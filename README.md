@@ -20,8 +20,20 @@ Pre-requisites
 Getting Started
 ---------------
 
-This sample uses the Gradle build system. To build this project, use the
-"gradlew build" command or use "Import Project" in Android Studio.
+This sample uses the Gradle build system. 
+
+First download the samples by cloning this repository or downloading an archived
+snapshot. (See the options on the right hand side.)
+
+In Android Studio, use the "Import non-Android Studio project" or 
+"Import Project" option. Next select one of the sample directories that you downloaded from this
+repository.
+If prompted for a gradle configuration accept the default settings. 
+
+Alternatively use the "gradlew build" command to build the project directly.
+
+Don't forget to add your API key to the AndroidManifest.xml.
+(See [https://developers.google.com/maps/documentation/android/start](https://developers.google.com/maps/documentation/android/start#get_an_android_certificate_and_the_google_maps_api_key))
 
 Support
 -------
