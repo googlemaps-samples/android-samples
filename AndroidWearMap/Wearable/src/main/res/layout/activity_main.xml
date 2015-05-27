@@ -19,17 +19,26 @@
 
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/root_container"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-    <fragment
-              android:id="@+id/map"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:name="com.google.android.gms.maps.SupportMapFragment" />
+    <FrameLayout
+            android:id="@+id/map_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <fragment
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+    </FrameLayout>
 
     <android.support.wearable.view.DismissOverlayView
             android:id="@+id/dismiss_overlay"
             android:layout_height="match_parent"
             android:layout_width="match_parent"/>
-    </FrameLayout>
+</FrameLayout>
