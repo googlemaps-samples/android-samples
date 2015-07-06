@@ -18,13 +18,13 @@ package com.example.androidwearmap;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.wearable.view.DismissOverlayView;
 import android.view.View;
 import android.view.WindowInsets;
@@ -33,7 +33,7 @@ import android.widget.FrameLayout;
 /**
  * Sample that shows how to set up a basic Google Map on Android Wear.
  */
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MainActivity extends Activity implements OnMapReadyCallback,
         GoogleMap.OnMapLongClickListener {
 
     private static final LatLng SYDNEY = new LatLng(-33.85704, 151.21522);
@@ -90,9 +90,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mDismissOverlay.showIntroIfNecessary();
 
         // Obtain the MapFragment and set the async listener to be notified when the map is ready.
-        SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
+        MapFragment mapFragment =
+                (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
     }
