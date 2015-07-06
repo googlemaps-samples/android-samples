@@ -40,10 +40,15 @@ repositories {
     jcenter()
 }
 
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.google.android.support:wearable:1.1.0'
-    compile 'com.google.android.gms:play-services:7.8.0'
+    // Required for DismissOverlayView to exit full screen wearable app.
+    compile 'com.google.android.support:wearable:1.2.0'
+
+    // Required to support ambient mode.
+    provided 'com.google.android.wearable:wearable:1.0.0'
+
+    // Include the Google Maps Android API from Google Play Services.
+    compile 'com.google.android.gms:play-services-maps:8.1.0'
 }

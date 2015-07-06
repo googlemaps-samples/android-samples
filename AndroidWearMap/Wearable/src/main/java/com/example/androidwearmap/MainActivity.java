@@ -23,8 +23,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
 import android.view.View;
 import android.view.WindowInsets;
@@ -33,7 +33,7 @@ import android.widget.FrameLayout;
 /**
  * Sample that shows how to set up a basic Google Map on Android Wear.
  */
-public class MainActivity extends Activity implements OnMapReadyCallback,
+public class MainActivity extends WearableActivity implements OnMapReadyCallback,
         GoogleMap.OnMapLongClickListener {
 
     private static final LatLng SYDNEY = new LatLng(-33.85704, 151.21522);
@@ -51,11 +51,18 @@ public class MainActivity extends Activity implements OnMapReadyCallback,
      */
     private GoogleMap mMap;
 
+    private MapFragment mMapFragment;
+
     public void onCreate(Bundle savedState) {
         super.onCreate(savedState);
 
         // Set the layout. It only contains a SupportMapFragment and a DismissOverlay.
         setContentView(R.layout.activity_main);
+
+        // Enable ambient support, so the map remains visible in simplified, low-color display
+        // when the user is no longer actively using the app but the app is still visible on the
+        // watch face.
+        setAmbientEnabled();
 
         // Retrieve the containers for the root of the layout and the map. Margins will need to be
         // set on them to account for the system window insets.
@@ -90,10 +97,31 @@ public class MainActivity extends Activity implements OnMapReadyCallback,
         mDismissOverlay.showIntroIfNecessary();
 
         // Obtain the MapFragment and set the async listener to be notified when the map is ready.
-        MapFragment mapFragment =
-                (MapFragment) getFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mMapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mMapFragment.getMapAsync(this);
 
+    }
+
+    /**
+     * Starts ambient mode on the map.
+     * The API swaps to a non-interactive and low-color rendering of the map when the user is no
+     * longer actively using the app.
+     */
+    @Override
+    public void onEnterAmbient(Bundle ambientDetails) {
+        super.onEnterAmbient(ambientDetails);
+        mMapFragment.onEnterAmbient(ambientDetails);
+    }
+
+    /**
+     * Exits ambient mode on the map.
+     * The API swaps to the normal rendering of the map when the user starts actively using the app.
+     */
+    @Override
+    public void onExitAmbient() {
+        super.onExitAmbient();
+        mMapFragment.onExitAmbient();
     }
 
     @Override
