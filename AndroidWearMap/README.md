@@ -3,12 +3,12 @@ Android Wear Maps Sample
 
 This sample uses the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android/) 
 to display a map on Android Wear. It shows the basic setup required for a
-gradle-based Android Studio project.
+gradle-based Android Studio project that [supports ambient mode](https://developer.android.com/training/wearables/apps/always-on.html).
 
 Pre-requisites
 --------------
 
-- Android SDK v21
+- Android SDK v22
 - Latest Android Build Tools
 - Android Support Repository
 - Android Wear emulator or device
