@@ -1,33 +1,31 @@
-Google Maps Android API v2 Samples
+Google Maps Android API Demos
 ===================================
 
-Samples that use the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android/).
+These are demos for the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android-api/).
+They demonstrate most of the features available in the API.
 
-This repo contains the following sample:
-
-1. [ApiDemos](https://github.com/googlemaps/android-samples/tree/master/ApiDemos): A collection of small demos showing most features of the Google Maps Android API. (This was formally part of the Google Play Services SDK.)
-1. [BasicWearMap](https://github.com/googlemaps/android-samples/tree/master/BasicWearMap):
-Displays a map on an Android Wear device. This sample demonstrates the basic
-setup required for a gradle-based Android Studio project.
-
+This app was written for a minSdk of 9 and the v4 support library, but it can be easily adapted to
+use native functionality instead.
+(For example replacing ``SupportMapFragment`` with ``MapFragment``.)
 
 Pre-requisites
 --------------
 
-See each sample for pre-requisites.
-All require an uptodate version of the Android build tools and the Android support repository.
+- Android SDK v23
+- Latest Android Build Tools
+- Android Support Repository
 
 Getting Started
 ---------------
 
-These samples use the Gradle build system.
+This sample use the Gradle build system.
 
 First download the samples by cloning this repository or downloading an archived
 snapshot. (See the options on the right hand side.)
 
 In Android Studio, use the "Import non-Android Studio project" or 
-"Import Project" option. Next select one of the sample directories that you downloaded from this
-repository.
+"Import Project" option. Next select the ApiDemos/ directory that you downloaded
+from this repository.
 If prompted for a gradle configuration accept the default settings. 
 
 Alternatively use the "gradlew build" command to build the project directly.
@@ -41,7 +39,7 @@ Support
 - Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
 
 If you have discovered an issue with the Google Maps Android API v2, please see
-the resources here: https://developers.google.com/maps/support/
+the resources here: https://developers.google.com/maps/documentation/android-api/support
 
 If you've found an error in these samples, please file an issue:
 https://github.com/googlemaps/android-samples/issues
@@ -49,15 +47,12 @@ https://github.com/googlemaps/android-samples/issues
 Patches are encouraged, and may be submitted according to the instructions in
 CONTRIBUTING.md.
 
-![Analytics](https://ga-beacon.appspot.com/UA-12846745-20/android-samples/readme?pixel)
+![Analytics](https://ga-beacon.appspot.com/UA-12846745-20/android-samples-apidemos/readme?pixel)
 
 License
 -------
-(See each sample directory for details.)
 
 Copyright 2015 The Android Open Source Project
-
-Copyright 2015 Google, Inc.
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements.  See the NOTICE file distributed with this work for
