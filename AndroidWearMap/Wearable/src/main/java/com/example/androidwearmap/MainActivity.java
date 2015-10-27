@@ -23,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
