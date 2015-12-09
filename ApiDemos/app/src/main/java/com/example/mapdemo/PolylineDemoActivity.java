@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -60,11 +62,15 @@ public class PolylineDemoActivity extends AppCompatActivity
 
     private Polyline mMutablePolyline;
 
+    private Polyline mClickablePolyline;
+
     private SeekBar mColorBar;
 
     private SeekBar mAlphaBar;
 
     private SeekBar mWidthBar;
+
+    private CheckBox mClickabilityCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,8 @@ public class PolylineDemoActivity extends AppCompatActivity
         mWidthBar.setMax(WIDTH_MAX);
         mWidthBar.setProgress(10);
 
+        mClickabilityCheckbox = (CheckBox) findViewById(R.id.toggleClickability);
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -99,11 +107,12 @@ public class PolylineDemoActivity extends AppCompatActivity
                 .add(MELBOURNE, ADELAIDE, PERTH));
 
         // A geodesic polyline that goes around the world.
-        map.addPolyline((new PolylineOptions())
+        mClickablePolyline = map.addPolyline((new PolylineOptions())
                 .add(LHR, AKL, LAX, JFK, LHR)
                 .width(5)
                 .color(Color.BLUE)
-                .geodesic(true));
+                .geodesic(true)
+                .clickable(mClickabilityCheckbox.isChecked()));
 
         // Rectangle centered at Sydney.  This polyline will be mutable.
         int radius = 5;
@@ -117,7 +126,8 @@ public class PolylineDemoActivity extends AppCompatActivity
                 mAlphaBar.getProgress(), new float[]{mColorBar.getProgress(), 1, 1});
         mMutablePolyline = map.addPolyline(options
                 .color(color)
-                .width(mWidthBar.getProgress()));
+                .width(mWidthBar.getProgress())
+                .clickable(mClickabilityCheckbox.isChecked()));
 
         mColorBar.setOnSeekBarChangeListener(this);
         mAlphaBar.setOnSeekBarChangeListener(this);
@@ -125,6 +135,16 @@ public class PolylineDemoActivity extends AppCompatActivity
 
         // Move the map so that it is centered on the mutable polyline.
         map.moveCamera(CameraUpdateFactory.newLatLng(SYDNEY));
+
+        // Add a listener for polyline clicks that changes the clicked polyline's color.
+        map.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
+            @Override
+            public void onPolylineClick(Polyline polyline) {
+                // Flip the values of the r, g and b components of the polyline's color.
+                int strokeColor = polyline.getColor() ^ 0x00ffffff;
+                polyline.setColor(strokeColor);
+            }
+        });
     }
 
     @Override
@@ -152,6 +172,20 @@ public class PolylineDemoActivity extends AppCompatActivity
             mMutablePolyline.setColor(Color.HSVToColor(progress, prevHSV));
         } else if (seekBar == mWidthBar) {
             mMutablePolyline.setWidth(progress);
+        }
+    }
+
+    /**
+     * Toggles the clickability of two polylines based on the state of the View that triggered this
+     * call.
+     * This callback is defined on the CheckBox in the layout for this Activity.
+     */
+    public void toggleClickability(View view) {
+        if (mClickablePolyline != null) {
+            mClickablePolyline.setClickable(((CheckBox) view).isChecked());
+        }
+        if (mMutablePolyline != null) {
+            mMutablePolyline.setClickable(((CheckBox) view).isChecked());
         }
     }
 }

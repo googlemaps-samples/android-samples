@@ -18,12 +18,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:padding="5dp">
 
         <TextView
+            android:id="@+id/transparency_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -32,31 +34,35 @@
         <SeekBar
             android:id="@+id/transparencySeekBar"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/transparency_text"
+            android:layout_toRightOf="@+id/transparency_text" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <fragment
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.google.android.gms.maps.SupportMapFragment" />
-
-        <FrameLayout
+        <Button
+            android:id="@+id/switchImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="5dp">
+            android:layout_below="@+id/transparencySeekBar"
+            android:onClick="switchImage"
+            android:text="@string/switch_image" />
 
-            <Button
-                android:id="@+id/switchImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="switchImage"
-                android:text="@string/switch_image" />
-        </FrameLayout>
+        <CheckBox
+            android:id="@+id/toggleClickability"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/switchImage"
+            android:layout_toEndOf="@+id/switchImage"
+            android:layout_toRightOf="@+id/switchImage"
+            android:checked="true"
+            android:onClick="toggleClickability"
+            android:text="@string/clickable" />
+
     </RelativeLayout>
+
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

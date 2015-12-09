@@ -20,6 +20,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowCloseListener;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -64,7 +66,9 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         OnInfoWindowClickListener,
         OnMarkerDragListener,
         OnSeekBarChangeListener,
-        OnMapReadyCallback {
+        OnMapReadyCallback,
+        OnInfoWindowLongClickListener,
+        OnInfoWindowCloseListener {
 
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
 
@@ -230,6 +234,8 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         mMap.setOnMarkerClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
         mMap.setOnMarkerDragListener(this);
+        mMap.setOnInfoWindowCloseListener(this);
+        mMap.setOnInfoWindowLongClickListener(this);
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localised.
@@ -418,6 +424,16 @@ public class MarkerDemoActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onInfoWindowClose(Marker marker) {
+        Toast.makeText(this, "Close Info Window", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onInfoWindowLongClick(Marker marker) {
+        Toast.makeText(this, "Info Window long click", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onMarkerDragStart(Marker marker) {
         mTopText.setText("onMarkerDragStart");
     }
@@ -431,4 +447,5 @@ public class MarkerDemoActivity extends AppCompatActivity implements
     public void onMarkerDrag(Marker marker) {
         mTopText.setText("onMarkerDrag.  Current Position: " + marker.getPosition());
     }
+
 }

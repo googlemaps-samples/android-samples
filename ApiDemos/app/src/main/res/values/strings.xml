@@ -29,6 +29,7 @@
     <string name="circle_demo_label">Circles</string>
     <string name="circle_demo_description">Demonstrates how to add Circles to a map.</string>
     <string name="clear_map">Clear</string>
+    <string name="clickable">Clickable</string>
     <string name="compass">Compass</string>
     <string name="custom_info_contents">Custom info contents</string>
     <string name="custom_info_window">Custom info window</string>
