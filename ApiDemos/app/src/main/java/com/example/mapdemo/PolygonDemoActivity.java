@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -49,11 +51,15 @@ public class PolygonDemoActivity extends AppCompatActivity
 
     private Polygon mMutablePolygon;
 
+    private Polygon mClickablePolygonWithHoles;
+
     private SeekBar mColorBar;
 
     private SeekBar mAlphaBar;
 
     private SeekBar mWidthBar;
+
+    private CheckBox mClickabilityCheckbox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,8 @@ public class PolygonDemoActivity extends AppCompatActivity
         mWidthBar.setMax(WIDTH_MAX);
         mWidthBar.setProgress(10);
 
+        mClickabilityCheckbox = (CheckBox) findViewById(R.id.toggleClickability);
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -84,16 +92,19 @@ public class PolygonDemoActivity extends AppCompatActivity
         map.setContentDescription("Google Map with polygons.");
 
         // Create a rectangle with two rectangular holes.
-        map.addPolygon(new PolygonOptions()
+        mClickablePolygonWithHoles = map.addPolygon(new PolygonOptions()
                 .addAll(createRectangle(new LatLng(-20, 130), 5, 5))
                 .addHole(createRectangle(new LatLng(-22, 128), 1, 1))
                 .addHole(createRectangle(new LatLng(-18, 133), 0.5, 1.5))
                 .fillColor(Color.CYAN)
                 .strokeColor(Color.BLUE)
-                .strokeWidth(5));
+                .strokeWidth(5)
+                .clickable(mClickabilityCheckbox.isChecked()));
 
         // Create a rectangle centered at Sydney.
-        PolygonOptions options = new PolygonOptions().addAll(createRectangle(SYDNEY, 5, 8));
+        PolygonOptions options = new PolygonOptions()
+                .addAll(createRectangle(SYDNEY, 5, 8))
+                .clickable(mClickabilityCheckbox.isChecked());
 
         int fillColor = Color.HSVToColor(
                 mAlphaBar.getProgress(), new float[]{mColorBar.getProgress(), 1, 1});
@@ -102,12 +113,29 @@ public class PolygonDemoActivity extends AppCompatActivity
                 .strokeColor(Color.BLACK)
                 .fillColor(fillColor));
 
+        // Create another polygon that overlaps the previous two.
+        // Clickability defaults to false, so this one won't accept clicks.
+        map.addPolygon(new PolygonOptions()
+                .addAll(createRectangle(new LatLng(-27, 140), 10, 7))
+                .fillColor(Color.WHITE)
+                .strokeColor(Color.BLACK));
+
         mColorBar.setOnSeekBarChangeListener(this);
         mAlphaBar.setOnSeekBarChangeListener(this);
         mWidthBar.setOnSeekBarChangeListener(this);
 
         // Move the map so that it is centered on the mutable polygon.
         map.moveCamera(CameraUpdateFactory.newLatLng(SYDNEY));
+
+        // Add a listener for polygon clicks that changes the clicked polygon's stroke color.
+        map.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
+            @Override
+            public void onPolygonClick(Polygon polygon) {
+                // Flip the r, g and b components of the polygon's stroke color.
+                int strokeColor = polygon.getStrokeColor() ^ 0x00ffffff;
+                polygon.setStrokeColor(strokeColor);
+            }
+        });
     }
 
     /**
@@ -147,6 +175,20 @@ public class PolygonDemoActivity extends AppCompatActivity
                     Color.blue(prevColor)));
         } else if (seekBar == mWidthBar) {
             mMutablePolygon.setStrokeWidth(progress);
+        }
+    }
+
+    /**
+     * Toggles the clickability of two polygons based on the state of the View that triggered this
+     * call.
+     * This callback is defined on the CheckBox in the layout for this Activity.
+     */
+    public void toggleClickability(View view) {
+        if (mClickablePolygonWithHoles != null) {
+            mClickablePolygonWithHoles.setClickable(((CheckBox) view).isChecked());
+        }
+        if (mMutablePolygon != null) {
+            mMutablePolygon.setClickable(((CheckBox) view).isChecked());
         }
     }
 }
