@@ -5,8 +5,8 @@ Samples that use the [Google Maps Android API v2](https://developers.google.com/
 
 This repo contains the following sample:
 
-1. [ApiDemos](https://github.com/googlemaps/android-samples/tree/master/ApiDemos): A collection of small demos showing most features of the Google Maps Android API. (This was formally part of the Google Play Services SDK.)
-1. [BasicWearMap](https://github.com/googlemaps/android-samples/tree/master/BasicWearMap):
+1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Google Maps Android API. (This was formally part of the Google Play Services SDK.)
+1. [AndroidWearMap](AndroidWearMap):
 Displays a map on an Android Wear device. This sample demonstrates the basic
 setup required for a gradle-based Android Studio project.
 
