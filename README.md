@@ -1,7 +1,8 @@
 Google Maps Android API v2 Samples
 ===================================
 
-Samples that use the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android/).
+Samples demonstrating how to use 
+[Google Maps Android API v2](https://developers.google.com/maps/documentation/android/).
 
 This repo contains the following sample:
 
