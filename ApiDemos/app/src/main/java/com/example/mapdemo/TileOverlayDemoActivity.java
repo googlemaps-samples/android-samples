@@ -28,6 +28,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,18 +38,26 @@ import java.util.Locale;
 /**
  * This demonstrates how to add a tile overlay to a map.
  */
-public class TileOverlayDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class TileOverlayDemoActivity extends AppCompatActivity
+        implements OnSeekBarChangeListener, OnMapReadyCallback {
+
+    private static final int TRANSPARENCY_MAX = 100;
 
     /** This returns moon tiles. */
     private static final String MOON_MAP_URL_FORMAT =
             "http://mw1.google.com/mw-planetary/lunar/lunarmaps_v1/clem_bw/%d/%d/%d.jpg";
 
     private TileOverlay mMoonTiles;
+    private SeekBar mTransparencyBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tile_overlay_demo);
+
+        mTransparencyBar = (SeekBar) findViewById(R.id.transparencySeekBar);
+        mTransparencyBar.setMax(TRANSPARENCY_MAX);
+        mTransparencyBar.setProgress(0);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -75,6 +85,7 @@ public class TileOverlayDemoActivity extends AppCompatActivity implements OnMapR
         };
 
         mMoonTiles = map.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
+        mTransparencyBar.setOnSeekBarChangeListener(this);
     }
 
     public void setFadeIn(View v) {
@@ -82,5 +93,20 @@ public class TileOverlayDemoActivity extends AppCompatActivity implements OnMapR
             return;
         }
         mMoonTiles.setFadeIn(((CheckBox) v).isChecked());
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if (mMoonTiles != null) {
+            mMoonTiles.setTransparency((float) progress / (float) TRANSPARENCY_MAX);
+        }
     }
 }

@@ -40,5 +40,17 @@
             android:checked="true"
             android:onClick="setFadeIn"
             android:text="@string/fade_in" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/transparency"/>
+
+        <SeekBar
+            android:id="@+id/transparencySeekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </RelativeLayout>
