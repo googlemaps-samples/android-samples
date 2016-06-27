@@ -17,6 +17,7 @@ package com.example.mapdemo;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCircleClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,6 +35,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
@@ -46,17 +48,12 @@ import java.util.List;
  */
 public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarChangeListener,
         OnMarkerDragListener, OnMapLongClickListener, OnMapReadyCallback {
-
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
-
     private static final double DEFAULT_RADIUS = 1000000;
-
     public static final double RADIUS_OF_EARTH_METERS = 6371009;
 
     private static final int WIDTH_MAX = 50;
-
     private static final int HUE_MAX = 360;
-
     private static final int ALPHA_MAX = 255;
 
     private GoogleMap mMap;
@@ -64,26 +61,18 @@ public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarCh
     private List<DraggableCircle> mCircles = new ArrayList<DraggableCircle>(1);
 
     private SeekBar mColorBar;
-
     private SeekBar mAlphaBar;
-
     private SeekBar mWidthBar;
-
     private int mStrokeColor;
-
     private int mFillColor;
+    private CheckBox mClickabilityCheckbox;
 
     private class DraggableCircle {
-
         private final Marker centerMarker;
-
         private final Marker radiusMarker;
-
         private final Circle circle;
-
         private double radius;
-
-        public DraggableCircle(LatLng center, double radius) {
+        public DraggableCircle(LatLng center, double radius, boolean clickable) {
             this.radius = radius;
             centerMarker = mMap.addMarker(new MarkerOptions()
                     .position(center)
@@ -98,10 +87,11 @@ public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarCh
                     .radius(radius)
                     .strokeWidth(mWidthBar.getProgress())
                     .strokeColor(mStrokeColor)
-                    .fillColor(mFillColor));
+                    .fillColor(mFillColor)
+                    .clickable(clickable));
         }
 
-        public DraggableCircle(LatLng center, LatLng radiusLatLng) {
+        public DraggableCircle(LatLng center, LatLng radiusLatLng, boolean clickable) {
             this.radius = toRadiusMeters(center, radiusLatLng);
             centerMarker = mMap.addMarker(new MarkerOptions()
                     .position(center)
@@ -116,7 +106,8 @@ public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarCh
                     .radius(radius)
                     .strokeWidth(mWidthBar.getProgress())
                     .strokeColor(mStrokeColor)
-                    .fillColor(mFillColor));
+                    .fillColor(mFillColor)
+                    .clickable(clickable));
         }
 
         public boolean onMarkerMoved(Marker marker) {
@@ -137,6 +128,10 @@ public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarCh
             circle.setStrokeWidth(mWidthBar.getProgress());
             circle.setFillColor(mFillColor);
             circle.setStrokeColor(mStrokeColor);
+        }
+
+        public void setClickable(boolean clickable) {
+            circle.setClickable(clickable);
         }
     }
 
@@ -174,6 +169,8 @@ public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarCh
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mClickabilityCheckbox = (CheckBox) findViewById(R.id.toggleClickability);
     }
 
     @Override
@@ -193,11 +190,22 @@ public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarCh
                 mAlphaBar.getProgress(), new float[]{mColorBar.getProgress(), 1, 1});
         mStrokeColor = Color.BLACK;
 
-        DraggableCircle circle = new DraggableCircle(SYDNEY, DEFAULT_RADIUS);
+        DraggableCircle circle =
+                new DraggableCircle(SYDNEY, DEFAULT_RADIUS, mClickabilityCheckbox.isChecked());
         mCircles.add(circle);
 
         // Move the map so that it is centered on the initial circle
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 4.0f));
+
+        // Set up the click listener for the circle.
+        map.setOnCircleClickListener(new OnCircleClickListener() {
+            @Override
+            public void onCircleClick(Circle circle) {
+                // Flip the r, g and b components of the circle's stroke color.
+                int strokeColor = circle.getStrokeColor() ^ 0x00ffffff;
+                circle.setStrokeColor(strokeColor);
+            }
+        });
     }
 
     @Override
@@ -256,7 +264,17 @@ public class CircleDemoActivity extends AppCompatActivity implements OnSeekBarCh
                 view.getHeight() * 3 / 4, view.getWidth() * 3 / 4));
 
         // ok create it
-        DraggableCircle circle = new DraggableCircle(point, radiusLatLng);
+        DraggableCircle circle =
+                new DraggableCircle(point, radiusLatLng, mClickabilityCheckbox.isChecked());
         mCircles.add(circle);
+    }
+
+    public void toggleClickability(View view) {
+        boolean clickable = ((CheckBox) view).isChecked();
+        // Set each of the circles to be clickable or not, based on the
+        // state of the checkbox.
+        for (DraggableCircle draggableCircle : mCircles) {
+            draggableCircle.setClickable(clickable);
+        }
     }
 }

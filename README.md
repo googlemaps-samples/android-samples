@@ -1,7 +1,8 @@
 Google Maps Android API v2 Samples
 ===================================
 
-Samples that use the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android/).
+Samples demonstrating how to use 
+[Google Maps Android API v2](https://developers.google.com/maps/documentation/android/).
 
 This repo contains the following sample:
 
@@ -49,7 +50,7 @@ https://github.com/googlemaps/android-samples/issues
 Patches are encouraged, and may be submitted according to the instructions in
 CONTRIBUTING.md.
 
-![Analytics](https://ga-beacon.appspot.com/UA-12846745-20/android-samples/readme?pixel)
+![Analytics](https://maps-ga-beacon.appspot.com/UA-12846745-20/android-samples/readme?pixel)
 
 License
 -------
