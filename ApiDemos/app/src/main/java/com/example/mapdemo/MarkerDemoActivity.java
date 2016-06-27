@@ -411,6 +411,12 @@ public class MarkerDemoActivity extends AppCompatActivity implements
             marker.setAlpha(mRandom.nextFloat());
         }
 
+        // Markers have a z-index that is settable and gettable.
+        float zIndex = marker.getZIndex() + 1.0f;
+        marker.setZIndex(zIndex);
+        Toast.makeText(this, marker.getTitle() + " z-index set to " + zIndex,
+                Toast.LENGTH_SHORT).show();
+
         mLastSelectedMarker = marker;
         // We return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the
@@ -425,7 +431,7 @@ public class MarkerDemoActivity extends AppCompatActivity implements
 
     @Override
     public void onInfoWindowClose(Marker marker) {
-        Toast.makeText(this, "Close Info Window", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Close Info Window", Toast.LENGTH_SHORT).show();
     }
 
     @Override
