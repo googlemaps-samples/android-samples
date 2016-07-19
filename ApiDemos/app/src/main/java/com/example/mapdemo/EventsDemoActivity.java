@@ -17,12 +17,11 @@
 package com.example.mapdemo;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.os.Bundle;
@@ -33,12 +32,12 @@ import android.widget.TextView;
  * This shows how to listen to some {@link GoogleMap} events.
  */
 public class EventsDemoActivity extends AppCompatActivity
-        implements OnMapClickListener, OnMapLongClickListener, OnCameraChangeListener,
+        implements OnMapClickListener, OnMapLongClickListener, OnCameraIdleListener,
         OnMapReadyCallback {
 
     private TextView mTapTextView;
-
     private TextView mCameraTextView;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +54,10 @@ public class EventsDemoActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.setOnMapClickListener(this);
-        map.setOnMapLongClickListener(this);
-        map.setOnCameraChangeListener(this);
+        mMap = map;
+        mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
+        mMap.setOnCameraIdleListener(this);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class EventsDemoActivity extends AppCompatActivity
     }
 
     @Override
-    public void onCameraChange(final CameraPosition position) {
-        mCameraTextView.setText(position.toString());
+    public void onCameraIdle() {
+        mCameraTextView.setText(mMap.getCameraPosition().toString());
     }
 }

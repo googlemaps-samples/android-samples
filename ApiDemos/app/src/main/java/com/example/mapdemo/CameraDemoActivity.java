@@ -20,13 +20,20 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.CancelableCallback;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraMoveCanceledListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraMoveStartedListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
@@ -35,7 +42,14 @@ import android.widget.Toast;
 /**
  * This shows how to change the camera position for the map.
  */
-public class CameraDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class CameraDemoActivity extends AppCompatActivity implements
+        OnCameraMoveStartedListener,
+        OnCameraMoveListener,
+        OnCameraMoveCanceledListener,
+        OnCameraIdleListener,
+        OnMapReadyCallback {
+
+    private static final String TAG = CameraDemoActivity.class.getName();
 
     /**
      * The amount by which to scroll the camera. Note that this amount is in raw pixels, not dp
@@ -60,10 +74,10 @@ public class CameraDemoActivity extends AppCompatActivity implements OnMapReadyC
     private GoogleMap mMap;
 
     private CompoundButton mAnimateToggle;
-
     private CompoundButton mCustomDurationToggle;
-
     private SeekBar mCustomDurationBar;
+    private PolylineOptions currPolylineOptions;
+    private boolean isCanceled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +105,14 @@ public class CameraDemoActivity extends AppCompatActivity implements OnMapReadyC
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
+        mMap.setOnCameraIdleListener(this);
+        mMap.setOnCameraMoveStartedListener(this);
+        mMap.setOnCameraMoveListener(this);
+        mMap.setOnCameraMoveCanceledListener(this);
+
         // We will provide our own zoom controls.
         mMap.getUiSettings().setZoomControlsEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         // Show Sydney
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.87365, 151.20689), 10));
@@ -305,5 +325,68 @@ public class CameraDemoActivity extends AppCompatActivity implements OnMapReadyC
         } else {
             mMap.moveCamera(update);
         }
+    }
+
+    @Override
+    public void onCameraMoveStarted(int reason) {
+        if (!isCanceled) {
+            mMap.clear();
+        }
+
+        String reasonText = "UNKNOWN_REASON";
+        currPolylineOptions = new PolylineOptions().width(5);
+        switch (reason) {
+            case OnCameraMoveStartedListener.REASON_GESTURE:
+                currPolylineOptions.color(Color.BLUE);
+                reasonText = "GESTURE";
+                break;
+            case OnCameraMoveStartedListener.REASON_API_ANIMATION:
+                currPolylineOptions.color(Color.RED);
+                reasonText = "API_ANIMATION";
+                break;
+            case OnCameraMoveStartedListener.REASON_DEVELOPER_ANIMATION:
+                currPolylineOptions.color(Color.GREEN);
+                reasonText = "DEVELOPER_ANIMATION";
+                break;
+        }
+        Log.i(TAG, "onCameraMoveStarted(" + reasonText + ")");
+        addCameraTargetToPath();
+    }
+
+    @Override
+    public void onCameraMove() {
+        // When the camera is moving, add its target to the current path we'll draw on the map.
+        if (currPolylineOptions != null) {
+            addCameraTargetToPath();
+        }
+        Log.i(TAG, "onCameraMove");
+    }
+
+    @Override
+    public void onCameraMoveCanceled() {
+        // When the camera stops moving, add its target to the current path, and draw it on the map.
+        if (currPolylineOptions != null) {
+            addCameraTargetToPath();
+            mMap.addPolyline(currPolylineOptions);
+        }
+        isCanceled = true;  // Set to clear the map when dragging starts again.
+        currPolylineOptions = null;
+        Log.i(TAG, "onCameraMoveCancelled");
+    }
+
+    @Override
+    public void onCameraIdle() {
+        if (currPolylineOptions != null) {
+            addCameraTargetToPath();
+            mMap.addPolyline(currPolylineOptions);
+        }
+        currPolylineOptions = null;
+        isCanceled = false;  // Set to *not* clear the map when dragging starts again.
+        Log.i(TAG, "onCameraIdle");
+    }
+
+    private void addCameraTargetToPath() {
+        LatLng target = mMap.getCameraPosition().target;
+        currPolylineOptions.add(target);
     }
 }

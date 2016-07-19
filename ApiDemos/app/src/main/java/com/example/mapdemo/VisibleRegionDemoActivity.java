@@ -18,10 +18,9 @@ package com.example.mapdemo;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -85,11 +84,11 @@ public class VisibleRegionDemoActivity extends AppCompatActivity implements OnMa
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SFO, 18));
         // Add a marker to the Opera House.
         mMap.addMarker(new MarkerOptions().position(SOH).title("Sydney Opera House"));
-        // Add a camera change listener.
-        mMap.setOnCameraChangeListener(new OnCameraChangeListener() {
+        // Add a camera idle listener.
+        mMap.setOnCameraIdleListener(new OnCameraIdleListener() {
             @Override
-            public void onCameraChange(CameraPosition pos) {
-                mMessageView.setText("CameraChangeListener: " + pos);
+            public void onCameraIdle() {
+                mMessageView.setText("CameraChangeListener: " + mMap.getCameraPosition());
             }
         });
     }
@@ -138,8 +137,7 @@ public class VisibleRegionDemoActivity extends AppCompatActivity implements OnMa
         if (!checkReady()) {
             return;
         }
-        View mapView = ((SupportMapFragment)
-                getSupportFragmentManager().findFragmentById(R.id.map)).getView();
+        View mapView = (getSupportFragmentManager().findFragmentById(R.id.map)).getView();
         int left = 150;
         int top = 0;
         int right = mapView.getWidth() / 3;
