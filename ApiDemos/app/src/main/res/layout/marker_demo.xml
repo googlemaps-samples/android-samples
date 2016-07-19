@@ -25,6 +25,11 @@
         android:lines="2"
         android:text="@string/drag_melbourne" />
 
+    <TextView
+        android:id="@+id/tag_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

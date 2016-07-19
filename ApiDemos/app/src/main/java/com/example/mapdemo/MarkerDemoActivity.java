@@ -179,6 +179,8 @@ public class MarkerDemoActivity extends AppCompatActivity implements
 
     private TextView mTopText;
 
+    private TextView mTagText;
+
     private SeekBar mRotationBar;
 
     private CheckBox mFlatBox;
@@ -193,6 +195,7 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         setContentView(R.layout.marker_demo);
 
         mTopText = (TextView) findViewById(R.id.top_text);
+        mTagText = (TextView) findViewById(R.id.tag_text);
 
         mRotationBar = (SeekBar) findViewById(R.id.rotationSeekBar);
         mRotationBar.setMax(360);
@@ -308,14 +311,16 @@ public class MarkerDemoActivity extends AppCompatActivity implements
 
         int numMarkersInRainbow = 12;
         for (int i = 0; i < numMarkersInRainbow; i++) {
-            mMarkerRainbow.add(mMap.addMarker(new MarkerOptions()
+            Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(
                             -30 + 10 * Math.sin(i * Math.PI / (numMarkersInRainbow - 1)),
                             135 - 10 * Math.cos(i * Math.PI / (numMarkersInRainbow - 1))))
                     .title("Marker " + i)
                     .icon(BitmapDescriptorFactory.defaultMarker(i * 360 / numMarkersInRainbow))
                     .flat(flat)
-                    .rotation(rotation)));
+                    .rotation(rotation));
+            marker.setTag(0);
+            mMarkerRainbow.add(marker);
         }
     }
 
@@ -416,6 +421,20 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         marker.setZIndex(zIndex);
         Toast.makeText(this, marker.getTitle() + " z-index set to " + zIndex,
                 Toast.LENGTH_SHORT).show();
+
+        // Markers can store and retrieve a data object via the getTag/setTag methods.
+        // Here we use it to retrieve the number of clicks stored for this marker.
+        Integer clickCount = (Integer) marker.getTag();
+        // Check if a click count was set.
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            // Markers can store and retrieve a data object via the getTag/setTag methods.
+            // Here we use it to store the number of clicks for this marker.
+            marker.setTag(clickCount);
+            mTagText.setText(marker.getTitle() + " has been clicked " + clickCount + " times.");
+        } else {
+            mTagText.setText("");
+        }
 
         mLastSelectedMarker = marker;
         // We return false to indicate that we have not consumed the event and that we wish
