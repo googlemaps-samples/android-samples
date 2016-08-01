@@ -24,7 +24,7 @@ Getting Started
 These samples use the Gradle build system.
 
 First download the samples by cloning this repository or downloading an archived
-snapshot. (See the options on the right hand side.)
+snapshot. (See the options at the top of the page.)
 
 In Android Studio, use the "Import non-Android Studio project" or 
 "Import Project" option. Next select one of the sample directories that you downloaded from this
