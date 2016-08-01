@@ -83,7 +83,7 @@ public class MarkerDemoActivity extends AppCompatActivity implements
     /** Demonstrates customizing the info window and/or its contents. */
     class CustomInfoWindowAdapter implements InfoWindowAdapter {
 
-        // These a both viewgroups containing an ImageView with id "badge" and two TextViews with id
+        // These are both viewgroups containing an ImageView with id "badge" and two TextViews with id
         // "title" and "snippet".
         private final View mWindow;
 
