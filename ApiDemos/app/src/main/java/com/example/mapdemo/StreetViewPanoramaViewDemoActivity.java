@@ -65,7 +65,7 @@ public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         mStreetViewPanoramaView.onDestroy();
-        super.onPause();
+        super.onDestroy();
     }
 
     @Override
