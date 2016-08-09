@@ -22,7 +22,7 @@
     <string name="alpha">Alpha</string>
     <string name="animate">Animate</string>
     <string name="basic_map_demo_label">Basic Map</string>
-    <string name="basic_map_demo_description">Launches a map</string>
+    <string name="basic_map_demo_description">Launches a map.</string>
     <string name="buildings">Buildings</string>
     <string name="camera_demo_label">Camera</string>
     <string name="camera_demo_description">Demonstrates camera functions.</string>
@@ -86,7 +86,7 @@
     <string name="multi_map_demo_description">Demonstrates how to show multiple maps in a single activity.</string>
     <string name="my_location">My Location</string>
     <string name="my_location_demo_label">My Location Demo</string>
-    <string name="my_location_demo_description">Demonstrates how to use GMS Location</string>
+    <string name="my_location_demo_description">Demonstrates how to use GMS Location.</string>
     <string name="mylocation_button">My Location Button</string>
     <string name="mylocation_layer">My Location Layer</string>
     <string name="none_map">None</string>
@@ -139,7 +139,7 @@
     <string name="ui_settings_demo_description">Demonstrates how to alter user interface settings.</string>
     <string name="up_arrow">\u2191</string>
     <string name="visible_region_demo_label">Visible Regions</string>
-    <string name="visible_region_demo_description">Demonstrates how to use Visible Regions</string>
+    <string name="visible_region_demo_description">Demonstrates how to use Visible Regions.</string>
     <string name="vr_aus_button">AUS</string>
     <string name="vr_normal_button">Normal</string>
     <string name="vr_more_padded_button">More</string>
@@ -160,13 +160,13 @@
     <string name="lite_go_to_adelaide">Go to Adelaide (One Marker)</string>
     <string name="lite_go_to_australia">Go to Australia (Five Markers)</string>
     <string name="lite_list_demo_label">Lite Mode ListView</string>
-    <string name="lite_list_demo_description">Demonstrates using maps in lite mode in a ListView</string>
+    <string name="lite_list_demo_description">Demonstrates using maps in lite mode in a ListView.</string>
 
     <!--     Indoor    -->
     <string name="activate_higher_level">Activate Higher Level</string>
     <string name="focused_building_info">Focused Building</string>
     <string name="focused_level_info">Focused Level</string>
-    <string name="indoor_demo_description">Demonstrates how to use the Indoor API</string>
+    <string name="indoor_demo_description">Demonstrates how to use the Indoor API.</string>
     <string name="indoor_demo_label">Indoor</string>
     <string name="toggle_level_picker">Toggle Level Picker</string>
 
@@ -185,11 +185,11 @@
     <string name="street_view_panorama_basic_demo_label">Street View Panorama</string>
     <string name="street_view_panorama_events_demo_description">Standard Street View Panorama with event handling.</string>
     <string name="street_view_panorama_events_demo_label">Street View Panorama events</string>
-    <string name="street_view_panorama_navigation_demo_description">Street View Panorama with programatic navigation</string>
+    <string name="street_view_panorama_navigation_demo_description">Street View Panorama with programmatic navigation.</string>
     <string name="street_view_panorama_navigation_demo_label">Street View Panorama navigation</string>
-    <string name="street_view_panorama_options_demo_description">Street View Panorama with toggles for options</string>
+    <string name="street_view_panorama_options_demo_description">Street View Panorama with toggles for options.</string>
     <string name="street_view_panorama_options_demo_label">Street View Panorama options</string>
-    <string name="street_view_panorama_view_demo_description">Standard Street View Panorama using a View</string>
+    <string name="street_view_panorama_view_demo_description">Standard Street View Panorama using a View.</string>
     <string name="street_view_panorama_view_demo_label">Street View Panorama View</string>
     <string name="streetnames">Streetnames</string>
     <string name="tap_screen">tap screen</string>
