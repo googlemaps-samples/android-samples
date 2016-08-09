@@ -26,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -33,11 +34,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -79,6 +87,8 @@ public class MarkerDemoActivity extends AppCompatActivity implements
     private static final LatLng ADELAIDE = new LatLng(-34.92873, 138.59995);
 
     private static final LatLng PERTH = new LatLng(-31.952854, 115.857342);
+
+    private static final LatLng ALICE_SPRINGS = new LatLng(-24.6980, 133.8807);
 
     /** Demonstrates customizing the info window and/or its contents. */
     class CustomInfoWindowAdapter implements InfoWindowAdapter {
@@ -304,6 +314,12 @@ public class MarkerDemoActivity extends AppCompatActivity implements
                 .title("Adelaide")
                 .snippet("Population: 1,213,000"));
 
+        // Vector drawable resource as a marker icon.
+        mMap.addMarker(new MarkerOptions()
+                .position(ALICE_SPRINGS)
+                .icon(vectorToBitmap(R.drawable.ic_android, Color.parseColor("#A4C639")))
+                .title("Alice Springs"));
+
         // Creates a marker rainbow demonstrating how to create default marker icons of different
         // hues (colors).
         float rotation = mRotationBar.getProgress();
@@ -322,6 +338,21 @@ public class MarkerDemoActivity extends AppCompatActivity implements
             marker.setTag(0);
             mMarkerRainbow.add(marker);
         }
+    }
+
+    /**
+     * Demonstrates converting a {@link Drawable} to a {@link BitmapDescriptor},
+     * for use as a marker icon.
+     */
+    private BitmapDescriptor vectorToBitmap(@DrawableRes int id, @ColorInt int color) {
+        Drawable vectorDrawable = ResourcesCompat.getDrawable(getResources(), id, null);
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
+                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        DrawableCompat.setTint(vectorDrawable, color);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
     private boolean checkReady() {
