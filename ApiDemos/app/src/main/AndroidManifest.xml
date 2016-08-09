@@ -148,6 +148,9 @@
             android:name=".StreetViewPanoramaViewDemoActivity"
             android:label="@string/street_view_panorama_view_demo_label"/>
         <activity
+            android:name=".StyledMapDemoActivity"
+            android:label="@string/styled_map_demo_label"/>
+        <activity
             android:name=".TileCoordinateDemoActivity"
             android:label="@string/tile_coordinate_demo_label"/>
         <activity
