@@ -33,15 +33,37 @@ public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapRe
 
     private MapView mMapView;
 
+    private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.raw_mapview_demo);
 
+        // *** IMPORTANT ***
+        // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
+        // objects or sub-Bundles.
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
+        }
         mMapView = (MapView) findViewById(R.id.map);
-        mMapView.onCreate(savedInstanceState);
+        mMapView.onCreate(mapViewBundle);
 
         mMapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
+        if (mapViewBundle == null) {
+            mapViewBundle = new Bundle();
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
+        }
+
+        mMapView.onSaveInstanceState(mapViewBundle);
     }
 
     @Override
@@ -85,9 +107,4 @@ public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapRe
         mMapView.onLowMemory();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMapView.onSaveInstanceState(outState);
-    }
 }

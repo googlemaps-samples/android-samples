@@ -34,6 +34,8 @@ public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
 
     private StreetViewPanoramaView mStreetViewPanoramaView;
 
+    private static final String STREETVIEW_BUNDLE_KEY = "StreetViewBundleKey";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,14 @@ public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
         addContentView(mStreetViewPanoramaView,
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-        mStreetViewPanoramaView.onCreate(savedInstanceState);
+        // *** IMPORTANT ***
+        // StreetViewPanoramaView requires that the Bundle you pass contain _ONLY_
+        // StreetViewPanoramaView SDK objects or sub-Bundles.
+        Bundle mStreetViewBundle = null;
+        if (savedInstanceState != null) {
+            mStreetViewBundle = savedInstanceState.getBundle(STREETVIEW_BUNDLE_KEY);
+        }
+        mStreetViewPanoramaView.onCreate(mStreetViewBundle);
     }
 
     @Override
@@ -71,6 +80,13 @@ public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mStreetViewPanoramaView.onSaveInstanceState(outState);
+
+        Bundle mStreetViewBundle = outState.getBundle(STREETVIEW_BUNDLE_KEY);
+        if (mStreetViewBundle == null) {
+            mStreetViewBundle = new Bundle();
+            outState.putBundle(STREETVIEW_BUNDLE_KEY, mStreetViewBundle);
+        }
+
+        mStreetViewPanoramaView.onSaveInstanceState(mStreetViewBundle);
     }
 }
