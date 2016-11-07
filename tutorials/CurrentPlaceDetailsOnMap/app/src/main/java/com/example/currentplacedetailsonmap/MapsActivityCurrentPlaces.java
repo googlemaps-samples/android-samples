@@ -37,13 +37,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import static com.example.currentplacedetailsonmap.R.id.map;
 
-public class MapsActivity extends AppCompatActivity implements
+/**
+ * An activity that displays a map showing places around the device's current location.
+ */
+public class MapsActivityCurrentPlaces extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = MapsActivityCurrentPlaces.class.getSimpleName();
     private GoogleMap mMap;
 
     // The entry point to Google Play services, used by the Places API and Fused Location Provider.
@@ -220,7 +223,7 @@ public class MapsActivity extends AppCompatActivity implements
         if (mSavedInstanceState != null && mSavedInstanceState.containsKey(KEY_CAMERA_POSITION)) {
             CameraPosition cameraPosition = mSavedInstanceState
                     .getParcelable(KEY_CAMERA_POSITION);
-            map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         } else if (mCurrentLocation != null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(mCurrentLocation.getLatitude(),
