@@ -150,10 +150,7 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
      */
     @Override
     public void onConnectionSuspended(int cause) {
-        // The connection to Google Play services was lost for some reason. Call connect() to
-        // attempt to re-establish the connection.
         Log.d(TAG, "Play services connection suspended");
-        mGoogleApiClient.connect();
     }
 
     /**
@@ -352,7 +349,7 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
                     .snippet(getString(R.string.default_info_snippet)));
         }
     }
-    
+
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
