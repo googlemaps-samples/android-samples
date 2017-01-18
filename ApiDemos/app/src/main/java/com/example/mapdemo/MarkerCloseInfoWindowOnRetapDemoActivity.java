@@ -20,7 +20,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -35,8 +34,8 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class MarkerCloseInfoWindowOnRetapDemoActivity extends AppCompatActivity implements
         OnMarkerClickListener,
-        OnMapReadyCallback,
-        OnMapClickListener {
+        OnMapClickListener,
+        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
     private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
@@ -58,7 +57,7 @@ public class MarkerCloseInfoWindowOnRetapDemoActivity extends AppCompatActivity 
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        new OnMapAndViewReadyListener(mapFragment, this);
     }
 
     @Override

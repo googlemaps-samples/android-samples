@@ -19,7 +19,6 @@ package com.example.mapdemo;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -39,7 +38,8 @@ import android.widget.Toast;
  * This shows how to use setPadding to allow overlays that obscure part of the map without
  * obscuring the map UI or copyright notices.
  */
-public class VisibleRegionDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class VisibleRegionDemoActivity extends AppCompatActivity implements
+        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     /**
      * Note that this may be null if the Google Play services APK is not available.
@@ -72,7 +72,7 @@ public class VisibleRegionDemoActivity extends AppCompatActivity implements OnMa
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        new OnMapAndViewReadyListener(mapFragment, this);
     }
 
     @Override

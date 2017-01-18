@@ -16,10 +16,8 @@
 
 package com.example.mapdemo;
 
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,13 +26,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 /**
  * This demo shows some features supported in lite mode.
@@ -42,7 +37,8 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
  * launch the Google Maps Mobile application, {@link com.google.android.gms.maps.CameraUpdate}s
  * and {@link com.google.android.gms.maps.model.Polygon}s.
  */
-public class LiteDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class LiteDemoActivity extends AppCompatActivity implements
+        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
 
@@ -76,7 +72,7 @@ public class LiteDemoActivity extends AppCompatActivity implements OnMapReadyCal
         // Get the map and register for the ready callback
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        new OnMapAndViewReadyListener(mapFragment, this);
     }
 
     /**
@@ -136,24 +132,8 @@ public class LiteDemoActivity extends AppCompatActivity implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         addMarkers();
-        addPolyobjects();
-
-        final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
-        if (mapView.getViewTreeObserver().isAlive()) {
-            mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                @SuppressWarnings("deprecation") // We use the new method when supported
-                @SuppressLint("NewApi") // We check which build version we are using.
-                @Override
-                public void onGlobalLayout() {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    } else {
-                        mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-                    showAustralia(null);
-                }
-            });
-        }
+        addPolyObjects();
+        showAustralia(null);
     }
 
     /**
@@ -161,7 +141,7 @@ public class LiteDemoActivity extends AppCompatActivity implements OnMapReadyCal
      * The Polyline connects Melbourne, Adelaide and Perth. The Polygon is located in the Northern
      * Territory (Australia).
      */
-    private void addPolyobjects() {
+    private void addPolyObjects() {
         mMap.addPolyline((new PolylineOptions())
                 .add(MELBOURNE, ADELAIDE, PERTH)
                 .color(Color.GREEN)

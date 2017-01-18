@@ -24,7 +24,6 @@ import com.google.android.gms.maps.GoogleMap.OnInfoWindowCloseListener;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -50,7 +49,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.CheckBox;
@@ -74,9 +72,9 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         OnInfoWindowClickListener,
         OnMarkerDragListener,
         OnSeekBarChangeListener,
-        OnMapReadyCallback,
         OnInfoWindowLongClickListener,
-        OnInfoWindowCloseListener {
+        OnInfoWindowCloseListener,
+        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
 
@@ -226,7 +224,7 @@ public class MarkerDemoActivity extends AppCompatActivity implements
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        new OnMapAndViewReadyListener(mapFragment, this);
     }
 
     @Override
@@ -252,33 +250,16 @@ public class MarkerDemoActivity extends AppCompatActivity implements
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localised.
-        map.setContentDescription("Map with lots of markers.");
+        mMap.setContentDescription("Map with lots of markers.");
 
-        // Pan to see all markers in view.
-        // Cannot zoom to bounds until the map has a size.
-        final View mapView = getSupportFragmentManager().findFragmentById(R.id.map).getView();
-        if (mapView.getViewTreeObserver().isAlive()) {
-            mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                @SuppressWarnings("deprecation") // We use the new method when supported
-                @SuppressLint("NewApi") // We check which build version we are using.
-                @Override
-                public void onGlobalLayout() {
-                    LatLngBounds bounds = new LatLngBounds.Builder()
-                            .include(PERTH)
-                            .include(SYDNEY)
-                            .include(ADELAIDE)
-                            .include(BRISBANE)
-                            .include(MELBOURNE)
-                            .build();
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    } else {
-                        mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-                }
-            });
-        }
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(PERTH)
+                .include(SYDNEY)
+                .include(ADELAIDE)
+                .include(BRISBANE)
+                .include(MELBOURNE)
+                .build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
     }
 
     private void addMarkersToMap() {
