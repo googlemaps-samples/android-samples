@@ -154,6 +154,9 @@
             android:name=".StyledMapDemoActivity"
             android:label="@string/styled_map_demo_label"/>
         <activity
+            android:name=".TagsDemoActivity"
+            android:label="@string/tags_demo_label"/>
+        <activity
             android:name=".TileCoordinateDemoActivity"
             android:label="@string/tile_coordinate_demo_label"/>
         <activity

@@ -32,12 +32,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -187,8 +185,6 @@ public class MarkerDemoActivity extends AppCompatActivity implements
 
     private TextView mTopText;
 
-    private TextView mTagText;
-
     private SeekBar mRotationBar;
 
     private CheckBox mFlatBox;
@@ -203,7 +199,6 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         setContentView(R.layout.marker_demo);
 
         mTopText = (TextView) findViewById(R.id.top_text);
-        mTagText = (TextView) findViewById(R.id.tag_text);
 
         mRotationBar = (SeekBar) findViewById(R.id.rotationSeekBar);
         mRotationBar.setMax(360);
@@ -316,7 +311,6 @@ public class MarkerDemoActivity extends AppCompatActivity implements
                     .icon(BitmapDescriptorFactory.defaultMarker(i * 360 / numMarkersInRainbow))
                     .flat(flat)
                     .rotation(rotation));
-            marker.setTag(0);
             mMarkerRainbow.add(marker);
         }
     }
@@ -433,20 +427,6 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         marker.setZIndex(zIndex);
         Toast.makeText(this, marker.getTitle() + " z-index set to " + zIndex,
                 Toast.LENGTH_SHORT).show();
-
-        // Markers can store and retrieve a data object via the getTag/setTag methods.
-        // Here we use it to retrieve the number of clicks stored for this marker.
-        Integer clickCount = (Integer) marker.getTag();
-        // Check if a click count was set.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            // Markers can store and retrieve a data object via the getTag/setTag methods.
-            // Here we use it to store the number of clicks for this marker.
-            marker.setTag(clickCount);
-            mTagText.setText(marker.getTitle() + " has been clicked " + clickCount + " times.");
-        } else {
-            mTagText.setText("");
-        }
 
         mLastSelectedMarker = marker;
         // We return false to indicate that we have not consumed the event and that we wish
