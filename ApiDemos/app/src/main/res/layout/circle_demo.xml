@@ -33,37 +33,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
-
             <TextView android:text="@string/fill_hue" />
-
-            <SeekBar android:id="@+id/hueSeekBar" />
+            <SeekBar android:id="@+id/fillHueSeekBar" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
-
             <TextView android:text="@string/fill_alpha" />
-
-            <SeekBar android:id="@+id/alphaSeekBar" />
+            <SeekBar android:id="@+id/fillAlphaSeekBar" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
-
             <TextView android:text="@string/stroke_width" />
-
-            <SeekBar android:id="@+id/widthSeekBar" />
+            <SeekBar android:id="@+id/strokeWidthSeekBar" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
+            <TextView android:text="@string/stroke_hue" />
+            <SeekBar android:id="@+id/strokeHueSeekBar" />
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+            <TextView android:text="@string/stroke_alpha" />
+            <SeekBar android:id="@+id/strokeAlphaSeekBar" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+            <TextView
+                android:text="@string/stroke_pattern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:id="@+id/strokePatternSpinner"
+                android:spinnerMode="dropdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
             <CheckBox
                 android:id="@+id/toggleClickability"
                 android:layout_width="wrap_content"

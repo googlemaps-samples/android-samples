@@ -40,6 +40,7 @@
 
     <string name="clear_map">Clear</string>
     <string name="clickable">Clickable</string>
+    <string name="color">Color</string>
     <string name="compass">Compass</string>
     <string name="custom_info_contents">Custom info contents</string>
     <string name="custom_info_window">Custom info window</string>
@@ -47,7 +48,6 @@
     <string name="down_arrow">\u2193</string>
     <string name="drag_melbourne">Drag Melbourne</string>
     <string name="duration">Custom Duration</string>
-    <string name="hue">Hue</string>
     <string name="events_demo_label">Events</string>
     <string name="events_demo_description">Demonstrates event handling.</string>
     <string name="fade_in">Fade In Tiles</string>
@@ -59,13 +59,12 @@
     <string name="go_to_sydney">Go to Sydney</string>
     <string name="ground_overlay_demo_label">Ground Overlays</string>
     <string name="ground_overlay_demo_description">Demonstrates how to add a GroundOverlay to a map.</string>
+    <string name="hue">Hue</string>
     <string name="hybrid">Hybrid</string>
     <string name="indoor">Indoor</string>
     <string-array name="layers_array">
         <item>@string/normal</item>
         <item>@string/hybrid</item>
-
-
         <item>@string/satellite</item>
         <item>@string/terrain</item>
         <item>@string/none_map</item>
@@ -102,8 +101,8 @@
     <string name="programmatic_demo_label">Programmatically add map</string>
     <string name="programmatic_demo_description">Demonstrates how to add a MapFragment programmatically.</string>
     <string name="properties_circle">Properties for Circle(s)</string>
-    <string name="properties_sydney_polyline">Properties for Sydney Polyline</string>
-    <string name="properties_sydney_polygon">Properties for Sydney Polygon</string>
+    <string name="properties_australia_polyline">Properties for Polyline over Australia</string>
+    <string name="properties_australia_polygon">Properties for Polygon over Australia</string>
     <string name="rotate">Rotate Gestures</string>
     <string name="raw_map_view_demo_label">Raw MapView</string>
     <string name="raw_map_view_demo_description">Demonstrates how to use a raw MapView.</string>
@@ -123,6 +122,10 @@
     <string name="snapshot_holder_description">Area for the map snapshot.</string>
     <string name="snapshot_take_button">Take snapshot</string>
     <string name="stop_animation">\u25A0</string>
+    <string name="stroke_alpha">Stroke Alpha</string>
+    <string name="stroke_hue">Stroke Hue</string>
+    <string name="stroke_joint_type">Stroke Joint Type</string>
+    <string name="stroke_pattern">Stroke Pattern</string>
     <string name="stroke_width">Stroke Width</string>
     <string name="swipe">\u2190 Swipe \u2192</string>
     <string name="switch_image">Switch Image</string>
@@ -153,6 +156,23 @@
     <string name="zoom_gestures">Zoom Gestures</string>
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
+
+    <!-- Polyline/polygon styling -->
+    <string name="start_cap">Start cap</string>
+    <string name="end_cap">End cap</string>
+    <string name="joint_type">Joint Type</string>
+    <string name="pattern">Pattern</string>
+    <string name="cap_butt">Butt</string>
+    <string name="cap_square">Square</string>
+    <string name="cap_round">Round</string>
+    <string name="cap_image">Image</string>
+    <string name="joint_type_default">Default</string>
+    <string name="joint_type_bevel">Bevel</string>
+    <string name="joint_type_round">Round</string>
+    <string name="pattern_solid">Solid</string>
+    <string name="pattern_dotted">Dotted</string>
+    <string name="pattern_dashed">Dashed</string>
+    <string name="pattern_mixed">Mixed</string>
 
     <!-- Lite Mode -->
     <string name="lite_demo_label">Lite Mode</string>

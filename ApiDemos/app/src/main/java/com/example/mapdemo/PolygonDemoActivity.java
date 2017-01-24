@@ -20,7 +20,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
+import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
@@ -28,9 +33,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,44 +48,82 @@ import java.util.List;
  * This shows how to draw polygons on a map.
  */
 public class PolygonDemoActivity extends AppCompatActivity
-        implements OnSeekBarChangeListener, OnMapReadyCallback {
+        implements OnSeekBarChangeListener, OnItemSelectedListener, OnMapReadyCallback {
 
-    private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
+    private static final LatLng CENTER = new LatLng(-20, 130);
+    private static final int MAX_WIDTH_PX = 100;
+    private static final int MAX_HUE_DEGREES = 360;
+    private static final int MAX_ALPHA = 255;
 
-    private static final int WIDTH_MAX = 50;
-
-    private static final int HUE_MAX = 360;
-
-    private static final int ALPHA_MAX = 255;
+    private static final int PATTERN_DASH_LENGTH_PX = 50;
+    private static final int PATTERN_GAP_LENGTH_PX = 10;
+    private static final Dot DOT = new Dot();
+    private static final Dash DASH = new Dash(PATTERN_DASH_LENGTH_PX);
+    private static final Gap GAP = new Gap(PATTERN_GAP_LENGTH_PX);
+    private static final List<PatternItem> PATTERN_DOTTED = Arrays.asList(DOT, GAP);
+    private static final List<PatternItem> PATTERN_DASHED = Arrays.asList(DASH, GAP);
+    private static final List<PatternItem> PATTERN_MIXED = Arrays.asList(DOT, GAP, DOT, DASH, GAP);
 
     private Polygon mMutablePolygon;
-
-    private Polygon mClickablePolygonWithHoles;
-
-    private SeekBar mColorBar;
-
-    private SeekBar mAlphaBar;
-
-    private SeekBar mWidthBar;
-
+    private SeekBar mFillHueBar;
+    private SeekBar mFillAlphaBar;
+    private SeekBar mStrokeWidthBar;
+    private SeekBar mStrokeHueBar;
+    private SeekBar mStrokeAlphaBar;
+    private Spinner mStrokeJointTypeSpinner;
+    private Spinner mStrokePatternSpinner;
     private CheckBox mClickabilityCheckbox;
+
+    // These are the options for polygon stroke joints and patterns. We use their
+    // string resource IDs as identifiers.
+
+    private static final int[] JOINT_TYPE_NAME_RESOURCE_IDS = {
+            R.string.joint_type_default, // Default
+            R.string.joint_type_bevel,
+            R.string.joint_type_round,
+    };
+
+    private static final int[] PATTERN_TYPE_NAME_RESOURCE_IDS = {
+            R.string.pattern_solid, // Default
+            R.string.pattern_dashed,
+            R.string.pattern_dotted,
+            R.string.pattern_mixed,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.polygon_demo);
 
-        mColorBar = (SeekBar) findViewById(R.id.hueSeekBar);
-        mColorBar.setMax(HUE_MAX);
-        mColorBar.setProgress(0);
+        mFillHueBar = (SeekBar) findViewById(R.id.fillHueSeekBar);
+        mFillHueBar.setMax(MAX_HUE_DEGREES);
+        mFillHueBar.setProgress(MAX_HUE_DEGREES / 2);
 
-        mAlphaBar = (SeekBar) findViewById(R.id.alphaSeekBar);
-        mAlphaBar.setMax(ALPHA_MAX);
-        mAlphaBar.setProgress(127);
+        mFillAlphaBar = (SeekBar) findViewById(R.id.fillAlphaSeekBar);
+        mFillAlphaBar.setMax(MAX_ALPHA);
+        mFillAlphaBar.setProgress(MAX_ALPHA / 2);
 
-        mWidthBar = (SeekBar) findViewById(R.id.widthSeekBar);
-        mWidthBar.setMax(WIDTH_MAX);
-        mWidthBar.setProgress(10);
+        mStrokeWidthBar = (SeekBar) findViewById(R.id.strokeWidthSeekBar);
+        mStrokeWidthBar.setMax(MAX_WIDTH_PX);
+        mStrokeWidthBar.setProgress(MAX_WIDTH_PX / 3);
+
+        mStrokeHueBar = (SeekBar) findViewById(R.id.strokeHueSeekBar);
+        mStrokeHueBar.setMax(MAX_HUE_DEGREES);
+        mStrokeHueBar.setProgress(0);
+
+        mStrokeAlphaBar = (SeekBar) findViewById(R.id.strokeAlphaSeekBar);
+        mStrokeAlphaBar.setMax(MAX_ALPHA);
+        mStrokeAlphaBar.setProgress(MAX_ALPHA);
+
+        mStrokeJointTypeSpinner = (Spinner) findViewById(R.id.strokeJointTypeSpinner);
+        mStrokeJointTypeSpinner.setAdapter(new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item,
+                getResourceStrings(JOINT_TYPE_NAME_RESOURCE_IDS)));
+
+        mStrokePatternSpinner = (Spinner) findViewById(R.id.strokePatternSpinner);
+        mStrokePatternSpinner.setAdapter(new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item,
+                getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
         mClickabilityCheckbox = (CheckBox) findViewById(R.id.toggleClickability);
 
@@ -85,55 +132,53 @@ public class PolygonDemoActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
     }
 
+    private String[] getResourceStrings(int[] resourceIds) {
+        String[] strings = new String[resourceIds.length];
+        for (int i = 0; i < resourceIds.length; i++) {
+            strings[i] = getString(resourceIds[i]);
+        }
+        return strings;
+    }
+
     @Override
     public void onMapReady(GoogleMap map) {
         // Override the default content description on the view, for accessibility mode.
-        // Ideally this string would be localised.
-        map.setContentDescription("Google Map with polygons.");
+        map.setContentDescription(getString(R.string.polygon_demo_description));
+
+        int fillColorArgb = Color.HSVToColor(
+                mFillAlphaBar.getProgress(), new float[]{mFillHueBar.getProgress(), 1, 1});
+        int strokeColorArgb = Color.HSVToColor(
+                mStrokeAlphaBar.getProgress(), new float[]{mStrokeHueBar.getProgress(), 1, 1});
 
         // Create a rectangle with two rectangular holes.
-        mClickablePolygonWithHoles = map.addPolygon(new PolygonOptions()
-                .addAll(createRectangle(new LatLng(-20, 130), 5, 5))
+        mMutablePolygon = map.addPolygon(new PolygonOptions()
+                .addAll(createRectangle(CENTER, 5, 5))
                 .addHole(createRectangle(new LatLng(-22, 128), 1, 1))
                 .addHole(createRectangle(new LatLng(-18, 133), 0.5, 1.5))
-                .fillColor(Color.CYAN)
-                .strokeColor(Color.BLUE)
-                .strokeWidth(5)
+                .fillColor(fillColorArgb)
+                .strokeColor(strokeColorArgb)
+                .strokeWidth(mStrokeWidthBar.getProgress())
                 .clickable(mClickabilityCheckbox.isChecked()));
 
-        // Create a rectangle centered at Sydney.
-        PolygonOptions options = new PolygonOptions()
-                .addAll(createRectangle(SYDNEY, 5, 8))
-                .clickable(mClickabilityCheckbox.isChecked());
+        mFillHueBar.setOnSeekBarChangeListener(this);
+        mFillAlphaBar.setOnSeekBarChangeListener(this);
 
-        int fillColor = Color.HSVToColor(
-                mAlphaBar.getProgress(), new float[]{mColorBar.getProgress(), 1, 1});
-        mMutablePolygon = map.addPolygon(options
-                .strokeWidth(mWidthBar.getProgress())
-                .strokeColor(Color.BLACK)
-                .fillColor(fillColor));
+        mStrokeWidthBar.setOnSeekBarChangeListener(this);
+        mStrokeHueBar.setOnSeekBarChangeListener(this);
+        mStrokeAlphaBar.setOnSeekBarChangeListener(this);
 
-        // Create another polygon that overlaps the previous two.
-        // Clickability defaults to false, so this one won't accept clicks.
-        map.addPolygon(new PolygonOptions()
-                .addAll(createRectangle(new LatLng(-27, 140), 10, 7))
-                .fillColor(Color.WHITE)
-                .strokeColor(Color.BLACK));
-
-        mColorBar.setOnSeekBarChangeListener(this);
-        mAlphaBar.setOnSeekBarChangeListener(this);
-        mWidthBar.setOnSeekBarChangeListener(this);
+        mStrokeJointTypeSpinner.setOnItemSelectedListener(this);
+        mStrokePatternSpinner.setOnItemSelectedListener(this);
 
         // Move the map so that it is centered on the mutable polygon.
-        map.moveCamera(CameraUpdateFactory.newLatLng(SYDNEY));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER, 4));
 
         // Add a listener for polygon clicks that changes the clicked polygon's stroke color.
         map.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
-                // Flip the r, g and b components of the polygon's stroke color.
-                int strokeColor = polygon.getStrokeColor() ^ 0x00ffffff;
-                polygon.setStrokeColor(strokeColor);
+                // Flip the red, green and blue components of the polygon's stroke color.
+                polygon.setStrokeColor(polygon.getStrokeColor() ^ 0x00ffffff);
             }
         });
     }
@@ -147,6 +192,50 @@ public class PolygonDemoActivity extends AppCompatActivity
                 new LatLng(center.latitude + halfHeight, center.longitude + halfWidth),
                 new LatLng(center.latitude + halfHeight, center.longitude - halfWidth),
                 new LatLng(center.latitude - halfHeight, center.longitude - halfWidth));
+    }
+
+    private int getSelectedJointType(int pos) {
+        switch (JOINT_TYPE_NAME_RESOURCE_IDS[pos]) {
+            case R.string.joint_type_bevel:
+                return JointType.BEVEL;
+            case R.string.joint_type_round:
+                return JointType.ROUND;
+            case R.string.joint_type_default:
+                return JointType.DEFAULT;
+        }
+        return 0;
+    }
+
+    private List<PatternItem> getSelectedPattern(int pos) {
+        switch (PATTERN_TYPE_NAME_RESOURCE_IDS[pos]) {
+            case R.string.pattern_solid:
+                return null;
+            case R.string.pattern_dotted:
+                return PATTERN_DOTTED;
+            case R.string.pattern_dashed:
+                return PATTERN_DASHED;
+            case R.string.pattern_mixed:
+                return PATTERN_MIXED;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        switch (parent.getId()) {
+            case R.id.strokeJointTypeSpinner:
+                mMutablePolygon.setStrokeJointType(getSelectedJointType(pos));
+                break;
+            case R.id.strokePatternSpinner:
+                mMutablePolygon.setStrokePattern(getSelectedPattern(pos));
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Don't do anything here.
     }
 
     @Override
@@ -165,28 +254,33 @@ public class PolygonDemoActivity extends AppCompatActivity
             return;
         }
 
-        if (seekBar == mColorBar) {
+        if (seekBar == mFillHueBar) {
             mMutablePolygon.setFillColor(Color.HSVToColor(
                     Color.alpha(mMutablePolygon.getFillColor()), new float[]{progress, 1, 1}));
-        } else if (seekBar == mAlphaBar) {
+        } else if (seekBar == mFillAlphaBar) {
             int prevColor = mMutablePolygon.getFillColor();
             mMutablePolygon.setFillColor(Color.argb(
                     progress, Color.red(prevColor), Color.green(prevColor),
                     Color.blue(prevColor)));
-        } else if (seekBar == mWidthBar) {
+        } else if (seekBar == mStrokeHueBar) {
+            mMutablePolygon.setStrokeColor(Color.HSVToColor(
+                    Color.alpha(mMutablePolygon.getStrokeColor()), new float[]{progress, 1, 1}));
+        } else if (seekBar == mStrokeAlphaBar) {
+            int prevColorArgb = mMutablePolygon.getStrokeColor();
+            mMutablePolygon.setStrokeColor(Color.argb(
+                    progress, Color.red(prevColorArgb), Color.green(prevColorArgb),
+                    Color.blue(prevColorArgb)));
+        } else if (seekBar == mStrokeWidthBar) {
             mMutablePolygon.setStrokeWidth(progress);
         }
     }
 
     /**
-     * Toggles the clickability of two polygons based on the state of the View that triggered this
+     * Toggles the clickability of the polygon based on the state of the View that triggered this
      * call.
      * This callback is defined on the CheckBox in the layout for this Activity.
      */
     public void toggleClickability(View view) {
-        if (mClickablePolygonWithHoles != null) {
-            mClickablePolygonWithHoles.setClickable(((CheckBox) view).isChecked());
-        }
         if (mMutablePolygon != null) {
             mMutablePolygon.setClickable(((CheckBox) view).isChecked());
         }

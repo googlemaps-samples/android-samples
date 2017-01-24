@@ -18,12 +18,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/properties_sydney_polyline" />
-
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,9 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
-
             <TextView android:text="@string/hue" />
-
             <SeekBar android:id="@+id/hueSeekBar" />
         </TableRow>
 
@@ -43,9 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
-
             <TextView android:text="@string/alpha" />
-
             <SeekBar android:id="@+id/alphaSeekBar" />
         </TableRow>
 
@@ -53,31 +43,76 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
-
             <TextView android:text="@string/width" />
-
             <SeekBar android:id="@+id/widthSeekBar" />
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <CheckBox
-                android:id="@+id/toggleClickability"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_span="2"
-                android:checked="true"
-                android:onClick="toggleClickability"
-                android:text="@string/clickable" />
-        </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/start_cap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:id="@+id/startCapSpinner"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="@string/end_cap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:id="@+id/endCapSpinner"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/joint_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:id="@+id/jointTypeSpinner"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="@string/pattern"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:id="@+id/patternSpinner"
+            android:spinnerMode="dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/toggleClickability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:onClick="toggleClickability"
+        android:text="@string/clickable" />
 
     <fragment
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>
