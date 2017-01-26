@@ -1,9 +1,6 @@
 Google Maps Android API Sample: Current Place Details
 =====================================================
 
-This sample goes hand in hand with a tutorial for the
-[Google Maps Android API v2](https://developers.google.com/maps/documentation/android-api/current-places-tutorial).
-
 Prerequisites
 --------------
 
