@@ -22,7 +22,7 @@ android {
 
 
 repositories {
-    maven { url "/Users/sarahmaddox/Development/devrelgit-projects/tut-polygons/maps/tutorials/Polygons/app/libs/"}
+    maven { url "/Users/sarahmaddox/Development/devrelgit-projects/tut-polygon/maps/tutorials/Polygons/app/libs/"}
 }
 
 dependencies {

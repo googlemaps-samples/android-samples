@@ -134,7 +134,7 @@ public class PolygonActivity extends AppCompatActivity implements
                 // Use a custom bitmap as the cap at one end of the line.
                 polyline.setEndCap(
                         new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow_black_48dp),
-                                16));
+                                10));
                 break;
             case "B":
                 // Use a round cap at the end of the line.
