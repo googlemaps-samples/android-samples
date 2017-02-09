@@ -108,7 +108,7 @@ public class CircleDemoActivity extends AppCompatActivity
         private double mRadiusMeters;
 
         public DraggableCircle(LatLng center, double radiusMeters) {
-            this.mRadiusMeters = radiusMeters;
+            mRadiusMeters = radiusMeters;
             mCenterMarker = mMap.addMarker(new MarkerOptions()
                     .position(center)
                     .draggable(true));
@@ -133,7 +133,8 @@ public class CircleDemoActivity extends AppCompatActivity
                 return true;
             }
             if (marker.equals(mRadiusMarker)) {
-                mRadiusMeters = toRadiusMeters(mCenterMarker.getPosition(), mRadiusMarker.getPosition());
+                mRadiusMeters =
+                        toRadiusMeters(mCenterMarker.getPosition(), mRadiusMarker.getPosition());
                 mCircle.setRadius(mRadiusMeters);
                 return true;
             }
@@ -295,15 +296,17 @@ public class CircleDemoActivity extends AppCompatActivity
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (seekBar == mFillHueBar) {
-            mFillColorArgb = Color.HSVToColor(Color.alpha(mFillColorArgb), new float[]{progress, 1, 1});
+            mFillColorArgb =
+                    Color.HSVToColor(Color.alpha(mFillColorArgb), new float[]{progress, 1, 1});
         } else if (seekBar == mFillAlphaBar) {
-            mFillColorArgb = Color.argb(progress,
-                    Color.red(mFillColorArgb), Color.green(mFillColorArgb), Color.blue(mFillColorArgb));
+            mFillColorArgb = Color.argb(progress, Color.red(mFillColorArgb),
+                    Color.green(mFillColorArgb), Color.blue(mFillColorArgb));
         } else if (seekBar == mStrokeHueBar) {
-            mStrokeColorArgb = Color.HSVToColor(Color.alpha(mStrokeColorArgb), new float[]{progress, 1, 1});
+            mStrokeColorArgb =
+                    Color.HSVToColor(Color.alpha(mStrokeColorArgb), new float[]{progress, 1, 1});
         } else if (seekBar == mStrokeAlphaBar) {
-            mStrokeColorArgb = Color.argb(progress,
-                    Color.red(mStrokeColorArgb), Color.green(mStrokeColorArgb), Color.blue(mStrokeColorArgb));
+            mStrokeColorArgb = Color.argb(progress, Color.red(mStrokeColorArgb),
+                    Color.green(mStrokeColorArgb), Color.blue(mStrokeColorArgb));
         }
 
         for (DraggableCircle draggableCircle : mCircles) {
