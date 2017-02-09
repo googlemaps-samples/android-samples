@@ -57,16 +57,16 @@ public class PolylineDemoActivity extends AppCompatActivity
         implements OnSeekBarChangeListener, OnItemSelectedListener, OnMapReadyCallback {
 
     // City locations for mutable polyline.
-    private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
     private static final LatLng ADELAIDE = new LatLng(-34.92873, 138.59995);
-    private static final LatLng PERTH = new LatLng(-31.95285, 115.85734);
     private static final LatLng DARWIN = new LatLng(-12.4258647, 130.7932231);
+    private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
+    private static final LatLng PERTH = new LatLng(-31.95285, 115.85734);
 
     // Airport locations for geodesic polyline.
-    private static final LatLng LHR = new LatLng(51.471547, -0.460052);
-    private static final LatLng LAX = new LatLng(33.936524, -118.377686);
-    private static final LatLng JFK = new LatLng(40.641051, -73.777485);
     private static final LatLng AKL = new LatLng(-37.006254, 174.783018);
+    private static final LatLng JFK = new LatLng(40.641051, -73.777485);
+    private static final LatLng LAX = new LatLng(33.936524, -118.377686);
+    private static final LatLng LHR = new LatLng(51.471547, -0.460052);
 
     private static final int MAX_WIDTH_PX = 100;
     private static final int MAX_HUE_DEGREES = 360;
@@ -174,7 +174,7 @@ public class PolylineDemoActivity extends AppCompatActivity
         map.setContentDescription(getString(R.string.polyline_demo_description));
 
         // A geodesic polyline that goes around the world.
-        map.addPolyline((new PolylineOptions())
+        map.addPolyline(new PolylineOptions()
                 .add(LHR, AKL, LAX, JFK, LHR)
                 .width(INITIAL_STROKE_WIDTH_PX)
                 .color(Color.BLUE)
@@ -184,7 +184,7 @@ public class PolylineDemoActivity extends AppCompatActivity
         // A simple polyline across Australia. This polyline will be mutable.
         int color = Color.HSVToColor(
                 mAlphaBar.getProgress(), new float[]{mHueBar.getProgress(), 1, 1});
-        mMutablePolyline = map.addPolyline((new PolylineOptions())
+        mMutablePolyline = map.addPolyline(new PolylineOptions()
                 .color(color)
                 .width(mWidthBar.getProgress())
                 .clickable(mClickabilityCheckbox.isChecked())
