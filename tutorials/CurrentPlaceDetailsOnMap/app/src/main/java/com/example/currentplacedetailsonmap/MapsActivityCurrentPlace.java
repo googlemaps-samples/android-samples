@@ -1,22 +1,25 @@
 package com.example.currentplacedetailsonmap;
 
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
@@ -31,28 +34,19 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
- * An activity that displays a map showing places around the device's current location.
+ * An activity that displays a map showing the place at the device's current location.
  */
-public class MapsActivityCurrentPlaces extends AppCompatActivity implements
-        OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+public class MapsActivityCurrentPlace extends AppCompatActivity
+        implements OnMapReadyCallback,
+                GoogleApiClient.ConnectionCallbacks,
+                GoogleApiClient.OnConnectionFailedListener {
 
-    private static final String TAG = MapsActivityCurrentPlaces.class.getSimpleName();
+    private static final String TAG = MapsActivityCurrentPlace.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
 
     // The entry point to Google Play services, used by the Places API and Fused Location Provider.
     private GoogleApiClient mGoogleApiClient;
-    // A request object to store parameters for requests to the FusedLocationProviderApi.
-    private LocationRequest mLocationRequest;
-    // The desired interval for location updates. Inexact. Updates may be more or less frequent.
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-    // The fastest rate for active location updates. Exact. Updates will never be more frequent
-    // than this value.
-    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS =
-            UPDATE_INTERVAL_IN_MILLISECONDS / 2;
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
@@ -61,12 +55,20 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean mLocationPermissionGranted;
 
-    // The geographical location where the device is currently located.
-    private Location mCurrentLocation;
+    // The geographical location where the device is currently located. That is, the last-known
+    // location retrieved by the Fused Location Provider.
+    private Location mLastKnownLocation;
 
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+
+    // Used for selecting the current place.
+    private final int mMaxEntries = 5;
+    private String[] mLikelyPlaceNames = new String[mMaxEntries];
+    private String[] mLikelyPlaceAddresses = new String[mMaxEntries];
+    private String[] mLikelyPlaceAttributions = new String[mMaxEntries];
+    private LatLng[] mLikelyPlaceLatLngs = new LatLng[mMaxEntries];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,39 +76,24 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
 
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
-            mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
+
         // Build the Play services client for use by the Fused Location Provider and the Places API.
-        buildGoogleApiClient();
+        // Use the addApi() method to request the Google Places API and the Fused Location Provider.
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
         mGoogleApiClient.connect();
-    }
-
-    /**
-     * Get the device location and nearby places when the activity is restored after a pause.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mGoogleApiClient.isConnected()) {
-            getDeviceLocation();
-        }
-        updateMarkers();
-    }
-
-    /**
-     * Stop location updates when the activity is no longer in focus, to reduce battery consumption.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(
-                    mGoogleApiClient, this);
-        }
     }
 
     /**
@@ -116,18 +103,16 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
     protected void onSaveInstanceState(Bundle outState) {
         if (mMap != null) {
             outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
-            outState.putParcelable(KEY_LOCATION, mCurrentLocation);
+            outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
             super.onSaveInstanceState(outState);
         }
     }
 
     /**
-     * Gets the device's current location and builds the map
-     * when the Google Play services client is successfully connected.
+     * Builds the map when the Google Play services client is successfully connected.
      */
     @Override
     public void onConnected(Bundle connectionHint) {
-        getDeviceLocation();
         // Build the map.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -154,12 +139,27 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
     }
 
     /**
-     * Handles the callback when location changes.
+     * Sets up the options menu.
+     * @param menu The options menu.
+     * @return Boolean.
      */
     @Override
-    public void onLocationChanged(Location location) {
-        mCurrentLocation = location;
-        updateMarkers();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.current_place_menu, menu);
+        return true;
+    }
+
+    /**
+     * Handles a click on the menu option to get a place.
+     * @param item The menu item to handle.
+     * @return Boolean.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.option_get_place) {
+            showCurrentPlace();
+        }
+        return true;
     }
 
     /**
@@ -169,11 +169,6 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
-
-        // Turn on the My Location layer and the related control on the map.
-        updateLocationUI();
-        // Add markers for nearby places.
-        updateMarkers();
 
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
@@ -188,7 +183,8 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
             @Override
             public View getInfoContents(Marker marker) {
                 // Inflate the layouts for the info window, title and snippet.
-                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
+                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
+                        (FrameLayout)findViewById(R.id.map), false);
 
                 TextView title = ((TextView) infoWindow.findViewById(R.id.title));
                 title.setText(marker.getTitle());
@@ -199,65 +195,16 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
                 return infoWindow;
             }
         });
-        /*
-         * Set the map's camera position to the current location of the device.
-         * If the previous state was saved, set the position to the saved state.
-         * If the current location is unknown, use a default position and zoom value.
-         */
-        if (mCameraPosition != null) {
-            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
-        } else if (mCurrentLocation != null) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(mCurrentLocation.getLatitude(),
-                            mCurrentLocation.getLongitude()), DEFAULT_ZOOM));
-        } else {
-            Log.d(TAG, "Current location is null. Using defaults.");
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        }
+
+        // Turn on the My Location layer and the related control on the map.
+        updateLocationUI();
+
+        // Get the current location of the device and set the position of the map.
+        getDeviceLocation();
     }
 
     /**
-     * Builds a GoogleApiClient.
-     * Uses the addApi() method to request the Google Places API and the Fused Location Provider.
-     */
-    private synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */,
-                        this /* OnConnectionFailedListener */)
-                .addConnectionCallbacks(this)
-                .addApi(LocationServices.API)
-                .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
-                .build();
-        createLocationRequest();
-    }
-
-    /**
-     * Sets up the location request.
-     */
-    private void createLocationRequest() {
-        mLocationRequest = new LocationRequest();
-
-        /*
-         * Sets the desired interval for active location updates. This interval is
-         * inexact. You may not receive updates at all if no location sources are available, or
-         * you may receive them slower than requested. You may also receive updates faster than
-         * requested if other applications are requesting location at a faster interval.
-         */
-        mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-
-        /*
-         * Sets the fastest rate for active location updates. This interval is exact, and your
-         * application will never receive updates faster than this value.
-         */
-        mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
-
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
-    /**
-     * Gets the current location of the device and starts the location update notifications.
+     * Gets the current location of the device, and positions the map's camera.
      */
     private void getDeviceLocation() {
         /*
@@ -277,12 +224,23 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
         /*
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
-         * Also request regular updates about the device location.
          */
         if (mLocationPermissionGranted) {
-            mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
-                    mLocationRequest, this);
+            mLastKnownLocation = LocationServices.FusedLocationApi
+                    .getLastLocation(mGoogleApiClient);
+        }
+
+        // Set the map's camera position to the current location of the device.
+        if (mCameraPosition != null) {
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(mCameraPosition));
+        } else if (mLastKnownLocation != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(mLastKnownLocation.getLatitude(),
+                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+        } else {
+            Log.d(TAG, "Current location is null. Using defaults.");
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
         }
     }
 
@@ -307,56 +265,114 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
     }
 
     /**
-     * Adds markers for places nearby the device and turns the My Location feature on or off,
-     * provided location permission has been granted.
+     * Prompts the user to select the current place from a list of likely places, and shows the
+     * current place on the map - provided the user has granted location permission.
      */
-    private void updateMarkers() {
+    private void showCurrentPlace() {
         if (mMap == null) {
             return;
         }
 
         if (mLocationPermissionGranted) {
-            // Get the businesses and other points of interest located
-            // nearest to the device's current location.
+            // Get the likely places - that is, the businesses and other points of interest that
+            // are the best match for the device's current location.
             @SuppressWarnings("MissingPermission")
             PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
                     .getCurrentPlace(mGoogleApiClient, null);
             result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
                 @Override
                 public void onResult(@NonNull PlaceLikelihoodBuffer likelyPlaces) {
+                    int i = 0;
+                    mLikelyPlaceNames = new String[mMaxEntries];
+                    mLikelyPlaceAddresses = new String[mMaxEntries];
+                    mLikelyPlaceAttributions = new String[mMaxEntries];
+                    mLikelyPlaceLatLngs = new LatLng[mMaxEntries];
                     for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                        // Add a marker for each place near the device's current location, with an
-                        // info window showing place information.
-                        String attributions = (String) placeLikelihood.getPlace().getAttributions();
-                        String snippet = (String) placeLikelihood.getPlace().getAddress();
-                        if (attributions != null) {
-                            snippet = snippet + "\n" + attributions;
-                        }
+                        // Build a list of likely places to show the user. Max 5.
+                        mLikelyPlaceNames[i] = (String) placeLikelihood.getPlace().getName();
+                        mLikelyPlaceAddresses[i] = (String) placeLikelihood.getPlace().getAddress();
+                        mLikelyPlaceAttributions[i] = (String) placeLikelihood.getPlace()
+                                .getAttributions();
+                        mLikelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
-                        mMap.addMarker(new MarkerOptions()
-                                .position(placeLikelihood.getPlace().getLatLng())
-                                .title((String) placeLikelihood.getPlace().getName())
-                                .snippet(snippet));
+                        i++;
+                        if (i > (mMaxEntries - 1)) {
+                            break;
+                        }
                     }
-                    // Release the place likelihood buffer.
+                    // Release the place likelihood buffer, to avoid memory leaks.
                     likelyPlaces.release();
+
+                    // Show a dialog offering the user the list of likely places, and add a
+                    // marker at the selected place.
+                    openPlacesDialog();
                 }
             });
         } else {
+            // Add a default marker, because the user hasn't selected a place.
             mMap.addMarker(new MarkerOptions()
-                    .position(mDefaultLocation)
                     .title(getString(R.string.default_info_title))
+                    .position(mDefaultLocation)
                     .snippet(getString(R.string.default_info_snippet)));
         }
     }
 
     /**
+     * Displays a form allowing the user to select a place from a list of likely places.
+     */
+    private void openPlacesDialog() {
+        // Ask the user to choose the place where they are now.
+        DialogInterface.OnClickListener listener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The "which" argument contains the position of the selected item.
+                        LatLng markerLatLng = mLikelyPlaceLatLngs[which];
+                        String markerSnippet = mLikelyPlaceAddresses[which];
+                        if (mLikelyPlaceAttributions[which] != null) {
+                            markerSnippet = markerSnippet + "\n" + mLikelyPlaceAttributions[which];
+                        }
+                        // Add a marker for the selected place, with an info window
+                        // showing information about that place.
+                        mMap.addMarker(new MarkerOptions()
+                                .title(mLikelyPlaceNames[which])
+                                .position(markerLatLng)
+                                .snippet(markerSnippet));
+
+                        // Position the map's camera at the location of the marker.
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
+                                DEFAULT_ZOOM));
+                    }
+                };
+
+        // Display the dialog.
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.pick_place)
+                .setItems(mLikelyPlaceNames, listener)
+                .show();
+    }
+
+    /**
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
-    @SuppressWarnings("MissingPermission")
     private void updateLocationUI() {
         if (mMap == null) {
             return;
+        }
+
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
 
         if (mLocationPermissionGranted) {
@@ -365,7 +381,7 @@ public class MapsActivityCurrentPlaces extends AppCompatActivity implements
         } else {
             mMap.setMyLocationEnabled(false);
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
-            mCurrentLocation = null;
+            mLastKnownLocation = null;
         }
     }
 }
