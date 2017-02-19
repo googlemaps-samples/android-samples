@@ -1,7 +1,7 @@
 Google Maps Android API Sample: Adding a Map with a Marker
 ==========================================================
 
-This sample goes hand in hand with a tutorial for the Google Maps Android API v2:
+This sample goes hand in hand with a tutorial for the Google Maps Android API:
 [Adding a Map with a Marker](https://developers.google.com/maps/documentation/android-api/map-with-marker).
 
 Prerequisites
