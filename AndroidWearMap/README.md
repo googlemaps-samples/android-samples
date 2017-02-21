@@ -29,8 +29,8 @@ If prompted for a gradle configuration accept the default settings.
 
 Alternatively use the "gradlew build" command to build the project directly.
 
-Don't forget to add your API key to the AndroidManifest.xml.
-(See [https://developers.google.com/maps/documentation/android/start](https://developers.google.com/maps/documentation/android/start#get_an_android_certificate_and_the_google_maps_api_key))
+Add your API key to the `AndroidManifest.xml` file.
+See the [quick guide to getting an API key](https://developers.google.com/maps/documentation/android-api/signup).
 
 Support
 -------
