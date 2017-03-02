@@ -129,6 +129,9 @@
     <string name="stroke_width">Stroke Width</string>
     <string name="swipe">\u2190 Swipe \u2192</string>
     <string name="switch_image">Switch Image</string>
+    <string name="tags_demo_label">Tags</string>
+    <string name="tags_demo_description">Demonstrates how to get and set tags on API objects.</string>
+    <string name="tags_demo_map_description">Map with a circle, ground overlay, marker, polygon and polyline.</string>
     <string name="tap_instructions">Tap or long press on the map</string>
     <string name="terrain">Terrain</string>
     <string name="tile_coordinate_demo_label">Tile Coordinate Overlay</string>
