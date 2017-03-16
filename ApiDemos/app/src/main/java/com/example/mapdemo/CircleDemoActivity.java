@@ -252,6 +252,11 @@ public class CircleDemoActivity extends AppCompatActivity
                 circle.setStrokeColor(circle.getStrokeColor() ^ 0x00ffffff);
             }
         });
+
+        List<PatternItem> pattern = getSelectedPattern(mStrokePatternSpinner.getSelectedItemPosition());
+        for (DraggableCircle draggableCircle : mCircles) {
+            draggableCircle.setStrokePattern(pattern);
+        }
     }
 
     private List<PatternItem> getSelectedPattern(int pos) {

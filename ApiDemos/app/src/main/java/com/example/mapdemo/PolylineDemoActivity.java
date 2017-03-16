@@ -170,6 +170,7 @@ public class PolylineDemoActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
+
         // Override the default content description on the view, for accessibility mode.
         map.setContentDescription(getString(R.string.polyline_demo_description));
 
@@ -198,6 +199,11 @@ public class PolylineDemoActivity extends AppCompatActivity
         mEndCapSpinner.setOnItemSelectedListener(this);
         mJointTypeSpinner.setOnItemSelectedListener(this);
         mPatternSpinner.setOnItemSelectedListener(this);
+
+        mMutablePolyline.setStartCap(getSelectedCap(mStartCapSpinner.getSelectedItemPosition()));
+        mMutablePolyline.setEndCap(getSelectedCap(mEndCapSpinner.getSelectedItemPosition()));
+        mMutablePolyline.setJointType(getSelectedJointType(mJointTypeSpinner.getSelectedItemPosition()));
+        mMutablePolyline.setPattern(getSelectedPattern(mPatternSpinner.getSelectedItemPosition()));
 
         // Move the map so that it is centered on the mutable polyline.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(MELBOURNE, 3));

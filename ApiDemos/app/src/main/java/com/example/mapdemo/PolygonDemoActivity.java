@@ -170,6 +170,9 @@ public class PolygonDemoActivity extends AppCompatActivity
         mStrokeJointTypeSpinner.setOnItemSelectedListener(this);
         mStrokePatternSpinner.setOnItemSelectedListener(this);
 
+        mMutablePolygon.setStrokeJointType(getSelectedJointType(mStrokeJointTypeSpinner.getSelectedItemPosition()));
+        mMutablePolygon.setStrokePattern(getSelectedPattern(mStrokePatternSpinner.getSelectedItemPosition()));
+
         // Move the map so that it is centered on the mutable polygon.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER, 4));
 
