@@ -58,9 +58,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LegalInfoActivity"
-            android:label="@string/legal_info"/>
-        <activity
             android:name=".BasicMapDemoActivity"
             android:label="@string/basic_map_demo_label"/>
         <activity
