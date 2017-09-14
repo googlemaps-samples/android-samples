@@ -18,11 +18,13 @@ package com.example.mapdemo;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +41,7 @@ import android.widget.Toast;
 public class MyLocationDemoActivity extends AppCompatActivity
         implements
         OnMyLocationButtonClickListener,
+        OnMyLocationClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -72,6 +75,7 @@ public class MyLocationDemoActivity extends AppCompatActivity
         mMap = map;
 
         mMap.setOnMyLocationButtonClickListener(this);
+        mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
     }
 
@@ -98,6 +102,10 @@ public class MyLocationDemoActivity extends AppCompatActivity
         return false;
     }
 
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
