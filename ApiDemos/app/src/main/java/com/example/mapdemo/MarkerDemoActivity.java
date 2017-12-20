@@ -78,6 +78,8 @@ public class MarkerDemoActivity extends AppCompatActivity implements
 
     private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
 
+    private static final LatLng DARWIN = new LatLng(-12.4634, 130.8456);
+
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
 
     private static final LatLng ADELAIDE = new LatLng(-34.92873, 138.59995);
@@ -133,6 +135,14 @@ public class MarkerDemoActivity extends AppCompatActivity implements
                 badge = R.drawable.badge_victoria;
             } else if (marker.equals(mPerth)) {
                 badge = R.drawable.badge_wa;
+            } else if (marker.equals(mDarwin1)) {
+                badge = R.drawable.badge_nt;
+            } else if (marker.equals(mDarwin2)) {
+                badge = R.drawable.badge_nt;
+            } else if (marker.equals(mDarwin3)) {
+                badge = R.drawable.badge_nt;
+            } else if (marker.equals(mDarwin4)) {
+                badge = R.drawable.badge_nt;
             } else {
                 // Passing 0 to setImageResource will clear the image view.
                 badge = 0;
@@ -174,6 +184,12 @@ public class MarkerDemoActivity extends AppCompatActivity implements
     private Marker mAdelaide;
 
     private Marker mMelbourne;
+
+    private Marker mDarwin1;
+    private Marker mDarwin2;
+    private Marker mDarwin3;
+    private Marker mDarwin4;
+
 
     /**
      * Keeps track of the last selected marker (though it may no longer be selected).  This is
@@ -253,6 +269,7 @@ public class MarkerDemoActivity extends AppCompatActivity implements
                 .include(ADELAIDE)
                 .include(BRISBANE)
                 .include(MELBOURNE)
+                .include(DARWIN)
                 .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
     }
@@ -279,6 +296,29 @@ public class MarkerDemoActivity extends AppCompatActivity implements
                 .title("Melbourne")
                 .snippet("Population: 4,137,400")
                 .draggable(true));
+
+        // Place four markers on top of each other with differing z-indexes.
+        mDarwin1 = mMap.addMarker(new MarkerOptions()
+                .position(DARWIN)
+                .title("Darwin Marker 1")
+                .snippet("z-index 1")
+                .zIndex(1));
+        mDarwin2 = mMap.addMarker(new MarkerOptions()
+                .position(DARWIN)
+                .title("Darwin Marker 2")
+                .snippet("z-index 2")
+                .zIndex(2));
+        mDarwin3 = mMap.addMarker(new MarkerOptions()
+                .position(DARWIN)
+                .title("Darwin Marker 3")
+                .snippet("z-index 3")
+                .zIndex(3));
+        mDarwin4 = mMap.addMarker(new MarkerOptions()
+                .position(DARWIN)
+                .title("Darwin Marker 4")
+                .snippet("z-index 4")
+                .zIndex(4));
+
 
         // A few more markers for good measure.
         mPerth = mMap.addMarker(new MarkerOptions()
