@@ -21,6 +21,9 @@ package com.example.kotlindemos
  */
 class DemoDetailsList {
     companion object {
-        val DEMOS = listOf<DemoDetails>()
+        val DEMOS = listOf<DemoDetails>(
+                DemoDetails(R.string.markers_demo_label, R.string.markers_demo_description,
+                        MarkerDemoActivity::class.java)
+        )
     }
 }

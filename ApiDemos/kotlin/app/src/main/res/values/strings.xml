@@ -18,4 +18,19 @@
     <string name="demo_title">Google Maps API Demos</string>
     <string name="no_demos">No demos</string>
     <string name="play_services_not_installed">Google Play services is not installed on this device.</string>
+
+    <!-- Markers Demo -->
+    <string name="custom_info_contents">Custom Info Contents</string>
+    <string name="custom_info_window">Custom Info Window</string>
+    <string name="default_info_window">Default Info Window</string>
+    <string name="drag_melbourne">Drag Melbourne</string>
+    <string name="clear_map">Clear</string>
+    <string name="flat">Flat</string>
+    <string name="reset_map">Reset</string>
+    <string name="map_not_ready">Map is not ready</string>
+    <string name="markers_demo_description">Demonstrates how to add Markers to a map.</string>
+    <string name="markers_demo_label">Markers</string>
+    <string name="on_marker_drag_start">Started dragging marker</string>
+    <string name="on_marker_drag_end">Marker stopped dragging</string>
+    <string name="rotation">Rotation</string>
 </resources>
