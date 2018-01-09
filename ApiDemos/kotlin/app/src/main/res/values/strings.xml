@@ -19,6 +19,23 @@
     <string name="no_demos">No demos</string>
     <string name="play_services_not_installed">Google Play services is not installed on this device.</string>
 
+    <!-- Camera Demo -->
+    <string name="animate">Animate</string>
+    <string name="camera_demo_description">Demonstrates Camera Functions</string>
+    <string name="camera_demo_label">Camera</string>
+    <string name="down_arrow">\u2193</string>
+    <string name="duration">Custom Duration</string>
+    <string name="go_to_bondi">Go to Bondi</string>
+    <string name="go_to_sydney">Go to Sydney</string>
+    <string name="left_arrow">\u2190</string>
+    <string name="right_arrow">\u2192</string>
+    <string name="stop_animation">\u25A0</string>
+    <string name="tilt_less">\u2193</string>
+    <string name="tilt_more">\u2191</string>
+    <string name="up_arrow">\u2191</string>
+    <string name="zoom_in">+</string>
+    <string name="zoom_out">-</string>
+
     <!-- Markers Demo -->
     <string name="custom_info_contents">Custom Info Contents</string>
     <string name="custom_info_window">Custom Info Window</string>
