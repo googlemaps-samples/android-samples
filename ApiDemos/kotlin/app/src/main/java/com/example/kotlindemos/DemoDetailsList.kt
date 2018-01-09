@@ -22,9 +22,10 @@ package com.example.kotlindemos
 class DemoDetailsList {
     companion object {
         val DEMOS = listOf<DemoDetails>(
+                DemoDetails(R.string.camera_demo_label, R.string.camera_demo_description,
+                        CameraDemoActivity::class.java),
                 DemoDetails(R.string.markers_demo_label, R.string.markers_demo_description,
                         MarkerDemoActivity::class.java)
         )
-
     }
 }
