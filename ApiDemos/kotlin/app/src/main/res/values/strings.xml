@@ -23,4 +23,29 @@
     <string name="basic_demo_label">Basic Map</string>
     <string name="basic_demo_details">Launches a map with marker pointing at Sydney</string>
 
+    <!-- Circle Demo -->
+    <string name="circle_demo_label">Circle Demo</string>
+    <string name="circle_demo_details">Demonstrate how to add circles to a map</string>
+    <string name="properties_circle">Properties for Circle(s)</string>
+
+    <!-- Polygon Demo -->
+    <string name="clickable">Clickable</string>
+    <string name="fill_alpha">Fill Alpha</string>
+    <string name="fill_hue">Fill Hue</string>
+    <string name="joint_type_bevel">Bevel</string>
+    <string name="joint_type_default">Default</string>
+    <string name="joint_type_round">Round</string>
+    <string name="pattern_dashed">Dashed</string>
+    <string name="pattern_dotted">Dotted</string>
+    <string name="pattern_mixed">Mixed</string>
+    <string name="pattern_solid">Solid</string>
+    <string name="polygon_demo_description">Demonstrates how to add Polygons to a map.</string>
+    <string name="polygon_demo_details">Demonstrates how to add Polygons to a map</string>
+    <string name="polygon_demo_label">Polygons</string>
+    <string name="properties_australia_polygon">Properties for Polygon over Australia</string>
+    <string name="stroke_alpha">Stroke Alpha</string>
+    <string name="stroke_hue">Stroke Hue</string>
+    <string name="stroke_joint_type">Stroke Joint Type</string>
+    <string name="stroke_pattern">Stroke Pattern</string>
+    <string name="stroke_width">Stroke Width</string>
 </resources>
