@@ -36,6 +36,11 @@
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
 
+    <!-- Tags Demo -->
+    <string name="tags_demo_label">Tags</string>
+    <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>
+    <string name="tags_demo_map_description">Map with a circle, ground overlay, marker, polygon and polyline.</string>
+
     <!-- Polygon Demo -->
     <string name="clickable">Clickable</string>
     <string name="fill_alpha">Fill Alpha</string>
@@ -56,7 +61,6 @@
     <string name="stroke_joint_type">Stroke Joint Type</string>
     <string name="stroke_pattern">Stroke Pattern</string>
     <string name="stroke_width">Stroke Width</string>
-
 
     <!-- Markers Demo -->
     <string name="custom_info_contents">Custom Info Contents</string>
