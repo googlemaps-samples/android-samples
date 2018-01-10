@@ -23,7 +23,9 @@ class DemoDetailsList {
     companion object {
         val DEMOS = listOf<DemoDetails>(
                 DemoDetails(R.string.basic_demo_label, R.string.basic_demo_details,
-                        BasicMapDemoActivity::class.java)
+                        BasicMapDemoActivity::class.java),
+                DemoDetails(R.string.circle_demo_label, R.string.circle_demo_details,
+                        CircleDemoActivity::class.java)
         )
     }
 }

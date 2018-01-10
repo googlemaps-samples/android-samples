@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     class CustomArrayAdapter(context: Context, demos: List<DemoDetails>) :
             ArrayAdapter<DemoDetails>(context, R.id.title, demos) {
 
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup) : View {
-            val demo : DemoDetails = getItem(position)
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val demo: DemoDetails = getItem(position)
             return (convertView as? FeatureView ?: FeatureView(context)).apply {
                 setTitleId(demo.titleId)
                 setDescriptionId(demo.descriptionId)
