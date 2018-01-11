@@ -28,6 +28,12 @@
     <string name="circle_demo_details">Demonstrate how to add circles to a map</string>
     <string name="properties_circle">Properties for Circle(s)</string>
 
+    <!-- Lite List Demo -->
+    <string name="lite_list_demo_label">Lite List Demo</string>
+    <string name="lite_list_demo_details">Show a list of Lite Map of different locations using RecyclerView with LinearLayoutManager and GridLayoutManager</string>
+    <string name="linear">Linear</string>
+    <string name="grid">Grid</string>
+
     <!-- Marker Close Info Window On Retap Demo -->
     <string name="close_info_window_demo_label">Close Info Window Demo</string>
     <string name="close_info_window_demo_details">Demonstrates how to close the info window when the currently selected marker is retapped.</string>

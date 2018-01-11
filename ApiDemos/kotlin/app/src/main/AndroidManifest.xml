@@ -39,14 +39,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".BasicMapDemoActivity" />
-        <activity android:name=".CloseInfoWindowDemoActivity" />
-        <activity android:name=".UiSettingsDemoActivity" />
-        <activity android:name=".MarkerDemoActivity" />
-        <activity android:name=".PolygonDemoActivity" />
-        <activity android:name=".CameraDemoActivity" />
-        <activity android:name=".BasicMapDemoActivity" />
-        <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
         <activity android:name=".CircleDemoActivity" />
+        <activity android:name=".CloseInfoWindowDemoActivity" />
+        <activity android:name=".LiteListDemoActivity" />
+        <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
+        <activity android:name=".UiSettingsDemoActivity" />
     </application>
 
 </manifest>
