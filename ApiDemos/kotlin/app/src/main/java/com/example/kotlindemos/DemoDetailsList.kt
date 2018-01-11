@@ -29,6 +29,8 @@ class DemoDetailsList {
                         CloseInfoWindowDemoActivity::class.java),
                 DemoDetails(R.string.circle_demo_label, R.string.circle_demo_details,
                         CircleDemoActivity::class.java),
+                DemoDetails(R.string.lite_list_demo_label, R.string.lite_list_demo_details,
+                        LiteListDemoActivity::class.java),
                 DemoDetails(
                         R.string.street_view_panorama_navigation_demo_label,
                         R.string.street_view_panorama_navigation_demo_details,
