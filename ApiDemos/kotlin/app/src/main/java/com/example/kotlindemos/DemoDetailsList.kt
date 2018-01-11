@@ -29,7 +29,9 @@ class DemoDetailsList {
                 DemoDetails(
                         R.string.street_view_panorama_navigation_demo_label,
                         R.string.street_view_panorama_navigation_demo_details,
-                        StreetViewPanoramaNavigationDemoActivity::class.java)
+                        StreetViewPanoramaNavigationDemoActivity::class.java),
+                DemoDetails(R.string.ui_settings_demo_label, R.string.ui_settings_demo_details,
+                        UiSettingsDemoActivity::class.java)
         )
     }
 }

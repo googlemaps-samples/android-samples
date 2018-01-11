@@ -16,6 +16,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kotlindemos">
 
+    <!-- Access to location is needed for the UI Settings Demo -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,6 +38,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BasicMapDemoActivity" />
+        <activity android:name=".UiSettingsDemoActivity" />
+        <activity android:name=".MarkerDemoActivity" />
+        <activity android:name=".PolygonDemoActivity" />
+        <activity android:name=".CameraDemoActivity" />
         <activity android:name=".BasicMapDemoActivity" />
         <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
         <activity android:name=".CircleDemoActivity" />
