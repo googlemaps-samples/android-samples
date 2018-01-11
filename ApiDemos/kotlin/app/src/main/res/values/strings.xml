@@ -58,4 +58,17 @@
     <string name="go_to_san_francisco">Go to San Francisco</string>
     <string name="go_to_santorini">Go to Santorini</string>
 
+    <!-- UI Settings Demo -->
+    <string name="ui_settings_demo_label">UI Settings Demo</string>
+    <string name="ui_settings_demo_details">Demonstrate how to toggle the UI of a map</string>
+    <string name="location">Location permission is required to run the demo</string>
+    <string name="checkbox_zoom">Zoom</string>
+    <string name="checkbox_compass">Compass</string>
+    <string name="checkbox_my_location_layer">My Location</string>
+    <string name="checkbox_level_picker">Level Picker</string>
+    <string name="checkbox_map_toolbar">Map Toolbar</string>
+    <string name="checkbox_zoom_gesture">Zoom Gestures</string>
+    <string name="checkbox_scroll_gesture">Scroll Gestures</string>
+    <string name="checkbox_tilt_gesture">Tilt Gestures</string>
+    <string name="checkbox_rotate_gesture">Rotate Gestures</string>
 </resources>
