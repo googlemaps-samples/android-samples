@@ -22,6 +22,8 @@ package com.example.kotlindemos
 class DemoDetailsList {
     companion object {
         val DEMOS = listOf<DemoDetails>(
+                DemoDetails(R.string.polygon_demo_label, R.string.polygon_demo_details,
+                        PolygonDemoActivity::class.java),
                 DemoDetails(R.string.camera_demo_label, R.string.camera_demo_description,
                         CameraDemoActivity::class.java),
                 DemoDetails(R.string.markers_demo_label, R.string.markers_demo_description,

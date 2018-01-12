@@ -36,6 +36,28 @@
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
 
+    <!-- Polygon Demo -->
+    <string name="clickable">Clickable</string>
+    <string name="fill_alpha">Fill Alpha</string>
+    <string name="fill_hue">Fill Hue</string>
+    <string name="joint_type_bevel">Bevel</string>
+    <string name="joint_type_default">Default</string>
+    <string name="joint_type_round">Round</string>
+    <string name="pattern_dashed">Dashed</string>
+    <string name="pattern_dotted">Dotted</string>
+    <string name="pattern_mixed">Mixed</string>
+    <string name="pattern_solid">Solid</string>
+    <string name="polygon_demo_description">Demonstrates how to add Polygons to a map.</string>
+    <string name="polygon_demo_details">Demonstrates how to add Polygons to a map</string>
+    <string name="polygon_demo_label">Polygons</string>
+    <string name="properties_australia_polygon">Properties for Polygon over Australia</string>
+    <string name="stroke_alpha">Stroke Alpha</string>
+    <string name="stroke_hue">Stroke Hue</string>
+    <string name="stroke_joint_type">Stroke Joint Type</string>
+    <string name="stroke_pattern">Stroke Pattern</string>
+    <string name="stroke_width">Stroke Width</string>
+
+
     <!-- Markers Demo -->
     <string name="custom_info_contents">Custom Info Contents</string>
     <string name="custom_info_window">Custom Info Window</string>
