@@ -25,5 +25,6 @@ class DemoDetailsList {
                 DemoDetails(R.string.markers_demo_label, R.string.markers_demo_description,
                         MarkerDemoActivity::class.java)
         )
+
     }
 }

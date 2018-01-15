@@ -84,6 +84,8 @@ class MarkerDemoActivity :
         OnInfoWindowCloseListener,
         OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
+    private val TAG = MarkerDemoActivity::class.java.name
+
     /** This is ok to be lateinit as it is initialised in onMapReady */
     private lateinit var map: GoogleMap
 
@@ -115,8 +117,6 @@ class MarkerDemoActivity :
     private lateinit var options: RadioGroup
 
     private val random = Random()
-
-    private val TAG = MarkerDemoActivity::class.java.name
 
     /** Demonstrates customizing the info window and/or its contents.  */
     internal inner class CustomInfoWindowAdapter : InfoWindowAdapter {
@@ -187,7 +187,7 @@ class MarkerDemoActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.marker_demo)
 
-        topText = findViewById<TextView>(R.id.top_text)
+        topText = findViewById(R.id.top_text)
 
         rotationBar = findViewById<SeekBar>(R.id.rotationSeekBar).apply {
             max = 360
@@ -196,7 +196,7 @@ class MarkerDemoActivity :
                 /** Called when the Rotation progress bar is moved */
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     val rotation = seekBar?.progress?.toFloat()
-                    checkReadyThen { markerRainbow.map { it.rotation = rotation ?: 0F } }
+                    checkReadyThen { markerRainbow.map { it.rotation = rotation ?: 0f } }
                 }
 
                 override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -210,9 +210,7 @@ class MarkerDemoActivity :
             } )
         }
 
-
-
-        flatBox = findViewById<CheckBox>(R.id.flat)
+        flatBox = findViewById(R.id.flat)
 
         options = findViewById<RadioGroup>(R.id.custom_info_window_options).apply {
             setOnCheckedChangeListener { _, _ ->
@@ -234,8 +232,8 @@ class MarkerDemoActivity :
      */
     override fun onMapReady(googleMap: GoogleMap?) {
 
-        // exit early if the map was not initialised properly
-        if (googleMap == null) return
+        // return early if the map was not initialised properly
+        map = googleMap ?: return
 
         // create bounds that encompass every location we reference
         val boundsBuilder = LatLngBounds.Builder()
@@ -243,7 +241,7 @@ class MarkerDemoActivity :
         places.keys.map { place -> boundsBuilder.include(places.getValue(place)) }
         val bounds = boundsBuilder.build()
 
-        map = googleMap.apply {
+        with(map) {
             // Hide the zoom controls as the button panel will cover it.
             uiSettings.isZoomControlsEnabled = false
 
@@ -338,7 +336,6 @@ class MarkerDemoActivity :
             )
         }
 
-
         // place markers for each of the defined locations
         placeDetailsMap.keys.map {
             with(placeDetailsMap.getValue(it)) {
@@ -402,11 +399,13 @@ class MarkerDemoActivity :
     }
 
     /** Called when the Clear button is clicked.  */
+    @Suppress("UNUSED_PARAMETER")
     fun onClearMap(view: View) {
         checkReadyThen { map.clear() }
     }
 
     /** Called when the Reset button is clicked.  */
+    @Suppress("UNUSED_PARAMETER")
     fun onResetMap(view: View) {
         checkReadyThen {
             map.clear()
@@ -415,10 +414,10 @@ class MarkerDemoActivity :
     }
 
     /** Called when the Flat check box is checked or unchecked */
+    @Suppress("UNUSED_PARAMETER")
     fun onToggleFlat(view: View) {
         checkReadyThen { markerRainbow.map { marker -> marker.isFlat = flatBox.isChecked } }
     }
-
 
     //
     // Marker related listeners.
