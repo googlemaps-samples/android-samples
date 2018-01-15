@@ -25,7 +25,11 @@ class DemoDetailsList {
                 DemoDetails(R.string.basic_demo_label, R.string.basic_demo_details,
                         BasicMapDemoActivity::class.java),
                 DemoDetails(R.string.circle_demo_label, R.string.circle_demo_details,
-                        CircleDemoActivity::class.java)
+                        CircleDemoActivity::class.java),
+                DemoDetails(
+                        R.string.street_view_panorama_navigation_demo_label,
+                        R.string.street_view_panorama_navigation_demo_details,
+                        StreetViewPanoramaNavigationDemoActivity::class.java)
         )
     }
 }
