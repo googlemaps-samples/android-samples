@@ -36,6 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BasicMapDemoActivity" />
+        <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
         <activity android:name=".CircleDemoActivity" />
     </application>
 

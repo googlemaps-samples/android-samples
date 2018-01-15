@@ -48,4 +48,14 @@
     <string name="stroke_joint_type">Stroke Joint Type</string>
     <string name="stroke_pattern">Stroke Pattern</string>
     <string name="stroke_width">Stroke Width</string>
+
+    <!-- StreetView Panorama Navigation Demo -->
+    <string name="street_view_panorama_navigation_demo_label">Street View Panorama Navigation Demo</string>
+    <string name="street_view_panorama_navigation_demo_details">Street View Panorama with programmatic navigation</string>
+    <string name="request_position">Position</string>
+    <string name="walk_panorama">Walk</string>
+    <string name="go_to_invalid">Go to Invalid Point</string>
+    <string name="go_to_san_francisco">Go to San Francisco</string>
+    <string name="go_to_santorini">Go to Santorini</string>
+
 </resources>
