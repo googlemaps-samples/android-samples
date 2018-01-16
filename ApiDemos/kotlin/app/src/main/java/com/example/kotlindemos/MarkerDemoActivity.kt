@@ -121,7 +121,7 @@ class MarkerDemoActivity :
     /** Demonstrates customizing the info window and/or its contents.  */
     internal inner class CustomInfoWindowAdapter : InfoWindowAdapter {
 
-        // These are both viewgroups containing an ImageView with id "badge" and two
+        // These are both view groups containing an ImageView with id "badge" and two
         // TextViews with id "title" and "snippet".
         private val window: View = layoutInflater.inflate(R.layout.custom_info_window, null)
         private val contents: View = layoutInflater.inflate(R.layout.custom_info_contents, null)
@@ -327,12 +327,12 @@ class MarkerDemoActivity :
         // add 4 markers on top of each other in Darwin with varying z-indexes
         (0 until 4).map {
             placeDetailsMap.put(
-                    "DARWIN ${it + 1}", PlaceDetails(
-                        position = places.getValue("DARWIN"),
-                        title = "Darwin Marker ${it + 1}",
-                        snippet = "z-index initially ${it + 1}",
-                        zIndex = it.toFloat()
-                    )
+                "DARWIN ${it + 1}", PlaceDetails(
+                    position = places.getValue("DARWIN"),
+                    title = "Darwin Marker ${it + 1}",
+                    snippet = "z-index initially ${it + 1}",
+                    zIndex = it.toFloat()
+                )
             )
         }
 
@@ -347,6 +347,7 @@ class MarkerDemoActivity :
                         .infoWindowAnchor(infoWindowAnchorX, infoWindowAnchorY)
                         .draggable(draggable)
                         .zIndex(zIndex))
+
             }
         }
 
@@ -354,15 +355,16 @@ class MarkerDemoActivity :
         // hues (colors).
         val numMarkersInRainbow = 12
         (0 until numMarkersInRainbow).mapTo(markerRainbow) {
-            map.addMarker(MarkerOptions()
-                    .position(LatLng(
-                            -30 + 10 * Math.sin(it * Math.PI / (numMarkersInRainbow - 1)),
-                            135 - 10 * Math.cos(it * Math.PI / (numMarkersInRainbow - 1))))
-                    .title("Marker $it")
-                    .icon(BitmapDescriptorFactory.defaultMarker((it * 360 / numMarkersInRainbow)
-                            .toFloat()))
-                    .flat(flatBox.isChecked)
-                    .rotation(rotationBar.progress.toFloat()))
+            map.addMarker(MarkerOptions().apply{
+                position(LatLng(
+                        -30 + 10 * Math.sin(it * Math.PI / (numMarkersInRainbow - 1)),
+                        135 - 10 * Math.cos(it * Math.PI / (numMarkersInRainbow - 1))))
+                title("Marker $it")
+                icon(BitmapDescriptorFactory.defaultMarker((it * 360 / numMarkersInRainbow)
+                        .toFloat()))
+                flat(flatBox.isChecked)
+                rotation(rotationBar.progress.toFloat())
+            })
         }
     }
 
@@ -386,7 +388,7 @@ class MarkerDemoActivity :
     }
 
     /**
-     * Checks if the map is ready, the executes the provided lamdba function
+     * Checks if the map is ready, the executes the provided lambda function
      *
      * @param stuffToDo the code to be executed if the map is ready
      */
@@ -487,6 +489,6 @@ class MarkerDemoActivity :
     }
 
     override fun onMarkerDrag(marker : Marker) {
-        topText.text = "onMarkerDrag.  Current Position: ${marker.position}"
+        topText.text = getString(R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
     }
 }
