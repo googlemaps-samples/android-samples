@@ -16,15 +16,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/custom_info_bubble"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@drawable/custom_info_bubble">
 
     <ImageView
         android:id="@+id/badge"
+        android:contentDescription="@string/state_badge_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:adjustViewBounds="true"></ImageView>
+        android:layout_marginEnd="5dp"
+        android:adjustViewBounds="true"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -39,7 +41,7 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="#ff000000"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -49,6 +51,6 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="#ff7f7f7f"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>
