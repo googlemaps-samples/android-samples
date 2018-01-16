@@ -74,4 +74,19 @@
     <string name="on_marker_drag_end">Marker stopped dragging</string>
     <string name="rotation">Rotation</string>
     <string name="state_badge_label">State badge</string>
+
+    <!-- Polylines Demo -->
+    <string name="alpha">Alpha</string>
+    <string name="cap_butt">Butt</string>
+    <string name="cap_image">Image</string>
+    <string name="cap_round">Round</string>
+    <string name="cap_square">Square</string>
+    <string name="end_cap">End Cap</string>
+    <string name="hue">Hue</string>
+    <string name="joint_type">Joint Type</string>
+    <string name="pattern">Pattern</string>
+    <string name="polyline_demo_description">Demonstrates how to add Polylines to a map</string>
+    <string name="polyline_demo_label">Polyline</string>
+    <string name="start_cap">Start Cap</string>
+    <string name="width">Width</string>
 </resources>

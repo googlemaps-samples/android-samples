@@ -27,7 +27,9 @@ class DemoDetailsList {
                 DemoDetails(R.string.camera_demo_label, R.string.camera_demo_description,
                         CameraDemoActivity::class.java),
                 DemoDetails(R.string.markers_demo_label, R.string.markers_demo_description,
-                        MarkerDemoActivity::class.java)
+                        MarkerDemoActivity::class.java),
+                DemoDetails(R.string.polyline_demo_label, R.string.polyline_demo_description,
+                        PolylineDemoActivity::class.java)
         )
     }
 }

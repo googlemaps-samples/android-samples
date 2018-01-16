@@ -36,6 +36,7 @@
         <activity android:name=".MarkerDemoActivity"/>
         <activity android:name=".PolygonDemoActivity"/>
         <activity android:name=".CameraDemoActivity"/>
+        <activity android:name=".PolylineDemoActivity"/>
     </application>
 
 </manifest>
