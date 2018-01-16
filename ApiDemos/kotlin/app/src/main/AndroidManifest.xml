@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BasicMapDemoActivity" />
+        <activity android:name=".CloseInfoWindowDemoActivity" />
         <activity android:name=".UiSettingsDemoActivity" />
         <activity android:name=".MarkerDemoActivity" />
         <activity android:name=".PolygonDemoActivity" />

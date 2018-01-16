@@ -21,12 +21,16 @@
 
     <!-- Basic Map Demo -->
     <string name="basic_demo_label">Basic Map</string>
-    <string name="basic_demo_details">Launches a map with marker pointing at Sydney</string>
+    <string name="basic_demo_details">Launches a map with marker pointing at Sydney.</string>
 
     <!-- Circle Demo -->
     <string name="circle_demo_label">Circle Demo</string>
     <string name="circle_demo_details">Demonstrate how to add circles to a map</string>
     <string name="properties_circle">Properties for Circle(s)</string>
+
+    <!-- Marker Close Info Window On Retap Demo -->
+    <string name="close_info_window_demo_label">Close Info Window Demo</string>
+    <string name="close_info_window_demo_details">Demonstrates how to close the info window when the currently selected marker is retapped.</string>
 
     <!-- Polygon Demo -->
     <string name="clickable">Clickable</string>
