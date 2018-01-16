@@ -24,6 +24,9 @@ class DemoDetailsList {
         val DEMOS = listOf<DemoDetails>(
                 DemoDetails(R.string.basic_demo_label, R.string.basic_demo_details,
                         BasicMapDemoActivity::class.java),
+                DemoDetails(R.string.close_info_window_demo_label,
+                        R.string.close_info_window_demo_details,
+                        CloseInfoWindowDemoActivity::class.java),
                 DemoDetails(R.string.circle_demo_label, R.string.circle_demo_details,
                         CircleDemoActivity::class.java),
                 DemoDetails(
