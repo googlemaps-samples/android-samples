@@ -28,6 +28,8 @@ class DemoDetailsList {
                         CameraDemoActivity::class.java),
                 DemoDetails(R.string.markers_demo_label, R.string.markers_demo_description,
                         MarkerDemoActivity::class.java),
+                DemoDetails(R.string.layers_demo_label, R.string.layers_demo_description,
+                        LayersDemoActivity::class.java),
                 DemoDetails(R.string.polyline_demo_label, R.string.polyline_demo_description,
                         PolylineDemoActivity::class.java),
                 DemoDetails(R.string.tags_demo_label, R.string.tags_demo_details,
