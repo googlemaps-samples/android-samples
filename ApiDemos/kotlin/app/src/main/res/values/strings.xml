@@ -79,6 +79,32 @@
     <string name="rotation">Rotation</string>
     <string name="state_badge_label">State badge</string>
 
+    <!-- Layers Demo -->
+    <string name="buildings">Buildings</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="indoor">Indoor</string>
+    <string-array name="layers_array">
+        <item>@string/normal</item>
+        <item>@string/hybrid</item>
+        <item>@string/satellite</item>
+        <item>@string/terrain</item>
+        <item>@string/none_map</item>
+    </string-array>
+    <string name="layers_demo_label">Layers</string>
+    <string name="layers_demo_description">Demonstrates the different map layers.</string>
+    <string name="my_location">My Location</string>
+    <string name="none_map">None</string>
+    <string name="normal">Normal</string>
+    <string name="ok">OK</string>
+    <string name="satellite">Satellite</string>
+    <string name="terrain">Terrain</string>
+    <string name="traffic">Traffic</string>
+
+    <!-- Permissions -->
+    <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
+    <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
+    <string name="permission_required_toast">Location permission is required for this demo.</string>
+
     <!-- Polylines Demo -->
     <string name="alpha">Alpha</string>
     <string name="cap_butt">Butt</string>

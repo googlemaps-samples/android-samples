@@ -16,6 +16,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kotlindemos">
 
+    <!-- This app requires location permissions for the layers demo.
+    The user's current location is displayed using the 'My Location' layer. -->
+    <!-- Access to location is needed for the UI Settings Demo -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -34,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MarkerDemoActivity"/>
+        <activity android:name=".LayersDemoActivity"/>
         <activity android:name=".PolygonDemoActivity"/>
         <activity android:name=".CameraDemoActivity"/>
         <activity android:name=".PolylineDemoActivity"/>
