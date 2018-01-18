@@ -31,7 +31,9 @@ class DemoDetailsList {
                 DemoDetails(R.string.polyline_demo_label, R.string.polyline_demo_description,
                         PolylineDemoActivity::class.java),
                 DemoDetails(R.string.tags_demo_label, R.string.tags_demo_details,
-                        TagsDemoActivity::class.java)
+                        TagsDemoActivity::class.java),
+                DemoDetails(R.string.region_demo_label, R.string.region_demo_details,
+                        VisibleRegionDemoActivity::class.java)
         )
     }
 }
