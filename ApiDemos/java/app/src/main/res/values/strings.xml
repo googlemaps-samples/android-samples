@@ -177,14 +177,16 @@
     <string name="pattern_mixed">Mixed</string>
 
     <!-- Lite Mode -->
+    <string name="grid">Grid</string>
     <string name="lite_demo_label">Lite Mode</string>
     <string name="lite_demo_description">Demonstrates some features on a map in lite mode.</string>
     <string name="lite_demo_intro">Click the map with no, one or multiple markers displayed to open the Google Maps Mobile app.</string>
     <string name="lite_go_to_darwin">Go to Darwin (No Markers)</string>
     <string name="lite_go_to_adelaide">Go to Adelaide (One Marker)</string>
     <string name="lite_go_to_australia">Go to Australia (Five Markers)</string>
-    <string name="lite_list_demo_label">Lite Mode ListView</string>
-    <string name="lite_list_demo_description">Demonstrates using maps in lite mode in a ListView.</string>
+    <string name="linear">Linear</string>
+    <string name="lite_list_demo_label">Lite Mode List</string>
+    <string name="lite_list_demo_description">Demonstrates using maps in lite mode in a RecyclerView using LinearLayoutManager and GridLayoutManager.</string>
 
     <!--     Indoor    -->
     <string name="activate_higher_level">Activate Higher Level</string>
