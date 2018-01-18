@@ -93,4 +93,14 @@
     <string name="polyline_demo_label">Polyline</string>
     <string name="start_cap">Start Cap</string>
     <string name="width">Width</string>
+
+    <!-- Visible Regions Demo -->
+    <string name="camera_change_message">CameraChangeListener: %1$s</string>
+    <string name="region_demo_label">Visible Regions</string>
+    <string name="region_demo_details">Demonstrates how to use Visible Regions.</string>
+    <string name="vr_normal_button">Normal</string>
+    <string name="vr_more_padded_button">More</string>
+    <string name="vr_opera_house_button">SOH</string>
+    <string name="vr_sfo_button">SFO</string>
+    <string name="vr_australia_button">AUS</string>
 </resources>
