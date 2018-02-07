@@ -66,8 +66,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             return (convertView as? FeatureView ?: FeatureView(context)).apply {
                 setTitleId(demo.titleId)
                 setDescriptionId(demo.descriptionId)
-                val title: String = resources.getString(demo.titleId)
-                contentDescription = title
+                contentDescription = resources.getString(demo.titleId)
             }
         }
     }
