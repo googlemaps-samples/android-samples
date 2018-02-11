@@ -1,17 +1,17 @@
 Google Maps Android API Demos
 ===================================
 
-These are demos for the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android-api/).
+These are demos for the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android-api/) in Kotlin.
 They demonstrate most of the features available in the API.
 
-This app was written for a minSdk of 9 and the v4 support library, but it can be easily adapted to
+This app was written for a minSdk of 15 and the v4 support library, but it can be easily adapted to
 use native functionality instead.
 (For example replacing ``SupportMapFragment`` with ``MapFragment``.)
 
 Pre-requisites
 --------------
 
-- Android SDK v23
+- Android SDK v27
 - Latest Android Build Tools
 - Android Support Repository
 
@@ -23,8 +23,7 @@ This sample use the Gradle build system.
 First download the samples by cloning this repository or downloading an archived
 snapshot. (See the options at the top of the page.)
 
-In Android Studio, use the "Import non-Android Studio project" or 
-"Import Project" option. Next select the ApiDemos/ directory that you downloaded
+In Android Studio, use "Open an existing Android Studio project". Next select the ApiDemos/kotlin/ directory that you downloaded
 from this repository.
 If prompted for a gradle configuration accept the default settings. 
 
