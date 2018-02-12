@@ -21,6 +21,22 @@ package com.example.kotlindemos
  */
 class DemoDetailsList {
     companion object {
-        val DEMOS = listOf<DemoDetails>()
+        val DEMOS = listOf<DemoDetails>(
+                DemoDetails(R.string.basic_demo_label, R.string.basic_demo_details,
+                        BasicMapDemoActivity::class.java),
+                DemoDetails(R.string.close_info_window_demo_label,
+                        R.string.close_info_window_demo_details,
+                        CloseInfoWindowDemoActivity::class.java),
+                DemoDetails(R.string.circle_demo_label, R.string.circle_demo_details,
+                        CircleDemoActivity::class.java),
+                DemoDetails(R.string.lite_list_demo_label, R.string.lite_list_demo_details,
+                        LiteListDemoActivity::class.java),
+                DemoDetails(
+                        R.string.street_view_panorama_navigation_demo_label,
+                        R.string.street_view_panorama_navigation_demo_details,
+                        StreetViewPanoramaNavigationDemoActivity::class.java),
+                DemoDetails(R.string.ui_settings_demo_label, R.string.ui_settings_demo_details,
+                        UiSettingsDemoActivity::class.java)
+        )
     }
 }
