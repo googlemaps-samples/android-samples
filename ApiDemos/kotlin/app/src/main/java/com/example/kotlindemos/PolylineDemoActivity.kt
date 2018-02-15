@@ -93,13 +93,13 @@ class PolylineDemoActivity :
 
     // These are the options for polyline caps, joints and patterns. We use their
     // string resource IDs as identifiers.
-    private val capTypeNameResourceIds = intArrayOf(R.string.cap_butt, // Default
+    private val capTypeNameResourceIds = intArrayOf(R.string.cap_butt,
             R.string.cap_round, R.string.cap_square, R.string.cap_image)
 
-    private val jointTypeNameResourceIds = intArrayOf(R.string.joint_type_default, // Default
+    private val jointTypeNameResourceIds = intArrayOf(R.string.joint_type_default,
             R.string.joint_type_bevel, R.string.joint_type_round)
 
-    private val patternTypeNameResourceIds = intArrayOf(R.string.pattern_solid, // Default
+    private val patternTypeNameResourceIds = intArrayOf(R.string.pattern_solid,
             R.string.pattern_dashed, R.string.pattern_dotted, R.string.pattern_mixed)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,20 +122,20 @@ class PolylineDemoActivity :
         }
 
         startCapSpinner = findViewById<Spinner>(R.id.startCapSpinner).apply {
-            adapter = ArrayAdapter(
-                    this@PolylineDemoActivity, android.R.layout.simple_spinner_item,
+            adapter = ArrayAdapter(this@PolylineDemoActivity,
+                    android.R.layout.simple_spinner_item,
                     getResourceStrings(capTypeNameResourceIds))
         }
 
         endCapSpinner = findViewById<Spinner>(R.id.endCapSpinner).apply {
-            adapter = ArrayAdapter(
-                    this@PolylineDemoActivity, android.R.layout.simple_spinner_item,
+            adapter = ArrayAdapter(this@PolylineDemoActivity,
+                    android.R.layout.simple_spinner_item,
                     getResourceStrings(capTypeNameResourceIds))
         }
 
         jointTypeSpinner = findViewById<Spinner>(R.id.jointTypeSpinner).apply {
-            adapter = ArrayAdapter(
-                    this@PolylineDemoActivity, android.R.layout.simple_spinner_item,
+            adapter = ArrayAdapter(this@PolylineDemoActivity,
+                    android.R.layout.simple_spinner_item,
                     getResourceStrings(jointTypeNameResourceIds))
         }
 
@@ -184,11 +184,9 @@ class PolylineDemoActivity :
         }
 
         // A simple polyline across Australia. This polyline will be mutable.
-        val color = Color.HSVToColor(
-                alphaBar.progress, floatArrayOf(hueBar.progress.toFloat(), 1f, 1f))
-
         mutablePolyline = googleMap.addPolyline(PolylineOptions().apply{
-            color(color)
+            color(Color.HSVToColor(
+                    alphaBar.progress, floatArrayOf(hueBar.progress.toFloat(), 1f, 1f)))
             width(widthBar.progress.toFloat())
             clickable(clickabilityCheckbox.isChecked)
             add(melbourneLatLng, adelaideLatLng, perthLatLng, darwinLatLng)
