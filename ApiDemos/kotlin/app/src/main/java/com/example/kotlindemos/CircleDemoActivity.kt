@@ -139,6 +139,7 @@ class CircleDemoActivity :
         }
 
         fun onStyleChange() {
+            // [circle] is treated as implicit this inside the with block
             with(circle) {
                 strokeWidth = strokeWidthBar.progress.toFloat()
                 strokeColor = strokeColorArgb
@@ -208,7 +209,8 @@ class CircleDemoActivity :
             setContentDescription(getString(R.string.circle_demo_details))
             setOnMapLongClickListener { point ->
                 // We know the center, let's place the outline at a point 3/4 along the view.
-                val view: View = supportFragmentManager.findFragmentById(R.id.map).view as View
+                val view: View = supportFragmentManager.findFragmentById(R.id.map).view
+                        ?: return@setOnMapLongClickListener
                 val radiusLatLng = map.projection.fromScreenLocation(
                         Point(view.height * 3 / 4, view.width * 3 / 4))
                 // Create the circle.
@@ -292,6 +294,7 @@ class CircleDemoActivity :
             else -> strokeColorArgb
         }
 
+        // Apply the style change to all the circles.
         circles.map { it.onStyleChange() }
     }
 
