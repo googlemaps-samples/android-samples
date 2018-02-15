@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright 2018 Google LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,26 +13,20 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="5dp">
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical">
 
     <TextView
-        android:id="@+id/lite_listrow_text"
+        android:id="@+id/tag_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <fragment
+        android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <!-- MapView in lite mode. Note that it needs to be initialised
-         programmatically before it can be used. -->
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/lite_listrow_map"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        map:liteMode="true"
-        map:mapType="none" />
+        class="com.google.android.gms.maps.SupportMapFragment"/>
 
 </LinearLayout>
