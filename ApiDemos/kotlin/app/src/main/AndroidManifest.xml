@@ -38,14 +38,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MarkerDemoActivity"/>
-        <activity android:name=".LayersDemoActivity"/>
-        <activity android:name=".PolygonDemoActivity"/>
+        <activity android:name=".BasicMapDemoActivity" />
         <activity android:name=".CameraDemoActivity"/>
+        <activity android:name=".CircleDemoActivity" />
+        <activity android:name=".CloseInfoWindowDemoActivity" />
+        <activity android:name=".LayersDemoActivity"/>
+        <activity android:name=".LiteListDemoActivity" />
+        <activity android:name=".MarkerDemoActivity"/>
+        <activity android:name=".PolygonDemoActivity"/>
         <activity android:name=".PolylineDemoActivity"/>
+        <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
         <activity android:name=".TagsDemoActivity"/>
+        <activity android:name=".UiSettingsDemoActivity" />
         <activity android:name=".VisibleRegionDemoActivity"/>
-
     </application>
 
 </manifest>

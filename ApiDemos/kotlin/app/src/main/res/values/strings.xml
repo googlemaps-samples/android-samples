@@ -19,6 +19,10 @@
     <string name="no_demos">No demos</string>
     <string name="play_services_not_installed">Google Play services is not installed on this device.</string>
 
+    <!-- Basic Map Demo -->
+    <string name="basic_demo_label">Basic Map</string>
+    <string name="basic_demo_details">Launches a map with marker pointing at Sydney.</string>
+
     <!-- Camera Demo -->
     <string name="animate">Animate</string>
     <string name="camera_demo_description">Demonstrates Camera Functions</string>
@@ -36,48 +40,14 @@
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
 
-    <!-- Tags Demo -->
-    <string name="tags_demo_label">Tags</string>
-    <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>
-    <string name="tags_demo_map_description">Map with a circle, ground overlay, marker, polygon and polyline.</string>
+    <!-- Circle Demo -->
+    <string name="circle_demo_label">Circle Demo</string>
+    <string name="circle_demo_details">Demonstrate how to add circles to a map</string>
+    <string name="properties_circle">Properties for Circle(s)</string>
 
-    <!-- Polygon Demo -->
-    <string name="clickable">Clickable</string>
-    <string name="fill_alpha">Fill Alpha</string>
-    <string name="fill_hue">Fill Hue</string>
-    <string name="joint_type_bevel">Bevel</string>
-    <string name="joint_type_default">Default</string>
-    <string name="joint_type_round">Round</string>
-    <string name="pattern_dashed">Dashed</string>
-    <string name="pattern_dotted">Dotted</string>
-    <string name="pattern_mixed">Mixed</string>
-    <string name="pattern_solid">Solid</string>
-    <string name="polygon_demo_description">Demonstrates how to add Polygons to a map.</string>
-    <string name="polygon_demo_details">Demonstrates how to add Polygons to a map</string>
-    <string name="polygon_demo_label">Polygons</string>
-    <string name="properties_australia_polygon">Properties for Polygon over Australia</string>
-    <string name="stroke_alpha">Stroke Alpha</string>
-    <string name="stroke_hue">Stroke Hue</string>
-    <string name="stroke_joint_type">Stroke Joint Type</string>
-    <string name="stroke_pattern">Stroke Pattern</string>
-    <string name="stroke_width">Stroke Width</string>
-
-    <!-- Markers Demo -->
-    <string name="custom_info_contents">Custom Info Contents</string>
-    <string name="custom_info_window">Custom Info Window</string>
-    <string name="default_info_window">Default Info Window</string>
-    <string name="drag_melbourne">Drag Melbourne</string>
-    <string name="clear_map">Clear</string>
-    <string name="flat">Flat</string>
-    <string name="reset_map">Reset</string>
-    <string name="map_not_ready">Map is not ready</string>
-    <string name="markers_demo_description">Demonstrates how to add Markers to a map.</string>
-    <string name="markers_demo_label">Markers</string>
-    <string name="on_marker_drag">onMarkerDrag.  Current Position: (%1$f, %2$f)</string>
-    <string name="on_marker_drag_start">Started dragging marker</string>
-    <string name="on_marker_drag_end">Marker stopped dragging</string>
-    <string name="rotation">Rotation</string>
-    <string name="state_badge_label">State badge</string>
+    <!-- Close Info Window On Retap Demo -->
+    <string name="close_info_window_demo_label">Close Info Window Demo</string>
+    <string name="close_info_window_demo_details">Demonstrates how to close the info window when the currently selected marker is retapped.</string>
 
     <!-- Layers Demo -->
     <string name="buildings">Buildings</string>
@@ -100,10 +70,54 @@
     <string name="terrain">Terrain</string>
     <string name="traffic">Traffic</string>
 
+    <!-- Lite List Demo -->
+    <string name="lite_list_demo_label">Lite List Demo</string>
+    <string name="lite_list_demo_details">Show a list of Lite Map of different locations using RecyclerView with LinearLayoutManager and GridLayoutManager</string>
+    <string name="linear">Linear</string>
+    <string name="grid">Grid</string>
+
+    <!-- Markers Demo -->
+    <string name="custom_info_contents">Custom Info Contents</string>
+    <string name="custom_info_window">Custom Info Window</string>
+    <string name="default_info_window">Default Info Window</string>
+    <string name="drag_melbourne">Drag Melbourne</string>
+    <string name="clear_map">Clear</string>
+    <string name="flat">Flat</string>
+    <string name="reset_map">Reset</string>
+    <string name="map_not_ready">Map is not ready</string>
+    <string name="markers_demo_description">Demonstrates how to add Markers to a map.</string>
+    <string name="markers_demo_label">Markers</string>
+    <string name="on_marker_drag">onMarkerDrag.  Current Position: (%1$f, %2$f)</string>
+    <string name="on_marker_drag_start">Started dragging marker</string>
+    <string name="on_marker_drag_end">Marker stopped dragging</string>
+    <string name="rotation">Rotation</string>
+    <string name="state_badge_label">State badge</string>
+
     <!-- Permissions -->
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
     <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
     <string name="permission_required_toast">Location permission is required for this demo.</string>
+
+    <!-- Polygon Demo -->
+    <string name="clickable">Clickable</string>
+    <string name="fill_alpha">Fill Alpha</string>
+    <string name="fill_hue">Fill Hue</string>
+    <string name="joint_type_bevel">Bevel</string>
+    <string name="joint_type_default">Default</string>
+    <string name="joint_type_round">Round</string>
+    <string name="pattern_dashed">Dashed</string>
+    <string name="pattern_dotted">Dotted</string>
+    <string name="pattern_mixed">Mixed</string>
+    <string name="pattern_solid">Solid</string>
+    <string name="polygon_demo_description">Demonstrates how to add Polygons to a map.</string>
+    <string name="polygon_demo_details">Demonstrates how to add Polygons to a map</string>
+    <string name="polygon_demo_label">Polygons</string>
+    <string name="properties_australia_polygon">Properties for Polygon over Australia</string>
+    <string name="stroke_alpha">Stroke Alpha</string>
+    <string name="stroke_hue">Stroke Hue</string>
+    <string name="stroke_joint_type">Stroke Joint Type</string>
+    <string name="stroke_pattern">Stroke Pattern</string>
+    <string name="stroke_width">Stroke Width</string>
 
     <!-- Polylines Demo -->
     <string name="alpha">Alpha</string>
@@ -119,6 +133,34 @@
     <string name="polyline_demo_label">Polyline</string>
     <string name="start_cap">Start Cap</string>
     <string name="width">Width</string>
+
+    <!-- StreetView Panorama Navigation Demo -->
+    <string name="street_view_panorama_navigation_demo_label">Street View Panorama Navigation Demo</string>
+    <string name="street_view_panorama_navigation_demo_details">Street View Panorama with programmatic navigation</string>
+    <string name="request_position">Position</string>
+    <string name="walk_panorama">Walk</string>
+    <string name="go_to_invalid">Go to Invalid Point</string>
+    <string name="go_to_san_francisco">Go to San Francisco</string>
+    <string name="go_to_santorini">Go to Santorini</string>
+
+    <!-- Tags Demo -->
+    <string name="tags_demo_label">Tags</string>
+    <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>
+    <string name="tags_demo_map_description">Map with a circle, ground overlay, marker, polygon and polyline.</string>
+
+    <!-- UI Settings Demo -->
+    <string name="ui_settings_demo_label">UI Settings Demo</string>
+    <string name="ui_settings_demo_details">Demonstrate how to toggle the UI of a map</string>
+    <string name="location">Location permission is required to run the demo</string>
+    <string name="checkbox_zoom">Zoom</string>
+    <string name="checkbox_compass">Compass</string>
+    <string name="checkbox_my_location_layer">My Location</string>
+    <string name="checkbox_level_picker">Level Picker</string>
+    <string name="checkbox_map_toolbar">Map Toolbar</string>
+    <string name="checkbox_zoom_gesture">Zoom Gestures</string>
+    <string name="checkbox_scroll_gesture">Scroll Gestures</string>
+    <string name="checkbox_tilt_gesture">Tilt Gestures</string>
+    <string name="checkbox_rotate_gesture">Rotate Gestures</string>
 
     <!-- Visible Regions Demo -->
     <string name="camera_change_message">CameraChangeListener: %1$s</string>
