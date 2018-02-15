@@ -131,7 +131,6 @@ class TagsDemoActivity : AppCompatActivity(),
 
     private fun addObjectsToMap() {
         with(map) {
-
             // A circle centered on Adelaide.
             addCircle(CircleOptions().apply {
                 center(places.getValue("ADELAIDE"))
@@ -141,7 +140,8 @@ class TagsDemoActivity : AppCompatActivity(),
                 clickable(true)
             }).run {
                 // add a tag to the circle to count clicks
-                tag = CustomTag("Adelaide circle")
+                //tag = String("Adelaide circle")
+                tag = "hello"
             }
 
             // A ground overlay at Sydney.
@@ -200,15 +200,15 @@ class TagsDemoActivity : AppCompatActivity(),
     }
 
     override fun onCircleClick(circle: Circle) {
-        onClick(circle.tag as CustomTag)
+        onClick(circle.tag as? CustomTag ?: return)
     }
 
     override fun onGroundOverlayClick(groundOverlay: GroundOverlay) {
-        onClick(groundOverlay.tag as CustomTag)
+        onClick(groundOverlay.tag as? CustomTag ?: return)
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        onClick(marker.tag as CustomTag)
+        onClick(marker.tag as? CustomTag ?: return false)
         // We return true to indicate that we have consumed the event and that we do not wish
         // for the default behavior to occur (which is for the camera to move such that the
         // marker is centered and for the marker's info window to open, if it has one).
@@ -216,11 +216,11 @@ class TagsDemoActivity : AppCompatActivity(),
     }
 
     override fun onPolygonClick(polygon: Polygon) {
-        onClick(polygon.tag as CustomTag)
+        onClick(polygon.tag as? CustomTag ?: return)
     }
 
     override fun onPolylineClick(polyline: Polyline) {
-        onClick(polyline.tag as CustomTag)
+        onClick(polyline.tag as? CustomTag ?: return)
     }
 
 }

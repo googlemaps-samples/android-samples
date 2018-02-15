@@ -33,14 +33,14 @@ import com.google.android.gms.maps.SupportMapFragment
 class OnMapAndViewReadyListener(
         private val mapFragment: SupportMapFragment,
         private val toBeNotified: OnGlobalLayoutAndMapReadyListener
-    ) : OnGlobalLayoutListener,
+) : OnGlobalLayoutListener,
         OnMapReadyCallback {
 
     private val mapView: View? = mapFragment.view
 
     private var isViewReady = false
     private var isMapReady = false
-    private var googleMap: GoogleMap? = null
+    private var map: GoogleMap? = null
 
     /** A listener that needs to wait for both the GoogleMap and the View to be initialized.  */
     interface OnGlobalLayoutAndMapReadyListener {
@@ -65,9 +65,9 @@ class OnMapAndViewReadyListener(
         mapFragment.getMapAsync(this)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
+    override fun onMapReady(googleMap: GoogleMap?) {
         // NOTE: The GoogleMap API specifies the listener is removed just prior to invocation.
-        this.googleMap = googleMap
+        map = googleMap ?: return
         isMapReady = true
         fireCallbackIfReady()
     }
@@ -87,7 +87,7 @@ class OnMapAndViewReadyListener(
 
     private fun fireCallbackIfReady() {
         if (isViewReady && isMapReady) {
-            toBeNotified.onMapReady(googleMap)
+            toBeNotified.onMapReady(map)
         }
     }
 }
