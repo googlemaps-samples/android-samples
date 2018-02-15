@@ -73,6 +73,7 @@ class OnMapAndViewReadyListener(
     }
 
     // We use the new method when supported
+    @Suppress("DEPRECATION")
     @SuppressLint("NewApi")  // We check which build version we are using.
     override fun onGlobalLayout() {
         // Remove our listener.
