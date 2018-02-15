@@ -56,8 +56,8 @@ class CameraDemoActivity :
     private val SCROLL_BY_PX = 100
     private val TAG = CameraDemoActivity::class.java.name
     private val sydneyLatLng = LatLng(-33.87365, 151.20689)
-    private val bondiLocation: CameraPosition = CameraPosition.Builder().
-            target(LatLng(-33.891614, 151.276417))
+    private val bondiLocation: CameraPosition = CameraPosition.Builder()
+            .target(LatLng(-33.891614, 151.276417))
             .zoom(15.5f)
             .bearing(300f)
             .tilt(50f)
@@ -151,16 +151,16 @@ class CameraDemoActivity :
         checkReadyThen {
             changeCamera(CameraUpdateFactory.newCameraPosition(sydneyLocation),
                     object : CancelableCallback {
-                override fun onFinish() {
-                    Toast.makeText(baseContext, "Animation to Sydney complete",
-                            Toast.LENGTH_SHORT).show()
-                }
+                        override fun onFinish() {
+                            Toast.makeText(baseContext, "Animation to Sydney complete",
+                                    Toast.LENGTH_SHORT).show()
+                        }
 
-                override fun onCancel() {
-                    Toast.makeText(baseContext, "Animation to Sydney canceled",
-                            Toast.LENGTH_SHORT).show()
-                }
-            })
+                        override fun onCancel() {
+                            Toast.makeText(baseContext, "Animation to Sydney canceled",
+                                    Toast.LENGTH_SHORT).show()
+                        }
+                    })
         }
     }
 
