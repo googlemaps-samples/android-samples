@@ -124,13 +124,17 @@ class LayersDemoActivity :
 
 
         // attach a listener to each checkbox
-        trafficCheckbox.setOnClickListener { map.isTrafficEnabled = trafficCheckbox.isChecked }
+        trafficCheckbox.setOnClickListener {
+            map.isTrafficEnabled = trafficCheckbox.isChecked
+        }
 
         buildingsCheckbox.setOnClickListener {
             map.isBuildingsEnabled = buildingsCheckbox.isChecked
         }
 
-        indoorCheckbox.setOnClickListener { map.isIndoorEnabled = indoorCheckbox.isChecked }
+        indoorCheckbox.setOnClickListener {
+            map.isIndoorEnabled = indoorCheckbox.isChecked
+        }
 
         // if this box is checked, must check for permission before enabling the My Location layer
         myLocationCheckbox.setOnClickListener {

@@ -60,19 +60,6 @@ import java.util.ArrayList
 import java.util.Random
 
 /**
- * This stores the details of a place that used to draw a marker
- */
-class PlaceDetails(
-        val position: LatLng,
-        val title: String = "Marker",
-        val snippet: String? = null,
-        val icon: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(),
-        val infoWindowAnchorX: Float = 0.5F,
-        val infoWindowAnchorY: Float = 0F,
-        val draggable: Boolean = false,
-        val zIndex: Float = 0F)
-
-/**
  * This shows how to place markers on a map.
  */
 class MarkerDemoActivity :
@@ -387,19 +374,6 @@ class MarkerDemoActivity :
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
-    /**
-     * Checks if the map is ready, the executes the provided lambda function
-     *
-     * @param stuffToDo the code to be executed if the map is ready
-     */
-    private fun checkReadyThen(stuffToDo : () -> Unit) {
-        if (!::map.isInitialized) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
-        } else {
-            stuffToDo()
-        }
-    }
-
     /** Called when the Clear button is clicked.  */
     @Suppress("UNUSED_PARAMETER")
     fun onClearMap(view: View) {
@@ -491,4 +465,30 @@ class MarkerDemoActivity :
     override fun onMarkerDrag(marker : Marker) {
         topText.text = getString(R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
     }
+
+    /**
+     * Checks if the map is ready, the executes the provided lambda function
+     *
+     * @param stuffToDo the code to be executed if the map is ready
+     */
+    private fun checkReadyThen(stuffToDo : () -> Unit) {
+        if (!::map.isInitialized) {
+            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
+        } else {
+            stuffToDo()
+        }
+    }
 }
+
+/**
+ * This stores the details of a place that used to draw a marker
+ */
+class PlaceDetails(
+        val position: LatLng,
+        val title: String = "Marker",
+        val snippet: String? = null,
+        val icon: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(),
+        val infoWindowAnchorX: Float = 0.5F,
+        val infoWindowAnchorY: Float = 0F,
+        val draggable: Boolean = false,
+        val zIndex: Float = 0F)
