@@ -1,8 +1,8 @@
-Android Wear Maps Sample
+Wear OS Sample
 ===================================
 
-This sample uses the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android/) 
-to display a map on Android Wear. It shows the basic setup required for a
+This sample uses the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android/)
+to display a map on Wear OS. It shows the basic setup required for a
 gradle-based Android Studio project that [supports ambient mode](https://developer.android.com/training/wearables/apps/always-on.html).
 
 Pre-requisites
@@ -11,7 +11,7 @@ Pre-requisites
 - Android SDK v22
 - Latest Android Build Tools
 - Android Support Repository
-- Android Wear emulator or device
+- Wear OS emulator or device
 
 Getting Started
 ---------------
@@ -22,10 +22,10 @@ This sample use the Gradle build system.
 First download the samples by cloning this repository or downloading an archived
 snapshot. (See the options at the top of the page.)
 
-In Android Studio, use the "Import non-Android Studio project" or 
+In Android Studio, use the "Import non-Android Studio project" or
 "Import Project" option. Next select the ApiDemos/ directory that you downloaded
 from this repository.
-If prompted for a gradle configuration accept the default settings. 
+If prompted for a gradle configuration accept the default settings.
 
 Alternatively use the "gradlew build" command to build the project directly.
 

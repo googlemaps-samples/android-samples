@@ -17,7 +17,7 @@
 
 <resources>
 
-    <string name="app_name">Android Wear Map</string>
+    <string name="app_name">Wear OS Map</string>
     <string name="intro_text">Long click to exit the map.</string>
 
 </resources>
