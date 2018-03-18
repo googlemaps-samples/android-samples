@@ -16,9 +16,9 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.androidwearmap" >
+    package="com.example.wearosmap" >
 
-    <!-- Mark this app as an Android Wear app. -->
+    <!-- Mark this app as a Wear OS app. -->
     <uses-feature android:name="android.hardware.type.watch" />
 
     <!-- Permission required for ambient mode to keep the application running. -->

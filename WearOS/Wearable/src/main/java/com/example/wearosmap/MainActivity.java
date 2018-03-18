@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.androidwearmap;
+package com.example.wearosmap;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,7 +32,7 @@ import android.view.WindowInsets;
 import android.widget.FrameLayout;
 
 /**
- * Sample that shows how to set up a basic Google Map on Android Wear.
+ * Sample that shows how to set up a basic Google Map on Wear OS.
  */
 public class MainActivity extends WearableActivity implements OnMapReadyCallback,
         GoogleMap.OnMapLongClickListener {
