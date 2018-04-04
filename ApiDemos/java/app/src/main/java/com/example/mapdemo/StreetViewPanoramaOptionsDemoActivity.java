@@ -19,6 +19,7 @@ import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.StreetViewSource;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,8 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
     // Cole St, San Fran
     private static final LatLng SAN_FRAN = new LatLng(37.765927, -122.449972);
 
+    private static int RADIUS = 20;
+
     private StreetViewPanorama mStreetViewPanorama;
 
     private CheckBox mStreetNameCheckbox;
@@ -44,6 +47,8 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
 
     private CheckBox mPanningCheckbox;
 
+    private CheckBox mOutdoor;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
         mNavigationCheckbox = (CheckBox) findViewById(R.id.navigation);
         mZoomCheckbox = (CheckBox) findViewById(R.id.zoom);
         mPanningCheckbox = (CheckBox) findViewById(R.id.panning);
+        mOutdoor = (CheckBox) findViewById(R.id.outdoor);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
@@ -71,10 +77,18 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
                         // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
                         // loaded which is when the savedInstanceState is null).
                         if (savedInstanceState == null) {
-                            mStreetViewPanorama.setPosition(SAN_FRAN);
+                            setPosition();
                         }
                     }
                 });
+    }
+
+    private void setPosition() {
+        mStreetViewPanorama.setPosition(
+                SAN_FRAN,
+                RADIUS,
+                mOutdoor.isChecked() ? StreetViewSource.OUTDOOR : StreetViewSource.DEFAULT
+        );
     }
 
     private boolean checkReady() {
@@ -111,5 +125,12 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
             return;
         }
         mStreetViewPanorama.setPanningGesturesEnabled(mPanningCheckbox.isChecked());
+    }
+
+    public void onOutdoorToggled(View view) {
+        if (!checkReady()) {
+            return;
+        }
+        setPosition();
     }
 }
