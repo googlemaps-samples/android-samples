@@ -201,6 +201,7 @@
     <string name="go_to_san_fran">Go to San Fran</string>
     <string name="navigate_to_another_panorama">navigate to another panorama</string>
     <string name="navigation">Navigation</string>
+    <string name="outdoor_only">Outdoor Only</string>
     <string name="pan_camera">pan camera</string>
     <string name="panning">Panning Gestures</string>
     <string name="panorama_not_ready">Panorama is not ready yet</string>
