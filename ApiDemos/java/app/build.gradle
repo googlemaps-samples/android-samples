@@ -24,7 +24,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.google.android.gms:play-services-maps:11.6.2'
+    implementation 'com.google.android.gms:play-services-maps:12.0.1'
     implementation 'com.android.support:support-v4:27.0.2'
     // Needed for the LiteListDemo
     implementation "com.android.support:recyclerview-v7:27.0.2"
