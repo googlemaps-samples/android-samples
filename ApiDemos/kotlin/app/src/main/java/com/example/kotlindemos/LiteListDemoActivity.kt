@@ -98,12 +98,12 @@ class LiteListDemoActivity : AppCompatActivity() {
     /**
      * Adapter that displays a title and [com.google.android.gms.maps.MapView] for each item.
      * The layout is defined in `lite_list_demo_row.xml`. It contains a MapView
-     * that is programatically initialised when onCreateViewHolder is called.
+     * that is programmatically initialised when onCreateViewHolder is called.
      */
     inner class MapAdapter : RecyclerView.Adapter<MapAdapter.ViewHolder>() {
 
-        override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-            holder?.bindView(position) ?: return
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bindView(position)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
