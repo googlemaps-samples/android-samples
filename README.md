@@ -2,7 +2,7 @@ Google Maps Android API v2 Samples
 ===================================
 
 Samples demonstrating how to use
-[Google Maps Android API v2](https://developers.google.com/maps/documentation/android/).
+[Google Maps Platform SDK for Android v2](https://developers.google.com/maps/documentation/android/).
 
 This repo contains the following samples:
 
@@ -44,7 +44,7 @@ Support
 
 - Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
 
-If you have discovered an issue with the Google Maps Android API v2, please see
+If you have discovered an issue with the Google Maps Platform SDK for Android v2, please see
 the resources here: https://developers.google.com/maps/support/
 
 If you've found an error in these samples, please file an issue:
