@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="0dp"
-            class="com.google.android.gms.maps.SupportMapFragment" />
+            class="com.google.android.libraries.maps.SupportMapFragment" />
 
         <ImageView
             android:id="@+id/snapshot_holder"

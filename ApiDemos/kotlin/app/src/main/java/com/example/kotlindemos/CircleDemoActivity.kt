@@ -28,20 +28,20 @@ import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Spinner
 
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.Circle
-import com.google.android.gms.maps.model.CircleOptions
-import com.google.android.gms.maps.model.Dash
-import com.google.android.gms.maps.model.Dot
-import com.google.android.gms.maps.model.Gap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PatternItem
+import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.OnMapReadyCallback
+import com.google.android.libraries.maps.SupportMapFragment
+import com.google.android.libraries.maps.model.BitmapDescriptorFactory
+import com.google.android.libraries.maps.model.Circle
+import com.google.android.libraries.maps.model.CircleOptions
+import com.google.android.libraries.maps.model.Dash
+import com.google.android.libraries.maps.model.Dot
+import com.google.android.libraries.maps.model.Gap
+import com.google.android.libraries.maps.model.LatLng
+import com.google.android.libraries.maps.model.Marker
+import com.google.android.libraries.maps.model.MarkerOptions
+import com.google.android.libraries.maps.model.PatternItem
 
 import java.util.ArrayList
 import java.util.Arrays
@@ -209,7 +209,7 @@ class CircleDemoActivity :
             setContentDescription(getString(R.string.circle_demo_details))
             setOnMapLongClickListener { point ->
                 // We know the center, let's place the outline at a point 3/4 along the view.
-                val view: View = supportFragmentManager.findFragmentById(R.id.map).view
+                val view: View = supportFragmentManager.findFragmentById(R.id.map)?.view
                         ?: return@setOnMapLongClickListener
                 val radiusLatLng = map.projection.fromScreenLocation(
                         Point(view.height * 3 / 4, view.width * 3 / 4))

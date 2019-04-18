@@ -16,13 +16,13 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.TileOverlay;
-import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.android.gms.maps.model.TileProvider;
-import com.google.android.gms.maps.model.UrlTileProvider;
+import com.google.android.libraries.maps.GoogleMap;
+import com.google.android.libraries.maps.OnMapReadyCallback;
+import com.google.android.libraries.maps.SupportMapFragment;
+import com.google.android.libraries.maps.model.TileOverlay;
+import com.google.android.libraries.maps.model.TileOverlayOptions;
+import com.google.android.libraries.maps.model.TileProvider;
+import com.google.android.libraries.maps.model.UrlTileProvider;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

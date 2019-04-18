@@ -16,9 +16,9 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.libraries.maps.GoogleMap;
+import com.google.android.libraries.maps.OnMapReadyCallback;
+import com.google.android.libraries.maps.SupportMapFragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -35,11 +35,11 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NONE;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_SATELLITE;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
+import static com.google.android.libraries.maps.GoogleMap.MAP_TYPE_HYBRID;
+import static com.google.android.libraries.maps.GoogleMap.MAP_TYPE_NONE;
+import static com.google.android.libraries.maps.GoogleMap.MAP_TYPE_NORMAL;
+import static com.google.android.libraries.maps.GoogleMap.MAP_TYPE_SATELLITE;
+import static com.google.android.libraries.maps.GoogleMap.MAP_TYPE_TERRAIN;
 
 /**
  * Demonstrates the different base layers of a map.

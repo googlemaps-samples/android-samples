@@ -16,13 +16,13 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
-import com.google.android.gms.maps.StreetViewPanorama;
-import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
-import com.google.android.gms.maps.model.StreetViewPanoramaLink;
-import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
+import com.google.android.libraries.maps.OnStreetViewPanoramaReadyCallback;
+import com.google.android.libraries.maps.StreetViewPanorama;
+import com.google.android.libraries.maps.SupportStreetViewPanoramaFragment;
+import com.google.android.libraries.maps.model.LatLng;
+import com.google.android.libraries.maps.model.StreetViewPanoramaCamera;
+import com.google.android.libraries.maps.model.StreetViewPanoramaLink;
+import com.google.android.libraries.maps.model.StreetViewPanoramaLocation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

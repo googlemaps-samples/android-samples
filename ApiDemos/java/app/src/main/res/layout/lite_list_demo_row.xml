@@ -29,7 +29,7 @@
 
     <!-- MapView in lite mode. Note that it needs to be initialised
          programmatically before it can be used. -->
-    <com.google.android.gms.maps.MapView
+    <com.google.android.libraries.maps.MapView
         android:id="@+id/lite_listrow_map"
         android:layout_width="match_parent"
         android:layout_height="150dp"

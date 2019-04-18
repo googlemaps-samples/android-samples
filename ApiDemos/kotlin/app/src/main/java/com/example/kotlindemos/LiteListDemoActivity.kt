@@ -28,18 +28,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.MapsInitializer
+import com.google.android.libraries.maps.MapView
+import com.google.android.libraries.maps.OnMapReadyCallback
+import com.google.android.libraries.maps.model.LatLng
+import com.google.android.libraries.maps.model.MarkerOptions
 
 /**
  * This shows to include a map in lite mode in a RecyclerView.
  * Note the use of the view holder pattern with the
- * [com.google.android.gms.maps.OnMapReadyCallback].
+ * [com.google.android.libraries.maps.OnMapReadyCallback].
  */
 class LiteListDemoActivity : AppCompatActivity() {
 
@@ -55,9 +55,9 @@ class LiteListDemoActivity : AppCompatActivity() {
     private lateinit var mapAdapter: RecyclerView.Adapter<MapAdapter.ViewHolder>
 
     /**
-     * RecycleListener that completely clears the [com.google.android.gms.maps.GoogleMap]
+     * RecycleListener that completely clears the [com.google.android.libraries.maps.GoogleMap]
      * attached to a row in the RecyclerView.
-     * Sets the map type to [com.google.android.gms.maps.GoogleMap.MAP_TYPE_NONE] and clears
+     * Sets the map type to [com.google.android.libraries.maps.GoogleMap.MAP_TYPE_NONE] and clears
      * the map.
      */
     private val recycleListener = RecyclerView.RecyclerListener { holder ->
@@ -96,14 +96,14 @@ class LiteListDemoActivity : AppCompatActivity() {
     }
 
     /**
-     * Adapter that displays a title and [com.google.android.gms.maps.MapView] for each item.
+     * Adapter that displays a title and [com.google.android.libraries.maps.MapView] for each item.
      * The layout is defined in `lite_list_demo_row.xml`. It contains a MapView
      * that is programatically initialised when onCreateViewHolder is called.
      */
     inner class MapAdapter : RecyclerView.Adapter<MapAdapter.ViewHolder>() {
 
-        override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-            holder?.bindView(position) ?: return
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            holder.bindView(position) ?: return
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

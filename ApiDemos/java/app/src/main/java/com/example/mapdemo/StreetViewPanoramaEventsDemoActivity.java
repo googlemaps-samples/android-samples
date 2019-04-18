@@ -16,17 +16,17 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
-import com.google.android.gms.maps.StreetViewPanorama;
-import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener;
-import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener;
-import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaClickListener;
-import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaLongClickListener;
-import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
-import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
-import com.google.android.gms.maps.model.StreetViewPanoramaOrientation;
+import com.google.android.libraries.maps.OnStreetViewPanoramaReadyCallback;
+import com.google.android.libraries.maps.StreetViewPanorama;
+import com.google.android.libraries.maps.StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener;
+import com.google.android.libraries.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener;
+import com.google.android.libraries.maps.StreetViewPanorama.OnStreetViewPanoramaClickListener;
+import com.google.android.libraries.maps.StreetViewPanorama.OnStreetViewPanoramaLongClickListener;
+import com.google.android.libraries.maps.SupportStreetViewPanoramaFragment;
+import com.google.android.libraries.maps.model.LatLng;
+import com.google.android.libraries.maps.model.StreetViewPanoramaCamera;
+import com.google.android.libraries.maps.model.StreetViewPanoramaLocation;
+import com.google.android.libraries.maps.model.StreetViewPanoramaOrientation;
 
 import android.graphics.Point;
 import android.os.Bundle;

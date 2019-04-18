@@ -27,14 +27,14 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID
-import com.google.android.gms.maps.GoogleMap.MAP_TYPE_NONE
-import com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL
-import com.google.android.gms.maps.GoogleMap.MAP_TYPE_SATELLITE
-import com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.GoogleMap.MAP_TYPE_HYBRID
+import com.google.android.libraries.maps.GoogleMap.MAP_TYPE_NONE
+import com.google.android.libraries.maps.GoogleMap.MAP_TYPE_NORMAL
+import com.google.android.libraries.maps.GoogleMap.MAP_TYPE_SATELLITE
+import com.google.android.libraries.maps.GoogleMap.MAP_TYPE_TERRAIN
+import com.google.android.libraries.maps.OnMapReadyCallback
+import com.google.android.libraries.maps.SupportMapFragment
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 

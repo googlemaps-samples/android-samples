@@ -16,12 +16,12 @@
 
 package com.example.kotlindemos
 
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.maps.CameraUpdateFactory
+import com.google.android.libraries.maps.GoogleMap
+import com.google.android.libraries.maps.SupportMapFragment
+import com.google.android.libraries.maps.model.LatLng
+import com.google.android.libraries.maps.model.LatLngBounds
+import com.google.android.libraries.maps.model.MarkerOptions
 
 import android.os.Bundle
 import android.os.Handler
@@ -103,7 +103,7 @@ class VisibleRegionDemoActivity :
         // increases the amount of padding along the right and bottom of the map
         morePaddedButton.setOnClickListener {
             // get the view that contains the map
-            val mapView: View? = supportFragmentManager.findFragmentById(R.id.map).view
+            val mapView: View? = supportFragmentManager.findFragmentById(R.id.map)?.view
             animatePadding(150, 0, (mapView?.width ?: 0) / 3,
                     (mapView?.height ?: 0)/ 4)
         }

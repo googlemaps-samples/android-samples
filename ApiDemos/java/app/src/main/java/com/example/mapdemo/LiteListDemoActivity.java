@@ -16,13 +16,13 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.maps.CameraUpdateFactory;
+import com.google.android.libraries.maps.GoogleMap;
+import com.google.android.libraries.maps.MapView;
+import com.google.android.libraries.maps.MapsInitializer;
+import com.google.android.libraries.maps.OnMapReadyCallback;
+import com.google.android.libraries.maps.model.LatLng;
+import com.google.android.libraries.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +39,7 @@ import android.widget.TextView;
 /**
  * This shows to include a map in lite mode in a ListView.
  * Note the use of the view holder pattern with the
- * {@link com.google.android.gms.maps.OnMapReadyCallback}.
+ * {@link com.google.android.libraries.maps.OnMapReadyCallback}.
  */
 public class LiteListDemoActivity extends AppCompatActivity {
 
@@ -85,7 +85,7 @@ public class LiteListDemoActivity extends AppCompatActivity {
     }
 
     /**
-     * Adapter that displays a title and {@link com.google.android.gms.maps.MapView} for each item.
+     * Adapter that displays a title and {@link com.google.android.libraries.maps.MapView} for each item.
      * The layout is defined in <code>lite_list_demo_row.xml</code>. It contains a MapView
      * that is programatically initialised in
      * {@link #(int, android.view.View, android.view.ViewGroup)}
@@ -125,8 +125,8 @@ public class LiteListDemoActivity extends AppCompatActivity {
         /**
          * Holder for Views used in the {@link LiteListDemoActivity.MapAdapter}.
          * Once the  the <code>map</code> field is set, otherwise it is null.
-         * When the {@link #onMapReady(com.google.android.gms.maps.GoogleMap)} callback is received and
-         * the {@link com.google.android.gms.maps.GoogleMap} is ready, it stored in the {@link #map}
+         * When the {@link #onMapReady(com.google.android.libraries.maps.GoogleMap)} callback is received and
+         * the {@link com.google.android.libraries.maps.GoogleMap} is ready, it stored in the {@link #map}
          * field. The map is then initialised with the NamedLocation that is stored as the tag of the
          * MapView. This ensures that the map is initialised with the latest data that it should
          * display.
@@ -160,7 +160,7 @@ public class LiteListDemoActivity extends AppCompatActivity {
 
             /**
              * Displays a {@link LiteListDemoActivity.NamedLocation} on a
-             * {@link com.google.android.gms.maps.GoogleMap}.
+             * {@link com.google.android.libraries.maps.GoogleMap}.
              * Adds a marker and centers the camera on the NamedLocation with the normal map type.
              */
             private void setMapLocation() {
@@ -191,9 +191,9 @@ public class LiteListDemoActivity extends AppCompatActivity {
     }
 
     /**
-     * RecycleListener that completely clears the {@link com.google.android.gms.maps.GoogleMap}
+     * RecycleListener that completely clears the {@link com.google.android.libraries.maps.GoogleMap}
      * attached to a row in the RecyclerView.
-     * Sets the map type to {@link com.google.android.gms.maps.GoogleMap#MAP_TYPE_NONE} and clears
+     * Sets the map type to {@link com.google.android.libraries.maps.GoogleMap#MAP_TYPE_NONE} and clears
      * the map.
      */
     private RecyclerView.RecyclerListener mRecycleListener = new RecyclerView.RecyclerListener() {
@@ -212,7 +212,7 @@ public class LiteListDemoActivity extends AppCompatActivity {
     };
 
     /**
-     * Location represented by a position ({@link com.google.android.gms.maps.model.LatLng} and a
+     * Location represented by a position ({@link com.google.android.libraries.maps.model.LatLng} and a
      * name ({@link java.lang.String}).
      */
     private static class NamedLocation {

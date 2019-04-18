@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            class="com.google.android.gms.maps.SupportMapFragment"
+            class="com.google.android.libraries.maps.SupportMapFragment"
             map:cameraTargetLat="40.72"
             map:cameraTargetLng="-74.00"
             map:cameraZoom="8" />
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            class="com.google.android.gms.maps.SupportMapFragment"
+            class="com.google.android.libraries.maps.SupportMapFragment"
             map:cameraTargetLat="51.51"
             map:cameraTargetLng="-0.12"
             map:cameraZoom="8" />
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            class="com.google.android.gms.maps.SupportMapFragment"
+            class="com.google.android.libraries.maps.SupportMapFragment"
             map:cameraTargetLat="48.85"
             map:cameraTargetLng="2.35"
             map:cameraZoom="8" />
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            class="com.google.android.gms.maps.SupportMapFragment"
+            class="com.google.android.libraries.maps.SupportMapFragment"
             map:cameraTargetLat="35.69"
             map:cameraTargetLng="139.69"
             map:cameraZoom="8" />

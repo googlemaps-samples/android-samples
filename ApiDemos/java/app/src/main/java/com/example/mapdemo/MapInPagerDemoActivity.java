@@ -16,7 +16,7 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.libraries.maps.SupportMapFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

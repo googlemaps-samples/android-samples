@@ -16,15 +16,15 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.libraries.maps.CameraUpdateFactory;
+import com.google.android.libraries.maps.GoogleMap;
+import com.google.android.libraries.maps.SupportMapFragment;
+import com.google.android.libraries.maps.model.BitmapDescriptorFactory;
+import com.google.android.libraries.maps.model.LatLng;
+import com.google.android.libraries.maps.model.LatLngBounds;
+import com.google.android.libraries.maps.model.MarkerOptions;
+import com.google.android.libraries.maps.model.PolygonOptions;
+import com.google.android.libraries.maps.model.PolylineOptions;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -33,9 +33,9 @@ import android.view.View;
 
 /**
  * This demo shows some features supported in lite mode.
- * In particular it demonstrates the use of {@link com.google.android.gms.maps.model.Marker}s to
- * launch the Google Maps Mobile application, {@link com.google.android.gms.maps.CameraUpdate}s
- * and {@link com.google.android.gms.maps.model.Polygon}s.
+ * In particular it demonstrates the use of {@link com.google.android.libraries.maps.model.Marker}s to
+ * launch the Google Maps Mobile application, {@link com.google.android.libraries.maps.CameraUpdate}s
+ * and {@link com.google.android.libraries.maps.model.Polygon}s.
  */
 public class LiteDemoActivity extends AppCompatActivity implements
         OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
@@ -103,7 +103,7 @@ public class LiteDemoActivity extends AppCompatActivity implements
 
     /**
      * Move the camera to show all of Australia.
-     * Construct a {@link com.google.android.gms.maps.model.LatLngBounds} from markers positions,
+     * Construct a {@link com.google.android.libraries.maps.model.LatLngBounds} from markers positions,
      * then move the camera.
      */
     public void showAustralia(View v) {

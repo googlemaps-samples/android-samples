@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            class="com.google.android.gms.maps.SupportMapFragment" />
+            class="com.google.android.libraries.maps.SupportMapFragment" />
 
         <ImageView
             android:id="@+id/snapshot_holder"

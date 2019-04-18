@@ -177,5 +177,5 @@
         android:id="@+id/streetviewpanorama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment" />
+        class="com.google.android.libraries.maps.SupportStreetViewPanoramaFragment" />
 </LinearLayout>
