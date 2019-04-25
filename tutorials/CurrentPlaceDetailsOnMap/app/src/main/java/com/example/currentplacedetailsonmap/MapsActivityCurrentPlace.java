@@ -303,7 +303,9 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                     for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
                         mLikelyPlaceNames[i] = placeLikelihood.getPlace().getName();
                         mLikelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
-                        mLikelyPlaceAttributions[i] = placeLikelihood.getPlace().getAttributions().toString();
+                        mLikelyPlaceAttributions[i] = (placeLikelihood.getPlace()
+                                .getAttributions() == null) ?
+                                null : placeLikelihood.getPlace().getAttributions().toString();
                         mLikelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
                         i++;
