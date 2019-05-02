@@ -23,8 +23,9 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:support-v4:+"
+    implementation 'com.android.support:appcompat-v7:+'
     implementation 'com.android.support.constraint:constraint-layout:+'
     // This dependency is needed to use RecyclerView, for the LiteListDemoActivity
     implementation "com.android.support:recyclerview-v7:+"
@@ -36,9 +37,9 @@ dependencies {
     // Below is used to run the easypermissions library to manage location permissions
     // EasyPermissions is needed to help us request for permission to access location
     implementation 'pub.devrel:easypermissions:1.1.1'
-    implementation name:'maps_release', ext:'aar'
-    implementation "com.android.support:support-v4:+"
-    implementation 'com.android.support:appcompat-v7:+'
+
+    // Dependencies for the Maps SDK v3.0 beta
+    implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
     implementation 'com.google.android.gms:play-services-basement:15.0.1'
     implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'com.google.android.gms:play-services-gcm:15.0.1'
