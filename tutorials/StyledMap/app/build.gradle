@@ -25,9 +25,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
-    implementation name:'maps_release', ext:'aar'
     implementation 'com.android.support:support-v4:+'
     implementation 'com.android.support:appcompat-v7:+'
+
+    // Dependencies for the Maps SDK v3.0 beta
+    implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
     implementation 'com.google.android.gms:play-services-basement:15.0.1'
     implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'com.google.android.gms:play-services-gcm:15.0.1'
