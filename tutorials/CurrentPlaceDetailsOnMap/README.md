@@ -1,13 +1,13 @@
-Google Maps Android API Sample: Current Place Details
+Google Maps SDK for Android Sample: Current Place Details
 =====================================================
 
-This sample goes hand in hand with a tutorial for the Google Maps Android API:
-[Select Current Place and Show Details on a Map](https://developers.google.com/maps/documentation/android-api/current-place-tutorial).
+This sample goes hand in hand with a tutorial for the Google Maps SDK for Android:
+[Select Current Place and Show Details on a Map](https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial).
 
 Prerequisites
 --------------
 
-- Android SDK v24
+- Android SDK v28
 - Latest Android Build Tools
 - Android Support Repository
 
@@ -25,15 +25,15 @@ This sample uses the Gradle build system.
   Alternatively use the "gradlew build" command to build the project directly.
 1. Add your API key to your app's `gradle.properties` file.
   (For information on getting an API key, see the
-  [documentation](https://developers.google.com/maps/documentation/android-api/signup).)
+  [documentation](https://developers.google.com/maps/documentation/android-sdk/signup).)
 
 Support
 -------
 
 - Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
 
-If you have discovered an issue with the Google Maps Android API v2, please see
-the resources here: https://developers.google.com/maps/documentation/android-api/support
+If you have discovered an issue with the Google Maps SDK for Android, please see
+the resources here: https://developers.google.com/maps/documentation/android-sdk/support
 
 If you've found an error in these samples, please file an issue:
 https://github.com/googlemaps/android-samples/issues

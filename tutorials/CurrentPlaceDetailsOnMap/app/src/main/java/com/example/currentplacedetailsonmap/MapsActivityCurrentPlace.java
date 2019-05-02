@@ -123,6 +123,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
     /**
      * Sets up the options menu.
+     *
      * @param menu The options menu.
      * @return Boolean.
      */
@@ -134,6 +135,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
     /**
      * Handles a click on the menu option to get a place.
+     *
      * @param item The menu item to handle.
      * @return Boolean.
      */
@@ -219,7 +221,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                     }
                 });
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
@@ -284,7 +286,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                     FindCurrentPlaceRequest.builder(placeFields).build();
             Task<FindCurrentPlaceResponse> placeResponse = mPlacesClient.findCurrentPlace(request);
             placeResponse.addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FindCurrentPlaceResponse response = task.getResult();
                     // Set the count, handling cases where less than 5 entries are returned.
                     int count;
@@ -313,14 +315,15 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                             break;
                         }
 
-                        // Show a dialog offering the user the list of likely places, and add a
-                        // marker at the selected place.
-                        openPlacesDialog();
-
                         Log.i(TAG, String.format("Place '%s' has likelihood: %f",
-                            placeLikelihood.getPlace().getName(),
-                            placeLikelihood.getLikelihood()));
+                                placeLikelihood.getPlace().getName(),
+                                placeLikelihood.getLikelihood()));
                     }
+
+                    // Show a dialog offering the user the list of likely places, and add a
+                    // marker at the selected place.
+                    openPlacesDialog();
+
                 } else {
                     Exception exception = task.getException();
                     if (exception instanceof ApiException) {
@@ -397,7 +400,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                 mLastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }

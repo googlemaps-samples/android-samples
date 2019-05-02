@@ -1,16 +1,16 @@
-Google Maps Android API v2 Samples
+Google Maps SDK for Android v3.0 beta Samples
 ===================================
 
 Samples demonstrating how to use
-[Google Maps Platform SDK for Android v2](https://developers.google.com/maps/documentation/android/).
+[Google Maps SDK for Android v3.0 beta](https://developers.google.com/maps/documentation/android-sdk/v3-client-migration).
 
 This repo contains the following samples:
 
-1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Google Maps Android API. (This was formally part of the Google Play Services SDK.)
+1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Google Maps Android API. (This was formerly part of the Google Play Services SDK.)
 1. [WearOS](WearOS):
 Displays a map on a Wear OS device. This sample demonstrates the basic
 setup required for a gradle-based Android Studio project.
-1. [Tutorials](https://github.com/googlemaps/android-samples/tree/master/tutorials): Samples
+1. [Tutorials](tutorials): Samples
 associated with tutorials in the developer's guide. See each sample for a link to the associated
 guide.
 
@@ -37,15 +37,15 @@ If prompted for a gradle configuration accept the default settings.
 Alternatively use the "gradlew build" command to build the project directly.
 
 Add your API key to the `AndroidManifest.xml` file.
-See the [quick guide to getting an API key](https://developers.google.com/maps/documentation/android-api/signup).
+See the [quick guide to getting an API key](https://developers.google.com/maps/documentation/android-sdk/signup).
 
 Support
 -------
 
 - Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
 
-If you have discovered an issue with the Google Maps Platform SDK for Android v2, please see
-the resources here: https://developers.google.com/maps/support/
+If you have discovered an issue with the Google Maps SDK for Android, please see
+the resources here: https://developers.google.com/maps/documentation/android-sdk/support
 
 If you've found an error in these samples, please file an issue:
 https://github.com/googlemaps/android-samples/issues

@@ -1,13 +1,13 @@
-Google Maps Android API Sample: Adding a Map with a Marker
+Google Maps SDK for Android Sample: Adding a Map with a Marker
 ==========================================================
 
-This sample goes hand in hand with a tutorial for the Google Maps Android API:
-[Adding a Map with a Marker](https://developers.google.com/maps/documentation/android-api/map-with-marker).
+This sample goes hand in hand with a tutorial for the Google Maps SDK for Android:
+[Adding a Map with a Marker](hhttps://developers.google.com/maps/documentation/android-sdk/map-with-marker).
 
 Prerequisites
 --------------
 
-- Android SDK v24
+- Android SDK v28
 - Latest Android Build Tools
 - Android Support Repository
 
@@ -25,15 +25,15 @@ This sample uses the Gradle build system.
   Alternatively use the "gradlew build" command to build the project directly.
 1. Add your API key to your app's `gradle.properties` file.
   (For information on getting an API key, see the
-  [documentation](https://developers.google.com/maps/documentation/android-api/signup).)
+  [documentation](https://developers.google.com/maps/documentation/android-sdk/signup).)
 
 Support
 -------
 
 Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
 
-If you have discovered an issue with the Google Maps Android API v2, please see
-the resources here: https://developers.google.com/maps/documentation/android-api/support
+If you have discovered an issue with the Google Maps SDK for Android, please see
+the resources here: https://developers.google.com/maps/documentation/android-sdk/support
 
 If you've found an error in these samples, please file an issue:
 https://github.com/googlemaps/android-samples/issues

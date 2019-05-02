@@ -1,13 +1,13 @@
-Google Maps Android API Sample: Polylines and Polygons
+Google Maps SDK for Android Sample: Polylines and Polygons
 ==========================================================
 
-This sample goes hand in hand with a tutorial for the Google Maps Android API:
-[Polylines and Polygons to Represent Routes and Areas](https://developers.google.com/maps/documentation/android-api/polygon-tutorial).
+This sample goes hand in hand with a tutorial for the Google Maps SDK for Android:
+[Polylines and Polygons to Represent Routes and Areas](https://developers.google.com/maps/documentation/android-sdk/polygon-tutorial).
 
 Prerequisites
 --------------
 
-- Android SDK v24
+- Android SDK v28
 - Latest Android Build Tools
 - Android Support Repository
 
@@ -25,15 +25,15 @@ This sample uses the Gradle build system.
   Alternatively use the "gradlew build" command to build the project directly.
 1. Add your API key to your app's `gradle.properties` file.
   (For information on getting an API key, see the
-  [documentation](https://developers.google.com/maps/documentation/android-api/signup).)
+  [documentation](https://developers.google.com/maps/documentation/android-sdk/signup).)
 
 Support
 -------
 
 Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
 
-If you have discovered an issue with the Google Maps Android API v2, please see
-the resources here: https://developers.google.com/maps/documentation/android-api/support
+If you have discovered an issue with the Google Maps SDK for Android, please see
+the resources here: https://developers.google.com/maps/documentation/android-sdk/support
 
 If you've found an error in these samples, please file an issue:
 https://github.com/googlemaps/android-samples/issues
