@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.example.polygons"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,14 +21,17 @@ android {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.google.android.gms:play-services-maps:10.2.0'
-}
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:support-v4:+'
+    implementation 'com.android.support:appcompat-v7:+'
+
+    // Dependencies for the Maps SDK v3.0 beta
+    implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
+    implementation 'com.google.android.gms:play-services-basement:15.0.1'
+    implementation 'com.google.android.gms:play-services-base:15.0.1'
+    implementation 'com.google.android.gms:play-services-gcm:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
 }

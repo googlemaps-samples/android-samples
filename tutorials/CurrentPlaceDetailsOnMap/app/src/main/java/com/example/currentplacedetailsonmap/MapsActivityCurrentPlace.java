@@ -16,23 +16,30 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.PlaceDetectionClient;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.maps.CameraUpdateFactory;
+import com.google.android.libraries.maps.GoogleMap;
+import com.google.android.libraries.maps.OnMapReadyCallback;
+import com.google.android.libraries.maps.SupportMapFragment;
+import com.google.android.libraries.maps.model.CameraPosition;
+import com.google.android.libraries.maps.model.LatLng;
+import com.google.android.libraries.maps.model.Marker;
+import com.google.android.libraries.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.PlaceLikelihood;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static com.google.android.apps.gmm.map.util.jni.NativeHelper.context;
 
 /**
  * An activity that displays a map showing the place at the device's current location.
@@ -45,8 +52,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
     private CameraPosition mCameraPosition;
 
     // The entry points to the Places API.
-    private GeoDataClient mGeoDataClient;
-    private PlaceDetectionClient mPlaceDetectionClient;
+    private PlacesClient mPlacesClient;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -86,11 +92,12 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps);
 
-        // Construct a GeoDataClient.
-        mGeoDataClient = Places.getGeoDataClient(this, null);
+        String apiKey = getString(R.string.google_maps_key);
 
-        // Construct a PlaceDetectionClient.
-        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+        // Initialize Places.
+        Places.initialize(context, apiKey);
+        // Create a new Places client instance.
+        mPlacesClient = Places.createClient(this);
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -116,6 +123,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
     /**
      * Sets up the options menu.
+     *
      * @param menu The options menu.
      * @return Boolean.
      */
@@ -127,6 +135,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
     /**
      * Handles a click on the menu option to get a place.
+     *
      * @param item The menu item to handle.
      * @return Boolean.
      */
@@ -212,7 +221,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                     }
                 });
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
@@ -268,59 +277,62 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
         }
 
         if (mLocationPermissionGranted) {
+            // Use fields to define the data types to return.
+            List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+
             // Get the likely places - that is, the businesses and other points of interest that
             // are the best match for the device's current location.
-            @SuppressWarnings("MissingPermission") final
-            Task<PlaceLikelihoodBufferResponse> placeResult =
-                    mPlaceDetectionClient.getCurrentPlace(null);
-            placeResult.addOnCompleteListener
-                    (new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
-                        @Override
-                        public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
-                            if (task.isSuccessful() && task.getResult() != null) {
-                                PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
+            @SuppressWarnings("MissingPermission") final FindCurrentPlaceRequest request =
+                    FindCurrentPlaceRequest.builder(placeFields).build();
+            Task<FindCurrentPlaceResponse> placeResponse = mPlacesClient.findCurrentPlace(request);
+            placeResponse.addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    FindCurrentPlaceResponse response = task.getResult();
+                    // Set the count, handling cases where less than 5 entries are returned.
+                    int count;
+                    if (response.getPlaceLikelihoods().size() < M_MAX_ENTRIES) {
+                        count = response.getPlaceLikelihoods().size();
+                    } else {
+                        count = M_MAX_ENTRIES;
+                    }
 
-                                // Set the count, handling cases where less than 5 entries are returned.
-                                int count;
-                                if (likelyPlaces.getCount() < M_MAX_ENTRIES) {
-                                    count = likelyPlaces.getCount();
-                                } else {
-                                    count = M_MAX_ENTRIES;
-                                }
+                    int i = 0;
+                    mLikelyPlaceNames = new String[count];
+                    mLikelyPlaceAddresses = new String[count];
+                    mLikelyPlaceAttributions = new String[count];
+                    mLikelyPlaceLatLngs = new LatLng[count];
 
-                                int i = 0;
-                                mLikelyPlaceNames = new String[count];
-                                mLikelyPlaceAddresses = new String[count];
-                                mLikelyPlaceAttributions = new String[count];
-                                mLikelyPlaceLatLngs = new LatLng[count];
+                    for (PlaceLikelihood placeLikelihood : response.getPlaceLikelihoods()) {
+                        mLikelyPlaceNames[i] = placeLikelihood.getPlace().getName();
+                        mLikelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
+                        mLikelyPlaceAttributions[i] = (placeLikelihood.getPlace()
+                                .getAttributions() == null) ?
+                                null : placeLikelihood.getPlace().getAttributions().toString();
+                        mLikelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
-                                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                                    // Build a list of likely places to show the user.
-                                    mLikelyPlaceNames[i] = (String) placeLikelihood.getPlace().getName();
-                                    mLikelyPlaceAddresses[i] = (String) placeLikelihood.getPlace()
-                                            .getAddress();
-                                    mLikelyPlaceAttributions[i] = (String) placeLikelihood.getPlace()
-                                            .getAttributions();
-                                    mLikelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
-
-                                    i++;
-                                    if (i > (count - 1)) {
-                                        break;
-                                    }
-                                }
-
-                                // Release the place likelihood buffer, to avoid memory leaks.
-                                likelyPlaces.release();
-
-                                // Show a dialog offering the user the list of likely places, and add a
-                                // marker at the selected place.
-                                openPlacesDialog();
-
-                            } else {
-                                Log.e(TAG, "Exception: %s", task.getException());
-                            }
+                        i++;
+                        if (i > (count - 1)) {
+                            break;
                         }
-                    });
+
+                        Log.i(TAG, String.format("Place '%s' has likelihood: %f",
+                                placeLikelihood.getPlace().getName(),
+                                placeLikelihood.getLikelihood()));
+                    }
+
+                    // Show a dialog offering the user the list of likely places, and add a
+                    // marker at the selected place.
+                    openPlacesDialog();
+
+                } else {
+                    Exception exception = task.getException();
+                    if (exception instanceof ApiException) {
+                        ApiException apiException = (ApiException) exception;
+                        Log.e(TAG, "Place not found: " + apiException.getStatusCode());
+                    }
+                }
+            });
+
         } else {
             // The user has not granted permission.
             Log.i(TAG, "The user did not grant location permission.");
@@ -388,7 +400,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
                 mLastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
