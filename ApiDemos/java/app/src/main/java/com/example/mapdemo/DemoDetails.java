@@ -16,7 +16,7 @@
 
 package com.example.mapdemo;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * A simple POJO that holds the details about the demo that are used by the List Adapter.

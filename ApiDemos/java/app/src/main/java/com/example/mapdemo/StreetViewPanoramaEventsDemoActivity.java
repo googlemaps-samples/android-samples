@@ -30,8 +30,9 @@ import com.google.android.gms.maps.model.StreetViewPanoramaOrientation;
 
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This shows how to listen to some {@link StreetViewPanorama} events.

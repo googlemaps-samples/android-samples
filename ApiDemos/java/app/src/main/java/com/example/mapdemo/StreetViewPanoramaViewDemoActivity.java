@@ -21,8 +21,9 @@ import com.google.android.gms.maps.StreetViewPanoramaView;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup.LayoutParams;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This shows how to create a simple activity with streetview
