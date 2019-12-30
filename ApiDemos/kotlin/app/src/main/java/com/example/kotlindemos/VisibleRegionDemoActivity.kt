@@ -16,21 +16,21 @@
 
 package com.example.kotlindemos
 
+import android.os.Bundle
+import android.os.Handler
+import android.os.SystemClock
+import android.view.View
+import android.view.animation.OvershootInterpolator
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-
-import android.os.Bundle
-import android.os.Handler
-import android.os.SystemClock
-import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.view.animation.OvershootInterpolator
-import android.widget.Button
-import android.widget.TextView
 
 /**
  * This shows how to use setPadding to allow overlays that obscure part of the map without
@@ -103,7 +103,7 @@ class VisibleRegionDemoActivity :
         // increases the amount of padding along the right and bottom of the map
         morePaddedButton.setOnClickListener {
             // get the view that contains the map
-            val mapView: View? = supportFragmentManager.findFragmentById(R.id.map).view
+            val mapView: View? = supportFragmentManager.findFragmentById(R.id.map)?.view
             animatePadding(150, 0, (mapView?.width ?: 0) / 3,
                     (mapView?.height ?: 0)/ 4)
         }

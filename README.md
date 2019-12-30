@@ -1,12 +1,12 @@
-Google Maps Android API v2 Samples
+Google Maps SDK for Android Samples
 ===================================
 
 Samples demonstrating how to use
-[Google Maps Platform SDK for Android v2](https://developers.google.com/maps/documentation/android/).
+[Maps SDK for Android](https://developers.google.com/maps/documentation/android/).
 
 This repo contains the following samples:
 
-1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Google Maps Android API. (This was formally part of the Google Play Services SDK.)
+1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Maps SDK for Android.
 1. [WearOS](WearOS):
 Displays a map on a Wear OS device. This sample demonstrates the basic
 setup required for a gradle-based Android Studio project.
@@ -36,8 +36,10 @@ If prompted for a gradle configuration accept the default settings.
 
 Alternatively use the "gradlew build" command to build the project directly.
 
-Add your API key to the `AndroidManifest.xml` file.
-See the [quick guide to getting an API key](https://developers.google.com/maps/documentation/android-api/signup).
+Search for `YOUR_API_KEY` in the project and replace it with your API key.
+Some samples store this in the gradle.properties file and others store it in the google_maps_api.xml file.
+See the [Get Started with Google Maps Platform](https://developers.google.com/maps/gmp-get-started) 
+guide to get an API key.
 
 Support
 -------
