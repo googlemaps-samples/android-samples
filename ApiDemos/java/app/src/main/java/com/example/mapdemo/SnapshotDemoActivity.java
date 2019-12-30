@@ -24,10 +24,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This shows how to take a snapshot of the map.

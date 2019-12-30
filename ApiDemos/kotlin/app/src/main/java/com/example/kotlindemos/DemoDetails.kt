@@ -16,7 +16,7 @@
 
 package com.example.kotlindemos
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 
 /**

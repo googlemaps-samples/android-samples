@@ -16,9 +16,9 @@
 
 package com.example.kotlindemos
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +26,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListAdapter
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * The main activity of the API library demo gallery.
@@ -58,15 +59,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
      * @property context current activity
      * @property demos An array containing the details of the demos to be displayed.
      */
+    @SuppressLint("ResourceType")
     class CustomArrayAdapter(context: Context, demos: List<DemoDetails>) :
-            ArrayAdapter<DemoDetails>(context, R.id.title, demos) {
+            ArrayAdapter<DemoDetails>(context, R.layout.feature, demos) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val demo: DemoDetails = getItem(position)
+            val demo: DemoDetails? = getItem(position)
             return (convertView as? FeatureView ?: FeatureView(context)).apply {
-                setTitleId(demo.titleId)
-                setDescriptionId(demo.descriptionId)
-                contentDescription = resources.getString(demo.titleId)
+                if (demo != null) {
+                    setTitleId(demo.titleId)
+                    setDescriptionId(demo.descriptionId)
+                    contentDescription = resources.getString(demo.titleId)
+                }
             }
         }
     }

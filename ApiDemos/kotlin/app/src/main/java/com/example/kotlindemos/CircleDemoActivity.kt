@@ -19,7 +19,6 @@ package com.example.kotlindemos
 import android.graphics.Color
 import android.graphics.Point
 import android.location.Location
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -27,6 +26,9 @@ import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Spinner
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -209,7 +211,7 @@ class CircleDemoActivity :
             setContentDescription(getString(R.string.circle_demo_details))
             setOnMapLongClickListener { point ->
                 // We know the center, let's place the outline at a point 3/4 along the view.
-                val view: View = supportFragmentManager.findFragmentById(R.id.map).view
+                val view: View = supportFragmentManager.findFragmentById(R.id.map)?.view
                         ?: return@setOnMapLongClickListener
                 val radiusLatLng = map.projection.fromScreenLocation(
                         Point(view.height * 3 / 4, view.width * 3 / 4))
