@@ -18,7 +18,6 @@ package com.example.kotlindemos
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListAdapter
 import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * The main activity of the API library demo gallery.
@@ -62,11 +62,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             ArrayAdapter<DemoDetails>(context, R.id.title, demos) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val demo: DemoDetails = getItem(position)
+
             return (convertView as? FeatureView ?: FeatureView(context)).apply {
-                setTitleId(demo.titleId)
-                setDescriptionId(demo.descriptionId)
-                contentDescription = resources.getString(demo.titleId)
+
+                getItem(position)?.let {
+                    setTitleId(it.titleId)
+                    setDescriptionId(it.descriptionId)
+                    contentDescription = resources.getString(it.titleId)
+                }
             }
         }
     }

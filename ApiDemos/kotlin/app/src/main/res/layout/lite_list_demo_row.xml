@@ -23,7 +23,7 @@
     android:paddingTop="5dp">
 
     <!-- Put the name of the location and the map inside a CardView -->
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_gravity="center"
@@ -52,5 +52,5 @@
             map:mapType="none"
             android:layout_below="@id/lite_listrow_text" />
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

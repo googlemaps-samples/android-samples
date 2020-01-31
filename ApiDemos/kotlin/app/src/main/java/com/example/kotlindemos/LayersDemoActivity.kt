@@ -20,13 +20,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.libraries.maps.GoogleMap
 import com.google.android.libraries.maps.GoogleMap.MAP_TYPE_HYBRID
 import com.google.android.libraries.maps.GoogleMap.MAP_TYPE_NONE

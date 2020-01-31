@@ -19,13 +19,13 @@ package com.example.kotlindemos
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.SeekBar
 import android.widget.Spinner
 import android.widget.CheckBox
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.model.Dash
 import com.google.android.libraries.maps.model.Dot
