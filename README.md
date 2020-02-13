@@ -1,3 +1,6 @@
+![GitHub contributors](https://img.shields.io/github/contributors/googlemaps/android-samples)
+![Apache-2.0](https://img.shields.io/badge/license-Apache-blue)
+
 Google Maps SDK for Android Samples
 ===================================
 
