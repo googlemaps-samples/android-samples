@@ -95,7 +95,7 @@ public class MyLocationDemoActivity extends AppCompatActivity
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
                 Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
-        // [START maps_check_location_permission]
+        // [END maps_check_location_permission]
     }
 
     @Override
