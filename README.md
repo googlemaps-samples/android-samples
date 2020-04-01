@@ -22,7 +22,7 @@ Pre-requisites
 --------------
 
 See each sample for pre-requisites.
-All require an uptodate version of the Android build tools and the Android support repository.
+All require up-to-date versions of the Android build tools and the Android support repository.
 
 Getting Started
 ---------------
