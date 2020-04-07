@@ -16,6 +16,8 @@
 
 package com.example.wearosmap;
 
+import android.support.wearable.activity.WearableActivity;
+import android.support.wearable.view.DismissOverlayView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -23,10 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.wearable.activity.WearableActivity;
-import android.support.wearable.view.DismissOverlayView;
 import android.view.View;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
