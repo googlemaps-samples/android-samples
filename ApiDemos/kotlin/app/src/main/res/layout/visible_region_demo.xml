@@ -46,7 +46,6 @@
                 android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="setNoPadding"
                 android:text="@string/vr_normal_button" />
 
             <Button
@@ -54,7 +53,6 @@
                 android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="setMorePadding"
                 android:text="@string/vr_more_padded_button" />
 
             <Button
@@ -62,7 +60,6 @@
                 android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="moveToOperaHouse"
                 android:text="@string/vr_opera_house_button" />
 
             <Button
@@ -70,7 +67,6 @@
                 android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="moveToSFO"
                 android:text="@string/vr_sfo_button" />
 
             <Button
@@ -78,7 +74,6 @@
                 android:padding="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="moveToAUS"
                 android:text="@string/vr_australia_button" />
         </LinearLayout>
     </RelativeLayout>

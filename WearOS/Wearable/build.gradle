@@ -18,13 +18,12 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.example.wearos"
         minSdkVersion 21
-        targetSdkVersion 22
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -41,14 +40,14 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Required for DismissOverlayView to exit full screen wearable app.
-    compile 'com.google.android.support:wearable:1.2.0'
+    implementation 'com.google.android.support:wearable:2.5.0'
 
-    // Required to support ambient mode.
-    provided 'com.google.android.wearable:wearable:1.0.0'
+//    // Required to support ambient mode.
+    compileOnly 'com.google.android.wearable:wearable:2.5.0'
 
     // Include the Google Maps Android API from Google Play Services.
-    compile 'com.google.android.gms:play-services-maps:8.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }
