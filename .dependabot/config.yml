@@ -1,0 +1,17 @@
+version: 1
+update_configs:
+    - package_manager: "java:gradle"
+      directory: "./ApiDemos/java/"
+      update_schedule: "daily"
+
+    - package_manager: "java:gradle"
+      directory: "./ApiDemos/kotlin/"
+      update_schedule: "daily"
+
+    - package_manager: "java:gradle"
+      directory: "./WearOS/"
+      update_schedule: "daily"
+
+    - package_manager: "java:gradle"
+      directory: "./tutorials/*/"
+      update_schedule: "daily"
