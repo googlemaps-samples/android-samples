@@ -3,27 +3,41 @@ update_configs:
     - package_manager: "java:gradle"
       directory: "./ApiDemos/java/"
       update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
       directory: "./ApiDemos/kotlin/"
       update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
       directory: "./WearOS/"
       update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
       directory: "./tutorials/CurrentPlaceDetailsOnMap/"
       update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
       directory: "./tutorials/MapWithMarker/"
       update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
       directory: "./tutorials/Polygons/"
       update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
       directory: "./tutorials/StyledMap/"
       update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
