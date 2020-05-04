@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'project-report'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.example.mapdemo"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
@@ -18,19 +18,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    implementation "com.android.support:support-v4:+"
-    implementation 'com.android.support:appcompat-v7:+'
+    testImplementation 'junit:junit:4.13'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     // Needed for the LiteListDemo
-    implementation "com.android.support:recyclerview-v7:+"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     // Dependencies for the Maps SDK v3.0 beta
     implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
-    implementation 'com.google.android.gms:play-services-basement:15.0.1'
-    implementation 'com.google.android.gms:play-services-base:15.0.1'
-    implementation 'com.google.android.gms:play-services-gcm:15.0.1'
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-basement:17.2.1'
+    implementation 'com.google.android.gms:play-services-base:17.2.1'
+    implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }

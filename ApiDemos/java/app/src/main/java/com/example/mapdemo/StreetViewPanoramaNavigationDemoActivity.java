@@ -25,7 +25,7 @@ import com.google.android.libraries.maps.model.StreetViewPanoramaLink;
 import com.google.android.libraries.maps.model.StreetViewPanoramaLocation;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;

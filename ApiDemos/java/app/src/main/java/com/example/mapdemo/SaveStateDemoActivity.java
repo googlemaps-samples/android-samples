@@ -30,7 +30,7 @@ import com.google.android.libraries.maps.model.MarkerOptions;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 

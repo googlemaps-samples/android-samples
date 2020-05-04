@@ -17,7 +17,7 @@
 package com.example.mapdemo;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * An activity that creates a map with some initial options.
