@@ -36,13 +36,13 @@ import com.google.android.libraries.maps.model.RoundCap
 import com.google.android.libraries.maps.model.SquareCap
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 import java.util.Arrays
 
 /**

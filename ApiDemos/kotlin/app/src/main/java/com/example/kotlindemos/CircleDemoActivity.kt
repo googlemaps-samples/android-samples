@@ -19,7 +19,6 @@ package com.example.kotlindemos
 import android.graphics.Color
 import android.graphics.Point
 import android.location.Location
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -27,6 +26,7 @@ import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.GoogleMap
