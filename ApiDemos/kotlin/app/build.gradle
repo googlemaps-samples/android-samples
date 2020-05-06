@@ -36,6 +36,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
+    // Google Maps KTX extensions
+    implementation 'com.google.maps.android:maps-ktx:1.4.0'
+
+    // Needed for coroutines
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+
     // Below is used to run the easypermissions library to manage location permissions
     // EasyPermissions is needed to help us request for permission to access location
     implementation 'pub.devrel:easypermissions:3.0.0'
