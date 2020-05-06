@@ -19,13 +19,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * The main activity of the API library demo gallery.
@@ -82,6 +84,10 @@ public final class MainActivity extends AppCompatActivity
         list.setAdapter(adapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(findViewById(R.id.empty));
+
+        if (getString(R.string.maps_api_key).isEmpty()) {
+            Toast.makeText(this, "Add your own API key in ApiDemos/java/app/secure.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
