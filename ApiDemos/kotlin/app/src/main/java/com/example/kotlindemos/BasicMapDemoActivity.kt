@@ -18,40 +18,40 @@ package com.example.kotlindemos
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.coroutineScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.ktx.MapsExperimentalFeature
+import com.google.maps.android.ktx.awaitMap
 
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
  */
 class BasicMapDemoActivity :
-        AppCompatActivity(),
-        OnMapReadyCallback {
+        AppCompatActivity() {
 
     val SYDNEY = LatLng(-33.862, 151.21)
     val ZOOM_LEVEL = 13f
 
+    @MapsExperimentalFeature
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic_map_demo)
-        val mapFragment : SupportMapFragment? =
-                supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
-        mapFragment?.getMapAsync(this)
-    }
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just move the camera to Sydney and add a marker in Sydney.
-     */
-    override fun onMapReady(googleMap: GoogleMap?) {
-        googleMap ?: return
-        with(googleMap) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, ZOOM_LEVEL))
-            addMarker(MarkerOptions().position(SYDNEY))
+        lifecycle.coroutineScope.launchWhenCreated {
+            check(mapFragment != null)
+            val googleMap = mapFragment.awaitMap() // Execution pauses here until we get the callback from the Maps SDK with a googleMap.
+            // This is where we can add markers or lines, add listeners or move the camera.
+            // In this case, we just move the camera to Sydney and add a marker in Sydney.
+            with(googleMap) {
+                moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, ZOOM_LEVEL))
+                addMarker(MarkerOptions().position(SYDNEY))
+            }
         }
     }
 }
