@@ -63,8 +63,10 @@ jobs:
         cd tutorials
         for dir in ./*/
         do
+          cd "$dir"
           for tutorial in ./*/
           do
             cd "$tutorial" && ./gradlew assembleDebug lintDebug
           done
+          cd ..
         done
