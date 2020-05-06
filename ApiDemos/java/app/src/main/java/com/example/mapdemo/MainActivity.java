@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -84,6 +85,10 @@ public final class MainActivity extends AppCompatActivity
         list.setAdapter(adapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(findViewById(R.id.empty));
+
+        if (getString(R.string.maps_api_key).isEmpty()) {
+            Toast.makeText(this, "Add your own API key in ApiDemos/java/app/secure.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
