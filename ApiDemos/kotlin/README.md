@@ -23,15 +23,18 @@ This sample use the Gradle build system.
 First download the samples by cloning this repository or downloading an archived
 snapshot. (See the options at the top of the page.)
 
-In Android Studio, use "Open an existing Android Studio project". Next select the ApiDemos/kotlin/ directory that you downloaded
+In Android Studio, use "Open an existing Android Studio project". Next select the `ApiDemos/kotlin/` directory that you downloaded
 from this repository.
 If prompted for a gradle configuration accept the default settings. 
 
-Alternatively use the "gradlew build" command to build the project directly.
+Alternatively use the `gradlew build` command to build the project directly.
 
-Add your API key to the file `debug/values/google_maps_api.xml`.
-It's pulled from there into your app's `AndroidManifest.xml` file.
-See the [quick guide to getting an API key](https://developers.google.com/maps/documentation/android-api/signup).
+This demo app requires that you add your own Google Maps API key:
+
+1. [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+1. Create a file in the `ApiDemos/kotlin/app` directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
+1. Add a single line to `ApiDemos/kotlin/app/secure.properties` that looks like `MAPS_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the API key you obtained in the first step
+1. Build and run
 
 Support
 -------
