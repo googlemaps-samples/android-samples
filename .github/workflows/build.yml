@@ -67,6 +67,7 @@ jobs:
           for tutorial in ./*/
           do
             cd "$tutorial" && ./gradlew assembleDebug lintDebug
+            cd ..
           done
           cd ..
         done
