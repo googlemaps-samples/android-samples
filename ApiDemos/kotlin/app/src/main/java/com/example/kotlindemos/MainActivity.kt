@@ -21,10 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
-import android.widget.ListView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -50,6 +47,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
             onItemClickListener = this@MainActivity
             emptyView = emptyMessage
         }
+
+        if (getString(R.string.maps_api_key).isEmpty()) {
+            Toast.makeText(this, "Add your own API key in ApiDemos/kotlin/app/secure.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
+        }
+
     }
 
     /**
