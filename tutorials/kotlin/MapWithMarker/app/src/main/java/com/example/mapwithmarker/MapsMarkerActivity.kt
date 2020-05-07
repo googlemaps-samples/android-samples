@@ -34,7 +34,10 @@ class MapsMarkerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_maps)
-
+        if (getString(R.string.maps_api_key).isEmpty()) {
+            Toast.makeText(this, "Add your own API key in MapWithMarker/app/secure.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
+        }
+        
         // Get the SupportMapFragment and request notification when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
 
