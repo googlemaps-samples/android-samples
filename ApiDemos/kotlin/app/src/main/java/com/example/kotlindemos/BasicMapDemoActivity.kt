@@ -22,8 +22,8 @@ import androidx.lifecycle.coroutineScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.ktx.MapsExperimentalFeature
-import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
 
 /**
@@ -42,14 +42,13 @@ class BasicMapDemoActivity :
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
 
         lifecycle.coroutineScope.launchWhenCreated {
-            val googleMap = mapFragment?.awaitMap() // Execution pauses here until we get the callback from the Maps SDK with a googleMap.
+            check(mapFragment != null)
+            val googleMap = mapFragment.awaitMap() // Execution pauses here until we get the callback from the Maps SDK with a googleMap.
             // This is where we can add markers or lines, add listeners or move the camera.
             // In this case, we just move the camera to Sydney and add a marker in Sydney.
             with(googleMap) {
-                this?.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, ZOOM_LEVEL))
-                this?.addMarker {
-                    position(SYDNEY)
-                }
+                moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, ZOOM_LEVEL))
+                addMarker(MarkerOptions().position(SYDNEY))
             }
         }
     }
