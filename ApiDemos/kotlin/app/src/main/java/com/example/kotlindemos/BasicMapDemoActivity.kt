@@ -18,15 +18,19 @@ package com.example.kotlindemos
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
  */
 class BasicMapDemoActivity :
         AppCompatActivity(),
-        OnMapReadyCallback {
+    OnMapReadyCallback {
 
     val SYDNEY = LatLng(-33.862, 151.21)
     val ZOOM_LEVEL = 13f
