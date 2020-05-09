@@ -27,9 +27,9 @@ This sample uses the Gradle build system.
 This demo app requires that you add your own Google Maps API key:
 
 1. [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
-1. Create a file in the `tutorials/java/Polygons` directory called `secure.properties` 
+1. Create a file in the `tutorials/kotlin/Polygons` directory called `secure.properties` 
   (this file should *NOT* be under version control to protect your API key)
-1. Add a single line to `tutorials/java/Polygons/secure.properties` that looks like 
+1. Add a single line to `tutorials/kotlin/Polygons/secure.properties` that looks like 
   `MAPS_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the API key you obtained in the first step
 1. Build and run
 
