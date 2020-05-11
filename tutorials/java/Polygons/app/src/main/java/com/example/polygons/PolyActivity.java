@@ -46,12 +46,14 @@ import static com.example.polygons.R.id.map;
  * An activity that displays a Google map with polylines to represent paths or routes,
  * and polygons to represent areas.
  */
+// [START maps_poly_activity_on_map_ready]
 public class PolyActivity extends AppCompatActivity
         implements
                 OnMapReadyCallback,
                 GoogleMap.OnPolylineClickListener,
                 GoogleMap.OnPolygonClickListener {
 
+    // [START EXCLUDE]
     private static final int COLOR_BLACK_ARGB = 0xff000000;
     private static final int COLOR_WHITE_ARGB = 0xffffffff;
     private static final int COLOR_GREEN_ARGB = 0xff388E3C;
@@ -98,6 +100,7 @@ public class PolyActivity extends AppCompatActivity
      * This is where we can add markers or lines, add listeners or move the camera.
      * In this tutorial, we add polylines and polygons to represent routes and areas on the map.
      */
+    // [END EXCLUDE]
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -112,6 +115,7 @@ public class PolyActivity extends AppCompatActivity
                         new LatLng(-33.501, 150.217),
                         new LatLng(-32.306, 149.248),
                         new LatLng(-32.491, 147.309)));
+        // [START_EXCLUDE silent]
         // Store a data object with the polyline, used here to indicate an arbitrary type.
         polyline1.setTag("A");
         // Style the polyline.
@@ -151,6 +155,7 @@ public class PolyActivity extends AppCompatActivity
                         new LatLng(-12.4258, 130.7932)));
         polygon2.setTag("beta");
         stylePolygon(polygon2);
+        // [END_EXCLUDE silent]
 
         // Position the map's camera near Alice Springs in the center of Australia,
         // and set the zoom factor so most of Australia shows on the screen.
@@ -160,6 +165,7 @@ public class PolyActivity extends AppCompatActivity
         googleMap.setOnPolylineClickListener(this);
         googleMap.setOnPolygonClickListener(this);
     }
+    // [END maps_poly_activity_on_map_ready]
 
     /**
      * Styles the polyline, based on type.

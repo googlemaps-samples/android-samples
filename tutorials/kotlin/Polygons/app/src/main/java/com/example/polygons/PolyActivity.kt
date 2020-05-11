@@ -42,8 +42,10 @@ import java.util.*
  * An activity that displays a Google map with polylines to represent paths or routes,
  * and polygons to represent areas.
  */
+// [START maps_poly_activity_on_map_ready]
 class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickListener, OnPolygonClickListener {
 
+    // [START EXCLUDE]
     // [START maps_poly_activity_get_map_async]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +66,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
      * This is where we can add markers or lines, add listeners or move the camera.
      * In this tutorial, we add polylines and polygons to represent routes and areas on the map.
      */
+    // [END EXCLUDE]
     override fun onMapReady(googleMap: GoogleMap) {
 
         // Add polylines to the map.
@@ -77,6 +80,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
                 LatLng(-33.501, 150.217),
                 LatLng(-32.306, 149.248),
                 LatLng(-32.491, 147.309)))
+        // [START_EXCLUDE silent]
         // Store a data object with the polyline, used here to indicate an arbitrary type.
         polyline1.tag = "A"
         // Style the polyline.
@@ -116,6 +120,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
                 LatLng(-12.4258, 130.7932)))
         polygon2.tag = "beta"
         stylePolygon(polygon2)
+        // [END_EXCLUDE silent]
 
         // Position the map's camera near Alice Springs in the center of Australia,
         // and set the zoom factor so most of Australia shows on the screen.
@@ -125,6 +130,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         googleMap.setOnPolylineClickListener(this)
         googleMap.setOnPolygonClickListener(this)
     }
+    // [END maps_poly_activity_on_map_ready]
 
     /**
      * Styles the polyline, based on type.
