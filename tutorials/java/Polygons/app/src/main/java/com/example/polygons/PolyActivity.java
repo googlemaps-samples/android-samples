@@ -54,14 +54,12 @@ public class PolyActivity extends AppCompatActivity
                 GoogleMap.OnPolygonClickListener {
 
     // [START EXCLUDE]
-    private static final int COLOR_BLACK_ARGB = 0xff000000;
     private static final int COLOR_WHITE_ARGB = 0xffffffff;
     private static final int COLOR_GREEN_ARGB = 0xff388E3C;
     private static final int COLOR_PURPLE_ARGB = 0xff81C784;
     private static final int COLOR_ORANGE_ARGB = 0xffF57F17;
     private static final int COLOR_BLUE_ARGB = 0xffF9A825;
 
-    private static final int POLYLINE_STROKE_WIDTH_PX = 12;
     private static final int POLYGON_STROKE_WIDTH_PX = 8;
     private static final int PATTERN_DASH_LENGTH_PX = 20;
     private static final int PATTERN_GAP_LENGTH_PX = 20;
@@ -171,6 +169,10 @@ public class PolyActivity extends AppCompatActivity
     }
     // [END maps_poly_activity_on_map_ready]
 
+    // [START maps_poly_activity_style_polyline]
+    private static final int COLOR_BLACK_ARGB = 0xff000000;
+    private static final int POLYLINE_STROKE_WIDTH_PX = 12;
+
     /**
      * Styles the polyline, based on type.
      * @param polyline The polyline object that needs styling.
@@ -201,6 +203,7 @@ public class PolyActivity extends AppCompatActivity
         polyline.setColor(COLOR_BLACK_ARGB);
         polyline.setJointType(JointType.ROUND);
     }
+    // [END maps_poly_activity_style_polyline]
 
     /**
      * Styles the polygon, based on type.

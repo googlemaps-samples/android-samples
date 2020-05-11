@@ -136,6 +136,10 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
     }
     // [END maps_poly_activity_on_map_ready]
 
+    // [START maps_poly_activity_style_polyline]
+    private val COLOR_BLACK_ARGB = -0x1000000
+    private val POLYLINE_STROKE_WIDTH_PX = 12
+
     /**
      * Styles the polyline, based on type.
      * @param polyline The polyline object that needs styling.
@@ -159,6 +163,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         polyline.color = COLOR_BLACK_ARGB
         polyline.jointType = JointType.ROUND
     }
+    // [END maps_poly_activity_style_polyline]
 
     /**
      * Styles the polygon, based on type.
@@ -220,13 +225,11 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
     }
 
     companion object {
-        private const val COLOR_BLACK_ARGB = -0x1000000
         private const val COLOR_WHITE_ARGB = -0x1
         private const val COLOR_GREEN_ARGB = -0xc771c4
         private const val COLOR_PURPLE_ARGB = -0x7e387c
         private const val COLOR_ORANGE_ARGB = -0xa80e9
         private const val COLOR_BLUE_ARGB = -0x657db
-        private const val POLYLINE_STROKE_WIDTH_PX = 12
         private const val POLYGON_STROKE_WIDTH_PX = 8
         private const val PATTERN_DASH_LENGTH_PX = 20
         private const val PATTERN_GAP_LENGTH_PX = 20
