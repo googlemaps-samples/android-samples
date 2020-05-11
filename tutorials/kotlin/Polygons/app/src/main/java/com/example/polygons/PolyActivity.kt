@@ -16,7 +16,6 @@ package com.example.polygons
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.polygons.R.id
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnPolygonClickListener
@@ -36,7 +35,6 @@ import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.RoundCap
-import java.util.*
 
 /**
  * An activity that displays a Google map with polylines to represent paths or routes,
@@ -55,7 +53,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
 
         // Get the SupportMapFragment and request notification when the map is ready to be used.
         val mapFragment = supportFragmentManager
-            .findFragmentById(id.map) as SupportMapFragment?
+            .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
     // [END maps_poly_activity_get_map_async]
@@ -102,6 +100,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         polyline2.tag = "B"
         stylePolyline(polyline2)
 
+        // [START maps_poly_activity_add_polygon]
         // Add polygons to indicate areas on the map.
         val polygon1 = googleMap.addPolygon(PolygonOptions()
             .clickable(true)
@@ -113,6 +112,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         // Store a data object with the polygon, used here to indicate an arbitrary type.
         polygon1.tag = "alpha"
         // Style the polygon.
+        // [END maps_poly_activity_add_polygon]
         stylePolygon(polygon1)
 
         val polygon2 = googleMap.addPolygon(PolygonOptions()
@@ -165,6 +165,61 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
     }
     // [END maps_poly_activity_style_polyline]
 
+    // [START maps_poly_activity_on_polyline_click]
+    private val PATTERN_GAP_LENGTH_PX = 20
+    private val DOT: PatternItem = Dot()
+    private val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX.toFloat())
+
+    // Create a stroke pattern of a gap followed by a dot.
+    private val PATTERN_POLYLINE_DOTTED = listOf(GAP, DOT)
+
+    /**
+     * Listens for clicks on a polyline.
+     * @param polyline The polyline object that the user has clicked.
+     */
+    override fun onPolylineClick(polyline: Polyline) {
+        // Flip from solid stroke to dotted stroke pattern.
+        if (polyline.pattern == null || !polyline.pattern!!.contains(DOT)) {
+            polyline.pattern = PATTERN_POLYLINE_DOTTED
+        } else {
+            // The default pattern is a solid stroke.
+            polyline.pattern = null
+        }
+        Toast.makeText(this, "Route type " + polyline.tag.toString(),
+            Toast.LENGTH_SHORT).show()
+    }
+    // [END maps_poly_activity_on_polyline_click]
+
+    /**
+     * Listens for clicks on a polygon.
+     * @param polygon The polygon object that the user has clicked.
+     */
+    override fun onPolygonClick(polygon: Polygon) {
+        // Flip the values of the red, green, and blue components of the polygon's color.
+        var color = polygon.strokeColor xor 0x00ffffff
+        polygon.strokeColor = color
+        color = polygon.fillColor xor 0x00ffffff
+        polygon.fillColor = color
+        Toast.makeText(this, "Area type ${polygon.tag?.toString()}", Toast.LENGTH_SHORT).show()
+    }
+
+    // [START maps_poly_activity_style_polygon]
+    private val COLOR_WHITE_ARGB = -0x1
+    private val COLOR_GREEN_ARGB = -0xc771c4
+    private val COLOR_PURPLE_ARGB = -0x7e387c
+    private val COLOR_ORANGE_ARGB = -0xa80e9
+    private val COLOR_BLUE_ARGB = -0x657db
+    private val POLYGON_STROKE_WIDTH_PX = 8
+    private val PATTERN_DASH_LENGTH_PX = 20
+
+    private val DASH: PatternItem = Dash(PATTERN_DASH_LENGTH_PX.toFloat())
+
+    // Create a stroke pattern of a gap followed by a dash.
+    private val PATTERN_POLYGON_ALPHA = listOf(GAP, DASH)
+
+    // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
+    private val PATTERN_POLYGON_BETA = listOf(DOT, GAP, DASH, GAP)
+
     /**
      * Styles the polygon, based on type.
      * @param polygon The polygon object that needs styling.
@@ -194,59 +249,5 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         polygon.strokeColor = strokeColor
         polygon.fillColor = fillColor
     }
-
-    // [START maps_poly_activity_on_polyline_click]
-    private val DOT: PatternItem = Dot()
-    private val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX.toFloat())
-
-    // Create a stroke pattern of a gap followed by a dot.
-    private val PATTERN_POLYLINE_DOTTED = listOf(GAP, DOT)
-
-    /**
-     * Listens for clicks on a polyline.
-     * @param polyline The polyline object that the user has clicked.
-     */
-    override fun onPolylineClick(polyline: Polyline) {
-        // Flip from solid stroke to dotted stroke pattern.
-        if (polyline.pattern == null || !polyline.pattern!!.contains(DOT)) {
-            polyline.pattern = PATTERN_POLYLINE_DOTTED
-        } else {
-            // The default pattern is a solid stroke.
-            polyline.pattern = null
-        }
-        Toast.makeText(this, "Route type " + polyline.tag.toString(),
-            Toast.LENGTH_SHORT).show()
-    }
-    // [END maps_poly_activity_on_polyline_click]
-
-    // Create a stroke pattern of a gap followed by a dash.
-    private val PATTERN_POLYGON_ALPHA = listOf(GAP, DASH)
-
-    // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
-    private val PATTERN_POLYGON_BETA = listOf(DOT, GAP, DASH, GAP)
-
-    /**
-     * Listens for clicks on a polygon.
-     * @param polygon The polygon object that the user has clicked.
-     */
-    override fun onPolygonClick(polygon: Polygon) {
-        // Flip the values of the red, green, and blue components of the polygon's color.
-        var color = polygon.strokeColor xor 0x00ffffff
-        polygon.strokeColor = color
-        color = polygon.fillColor xor 0x00ffffff
-        polygon.fillColor = color
-        Toast.makeText(this, "Area type ${polygon.tag?.toString()}", Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        private const val COLOR_WHITE_ARGB = -0x1
-        private const val COLOR_GREEN_ARGB = -0xc771c4
-        private const val COLOR_PURPLE_ARGB = -0x7e387c
-        private const val COLOR_ORANGE_ARGB = -0xa80e9
-        private const val COLOR_BLUE_ARGB = -0x657db
-        private const val POLYGON_STROKE_WIDTH_PX = 8
-        private const val PATTERN_DASH_LENGTH_PX = 20
-        private const val PATTERN_GAP_LENGTH_PX = 20
-        private val DASH: PatternItem = Dash(PATTERN_DASH_LENGTH_PX.toFloat())
-    }
+    // [END maps_poly_activity_style_polygon]
 }

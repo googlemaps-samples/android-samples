@@ -17,7 +17,6 @@ package com.example.polygons;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -35,11 +34,8 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
-
 import java.util.Arrays;
 import java.util.List;
-
-import static com.example.polygons.R.id.map;
 
 
 /**
@@ -54,17 +50,6 @@ public class PolyActivity extends AppCompatActivity
                 GoogleMap.OnPolygonClickListener {
 
     // [START EXCLUDE]
-    private static final int COLOR_WHITE_ARGB = 0xffffffff;
-    private static final int COLOR_GREEN_ARGB = 0xff388E3C;
-    private static final int COLOR_PURPLE_ARGB = 0xff81C784;
-    private static final int COLOR_ORANGE_ARGB = 0xffF57F17;
-    private static final int COLOR_BLUE_ARGB = 0xffF9A825;
-
-    private static final int POLYGON_STROKE_WIDTH_PX = 8;
-    private static final int PATTERN_DASH_LENGTH_PX = 20;
-    private static final int PATTERN_GAP_LENGTH_PX = 20;
-    private static final PatternItem DASH = new Dash(PATTERN_DASH_LENGTH_PX);
-
     // [START maps_poly_activity_get_map_async]
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +60,7 @@ public class PolyActivity extends AppCompatActivity
 
         // Get the SupportMapFragment and request notification when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(map);
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
     // [END maps_poly_activity_get_map_async]
@@ -123,6 +108,7 @@ public class PolyActivity extends AppCompatActivity
         polyline2.setTag("B");
         stylePolyline(polyline2);
 
+        // [START maps_poly_activity_add_polygon]
         // Add polygons to indicate areas on the map.
         Polygon polygon1 = googleMap.addPolygon(new PolygonOptions()
                 .clickable(true)
@@ -133,6 +119,7 @@ public class PolyActivity extends AppCompatActivity
                         new LatLng(-34.928, 138.599)));
         // Store a data object with the polygon, used here to indicate an arbitrary type.
         polygon1.setTag("alpha");
+        // [END maps_poly_activity_add_polygon]
         // Style the polygon.
         stylePolygon(polygon1);
 
@@ -193,6 +180,66 @@ public class PolyActivity extends AppCompatActivity
     }
     // [END maps_poly_activity_style_polyline]
 
+    // [START maps_poly_activity_on_polyline_click]
+    private static final int PATTERN_GAP_LENGTH_PX = 20;
+    private static final PatternItem DOT = new Dot();
+    private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
+
+    // Create a stroke pattern of a gap followed by a dot.
+    private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
+
+    /**
+     * Listens for clicks on a polyline.
+     * @param polyline The polyline object that the user has clicked.
+     */
+    @Override
+    public void onPolylineClick(Polyline polyline) {
+        // Flip from solid stroke to dotted stroke pattern.
+        if ((polyline.getPattern() == null) || (!polyline.getPattern().contains(DOT))) {
+            polyline.setPattern(PATTERN_POLYLINE_DOTTED);
+        } else {
+            // The default pattern is a solid stroke.
+            polyline.setPattern(null);
+        }
+
+        Toast.makeText(this, "Route type " + polyline.getTag().toString(),
+                Toast.LENGTH_SHORT).show();
+    }
+    // [END maps_poly_activity_on_polyline_click]
+
+    /**
+     * Listens for clicks on a polygon.
+     * @param polygon The polygon object that the user has clicked.
+     */
+    @Override
+    public void onPolygonClick(Polygon polygon) {
+        // Flip the values of the red, green, and blue components of the polygon's color.
+        int color = polygon.getStrokeColor() ^ 0x00ffffff;
+        polygon.setStrokeColor(color);
+        color = polygon.getFillColor() ^ 0x00ffffff;
+        polygon.setFillColor(color);
+
+        Toast.makeText(this, "Area type " + polygon.getTag().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    // [START maps_poly_activity_style_polygon]
+    private static final int COLOR_WHITE_ARGB = 0xffffffff;
+    private static final int COLOR_GREEN_ARGB = 0xff388E3C;
+    private static final int COLOR_PURPLE_ARGB = 0xff81C784;
+    private static final int COLOR_ORANGE_ARGB = 0xffF57F17;
+    private static final int COLOR_BLUE_ARGB = 0xffF9A825;
+
+    private static final int POLYGON_STROKE_WIDTH_PX = 8;
+    private static final int PATTERN_DASH_LENGTH_PX = 20;
+    private static final PatternItem DASH = new Dash(PATTERN_DASH_LENGTH_PX);
+
+    // Create a stroke pattern of a gap followed by a dash.
+    private static final List<PatternItem> PATTERN_POLYGON_ALPHA = Arrays.asList(GAP, DASH);
+
+    // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
+    private static final List<PatternItem> PATTERN_POLYGON_BETA =
+        Arrays.asList(DOT, GAP, DASH, GAP);
+
     /**
      * Styles the polygon, based on type.
      * @param polygon The polygon object that needs styling.
@@ -229,52 +276,5 @@ public class PolyActivity extends AppCompatActivity
         polygon.setStrokeColor(strokeColor);
         polygon.setFillColor(fillColor);
     }
-
-    // [START maps_poly_activity_on_polyline_click]
-    private static final PatternItem DOT = new Dot();
-    private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
-
-    // Create a stroke pattern of a gap followed by a dot.
-    private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
-
-    /**
-     * Listens for clicks on a polyline.
-     * @param polyline The polyline object that the user has clicked.
-     */
-    @Override
-    public void onPolylineClick(Polyline polyline) {
-        // Flip from solid stroke to dotted stroke pattern.
-        if ((polyline.getPattern() == null) || (!polyline.getPattern().contains(DOT))) {
-            polyline.setPattern(PATTERN_POLYLINE_DOTTED);
-        } else {
-            // The default pattern is a solid stroke.
-            polyline.setPattern(null);
-        }
-
-        Toast.makeText(this, "Route type " + polyline.getTag().toString(),
-                Toast.LENGTH_SHORT).show();
-    }
-    // [END maps_poly_activity_on_polyline_click]
-
-    // Create a stroke pattern of a gap followed by a dash.
-    private static final List<PatternItem> PATTERN_POLYGON_ALPHA = Arrays.asList(GAP, DASH);
-
-    // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
-    private static final List<PatternItem> PATTERN_POLYGON_BETA =
-        Arrays.asList(DOT, GAP, DASH, GAP);
-
-    /**
-     * Listens for clicks on a polygon.
-     * @param polygon The polygon object that the user has clicked.
-     */
-    @Override
-    public void onPolygonClick(Polygon polygon) {
-        // Flip the values of the red, green, and blue components of the polygon's color.
-        int color = polygon.getStrokeColor() ^ 0x00ffffff;
-        polygon.setStrokeColor(color);
-        color = polygon.getFillColor() ^ 0x00ffffff;
-        polygon.setFillColor(color);
-
-        Toast.makeText(this, "Area type " + polygon.getTag().toString(), Toast.LENGTH_SHORT).show();
-    }
+    // [END maps_poly_activity_style_polygon]
 }
