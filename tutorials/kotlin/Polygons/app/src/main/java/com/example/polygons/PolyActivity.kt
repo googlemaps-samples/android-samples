@@ -43,6 +43,8 @@ import java.util.*
  * and polygons to represent areas.
  */
 class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickListener, OnPolygonClickListener {
+
+    // [START maps_poly_activity_get_map_async]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,6 +56,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
             .findFragmentById(id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
+    // [END maps_poly_activity_get_map_async]
 
     /**
      * Manipulates the map when it's available.

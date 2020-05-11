@@ -77,6 +77,7 @@ public class PolyActivity extends AppCompatActivity
     private static final List<PatternItem> PATTERN_POLYGON_BETA =
             Arrays.asList(DOT, GAP, DASH, GAP);
 
+    // [START maps_poly_activity_get_map_async]
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class PolyActivity extends AppCompatActivity
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
     }
+    // [END maps_poly_activity_get_map_async]
 
     /**
      * Manipulates the map when it's available.
