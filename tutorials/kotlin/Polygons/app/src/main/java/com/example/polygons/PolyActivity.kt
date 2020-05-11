@@ -71,6 +71,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
 
         // Add polylines to the map.
         // Polylines are useful to show a route or some other connection between points.
+        // [START maps_poly_activity_add_polyline]
         val polyline1 = googleMap.addPolyline(PolylineOptions()
             .clickable(true)
             .add(
@@ -80,6 +81,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
                 LatLng(-33.501, 150.217),
                 LatLng(-32.306, 149.248),
                 LatLng(-32.491, 147.309)))
+        // [END maps_poly_activity_add_polyline]
         // [START_EXCLUDE silent]
         // Store a data object with the polyline, used here to indicate an arbitrary type.
         polyline1.tag = "A"
