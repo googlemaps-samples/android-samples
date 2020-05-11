@@ -195,6 +195,13 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         polygon.fillColor = fillColor
     }
 
+    // [START maps_poly_activity_on_polyline_click]
+    private val DOT: PatternItem = Dot()
+    private val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX.toFloat())
+
+    // Create a stroke pattern of a gap followed by a dot.
+    private val PATTERN_POLYLINE_DOTTED = listOf(GAP, DOT)
+
     /**
      * Listens for clicks on a polyline.
      * @param polyline The polyline object that the user has clicked.
@@ -210,6 +217,13 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         Toast.makeText(this, "Route type " + polyline.tag.toString(),
             Toast.LENGTH_SHORT).show()
     }
+    // [END maps_poly_activity_on_polyline_click]
+
+    // Create a stroke pattern of a gap followed by a dash.
+    private val PATTERN_POLYGON_ALPHA = listOf(GAP, DASH)
+
+    // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
+    private val PATTERN_POLYGON_BETA = listOf(DOT, GAP, DASH, GAP)
 
     /**
      * Listens for clicks on a polygon.
@@ -233,17 +247,6 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         private const val POLYGON_STROKE_WIDTH_PX = 8
         private const val PATTERN_DASH_LENGTH_PX = 20
         private const val PATTERN_GAP_LENGTH_PX = 20
-        private val DOT: PatternItem = Dot()
         private val DASH: PatternItem = Dash(PATTERN_DASH_LENGTH_PX.toFloat())
-        private val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX.toFloat())
-
-        // Create a stroke pattern of a gap followed by a dot.
-        private val PATTERN_POLYLINE_DOTTED = listOf(GAP, DOT)
-
-        // Create a stroke pattern of a gap followed by a dash.
-        private val PATTERN_POLYGON_ALPHA = listOf(GAP, DASH)
-
-        // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
-        private val PATTERN_POLYGON_BETA = listOf(DOT, GAP, DASH, GAP)
     }
 }

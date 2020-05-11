@@ -63,19 +63,7 @@ public class PolyActivity extends AppCompatActivity
     private static final int POLYGON_STROKE_WIDTH_PX = 8;
     private static final int PATTERN_DASH_LENGTH_PX = 20;
     private static final int PATTERN_GAP_LENGTH_PX = 20;
-    private static final PatternItem DOT = new Dot();
     private static final PatternItem DASH = new Dash(PATTERN_DASH_LENGTH_PX);
-    private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
-
-    // Create a stroke pattern of a gap followed by a dot.
-    private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
-
-    // Create a stroke pattern of a gap followed by a dash.
-    private static final List<PatternItem> PATTERN_POLYGON_ALPHA = Arrays.asList(GAP, DASH);
-
-    // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
-    private static final List<PatternItem> PATTERN_POLYGON_BETA =
-            Arrays.asList(DOT, GAP, DASH, GAP);
 
     // [START maps_poly_activity_get_map_async]
     @Override
@@ -242,6 +230,13 @@ public class PolyActivity extends AppCompatActivity
         polygon.setFillColor(fillColor);
     }
 
+    // [START maps_poly_activity_on_polyline_click]
+    private static final PatternItem DOT = new Dot();
+    private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
+
+    // Create a stroke pattern of a gap followed by a dot.
+    private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
+
     /**
      * Listens for clicks on a polyline.
      * @param polyline The polyline object that the user has clicked.
@@ -259,6 +254,14 @@ public class PolyActivity extends AppCompatActivity
         Toast.makeText(this, "Route type " + polyline.getTag().toString(),
                 Toast.LENGTH_SHORT).show();
     }
+    // [END maps_poly_activity_on_polyline_click]
+
+    // Create a stroke pattern of a gap followed by a dash.
+    private static final List<PatternItem> PATTERN_POLYGON_ALPHA = Arrays.asList(GAP, DASH);
+
+    // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
+    private static final List<PatternItem> PATTERN_POLYGON_BETA =
+        Arrays.asList(DOT, GAP, DASH, GAP);
 
     /**
      * Listens for clicks on a polygon.
