@@ -106,6 +106,7 @@ public class PolyActivity extends AppCompatActivity
 
         // Add polylines to the map.
         // Polylines are useful to show a route or some other connection between points.
+        // [START maps_poly_activity_add_polyline_set_tag]
         // [START maps_poly_activity_add_polyline]
         Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
                 .clickable(true)
@@ -120,6 +121,7 @@ public class PolyActivity extends AppCompatActivity
         // [START_EXCLUDE silent]
         // Store a data object with the polyline, used here to indicate an arbitrary type.
         polyline1.setTag("A");
+        // [END maps_poly_activity_add_polyline_set_tag]
         // Style the polyline.
         stylePolyline(polyline1);
 
