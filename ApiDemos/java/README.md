@@ -1,18 +1,23 @@
 Google Maps Android API Demos
 ===================================
 
-These are demos for the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android-api/)
+These are demos for the [Maps SDK for Android](https://developers.google.com/maps/documentation/android-api/)
+and [Maps SDK for Android V3 BETA](https://developers.google.com/maps/documentation/android-sdk/v3-client-migration) libraries
 in the Java programming language.
+
 They demonstrate most of the features available in the API.
 
-This app was written for a minSdk of 15 and the v4 support library, but it can be easily adapted to
-use native functionality instead.
-(For example replacing ``SupportMapFragment`` with ``MapFragment``.)
+This app was written with a minSdk of 16 and the androidx appcompat library, but it can be easily 
+adapted to use native functionality instead (for example replacing `SupportMapFragment` with 
+`MapFragment`).
+
+The Maps SDK for Android samples can be found under the `app` module while the Maps SDK V3 BETA 
+samples can be found under the `app-v3` module.
 
 Pre-requisites
 --------------
 
-- Android SDK v27
+- Android SDK v29
 - Latest Android Build Tools
 - Android Support Repository
 - Google Repository
@@ -35,8 +40,8 @@ Alternatively use the `gradlew build` command to build the project directly.
 This demo app requires that you add your own Google Maps API key:
 
 1. [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
-1. Create a file in the `ApiDemos/java/app` directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
-1. Add a single line to `ApiDemos/java/app/secure.properties` that looks like `MAPS_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the API key you obtained in the first step
+1. Create a file in the `ApiDemos/java` directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
+1. Add a single line to `ApiDemos/java/secure.properties` that looks like `MAPS_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the API key you obtained in the first step
 1. Build and run
 
 Support
