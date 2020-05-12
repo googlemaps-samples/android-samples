@@ -18,9 +18,23 @@ allprojects {
         mavenLocal()
         google()
         jcenter()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task generateV3(type: Copy) {
+    from('app/src/main') {
+       exclude '**/*.png'
+    }
+    into 'app-v3/src/main'
+    filter { line ->
+        line.replace('com.google.android.gms.maps', 'com.google.android.libraries.maps')
+    }
+}
+

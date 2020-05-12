@@ -42,3 +42,5 @@ dependencies {
     // Needed for the LiteListDemo
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 }
+
+preBuild.dependsOn(rootProject.tasks.generateV3)
