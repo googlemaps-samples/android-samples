@@ -11,8 +11,8 @@ This app was written with a minSdk of 16 and the androidx appcompat library, but
 adapted to use native functionality instead (for example replacing `SupportMapFragment` with 
 `MapFragment`).
 
-The Maps SDK for Android samples can be found under the `app` module while the Maps SDK V3 BETA 
-samples can be found under the `app-v3` module.
+The Maps SDK for Android samples can be found under the `gms` gradle product flavor, while the Maps
+SDK V3 BETA samples can be found under the `v3` gradle product flavor.
 
 Pre-requisites
 --------------
