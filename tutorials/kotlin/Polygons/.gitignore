@@ -1,0 +1,11 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/play-services-maps-10.2.0
+/app/libs
