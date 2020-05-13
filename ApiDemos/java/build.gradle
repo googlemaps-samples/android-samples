@@ -18,9 +18,13 @@ allprojects {
         mavenLocal()
         google()
         jcenter()
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
