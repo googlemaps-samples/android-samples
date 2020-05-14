@@ -93,10 +93,6 @@
     <string name="normal">Normal</string>
     <string name="options_demo_label">Options</string>
     <string name="options_demo_description">Demonstrates how to use Options to initialize a map.</string>
-    <string name="polygon_demo_label">Polygons</string>
-    <string name="polygon_demo_description">Demonstrates how to add Polygons to a map.</string>
-    <string name="polyline_demo_label">Polylines</string>
-    <string name="polyline_demo_description">Demonstrates how to add Polylines to a map.</string>
     <string name="programmatic_demo_label">Programmatically add map</string>
     <string name="programmatic_demo_description">Demonstrates how to add a MapFragment programmatically.</string>
     <string name="properties_circle">Properties for Circle(s)</string>
@@ -158,23 +154,6 @@
     <string name="zoom_gestures">Zoom Gestures</string>
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
-
-    <!-- Polyline/polygon styling -->
-    <string name="start_cap">Start cap</string>
-    <string name="end_cap">End cap</string>
-    <string name="joint_type">Joint Type</string>
-    <string name="pattern">Pattern</string>
-    <string name="cap_butt">Butt</string>
-    <string name="cap_square">Square</string>
-    <string name="cap_round">Round</string>
-    <string name="cap_image">Image</string>
-    <string name="joint_type_default">Default</string>
-    <string name="joint_type_bevel">Bevel</string>
-    <string name="joint_type_round">Round</string>
-    <string name="pattern_solid">Solid</string>
-    <string name="pattern_dotted">Dotted</string>
-    <string name="pattern_dashed">Dashed</string>
-    <string name="pattern_mixed">Mixed</string>
 
     <!-- Lite Mode -->
     <string name="grid">Grid</string>
@@ -238,5 +217,57 @@
     <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
     <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
     <string name="permission_required_toast">Location permission is required for this demo.</string>
+
+    <!-- Cloud Styling -->
+    <string name="cloud_styling_basic_map_id">26a66b031807a453</string>
+    <string name="lite_styling_normal_mode">Normal</string>
+    <string name="lite_styling_satellite_mode">Satellite</string>
+    <string name="lite_styling_hybrid_mode">Hybrid</string>
+    <string name="lite_styling_terrain_mode">Terrain</string>
+    <string name="cloud_styling_label">Cloud Styling</string>
+    <string name="cloud_styling_description">Demonstrates how to use a simple map using Cloud Styling.</string>
+
+    <!-- Polyline/polygon styling -->
+    <string name="polygon_demo_label">Polygons</string>
+    <string name="polygon_demo_description">Demonstrates how to add Polygons to a map.</string>
+    <string name="start_cap">Start cap</string>
+    <string name="end_cap">End cap</string>
+    <string name="joint_type">Joint Type</string>
+    <string name="pattern">Pattern</string>
+    <string name="cap_butt">Butt</string>
+    <string name="cap_square">Square</string>
+    <string name="cap_round">Round</string>
+    <string name="cap_image">Image</string>
+    <string name="joint_type_default">Default</string>
+    <string name="joint_type_bevel">Bevel</string>
+    <string name="joint_type_round">Round</string>
+    <string name="pattern_solid">Solid</string>
+    <string name="pattern_dotted">Dotted</string>
+    <string name="pattern_dashed">Dashed</string>
+    <string name="pattern_mixed">Mixed</string>
+    <string name="polyline_demo_label">Polylines</string>
+    <string name="polyline_demo_description">Demonstrates how to add and configure Polylines to a map.</string>
+    <string name="polyline_selection">Select polyline</string>
+    <string name="polyline_sydney">Sydney</string>
+    <string name="polyline_melbourne">Melbourne</string>
+    <string name="polyline_australia">Australia</string>
+    <string name="polyline_world">World</string>
+    <string name="argb">ARGB</string>
+    <string name="cap_custom_chevron">Chevron</string>
+    <string name="cap_custom_ook">Ook</string>
+    <string name="joint_default">Default</string>
+    <string name="joint_bevel">Bevel</string>
+    <string name="joint_round">Round</string>
+    <string name="solid" desc="Label of a toggle button indicating that the selected polyline should have solid color.">Solid color</string>
+    <string name="gradient" desc="Label of a toggle button indicating that the selected polyline should have a color gradient.">Gradient color</string>
+    <string name="textured" desc="Label of a checkbox indicating whether or not the selected polyline has texture.">Textured</string>
+    <string name="point_sprite" desc="Label of a checkbox indicating whether or not the point sprite rendering technique is applied on textured polyline.">Point sprite</string>
+    <string name="default_style" desc="Label of a radio group indicating whether or not default style is applied.">Default</string>
+    <string name="geodesic">Geodesic</string>
+    <string name="visible">Visible</string>
+
+    <!-- Marker Collision -->
+    <string name="marker_collision_label">Marker Collision</string>
+    <string name="marker_collision_description">Demonstrates different supported marker collision behaviors.</string>
 
 </resources>
