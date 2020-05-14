@@ -151,21 +151,6 @@
     <string name="stroke_pattern">Stroke Pattern</string>
     <string name="stroke_width">Stroke Width</string>
 
-    <!-- Polylines Demo -->
-    <string name="alpha">Alpha</string>
-    <string name="cap_butt">Butt</string>
-    <string name="cap_image">Image</string>
-    <string name="cap_round">Round</string>
-    <string name="cap_square">Square</string>
-    <string name="end_cap">End Cap</string>
-    <string name="hue">Hue</string>
-    <string name="joint_type">Joint Type</string>
-    <string name="pattern">Pattern</string>
-    <string name="polyline_demo_description">Demonstrates how to add Polylines to a map</string>
-    <string name="polyline_demo_label">Polyline</string>
-    <string name="start_cap">Start Cap</string>
-    <string name="width">Width</string>
-
     <!-- StreetView Panorama Navigation Demo -->
     <string name="street_view_panorama_navigation_demo_label">Street View Panorama Navigation Demo</string>
     <string name="street_view_panorama_navigation_demo_details">Street View Panorama with programmatic navigation</string>
@@ -232,4 +217,50 @@
     <string name="vr_opera_house_button">SOH</string>
     <string name="vr_sfo_button">SFO</string>
     <string name="vr_australia_button">AUS</string>
+
+    <!-- Cloud Styling -->
+    <string name="cloud_styling_basic_map_id">26a66b031807a453</string>
+    <string name="lite_styling_normal_mode">Normal</string>
+    <string name="lite_styling_satellite_mode">Satellite</string>
+    <string name="lite_styling_hybrid_mode">Hybrid</string>
+    <string name="lite_styling_terrain_mode">Terrain</string>
+    <string name="cloud_styling_label">Cloud Styling</string>
+    <string name="cloud_styling_description">Demonstrates how to use a simple map using Cloud Styling.</string>
+
+    <!-- Polylines Demo -->
+    <string name="alpha">Alpha</string>
+    <string name="cap_butt">Butt</string>
+    <string name="cap_image">Image</string>
+    <string name="cap_round">Round</string>
+    <string name="cap_square">Square</string>
+    <string name="end_cap">End Cap</string>
+    <string name="hue">Hue</string>
+    <string name="joint_type">Joint Type</string>
+    <string name="pattern">Pattern</string>
+    <string name="polyline_demo_description">Demonstrates how to add and configure Polylines to a map</string>
+    <string name="polyline_demo_label">Polyline</string>
+    <string name="start_cap">Start Cap</string>
+    <string name="width">Width</string>
+    <string name="polyline_selection">Select polyline</string>
+    <string name="polyline_sydney">Sydney</string>
+    <string name="polyline_melbourne">Melbourne</string>
+    <string name="polyline_australia">Australia</string>
+    <string name="polyline_world">World</string>
+    <string name="argb">ARGB</string>
+    <string name="cap_custom_chevron">Chevron</string>
+    <string name="cap_custom_ook">Ook</string>
+    <string name="joint_default">Default</string>
+    <string name="joint_bevel">Bevel</string>
+    <string name="joint_round">Round</string>
+    <string name="solid" desc="Label of a toggle button indicating that the selected polyline should have solid color.">Solid color</string>
+    <string name="gradient" desc="Label of a toggle button indicating that the selected polyline should have a color gradient.">Gradient color</string>
+    <string name="textured" desc="Label of a checkbox indicating whether or not the selected polyline has texture.">Textured</string>
+    <string name="point_sprite" desc="Label of a checkbox indicating whether or not the point sprite rendering technique is applied on textured polyline.">Point sprite</string>
+    <string name="default_style" desc="Label of a radio group indicating whether or not default style is applied.">Default</string>
+    <string name="geodesic">Geodesic</string>
+    <string name="visible">Visible</string>
+
+    <!-- Marker Collision -->
+    <string name="marker_collision_label">Marker Collision</string>
+    <string name="marker_collision_description">Demonstrates different supported marker collision behaviors.</string>
 </resources>

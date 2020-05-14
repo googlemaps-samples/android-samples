@@ -48,11 +48,13 @@
         <activity android:name=".CameraDemoActivity"/>
         <activity android:name=".CircleDemoActivity" />
         <activity android:name=".CloseInfoWindowDemoActivity" />
+        <activity android:name=".CloudBasedMapStylingDemoActivity" />
         <activity android:name=".LayersDemoActivity"/>
         <activity android:name=".LiteListDemoActivity" />
+        <activity android:name=".MarkerCollisionDemoActivity" />
         <activity android:name=".MarkerDemoActivity"/>
+        <activity android:name=".polyline.PolylineDemoActivity" />
         <activity android:name=".PolygonDemoActivity"/>
-        <activity android:name=".PolylineDemoActivity"/>
         <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
         <activity android:name=".TagsDemoActivity"/>
         <activity android:name=".UiSettingsDemoActivity" />
