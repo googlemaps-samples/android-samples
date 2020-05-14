@@ -13,6 +13,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         // Read the API key from ApiDemos/java/secure.properties into R.string.maps_api_key
         def secureProps = new Properties()
@@ -67,6 +68,9 @@ dependencies {
 }
 
 task generateV3(type: Copy) {
+    group "V3 Beta"
+    description "Copies source code from GMS to V3 BETA."
+
     from 'src/gms/java'
     into 'src/v3/java'
     filter { line ->
@@ -76,11 +80,12 @@ task generateV3(type: Copy) {
 }
 
 task generateV3Layout(type: Copy) {
+    group "V3 Beta"
+    description "Copies layout files from GMS to V3 BETA."
+
     from 'src/gms/res/layout'
     into 'src/v3/res/layout'
     filter { line ->
         line.replace('com.google.android.gms.maps', 'com.google.android.libraries.maps')
     }
 }
-
-preBuild.dependsOn(generateV3, generateV3Layout)
