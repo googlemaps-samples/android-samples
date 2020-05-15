@@ -57,6 +57,7 @@
         <activity android:name=".TagsDemoActivity"/>
         <activity android:name=".UiSettingsDemoActivity" />
         <activity android:name=".VisibleRegionDemoActivity"/>
+        <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
     </application>
 
 </manifest>

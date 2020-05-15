@@ -143,6 +143,10 @@
     <string name="go_to_san_francisco">Go to San Francisco</string>
     <string name="go_to_santorini">Go to Santorini</string>
 
+    <!-- Split StreetView Panorama and Map Demo -->
+    <string name="split_street_view_panorama_and_map_demo_label">Street View Panorama and Map</string>
+    <string name="split_street_view_panorama_and_map_demo_details">Demonstrates how to show a Street View panorama and map.</string>
+
     <!-- Tags Demo -->
     <string name="tags_demo_label">Tags</string>
     <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>
