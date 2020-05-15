@@ -44,9 +44,9 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends AppCompatActivity
     // George St, Sydney
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
 
-    private StreetViewPanorama mStreetViewPanorama;
+    private StreetViewPanorama streetViewPanorama;
 
-    private Marker mMarker;
+    private Marker marker;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -67,13 +67,13 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends AppCompatActivity
                 new OnStreetViewPanoramaReadyCallback() {
                     @Override
                     public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-                        mStreetViewPanorama = panorama;
-                        mStreetViewPanorama.setOnStreetViewPanoramaChangeListener(
+                        streetViewPanorama = panorama;
+                        streetViewPanorama.setOnStreetViewPanoramaChangeListener(
                                 SplitStreetViewPanoramaAndMapDemoActivity.this);
                         // Only need to set the position once as the streetview fragment will maintain
                         // its state.
                         if (savedInstanceState == null) {
-                            mStreetViewPanorama.setPosition(SYDNEY);
+                            streetViewPanorama.setPosition(SYDNEY);
                         }
                     }
                 });
@@ -85,7 +85,7 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends AppCompatActivity
             public void onMapReady(GoogleMap map) {
                 map.setOnMarkerDragListener(SplitStreetViewPanoramaAndMapDemoActivity.this);
                 // Creates a draggable marker. Long press to drag.
-                mMarker = map.addMarker(new MarkerOptions()
+                marker = map.addMarker(new MarkerOptions()
                         .position(markerPosition)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
                         .draggable(true));
@@ -96,13 +96,13 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(MARKER_POSITION_KEY, mMarker.getPosition());
+        outState.putParcelable(MARKER_POSITION_KEY, marker.getPosition());
     }
 
     @Override
     public void onStreetViewPanoramaChange(StreetViewPanoramaLocation location) {
         if (location != null) {
-            mMarker.setPosition(location.position);
+            marker.setPosition(location.position);
         }
     }
 
@@ -112,7 +112,7 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends AppCompatActivity
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-        mStreetViewPanorama.setPosition(marker.getPosition(), 150);
+        streetViewPanorama.setPosition(marker.getPosition(), 150);
     }
 
     @Override
