@@ -45,6 +45,10 @@ class DemoDetailsList {
                         R.string.street_view_panorama_navigation_demo_label,
                         R.string.street_view_panorama_navigation_demo_details,
                         StreetViewPanoramaNavigationDemoActivity::class.java),
+                DemoDetails(
+                        R.string.split_street_view_panorama_and_map_demo_label,
+                        R.string.split_street_view_panorama_and_map_demo_details,
+                        SplitStreetViewPanoramaAndMapDemoActivity::class.java),
                 DemoDetails(R.string.tags_demo_label, R.string.tags_demo_details,
                         TagsDemoActivity::class.java),
                 DemoDetails(R.string.ui_settings_demo_label, R.string.ui_settings_demo_details,
