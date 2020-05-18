@@ -15,17 +15,17 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.StreetViewPanorama;
-import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.StreetViewSource;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.maps.StreetViewPanorama;
+import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.StreetViewSource;
 
 /**
  * This shows how to create an activity with static streetview (all options have been switched off)
@@ -66,11 +66,10 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 panorama -> {
                     streetViewPanorama = panorama;
-                    streetViewPanorama.setStreetNamesEnabled(streetNameCheckbox.isChecked());
-                    streetViewPanorama
-                            .setUserNavigationEnabled(navigationCheckbox.isChecked());
-                    streetViewPanorama.setZoomGesturesEnabled(zoomCheckbox.isChecked());
-                    streetViewPanorama.setPanningGesturesEnabled(panningCheckbox.isChecked());
+                    panorama.setStreetNamesEnabled(streetNameCheckbox.isChecked());
+                    panorama.setUserNavigationEnabled(navigationCheckbox.isChecked());
+                    panorama.setZoomGesturesEnabled(zoomCheckbox.isChecked());
+                    panorama.setPanningGesturesEnabled(panningCheckbox.isChecked());
 
                     // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
                     // loaded which is when the savedInstanceState is null).
