@@ -151,6 +151,14 @@
     <string name="street_view_panorama_basic_demo_label">Street View Panorama</string>
     <string name="street_view_panorama_basic_demo_details">Standard Street View Panorama using a Fragment.</string>
 
+    <!-- StreetView Events Demo -->
+    <string name="street_view_panorama_events_demo_label">Street View Panorama events</string>
+    <string name="street_view_panorama_events_demo_details">Standard Street View Panorama with event handling.</string>
+    <string name="navigate_to_another_panorama">navigate to another panorama</string>
+    <string name="pan_camera">pan camera</string>
+    <string name="tap_screen">tap screen</string>
+    <string name="long_press_screen">long press screen</string>
+
     <!-- Tags Demo -->
     <string name="tags_demo_label">Tags</string>
     <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>
