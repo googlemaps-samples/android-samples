@@ -147,6 +147,10 @@
     <string name="split_street_view_panorama_and_map_demo_label">Street View Panorama and Map</string>
     <string name="split_street_view_panorama_and_map_demo_details">Demonstrates how to show a Street View panorama and map.</string>
 
+    <!-- StreetView Panorama Basic Demo -->
+    <string name="street_view_panorama_basic_demo_label">Street View Panorama</string>
+    <string name="street_view_panorama_basic_demo_details">Standard Street View Panorama using a Fragment.</string>
+
     <!-- Tags Demo -->
     <string name="tags_demo_label">Tags</string>
     <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>
