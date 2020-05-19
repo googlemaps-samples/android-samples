@@ -59,6 +59,7 @@
         <activity android:name=".VisibleRegionDemoActivity"/>
         <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
         <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
+        <activity android:name=".StreetViewPanoramaOptionsDemoActivity" />
         <activity android:name=".StreetViewPanoramaEventsDemoActivity" />
     </application>
 
