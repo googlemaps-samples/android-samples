@@ -161,7 +161,7 @@
     <string name="streetnames">Streetnames</string>
 
     <!-- StreetView Events Demo -->
-    <string name="street_view_panorama_events_demo_label">Street View Panorama events</string>
+    <string name="street_view_panorama_events_demo_label">Street View Panorama Events</string>
     <string name="street_view_panorama_events_demo_details">Standard Street View Panorama with event handling.</string>
     <string name="navigate_to_another_panorama">navigate to another panorama</string>
     <string name="pan_camera">pan camera</string>
