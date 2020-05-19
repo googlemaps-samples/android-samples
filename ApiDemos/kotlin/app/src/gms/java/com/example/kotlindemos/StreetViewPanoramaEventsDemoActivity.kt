@@ -31,11 +31,11 @@ class StreetViewPanoramaEventsDemoActivity : AppCompatActivity(),
     OnStreetViewPanoramaChangeListener, OnStreetViewPanoramaCameraChangeListener,
     OnStreetViewPanoramaClickListener, OnStreetViewPanoramaLongClickListener {
 
-    private var streetViewPanorama: StreetViewPanorama? = null
-    private var panoChangeTimesTextView: TextView? = null
-    private var panoCameraChangeTextView: TextView? = null
-    private var panoClickTextView: TextView? = null
-    private var panoLongClickTextView: TextView? = null
+    private lateinit var streetViewPanorama: StreetViewPanorama
+    private lateinit var panoChangeTimesTextView: TextView
+    private lateinit var panoCameraChangeTextView: TextView
+    private lateinit var panoClickTextView: TextView
+    private lateinit var panoLongClickTextView: TextView
 
     private var panoChangeTimes = 0
     private var panoCameraChangeTimes = 0
@@ -53,54 +53,54 @@ class StreetViewPanoramaEventsDemoActivity : AppCompatActivity(),
 
         val streetViewPanoramaFragment =
             supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
-        streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama? ->
+        streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama ->
             streetViewPanorama = panorama
-            streetViewPanorama?.setOnStreetViewPanoramaChangeListener(
+            streetViewPanorama.setOnStreetViewPanoramaChangeListener(
                 this@StreetViewPanoramaEventsDemoActivity
             )
-            streetViewPanorama?.setOnStreetViewPanoramaCameraChangeListener(
+            streetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
                 this@StreetViewPanoramaEventsDemoActivity
             )
-            streetViewPanorama?.setOnStreetViewPanoramaClickListener(
+            streetViewPanorama.setOnStreetViewPanoramaClickListener(
                 this@StreetViewPanoramaEventsDemoActivity
             )
-            streetViewPanorama?.setOnStreetViewPanoramaLongClickListener(
+            streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
                 this@StreetViewPanoramaEventsDemoActivity
             )
 
             // Only set the panorama to SYDNEY on startup (when no panoramas have been
             // loaded which is when the savedInstanceState is null).
-            savedInstanceState ?: streetViewPanorama?.setPosition(SYDNEY)
+            savedInstanceState ?: streetViewPanorama.setPosition(SYDNEY)
         }
     }
 
     override fun onStreetViewPanoramaChange(location: StreetViewPanoramaLocation) {
-        panoChangeTimesTextView?.text = "Times panorama changed=" + ++panoChangeTimes
+        panoChangeTimesTextView.text = "Times panorama changed=" + ++panoChangeTimes
     }
 
     override fun onStreetViewPanoramaCameraChange(camera: StreetViewPanoramaCamera) {
-        panoCameraChangeTextView?.text = "Times camera changed=" + ++panoCameraChangeTimes
+        panoCameraChangeTextView.text = "Times camera changed=" + ++panoCameraChangeTimes
     }
 
     override fun onStreetViewPanoramaClick(orientation: StreetViewPanoramaOrientation) {
-        val point = streetViewPanorama!!.orientationToPoint(orientation)
+        val point = streetViewPanorama.orientationToPoint(orientation)
         point?.let {
             panoClickTimes++
-            panoClickTextView?.text = "Times clicked=$panoClickTimes : $point"
-            streetViewPanorama?.animateTo(
+            panoClickTextView.text = "Times clicked=$panoClickTimes : $point"
+            streetViewPanorama.animateTo(
                 StreetViewPanoramaCamera.Builder()
                     .orientation(orientation)
-                    .zoom(streetViewPanorama!!.panoramaCamera.zoom)
+                    .zoom(streetViewPanorama.panoramaCamera.zoom)
                     .build(), 1000
             )
         }
     }
 
     override fun onStreetViewPanoramaLongClick(orientation: StreetViewPanoramaOrientation) {
-        val point = streetViewPanorama?.orientationToPoint(orientation)
+        val point = streetViewPanorama.orientationToPoint(orientation)
         if (point != null) {
             panoLongClickTimes++
-            panoLongClickTextView?.text = "Times long clicked=$panoLongClickTimes : $point"
+            panoLongClickTextView.text = "Times long clicked=$panoLongClickTimes : $point"
         }
     }
 
