@@ -15,18 +15,17 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
-import com.google.android.gms.maps.StreetViewPanorama;
-import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.StreetViewSource;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.maps.StreetViewPanorama;
+import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.StreetViewSource;
 
 /**
  * This shows how to create an activity with static streetview (all options have been switched off)
@@ -38,62 +37,58 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
 
     private static int RADIUS = 20;
 
-    private StreetViewPanorama mStreetViewPanorama;
+    private StreetViewPanorama streetViewPanorama;
 
-    private CheckBox mStreetNameCheckbox;
+    private CheckBox streetNameCheckbox;
 
-    private CheckBox mNavigationCheckbox;
+    private CheckBox navigationCheckbox;
 
-    private CheckBox mZoomCheckbox;
+    private CheckBox zoomCheckbox;
 
-    private CheckBox mPanningCheckbox;
+    private CheckBox panningCheckbox;
 
-    private CheckBox mOutdoor;
+    private CheckBox outdoorCheckbox;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.street_view_panorama_options_demo);
 
-        mStreetNameCheckbox = (CheckBox) findViewById(R.id.streetnames);
-        mNavigationCheckbox = (CheckBox) findViewById(R.id.navigation);
-        mZoomCheckbox = (CheckBox) findViewById(R.id.zoom);
-        mPanningCheckbox = (CheckBox) findViewById(R.id.panning);
-        mOutdoor = (CheckBox) findViewById(R.id.outdoor);
+        streetNameCheckbox = findViewById(R.id.streetnames);
+        navigationCheckbox = findViewById(R.id.navigation);
+        zoomCheckbox = findViewById(R.id.zoom);
+        panningCheckbox = findViewById(R.id.panning);
+        outdoorCheckbox = findViewById(R.id.outdoor);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
                         getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
-                new OnStreetViewPanoramaReadyCallback() {
-                    @Override
-                    public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-                        mStreetViewPanorama = panorama;
-                        mStreetViewPanorama.setStreetNamesEnabled(mStreetNameCheckbox.isChecked());
-                        mStreetViewPanorama
-                                .setUserNavigationEnabled(mNavigationCheckbox.isChecked());
-                        mStreetViewPanorama.setZoomGesturesEnabled(mZoomCheckbox.isChecked());
-                        mStreetViewPanorama.setPanningGesturesEnabled(mPanningCheckbox.isChecked());
+                panorama -> {
+                    streetViewPanorama = panorama;
+                    panorama.setStreetNamesEnabled(streetNameCheckbox.isChecked());
+                    panorama.setUserNavigationEnabled(navigationCheckbox.isChecked());
+                    panorama.setZoomGesturesEnabled(zoomCheckbox.isChecked());
+                    panorama.setPanningGesturesEnabled(panningCheckbox.isChecked());
 
-                        // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
-                        // loaded which is when the savedInstanceState is null).
-                        if (savedInstanceState == null) {
-                            setPosition();
-                        }
+                    // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
+                    // loaded which is when the savedInstanceState is null).
+                    if (savedInstanceState == null) {
+                        setPosition();
                     }
                 });
     }
 
     private void setPosition() {
-        mStreetViewPanorama.setPosition(
+        streetViewPanorama.setPosition(
                 SAN_FRAN,
                 RADIUS,
-                mOutdoor.isChecked() ? StreetViewSource.OUTDOOR : StreetViewSource.DEFAULT
+                outdoorCheckbox.isChecked() ? StreetViewSource.OUTDOOR : StreetViewSource.DEFAULT
         );
     }
 
     private boolean checkReady() {
-        if (mStreetViewPanorama == null) {
+        if (streetViewPanorama == null) {
             Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -104,28 +99,28 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
         if (!checkReady()) {
             return;
         }
-        mStreetViewPanorama.setStreetNamesEnabled(mStreetNameCheckbox.isChecked());
+        streetViewPanorama.setStreetNamesEnabled(streetNameCheckbox.isChecked());
     }
 
     public void onNavigationToggled(View view) {
         if (!checkReady()) {
             return;
         }
-        mStreetViewPanorama.setUserNavigationEnabled(mNavigationCheckbox.isChecked());
+        streetViewPanorama.setUserNavigationEnabled(navigationCheckbox.isChecked());
     }
 
     public void onZoomToggled(View view) {
         if (!checkReady()) {
             return;
         }
-        mStreetViewPanorama.setZoomGesturesEnabled(mZoomCheckbox.isChecked());
+        streetViewPanorama.setZoomGesturesEnabled(zoomCheckbox.isChecked());
     }
 
     public void onPanningToggled(View view) {
         if (!checkReady()) {
             return;
         }
-        mStreetViewPanorama.setPanningGesturesEnabled(mPanningCheckbox.isChecked());
+        streetViewPanorama.setPanningGesturesEnabled(panningCheckbox.isChecked());
     }
 
     public void onOutdoorToggled(View view) {
