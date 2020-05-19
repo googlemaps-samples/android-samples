@@ -151,6 +151,15 @@
     <string name="street_view_panorama_basic_demo_label">Street View Panorama</string>
     <string name="street_view_panorama_basic_demo_details">Standard Street View Panorama using a Fragment.</string>
 
+    <!-- StreetView Panorama Options Demo -->
+    <string name="street_view_panorama_options_demo_label">Street View Panorama Options</string>
+    <string name="street_view_panorama_options_demo_details">Street View Panorama with toggles for options.</string>
+    <string name="navigation">Navigation</string>
+    <string name="outdoor_only">Outdoor Only</string>
+    <string name="zoom_gestures">Zoom Gestures</string>
+    <string name="panning">Panning Gestures</string>
+    <string name="streetnames">Streetnames</string>
+
     <!-- Tags Demo -->
     <string name="tags_demo_label">Tags</string>
     <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>
