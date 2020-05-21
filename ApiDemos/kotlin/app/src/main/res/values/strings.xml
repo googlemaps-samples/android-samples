@@ -176,6 +176,10 @@
     <string name="tap_screen">tap screen</string>
     <string name="long_press_screen">long press screen</string>
 
+    <!-- StreetView PanoramaView Demo -->
+    <string name="street_view_panorama_view_demo_label">Street View Panorama View</string>
+    <string name="street_view_panorama_view_demo_details">Standard Street View Panorama using a View.</string>
+
     <!-- Tags Demo -->
     <string name="tags_demo_label">Tags</string>
     <string name="tags_demo_details">Demonstrates how to get and set tags on API objects.</string>

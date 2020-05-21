@@ -61,6 +61,7 @@
         <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
         <activity android:name=".StreetViewPanoramaOptionsDemoActivity" />
         <activity android:name=".StreetViewPanoramaEventsDemoActivity" />
+        <activity android:name=".StreetViewPanoramaViewDemoActivity" />
         <activity android:name=".LiteDemoActivity" />
     </application>
 
