@@ -61,6 +61,11 @@ class DemoDetailsList {
                         R.string.street_view_panorama_events_demo_label,
                         R.string.street_view_panorama_events_demo_details,
                         StreetViewPanoramaEventsDemoActivity::class.java),
+                DemoDetails(
+                        R.string.street_view_panorama_view_demo_label,
+                        R.string.street_view_panorama_view_demo_details,
+                        StreetViewPanoramaViewDemoActivity::class.java
+                ),
                 DemoDetails(R.string.tags_demo_label, R.string.tags_demo_details,
                         TagsDemoActivity::class.java),
                 DemoDetails(R.string.ui_settings_demo_label, R.string.ui_settings_demo_details,
