@@ -17,16 +17,12 @@ package com.example.mapwithmarker
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.coroutineScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.maps.android.ktx.MapsExperimentalFeature
-import com.google.maps.android.ktx.addMarker
-import com.google.maps.android.ktx.awaitMap
 
 /**
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.
