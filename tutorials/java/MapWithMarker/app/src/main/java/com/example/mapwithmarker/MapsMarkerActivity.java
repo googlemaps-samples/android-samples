@@ -57,7 +57,7 @@ public class MapsMarkerActivity extends AppCompatActivity
      * Play services inside the SupportMapFragment. The API invokes this method after the user has
      * installed Google Play services and returned to the app.
      */
-    // [END_EXCLUDE silent]
+    // [END_EXCLUDE]
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
