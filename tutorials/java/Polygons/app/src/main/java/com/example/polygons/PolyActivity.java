@@ -132,7 +132,7 @@ public class PolyActivity extends AppCompatActivity
                         new LatLng(-12.4258, 130.7932)));
         polygon2.setTag("beta");
         stylePolygon(polygon2);
-        // [END_EXCLUDE silent]
+        // [END_EXCLUDE]
 
         // Position the map's camera near Alice Springs in the center of Australia,
         // and set the zoom factor so most of Australia shows on the screen.
