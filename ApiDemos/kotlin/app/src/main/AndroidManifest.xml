@@ -30,7 +30,7 @@
         android:theme="@style/AppTheme">
         <!--
         To add your Maps API key to this project:
-            1. Create a file ApiDemos/kotlin/app/secure.properties
+            1. Create a file ApiDemos/kotlin/secure.properties
             2. Add this line, where YOUR_API_KEY is your API key:
                 MAPS_API_KEY=YOUR_API_KEY
         -->
