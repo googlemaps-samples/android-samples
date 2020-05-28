@@ -49,6 +49,12 @@
     <string name="close_info_window_demo_label">Close Info Window Demo</string>
     <string name="close_info_window_demo_details">Demonstrates how to close the info window when the currently selected marker is retapped.</string>
 
+    <!-- Events Demo -->
+    <string name="events_demo_label">Events</string>
+    <string name="events_demo_details">Demonstrates event handling.</string>
+    <string name="move_the_camera">Move the camera</string>
+    <string name="tap_instructions">Tap or long press on the map</string>
+
     <!-- Layers Demo -->
     <string name="buildings">Buildings</string>
     <string name="hybrid">Hybrid</string>
