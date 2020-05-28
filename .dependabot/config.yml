@@ -25,7 +25,19 @@ update_configs:
           prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
+      directory: "./tutorials/kotlin/CurrentPlaceDetailsOnMap/"
+      update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
+
+    - package_manager: "java:gradle"
       directory: "./tutorials/java/MapWithMarker/"
+      update_schedule: "daily"
+      commit_message:
+          prefix: "chore(deps)"
+
+    - package_manager: "java:gradle"
+      directory: "./tutorials/kotlin/MapWithMarker/"
       update_schedule: "daily"
       commit_message:
           prefix: "chore(deps)"
@@ -37,13 +49,13 @@ update_configs:
           prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
-      directory: "./tutorials/java/StyledMap/"
+      directory: "./tutorials/kotlin/Polygons/"
       update_schedule: "daily"
       commit_message:
           prefix: "chore(deps)"
 
     - package_manager: "java:gradle"
-      directory: "./tutorials/kotlin/MapWithMarker/"
+      directory: "./tutorials/java/StyledMap/"
       update_schedule: "daily"
       commit_message:
           prefix: "chore(deps)"
