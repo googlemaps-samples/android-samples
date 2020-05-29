@@ -31,6 +31,10 @@ class DemoDetailsList {
                 DemoDetails(R.string.close_info_window_demo_label,
                         R.string.close_info_window_demo_details,
                         CloseInfoWindowDemoActivity::class.java),
+                DemoDetails(
+                        R.string.events_demo_label,
+                        R.string.events_demo_details,
+                        EventsDemoActivity::class.java),
                 DemoDetails(R.string.layers_demo_label, R.string.layers_demo_description,
                         LayersDemoActivity::class.java),
                 DemoDetails(R.string.lite_demo_label, R.string.lite_demo_details,
