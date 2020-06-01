@@ -61,6 +61,14 @@
     <string name="transparency">Transparency</string>
     <string name="switch_image">Switch Image</string>
 
+    <!--     Indoor    -->
+    <string name="indoor_demo_label">Indoor</string>
+    <string name="indoor_demo_details">Demonstrates how to use the Indoor API.</string>
+    <string name="activate_higher_level">Activate Higher Level</string>
+    <string name="focused_building_info">Focused Building</string>
+    <string name="focused_level_info">Focused Level</string>
+    <string name="toggle_level_picker">Toggle Level Picker</string>
+
     <!-- Layers Demo -->
     <string name="buildings">Buildings</string>
     <string name="hybrid">Hybrid</string>

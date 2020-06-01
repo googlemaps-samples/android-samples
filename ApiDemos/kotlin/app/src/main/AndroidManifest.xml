@@ -65,6 +65,7 @@
         <activity android:name=".LiteDemoActivity" />
         <activity android:name=".EventsDemoActivity" />
         <activity android:name=".GroundOverlayDemoActivity" />
+        <activity android:name=".IndoorDemoActivity" />
     </application>
 
 </manifest>
