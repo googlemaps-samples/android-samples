@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    private GoogleMap map;
 
     private boolean showLevelPicker = true;
 
@@ -51,9 +51,9 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.614631, -122.385153), 18));
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.614631, -122.385153), 18));
     }
 
     /**
@@ -61,14 +61,14 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
      */
     public void onToggleLevelPicker(View view) {
         showLevelPicker = !showLevelPicker;
-        mMap.getUiSettings().setIndoorLevelPickerEnabled(showLevelPicker);
+        map.getUiSettings().setIndoorLevelPickerEnabled(showLevelPicker);
     }
 
     /**
      * Called when the focused building info is clicked.
      */
     public void onFocusedBuildingInfo(View view) {
-        IndoorBuilding building = mMap.getFocusedBuilding();
+        IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
             StringBuilder s = new StringBuilder();
             for (IndoorLevel level : building.getLevels()) {
@@ -87,7 +87,7 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
      * Called when the focused level info is clicked.
      */
     public void onVisibleLevelInfo(View view) {
-        IndoorBuilding building = mMap.getFocusedBuilding();
+        IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
             IndoorLevel level =
                     building.getLevels().get(building.getActiveLevelIndex());
@@ -105,7 +105,7 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
      * Called when the activate higher level is clicked.
      */
     public void onHigherLevel(View view) {
-        IndoorBuilding building = mMap.getFocusedBuilding();
+        IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
             List<IndoorLevel> levels = building.getLevels();
             if (!levels.isEmpty()) {
@@ -117,7 +117,7 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
                     newLevel = levels.size() - 1;
                 }
                 IndoorLevel level = levels.get(newLevel);
-                setText("Activiating level " + level.getName());
+                setText("Activating level " + level.getName());
                 level.activate();
             } else {
                 setText("No levels in building");
@@ -128,7 +128,7 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     private void setText(String message) {
-        TextView text = (TextView) findViewById(R.id.top_text);
+        TextView text = findViewById(R.id.top_text);
         text.setText(message);
     }
 }

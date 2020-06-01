@@ -39,6 +39,8 @@ class DemoDetailsList {
                         R.string.ground_overlay_demo_label,
                         R.string.ground_overlay_demo_details,
                         GroundOverlayDemoActivity::class.java),
+                DemoDetails(R.string.indoor_demo_label, R.string.indoor_demo_details,
+                        IndoorDemoActivity::class.java),
                 DemoDetails(R.string.layers_demo_label, R.string.layers_demo_description,
                         LayersDemoActivity::class.java),
                 DemoDetails(R.string.lite_demo_label, R.string.lite_demo_details,
