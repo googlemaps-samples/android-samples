@@ -55,6 +55,12 @@
     <string name="move_the_camera">Move the camera</string>
     <string name="tap_instructions">Tap or long press on the map</string>
 
+    <!-- GroundOverLay Demo -->
+    <string name="ground_overlay_demo_label">Ground Overlays</string>
+    <string name="ground_overlay_demo_details">Demonstrates how to add a GroundOverlay to a map.</string>
+    <string name="transparency">Transparency</string>
+    <string name="switch_image">Switch Image</string>
+
     <!-- Layers Demo -->
     <string name="buildings">Buildings</string>
     <string name="hybrid">Hybrid</string>

@@ -50,24 +50,24 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
     private static final LatLng NEAR_NEWARK =
             new LatLng(NEWARK.latitude - 0.001, NEWARK.longitude - 0.025);
 
-    private final List<BitmapDescriptor> mImages = new ArrayList<BitmapDescriptor>();
+    private final List<BitmapDescriptor> images = new ArrayList<BitmapDescriptor>();
 
-    private GroundOverlay mGroundOverlay;
+    private GroundOverlay groundOverlay;
 
-    private GroundOverlay mGroundOverlayRotated;
+    private GroundOverlay groundOverlayRotated;
 
-    private SeekBar mTransparencyBar;
+    private SeekBar transparencyBar;
 
-    private int mCurrentEntry = 0;
+    private int currentEntry = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ground_overlay_demo);
 
-        mTransparencyBar = (SeekBar) findViewById(R.id.transparencySeekBar);
-        mTransparencyBar.setMax(TRANSPARENCY_MAX);
-        mTransparencyBar.setProgress(0);
+        transparencyBar = findViewById(R.id.transparencySeekBar);
+        transparencyBar.setMax(TRANSPARENCY_MAX);
+        transparencyBar.setProgress(0);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -81,24 +81,24 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11));
 
-        mImages.clear();
-        mImages.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922));
-        mImages.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_prudential_sunny));
+        images.clear();
+        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922));
+        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_prudential_sunny));
 
         // Add a small, rotated overlay that is clickable by default
         // (set by the initial state of the checkbox.)
-        mGroundOverlayRotated = map.addGroundOverlay(new GroundOverlayOptions()
-                .image(mImages.get(1)).anchor(0, 1)
+        groundOverlayRotated = map.addGroundOverlay(new GroundOverlayOptions()
+                .image(images.get(1)).anchor(0, 1)
                 .position(NEAR_NEWARK, 4300f, 3025f)
                 .bearing(30)
                 .clickable(((CheckBox) findViewById(R.id.toggleClickability)).isChecked()));
 
         // Add a large overlay at Newark on top of the smaller overlay.
-        mGroundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
-                .image(mImages.get(mCurrentEntry)).anchor(0, 1)
+        groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
+                .image(images.get(currentEntry)).anchor(0, 1)
                 .position(NEWARK, 8600f, 6500f));
 
-        mTransparencyBar.setOnSeekBarChangeListener(this);
+        transparencyBar.setOnSeekBarChangeListener(this);
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localised.
@@ -115,14 +115,14 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mGroundOverlay != null) {
-            mGroundOverlay.setTransparency((float) progress / (float) TRANSPARENCY_MAX);
+        if (groundOverlay != null) {
+            groundOverlay.setTransparency((float) progress / (float) TRANSPARENCY_MAX);
         }
     }
 
     public void switchImage(View view) {
-        mCurrentEntry = (mCurrentEntry + 1) % mImages.size();
-        mGroundOverlay.setImage(mImages.get(mCurrentEntry));
+        currentEntry = (currentEntry + 1) % images.size();
+        groundOverlay.setImage(images.get(currentEntry));
     }
 
     /**
@@ -131,7 +131,7 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
     @Override
     public void onGroundOverlayClick(GroundOverlay groundOverlay) {
         // Toggle transparency value between 0.0f and 0.5f. Initial default value is 0.0f.
-        mGroundOverlayRotated.setTransparency(0.5f - mGroundOverlayRotated.getTransparency());
+        groundOverlayRotated.setTransparency(0.5f - groundOverlayRotated.getTransparency());
     }
 
     /**
@@ -140,8 +140,8 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
      * This callback is defined on the CheckBox in the layout for this Activity.
      */
     public void toggleClickability(View view) {
-        if (mGroundOverlayRotated != null) {
-            mGroundOverlayRotated.setClickable(((CheckBox) view).isChecked());
+        if (groundOverlayRotated != null) {
+            groundOverlayRotated.setClickable(((CheckBox) view).isChecked());
         }
     }
 }
