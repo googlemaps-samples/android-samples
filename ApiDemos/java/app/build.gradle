@@ -60,7 +60,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     v3Implementation name:'maps-sdk-3.0.0-beta', ext:'aar'
-    v3Implementation 'com.google.android.gms:play-services-basement:17.2.1'
+    v3Implementation 'com.google.android.gms:play-services-basement:17.3.0'
     v3Implementation 'com.google.android.gms:play-services-base:17.2.1'
     v3Implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     v3Implementation 'com.google.android.gms:play-services-location:17.0.0'
