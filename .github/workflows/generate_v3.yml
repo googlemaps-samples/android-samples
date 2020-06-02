@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '0 */1 * * *'
   repository_dispatch:
-    types: [ generate_v3 ]
+    types: [ generate-v3 ]
 
 jobs:
   generate-v3:
