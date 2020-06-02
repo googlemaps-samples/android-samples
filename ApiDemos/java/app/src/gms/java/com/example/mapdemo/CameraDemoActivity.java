@@ -15,6 +15,16 @@
 
 package com.example.mapdemo;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.SeekBar;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,26 +39,17 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.SeekBar;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 /**
  * This shows how to change the camera position for the map.
  */
+// [START maps_camera_events]
 public class CameraDemoActivity extends AppCompatActivity implements
         OnCameraMoveStartedListener,
         OnCameraMoveListener,
         OnCameraMoveCanceledListener,
         OnCameraIdleListener,
         OnMapReadyCallback {
-
+    // [START_EXCLUDE silent]
     private static final String TAG = CameraDemoActivity.class.getName();
 
     /**
@@ -70,60 +71,67 @@ public class CameraDemoActivity extends AppCompatActivity implements
                     .bearing(0)
                     .tilt(25)
                     .build();
+    // [END_EXCLUDE]
 
-    private GoogleMap mMap;
-
-    private CompoundButton mAnimateToggle;
-    private CompoundButton mCustomDurationToggle;
-    private SeekBar mCustomDurationBar;
+    private GoogleMap map;
+    // [START_EXCLUDE silent]
+    private CompoundButton animateToggle;
+    private CompoundButton customDurationToggle;
+    private SeekBar customDurationBar;
     private PolylineOptions currPolylineOptions;
     private boolean isCanceled = false;
+    // [END_EXCLUDE]
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_demo);
-
-        mAnimateToggle = (CompoundButton) findViewById(R.id.animate);
-        mCustomDurationToggle = (CompoundButton) findViewById(R.id.duration_toggle);
-        mCustomDurationBar = (SeekBar) findViewById(R.id.duration_bar);
+        // [START_EXCLUDE silent]
+        animateToggle = findViewById(R.id.animate);
+        customDurationToggle = findViewById(R.id.duration_toggle);
+        customDurationBar = findViewById(R.id.duration_bar);
 
         updateEnabledState();
+        // [END_EXCLUDE]
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    // [START_EXCLUDE silent]
     @Override
     protected void onResume() {
         super.onResume();
         updateEnabledState();
     }
+    // [END_EXCLUDE]
 
     @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
 
-        mMap.setOnCameraIdleListener(this);
-        mMap.setOnCameraMoveStartedListener(this);
-        mMap.setOnCameraMoveListener(this);
-        mMap.setOnCameraMoveCanceledListener(this);
-
+        map.setOnCameraIdleListener(this);
+        map.setOnCameraMoveStartedListener(this);
+        map.setOnCameraMoveListener(this);
+        map.setOnCameraMoveCanceledListener(this);
+        // [START_EXCLUDE silent]
         // We will provide our own zoom controls.
-        mMap.getUiSettings().setZoomControlsEnabled(false);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        map.getUiSettings().setZoomControlsEnabled(false);
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        // [END_EXCLUDE]
 
         // Show Sydney
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.87365, 151.20689), 10));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.87365, 151.20689), 10));
     }
 
+    // [START_EXCLUDE silent]
     /**
      * When the map is not ready the CameraUpdateFactory cannot be used. This should be called on
      * all entry points that call methods on the Google Maps API.
      */
     private boolean checkReady() {
-        if (mMap == null) {
+        if (map == null) {
             Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -172,7 +180,7 @@ public class CameraDemoActivity extends AppCompatActivity implements
             return;
         }
 
-        mMap.stopAnimation();
+        map.stopAnimation();
     }
 
     /**
@@ -205,7 +213,7 @@ public class CameraDemoActivity extends AppCompatActivity implements
             return;
         }
 
-        CameraPosition currentCameraPosition = mMap.getCameraPosition();
+        CameraPosition currentCameraPosition = map.getCameraPosition();
         float currentTilt = currentCameraPosition.tilt;
         float newTilt = currentTilt + 10;
 
@@ -225,7 +233,7 @@ public class CameraDemoActivity extends AppCompatActivity implements
             return;
         }
 
-        CameraPosition currentCameraPosition = mMap.getCameraPosition();
+        CameraPosition currentCameraPosition = map.getCameraPosition();
 
         float currentTilt = currentCameraPosition.tilt;
 
@@ -300,9 +308,9 @@ public class CameraDemoActivity extends AppCompatActivity implements
      * Update the enabled state of the custom duration controls.
      */
     private void updateEnabledState() {
-        mCustomDurationToggle.setEnabled(mAnimateToggle.isChecked());
-        mCustomDurationBar
-                .setEnabled(mAnimateToggle.isChecked() && mCustomDurationToggle.isChecked());
+        customDurationToggle.setEnabled(animateToggle.isChecked());
+        customDurationBar
+                .setEnabled(animateToggle.isChecked() && customDurationToggle.isChecked());
     }
 
     private void changeCamera(CameraUpdate update) {
@@ -314,79 +322,101 @@ public class CameraDemoActivity extends AppCompatActivity implements
      * animate toggle button.
      */
     private void changeCamera(CameraUpdate update, CancelableCallback callback) {
-        if (mAnimateToggle.isChecked()) {
-            if (mCustomDurationToggle.isChecked()) {
-                int duration = mCustomDurationBar.getProgress();
+        if (animateToggle.isChecked()) {
+            if (customDurationToggle.isChecked()) {
+                int duration = customDurationBar.getProgress();
                 // The duration must be strictly positive so we make it at least 1.
-                mMap.animateCamera(update, Math.max(duration, 1), callback);
+                map.animateCamera(update, Math.max(duration, 1), callback);
             } else {
-                mMap.animateCamera(update, callback);
+                map.animateCamera(update, callback);
             }
         } else {
-            mMap.moveCamera(update);
+            map.moveCamera(update);
         }
     }
+    // [END_EXCLUDE]
 
     @Override
     public void onCameraMoveStarted(int reason) {
+        // [START_EXCLUDE silent]
         if (!isCanceled) {
-            mMap.clear();
+            map.clear();
         }
+        // [END_EXCLUDE]
 
         String reasonText = "UNKNOWN_REASON";
+        // [START_EXCLUDE silent]
         currPolylineOptions = new PolylineOptions().width(5);
+        // [END_EXCLUDE]
         switch (reason) {
             case OnCameraMoveStartedListener.REASON_GESTURE:
+                // [START_EXCLUDE silent]
                 currPolylineOptions.color(Color.BLUE);
+                // [END_EXCLUDE]
                 reasonText = "GESTURE";
                 break;
             case OnCameraMoveStartedListener.REASON_API_ANIMATION:
+                // [START_EXCLUDE silent]
                 currPolylineOptions.color(Color.RED);
+                // [END_EXCLUDE]
                 reasonText = "API_ANIMATION";
                 break;
             case OnCameraMoveStartedListener.REASON_DEVELOPER_ANIMATION:
+                // [START_EXCLUDE silent]
                 currPolylineOptions.color(Color.GREEN);
+                // [END_EXCLUDE]
                 reasonText = "DEVELOPER_ANIMATION";
                 break;
         }
-        Log.i(TAG, "onCameraMoveStarted(" + reasonText + ")");
+        Log.d(TAG, "onCameraMoveStarted(" + reasonText + ")");
+        // [START_EXCLUDE silent]
         addCameraTargetToPath();
+        // [END_EXCLUDE]
     }
 
     @Override
     public void onCameraMove() {
+        // [START_EXCLUDE silent]
         // When the camera is moving, add its target to the current path we'll draw on the map.
         if (currPolylineOptions != null) {
             addCameraTargetToPath();
         }
-        Log.i(TAG, "onCameraMove");
+        // [END_EXCLUDE]
+        Log.d(TAG, "onCameraMove");
     }
 
     @Override
     public void onCameraMoveCanceled() {
+        // [START_EXCLUDE silent]
         // When the camera stops moving, add its target to the current path, and draw it on the map.
         if (currPolylineOptions != null) {
             addCameraTargetToPath();
-            mMap.addPolyline(currPolylineOptions);
+            map.addPolyline(currPolylineOptions);
         }
         isCanceled = true;  // Set to clear the map when dragging starts again.
         currPolylineOptions = null;
-        Log.i(TAG, "onCameraMoveCancelled");
+        // [END_EXCLUDE]
+        Log.d(TAG, "onCameraMoveCancelled");
     }
 
     @Override
     public void onCameraIdle() {
+        // [START_EXCLUDE silent]
         if (currPolylineOptions != null) {
             addCameraTargetToPath();
-            mMap.addPolyline(currPolylineOptions);
+            map.addPolyline(currPolylineOptions);
         }
         currPolylineOptions = null;
         isCanceled = false;  // Set to *not* clear the map when dragging starts again.
-        Log.i(TAG, "onCameraIdle");
+        // [END_EXCLUDE]
+        Log.d(TAG, "onCameraIdle");
     }
 
+    // [START_EXCLUDE silent]
     private void addCameraTargetToPath() {
-        LatLng target = mMap.getCameraPosition().target;
+        LatLng target = map.getCameraPosition().target;
         currPolylineOptions.add(target);
     }
+    // [END_EXCLUDE]
 }
+// [END maps_camera_events]
