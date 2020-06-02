@@ -72,7 +72,7 @@ public abstract class PermissionUtils {
 
         private static final String ARGUMENT_FINISH_ACTIVITY = "finish";
 
-        private boolean mFinishActivity = false;
+        private boolean finishActivity = false;
 
         /**
          * Creates a new instance of this dialog and optionally finishes the calling Activity
@@ -89,7 +89,7 @@ public abstract class PermissionUtils {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            mFinishActivity = getArguments().getBoolean(ARGUMENT_FINISH_ACTIVITY);
+            finishActivity = getArguments().getBoolean(ARGUMENT_FINISH_ACTIVITY);
 
             return new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.location_permission_denied)
@@ -100,7 +100,7 @@ public abstract class PermissionUtils {
         @Override
         public void onDismiss(DialogInterface dialog) {
             super.onDismiss(dialog);
-            if (mFinishActivity) {
+            if (finishActivity) {
                 Toast.makeText(getActivity(), R.string.permission_required_toast,
                         Toast.LENGTH_SHORT).show();
                 getActivity().finish();
@@ -122,7 +122,7 @@ public abstract class PermissionUtils {
 
         private static final String ARGUMENT_FINISH_ACTIVITY = "finish";
 
-        private boolean mFinishActivity = false;
+        private boolean finishActivity = false;
 
         /**
          * Creates a new instance of a dialog displaying the rationale for the use of the location
@@ -149,7 +149,7 @@ public abstract class PermissionUtils {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             Bundle arguments = getArguments();
             final int requestCode = arguments.getInt(ARGUMENT_PERMISSION_REQUEST_CODE);
-            mFinishActivity = arguments.getBoolean(ARGUMENT_FINISH_ACTIVITY);
+            finishActivity = arguments.getBoolean(ARGUMENT_FINISH_ACTIVITY);
 
             return new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.permission_rationale_location)
@@ -161,7 +161,7 @@ public abstract class PermissionUtils {
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     requestCode);
                             // Do not finish the Activity while requesting permission.
-                            mFinishActivity = false;
+                            finishActivity = false;
                         }
                     })
                     .setNegativeButton(android.R.string.cancel, null)
@@ -171,7 +171,7 @@ public abstract class PermissionUtils {
         @Override
         public void onDismiss(DialogInterface dialog) {
             super.onDismiss(dialog);
-            if (mFinishActivity) {
+            if (finishActivity) {
                 Toast.makeText(getActivity(),
                         R.string.permission_required_toast,
                         Toast.LENGTH_SHORT)
