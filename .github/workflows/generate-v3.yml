@@ -37,10 +37,10 @@ jobs:
       if: steps.gradlew-generate-v3.outputs.files-changed > 0
       with:
         token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
-        commit-message: 'chore: Generate V3 code'
+        commit-message: 'chore: Generate V3 samples'
         committer: googlemaps-bot <googlemaps-bot@google.com>
         author: googlemaps-bot <googlemaps-bot@google.com>
-        title: 'chore: Generate V3 code'
+        title: 'chore: Generate V3 samples'
         body: |
             Generating V3 code via `./gradlew generateV3 generateV3Layout`
         branch: googlemaps-bot/generate-v3
