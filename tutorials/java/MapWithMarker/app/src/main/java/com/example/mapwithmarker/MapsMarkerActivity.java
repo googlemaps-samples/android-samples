@@ -58,14 +58,21 @@ public class MapsMarkerActivity extends AppCompatActivity
      * installed Google Play services and returned to the app.
      */
     // [END_EXCLUDE]
+    // [START maps_marker_on_map_ready_add_marker]
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        // [START_EXCLUDE silent]
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
+        // [END_EXCLUDE]
         LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions().position(sydney)
-                .title("Marker in Sydney"));
+        googleMap.addMarker(new MarkerOptions()
+            .position(sydney)
+            .title("Marker in Sydney"));
+        // [START_EXCLUDE silent]
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // [END_EXCLUDE]
     }
+    // [END maps_marker_on_map_ready_add_marker]
 }
 // [END maps_marker_on_map_ready]

@@ -47,6 +47,7 @@ class MapsMarkerActivity : AppCompatActivity(), OnMapReadyCallback {
     // [END maps_marker_get_map_async]
     // [END_EXCLUDE]
 
+    // [START maps_marker_on_map_ready_add_marker]
     override fun onMapReady(googleMap: GoogleMap?) {
         googleMap?.apply {
             val sydney = LatLng(-33.852, 151.211)
@@ -55,8 +56,11 @@ class MapsMarkerActivity : AppCompatActivity(), OnMapReadyCallback {
                     .position(sydney)
                     .title("Marker in Sydney")
             )
+            // [START_EXCLUDE silent]
             moveCamera(CameraUpdateFactory.newLatLng(sydney))
+            // [END_EXCLUDE]
         }
     }
+    // [END maps_marker_on_map_ready_add_marker]
 }
 // [END maps_marker_on_map_ready]
