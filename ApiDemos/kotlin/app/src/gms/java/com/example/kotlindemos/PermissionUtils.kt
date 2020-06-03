@@ -104,14 +104,12 @@ object PermissionUtils {
              */
             @JvmStatic
             fun newInstance(finishActivity: Boolean): PermissionDeniedDialog {
-                val arguments = Bundle()
-                arguments.putBoolean(
-                    ARGUMENT_FINISH_ACTIVITY,
-                    finishActivity
-                )
-                val dialog = PermissionDeniedDialog()
-                dialog.arguments = arguments
-                return dialog
+                val arguments = Bundle().apply {
+                    putBoolean(ARGUMENT_FINISH_ACTIVITY, finishActivity)
+                }
+                return PermissionDeniedDialog().apply {
+                    this.arguments = arguments
+                }
             }
         }
     }
@@ -177,18 +175,13 @@ object PermissionUtils {
              * cancelled.
              */
             fun newInstance(requestCode: Int, finishActivity: Boolean): RationaleDialog {
-                val arguments = Bundle()
-                arguments.putInt(
-                    ARGUMENT_PERMISSION_REQUEST_CODE,
-                    requestCode
-                )
-                arguments.putBoolean(
-                    ARGUMENT_FINISH_ACTIVITY,
-                    finishActivity
-                )
-                val dialog = RationaleDialog()
-                dialog.arguments = arguments
-                return dialog
+                val arguments = Bundle().apply {
+                    putInt(ARGUMENT_PERMISSION_REQUEST_CODE, requestCode)
+                    putBoolean(ARGUMENT_FINISH_ACTIVITY, finishActivity)
+                }
+                return RationaleDialog().apply {
+                    this.arguments = arguments
+                }
             }
         }
     }
