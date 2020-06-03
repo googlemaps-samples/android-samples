@@ -1,0 +1,46 @@
+name: Generate V3 Samples
+
+on:
+  schedule:
+    - cron: '0 */1 * * *'
+  repository_dispatch:
+    types: [ generate-v3 ]
+
+jobs:
+  generate-v3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+
+    - name: Install NDK
+      run: |
+        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;20.0.5594570"
+
+    - name: Generate V3
+      id: gradlew-generate-v3
+      run: |
+        cd ApiDemos/java
+        ./gradlew generateV3 generateV3Layout
+        cd ../kotlin
+        ./gradlew generateV3 generateV3Layout
+        echo "::set-output name=files-changed::$(git status -s | wc -l)"
+
+    - name: PR Changes
+      uses: peter-evans/create-pull-request@v2
+      if: steps.gradlew-generate-v3.outputs.files-changed > 0
+      with:
+        token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
+        commit-message: 'chore: Generate V3 samples'
+        committer: googlemaps-bot <googlemaps-bot@google.com>
+        author: googlemaps-bot <googlemaps-bot@google.com>
+        title: 'chore: Generate V3 samples'
+        body: |
+            Generating V3 code via `./gradlew generateV3 generateV3Layout`
+        branch: googlemaps-bot/generate-v3
