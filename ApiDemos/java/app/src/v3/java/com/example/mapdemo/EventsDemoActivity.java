@@ -42,17 +42,17 @@ public class EventsDemoActivity extends AppCompatActivity
         implements OnMapClickListener, OnMapLongClickListener, OnCameraIdleListener,
         OnMapReadyCallback {
 
-    private TextView mTapTextView;
-    private TextView mCameraTextView;
-    private GoogleMap mMap;
+    private TextView tapTextView;
+    private TextView cameraTextView;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.events_demo);
 
-        mTapTextView = (TextView) findViewById(R.id.tap_text);
-        mCameraTextView = (TextView) findViewById(R.id.camera_text);
+        tapTextView = findViewById(R.id.tap_text);
+        cameraTextView = findViewById(R.id.camera_text);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -61,24 +61,24 @@ public class EventsDemoActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
-        mMap = map;
-        mMap.setOnMapClickListener(this);
-        mMap.setOnMapLongClickListener(this);
-        mMap.setOnCameraIdleListener(this);
+        this.map = map;
+        this.map.setOnMapClickListener(this);
+        this.map.setOnMapLongClickListener(this);
+        this.map.setOnCameraIdleListener(this);
     }
 
     @Override
     public void onMapClick(LatLng point) {
-        mTapTextView.setText("tapped, point=" + point);
+        tapTextView.setText("tapped, point=" + point);
     }
 
     @Override
     public void onMapLongClick(LatLng point) {
-        mTapTextView.setText("long pressed, point=" + point);
+        tapTextView.setText("long pressed, point=" + point);
     }
 
     @Override
     public void onCameraIdle() {
-        mCameraTextView.setText(mMap.getCameraPosition().toString());
+        cameraTextView.setText(map.getCameraPosition().toString());
     }
 }
