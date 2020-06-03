@@ -22,7 +22,12 @@
 
 package com.example.mapdemo;
 
-import com.google.android.libraries.maps.OnStreetViewPanoramaReadyCallback;
+import android.graphics.Point;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.libraries.maps.StreetViewPanorama;
 import com.google.android.libraries.maps.StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener;
 import com.google.android.libraries.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener;
@@ -34,12 +39,6 @@ import com.google.android.libraries.maps.model.StreetViewPanoramaCamera;
 import com.google.android.libraries.maps.model.StreetViewPanoramaLocation;
 import com.google.android.libraries.maps.model.StreetViewPanoramaOrientation;
 
-import android.graphics.Point;
-import android.os.Bundle;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 /**
  * This shows how to listen to some {@link StreetViewPanorama} events.
  */
@@ -50,56 +49,53 @@ public class StreetViewPanoramaEventsDemoActivity extends AppCompatActivity
     // George St, Sydney
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
 
-    private StreetViewPanorama mStreetViewPanorama;
+    private StreetViewPanorama streetViewPanorama;
 
-    private TextView mPanoChangeTimesTextView;
+    private TextView panoChangeTimesTextView;
 
-    private TextView mPanoCameraChangeTextView;
+    private TextView panoCameraChangeTextView;
 
-    private TextView mPanoClickTextView;
+    private TextView panoClickTextView;
 
-    private TextView mPanoLongClickTextView;
+    private TextView panoLongClickTextView;
 
-    private int mPanoChangeTimes = 0;
+    private int panoChangeTimes = 0;
 
-    private int mPanoCameraChangeTimes = 0;
+    private int panoCameraChangeTimes = 0;
 
-    private int mPanoClickTimes = 0;
+    private int panoClickTimes = 0;
 
-    private int mPanoLongClickTimes = 0;
+    private int panoLongClickTimes = 0;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.street_view_panorama_events_demo);
 
-        mPanoChangeTimesTextView = (TextView) findViewById(R.id.change_pano);
-        mPanoCameraChangeTextView = (TextView) findViewById(R.id.change_camera);
-        mPanoClickTextView = (TextView) findViewById(R.id.click_pano);
-        mPanoLongClickTextView = (TextView) findViewById(R.id.long_click_pano);
+        panoChangeTimesTextView = findViewById(R.id.change_pano);
+        panoCameraChangeTextView = findViewById(R.id.change_camera);
+        panoClickTextView = findViewById(R.id.click_pano);
+        panoLongClickTextView = findViewById(R.id.long_click_pano);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
                         getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
-                new OnStreetViewPanoramaReadyCallback() {
-                    @Override
-                    public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
-                        mStreetViewPanorama = panorama;
-                        mStreetViewPanorama.setOnStreetViewPanoramaChangeListener(
-                                StreetViewPanoramaEventsDemoActivity.this);
-                        mStreetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
-                                StreetViewPanoramaEventsDemoActivity.this);
-                        mStreetViewPanorama.setOnStreetViewPanoramaClickListener(
-                                StreetViewPanoramaEventsDemoActivity.this);
-                        mStreetViewPanorama.setOnStreetViewPanoramaLongClickListener(
-                                StreetViewPanoramaEventsDemoActivity.this);
+                panorama -> {
+                    streetViewPanorama = panorama;
+                    streetViewPanorama.setOnStreetViewPanoramaChangeListener(
+                            StreetViewPanoramaEventsDemoActivity.this);
+                    streetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
+                            StreetViewPanoramaEventsDemoActivity.this);
+                    streetViewPanorama.setOnStreetViewPanoramaClickListener(
+                            StreetViewPanoramaEventsDemoActivity.this);
+                    streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
+                            StreetViewPanoramaEventsDemoActivity.this);
 
-                        // Only set the panorama to SYDNEY on startup (when no panoramas have been
-                        // loaded which is when the savedInstanceState is null).
-                        if (savedInstanceState == null) {
-                            mStreetViewPanorama.setPosition(SYDNEY);
-                        }
+                    // Only set the panorama to SYDNEY on startup (when no panoramas have been
+                    // loaded which is when the savedInstanceState is null).
+                    if (savedInstanceState == null) {
+                        streetViewPanorama.setPosition(SYDNEY);
                     }
                 });
     }
@@ -107,37 +103,37 @@ public class StreetViewPanoramaEventsDemoActivity extends AppCompatActivity
     @Override
     public void onStreetViewPanoramaChange(StreetViewPanoramaLocation location) {
         if (location != null) {
-            mPanoChangeTimesTextView.setText("Times panorama changed=" + ++mPanoChangeTimes);
+            panoChangeTimesTextView.setText("Times panorama changed=" + ++panoChangeTimes);
         }
     }
 
     @Override
     public void onStreetViewPanoramaCameraChange(StreetViewPanoramaCamera camera) {
-        mPanoCameraChangeTextView.setText("Times camera changed=" + ++mPanoCameraChangeTimes);
+        panoCameraChangeTextView.setText("Times camera changed=" + ++panoCameraChangeTimes);
     }
 
     @Override
     public void onStreetViewPanoramaClick(StreetViewPanoramaOrientation orientation) {
-        Point point = mStreetViewPanorama.orientationToPoint(orientation);
+        Point point = streetViewPanorama.orientationToPoint(orientation);
         if (point != null) {
-            mPanoClickTimes++;
-            mPanoClickTextView.setText(
-                    "Times clicked=" + mPanoClickTimes + " : " + point.toString());
-            mStreetViewPanorama.animateTo(
+            panoClickTimes++;
+            panoClickTextView.setText(
+                    "Times clicked=" + panoClickTimes + " : " + point.toString());
+            streetViewPanorama.animateTo(
                     new StreetViewPanoramaCamera.Builder()
                             .orientation(orientation)
-                            .zoom(mStreetViewPanorama.getPanoramaCamera().zoom)
+                            .zoom(streetViewPanorama.getPanoramaCamera().zoom)
                             .build(), 1000);
         }
     }
 
     @Override
     public void onStreetViewPanoramaLongClick(StreetViewPanoramaOrientation orientation) {
-        Point point = mStreetViewPanorama.orientationToPoint(orientation);
+        Point point = streetViewPanorama.orientationToPoint(orientation);
         if (point != null) {
-            mPanoLongClickTimes++;
-            mPanoLongClickTextView.setText(
-                    "Times long clicked=" + mPanoLongClickTimes + " : " + point.toString());
+            panoLongClickTimes++;
+            panoLongClickTextView.setText(
+                    "Times long clicked=" + panoLongClickTimes + " : " + point.toString());
         }
     }
 }

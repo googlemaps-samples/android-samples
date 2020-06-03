@@ -29,6 +29,7 @@ import com.google.android.libraries.maps.model.LatLng;
 import android.os.Bundle;
 import android.view.ViewGroup.LayoutParams;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -39,7 +40,7 @@ public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
     // George St, Sydney
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
 
-    private StreetViewPanoramaView mStreetViewPanoramaView;
+    private StreetViewPanoramaView streetViewPanoramaView;
 
     private static final String STREETVIEW_BUNDLE_KEY = "StreetViewBundleKey";
 
@@ -52,48 +53,48 @@ public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
             options.position(SYDNEY);
         }
 
-        mStreetViewPanoramaView = new StreetViewPanoramaView(this, options);
-        addContentView(mStreetViewPanoramaView,
+        streetViewPanoramaView = new StreetViewPanoramaView(this, options);
+        addContentView(streetViewPanoramaView,
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         // *** IMPORTANT ***
         // StreetViewPanoramaView requires that the Bundle you pass contain _ONLY_
         // StreetViewPanoramaView SDK objects or sub-Bundles.
-        Bundle mStreetViewBundle = null;
+        Bundle streetViewBundle = null;
         if (savedInstanceState != null) {
-            mStreetViewBundle = savedInstanceState.getBundle(STREETVIEW_BUNDLE_KEY);
+            streetViewBundle = savedInstanceState.getBundle(STREETVIEW_BUNDLE_KEY);
         }
-        mStreetViewPanoramaView.onCreate(mStreetViewBundle);
+        streetViewPanoramaView.onCreate(streetViewBundle);
     }
 
     @Override
     protected void onResume() {
-        mStreetViewPanoramaView.onResume();
+        streetViewPanoramaView.onResume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        mStreetViewPanoramaView.onPause();
+        streetViewPanoramaView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        mStreetViewPanoramaView.onDestroy();
+        streetViewPanoramaView.onDestroy();
         super.onDestroy();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        Bundle mStreetViewBundle = outState.getBundle(STREETVIEW_BUNDLE_KEY);
-        if (mStreetViewBundle == null) {
-            mStreetViewBundle = new Bundle();
-            outState.putBundle(STREETVIEW_BUNDLE_KEY, mStreetViewBundle);
+        Bundle streetViewBundle = outState.getBundle(STREETVIEW_BUNDLE_KEY);
+        if (streetViewBundle == null) {
+            streetViewBundle = new Bundle();
+            outState.putBundle(STREETVIEW_BUNDLE_KEY, streetViewBundle);
         }
 
-        mStreetViewPanoramaView.onSaveInstanceState(mStreetViewBundle);
+        streetViewPanoramaView.onSaveInstanceState(streetViewBundle);
     }
 }

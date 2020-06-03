@@ -67,7 +67,7 @@ public class LiteDemoActivity extends AppCompatActivity implements
             new LatLng(-19.663970, 137.724609), new LatLng(-23.202307, 135.395508),
             new LatLng(-19.705347, 129.550781)};
 
-    private GoogleMap mMap;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +87,12 @@ public class LiteDemoActivity extends AppCompatActivity implements
      */
     public void showDarwin(View v) {
         // Wait until map is ready
-        if (mMap == null) {
+        if (map == null) {
             return;
         }
 
         // Center camera on Adelaide marker
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DARWIN, 10f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(DARWIN, 10f));
     }
 
     /**
@@ -100,12 +100,12 @@ public class LiteDemoActivity extends AppCompatActivity implements
      */
     public void showAdelaide(View v) {
         // Wait until map is ready
-        if (mMap == null) {
+        if (map == null) {
             return;
         }
 
         // Center camera on Adelaide marker
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ADELAIDE, 10f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(ADELAIDE, 10f));
     }
 
     /**
@@ -115,7 +115,7 @@ public class LiteDemoActivity extends AppCompatActivity implements
      */
     public void showAustralia(View v) {
         // Wait until map is ready
-        if (mMap == null) {
+        if (map == null) {
             return;
         }
 
@@ -129,7 +129,7 @@ public class LiteDemoActivity extends AppCompatActivity implements
                 .include(BRISBANE);
 
         // Move camera to show all markers and locations
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 20));
     }
 
     /**
@@ -137,7 +137,7 @@ public class LiteDemoActivity extends AppCompatActivity implements
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        map = googleMap;
         addMarkers();
         addPolyObjects();
         showAustralia(null);
@@ -149,12 +149,12 @@ public class LiteDemoActivity extends AppCompatActivity implements
      * Territory (Australia).
      */
     private void addPolyObjects() {
-        mMap.addPolyline((new PolylineOptions())
+        map.addPolyline((new PolylineOptions())
                 .add(MELBOURNE, ADELAIDE, PERTH)
                 .color(Color.GREEN)
                 .width(5f));
 
-        mMap.addPolygon(new PolygonOptions()
+        map.addPolygon(new PolygonOptions()
                 .add(POLYGON)
                 .fillColor(Color.CYAN)
                 .strokeColor(Color.BLUE)
@@ -165,26 +165,26 @@ public class LiteDemoActivity extends AppCompatActivity implements
      * Add Markers with default info windows to the map.
      */
     private void addMarkers() {
-        mMap.addMarker(new MarkerOptions()
+        map.addMarker(new MarkerOptions()
                 .position(BRISBANE)
                 .title("Brisbane"));
 
-        mMap.addMarker(new MarkerOptions()
+        map.addMarker(new MarkerOptions()
                 .position(MELBOURNE)
                 .title("Melbourne")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
-        mMap.addMarker(new MarkerOptions()
+        map.addMarker(new MarkerOptions()
                 .position(SYDNEY)
                 .title("Sydney")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-        mMap.addMarker(new MarkerOptions()
+        map.addMarker(new MarkerOptions()
                 .position(ADELAIDE)
                 .title("Adelaide")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
 
-        mMap.addMarker(new MarkerOptions()
+        map.addMarker(new MarkerOptions()
                 .position(PERTH)
                 .title("Perth")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
