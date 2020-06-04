@@ -15,6 +15,19 @@
 
 package com.example.mapdemo;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,19 +46,6 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.gms.maps.model.SquareCap;
-
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Spinner;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -83,15 +83,15 @@ public class PolylineDemoActivity extends AppCompatActivity
     private static final List<PatternItem> PATTERN_DASHED = Arrays.asList(DASH, GAP);
     private static final List<PatternItem> PATTERN_MIXED = Arrays.asList(DOT, GAP, DOT, DASH, GAP);
 
-    private Polyline mMutablePolyline;
-    private SeekBar mHueBar;
-    private SeekBar mAlphaBar;
-    private SeekBar mWidthBar;
-    private Spinner mStartCapSpinner;
-    private Spinner mEndCapSpinner;
-    private Spinner mJointTypeSpinner;
-    private Spinner mPatternSpinner;
-    private CheckBox mClickabilityCheckbox;
+    private Polyline mutablePolyline;
+    private SeekBar hueBar;
+    private SeekBar alphaBar;
+    private SeekBar widthBar;
+    private Spinner startCapSpinner;
+    private Spinner endCapSpinner;
+    private Spinner jointTypeSpinner;
+    private Spinner patternSpinner;
+    private CheckBox clickabilityCheckbox;
 
     // These are the options for polyline caps, joints and patterns. We use their
     // string resource IDs as identifiers.
@@ -121,39 +121,39 @@ public class PolylineDemoActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.polyline_demo);
 
-        mHueBar = (SeekBar) findViewById(R.id.hueSeekBar);
-        mHueBar.setMax(MAX_HUE_DEGREES);
-        mHueBar.setProgress(0);
+        hueBar = findViewById(R.id.hueSeekBar);
+        hueBar.setMax(MAX_HUE_DEGREES);
+        hueBar.setProgress(0);
 
-        mAlphaBar = (SeekBar) findViewById(R.id.alphaSeekBar);
-        mAlphaBar.setMax(MAX_ALPHA);
-        mAlphaBar.setProgress(MAX_ALPHA);
+        alphaBar = findViewById(R.id.alphaSeekBar);
+        alphaBar.setMax(MAX_ALPHA);
+        alphaBar.setProgress(MAX_ALPHA);
 
-        mWidthBar = (SeekBar) findViewById(R.id.widthSeekBar);
-        mWidthBar.setMax(MAX_WIDTH_PX);
-        mWidthBar.setProgress(MAX_WIDTH_PX / 2);
+        widthBar = findViewById(R.id.widthSeekBar);
+        widthBar.setMax(MAX_WIDTH_PX);
+        widthBar.setProgress(MAX_WIDTH_PX / 2);
 
-        mStartCapSpinner = (Spinner) findViewById(R.id.startCapSpinner);
-        mStartCapSpinner.setAdapter(new ArrayAdapter<>(
+        startCapSpinner = findViewById(R.id.startCapSpinner);
+        startCapSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
 
-        mEndCapSpinner = (Spinner) findViewById(R.id.endCapSpinner);
-        mEndCapSpinner.setAdapter(new ArrayAdapter<>(
+        endCapSpinner = findViewById(R.id.endCapSpinner);
+        endCapSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
 
-        mJointTypeSpinner = (Spinner) findViewById(R.id.jointTypeSpinner);
-        mJointTypeSpinner.setAdapter(new ArrayAdapter<>(
+        jointTypeSpinner = findViewById(R.id.jointTypeSpinner);
+        jointTypeSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(JOINT_TYPE_NAME_RESOURCE_IDS)));
 
-        mPatternSpinner = (Spinner) findViewById(R.id.patternSpinner);
-        mPatternSpinner.setAdapter(new ArrayAdapter<>(
+        patternSpinner = findViewById(R.id.patternSpinner);
+        patternSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
-        mClickabilityCheckbox = (CheckBox) findViewById(R.id.toggleClickability);
+        clickabilityCheckbox = findViewById(R.id.toggleClickability);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -180,30 +180,30 @@ public class PolylineDemoActivity extends AppCompatActivity
                 .width(INITIAL_STROKE_WIDTH_PX)
                 .color(Color.BLUE)
                 .geodesic(true)
-                .clickable(mClickabilityCheckbox.isChecked()));
+                .clickable(clickabilityCheckbox.isChecked()));
 
         // A simple polyline across Australia. This polyline will be mutable.
         int color = Color.HSVToColor(
-                mAlphaBar.getProgress(), new float[]{mHueBar.getProgress(), 1, 1});
-        mMutablePolyline = map.addPolyline(new PolylineOptions()
+                alphaBar.getProgress(), new float[]{hueBar.getProgress(), 1, 1});
+        mutablePolyline = map.addPolyline(new PolylineOptions()
                 .color(color)
-                .width(mWidthBar.getProgress())
-                .clickable(mClickabilityCheckbox.isChecked())
+                .width(widthBar.getProgress())
+                .clickable(clickabilityCheckbox.isChecked())
                 .add(MELBOURNE, ADELAIDE, PERTH, DARWIN));
 
-        mHueBar.setOnSeekBarChangeListener(this);
-        mAlphaBar.setOnSeekBarChangeListener(this);
-        mWidthBar.setOnSeekBarChangeListener(this);
+        hueBar.setOnSeekBarChangeListener(this);
+        alphaBar.setOnSeekBarChangeListener(this);
+        widthBar.setOnSeekBarChangeListener(this);
 
-        mStartCapSpinner.setOnItemSelectedListener(this);
-        mEndCapSpinner.setOnItemSelectedListener(this);
-        mJointTypeSpinner.setOnItemSelectedListener(this);
-        mPatternSpinner.setOnItemSelectedListener(this);
+        startCapSpinner.setOnItemSelectedListener(this);
+        endCapSpinner.setOnItemSelectedListener(this);
+        jointTypeSpinner.setOnItemSelectedListener(this);
+        patternSpinner.setOnItemSelectedListener(this);
 
-        mMutablePolyline.setStartCap(getSelectedCap(mStartCapSpinner.getSelectedItemPosition()));
-        mMutablePolyline.setEndCap(getSelectedCap(mEndCapSpinner.getSelectedItemPosition()));
-        mMutablePolyline.setJointType(getSelectedJointType(mJointTypeSpinner.getSelectedItemPosition()));
-        mMutablePolyline.setPattern(getSelectedPattern(mPatternSpinner.getSelectedItemPosition()));
+        mutablePolyline.setStartCap(getSelectedCap(startCapSpinner.getSelectedItemPosition()));
+        mutablePolyline.setEndCap(getSelectedCap(endCapSpinner.getSelectedItemPosition()));
+        mutablePolyline.setJointType(getSelectedJointType(jointTypeSpinner.getSelectedItemPosition()));
+        mutablePolyline.setPattern(getSelectedPattern(patternSpinner.getSelectedItemPosition()));
 
         // Move the map so that it is centered on the mutable polyline.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(MELBOURNE, 3));
@@ -265,16 +265,16 @@ public class PolylineDemoActivity extends AppCompatActivity
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         switch (parent.getId()) {
             case R.id.startCapSpinner:
-                mMutablePolyline.setStartCap(getSelectedCap(pos));
+                mutablePolyline.setStartCap(getSelectedCap(pos));
                 break;
             case R.id.endCapSpinner:
-                mMutablePolyline.setEndCap(getSelectedCap(pos));
+                mutablePolyline.setEndCap(getSelectedCap(pos));
                 break;
             case R.id.jointTypeSpinner:
-                mMutablePolyline.setJointType(getSelectedJointType(pos));
+                mutablePolyline.setJointType(getSelectedJointType(pos));
                 break;
             case R.id.patternSpinner:
-                mMutablePolyline.setPattern(getSelectedPattern(pos));
+                mutablePolyline.setPattern(getSelectedPattern(pos));
                 break;
         }
     }
@@ -296,19 +296,19 @@ public class PolylineDemoActivity extends AppCompatActivity
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mMutablePolyline == null) {
+        if (mutablePolyline == null) {
             return;
         }
 
-        if (seekBar == mHueBar) {
-            mMutablePolyline.setColor(Color.HSVToColor(
-                    Color.alpha(mMutablePolyline.getColor()), new float[]{progress, 1, 1}));
-        } else if (seekBar == mAlphaBar) {
+        if (seekBar == hueBar) {
+            mutablePolyline.setColor(Color.HSVToColor(
+                    Color.alpha(mutablePolyline.getColor()), new float[]{progress, 1, 1}));
+        } else if (seekBar == alphaBar) {
             float[] prevHSV = new float[3];
-            Color.colorToHSV(mMutablePolyline.getColor(), prevHSV);
-            mMutablePolyline.setColor(Color.HSVToColor(progress, prevHSV));
-        } else if (seekBar == mWidthBar) {
-            mMutablePolyline.setWidth(progress);
+            Color.colorToHSV(mutablePolyline.getColor(), prevHSV);
+            mutablePolyline.setColor(Color.HSVToColor(progress, prevHSV));
+        } else if (seekBar == widthBar) {
+            mutablePolyline.setWidth(progress);
         }
     }
 
@@ -318,8 +318,8 @@ public class PolylineDemoActivity extends AppCompatActivity
      * This callback is defined on the CheckBox in the layout for this Activity.
      */
     public void toggleClickability(View view) {
-        if (mMutablePolyline != null) {
-            mMutablePolyline.setClickable(((CheckBox) view).isChecked());
+        if (mutablePolyline != null) {
+            mutablePolyline.setClickable(((CheckBox) view).isChecked());
         }
     }
 }
