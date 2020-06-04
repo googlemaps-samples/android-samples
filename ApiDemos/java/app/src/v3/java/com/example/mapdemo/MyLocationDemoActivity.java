@@ -63,9 +63,9 @@ public class MyLocationDemoActivity extends AppCompatActivity
      * Flag indicating whether a requested permission has been denied after returning in
      * {@link #onRequestPermissionsResult(int, String[], int[])}.
      */
-    private boolean mPermissionDenied = false;
+    private boolean permissionDenied = false;
 
-    private GoogleMap mMap;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +78,10 @@ public class MyLocationDemoActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
-        mMap = map;
-
-        mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMyLocationClickListener(this);
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        map.setOnMyLocationButtonClickListener(this);
+        map.setOnMyLocationClickListener(this);
         enableMyLocation();
     }
 
@@ -93,8 +92,8 @@ public class MyLocationDemoActivity extends AppCompatActivity
         // [START maps_check_location_permission]
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            if (mMap != null) {
-                mMap.setMyLocationEnabled(true);
+            if (map != null) {
+                map.setMyLocationEnabled(true);
             }
         } else {
             // Permission to access the location is missing. Show rationale and request permission
@@ -131,7 +130,7 @@ public class MyLocationDemoActivity extends AppCompatActivity
             // Permission was denied. Display an error message
             // [START_EXCLUDE]
             // Display the missing permission error dialog when the fragments resume.
-            mPermissionDenied = true;
+            permissionDenied = true;
             // [END_EXCLUDE]
         }
     }
@@ -140,10 +139,10 @@ public class MyLocationDemoActivity extends AppCompatActivity
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        if (mPermissionDenied) {
+        if (permissionDenied) {
             // Permission was not granted, display error dialog.
             showMissingPermissionError();
-            mPermissionDenied = false;
+            permissionDenied = false;
         }
     }
 
