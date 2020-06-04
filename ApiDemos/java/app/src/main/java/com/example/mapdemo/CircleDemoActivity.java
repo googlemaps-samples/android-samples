@@ -14,6 +14,21 @@
 
 package com.example.mapdemo;
 
+import android.graphics.Color;
+import android.graphics.Point;
+import android.location.Location;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.Spinner;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCircleClickListener;
@@ -31,21 +46,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
-
-import android.graphics.Color;
-import android.graphics.Point;
-import android.location.Location;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Spinner;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,20 +76,20 @@ public class CircleDemoActivity extends AppCompatActivity
     private static final List<PatternItem> PATTERN_DASHED = Arrays.asList(DASH, GAP);
     private static final List<PatternItem> PATTERN_MIXED = Arrays.asList(DOT, GAP, DOT, DASH, GAP);
 
-    private GoogleMap mMap;
+    private GoogleMap map;
 
-    private List<DraggableCircle> mCircles = new ArrayList<>(1);
+    private List<DraggableCircle> circles = new ArrayList<>(1);
 
-    private int mFillColorArgb;
-    private int mStrokeColorArgb;
+    private int fillColorArgb;
+    private int strokeColorArgb;
 
-    private SeekBar mFillHueBar;
-    private SeekBar mFillAlphaBar;
-    private SeekBar mStrokeWidthBar;
-    private SeekBar mStrokeHueBar;
-    private SeekBar mStrokeAlphaBar;
-    private Spinner mStrokePatternSpinner;
-    private CheckBox mClickabilityCheckbox;
+    private SeekBar fillHueBar;
+    private SeekBar fillAlphaBar;
+    private SeekBar strokeWidthBar;
+    private SeekBar strokeHueBar;
+    private SeekBar strokeAlphaBar;
+    private Spinner strokePatternSpinner;
+    private CheckBox clickabilityCheckbox;
 
     // These are the options for stroke patterns. We use their
     // string resource IDs as identifiers.
@@ -102,57 +102,57 @@ public class CircleDemoActivity extends AppCompatActivity
     };
 
     private class DraggableCircle {
-        private final Marker mCenterMarker;
-        private final Marker mRadiusMarker;
-        private final Circle mCircle;
-        private double mRadiusMeters;
+        private final Marker centerMarker;
+        private final Marker radiusMarker;
+        private final Circle circle;
+        private double radiusMeters;
 
         public DraggableCircle(LatLng center, double radiusMeters) {
-            mRadiusMeters = radiusMeters;
-            mCenterMarker = mMap.addMarker(new MarkerOptions()
+            this.radiusMeters = radiusMeters;
+            centerMarker = map.addMarker(new MarkerOptions()
                     .position(center)
                     .draggable(true));
-            mRadiusMarker = mMap.addMarker(new MarkerOptions()
+            radiusMarker = map.addMarker(new MarkerOptions()
                     .position(toRadiusLatLng(center, radiusMeters))
                     .draggable(true)
                     .icon(BitmapDescriptorFactory.defaultMarker(
                             BitmapDescriptorFactory.HUE_AZURE)));
-            mCircle = mMap.addCircle(new CircleOptions()
+            circle = map.addCircle(new CircleOptions()
                     .center(center)
                     .radius(radiusMeters)
-                    .strokeWidth(mStrokeWidthBar.getProgress())
-                    .strokeColor(mStrokeColorArgb)
-                    .fillColor(mFillColorArgb)
-                    .clickable(mClickabilityCheckbox.isChecked()));
+                    .strokeWidth(strokeWidthBar.getProgress())
+                    .strokeColor(strokeColorArgb)
+                    .fillColor(fillColorArgb)
+                    .clickable(clickabilityCheckbox.isChecked()));
         }
 
         public boolean onMarkerMoved(Marker marker) {
-            if (marker.equals(mCenterMarker)) {
-                mCircle.setCenter(marker.getPosition());
-                mRadiusMarker.setPosition(toRadiusLatLng(marker.getPosition(), mRadiusMeters));
+            if (marker.equals(centerMarker)) {
+                circle.setCenter(marker.getPosition());
+                radiusMarker.setPosition(toRadiusLatLng(marker.getPosition(), radiusMeters));
                 return true;
             }
-            if (marker.equals(mRadiusMarker)) {
-                mRadiusMeters =
-                        toRadiusMeters(mCenterMarker.getPosition(), mRadiusMarker.getPosition());
-                mCircle.setRadius(mRadiusMeters);
+            if (marker.equals(radiusMarker)) {
+                radiusMeters =
+                        toRadiusMeters(centerMarker.getPosition(), radiusMarker.getPosition());
+                circle.setRadius(radiusMeters);
                 return true;
             }
             return false;
         }
 
         public void onStyleChange() {
-            mCircle.setStrokeWidth(mStrokeWidthBar.getProgress());
-            mCircle.setStrokeColor(mStrokeColorArgb);
-            mCircle.setFillColor(mFillColorArgb);
+            circle.setStrokeWidth(strokeWidthBar.getProgress());
+            circle.setStrokeColor(strokeColorArgb);
+            circle.setFillColor(fillColorArgb);
         }
 
         public void setStrokePattern(List<PatternItem> pattern) {
-            mCircle.setStrokePattern(pattern);
+            circle.setStrokePattern(pattern);
         }
 
         public void setClickable(boolean clickable) {
-            mCircle.setClickable(clickable);
+            circle.setClickable(clickable);
         }
     }
 
@@ -175,32 +175,32 @@ public class CircleDemoActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.circle_demo);
 
-        mFillHueBar = (SeekBar) findViewById(R.id.fillHueSeekBar);
-        mFillHueBar.setMax(MAX_HUE_DEGREES);
-        mFillHueBar.setProgress(MAX_HUE_DEGREES / 2);
+        fillHueBar = findViewById(R.id.fillHueSeekBar);
+        fillHueBar.setMax(MAX_HUE_DEGREES);
+        fillHueBar.setProgress(MAX_HUE_DEGREES / 2);
 
-        mFillAlphaBar = (SeekBar) findViewById(R.id.fillAlphaSeekBar);
-        mFillAlphaBar.setMax(MAX_ALPHA);
-        mFillAlphaBar.setProgress(MAX_ALPHA / 2);
+        fillAlphaBar = findViewById(R.id.fillAlphaSeekBar);
+        fillAlphaBar.setMax(MAX_ALPHA);
+        fillAlphaBar.setProgress(MAX_ALPHA / 2);
 
-        mStrokeWidthBar = (SeekBar) findViewById(R.id.strokeWidthSeekBar);
-        mStrokeWidthBar.setMax(MAX_WIDTH_PX);
-        mStrokeWidthBar.setProgress(MAX_WIDTH_PX / 3);
+        strokeWidthBar = findViewById(R.id.strokeWidthSeekBar);
+        strokeWidthBar.setMax(MAX_WIDTH_PX);
+        strokeWidthBar.setProgress(MAX_WIDTH_PX / 3);
 
-        mStrokeHueBar = (SeekBar) findViewById(R.id.strokeHueSeekBar);
-        mStrokeHueBar.setMax(MAX_HUE_DEGREES);
-        mStrokeHueBar.setProgress(0);
+        strokeHueBar = findViewById(R.id.strokeHueSeekBar);
+        strokeHueBar.setMax(MAX_HUE_DEGREES);
+        strokeHueBar.setProgress(0);
 
-        mStrokeAlphaBar = (SeekBar) findViewById(R.id.strokeAlphaSeekBar);
-        mStrokeAlphaBar.setMax(MAX_ALPHA);
-        mStrokeAlphaBar.setProgress(MAX_ALPHA);
+        strokeAlphaBar = findViewById(R.id.strokeAlphaSeekBar);
+        strokeAlphaBar.setMax(MAX_ALPHA);
+        strokeAlphaBar.setProgress(MAX_ALPHA);
 
-        mStrokePatternSpinner = (Spinner) findViewById(R.id.strokePatternSpinner);
-        mStrokePatternSpinner.setAdapter(new ArrayAdapter<>(
+        strokePatternSpinner = findViewById(R.id.strokePatternSpinner);
+        strokePatternSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
-        mClickabilityCheckbox = (CheckBox) findViewById(R.id.toggleClickability);
+        clickabilityCheckbox = findViewById(R.id.toggleClickability);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -216,36 +216,36 @@ public class CircleDemoActivity extends AppCompatActivity
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(GoogleMap googleMap) {
         // Override the default content description on the view, for accessibility mode.
-        map.setContentDescription(getString(R.string.map_circle_description));
+        googleMap.setContentDescription(getString(R.string.map_circle_description));
 
-        mMap = map;
-        mMap.setOnMarkerDragListener(this);
-        mMap.setOnMapLongClickListener(this);
+        map = googleMap;
+        map.setOnMarkerDragListener(this);
+        map.setOnMapLongClickListener(this);
 
-        mFillColorArgb = Color.HSVToColor(
-                mFillAlphaBar.getProgress(), new float[]{mFillHueBar.getProgress(), 1, 1});
-        mStrokeColorArgb = Color.HSVToColor(
-                mStrokeAlphaBar.getProgress(), new float[]{mStrokeHueBar.getProgress(), 1, 1});
+        fillColorArgb = Color.HSVToColor(
+                fillAlphaBar.getProgress(), new float[]{fillHueBar.getProgress(), 1, 1});
+        strokeColorArgb = Color.HSVToColor(
+                strokeAlphaBar.getProgress(), new float[]{strokeHueBar.getProgress(), 1, 1});
 
-        mFillHueBar.setOnSeekBarChangeListener(this);
-        mFillAlphaBar.setOnSeekBarChangeListener(this);
+        fillHueBar.setOnSeekBarChangeListener(this);
+        fillAlphaBar.setOnSeekBarChangeListener(this);
 
-        mStrokeWidthBar.setOnSeekBarChangeListener(this);
-        mStrokeHueBar.setOnSeekBarChangeListener(this);
-        mStrokeAlphaBar.setOnSeekBarChangeListener(this);
+        strokeWidthBar.setOnSeekBarChangeListener(this);
+        strokeHueBar.setOnSeekBarChangeListener(this);
+        strokeAlphaBar.setOnSeekBarChangeListener(this);
 
-        mStrokePatternSpinner.setOnItemSelectedListener(this);
+        strokePatternSpinner.setOnItemSelectedListener(this);
 
         DraggableCircle circle = new DraggableCircle(SYDNEY, DEFAULT_RADIUS_METERS);
-        mCircles.add(circle);
+        circles.add(circle);
 
         // Move the map so that it is centered on the initial circle
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 4.0f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 4.0f));
 
         // Set up the click listener for the circle.
-        map.setOnCircleClickListener(new OnCircleClickListener() {
+        googleMap.setOnCircleClickListener(new OnCircleClickListener() {
             @Override
             public void onCircleClick(Circle circle) {
                 // Flip the red, green and blue components of the circle's stroke color.
@@ -253,8 +253,8 @@ public class CircleDemoActivity extends AppCompatActivity
             }
         });
 
-        List<PatternItem> pattern = getSelectedPattern(mStrokePatternSpinner.getSelectedItemPosition());
-        for (DraggableCircle draggableCircle : mCircles) {
+        List<PatternItem> pattern = getSelectedPattern(strokePatternSpinner.getSelectedItemPosition());
+        for (DraggableCircle draggableCircle : circles) {
             draggableCircle.setStrokePattern(pattern);
         }
     }
@@ -277,7 +277,7 @@ public class CircleDemoActivity extends AppCompatActivity
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         if (parent.getId() == R.id.strokePatternSpinner) {
-            for (DraggableCircle draggableCircle : mCircles) {
+            for (DraggableCircle draggableCircle : circles) {
                 draggableCircle.setStrokePattern(getSelectedPattern(pos));
             }
         }
@@ -300,21 +300,21 @@ public class CircleDemoActivity extends AppCompatActivity
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (seekBar == mFillHueBar) {
-            mFillColorArgb =
-                    Color.HSVToColor(Color.alpha(mFillColorArgb), new float[]{progress, 1, 1});
-        } else if (seekBar == mFillAlphaBar) {
-            mFillColorArgb = Color.argb(progress, Color.red(mFillColorArgb),
-                    Color.green(mFillColorArgb), Color.blue(mFillColorArgb));
-        } else if (seekBar == mStrokeHueBar) {
-            mStrokeColorArgb =
-                    Color.HSVToColor(Color.alpha(mStrokeColorArgb), new float[]{progress, 1, 1});
-        } else if (seekBar == mStrokeAlphaBar) {
-            mStrokeColorArgb = Color.argb(progress, Color.red(mStrokeColorArgb),
-                    Color.green(mStrokeColorArgb), Color.blue(mStrokeColorArgb));
+        if (seekBar == fillHueBar) {
+            fillColorArgb =
+                    Color.HSVToColor(Color.alpha(fillColorArgb), new float[]{progress, 1, 1});
+        } else if (seekBar == fillAlphaBar) {
+            fillColorArgb = Color.argb(progress, Color.red(fillColorArgb),
+                    Color.green(fillColorArgb), Color.blue(fillColorArgb));
+        } else if (seekBar == strokeHueBar) {
+            strokeColorArgb =
+                    Color.HSVToColor(Color.alpha(strokeColorArgb), new float[]{progress, 1, 1});
+        } else if (seekBar == strokeAlphaBar) {
+            strokeColorArgb = Color.argb(progress, Color.red(strokeColorArgb),
+                    Color.green(strokeColorArgb), Color.blue(strokeColorArgb));
         }
 
-        for (DraggableCircle draggableCircle : mCircles) {
+        for (DraggableCircle draggableCircle : circles) {
             draggableCircle.onStyleChange();
         }
     }
@@ -335,7 +335,7 @@ public class CircleDemoActivity extends AppCompatActivity
     }
 
     private void onMarkerMoved(Marker marker) {
-        for (DraggableCircle draggableCircle : mCircles) {
+        for (DraggableCircle draggableCircle : circles) {
             if (draggableCircle.onMarkerMoved(marker)) {
                 break;
             }
@@ -346,19 +346,19 @@ public class CircleDemoActivity extends AppCompatActivity
     public void onMapLongClick(LatLng point) {
         // We know the center, let's place the outline at a point 3/4 along the view.
         View view = getSupportFragmentManager().findFragmentById(R.id.map).getView();
-        LatLng radiusLatLng = mMap.getProjection().fromScreenLocation(new Point(
+        LatLng radiusLatLng = map.getProjection().fromScreenLocation(new Point(
                 view.getHeight() * 3 / 4, view.getWidth() * 3 / 4));
 
         // Create the circle.
         DraggableCircle circle = new DraggableCircle(point, toRadiusMeters(point, radiusLatLng));
-        mCircles.add(circle);
+        circles.add(circle);
     }
 
     public void toggleClickability(View view) {
         boolean clickable = ((CheckBox) view).isChecked();
         // Set each of the circles to be clickable or not, based on the
         // state of the checkbox.
-        for (DraggableCircle draggableCircle : mCircles) {
+        for (DraggableCircle draggableCircle : circles) {
             draggableCircle.setClickable(clickable);
         }
     }
