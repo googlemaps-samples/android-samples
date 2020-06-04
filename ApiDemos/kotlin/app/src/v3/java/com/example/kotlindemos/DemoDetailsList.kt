@@ -56,6 +56,8 @@ class DemoDetailsList {
                         LiteListDemoActivity::class.java),
                 DemoDetails(R.string.markers_demo_label, R.string.markers_demo_description,
                         MarkerDemoActivity::class.java),
+                DemoDetails(R.string.my_location_demo_label, R.string.my_location_demo_details,
+                        MyLocationDemoActivity::class.java),
                 DemoDetails(R.string.polygon_demo_label, R.string.polygon_demo_details,
                         PolygonDemoActivity::class.java),
                 DemoDetails(R.string.polyline_demo_label, R.string.polyline_demo_description,
