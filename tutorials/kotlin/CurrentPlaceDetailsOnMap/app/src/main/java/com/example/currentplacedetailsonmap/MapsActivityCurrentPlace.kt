@@ -43,7 +43,6 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
-import java.util.*
 
 /**
  * An activity that displays a map showing the place at the device's current location.
@@ -111,8 +110,8 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
      */
     // [START maps_current_place_on_save_instance_state]
     override fun onSaveInstanceState(outState: Bundle) {
-        if (map != null) {
-            outState.putParcelable(KEY_CAMERA_POSITION, map!!.cameraPosition)
+        map?.let { map ->
+            outState.putParcelable(KEY_CAMERA_POSITION, map.cameraPosition)
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
         }
         super.onSaveInstanceState(outState)
@@ -203,7 +202,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-                            map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 LatLng(lastKnownLocation!!.latitude,
                                     lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
                         }
@@ -323,7 +322,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
             Log.i(TAG, "The user did not grant location permission.")
 
             // Add a default marker, because the user hasn't selected a place.
-            map!!.addMarker(MarkerOptions()
+            map?.addMarker(MarkerOptions()
                 .title(getString(R.string.default_info_title))
                 .position(defaultLocation)
                 .snippet(getString(R.string.default_info_snippet)))
@@ -352,13 +351,13 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
 
             // Add a marker for the selected place, with an info window
             // showing information about that place.
-            map!!.addMarker(MarkerOptions()
+            map?.addMarker(MarkerOptions()
                 .title(likelyPlaceNames[which])
                 .position(markerLatLng!!)
                 .snippet(markerSnippet))
 
             // Position the map's camera at the location of the marker.
-            map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
+            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
                 DEFAULT_ZOOM.toFloat()))
         }
 
@@ -380,11 +379,11 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
         }
         try {
             if (locationPermissionGranted) {
-                map!!.isMyLocationEnabled = true
-                map!!.uiSettings.isMyLocationButtonEnabled = true
+                map?.isMyLocationEnabled = true
+                map?.uiSettings?.isMyLocationButtonEnabled = true
             } else {
-                map!!.isMyLocationEnabled = false
-                map!!.uiSettings.isMyLocationButtonEnabled = false
+                map?.isMyLocationEnabled = false
+                map?.uiSettings?.isMyLocationButtonEnabled = false
                 lastKnownLocation = null
                 getLocationPermission()
             }
