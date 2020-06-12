@@ -6,7 +6,9 @@ They demonstrate most of the features available in the API.
 
 This app was written for a minSdk of 15 and the v4 support library, but it can be easily adapted to
 use native functionality instead.
-(For example replacing ``SupportMapFragment`` with ``MapFragment``.)
+(For example replacing ``SupportMapFragment`` with ``MapFragment``).
+
+The Maps SDK for Android samples can be found under the `gms` gradle product flavor, while the Maps SDK V3 BETA samples can be found under the `v3` gradle product flavor. The active product flavor can be modified through Android Studio’s “Build Variants” toolbar options.
 
 Pre-requisites
 --------------

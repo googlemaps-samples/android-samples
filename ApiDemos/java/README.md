@@ -11,8 +11,7 @@ This app was written with a minSdk of 16 and the androidx appcompat library, but
 adapted to use native functionality instead (for example replacing `SupportMapFragment` with 
 `MapFragment`).
 
-The Maps SDK for Android samples can be found under the `gms` gradle product flavor, while the Maps
-SDK V3 BETA samples can be found under the `v3` gradle product flavor.
+The Maps SDK for Android samples can be found under the `gms` gradle product flavor, while the Maps SDK V3 BETA samples can be found under the `v3` gradle product flavor. The active product flavor can be modified through Android Studio’s “Build Variants” toolbar options.
 
 Pre-requisites
 --------------
@@ -28,8 +27,7 @@ Getting Started
 
 This sample use the Gradle build system.
 
-First download the samples by cloning this repository or downloading an archived
-snapshot. (See the options at the top of the page.)
+First download the samples by cloning this repository or downloading an archived snapshot. (See the options at the top of the page.)
 
 In Android Studio, use "Open an existing Android Studio project".
 Next select the `ApiDemos/java/` directory that you downloaded from this repository.
