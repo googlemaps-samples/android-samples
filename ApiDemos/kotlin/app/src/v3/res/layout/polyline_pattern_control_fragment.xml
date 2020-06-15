@@ -32,25 +32,21 @@
                 android:id="@+id/patternSolidBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="setPatternSolid"
                 android:text="@string/pattern_solid" />
             <Button
                 android:id="@+id/patternDottedBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="setPatternDotted"
                 android:text="@string/pattern_dotted" />
             <Button
                 android:id="@+id/patternDashedBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="setPatternDashed"
                 android:text="@string/pattern_dashed" />
             <Button
                 android:id="@+id/patternMixedBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="setPatternMixed"
                 android:text="@string/pattern_mixed" />
         </LinearLayout>
         <TextView

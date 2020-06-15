@@ -9,7 +9,7 @@ import com.google.android.libraries.maps.SupportMapFragment;
 /**
  * This shows how to use Cloud-based Map Styling in a simple Activity. For more information on how
  * to style a map using this method, see:
- * https://developers.google.com/maps/documentation/android-sdk/cloud-styling-android
+ * https://developers.google.com/maps/documentation/android-sdk/cloud-based-map-styling
  **/
 public class CloudBasedMapStylingDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
 
