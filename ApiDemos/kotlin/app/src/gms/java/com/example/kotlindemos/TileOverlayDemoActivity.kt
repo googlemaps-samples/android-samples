@@ -1,6 +1,7 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -55,8 +56,8 @@ class TileOverlayDemoActivity : AppCompatActivity(), OnSeekBarChangeListener, On
         mTransparencyBar.setOnSeekBarChangeListener(this)
     }
 
-    fun setFadeIn(checkBox: CheckBox) {
-        mMoonTiles.fadeIn = checkBox.isChecked
+    fun setFadeIn(view: View) {
+        mMoonTiles.fadeIn = (view as CheckBox).isChecked
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {}
