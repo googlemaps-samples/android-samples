@@ -47,17 +47,17 @@ public class TileOverlayDemoActivity extends AppCompatActivity
     private static final String MOON_MAP_URL_FORMAT =
             "https://mw1.google.com/mw-planetary/lunar/lunarmaps_v1/clem_bw/%d/%d/%d.jpg";
 
-    private TileOverlay mMoonTiles;
-    private SeekBar mTransparencyBar;
+    private TileOverlay moonTiles;
+    private SeekBar transparencyBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tile_overlay_demo);
 
-        mTransparencyBar = (SeekBar) findViewById(R.id.transparencySeekBar);
-        mTransparencyBar.setMax(TRANSPARENCY_MAX);
-        mTransparencyBar.setProgress(0);
+        transparencyBar = (SeekBar) findViewById(R.id.transparencySeekBar);
+        transparencyBar.setMax(TRANSPARENCY_MAX);
+        transparencyBar.setProgress(0);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -84,15 +84,15 @@ public class TileOverlayDemoActivity extends AppCompatActivity
             }
         };
 
-        mMoonTiles = map.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
-        mTransparencyBar.setOnSeekBarChangeListener(this);
+        moonTiles = map.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
+        transparencyBar.setOnSeekBarChangeListener(this);
     }
 
     public void setFadeIn(View v) {
-        if (mMoonTiles == null) {
+        if (moonTiles == null) {
             return;
         }
-        mMoonTiles.setFadeIn(((CheckBox) v).isChecked());
+        moonTiles.setFadeIn(((CheckBox) v).isChecked());
     }
 
     @Override
@@ -105,8 +105,8 @@ public class TileOverlayDemoActivity extends AppCompatActivity
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mMoonTiles != null) {
-            mMoonTiles.setTransparency((float) progress / (float) TRANSPARENCY_MAX);
+        if (moonTiles != null) {
+            moonTiles.setTransparency((float) progress / (float) TRANSPARENCY_MAX);
         }
     }
 }

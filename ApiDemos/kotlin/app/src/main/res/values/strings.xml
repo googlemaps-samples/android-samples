@@ -19,6 +19,13 @@
     <string name="no_demos">No demos</string>
     <string name="play_services_not_installed">Google Play services is not installed on this device.</string>
 
+    <!-- Tile Overlay -->
+    <string name="tile_overlay_demo_label">Tile Overlays</string>
+    <string name="tile_overlay_demo_description">Demonstrates how to add a tile overlay to a map.</string>
+    <string name="tile_coordinate_demo_label">Tile Coordinate Overlay</string>
+    <string name="tile_coordinate_demo_description">Demonstrates how to add a tile overlay with tile coordinates to a map.</string>
+    <string name="fade_in">Fade In Tiles</string>
+
     <!-- Basic Map Demo -->
     <string name="basic_demo_label">Basic Map</string>
     <string name="basic_demo_details">Launches a map with marker pointing at Sydney.</string>
