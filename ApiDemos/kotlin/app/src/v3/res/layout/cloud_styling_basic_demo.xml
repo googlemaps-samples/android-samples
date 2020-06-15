@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:map="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  <fragment
+    android:id="@+id/map"
+    class="com.google.android.libraries.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    map:cameraTargetLat="47.6089945"
+    map:cameraTargetLng="-122.3410462"
+    map:cameraZoom="14"
+    map:mapId="@string/cloud_styling_basic_map_id" />
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#D000"
+    android:orientation="vertical"
+    android:padding="5dp">
+    <LinearLayout
+      android:id="@+id/cloud_styling_basic_demo_mode_buttons"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <Button
+        android:id="@+id/styling_normal_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lite_styling_normal_mode" />
+      <Button
+        android:id="@+id/styling_satellite_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lite_styling_satellite_mode" />
+      <Button
+        android:id="@+id/styling_hybrid_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lite_styling_hybrid_mode" />
+      <Button
+        android:id="@+id/styling_terrain_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lite_styling_terrain_mode" />
+    </LinearLayout>
+  </LinearLayout>
+</RelativeLayout>
