@@ -1,0 +1,3 @@
+# This is a template for the `secure.properties` file
+# To use this, replace "YOUR_API_KEY" with your GMP API key and rename this file to `secure.properties`
+MAPS_API_KEY="YOUR_API_KEY"

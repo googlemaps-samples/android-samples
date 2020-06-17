@@ -14,8 +14,7 @@ This repo contains the following samples:
 Displays a map on a Wear OS device. This sample demonstrates the basic
 setup required for a gradle-based Android Studio project.
 1. [Tutorials](https://github.com/googlemaps/android-samples/tree/master/tutorials): Samples
-associated with tutorials in the developer's guide. See each sample for a link to the associated
-guide.
+associated with tutorials in the developer's guide. See each sample for a link to the associated guide.
 
 
 Pre-requisites
@@ -37,12 +36,14 @@ In Android Studio, use the "Import non-Android Studio project" or
 repository.
 If prompted for a gradle configuration accept the default settings.
 
-Alternatively use the "gradlew build" command to build the project directly.
+Alternatively use the `gradlew build` command to build the project directly.
 
-Search for `YOUR_API_KEY` in the project and replace it with your API key.
-Some samples store this in the gradle.properties file and others store it in the google_maps_api.xml file.
-See the [Get Started with Google Maps Platform](https://developers.google.com/maps/gmp-get-started) 
-guide to get an API key.
+The demo apps require that you add your own Google Maps API key:
+
+1. [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+1. Create a file in the root directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
+1. Add a single line to `secure.properties` that looks like `MAPS_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the API key you obtained in the first step
+1. Build and run
 
 Support
 -------

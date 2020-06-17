@@ -22,10 +22,15 @@ This sample uses the Gradle build system.
   "Import Project" option.
 1. Select the `CurrentPlaceDetailsOnMap` directory that you downloaded with this repository.
 1. If prompted for a gradle configuration, accept the default settings.
-  Alternatively use the "gradlew build" command to build the project directly.
-1. Add your API key to your app's `gradle.properties` file.
-  (For information on getting an API key, see the
-  [documentation](https://developers.google.com/maps/documentation/android-api/signup).)
+  Alternatively use the `gradlew build` command to build the project directly.
+
+This demo app requires that you add your own Google Maps API key:
+
+  1. [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+  1. Create a file in the root directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
+  1. Add a single line to `secure.properties` that looks like `MAPS_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the API key you obtained in the first step
+  1. Build and run
+
 
 Support
 -------
