@@ -28,7 +28,7 @@ jobs:
 
     - name: Install NDK
       run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;20.0.5594570"
+        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.3.6528147"
 
     - name: Build and check
       run: |
