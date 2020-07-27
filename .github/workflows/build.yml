@@ -26,9 +26,9 @@ jobs:
       with:
         java-version: 1.8
 
-    - name: Install NDK
+    - name: Uninstall NDK
       run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;21.3.6528147"
+        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
 
     - name: Build and check
       run: |
