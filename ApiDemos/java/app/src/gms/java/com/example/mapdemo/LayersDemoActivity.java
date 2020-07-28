@@ -15,6 +15,7 @@
 
 package com.example.mapdemo;
 
+import android.annotation.SuppressLint;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -73,17 +74,17 @@ public class LayersDemoActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layers_demo);
 
-        mSpinner = (Spinner) findViewById(R.id.layers_spinner);
+        mSpinner = findViewById(R.id.layers_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.layers_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
-        mTrafficCheckbox = (CheckBox) findViewById(R.id.traffic);
-        mMyLocationCheckbox = (CheckBox) findViewById(R.id.my_location);
-        mBuildingsCheckbox = (CheckBox) findViewById(R.id.buildings);
-        mIndoorCheckbox = (CheckBox) findViewById(R.id.indoor);
+        mTrafficCheckbox = findViewById(R.id.traffic);
+        mMyLocationCheckbox = findViewById(R.id.my_location);
+        mBuildingsCheckbox = findViewById(R.id.buildings);
+        mIndoorCheckbox = findViewById(R.id.indoor);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -129,6 +130,7 @@ public class LayersDemoActivity extends AppCompatActivity
         updateMyLocation();
     }
 
+    @SuppressLint("MissingPermission")
     private void updateMyLocation() {
         if (!checkReady()) {
             return;
@@ -151,6 +153,7 @@ public class LayersDemoActivity extends AppCompatActivity
         }
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
