@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.kotlindemos
+package com.example.kotlindemos.polyline
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -43,6 +43,7 @@ import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kotlindemos.R
 import java.util.Arrays
 
 /**
@@ -94,13 +95,18 @@ class PolylineDemoActivity :
     // These are the options for polyline caps, joints and patterns. We use their
     // string resource IDs as identifiers.
     private val capTypeNameResourceIds = intArrayOf(R.string.cap_butt,
-            R.string.cap_round, R.string.cap_square, R.string.cap_image)
+                                                    R.string.cap_round,
+                                                    R.string.cap_square,
+                                                    R.string.cap_image)
 
     private val jointTypeNameResourceIds = intArrayOf(R.string.joint_type_default,
-            R.string.joint_type_bevel, R.string.joint_type_round)
+                                                      R.string.joint_type_bevel,
+                                                      R.string.joint_type_round)
 
     private val patternTypeNameResourceIds = intArrayOf(R.string.pattern_solid,
-            R.string.pattern_dashed, R.string.pattern_dotted, R.string.pattern_mixed)
+                                                        R.string.pattern_dashed,
+                                                        R.string.pattern_dotted,
+                                                        R.string.pattern_mixed)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -218,8 +224,8 @@ class PolylineDemoActivity :
             R.string.cap_square -> SquareCap()
             R.string.cap_round -> RoundCap()
             R.string.cap_image -> CustomCap(
-                    BitmapDescriptorFactory.fromResource(R.drawable.chevron),
-                    CUSTOM_CAP_IMAGE_REF_WIDTH_PX.toFloat())
+              BitmapDescriptorFactory.fromResource(R.drawable.chevron),
+              CUSTOM_CAP_IMAGE_REF_WIDTH_PX.toFloat())
             else -> null
         }
     }

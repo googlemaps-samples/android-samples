@@ -14,6 +14,7 @@
 package com.example.currentplacedetailsonmap
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.location.Location
@@ -269,6 +270,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
      * current place on the map - provided the user has granted location permission.
      */
     // [START maps_current_place_show_current_place]
+    @SuppressLint("MissingPermission")
     private fun showCurrentPlace() {
         if (map == null) {
             return

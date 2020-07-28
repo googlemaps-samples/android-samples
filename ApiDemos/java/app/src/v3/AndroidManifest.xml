@@ -68,6 +68,9 @@
             android:name=".CircleDemoActivity"
             android:label="@string/circle_demo_label" />
         <activity
+            android:name=".CloudBasedMapStylingDemoActivity"
+            android:label="@string/cloud_styling_label" />
+        <activity
             android:name=".EventsDemoActivity"
             android:label="@string/events_demo_label" />
         <activity
@@ -97,6 +100,9 @@
         <activity
             android:name=".MarkerCloseInfoWindowOnRetapDemoActivity"
             android:label="@string/marker_close_info_window_on_retap_demo_label" />
+        <activity
+            android:name=".MarkerCollisionDemoActivity"
+            android:label="@string/marker_collision_label" />
         <activity
             android:name=".polyline.PolylineDemoActivity"
             android:label="@string/polyline_demo_label" />
