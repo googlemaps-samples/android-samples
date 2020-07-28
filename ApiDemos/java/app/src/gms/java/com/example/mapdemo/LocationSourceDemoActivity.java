@@ -15,6 +15,9 @@
 
 package com.example.mapdemo;
 
+import android.Manifest.permission;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.LocationSource;
@@ -89,7 +92,7 @@ public class LocationSourceDemoActivity extends AppCompatActivity implements OnM
         mLocationSource = new LongPressLocationSource();
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -109,6 +112,13 @@ public class LocationSourceDemoActivity extends AppCompatActivity implements OnM
     public void onMapReady(GoogleMap map) {
         map.setLocationSource(mLocationSource);
         map.setOnMapLongClickListener(mLocationSource);
+
+        if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         map.setMyLocationEnabled(true);
     }
 }

@@ -5,7 +5,6 @@ apply plugin: 'project-report'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.example.mapdemo"
