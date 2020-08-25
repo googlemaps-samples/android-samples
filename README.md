@@ -15,6 +15,7 @@ Displays a map on a Wear OS device. This sample demonstrates the basic
 setup required for a gradle-based Android Studio project.
 1. [Tutorials](https://github.com/googlemaps/android-samples/tree/master/tutorials): Samples
 associated with tutorials in the developer's guide. See each sample for a link to the associated guide.
+1. [Snippets](snippets): Snippets for code found in https://developers.google.com/maps/documentation/android-sdk
 
 
 Pre-requisites
