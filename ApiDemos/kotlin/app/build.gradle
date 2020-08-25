@@ -62,7 +62,7 @@ dependencies {
 
     // V3
     v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
-    v3Implementation 'com.google.android.gms:play-services-basement:17.3.0'
+    v3Implementation 'com.google.android.gms:play-services-basement:17.4.0'
     v3Implementation 'com.google.android.gms:play-services-base:17.3.0'
     v3Implementation 'com.google.android.gms:play-services-gcm:17.0.0'
     v3Implementation 'com.google.android.gms:play-services-location:17.0.0'
