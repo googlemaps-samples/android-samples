@@ -59,3 +59,9 @@ update_configs:
       update_schedule: "weekly"
       commit_message:
           prefix: "chore(deps)"
+
+    - package_manager: "java:gradle"
+      directory: "./snippets/"
+      update_schedule: "weekly"
+      commit_message:
+          prefix: "chore(deps)"
