@@ -27,6 +27,8 @@ import com.google.maps.example.R
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    private lateinit var mMap: GoogleMap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -46,11 +48,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions()
+        mMap.addMarker(MarkerOptions()
             .position(sydney)
             .title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 }
