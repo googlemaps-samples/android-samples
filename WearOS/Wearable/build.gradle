@@ -43,7 +43,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Required for DismissOverlayView to exit full screen wearable app.
-    implementation 'com.google.android.support:wearable:2.5.0'
+    implementation 'com.google.android.support:wearable:2.7.0'
 
 //    // Required to support ambient mode.
     compileOnly 'com.google.android.wearable:wearable:2.5.0'
