@@ -20,7 +20,7 @@ Pre-requisites
 Getting Started
 ---------------
 
-This sample use the Gradle build system.
+This sample uses the Gradle build system.
 
 First download the samples by cloning this repository or downloading an archived
 snapshot. (See the options at the top of the page.)
