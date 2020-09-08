@@ -58,6 +58,10 @@ class DemoDetailsList {
           DemoDetails(R.string.polyline_demo_label, R.string.polyline_demo_description,
                       PolylineDemoActivity::class.java),
           DemoDetails(
+            R.string.raw_map_view_demo_label,
+            R.string.raw_map_view_demo_description,
+            RawMapViewDemoActivity::class.java),
+          DemoDetails(
                 R.string.street_view_panorama_basic_demo_label,
                 R.string.street_view_panorama_basic_demo_details,
                 StreetViewPanoramaBasicDemoActivity::class.java),

@@ -234,6 +234,10 @@
     <string name="cloud_styling_label">Cloud Styling</string>
     <string name="cloud_styling_description">Demonstrates how to use a simple map using Cloud Styling.</string>
 
+    <!-- Raw MapView Demo -->
+    <string name="raw_map_view_demo_label">Raw MapView</string>
+    <string name="raw_map_view_demo_description">Demonstrates how to use a raw MapView.</string>
+
     <!-- Polylines Demo -->
     <string name="alpha">Alpha</string>
     <string name="cap_butt">Butt</string>
