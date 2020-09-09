@@ -62,10 +62,14 @@ jobs:
       with:
         java-version: 1.8
 
+    - name: Uninstall NDK
+      run: |
+        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
+
     - name: Build and check
       run: |
         cd snippets
-        ./gradlew assembleDebug lintDebug
+        ./gradlew assembleGmsDebug assembleV3Debug lintGmsDebug lintV3Debug
 
   build-tutorials:
     runs-on: ubuntu-latest
