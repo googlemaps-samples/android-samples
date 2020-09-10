@@ -16,4 +16,5 @@
 
 <resources>
     <string name="title_activity_polyline_customization">PolylineCustomizationActivity</string>
+    <string name="map_id">13564581852493597319</string>
 </resources>
