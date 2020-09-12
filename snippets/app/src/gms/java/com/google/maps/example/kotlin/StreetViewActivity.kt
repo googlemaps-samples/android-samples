@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.StreetViewSource
 import com.google.maps.example.R
 
 // [START maps_street_view_on_street_view_panorama_ready]
-class StreetViewActivity : AppCompatActivity(), OnStreetViewPanoramaReadyCallback {
+internal class StreetViewActivity : AppCompatActivity(), OnStreetViewPanoramaReadyCallback {
 
     // [START maps_street_view_on_create]
     override fun onCreate(savedInstanceState: Bundle?) {
