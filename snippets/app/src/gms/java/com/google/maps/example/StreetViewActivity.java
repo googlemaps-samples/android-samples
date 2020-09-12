@@ -31,7 +31,7 @@ import com.google.android.gms.maps.model.StreetViewSource;
 
 // [START maps_street_view_on_street_view_panorama_ready]
 class StreetViewActivity extends AppCompatActivity implements OnStreetViewPanoramaReadyCallback {
-
+    // [START_EXCLUDE]
     // [START maps_street_view_on_create]
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +54,6 @@ class StreetViewActivity extends AppCompatActivity implements OnStreetViewPanora
     }
     // [END maps_street_view_on_street_view_panorama_ready_callback]
 
-    // [START_EXCLUDE]
     private void newView() {
         // [START maps_street_view_new_panorama_view]
         LatLng sanFrancisco = new LatLng(37.754130, -122.447129);
@@ -107,7 +106,7 @@ class StreetViewActivity extends AppCompatActivity implements OnStreetViewPanora
             .tilt(streetViewPanorama.getPanoramaCamera().tilt)
             .bearing(streetViewPanorama.getPanoramaCamera().bearing - panBy)
             .build();
-        // [END maps_street_view_panorama_zoom]
+        // [END maps_street_view_panorama_pan]
     }
 
     private void tilt(StreetViewPanorama streetViewPanorama) {
