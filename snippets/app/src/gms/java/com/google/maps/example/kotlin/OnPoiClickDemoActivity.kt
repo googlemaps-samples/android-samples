@@ -25,7 +25,7 @@ import com.google.android.gms.maps.model.PointOfInterest
 import com.google.maps.example.R
 
 // [START maps_android_on_poi_click_demo]
-internal class OnPoiClickDemoActivity : AppCompatActivity(), OnMapReadyCallback, OnPoiClickListener {
+class OnPoiClickDemoActivity : AppCompatActivity(), OnMapReadyCallback, OnPoiClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

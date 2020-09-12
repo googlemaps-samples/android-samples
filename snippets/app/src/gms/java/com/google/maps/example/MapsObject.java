@@ -68,7 +68,6 @@ class MapsObject extends AppCompatActivity {
 
     // [START maps_android_on_map_ready_callback]
     class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
-
         // [START_EXCLUDE]
         // [START maps_android_on_map_ready_add_marker]
         @Override
