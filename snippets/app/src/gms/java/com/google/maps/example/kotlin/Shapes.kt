@@ -18,9 +18,9 @@ import android.graphics.Color
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.maps.example.R
-import java.util.*
 
 internal class Shapes {
+
     private lateinit var map: GoogleMap
 
     private fun polylines() {
