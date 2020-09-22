@@ -42,10 +42,6 @@ internal class GeoJSON {
     @Throws(IOException::class, JSONException::class)
     private fun addGeoJsonLayerFile(context: Context) {
         // [START maps_android_util_geojson_add_file]
-        val geoJsonData: JSONObject? =  // JSONObject containing the GeoJSON data
-            // [START_EXCLUDE silent]
-            null
-        // [END_EXCLUDE]
         val layer = GeoJsonLayer(map, R.raw.geojson_file, context)
         // [END maps_android_util_geojson_add_file]
 

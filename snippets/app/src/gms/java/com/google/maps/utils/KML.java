@@ -45,7 +45,7 @@ class KML {
             null;
         // [END_EXCLUDE]
         KmlLayer layer = new KmlLayer(map, inputStream, context);
-        // [END maps_android_utils_kml_add_file]
+        // [END maps_android_utils_kml_add_input_stream]
 
         // [START maps_android_utils_kml_add_layer]
         layer.addLayerToMap();
@@ -73,7 +73,7 @@ class KML {
                 Log.i("KML", container.getProperty("name"));
             }
         }
-        // [END maps_android_utils_kml_access_placemarks]
+        // [END maps_android_utils_kml_access_properties]
 
         // [START maps_android_utils_kml_click_listener]
         // Set a listener for geometry clicked events.

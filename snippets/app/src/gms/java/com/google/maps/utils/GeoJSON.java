@@ -53,10 +53,6 @@ class GeoJSON {
 
     private void addGeoJsonLayerFile(Context context) throws IOException, JSONException {
         // [START maps_android_util_geojson_add_file]
-        JSONObject geoJsonData = // JSONObject containing the GeoJSON data
-            // [START_EXCLUDE silent]
-            null;
-        // [END_EXCLUDE]
         GeoJsonLayer layer = new GeoJsonLayer(map, R.raw.geojson_file, context);
         // [END maps_android_util_geojson_add_file]
 
