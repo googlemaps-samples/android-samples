@@ -37,6 +37,10 @@ android {
             versionNameSuffix "-v3"
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -50,6 +54,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.0'
 
     gmsImplementation 'com.google.android.gms:play-services-maps:17.0.0'
+    gmsImplementation 'com.google.maps.android:android-maps-utils:2.0.3'
     v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
 
     testImplementation 'junit:junit:4.13'
