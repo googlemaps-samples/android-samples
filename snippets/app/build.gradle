@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.navigation:navigation-fragment:2.3.1'
-    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
 
     gmsImplementation 'com.google.android.gms:play-services-maps:17.0.0'
     gmsImplementation 'com.google.maps.android:android-maps-utils:2.0.3'
