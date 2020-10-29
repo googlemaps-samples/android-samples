@@ -31,7 +31,7 @@ android {
     }
 }
 
-// [START maps_android_pay_services_maps_dependency]
+// [START maps_android_play_services_maps_dependency]
 dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     // [START_EXCLUDE]
@@ -42,4 +42,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // [END_EXCLUDE]
 }
-// [END maps_android_pay_services_maps_dependency]
+// [END maps_android_play_services_maps_dependency]
