@@ -93,8 +93,8 @@ class LiteListDemoActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        recyclerView.layoutManager = when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        recyclerView.layoutManager = when (item.itemId) {
             R.id.layout_linear -> linearLayoutManager
             R.id.layout_grid -> gridLayoutManager
             else -> return false
