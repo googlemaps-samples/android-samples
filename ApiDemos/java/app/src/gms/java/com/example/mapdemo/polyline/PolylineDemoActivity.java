@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.example.mapdemo;
+package com.example.mapdemo.polyline;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,6 +28,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mapdemo.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

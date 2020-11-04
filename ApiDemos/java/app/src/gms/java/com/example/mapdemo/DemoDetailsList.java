@@ -15,6 +15,8 @@
 
 package com.example.mapdemo;
 
+import com.example.mapdemo.polyline.PolylineDemoActivity;
+
 /**
  * A list of all the demos we have available.
  */
