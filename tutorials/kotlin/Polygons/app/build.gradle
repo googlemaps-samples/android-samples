@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
+// Set the properties within `local.properties` into a `Properties` class so
+// that values within `local.properties` (e.g. Maps API key) are accessible in
+// this file.
+Properties properties = new Properties()
+if (rootProject.file("local.properties").exists()) {
+    properties.load(rootProject.file("local.properties").newDataInputStream())
+}
+def mapsApiKey = properties.getProperty("MAPS_API_KEY", "")
+
 android {
     compileSdkVersion 29
     buildToolsVersion '28.0.3'
@@ -13,15 +22,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        // Read the API key from ./secure.properties into R.string.maps_api_key
-        def secureProps = new Properties()
-        if (file("../../../../secure.properties").exists()) {
-            file("../../../../secure.properties")?.withInputStream { secureProps.load(it) }
-        }
-        resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "")
+        // Read the API key from local.properties into R.string.maps_api_key
+        resValue "string", "maps_api_key", mapsApiKey
 
         // To add your Maps API key to this project:
-        // 1. Create a file ./secure.properties
+        // 1. Open the root project's local.properties file
         // 2. Add this line, where YOUR_API_KEY is your API key:
         //        MAPS_API_KEY=YOUR_API_KEY
     }
