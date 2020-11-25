@@ -23,6 +23,13 @@
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
-      android:theme="@style/AppTheme" />
+      android:theme="@style/AppTheme" >
+
+    <!-- [START maps_android_api_key_security_manifest_metadata] -->
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="${mapsApiKey}" />
+    <!-- [END maps_android_api_key_security_manifest_metadata] -->
+  </application>
 
 </manifest>

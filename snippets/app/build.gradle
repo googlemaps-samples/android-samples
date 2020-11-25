@@ -2,20 +2,32 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+// [START maps_android_api_key_security_manifest_placeholder]
 android {
-    compileSdkVersion 29
+    // [START_EXCLUDE silent]
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
-
+    // [END_EXCLUDE]
     defaultConfig {
+        // [START_EXCLUDE]
         applicationId "com.google.maps.example"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
+        // [END_EXCLUDE]
+        // Set the properties within `local.properties` into a `Properties` class so that values
+        // within `local.properties` (e.g. Maps API key) are accessible in this file.
+        Properties properties = new Properties()
+        if (rootProject.file("local.properties").exists()) {
+            properties.load(rootProject.file("local.properties").newDataInputStream())
+        }
 
+        // Inject the Maps API key into the manifest
+        manifestPlaceholders = [ mapsApiKey : properties.getProperty("MAPS_API_KEY", "") ]
+    }
+    // [START_EXCLUDE silent]
     buildTypes {
         release {
             minifyEnabled false
@@ -41,7 +53,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    // [END_EXCLUDE]
 }
+// [END maps_android_api_key_security_manifest_placeholder]
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
