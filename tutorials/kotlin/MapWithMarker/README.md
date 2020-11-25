@@ -43,4 +43,4 @@ https://github.com/googlemaps/android-samples/issues
 License
 -------
 
-Please refer to the [LICENSE](https://github.com/googlemaps/android-samples/blob/master/LICENSE) at the root of this repo.
+Please refer to the [LICENSE](https://github.com/googlemaps/android-samples/blob/main/LICENSE) at the root of this repo.
