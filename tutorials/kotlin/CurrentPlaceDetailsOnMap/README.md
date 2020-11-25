@@ -24,13 +24,7 @@ This sample uses the Gradle build system.
 1. If prompted for a gradle configuration, accept the default settings.
   Alternatively use the `gradlew build` command to build the project directly.
 
-This demo app requires that you add your own Google Maps API key:
-
-  1. [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
-  1. Create a file in the root directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
-  1. Add a single line to `secure.properties` that looks like `MAPS_API_KEY=YOUR_API_KEY`, where `YOUR_API_KEY` is the API key you obtained in the first step
-  1. Build and run
-
+This demo app requires that you add your own Google Maps API key. See [Get an API Key](../../../docs/GET_AN_API_KEY.md) for more instructions.
 
 Support
 -------
