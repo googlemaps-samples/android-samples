@@ -16,13 +16,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kotlindemos">
 
+    <!--
+        Android 11 package visibility changes require that apps specify which
+        set of other packages on the device that they can access. Since this
+        sample uses Google Maps, specifying the Google Maps package name is
+        required so that the buttons on the Map toolbar launch the Google Maps
+        app.
+    -->
     <queries>
         <package android:name="com.google.android.apps.maps" />
     </queries>
 
-    <!-- This app requires location permissions for the layers demo.
-    The user's current location is displayed using the 'My Location' layer. -->
-    <!-- Access to location is needed for the UI Settings Demo -->
+    <!--
+        This app requires location permissions for the layers demo.
+        The user's current location is displayed using the 'My Location' layer.
+        Access to location is needed for the UI Settings Demo
+    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -33,47 +42,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--
-        To add your Maps API key to this project:
-            1. Create a file ApiDemos/kotlin/secure.properties
+            To add your Maps API key to this project:
+            1. Open the root project'sl local.properties file
             2. Add this line, where YOUR_API_KEY is your API key:
                 MAPS_API_KEY=YOUR_API_KEY
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".BasicMapDemoActivity" />
-        <activity android:name=".CameraDemoActivity"/>
-        <activity android:name=".CircleDemoActivity" />
-        <activity android:name=".CloseInfoWindowDemoActivity" />
-        <activity android:name=".EventsDemoActivity" />
-        <activity android:name=".GroundOverlayDemoActivity" />
-        <activity android:name=".IndoorDemoActivity" />
-        <activity android:name=".LayersDemoActivity"/>
-        <activity android:name=".LiteDemoActivity" />
-        <activity android:name=".LiteListDemoActivity" />
-        <activity android:name=".MarkerDemoActivity"/>
-        <activity android:name=".MyLocationDemoActivity" />
-        <activity android:name=".PolygonDemoActivity"/>
-        <activity android:name=".RawMapViewDemoActivity"/>
-        <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
-        <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
-        <activity android:name=".StreetViewPanoramaEventsDemoActivity" />
-        <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
-        <activity android:name=".StreetViewPanoramaOptionsDemoActivity" />
-        <activity android:name=".StreetViewPanoramaViewDemoActivity" />
-        <activity android:name=".TagsDemoActivity"/>
-        <activity android:name=".TileCoordinateDemoActivity"/>
-        <activity android:name=".TileOverlayDemoActivity"/>
-        <activity android:name=".UiSettingsDemoActivity" />
-        <activity android:name=".VisibleRegionDemoActivity"/>
-        <activity android:name=".polyline.PolylineDemoActivity" />
+            android:value="${mapsApiKey}" />
     </application>
 
 </manifest>

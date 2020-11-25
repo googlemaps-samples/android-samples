@@ -16,11 +16,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kotlindemos">
 
-    <!-- This app requires location permissions for the layers demo.
-    The user's current location is displayed using the 'My Location' layer. -->
-    <!-- Access to location is needed for the UI Settings Demo -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,15 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--
-        To add your Maps API key to this project:
-            1. Create a file ApiDemos/kotlin/secure.properties
-            2. Add this line, where YOUR_API_KEY is your API key:
-                MAPS_API_KEY=YOUR_API_KEY
-        -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

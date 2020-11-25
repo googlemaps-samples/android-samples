@@ -7,20 +7,19 @@ in the Java programming language.
 
 They demonstrate most of the features available in the API.
 
-This app was written with a minSdk of 16 and the androidx appcompat library, but it can be easily 
-adapted to use native functionality instead (for example replacing `SupportMapFragment` with 
-`MapFragment`).
-
-The Maps SDK for Android samples can be found under the `gms` gradle product flavor, while the Maps SDK V3 BETA samples can be found under the `v3` gradle product flavor. The active product flavor can be modified through Android Studio’s “Build Variants” toolbar options.
+The Maps SDK for Android samples can be found under the `gms` gradle product
+flavor, while the Maps SDK V3 BETA samples can be found under the `v3` gradle
+product flavor. The active product flavor can be modified through
+Android Studio’s “Build Variants” toolbar options.
 
 Pre-requisites
 --------------
 
-- Android SDK v29
+- Android SDK v30
 - Latest Android Build Tools
 - Android Support Repository
 - Google Repository
-- Google Play services
+- Google Play Services
 
 Getting Started
 ---------------
@@ -61,4 +60,4 @@ CONTRIBUTING.md.
 License
 -------
 
-Please refer to the [LICENSE](https://github.com/googlemaps/android-samples/blob/master/LICENSE) at the root of this repo.
+Please refer to the [LICENSE](https://github.com/googlemaps/android-samples/blob/main/LICENSE) at the root of this repo.
