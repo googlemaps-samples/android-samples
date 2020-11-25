@@ -17,6 +17,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mapdemo">
 
+    <!--
+        Android 11 package visibility changes require that apps specify which
+        set of other packages on the device that they can access. Since this
+        sample uses Google Maps, specifying the Google Maps package name is
+        required so that the buttons on the Map toolbar launch the Google Maps
+        app.
+    -->
     <queries>
         <package android:name="com.google.android.apps.maps" />
     </queries>
@@ -44,14 +51,14 @@
         android:theme="@style/AppTheme">
 
         <!--
-        To add your Maps API key to this project:
-            1. Create a file ApiDemos/java/app/secure.properties
+            To add your Maps API key to this project:
+            1. Open the root project's local.properties file
             2. Add this line, where YOUR_API_KEY is your API key:
                 MAPS_API_KEY=YOUR_API_KEY
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key" />
+            android:value="${mapsApiKey}" />
 
         <activity android:name=".MainActivity">
             <intent-filter>

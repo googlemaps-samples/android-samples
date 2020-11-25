@@ -3,6 +3,15 @@ import org.apache.tools.ant.filters.ConcatFilter
 apply plugin: 'com.android.application'
 apply plugin: 'project-report'
 
+// Set the properties within `local.properties` into a `Properties` class so
+// that values within `local.properties` (e.g. Maps API key) are accessible in
+// this file.
+Properties properties = new Properties()
+if (rootProject.file("local.properties").exists()) {
+    properties.load(rootProject.file("local.properties").newDataInputStream())
+}
+def mapsApiKey = properties.getProperty("MAPS_API_KEY", "")
+
 android {
     compileSdkVersion 30
 
@@ -14,15 +23,16 @@ android {
         versionName "1.0"
         multiDexEnabled true
 
-        // Read the API key from ./secure.properties into R.string.maps_api_key
-        def secureProps = new Properties()
-        if (file("../../../secure.properties").exists()) {
-            file("../../../secure.properties")?.withInputStream { secureProps.load(it) }
-        }
-        resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "")
+        // Inject the Maps API key into the manifest
+        manifestPlaceholders = [ mapsApiKey : mapsApiKey ]
+
+        // Reading the Maps API key into a BuildConfig value. This is only
+        // necessary so that the sample app can display a toast message if the
+        // API key was not set, otherwise, this can be skipped.
+        buildConfigField("String", "MAPS_API_KEY", "\"$mapsApiKey\"" )
 
         // To add your Maps API key to this project:
-        // 1. Create a file ./secure.properties
+        // 1. Open the root project's local.properties file
         // 2. Add this line, where YOUR_API_KEY is your API key:
         //        MAPS_API_KEY=YOUR_API_KEY
     }
