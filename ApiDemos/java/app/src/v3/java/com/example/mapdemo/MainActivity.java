@@ -85,8 +85,8 @@ public final class MainActivity extends AppCompatActivity
         list.setOnItemClickListener(this);
         list.setEmptyView(findViewById(R.id.empty));
 
-        if (getString(R.string.maps_api_key).isEmpty()) {
-            Toast.makeText(this, "Add your own API key in ApiDemos/java/app/secure.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show();
+        if (BuildConfig.MAPS_API_KEY.isEmpty()) {
+            Toast.makeText(this, "Add your own API key in local.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show();
         }
     }
 
