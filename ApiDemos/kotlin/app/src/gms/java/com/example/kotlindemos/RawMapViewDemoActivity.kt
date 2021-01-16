@@ -43,8 +43,8 @@ class RawMapViewDemoActivity : AppCompatActivity(), OnMapReadyCallback {
 
   override fun onSaveInstanceState(outState: Bundle) {
     super.onSaveInstanceState(outState)
-    val mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY) ?: Bundle().apply {
-      putBundle(MAPVIEW_BUNDLE_KEY, this)
+    val mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY) ?: Bundle().also {
+      outState.putBundle(MAPVIEW_BUNDLE_KEY, it)
     }
     mapView.onSaveInstanceState(mapViewBundle)
   }
