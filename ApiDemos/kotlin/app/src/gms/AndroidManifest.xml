@@ -34,7 +34,7 @@
         <activity android:name=".BasicMapDemoActivity" />
         <activity android:name=".CameraDemoActivity"/>
         <activity android:name=".CircleDemoActivity" />
-        <activity android:name=".CloseInfoWindowDemoActivity" />
+        <activity android:name=".MarkerCloseInfoWindowOnRetapDemoActivity" />
         <activity android:name=".EventsDemoActivity" />
         <activity android:name=".GroundOverlayDemoActivity" />
         <activity android:name=".IndoorDemoActivity" />
