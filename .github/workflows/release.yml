@@ -38,13 +38,13 @@ jobs:
     - name: Build APKs
       run: |
         echo "Generating ApiDemos (Java) APKs"
-        cd ./ApiDemos/java
+        cd $GITHUB_WORKSPACE/ApiDemos/java
         ./gradlew assembleV3 assembleGms
         cp ./app/build/outputs/apk/gms/debug/app-gms-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-gms-debug.apk
         cp ./app/build/outputs/apk/v3/debug/app-v3-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-v3-debug.apk
 
         echo "Generating Kotlin (Kotlin) APKs"
-        cd ./ApiDemos/kotlin
+        cd $GITHUB_WORKSPACE/ApiDemos/kotlin
         ./gradlew assembleV3 assembleGms
         cp ./app/build/outputs/apk/gms/debug/app-gms-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-gms-debug.apk
         cp ./app/build/outputs/apk/v3/debug/app-v3-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-v3-debug.apk

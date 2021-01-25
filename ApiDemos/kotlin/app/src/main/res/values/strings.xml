@@ -14,7 +14,7 @@
     limitations under the License.
 -->
 <resources>
-    <string name="app_name">Kotlin Demos</string>
+    <string name="app_name">Maps SDK for Android Demos (Kotlin)</string>
     <string name="demo_title">Google Maps API Demos</string>
     <string name="no_demos">No demos</string>
     <string name="play_services_not_installed">Google Play services is not installed on this device.</string>
