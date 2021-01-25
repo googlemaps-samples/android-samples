@@ -14,7 +14,7 @@ plugins:
     - assets:
         - "./ApiDemos/java/app/build.gradle"
         - "./ApiDemos/kotlin/app/build.gradle"
-  - "@semantic-release/github"
+  - - "@semantic-release/github"
     - assets:
         - "./ApiDemos-java-gms-debug.apk"
         - "./ApiDemos-java-v3-debug.apk"
