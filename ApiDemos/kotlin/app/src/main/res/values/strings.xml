@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Kotlin Demos</string>
     <string name="demo_title">Google Maps API Demos</string>
     <string name="no_demos">No demos</string>
@@ -274,4 +274,14 @@
     <!-- Marker Collision -->
     <string name="marker_collision_label">Marker Collision</string>
     <string name="marker_collision_description">Demonstrates different supported marker collision behaviors.</string>
+
+    <!-- Camera Clamping -->
+    <string name="camera_clamping_demo_label">Camera Clamping</string>
+    <string name="camera_clamping_demo_description">Demonstrates how to constrain the camera to specific boundaries and zoom levels.</string>
+    <string name="clamp_latlng_adelaide">Clamp to Adelaide</string>
+    <string name="clamp_latlng_pacific">Clamp to Pacific</string>
+    <string name="clamp_latlng_reset">Reset LatLng Bounds</string>
+    <string name="clamp_min_zoom">MinZoom++</string>
+    <string name="clamp_max_zoom" tools:ignore="TypographyDashes">MaxZoom--</string>
+    <string name="clamp_zoom_reset">Reset Zoom Bounds</string>
 </resources>

@@ -16,47 +16,48 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kotlindemos">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+  <application
+      android:allowBackup="true"
+      android:icon="@mipmap/ic_launcher"
+      android:label="@string/app_name"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:supportsRtl="true"
+      android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <activity android:name=".MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".BasicMapDemoActivity" />
-        <activity android:name=".CameraDemoActivity"/>
-        <activity android:name=".CircleDemoActivity" />
-        <activity android:name=".MarkerCloseInfoWindowOnRetapDemoActivity" />
-        <activity android:name=".EventsDemoActivity" />
-        <activity android:name=".GroundOverlayDemoActivity" />
-        <activity android:name=".IndoorDemoActivity" />
-        <activity android:name=".LayersDemoActivity"/>
-        <activity android:name=".LiteDemoActivity" />
-        <activity android:name=".LiteListDemoActivity" />
-        <activity android:name=".MarkerDemoActivity"/>
-        <activity android:name=".MyLocationDemoActivity" />
-        <activity android:name=".PolygonDemoActivity"/>
-        <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
-        <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
-        <activity android:name=".StreetViewPanoramaEventsDemoActivity" />
-        <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
-        <activity android:name=".StreetViewPanoramaOptionsDemoActivity" />
-        <activity android:name=".StreetViewPanoramaViewDemoActivity" />
-        <activity android:name=".TagsDemoActivity"/>
-        <activity android:name=".TileCoordinateDemoActivity"/>
-        <activity android:name=".TileOverlayDemoActivity"/>
-        <activity android:name=".UiSettingsDemoActivity" />
-        <activity android:name=".VisibleRegionDemoActivity"/>
-        <activity android:name=".polyline.PolylineDemoActivity" />
-        <activity android:name=".RawMapViewDemoActivity" />
-    </application>
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".BasicMapDemoActivity" />
+    <activity android:name=".CameraDemoActivity" />
+    <activity android:name=".CameraClampingDemoActivity" />
+    <activity android:name=".CircleDemoActivity" />
+    <activity android:name=".MarkerCloseInfoWindowOnRetapDemoActivity" />
+    <activity android:name=".EventsDemoActivity" />
+    <activity android:name=".GroundOverlayDemoActivity" />
+    <activity android:name=".IndoorDemoActivity" />
+    <activity android:name=".LayersDemoActivity" />
+    <activity android:name=".LiteDemoActivity" />
+    <activity android:name=".LiteListDemoActivity" />
+    <activity android:name=".MarkerDemoActivity" />
+    <activity android:name=".MyLocationDemoActivity" />
+    <activity android:name=".PolygonDemoActivity" />
+    <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
+    <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
+    <activity android:name=".StreetViewPanoramaEventsDemoActivity" />
+    <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
+    <activity android:name=".StreetViewPanoramaOptionsDemoActivity" />
+    <activity android:name=".StreetViewPanoramaViewDemoActivity" />
+    <activity android:name=".TagsDemoActivity" />
+    <activity android:name=".TileCoordinateDemoActivity" />
+    <activity android:name=".TileOverlayDemoActivity" />
+    <activity android:name=".UiSettingsDemoActivity" />
+    <activity android:name=".VisibleRegionDemoActivity" />
+    <activity android:name=".polyline.PolylineDemoActivity" />
+    <activity android:name=".RawMapViewDemoActivity" />
+  </application>
 
 </manifest>

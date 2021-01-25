@@ -23,13 +23,16 @@ import com.example.kotlindemos.polyline.PolylineDemoActivity
  */
 class DemoDetailsList {
   companion object {
-    val DEMOS = listOf<DemoDetails>(
+    val DEMOS = listOf(
       DemoDetails(R.string.basic_demo_label,
                   R.string.basic_demo_details,
                   BasicMapDemoActivity::class.java),
       DemoDetails(R.string.camera_demo_label,
                   R.string.camera_demo_description,
                   CameraDemoActivity::class.java),
+      DemoDetails(R.string.camera_clamping_demo_label,
+                  R.string.camera_clamping_demo_description,
+                  CameraClampingDemoActivity::class.java),
       DemoDetails(R.string.circle_demo_label, R.string.circle_demo_details,
                   CircleDemoActivity::class.java),
       DemoDetails(R.string.close_info_window_demo_label,
