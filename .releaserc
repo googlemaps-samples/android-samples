@@ -1,0 +1,24 @@
+branches:
+  - main
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - - "@google/semantic-release-replace-plugin"
+    - replacements:
+        - files:
+            - "./ApiDemos/java/app/build.gradle"
+            - "./ApiDemos/kotlin/app/build.gradle"
+          from: "versionName = \".*\""
+          to: "versionName = \"${nextRelease.version}\""
+  - - "@semantic-release/git"
+    - assets:
+        - "./ApiDemos/java/app/build.gradle"
+        - "./ApiDemos/kotlin/app/build.gradle"
+  - - "@semantic-release/github"
+    - assets:
+        - "./ApiDemos-java-gms-debug.apk"
+        - "./ApiDemos-java-v3-debug.apk"
+        - "./ApiDemos-kotlin-gms-debug.apk"
+        - "./ApiDemos-kotlin-v3-debug.apk"
+options:
+  debug: true

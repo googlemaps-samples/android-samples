@@ -4,6 +4,8 @@
 Google Maps SDK for Android Samples
 ===================================
 
+<img src="images/screenshots.png" width="1024" />
+
 Samples demonstrating how to use
 [Maps SDK for Android](https://developers.google.com/maps/documentation/android/).
 
@@ -21,25 +23,19 @@ associated with tutorials in the developer's guide. See each sample for a link t
 Pre-requisites
 --------------
 
-See each sample for pre-requisites.
-All require up-to-date versions of the Android build tools and the Android support repository.
+* See each sample for pre-requisites.
+* All require up-to-date versions of the Android build tools and the Android support repository.
+* The demo apps require that you add your own Google Maps API key. See [Get an API Key](docs/GET_AN_API_KEY.md) docs for more instructions.
 
 Getting Started
 ---------------
 
-These samples use the Gradle build system.
+1. Download the samples by cloning this repository
+2. In the welcome screen of Android Studio, select "Open an Existing project"
+3. Select one of the sample directories from this repository
 
-First download the samples by cloning this repository or downloading an archived
-snapshot. (See the options at the top of the page.)
-
-In Android Studio, use the "Import non-Android Studio project" or
-"Import Project" option. Next select one of the sample directories that you downloaded from this
-repository.
-If prompted for a gradle configuration accept the default settings.
-
-Alternatively use the `gradlew build` command to build the project directly.
-
-The demo apps require that you add your own Google Maps API key. See [Get an API Key](docs/GET_AN_API_KEY.md) docs for more instructions.
+Alternatively, use the `gradlew build` command to build the project directly or download an APK
+under [releases](https://github.com/googlemaps/android-samples/releases).
 
 Support
 -------
