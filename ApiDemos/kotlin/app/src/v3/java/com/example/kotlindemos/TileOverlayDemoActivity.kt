@@ -61,7 +61,7 @@ class TileOverlayDemoActivity : AppCompatActivity(), OnSeekBarChangeListener, On
         map.mapType = GoogleMap.MAP_TYPE_NONE
         val tileProvider: TileProvider = object : UrlTileProvider(256, 256) {
             @Synchronized
-            override fun getTileUrl(x: Int, y: Int, zoom: Int): URL {
+            override fun getTileUrl(x: Int, y: Int, zoom: Int): URL? {
                 // The moon tile coordinate system is reversed.  This is not normal.
                 val reversedY = (1 shl zoom) - y - 1
                 val s = String.format(Locale.US, MOON_MAP_URL_FORMAT, zoom, x, reversedY)
