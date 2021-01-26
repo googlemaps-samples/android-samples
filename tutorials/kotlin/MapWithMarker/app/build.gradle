@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 // Set the properties within `local.properties` into a `Properties` class so
 // that values within `local.properties` (e.g. Maps API key) are accessible in
