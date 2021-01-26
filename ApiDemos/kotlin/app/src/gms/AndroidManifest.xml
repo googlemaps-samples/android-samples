@@ -43,8 +43,11 @@
     <activity android:name=".LiteDemoActivity" />
     <activity android:name=".LiteListDemoActivity" />
     <activity android:name=".LocationSourceDemoActivity" />
+    <activity android:name=".MapInPagerDemoActivity" />
     <activity android:name=".MarkerDemoActivity" />
+    <activity android:name=".MultiMapDemoActivity" />
     <activity android:name=".MyLocationDemoActivity" />
+    <activity android:name=".OptionsDemoActivity" />
     <activity android:name=".PolygonDemoActivity" />
     <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
     <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
