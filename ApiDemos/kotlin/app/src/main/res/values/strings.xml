@@ -302,4 +302,8 @@
     <string name="options_demo_label">Options</string>
     <string name="options_demo_description">Demonstrates how to use Options to initialize a map.</string>
 
+    <!-- Programmatic -->
+    <string name="programmatic_demo_label">Programmatically add map</string>
+    <string name="programmatic_demo_description">Demonstrates how to add a MapFragment programmatically.</string>
+
 </resources>
