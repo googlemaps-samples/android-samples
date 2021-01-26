@@ -42,6 +42,7 @@
     <activity android:name=".LayersDemoActivity" />
     <activity android:name=".LiteDemoActivity" />
     <activity android:name=".LiteListDemoActivity" />
+    <activity android:name=".LocationSourceDemoActivity" />
     <activity android:name=".MarkerDemoActivity" />
     <activity android:name=".MyLocationDemoActivity" />
     <activity android:name=".PolygonDemoActivity" />

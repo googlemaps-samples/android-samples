@@ -284,4 +284,9 @@
     <string name="clamp_min_zoom">MinZoom++</string>
     <string name="clamp_max_zoom" tools:ignore="TypographyDashes">MaxZoom--</string>
     <string name="clamp_zoom_reset">Reset Zoom Bounds</string>
+
+    <!-- Location Source -->
+    <string name="location_source_demo_label">Location Source Demo</string>
+    <string name="location_source_demo_description">Demonstrates how to use a custom location source.</string>
+
 </resources>
