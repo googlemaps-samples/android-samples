@@ -306,4 +306,8 @@
     <string name="programmatic_demo_label">Programmatically add map</string>
     <string name="programmatic_demo_description">Demonstrates how to add a MapFragment programmatically.</string>
 
+    <!-- Retain Map -->
+    <string name="retain_map_demo_label">Retain map</string>
+    <string name="retain_map_demo_description">Demonstrates how to reuse a MapFragment.</string>
+
 </resources>

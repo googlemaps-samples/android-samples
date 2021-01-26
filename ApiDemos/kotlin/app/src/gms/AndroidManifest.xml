@@ -50,6 +50,8 @@
     <activity android:name=".OptionsDemoActivity" />
     <activity android:name=".PolygonDemoActivity" />
     <activity android:name=".ProgrammaticDemoActivity" />
+    <activity android:name=".RawMapViewDemoActivity" />
+    <activity android:name=".RetainMapDemoActivity" />
     <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
     <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
     <activity android:name=".StreetViewPanoramaEventsDemoActivity" />
@@ -62,7 +64,6 @@
     <activity android:name=".UiSettingsDemoActivity" />
     <activity android:name=".VisibleRegionDemoActivity" />
     <activity android:name=".polyline.PolylineDemoActivity" />
-    <activity android:name=".RawMapViewDemoActivity" />
   </application>
 
 </manifest>
