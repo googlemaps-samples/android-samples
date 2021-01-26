@@ -289,4 +289,9 @@
     <string name="location_source_demo_label">Location Source Demo</string>
     <string name="location_source_demo_description">Demonstrates how to use a custom location source.</string>
 
+    <!-- Map in Pager -->
+    <string name="map_in_pager_demo_label">Map In Pager</string>
+    <string name="map_in_pager_demo_description">Demonstrates how to add a map to a ViewPager.</string>
+    <string name="swipe">\u2190 Swipe \u2192</string>
+
 </resources>
