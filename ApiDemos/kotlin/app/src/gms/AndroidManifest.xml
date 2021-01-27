@@ -52,6 +52,7 @@
     <activity android:name=".ProgrammaticDemoActivity" />
     <activity android:name=".RawMapViewDemoActivity" />
     <activity android:name=".RetainMapDemoActivity" />
+    <activity android:name=".SaveStateDemoActivity" />
     <activity android:name=".SplitStreetViewPanoramaAndMapDemoActivity" />
     <activity android:name=".StreetViewPanoramaBasicDemoActivity" />
     <activity android:name=".StreetViewPanoramaEventsDemoActivity" />
