@@ -1,16 +1,10 @@
 import org.apache.tools.ant.filters.ConcatFilter
 
-apply plugin: 'com.android.application'
-apply plugin: 'project-report'
-
-// Set the properties within `local.properties` into a `Properties` class so
-// that values within `local.properties` (e.g. Maps API key) are accessible in
-// this file.
-Properties properties = new Properties()
-if (rootProject.file("local.properties").exists()) {
-    properties.load(rootProject.file("local.properties").newDataInputStream())
+plugins {
+    id 'com.android.application'
+    id 'project-report'
+    id 'com.google.secrets_gradle_plugin' version '0.2'
 }
-def mapsApiKey = properties.getProperty("MAPS_API_KEY", "")
 
 android {
     compileSdkVersion 30
@@ -22,14 +16,6 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
-        // Inject the Maps API key into the manifest
-        manifestPlaceholders = [ mapsApiKey : mapsApiKey ]
-
-        // Reading the Maps API key into a BuildConfig value. This is only
-        // necessary so that the sample app can display a toast message if the
-        // API key was not set, otherwise, this can be skipped.
-        buildConfigField("String", "MAPS_API_KEY", "\"$mapsApiKey\"" )
 
         // To add your Maps API key to this project:
         // 1. Open the root project's local.properties file
