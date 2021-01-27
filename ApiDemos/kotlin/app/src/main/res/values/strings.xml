@@ -310,4 +310,9 @@
     <string name="retain_map_demo_label">Retain map</string>
     <string name="retain_map_demo_description">Demonstrates how to reuse a MapFragment.</string>
 
+    <!-- Saved State -->
+    <string name="save_state_demo_label">Save the state of a MapFragment.</string>
+    <string name="save_state_demo_description">Demonstrates how to save the state of a MapFragment upon rotation of the device.</string>
+    <string name="save_state_instructions">Drag the marker, tap on it to change its color and rotate the device to check that the state of the map is preserved.</string>
+
 </resources>
