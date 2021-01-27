@@ -298,4 +298,16 @@
     <string name="multi_map_demo_label">Multiple Maps</string>
     <string name="multi_map_demo_description">Demonstrates how to show multiple maps in a single activity.</string>
 
+    <!-- Options -->
+    <string name="options_demo_label">Options</string>
+    <string name="options_demo_description">Demonstrates how to use Options to initialize a map.</string>
+
+    <!-- Programmatic -->
+    <string name="programmatic_demo_label">Programmatically add map</string>
+    <string name="programmatic_demo_description">Demonstrates how to add a MapFragment programmatically.</string>
+
+    <!-- Retain Map -->
+    <string name="retain_map_demo_label">Retain map</string>
+    <string name="retain_map_demo_description">Demonstrates how to reuse a MapFragment.</string>
+
 </resources>
