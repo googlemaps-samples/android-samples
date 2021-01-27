@@ -115,7 +115,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
         // [START_EXCLUDE silent]
         // Construct a PlacesClient
-        Places.initialize(getApplicationContext(), getString(R.string.maps_api_key));
+        Places.initialize(getApplicationContext(), BuildConfig.MAPS_API_KEY);
         placesClient = Places.createClient(this);
 
         // Construct a FusedLocationProviderClient.

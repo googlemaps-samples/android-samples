@@ -4,7 +4,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'com.google.secrets_gradle_plugin' version '0.2'
+    id 'com.google.secrets_gradle_plugin' version '0.3'
 }
 
 android {
@@ -17,11 +17,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
-        // To add your Maps API key to this project:
-        // 1. Open the root project's local.properties file
-        // 2. Add this line, where YOUR_API_KEY is your API key:
-        //        MAPS_API_KEY=YOUR_API_KEY
     }
     buildTypes {
         release {
@@ -95,4 +90,12 @@ task generateV3Layout(type: Copy) {
     filter { line ->
         line.replace('com.google.android.gms.maps', 'com.google.android.libraries.maps')
     }
+}
+
+secrets {
+    // To add your Maps API key to this project:
+    // 1. Open the root project's local.properties file
+    // 2. Add this line, where YOUR_API_KEY is your API key:
+    //        MAPS_API_KEY=YOUR_API_KEY
+    defaultPropertiesFileName 'local.defaults.properties'
 }
