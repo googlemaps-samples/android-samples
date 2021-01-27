@@ -90,7 +90,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
 
         // [START_EXCLUDE silent]
         // Construct a PlacesClient
-        Places.initialize(applicationContext, getString(R.string.maps_api_key))
+        Places.initialize(applicationContext, BuildConfig.MAPS_API_KEY)
         placesClient = Places.createClient(this)
 
         // Construct a FusedLocationProviderClient.
