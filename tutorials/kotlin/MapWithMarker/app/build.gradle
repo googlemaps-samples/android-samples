@@ -1,15 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-
-// Set the properties within `local.properties` into a `Properties` class so
-// that values within `local.properties` (e.g. Maps API key) are accessible in
-// this file.
-Properties properties = new Properties()
-if (rootProject.file("local.properties").exists()) {
-    properties.load(rootProject.file("local.properties").newDataInputStream())
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'com.google.secrets_gradle_plugin' version '0.4'
 }
-def mapsApiKey = properties.getProperty("MAPS_API_KEY", "")
 
 android {
     compileSdkVersion 29
@@ -21,14 +15,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        // Read the API key from local.properties into R.string.maps_api_key
-        resValue "string", "maps_api_key", mapsApiKey
-
-        // To add your Maps API key to this project:
-        // 1. Open the root project's local.properties file
-        // 2. Add this line, where YOUR_API_KEY is your API key:
-        //        MAPS_API_KEY=YOUR_API_KEY
     }
     buildTypes {
         release {
@@ -49,4 +35,12 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+secrets {
+    defaultPropertiesFileName 'local.defaults.properties'
+    // To add your Maps API key to this project:
+    // 1. Open the root project's local.properties file
+    // 2. Add this line, where YOUR_API_KEY is your API key:
+    //        MAPS_API_KEY=YOUR_API_KEY
 }
