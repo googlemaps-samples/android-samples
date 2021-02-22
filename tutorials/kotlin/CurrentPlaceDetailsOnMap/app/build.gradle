@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'com.google.secrets_gradle_plugin' version '0.4'
+    id 'com.google.secrets_gradle_plugin' version '0.5'
 }
 
 android {
