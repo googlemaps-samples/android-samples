@@ -1,0 +1,100 @@
+version: 2
+updates:
+- package-ecosystem: gradle
+  directory: "/./ApiDemos/java"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./ApiDemos/kotlin"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.google.android.gms:play-services-basement
+    versions:
+    - 17.6.0
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./WearOS"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.android.tools.build:gradle
+    versions:
+    - 4.1.2
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./tutorials/java/CurrentPlaceDetailsOnMap"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./tutorials/java/MapWithMarker"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./tutorials/java/Polygons"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./tutorials/java/StyledMap"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.android.tools.build:gradle
+    versions:
+    - 4.1.2
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./tutorials/kotlin/MapWithMarker"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./tutorials/kotlin/CurrentPlaceDetailsOnMap"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./tutorials/kotlin/Polygons"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.android.tools.build:gradle
+    versions:
+    - 4.1.3
+  commit-message:
+    prefix: chore(deps)
+- package-ecosystem: gradle
+  directory: "/./snippets"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.android.tools.build:gradle
+    versions:
+    - 4.1.2
+    - 4.1.3
+  commit-message:
+    prefix: chore(deps)
