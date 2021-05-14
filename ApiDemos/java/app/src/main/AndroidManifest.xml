@@ -18,17 +18,6 @@
     package="com.example.mapdemo">
 
     <!--
-        Android 11 package visibility changes require that apps specify which
-        set of other packages on the device that they can access. Since this
-        sample uses Google Maps, specifying the Google Maps package name is
-        required so that the buttons on the Map toolbar launch the Google Maps
-        app.
-    -->
-    <queries>
-        <package android:name="com.google.android.apps.maps" />
-    </queries>
-
-    <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.

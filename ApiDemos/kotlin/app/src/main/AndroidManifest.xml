@@ -17,17 +17,6 @@
     package="com.example.kotlindemos">
 
     <!--
-        Android 11 package visibility changes require that apps specify which
-        set of other packages on the device that they can access. Since this
-        sample uses Google Maps, specifying the Google Maps package name is
-        required so that the buttons on the Map toolbar launch the Google Maps
-        app.
-    -->
-    <queries>
-        <package android:name="com.google.android.apps.maps" />
-    </queries>
-
-    <!--
         This app requires location permissions for the layers demo.
         The user's current location is displayed using the 'My Location' layer.
         Access to location is needed for the UI Settings Demo
