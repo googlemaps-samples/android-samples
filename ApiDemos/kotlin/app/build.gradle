@@ -50,7 +50,7 @@ dependencies {
     // GMS
     gmsImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     gmsImplementation 'com.google.android.gms:play-services-maps:17.0.1'
-    gmsImplementation 'com.google.maps.android:maps-ktx:3.0.1'
+    gmsImplementation 'com.google.maps.android:maps-ktx:3.1.0'
 
     // V3
     v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
