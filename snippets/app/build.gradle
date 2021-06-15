@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     // [START maps_android_secrets_gradle_plugin]
-    id 'com.google.secrets_gradle_plugin' version '0.5'
+    id 'com.google.android.secrets-gradle-plugin' version '1.1.0'
     // [END maps_android_secrets_gradle_plugin]
 }
 
