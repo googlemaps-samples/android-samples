@@ -3,7 +3,7 @@ import org.apache.tools.ant.filters.ConcatFilter
 plugins {
     id 'com.android.application'
     id 'project-report'
-    id 'com.google.secrets_gradle_plugin' version '0.5'
+    id 'com.google.android.secrets-gradle-plugin' version '1.1.0'
 }
 
 android {
