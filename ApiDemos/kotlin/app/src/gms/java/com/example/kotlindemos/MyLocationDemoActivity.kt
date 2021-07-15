@@ -14,6 +14,7 @@
 package com.example.kotlindemos
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -61,6 +62,7 @@ class MyLocationDemoActivity : AppCompatActivity(), OnMyLocationButtonClickListe
     /**
      * Enables the My Location layer if the fine location permission has been granted.
      */
+    @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
         if (!::map.isInitialized) return
         // [START maps_check_location_permission]
@@ -90,7 +92,8 @@ class MyLocationDemoActivity : AppCompatActivity(), OnMyLocationButtonClickListe
     // [START maps_check_location_permission_result]
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
-            return
+          super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+          return
         }
         if (isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.

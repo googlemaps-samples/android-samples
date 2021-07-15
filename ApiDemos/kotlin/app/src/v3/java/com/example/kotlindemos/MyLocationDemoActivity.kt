@@ -97,6 +97,7 @@ class MyLocationDemoActivity : AppCompatActivity(), OnMyLocationButtonClickListe
     // [START maps_check_location_permission_result]
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
             return
         }
         if (isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
