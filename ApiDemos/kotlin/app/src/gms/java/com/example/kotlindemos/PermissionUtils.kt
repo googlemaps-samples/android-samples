@@ -134,7 +134,7 @@ object PermissionUtils {
                 .setMessage(R.string.permission_rationale_location)
                 .setPositiveButton(android.R.string.ok) { dialog, which -> // After click on Ok, request the permission.
                     ActivityCompat.requestPermissions(
-                        activity!!,
+                        requireActivity(),
                         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                         requestCode
                     )
