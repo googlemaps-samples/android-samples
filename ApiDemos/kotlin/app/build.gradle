@@ -37,6 +37,9 @@ android {
             versionNameSuffix "-v3"
         }
     }
+    lintOptions {
+            abortOnError false
+    }
 }
 
 dependencies {
