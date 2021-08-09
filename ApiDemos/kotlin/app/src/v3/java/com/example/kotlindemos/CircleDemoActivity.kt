@@ -197,6 +197,9 @@ class CircleDemoActivity :
         }
 
         clickabilityCheckbox = findViewById(R.id.toggleClickability)
+        clickabilityCheckbox.setOnClickListener {
+            toggleClickability(it)
+        }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
