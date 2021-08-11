@@ -44,11 +44,12 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Required for DismissOverlayView to exit full screen wearable app.
-    implementation 'com.google.android.support:wearable:2.5.0'
+    // Standard Wear OS libraries
+    implementation 'com.google.android.support:wearable:2.8.1'
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
 
-//    // Required to support ambient mode.
-    compileOnly 'com.google.android.wearable:wearable:2.5.0'
+    // Required to support ambient mode
+    implementation 'androidx.wear:wear:1.1.0'
 
     // Include the Google Maps Android API from Google Play Services.
     implementation 'com.google.android.gms:play-services-maps:17.0.1'

@@ -16,8 +16,16 @@
 
 package com.example.wearosmap;
 
-import android.support.wearable.activity.WearableActivity;
+import android.os.Bundle;
 import android.support.wearable.view.DismissOverlayView;
+import android.util.Log;
+import android.view.View;
+import android.view.WindowInsets;
+import android.widget.FrameLayout;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.wear.ambient.AmbientModeSupport;
+import androidx.wear.ambient.AmbientModeSupport.AmbientCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -25,16 +33,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowInsets;
-import android.widget.FrameLayout;
-
 /**
  * Sample that shows how to set up a basic Google Map on Wear OS.
  */
-public class MainActivity extends WearableActivity implements OnMapReadyCallback,
-        GoogleMap.OnMapLongClickListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleMap.OnMapLongClickListener, AmbientModeSupport.AmbientCallbackProvider {
 
     private static final LatLng SYDNEY = new LatLng(-33.85704, 151.21522);
 
@@ -62,7 +65,8 @@ public class MainActivity extends WearableActivity implements OnMapReadyCallback
         // Enable ambient support, so the map remains visible in simplified, low-color display
         // when the user is no longer actively using the app but the app is still visible on the
         // watch face.
-        setAmbientEnabled();
+        AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
+        Log.d(MainActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
 
         // Retrieve the containers for the root of the layout and the map. Margins will need to be
         // set on them to account for the system window insets.
@@ -103,29 +107,8 @@ public class MainActivity extends WearableActivity implements OnMapReadyCallback
 
     }
 
-    /**
-     * Starts ambient mode on the map.
-     * The API swaps to a non-interactive and low-color rendering of the map when the user is no
-     * longer actively using the app.
-     */
     @Override
-    public void onEnterAmbient(Bundle ambientDetails) {
-        super.onEnterAmbient(ambientDetails);
-        mMapFragment.onEnterAmbient(ambientDetails);
-    }
-
-    /**
-     * Exits ambient mode on the map.
-     * The API swaps to the normal rendering of the map when the user starts actively using the app.
-     */
-    @Override
-    public void onExitAmbient() {
-        super.onExitAmbient();
-        mMapFragment.onExitAmbient();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         // Map is ready to be used.
         mMap = googleMap;
 
@@ -141,8 +124,34 @@ public class MainActivity extends WearableActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng) {
+    public void onMapLongClick(@NonNull LatLng latLng) {
         // Display the dismiss overlay with a button to exit this activity.
         mDismissOverlay.show();
+    }
+
+    @Override
+    public AmbientCallback getAmbientCallback() {
+        return new AmbientCallback() {
+            /**
+             * Starts ambient mode on the map.
+             * The API swaps to a non-interactive and low-color rendering of the map when the user is no
+             * longer actively using the app.
+             */
+            @Override
+            public void onEnterAmbient(Bundle ambientDetails) {
+                super.onEnterAmbient(ambientDetails);
+                mMapFragment.onEnterAmbient(ambientDetails);
+            }
+
+            /**
+             * Exits ambient mode on the map.
+             * The API swaps to the normal rendering of the map when the user starts actively using the app.
+             */
+            @Override
+            public void onExitAmbient() {
+                super.onExitAmbient();
+                mMapFragment.onExitAmbient();
+            }
+        };
     }
 }
