@@ -38,7 +38,7 @@
         <uses-library android:name="com.google.android.wearable" android:required="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".kt.MainActivity"
             android:label="@string/app_name" >
 
             <intent-filter>

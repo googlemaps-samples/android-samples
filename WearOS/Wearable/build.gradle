@@ -18,6 +18,7 @@ plugins {
     id 'com.android.application'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 30
@@ -41,16 +42,17 @@ repositories {
     mavenCentral()
 }
 
+// [START maps_wear_os_depdendencies]
 dependencies {
+    // [START_EXCLUDE]
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    // Standard Wear OS libraries
-    implementation 'com.google.android.support:wearable:2.8.1'
+    // [END_EXCLUDE]
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
-
-    // Required to support ambient mode
     implementation 'androidx.wear:wear:1.1.0'
-
-    // Include the Google Maps Android API from Google Play Services.
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    // This dependency is necessary for ambient mode
+    implementation 'com.google.android.support:wearable:2.8.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+// [END maps_wear_os_depdendencies]
