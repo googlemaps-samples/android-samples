@@ -56,3 +56,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 // [END maps_wear_os_depdendencies]
+
+secrets {
+    defaultPropertiesFileName 'local.defaults.properties'
+}
