@@ -18,7 +18,6 @@ package com.example.wearosmap;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.wear.ambient.AmbientModeSupport;
@@ -26,8 +25,6 @@ import androidx.wear.ambient.AmbientModeSupport.AmbientCallback;
 import androidx.wear.widget.SwipeDismissFrameLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -36,15 +33,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Sample that shows how to set up a basic Google Map on Wear OS.
  */
-// [START maps_wear_os_swipe_dismiss_callback]
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,
+// [START maps_wear_os_ambient_mode_support]
+public class AmbientActivity extends AppCompatActivity implements
     AmbientModeSupport.AmbientCallbackProvider {
 
-    // [START_EXCLUDE silent]
-    private static final LatLng SYDNEY = new LatLng(-33.85704, 151.21522);
-
     private SupportMapFragment mapFragment;
-    // [END_EXCLUDE]
 
     public void onCreate(Bundle savedState) {
         super.onCreate(savedState);
@@ -55,40 +48,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Enable ambient support, so the map remains visible in simplified, low-color display
         // when the user is no longer actively using the app but the app is still visible on the
         // watch face.
-        // [START maps_wear_os_ambient_mode_support]
         AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
-        // [END maps_wear_os_ambient_mode_support]
-        Log.d(MainActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
-
-        // Retrieve the containers for the root of the layout and the map. Margins will need to be
-        // set on them to account for the system window insets.
-        final SwipeDismissFrameLayout mapFrameLayout = (SwipeDismissFrameLayout) findViewById(
-            R.id.map_container);
-        mapFrameLayout.addCallback(new SwipeDismissFrameLayout.Callback() {
-            @Override
-            public void onDismissed(SwipeDismissFrameLayout layout) {
-                onBackPressed();
-            }
-        });
+        Log.d(AmbientActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
 
         // Obtain the MapFragment and set the async listener to be notified when the map is ready.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
             .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
-
-    // [START_EXCLUDE]
-    // [START maps_wear_os_on_map_ready]
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        // Add a marker with a title that is shown in its info window.
-        googleMap.addMarker(new MarkerOptions().position(SYDNEY)
-            .title("Sydney Opera House"));
-
-        // Move the camera to show the marker.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 10));
-    }
-    // [END maps_wear_os_on_map_ready]
 
     @Override
     public AmbientCallback getAmbientCallback() {
@@ -115,6 +81,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         };
     }
-    // [END_EXCLUDE]
 }
-// [END maps_wear_os_swipe_dismiss_callback]
+// [END maps_wear_os_ambient_mode_support]

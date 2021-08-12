@@ -16,7 +16,6 @@ Pre-requisites
 Getting Started
 ---------------
 
-
 This sample use the Gradle build system.
 
 First download the samples by cloning this repository or downloading an archived
@@ -29,7 +28,7 @@ If prompted for a gradle configuration accept the default settings.
 
 Alternatively use the "gradlew build" command to build the project directly.
 
-Add your API key to the `AndroidManifest.xml` file.
+Add your API key to the `local.properties` file and call it `GOOGLE_MAPS_API_KEY`.
 See the [quick guide to getting an API key](https://developers.google.com/maps/documentation/android-api/signup).
 
 Support
@@ -51,4 +50,4 @@ CONTRIBUTING.md.
 License
 -------
 
-Please refer to the [LICENSE](https://github.com/googlemaps/android-samples/blob/master/LICENSE) at the root of this repo.
+Please refer to the [LICENSE](https://github.com/googlemaps/android-samples/blob/main/LICENSE) at the root of this repo.
