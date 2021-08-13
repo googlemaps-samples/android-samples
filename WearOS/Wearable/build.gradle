@@ -42,7 +42,7 @@ repositories {
     mavenCentral()
 }
 
-// [START maps_wear_os_depdendencies]
+// [START maps_wear_os_dependencies]
 dependencies {
     // [START_EXCLUDE]
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -56,7 +56,7 @@ dependencies {
     // This dependency is necessary for ambient mode
     implementation 'androidx.wear:wear:1.1.0'
 }
-// [END maps_wear_os_depdendencies]
+// [END maps_wear_os_dependencies]
 
 secrets {
     defaultPropertiesFileName 'local.defaults.properties'
