@@ -70,15 +70,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback,
 
     // [START_EXCLUDE]
     // [START maps_wear_os_on_map_ready]
+    private val sydney = LatLng(-33.85704, 151.21522)
+
     override fun onMapReady(googleMap: GoogleMap) {
         // Add a marker with a title that is shown in its info window.
         googleMap.addMarker(
-            MarkerOptions().position(SYDNEY)
+            MarkerOptions().position(sydney)
                 .title("Sydney Opera House")
         )
 
         // Move the camera to show the marker.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 10f))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10f))
     }
     // [END maps_wear_os_on_map_ready]
 
@@ -103,10 +105,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback,
                 mapFragment.onExitAmbient()
             }
         }
-    }
-
-    companion object {
-        private val SYDNEY = LatLng(-33.85704, 151.21522)
     }
     // [END_EXCLUDE]
 }

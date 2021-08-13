@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     AmbientModeSupport.AmbientCallbackProvider {
 
     // [START_EXCLUDE silent]
-    private static final LatLng SYDNEY = new LatLng(-33.85704, 151.21522);
-
     private SupportMapFragment mapFragment;
     // [END_EXCLUDE]
 
@@ -79,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     // [START_EXCLUDE]
     // [START maps_wear_os_on_map_ready]
+    private static final LatLng SYDNEY = new LatLng(-33.85704, 151.21522);
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         // Add a marker with a title that is shown in its info window.
