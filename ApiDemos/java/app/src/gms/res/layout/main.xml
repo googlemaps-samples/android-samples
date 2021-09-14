@@ -17,6 +17,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <Spinner
+        android:id="@+id/map_renderer_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"/>
 
     <ListView
         android:id="@+id/list"

@@ -44,6 +44,7 @@
     <string name="custom_info_contents">Custom info contents</string>
     <string name="custom_info_window">Custom info window</string>
     <string name="default_info_window">Default info window</string>
+    <string name="default_renderer">Default</string>
     <string name="down_arrow">\u2193</string>
     <string name="drag_melbourne">Drag Melbourne</string>
     <string name="duration">Custom Duration</string>
@@ -61,6 +62,7 @@
     <string name="hue">Hue</string>
     <string name="hybrid">Hybrid</string>
     <string name="indoor">Indoor</string>
+    <string name="latest">Latest</string>
     <string-array name="layers_array">
         <item>@string/normal</item>
         <item>@string/hybrid</item>
@@ -71,12 +73,21 @@
     <string name="layers_demo_label">Layers</string>
     <string name="layers_demo_description">Demonstrates the different map layers.</string>
     <string name="left_arrow">\u2190</string>
+    <string name="legacy">Legacy</string>
     <string name="location_source_demo_label">Location Source Demo</string>
     <string name="location_source_demo_description">Demonstrates how to use a custom location source.</string>
     <string name="map_circle_description">Google Map with circles.</string>
     <string name="map_not_ready">Map is not ready yet</string>
     <string name="map_in_pager_demo_label">Map In Pager</string>
     <string name="map_in_pager_demo_description">Demonstrates how to add a map to a ViewPager.</string>
+    <string name="map_renderer_alert_dialog_message">Select a Map renderer before opening any demo.</string>
+    <string-array name="map_renderer_spinner_array">
+        <item>@string/map_renderer_spinner_label</item>
+        <item>@string/default_renderer</item>
+        <item>@string/legacy</item>
+        <item>@string/latest</item>
+    </string-array>
+    <string name="map_renderer_spinner_label">Select Preferred Map Renderer</string>
     <string name="marker_demo_label">Markers</string>
     <string name="marker_close_info_window_on_retap_demo_label">Marker Close Info Window on Retap</string>
     <string name="marker_close_info_window_on_retap_demo_description">Demonstrates how to close the info window when the currently selected marker is retapped.</string>
@@ -269,5 +280,16 @@
     <!-- Marker Collision -->
     <string name="marker_collision_label">Marker Collision</string>
     <string name="marker_collision_description">Demonstrates different supported marker collision behaviors.</string>
+
+    <!-- Background Customization -->
+    <string name="background_color_customization_demo_label"
+        description="Title text of Background Color Customization demo for test.">Background Color Customization</string>
+    <string name="background_color_customization_demo_description"
+        description="Text displayed below the Background Color Customization demo title.">Demonstrates how to set a custom background color to a map.</string>
+    <string name="background_color_customization_programmatic_demo_label"
+        description="Title text of Background Color Customization - Programmatic demo for test.">Background Color Customization - Programmatic</string>
+    <string name="background_color_customization_programmatic_demo_description"
+        description="Text displayed below the Background Color Customization  - Programmatic demo title.">Demonstrates how to programmatically set a custom background color to a map.</string>
+    <string name="show_map_tiles">Show Map Tiles</string>
 
 </resources>

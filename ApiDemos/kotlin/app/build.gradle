@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.example.kotlindemos"
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdkVersion 19
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -69,6 +69,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
+// Deprecated
 task generateV3(type: Copy) {
     group "V3 Beta"
     description "Copies source code from GMS to V3 BETA."
@@ -81,6 +82,7 @@ task generateV3(type: Copy) {
     filter(ConcatFilter, prepend: file('../../V3_FILE_HEADER'))
 }
 
+// Deprecated
 task generateV3Layout(type: Copy) {
     group "V3 Beta"
     description "Copies layout files from GMS to V3 BETA."

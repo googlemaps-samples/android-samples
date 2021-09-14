@@ -32,6 +32,8 @@
       </intent-filter>
     </activity>
     <activity android:name=".BasicMapDemoActivity" />
+    <activity android:name=".BackgroundColorCustomizationDemoActivity" />
+    <activity android:name=".BackgroundColorCustomizationProgrammaticDemoActivity" />
     <activity android:name=".CameraDemoActivity" />
     <activity android:name=".CameraClampingDemoActivity" />
     <activity android:name=".CircleDemoActivity" />
