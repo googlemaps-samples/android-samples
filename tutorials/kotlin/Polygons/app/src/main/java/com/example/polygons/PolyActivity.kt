@@ -205,10 +205,10 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
 
     // [START maps_poly_activity_style_polygon]
     private val COLOR_WHITE_ARGB = -0x1
-    private val COLOR_GREEN_ARGB = -0xc771c4
-    private val COLOR_PURPLE_ARGB = -0x7e387c
-    private val COLOR_ORANGE_ARGB = -0xa80e9
-    private val COLOR_BLUE_ARGB = -0x657db
+    private val COLOR_DARK_GREEN_ARGB = -0xc771c4
+    private val COLOR_LIGHT_GREEN_ARGB = -0x7e387c
+    private val COLOR_DARK_ORANGE_ARGB = -0xa80e9
+    private val COLOR_LIGHT_ORANGE_ARGB = -0x657db
     private val POLYGON_STROKE_WIDTH_PX = 8
     private val PATTERN_DASH_LENGTH_PX = 20
 
@@ -234,14 +234,14 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
             "alpha" -> {
                 // Apply a stroke pattern to render a dashed line, and define colors.
                 pattern = PATTERN_POLYGON_ALPHA
-                strokeColor = COLOR_GREEN_ARGB
-                fillColor = COLOR_PURPLE_ARGB
+                strokeColor = COLOR_DARK_GREEN_ARGB
+                fillColor = COLOR_LIGHT_GREEN_ARGB
             }
             "beta" -> {
                 // Apply a stroke pattern to render a line of dots and dashes, and define colors.
                 pattern = PATTERN_POLYGON_BETA
-                strokeColor = COLOR_ORANGE_ARGB
-                fillColor = COLOR_BLUE_ARGB
+                strokeColor = COLOR_DARK_ORANGE_ARGB
+                fillColor = COLOR_LIGHT_ORANGE_ARGB
             }
         }
         polygon.strokePattern = pattern
