@@ -224,10 +224,10 @@ public class PolyActivity extends AppCompatActivity
 
     // [START maps_poly_activity_style_polygon]
     private static final int COLOR_WHITE_ARGB = 0xffffffff;
-    private static final int COLOR_GREEN_ARGB = 0xff388E3C;
-    private static final int COLOR_PURPLE_ARGB = 0xff81C784;
-    private static final int COLOR_ORANGE_ARGB = 0xffF57F17;
-    private static final int COLOR_BLUE_ARGB = 0xffF9A825;
+    private static final int COLOR_DARK_GREEN_ARGB = 0xff388E3C;
+    private static final int COLOR_LIGHT_GREEN_ARGB = 0xff81C784;
+    private static final int COLOR_DARK_ORANGE_ARGB = 0xffF57F17;
+    private static final int COLOR_LIGHT_ORANGE_ARGB = 0xffF9A825;
 
     private static final int POLYGON_STROKE_WIDTH_PX = 8;
     private static final int PATTERN_DASH_LENGTH_PX = 20;
@@ -260,14 +260,14 @@ public class PolyActivity extends AppCompatActivity
             case "alpha":
                 // Apply a stroke pattern to render a dashed line, and define colors.
                 pattern = PATTERN_POLYGON_ALPHA;
-                strokeColor = COLOR_GREEN_ARGB;
-                fillColor = COLOR_PURPLE_ARGB;
+                strokeColor = COLOR_DARK_GREEN_ARGB;
+                fillColor = COLOR_LIGHT_GREEN_ARGB;
                 break;
             case "beta":
                 // Apply a stroke pattern to render a line of dots and dashes, and define colors.
                 pattern = PATTERN_POLYGON_BETA;
-                strokeColor = COLOR_ORANGE_ARGB;
-                fillColor = COLOR_BLUE_ARGB;
+                strokeColor = COLOR_DARK_ORANGE_ARGB;
+                fillColor = COLOR_LIGHT_ORANGE_ARGB;
                 break;
         }
 
