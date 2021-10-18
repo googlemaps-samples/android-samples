@@ -2,7 +2,7 @@
 // [START maps_android_secrets_gradle_plugin_classpath]
 buildscript {
     // [START_EXCLUDE silent]
-    ext.kotlin_version = "1.5.30"
+    ext.kotlin_version = "1.5.31"
     repositories {
         google()
         mavenCentral()
