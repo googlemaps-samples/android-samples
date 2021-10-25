@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
 
     gmsImplementation 'com.google.android.gms:play-services-maps:17.0.1'
-    gmsImplementation 'com.google.maps.android:android-maps-utils:2.2.5'
+    gmsImplementation 'com.google.maps.android:android-maps-utils:2.3.0'
     v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
 
     testImplementation 'junit:junit:4.13.2'
