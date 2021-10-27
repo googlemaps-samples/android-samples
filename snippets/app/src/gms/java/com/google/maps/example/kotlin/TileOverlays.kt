@@ -84,7 +84,6 @@ internal class TileOverlays : OnMapReadyCallback {
     }
     // [END maps_android_tile_overlays_transparency]
 
-    // [END maps_android_tile_overlays_transparency]
     private fun removeAndClearCache() {
         // [START maps_android_tile_overlays_remove]
         tileOverlay?.remove()
