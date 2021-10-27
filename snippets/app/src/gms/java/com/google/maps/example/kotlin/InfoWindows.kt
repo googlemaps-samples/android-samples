@@ -46,7 +46,7 @@ internal class InfoWindows {
                 .position(melbourneLatLng)
                 .title("Melbourne")
         )
-        melbourne.showInfoWindow()
+        melbourne?.showInfoWindow()
         // [END maps_android_info_windows_show_hide]
     }
 
