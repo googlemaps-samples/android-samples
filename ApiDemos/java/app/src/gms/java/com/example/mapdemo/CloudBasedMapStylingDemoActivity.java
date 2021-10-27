@@ -16,9 +16,9 @@ package com.example.mapdemo;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.libraries.maps.GoogleMap;
-import com.google.android.libraries.maps.OnMapReadyCallback;
-import com.google.android.libraries.maps.SupportMapFragment;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 /**
  * This shows how to use Cloud-based Map Styling in a simple Activity. For more information on how

@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
     buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.example.mapwithmarker"
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion 19
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -24,7 +24,7 @@ android {
 
 // [START maps_android_play_services_maps_dependency]
 dependencies {
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
     // [START_EXCLUDE]
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.3.1'

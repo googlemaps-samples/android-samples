@@ -15,23 +15,29 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical">
-
-  <ListView
-    android:id="@+id/list"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1" />
-
-  <TextView
-    android:id="@+id/empty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:text="@string/no_demos"
-    android:textAlignment="center"
-    android:textSize="24sp"
-    android:visibility="gone" />
+    android:orientation="vertical">
+
+  <ListView
+      android:id="@+id/list"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <Spinner
+      android:id="@+id/map_renderer_spinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:spinnerMode="dialog" />
+
+  <TextView
+      android:id="@+id/empty"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_gravity="center_horizontal"
+      android:text="@string/no_demos"
+      android:textAlignment="center"
+      android:textSize="24sp"
+      android:visibility="gone" />
 </LinearLayout>

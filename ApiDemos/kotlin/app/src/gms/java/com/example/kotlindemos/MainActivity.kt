@@ -20,16 +20,23 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.MapsInitializer.Renderer;
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 
 /**
  * The main activity of the API library demo gallery.
  * The main layout lists the demonstrated features, with buttons to launch them.
  */
-class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener, OnMapsSdkInitializedCallback {
+
+    private val TAG = MainActivity::class.java.simpleName
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val demo: DemoDetails = parent?.adapter?.getItem(position) as DemoDetails
@@ -52,6 +59,51 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         if (BuildConfig.MAPS_API_KEY.isEmpty()) {
             Toast.makeText(this, "Add your own API key in local.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
         }
+
+        val spinner = findViewById<Spinner>(R.id.map_renderer_spinner)
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            this, R.array.map_renderer_spinner_array, android.R.layout.simple_spinner_item
+        )
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = spinnerAdapter
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                val preferredRendererName = spinner.selectedItem as String
+                val preferredRenderer: Renderer?
+                preferredRenderer = if (preferredRendererName == getString(R.string.latest)) {
+                    Renderer.LATEST
+                } else if (preferredRendererName == getString(R.string.legacy)) {
+                    Renderer.LEGACY
+                } else if (preferredRendererName == getString(R.string.default_renderer)) {
+                    null
+                } else {
+                    Log.i(
+                        TAG,
+                        "Error setting renderer with name $preferredRendererName"
+                    )
+                    return
+                }
+                MapsInitializer.initialize(applicationContext, preferredRenderer, this@MainActivity)
+
+                // Disable spinner since renderer cannot be changed once map is intitialized.
+                spinner.isEnabled = false
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
+        Toast.makeText(
+            this,
+            "All demo activities will use the ${renderer.toString()} renderer.",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     /**

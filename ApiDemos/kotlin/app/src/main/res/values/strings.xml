@@ -15,9 +15,20 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Maps SDK for Android Demos (Kotlin)</string>
+    <string name="default_renderer">Default</string>
     <string name="demo_title">Google Maps API Demos</string>
+    <string name="latest">Latest</string>
+    <string name="legacy">Legacy</string>
+    <string name="map_renderer_alert_dialog_message">Select a Map renderer before opening any demo.</string>
     <string name="no_demos">No demos</string>
     <string name="play_services_not_installed">Google Play services is not installed on this device.</string>
+    <string-array name="map_renderer_spinner_array">
+        <item>@string/map_renderer_spinner_label</item>
+        <item>@string/default_renderer</item>
+        <item>@string/legacy</item>
+        <item>@string/latest</item>
+    </string-array>
+    <string name="map_renderer_spinner_label">Select Preferred Map Renderer</string>
 
     <!-- Tile Overlay -->
     <string name="tile_overlay_demo_label">Tile Overlays</string>
@@ -322,5 +333,16 @@
     <string name="snapshot_holder_description">Area for the map snapshot.</string>
     <string name="snapshot_take_button">Take snapshot</string>
     <string name="wait_for_map_load">Wait for Map Load</string>
+
+    <!-- Background Customization -->
+    <string name="background_color_customization_demo_label"
+        description="Title text of Background Color Customization demo for test.">Background Color Customization</string>
+    <string name="background_color_customization_demo_description"
+        description="Text displayed below the Background Color Customization demo title.">Demonstrates how to set a custom background color to a map.</string>
+    <string name="background_color_customization_programmatic_demo_label"
+        description="Title text of Background Color Customization - Programmatic demo for test.">Background Color Customization - Programmatic</string>
+    <string name="background_color_customization_programmatic_demo_description"
+        description="Text displayed below the Background Color Customization  - Programmatic demo title.">Demonstrates how to programmatically set a custom background color to a map.</string>
+    <string name="show_map_tiles">Show Map Tiles</string>
 
 </resources>
