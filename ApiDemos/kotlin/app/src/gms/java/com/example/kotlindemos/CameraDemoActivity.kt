@@ -103,10 +103,8 @@ class CameraDemoActivity :
     }
     // [END_EXCLUDE]
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         // return early if the map was not initialised properly
-        map = googleMap ?: return
-
         with(googleMap) {
             setOnCameraIdleListener(this@CameraDemoActivity)
             setOnCameraMoveStartedListener(this@CameraDemoActivity)
@@ -352,7 +350,7 @@ class CameraDemoActivity :
         // When the camera stops moving, add its target to the current path, and draw it on the map.
         checkPolylineThen {
             addCameraTargetToPath()
-            map.addPolyline(currPolylineOptions)
+            map.addPolyline(currPolylineOptions!!)
         }
 
         isCanceled = true  // Set to clear the map when dragging starts again.
@@ -365,7 +363,7 @@ class CameraDemoActivity :
         // [START_EXCLUDE silent]
         checkPolylineThen {
             addCameraTargetToPath()
-            map.addPolyline(currPolylineOptions)
+            map.addPolyline(currPolylineOptions!!)
         }
 
         currPolylineOptions = null

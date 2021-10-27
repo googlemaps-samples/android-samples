@@ -14,6 +14,7 @@
 package com.example.kotlindemos
 
 import android.Manifest.permission
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -50,6 +51,7 @@ class LocationSourceDemoActivity : AppCompatActivity() {
     lifecycle.addObserver(locationSource)
   }
 
+  @SuppressLint("MissingPermission")
   private fun init(map: GoogleMap) {
     map.setLocationSource(locationSource)
     map.setOnMapLongClickListener(locationSource)
