@@ -67,7 +67,7 @@ class TileOverlayDemoActivity : AppCompatActivity(), OnSeekBarChangeListener, On
                 return url
             }
         }
-        mMoonTiles = map.addTileOverlay(TileOverlayOptions().tileProvider(tileProvider))
+        mMoonTiles = map.addTileOverlay(TileOverlayOptions().tileProvider(tileProvider))!!
         mTransparencyBar.setOnSeekBarChangeListener(this)
     }
 

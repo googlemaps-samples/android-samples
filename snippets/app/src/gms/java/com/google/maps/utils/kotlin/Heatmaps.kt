@@ -97,17 +97,17 @@ internal class Heatmaps {
 
         // [START maps_android_utils_heatmap_customize_opacity]
         provider.setOpacity(0.7)
-        tileOverlay.clearTileCache()
+        tileOverlay?.clearTileCache()
         // [END maps_android_utils_heatmap_customize_opacity]
 
         // [START maps_android_utils_heatmap_customize_dataset]
         val data: List<WeightedLatLng> = ArrayList()
         provider.setWeightedData(data)
-        tileOverlay.clearTileCache()
+        tileOverlay?.clearTileCache()
         // [END maps_android_utils_heatmap_customize_dataset]
 
         // [START maps_android_utils_heatmap_remove]
-        tileOverlay.remove()
+        tileOverlay?.remove()
         // [END maps_android_utils_heatmap_remove]
     }
 }

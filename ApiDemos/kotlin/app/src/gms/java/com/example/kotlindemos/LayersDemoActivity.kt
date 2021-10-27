@@ -104,10 +104,8 @@ class LayersDemoActivity :
     }
 
     @SuppressLint("MissingPermission")
-    override fun onMapReady(googleMap: GoogleMap?) {
-
-        // exit early if the map was not initialised properly
-        map = googleMap ?: return
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
 
         updateMapType()
 

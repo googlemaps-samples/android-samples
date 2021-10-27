@@ -131,7 +131,7 @@ class MarkerDemoActivity :
         }
 
         private fun render(marker: Marker, view: View) {
-            val badge = when (marker.title) {
+            val badge = when (marker.title!!) {
                 "Brisbane" -> R.drawable.badge_qld
                 "Adelaide" -> R.drawable.badge_sa
                 "Sydney" -> R.drawable.badge_nsw
@@ -343,14 +343,14 @@ class MarkerDemoActivity :
         (0 until numMarkersInRainbow).mapTo(markerRainbow) {
             map.addMarker(MarkerOptions().apply{
                 position(LatLng(
-                        -30 + 10 * Math.sin(it * Math.PI / (numMarkersInRainbow - 1)),
-                        135 - 10 * Math.cos(it * Math.PI / (numMarkersInRainbow - 1))))
+                    -30 + 10 * Math.sin(it * Math.PI / (numMarkersInRainbow - 1)),
+                    135 - 10 * Math.cos(it * Math.PI / (numMarkersInRainbow - 1))))
                 title("Marker $it")
                 icon(BitmapDescriptorFactory.defaultMarker((it * 360 / numMarkersInRainbow)
-                        .toFloat()))
+                                                               .toFloat()))
                 flat(flatBox.isChecked)
                 rotation(rotationBar.progress.toFloat())
-            })
+            })!!
         }
     }
 

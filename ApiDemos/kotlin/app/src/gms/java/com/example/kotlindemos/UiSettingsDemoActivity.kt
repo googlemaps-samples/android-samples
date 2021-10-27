@@ -44,7 +44,7 @@ class UiSettingsDemoActivity :
         mapFragment.getMapAsync(this)
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         // Return early if map is not initialised properly
         map = googleMap ?: return
         enableMyLocation()

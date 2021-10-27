@@ -65,7 +65,7 @@ class OnMapAndViewReadyListener(
         mapFragment.getMapAsync(this)
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
         // NOTE: The GoogleMap API specifies the listener is removed just prior to invocation.
         map = googleMap ?: return
         isMapReady = true

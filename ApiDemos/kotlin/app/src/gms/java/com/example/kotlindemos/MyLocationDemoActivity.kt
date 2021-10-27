@@ -52,8 +52,8 @@ class MyLocationDemoActivity : AppCompatActivity(), OnMyLocationButtonClickListe
         mapFragment?.getMapAsync(this)
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
-        map = googleMap ?: return
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
         googleMap.setOnMyLocationButtonClickListener(this)
         googleMap.setOnMyLocationClickListener(this)
         enableMyLocation()

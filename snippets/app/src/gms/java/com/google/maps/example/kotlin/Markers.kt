@@ -144,9 +144,9 @@ class MarkerDemoActivity : AppCompatActivity(),
     private val SYDNEY = LatLng(-33.87365, 151.20689)
     private val BRISBANE = LatLng(-27.47093, 153.0235)
 
-    private lateinit var markerPerth: Marker
-    private lateinit var markerSydney: Marker
-    private lateinit var markerBrisbane: Marker
+    private var markerPerth: Marker? = null
+    private var markerSydney: Marker? = null
+    private var markerBrisbane: Marker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,19 +164,19 @@ class MarkerDemoActivity : AppCompatActivity(),
                 .position(PERTH)
                 .title("Perth")
         )
-        markerPerth.tag = 0
+        markerPerth?.tag = 0
         markerSydney = map.addMarker(
             MarkerOptions()
                 .position(SYDNEY)
                 .title("Sydney")
         )
-        markerSydney.tag = 0
+        markerSydney?.tag = 0
         markerBrisbane = map.addMarker(
             MarkerOptions()
                 .position(BRISBANE)
                 .title("Brisbane")
         )
-        markerBrisbane.tag = 0
+        markerBrisbane?.tag = 0
 
         // Set a listener for marker click.
         map.setOnMarkerClickListener(this)

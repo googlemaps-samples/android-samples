@@ -133,7 +133,7 @@ class PolygonDemoActivity :
         return resourceIds.map { getString(it) }
     }
 
-    override fun onMapReady(googleMap: GoogleMap?) {
+    override fun onMapReady(googleMap: GoogleMap) {
 
         // return early if the map was not initialised properly
         googleMap ?: return
