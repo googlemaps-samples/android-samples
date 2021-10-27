@@ -28,9 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
  */
-class BasicMapDemoActivity :
-        AppCompatActivity(),
-    OnMapReadyCallback {
+class BasicMapDemoActivity : AppCompatActivity(), OnMapReadyCallback {
 
     val SYDNEY = LatLng(-33.862, 151.21)
     val ZOOM_LEVEL = 13f
@@ -47,8 +45,7 @@ class BasicMapDemoActivity :
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
      * we just move the camera to Sydney and add a marker in Sydney.
      */
-    override fun onMapReady(googleMap: GoogleMap?) {
-        googleMap ?: return
+    override fun onMapReady(googleMap: GoogleMap) {
         with(googleMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, ZOOM_LEVEL))
             addMarker(MarkerOptions().position(SYDNEY))

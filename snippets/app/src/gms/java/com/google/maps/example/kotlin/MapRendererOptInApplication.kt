@@ -29,8 +29,8 @@ internal class MapRendererOptInApplication : Application(), OnMapsSdkInitialized
 
   override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
     when (renderer) {
-      LATEST -> Log.d("MapsDemo", "The latest version of the renderer is used.")
-      LEGACY -> Log.d("MapsDemo", "The legacy version of the renderer is used.")
+      Renderer.LATEST -> Log.d("MapsDemo", "The latest version of the renderer is used.")
+      Renderer.LEGACY -> Log.d("MapsDemo", "The legacy version of the renderer is used.")
     }
   }
 }

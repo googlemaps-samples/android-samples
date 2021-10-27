@@ -98,10 +98,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener, OnMap
         }
     }
 
-    override fun onMapsSdkInitialized(renderer: MapsInitializer.Renderer) {
+    override fun onMapsSdkInitialized(renderer: Renderer) {
         Toast.makeText(
             this,
-            "All demo activities will use the ${renderer.toString()} renderer.",
+            "All demo activities will use the $renderer renderer.",
             Toast.LENGTH_LONG
         ).show()
     }

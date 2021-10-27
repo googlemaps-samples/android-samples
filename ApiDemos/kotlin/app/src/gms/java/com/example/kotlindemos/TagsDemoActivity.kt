@@ -149,7 +149,7 @@ class TagsDemoActivity : AppCompatActivity(),
                 image(BitmapDescriptorFactory.fromResource(R.drawable.harbour_bridge))
                 position(places.getValue("SYDNEY"), 700000f)
                 clickable(true)
-            }).run {
+            })?.run {
                 // add a tag to the overlay to count clicks
                 tag = CustomTag("Sydney ground overlay")
             }
@@ -157,7 +157,7 @@ class TagsDemoActivity : AppCompatActivity(),
             // A marker at Hobart.
             addMarker(MarkerOptions().apply {
                 position(places.getValue("HOBART"))
-            }).run {
+            })?.run {
                 // add a tag to the marker to count clicks
                 tag = CustomTag("Hobart marker")
             }
