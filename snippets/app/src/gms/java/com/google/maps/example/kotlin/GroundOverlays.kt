@@ -40,7 +40,7 @@ internal class GroundOverlays {
         // [END maps_android_ground_overlays_retain]
 
         // [START maps_android_ground_overlays_remove]
-        imageOverlay.remove()
+        imageOverlay?.remove()
         // [END maps_android_ground_overlays_remove]
 
         // [START maps_android_ground_overlays_change_image]
@@ -49,7 +49,7 @@ internal class GroundOverlays {
 
         // [START maps_android_ground_overlays_change_image]
         // Update the GroundOverlay with a new image of the same dimension
-        imageOverlay.setImage(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
+        imageOverlay?.setImage(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
         // [END maps_android_ground_overlays_change_image]
 
 
@@ -60,7 +60,7 @@ internal class GroundOverlays {
                 .position(LatLng(-33.873, 151.206), 100f)
                 .clickable(true)
         )
-        sydneyGroundOverlay.tag = "Sydney"
+        sydneyGroundOverlay?.tag = "Sydney"
         // [END maps_android_ground_overlays_associate_data]
     }
 

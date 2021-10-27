@@ -24,7 +24,8 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
 
-    <activity android:name=".MainActivity">
+  <activity android:name=".MainActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
@@ -32,6 +33,8 @@
       </intent-filter>
     </activity>
     <activity android:name=".BasicMapDemoActivity" />
+    <activity android:name=".BackgroundColorCustomizationDemoActivity" />
+    <activity android:name=".BackgroundColorCustomizationProgrammaticDemoActivity" />
     <activity android:name=".CameraDemoActivity" />
     <activity android:name=".CameraClampingDemoActivity" />
     <activity android:name=".CircleDemoActivity" />

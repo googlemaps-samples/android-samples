@@ -24,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+    <activity android:name=".MainActivity"
+        android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,6 +34,12 @@
         <activity
             android:name=".BasicMapDemoActivity"
             android:label="@string/basic_map_demo_label" />
+        <activity
+            android:name=".BackgroundColorCustomizationDemoActivity"
+            android:label="@string/background_color_customization_demo_label"/>
+        <activity
+            android:name=".BackgroundColorCustomizationProgrammaticDemoActivity"
+            android:label="@string/background_color_customization_programmatic_demo_label"/>
         <activity
             android:name=".CameraDemoActivity"
             android:label="@string/camera_demo_label" />
