@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 31
+    buildToolsVersion '30.0.2'
     defaultConfig {
         applicationId "com.example.currentplacedetailsonmap"
-        minSdkVersion 17
-        targetSdkVersion 29
+        minSdkVersion 19
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -33,7 +33,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation 'com.google.android.libraries.places:places:2.5.0'
     implementation 'com.android.volley:volley:1.2.1'
     testImplementation'junit:junit:4.13'

@@ -190,6 +190,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
      * Gets the current location of the device, and positions the map's camera.
      */
     // [START maps_current_place_get_device_location]
+    @SuppressLint("MissingPermission")
     private fun getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare
@@ -351,11 +352,15 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
                     """.trimIndent()
             }
 
+            if (markerLatLng == null) {
+                return@OnClickListener
+            }
+
             // Add a marker for the selected place, with an info window
             // showing information about that place.
             map?.addMarker(MarkerOptions()
                 .title(likelyPlaceNames[which])
-                .position(markerLatLng!!)
+                .position(markerLatLng)
                 .snippet(markerSnippet))
 
             // Position the map's camera at the location of the marker.
@@ -375,6 +380,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
     // [START maps_current_place_update_location_ui]
+    @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
         if (map == null) {
             return
