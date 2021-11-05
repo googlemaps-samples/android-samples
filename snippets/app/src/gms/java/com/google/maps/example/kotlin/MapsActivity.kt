@@ -14,6 +14,7 @@
 
 package com.google.maps.example.kotlin
 
+//[START maps_android_mapsactivity]
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
@@ -60,3 +61,4 @@ internal class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 }
+//[END maps_android_mapsactivity]

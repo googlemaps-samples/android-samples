@@ -14,11 +14,9 @@
 
 package com.google.maps.example;
 
-
-import androidx.appcompat.app.AppCompatActivity;
-
+//[START maps_android_mapsactivity]
 import android.os.Bundle;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -62,3 +60,4 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
+//[END maps_android_mapsactivity]
