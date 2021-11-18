@@ -24,20 +24,18 @@ import com.google.android.gms.maps.model.StreetViewSource
 import com.google.maps.example.R
 
 // [START maps_street_view_on_street_view_panorama_ready]
-internal class StreetViewActivity : AppCompatActivity(), OnStreetViewPanoramaReadyCallback {
+class StreetViewActivity : AppCompatActivity(), OnStreetViewPanoramaReadyCallback {
     // [START_EXCLUDE]
     // [START maps_street_view_on_create]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_street_view)
-        // [START_EXCLUDE]
         // [START maps_street_view_find_fragment]
         val streetViewPanoramaFragment =
             supportFragmentManager
                 .findFragmentById(R.id.street_view_panorama) as SupportStreetViewPanoramaFragment
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(this)
         // [END maps_street_view_find_fragment]
-        // [END_EXCLUDE]
     }
     // [END maps_street_view_on_create]
 
