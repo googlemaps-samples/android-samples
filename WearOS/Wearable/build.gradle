@@ -51,7 +51,7 @@ dependencies {
     // [END_EXCLUDE]
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
     implementation 'com.google.android.support:wearable:2.8.1'
-    implementation 'com.google.android.gms:play-services-maps:18.0.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.1'
 
     // This dependency is necessary for ambient mode
     implementation 'androidx.wear:wear:1.1.0'
