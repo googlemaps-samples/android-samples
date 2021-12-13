@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.0.1'
 
     // This dependency is necessary for ambient mode
-    implementation 'androidx.wear:wear:1.1.0'
+    implementation 'androidx.wear:wear:1.2.0'
 }
 // [END maps_wear_os_dependencies]
 
