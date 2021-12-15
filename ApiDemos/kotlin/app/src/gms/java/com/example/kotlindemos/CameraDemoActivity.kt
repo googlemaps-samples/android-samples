@@ -104,6 +104,7 @@ class CameraDemoActivity :
     // [END_EXCLUDE]
 
     override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
         // return early if the map was not initialised properly
         with(googleMap) {
             setOnCameraIdleListener(this@CameraDemoActivity)
