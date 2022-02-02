@@ -37,6 +37,7 @@
             android:value="@string/maps_api_key" />
 
         <activity android:name=".MapsActivityRaw"
+            android:exported="true"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
