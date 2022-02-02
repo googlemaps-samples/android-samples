@@ -261,6 +261,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
                     locationPermissionGranted = true
                 }
             }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
         updateLocationUI()
     }
