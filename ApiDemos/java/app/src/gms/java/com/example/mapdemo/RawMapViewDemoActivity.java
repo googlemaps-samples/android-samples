@@ -15,9 +15,13 @@
 
 package com.example.mapdemo;
 
+import android.view.ViewGroup;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -47,10 +51,19 @@ public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapRe
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
-        mMapView = (MapView) findViewById(R.id.map);
-        mMapView.onCreate(mapViewBundle);
 
+        // Attempt to debug issue reported in: https://github.com/googlemaps/android-maps-compose/issues/13
+        // It appears that cloud-based map styling is not applied when the MapView is created programmatically.
+        // Map ID is applied and styling options are reflected when the MapView is inflated via XML though.
+        LatLng singapore = new LatLng(1.35, 103.87);
+        ViewGroup root = findViewById(R.id.root);
+        GoogleMapOptions options = new GoogleMapOptions()
+            .camera(CameraPosition.fromLatLngZoom(singapore, 11.0F))
+            .mapId(getString(R.string.cloud_styling_basic_map_id));
+        mMapView = new MapView(this, options);
+        mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
+        root.addView(mMapView);
     }
 
     @Override
