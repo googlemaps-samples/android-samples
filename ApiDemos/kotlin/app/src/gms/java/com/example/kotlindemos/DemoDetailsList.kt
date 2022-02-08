@@ -41,6 +41,8 @@ class DemoDetailsList {
                   CameraClampingDemoActivity::class.java),
       DemoDetails(R.string.circle_demo_label, R.string.circle_demo_details,
                   CircleDemoActivity::class.java),
+      DemoDetails(R.string.cloud_styling_label, R.string.cloud_styling_description,
+                  CloudBasedMapStylingDemoActivity::class.java),
       DemoDetails(R.string.close_info_window_demo_label,
                   R.string.close_info_window_demo_details,
                   MarkerCloseInfoWindowOnRetapDemoActivity::class.java),
