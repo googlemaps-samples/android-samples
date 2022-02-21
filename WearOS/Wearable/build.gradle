@@ -50,7 +50,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // [END_EXCLUDE]
     compileOnly 'com.google.android.wearable:wearable:2.8.1'
-    implementation 'com.google.android.support:wearable:2.8.1'
+    implementation 'com.google.android.support:wearable:2.9.0'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
     // This dependency is necessary for ambient mode
