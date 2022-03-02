@@ -23,11 +23,12 @@ import java.util.Properties
 fun AddAMap() {
   // [START maps_android_compose_add_a_map]
   val singapore = LatLng(1.35, 103.87)
+  val cameraPositionState = rememberCameraPositionState {
+    position = CameraPosition.fromLatLngZoom(singapore, 10f)
+  }
   GoogleMap(
     modifier = Modifier.fillMaxSize(),
-    googleMapOptionsFactory = {
-      GoogleMapOptions().camera(CameraPosition.fromLatLngZoom(singapore, 11f))
-    }
+    cameraPositionState = cameraPositionState
   ) {
     Marker(
       position = singapore,
