@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
 
     // GMS
-    gmsImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    gmsImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     gmsImplementation 'com.google.android.gms:play-services-maps:18.0.2'
     gmsImplementation 'com.google.maps.android:maps-ktx:3.3.0'
 
