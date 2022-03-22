@@ -16,6 +16,7 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
@@ -30,7 +31,7 @@ fun AddAMap() {
     cameraPositionState = cameraPositionState
   ) {
     Marker(
-      position = singapore,
+      state = MarkerState(position = singapore),
       title = "Singapore",
       snippet = "Marker in Singapore"
     )
