@@ -47,8 +47,8 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
  * Demonstrates the different base layers of a map.
  */
 public class LayersDemoActivity extends AppCompatActivity
-        implements OnItemSelectedListener, OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+    implements OnItemSelectedListener, OnMapReadyCallback,
+    ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -65,8 +65,8 @@ public class LayersDemoActivity extends AppCompatActivity
     private Spinner mSpinner;
 
     /**
-     * Flag indicating whether a requested permission has been denied after returning in
-     * {@link #onRequestPermissionsResult(int, String[], int[])}.
+     * Flag indicating whether a requested permission has been denied after returning in {@link
+     * #onRequestPermissionsResult(int, String[], int[])}.
      */
     private boolean mShowPermissionDeniedDialog = false;
 
@@ -77,7 +77,7 @@ public class LayersDemoActivity extends AppCompatActivity
 
         mSpinner = findViewById(R.id.layers_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.layers_array, android.R.layout.simple_spinner_item);
+            this, R.array.layers_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
@@ -88,7 +88,7 @@ public class LayersDemoActivity extends AppCompatActivity
         mIndoorCheckbox = findViewById(R.id.indoor);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -144,13 +144,15 @@ public class LayersDemoActivity extends AppCompatActivity
 
         // Enable the location layer. Request the location permission if needed.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         } else {
             // Uncheck the box until the layer has been enabled and request missing permission.
             mMyLocationCheckbox.setChecked(false);
-            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
-                    Manifest.permission.ACCESS_FINE_LOCATION, false);
+            PermissionUtils
+                .requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE,false);
         }
     }
 
@@ -176,7 +178,7 @@ public class LayersDemoActivity extends AppCompatActivity
         super.onResumeFragments();
         if (mShowPermissionDeniedDialog) {
             PermissionUtils.PermissionDeniedDialog
-                    .newInstance(false).show(getSupportFragmentManager(), "dialog");
+                .newInstance(false).show(getSupportFragmentManager(), "dialog");
             mShowPermissionDeniedDialog = false;
         }
     }

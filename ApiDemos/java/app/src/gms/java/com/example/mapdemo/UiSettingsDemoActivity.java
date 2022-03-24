@@ -51,8 +51,8 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
     private static final int LOCATION_LAYER_PERMISSION_REQUEST_CODE = 2;
 
     /**
-     * Flag indicating whether a requested permission has been denied after returning in
-     * {@link #onRequestPermissionsResult(int, String[], int[])}.
+     * Flag indicating whether a requested permission has been denied after returning in {@link
+     * #onRequestPermissionsResult(int, String[], int[])}.
      */
     private boolean mLocationPermissionDenied = false;
 
@@ -140,12 +140,15 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         // layer is not enabled.
         // First verify that the location permission has been granted.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
             mUiSettings.setMyLocationButtonEnabled(mMyLocationButtonCheckbox.isChecked());
         } else {
             // Uncheck the box and request missing location permission.
             mMyLocationButtonCheckbox.setChecked(false);
-            requestLocationPermission(MY_LOCATION_PERMISSION_REQUEST_CODE);
+            PermissionUtils
+                .requestLocationPermissions(this, MY_LOCATION_PERMISSION_REQUEST_CODE, false);
         }
     }
 
@@ -158,13 +161,15 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         // will also cause the my location button to show (if it is enabled); if disabled, the my
         // location button will never show.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(mMyLocationLayerCheckbox.isChecked());
         } else {
             // Uncheck the box and request missing location permission.
             mMyLocationLayerCheckbox.setChecked(false);
-            PermissionUtils.requestPermission(this, LOCATION_LAYER_PERMISSION_REQUEST_CODE,
-                    Manifest.permission.ACCESS_FINE_LOCATION, false);
+            PermissionUtils
+                .requestLocationPermissions(this, LOCATION_LAYER_PERMISSION_REQUEST_CODE, false);
         }
     }
 
@@ -200,32 +205,17 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         mUiSettings.setRotateGesturesEnabled(((CheckBox) v).isChecked());
     }
 
-    /**
-     * Requests the fine location permission. If a rationale with an additional explanation should
-     * be shown to the user, displays a dialog that triggers the request.
-     */
-    public void requestLocationPermission(int requestCode) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Display a dialog with rationale.
-            PermissionUtils.RationaleDialog
-                    .newInstance(requestCode, false).show(
-                    getSupportFragmentManager(), "dialog");
-        } else {
-            // Location permission has not been granted yet, request it.
-            PermissionUtils.requestPermission(this, requestCode,
-                    Manifest.permission.ACCESS_FINE_LOCATION, false);
-        }
-    }
-
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+        @NonNull int[] grantResults) {
         if (requestCode == MY_LOCATION_PERMISSION_REQUEST_CODE) {
             // Enable the My Location button if the permission has been granted.
             if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Manifest.permission.ACCESS_FINE_LOCATION) ||
+                PermissionUtils.isPermissionGranted(permissions, grantResults,
+                    permission.ACCESS_COARSE_LOCATION)
+            ) {
                 mUiSettings.setMyLocationButtonEnabled(true);
                 mMyLocationButtonCheckbox.setChecked(true);
             } else {
@@ -235,7 +225,10 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         } else if (requestCode == LOCATION_LAYER_PERMISSION_REQUEST_CODE) {
             // Enable the My Location layer if the permission has been granted.
             if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Manifest.permission.ACCESS_FINE_LOCATION) ||
+                PermissionUtils.isPermissionGranted(permissions, grantResults,
+                    permission.ACCESS_COARSE_LOCATION)
+            ) {
                 mMap.setMyLocationEnabled(true);
                 mMyLocationLayerCheckbox.setChecked(true);
             } else {
@@ -251,7 +244,7 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         super.onResumeFragments();
         if (mLocationPermissionDenied) {
             PermissionUtils.PermissionDeniedDialog
-                    .newInstance(false).show(getSupportFragmentManager(), "dialog");
+                .newInstance(false).show(getSupportFragmentManager(), "dialog");
             mLocationPermissionDenied = false;
         }
     }

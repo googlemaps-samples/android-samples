@@ -14,6 +14,7 @@
 package com.example.kotlindemos
 
 import android.Manifest
+import android.Manifest.permission
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
@@ -28,6 +29,41 @@ import androidx.fragment.app.DialogFragment
  * Utility class for access to runtime permissions.
  */
 object PermissionUtils {
+
+    /**
+     * Requests the fine and coarse location permissions. If a rationale with an additional
+     * explanation should be shown to the user, displays a dialog that triggers the request.
+     */
+    fun requestLocationPermissions(
+        activity: AppCompatActivity,
+        requestId: Int,
+        finishActivity: Boolean
+    ) {
+        if (
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                activity,
+                permission.ACCESS_FINE_LOCATION
+            ) ||
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                activity,
+                permission.ACCESS_COARSE_LOCATION
+            )
+        ) {
+            // Display a dialog with rationale.
+            RationaleDialog.newInstance(requestId, finishActivity)
+                .show(activity.supportFragmentManager, "dialog")
+        } else {
+            // Location permission has not been granted yet, request it.
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(
+                    permission.ACCESS_FINE_LOCATION,
+                    permission.ACCESS_COARSE_LOCATION
+                ),
+                requestId
+            )
+        }
+    }
 
     /**
      * Checks if the result contains a [PackageManager.PERMISSION_GRANTED] result for a
@@ -113,7 +149,10 @@ object PermissionUtils {
                 .setPositiveButton(android.R.string.ok) { dialog, which -> // After click on Ok, request the permission.
                     ActivityCompat.requestPermissions(
                         requireActivity(),
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        arrayOf(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        ),
                         requestCode
                     )
                     // Do not finish the Activity while requesting permission.
@@ -152,7 +191,10 @@ object PermissionUtils {
              * @param finishActivity Whether the calling Activity should be finished if the dialog is
              * cancelled.
              */
-            fun newInstance(requestCode: Int, finishActivity: Boolean): RationaleDialog {
+            fun newInstance(
+                requestCode: Int,
+                finishActivity: Boolean
+            ): RationaleDialog {
                 val arguments = Bundle().apply {
                     putInt(ARGUMENT_PERMISSION_REQUEST_CODE, requestCode)
                     putBoolean(ARGUMENT_FINISH_ACTIVITY, finishActivity)

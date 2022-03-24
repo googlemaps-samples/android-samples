@@ -35,7 +35,7 @@ import com.google.android.gms.maps.SupportMapFragment
  * This demo shows how GMS Location can be used to check for changes to the users location.  The
  * "My Location" button uses GMS Location to set the blue dot representing the users location.
  * Permission for [Manifest.permission.ACCESS_FINE_LOCATION] and [Manifest.permission.ACCESS_COARSE_LOCATION]
- * are requested at run time. If the permission has not been granted, the Activity is finished with an error message.
+ * are requested at run time. If either permission is not granted, the Activity is finished with an error message.
  */
 class MyLocationDemoActivity : AppCompatActivity(),
     OnMyLocationButtonClickListener,
@@ -92,7 +92,7 @@ class MyLocationDemoActivity : AppCompatActivity(),
             )
         ) {
             PermissionUtils.RationaleDialog.newInstance(
-                LOCATION_PERMISSION_REQUEST_CODE, false
+                LOCATION_PERMISSION_REQUEST_CODE, true
             ).show(supportFragmentManager, "dialog")
             return
         }
