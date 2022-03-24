@@ -76,6 +76,7 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         return ((CheckBox) findViewById(id)).isChecked();
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
@@ -148,6 +149,7 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         }
     }
 
+    @SuppressLint("MissingPermission")
     public void setMyLocationLayerEnabled(View v) {
         if (!checkReady()) {
             return;
@@ -229,7 +231,7 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
             } else {
                 mLocationPermissionDenied = true;
             }
-
+            return;
         } else if (requestCode == LOCATION_LAYER_PERMISSION_REQUEST_CODE) {
             // Enable the My Location layer if the permission has been granted.
             if (PermissionUtils.isPermissionGranted(permissions, grantResults,
@@ -239,7 +241,9 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
             } else {
                 mLocationPermissionDenied = true;
             }
+            return;
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

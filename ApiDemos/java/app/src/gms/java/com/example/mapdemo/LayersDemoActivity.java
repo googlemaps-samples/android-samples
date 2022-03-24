@@ -15,6 +15,7 @@
 
 package com.example.mapdemo;
 
+import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -157,11 +158,12 @@ public class LayersDemoActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            super.onRequestPermissionsResult(requestCode, permissions, results);
             return;
         }
 
         if (PermissionUtils.isPermissionGranted(permissions, results,
-                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            permission.ACCESS_FINE_LOCATION)) {
             mMap.setMyLocationEnabled(true);
             mMyLocationCheckbox.setChecked(true);
         } else {

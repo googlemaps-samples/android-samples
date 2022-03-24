@@ -15,6 +15,7 @@
 
 package com.example.mapdemo;
 
+import android.annotation.SuppressLint;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
@@ -81,6 +82,7 @@ public class MyLocationDemoActivity extends AppCompatActivity
     /**
      * Enables the My Location layer if the fine location permission has been granted.
      */
+    @SuppressLint("MissingPermission")
     private void enableMyLocation() {
         // [START maps_check_location_permission]
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -113,6 +115,7 @@ public class MyLocationDemoActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             return;
         }
 
