@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.ktx.CameraIdleEvent
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.cameraEvents
+import com.google.maps.android.ktx.cameraIdleEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ class CameraClampingDemoActivity : AppCompatActivity() {
    */
   private var maxZoom = DEFAULT_MAX_ZOOM
 
-  @ExperimentalCoroutinesApi
+  @OptIn(ExperimentalCoroutinesApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.camera_clamping_demo)
@@ -65,11 +66,8 @@ class CameraClampingDemoActivity : AppCompatActivity() {
     lifecycleScope.launchWhenCreated {
       map = mapFragment.awaitMap()
       launch {
-        map.cameraEvents().collect { event ->
-          when (event) {
-            is CameraIdleEvent -> onCameraIdle()
-            else -> Log.d(TAG, "Got event: $event")
-          }
+        map.cameraIdleEvents().collect {
+            onCameraIdle()
         }
       }
       setButtonClickListeners()
