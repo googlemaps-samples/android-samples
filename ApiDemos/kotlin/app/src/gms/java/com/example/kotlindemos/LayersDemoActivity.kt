@@ -148,11 +148,13 @@ class LayersDemoActivity :
     @AfterPermissionGranted(LOCATION_PERMISSION_REQUEST_CODE)
     private fun enableMyLocation() {
         // Enable the location layer. Request the location permission if needed.
-        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
 
         if (EasyPermissions.hasPermissions(this, *permissions)) {
             map.isMyLocationEnabled = true
-
         } else {
             // if permissions are not currently granted, request permissions
             EasyPermissions.requestPermissions(this,

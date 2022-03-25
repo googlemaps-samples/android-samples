@@ -16,6 +16,7 @@
 package com.example.mapdemo;
 
 import android.Manifest.permission;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import com.google.android.gms.maps.GoogleMap;
@@ -108,6 +109,7 @@ public class LocationSourceDemoActivity extends AppCompatActivity implements OnM
         mLocationSource.onPause();
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap map) {
         map.setLocationSource(mLocationSource);
