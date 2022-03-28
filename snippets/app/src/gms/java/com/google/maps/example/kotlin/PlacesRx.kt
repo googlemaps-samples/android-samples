@@ -21,5 +21,5 @@ internal class PlacesRx {
       }
     )
   }
-  // [START maps_android_places_rx_marker_click_events]
+  // [END maps_android_places_rx_marker_click_events]
 }
