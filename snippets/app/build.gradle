@@ -68,7 +68,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.1.4'
     implementation 'com.google.android.libraries.places:places:2.5.0'
 
-    gmsImplementation 'com.google.maps.android:maps-ktx:3.3.0'
+    gmsImplementation 'com.google.maps.android:maps-ktx:3.4.0'
     gmsImplementation 'com.google.maps.android:maps-compose:2.0.0'
     gmsImplementation 'com.google.android.gms:play-services-maps:18.0.2'
     gmsImplementation 'com.google.maps.android:android-maps-utils:2.3.0'
