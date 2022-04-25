@@ -33,7 +33,7 @@ dependencies {
     })
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
-    implementation 'com.google.android.libraries.places:places:2.5.0'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
     implementation 'com.android.volley:volley:1.2.1'
     testImplementation'junit:junit:4.13'
     implementation "androidx.core:core-ktx:1.7.0"
