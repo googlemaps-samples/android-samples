@@ -115,3 +115,13 @@ jobs:
           done
           cd ..
         done
+
+  test: # used as required status check
+    runs-on: ubuntu-latest
+    needs:
+      - build-ApiDemos
+      - build-WearOS
+      - build-Snippets
+      - build-tutorials
+    steps: 
+      - run: echo "Fail if all other steps are not successful"
