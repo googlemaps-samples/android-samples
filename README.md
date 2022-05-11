@@ -53,8 +53,6 @@ https://github.com/googlemaps/android-samples/issues
 Patches are encouraged, and may be submitted according to the instructions in
 CONTRIBUTING.md.
 
-![Analytics](https://maps-ga-beacon.appspot.com/UA-12846745-20/android-samples/readme?pixel)
-
 License
 -------
 (See each sample directory for details.)
