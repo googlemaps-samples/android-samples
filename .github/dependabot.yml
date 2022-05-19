@@ -17,14 +17,14 @@ updates:
 - package-ecosystem: gradle
   directory: "/./ApiDemos/java"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   commit-message:
     prefix: chore(deps)
 - package-ecosystem: gradle
   directory: "/./ApiDemos/kotlin"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   ignore:
   - dependency-name: com.google.android.gms:play-services-basement
@@ -35,7 +35,7 @@ updates:
 - package-ecosystem: gradle
   directory: "/./WearOS"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   ignore:
   - dependency-name: com.android.tools.build:gradle
@@ -46,28 +46,28 @@ updates:
 - package-ecosystem: gradle
   directory: "/./tutorials/java/CurrentPlaceDetailsOnMap"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   commit-message:
     prefix: chore(deps)
 - package-ecosystem: gradle
   directory: "/./tutorials/java/MapWithMarker"
   schedule:
-    interval: daily
+    interval: "weekly"
   open-pull-requests-limit: 10
   commit-message:
     prefix: chore(deps)
 - package-ecosystem: gradle
   directory: "/./tutorials/java/Polygons"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   commit-message:
     prefix: chore(deps)
 - package-ecosystem: gradle
   directory: "/./tutorials/java/StyledMap"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   ignore:
   - dependency-name: com.android.tools.build:gradle
@@ -78,21 +78,21 @@ updates:
 - package-ecosystem: gradle
   directory: "/./tutorials/kotlin/MapWithMarker"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   commit-message:
     prefix: chore(deps)
 - package-ecosystem: gradle
   directory: "/./tutorials/kotlin/CurrentPlaceDetailsOnMap"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   commit-message:
     prefix: chore(deps)
 - package-ecosystem: gradle
   directory: "/./tutorials/kotlin/Polygons"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   ignore:
   - dependency-name: com.android.tools.build:gradle
@@ -103,7 +103,7 @@ updates:
 - package-ecosystem: gradle
   directory: "/./snippets"
   schedule:
-    interval: weekly
+    interval: "weekly"
   open-pull-requests-limit: 10
   ignore:
   - dependency-name: com.android.tools.build:gradle
