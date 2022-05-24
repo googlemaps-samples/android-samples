@@ -11,7 +11,6 @@ def mapsApiKey = properties.getProperty("MAPS_API_KEY", "")
 
 android {
     compileSdkVersion 31
-    buildToolsVersion '30.0.2'
     defaultConfig {
         applicationId "com.example.styledmap"
         minSdkVersion 19
