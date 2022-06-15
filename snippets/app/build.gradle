@@ -25,7 +25,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0-alpha05'
+        kotlinCompilerExtensionVersion '1.2.0-alpha06'
     }
 
     buildFeatures {
