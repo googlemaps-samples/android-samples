@@ -25,7 +25,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.2.0-alpha05'
+        kotlinCompilerExtensionVersion '1.2.0-alpha06'
     }
 
     buildFeatures {
@@ -52,7 +52,9 @@ android {
     }
 }
 
+// [START maps_android_compose_dependency]
 dependencies {
+    // [START_EXCLUDE silent]
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.0'
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -77,7 +79,12 @@ dependencies {
     v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
 
     testImplementation 'junit:junit:4.13.2'
+
+    // [END_EXCLUDE]
+    implementation 'com.google.maps.android:maps-compose:2.2.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
 }
+// [END maps_android_compose_dependency]
 
 // [START maps_android_secrets_gradle_plugin_config]
 secrets {
