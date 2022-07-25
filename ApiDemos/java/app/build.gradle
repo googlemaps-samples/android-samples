@@ -49,7 +49,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
 
     // GMS
-    gmsImplementation 'com.google.android.gms:play-services-maps:18.0.2'
+    gmsImplementation 'com.google.android.gms:play-services-maps:18.1.0'
 
     // V3
     v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
