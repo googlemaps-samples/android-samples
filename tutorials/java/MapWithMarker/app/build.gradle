@@ -23,7 +23,7 @@ android {
 
 // [START maps_android_play_services_maps_dependency]
 dependencies {
-    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     // [START_EXCLUDE]
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.4.2'
