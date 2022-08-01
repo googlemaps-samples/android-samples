@@ -36,7 +36,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     testImplementation'junit:junit:4.13'
     implementation "androidx.core:core-ktx:1.8.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
