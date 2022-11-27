@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.example.kotlindemos"
-        minSdkVersion 19
-        targetSdkVersion 31
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

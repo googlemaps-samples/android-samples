@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.example.currentplacedetailsonmap"
         minSdkVersion 19
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -34,7 +34,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.libraries.places:places:2.7.0'
     implementation 'com.android.volley:volley:1.2.1'
-    testImplementation'junit:junit:4.13'
+    testImplementation'junit:junit:4.13.2'
     implementation "androidx.core:core-ktx:1.9.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
