@@ -2,7 +2,7 @@
 plugins {
     // [START_EXCLUDE]
     id 'com.android.application' version '7.1.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.21' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.22' apply false
     // [END_EXCLUDE]
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
 }
