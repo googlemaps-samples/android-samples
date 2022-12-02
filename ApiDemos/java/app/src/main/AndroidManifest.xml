@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-    <activity android:name="com.example.mapdemo.MainActivity"
+    <activity android:name=".MainActivity"
         android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -153,14 +153,15 @@
             android:label="@string/visible_region_demo_label" />
 
         <!--
-        To add your Maps API key to this project:
-        1. Open the root project's local.properties file
-        2. Add this line, where YOUR_API_KEY is your API key:
-            MAPS_API_KEY=YOUR_API_KEY
+            To add your Maps API key to this project:
+            1. Open the root project's local.properties file
+            2. Add this line, where YOUR_API_KEY is your API key:
+                MAPS_API_KEY=YOUR_API_KEY
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
+
     </application>
 
 </manifest>
