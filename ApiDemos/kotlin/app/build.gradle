@@ -11,7 +11,7 @@ android {
     compileSdkVersion 33
     defaultConfig {
         applicationId "com.example.kotlindemos"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
