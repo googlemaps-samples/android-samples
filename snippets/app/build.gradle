@@ -71,7 +71,7 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.5.0'
 
     gmsImplementation 'com.google.maps.android:maps-ktx:3.4.0'
-    gmsImplementation 'com.google.maps.android:maps-compose:2.7.2'
+    gmsImplementation 'com.google.maps.android:maps-compose:2.7.3'
     gmsImplementation 'com.google.android.gms:play-services-maps:18.0.2'
     gmsImplementation 'com.google.maps.android:android-maps-utils:2.4.0'
     gmsImplementation 'com.google.maps.android:maps-rx:1.0.0'
