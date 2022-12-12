@@ -13,7 +13,6 @@
 
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Fragment
--keep public class * extends android.support.v4.app.Fragment
 
 # The Maps API uses custom Parcelables.
 # Use this rule (which is slightly broader than the standard recommended one)
