@@ -9,7 +9,6 @@ Prerequisites
 
 - Android SDK v33
 - Latest Android Build Tools
-- Android Support Repository
 
 Getting started
 ---------------

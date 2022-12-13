@@ -15,9 +15,8 @@ Android Studio’s “Build Variants” toolbar options.
 Pre-requisites
 --------------
 
-- Android SDK v30
+- Android SDK v33
 - Latest Android Build Tools
-- Android Support Repository
 - Google Repository
 - Google Play Services
 
