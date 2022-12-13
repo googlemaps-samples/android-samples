@@ -8,7 +8,7 @@ gradle-based Android Studio project that [supports ambient mode](https://develop
 Pre-requisites
 --------------
 
-- Android SDK v33
+- Android SDK v31
 - Latest Android Build Tools
 - Wear OS emulator or device
 
