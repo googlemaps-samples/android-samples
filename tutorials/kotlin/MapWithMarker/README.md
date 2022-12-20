@@ -7,7 +7,7 @@ This sample goes hand in hand with a tutorial for the Google Maps Android API:
 Prerequisites
 --------------
 
-- Android SDK v30
+- Android SDK v33
 - Latest Android Build Tools
 - Android Support Repository
 - Google Repository

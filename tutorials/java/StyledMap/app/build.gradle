@@ -10,11 +10,11 @@ if (rootProject.file("local.properties").exists()) {
 def mapsApiKey = properties.getProperty("MAPS_API_KEY", "")
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.example.styledmap"
         minSdkVersion 19
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
