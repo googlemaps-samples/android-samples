@@ -53,14 +53,15 @@ class OnMapAndViewReadyListener(
 
     private fun registerListeners() {
         // View layout.
-        if (mapView?.width != 0 && mapView?.height != 0) {
-            // View has already completed layout.
-            isViewReady = true
-        } else {
-            // Map has not undergone layout, register a View observer.
-            mapView.viewTreeObserver.addOnGlobalLayoutListener(this)
+        mapView?.let {
+            if (it.width != 0 && it.height != 0) {
+                // View has already completed layout.
+                isViewReady = true
+            } else {
+                // Map has not undergone layout, register a View observer.
+                it.viewTreeObserver.addOnGlobalLayoutListener(this)
+            }
         }
-
         // GoogleMap. Note if the GoogleMap is already ready it will still fire the callback later.
         mapFragment.getMapAsync(this)
     }
