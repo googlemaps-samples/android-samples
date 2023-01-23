@@ -68,7 +68,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
     implementation 'com.google.android.libraries.places:places:2.7.0'
     gmsImplementation 'com.google.maps.android:maps-ktx:3.4.0'
     gmsImplementation 'com.google.maps.android:maps-compose:2.8.0'
