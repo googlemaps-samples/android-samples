@@ -71,7 +71,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
     implementation 'com.google.android.libraries.places:places:2.7.0'
     gmsImplementation 'com.google.maps.android:maps-ktx:3.4.0'
-    gmsImplementation 'com.google.maps.android:maps-compose:2.9.1'
+    gmsImplementation 'com.google.maps.android:maps-compose:2.10.0'
     gmsImplementation 'com.google.android.gms:play-services-maps:18.1.0'
     gmsImplementation 'com.google.maps.android:android-maps-utils:3.4.0'
     gmsImplementation 'com.google.maps.android:maps-rx:1.0.0'
@@ -81,7 +81,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     // [END_EXCLUDE]
-    implementation 'com.google.maps.android:maps-compose:2.9.1'
+    implementation 'com.google.maps.android:maps-compose:2.10.0'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
 }
 // [END maps_android_compose_dependency]
