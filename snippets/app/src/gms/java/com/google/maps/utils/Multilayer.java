@@ -37,6 +37,8 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
+import androidx.annotation.Nullable;
+
 class Multilayer {
     private GoogleMap map;
     private Context context;
@@ -103,6 +105,12 @@ class Multilayer {
         @Override
         public String getSnippet() {
             return snippet;
+        }
+
+        @Nullable
+        @Override
+        public Float getZIndex() {
+            return 0f;
         }
     }
 }
