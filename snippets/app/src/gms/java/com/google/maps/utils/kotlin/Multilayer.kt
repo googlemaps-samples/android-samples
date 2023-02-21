@@ -122,12 +122,16 @@ internal class Multilayer {
             return position
         }
 
-        override fun getTitle(): String? {
+        override fun getTitle(): String {
             return title
         }
 
-        override fun getSnippet(): String? {
+        override fun getSnippet(): String {
             return snippet
+        }
+
+        override fun getZIndex(): Float {
+            return 0f
         }
 
         init {

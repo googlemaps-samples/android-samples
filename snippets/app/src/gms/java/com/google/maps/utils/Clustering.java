@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
+import androidx.annotation.Nullable;
+
 class Clustering {
 
     private GoogleMap map;
@@ -52,6 +54,12 @@ class Clustering {
         @Override
         public String getSnippet() {
             return snippet;
+        }
+
+        @Nullable
+        @Override
+        public Float getZIndex() {
+            return 0f;
         }
     }
     // [END maps_android_utils_clustering_cluster_item]
