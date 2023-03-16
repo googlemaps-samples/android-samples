@@ -55,7 +55,7 @@ class LiteDemoActivity : AppCompatActivity(), OnGlobalLayoutAndMapReadyListener 
     fun showDarwin(v: View?) {
         if (!::map.isInitialized) return
 
-        // Center camera on Adelaide marker
+        // Center camera on Darwin marker
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(DARWIN, 10f))
     }
 
