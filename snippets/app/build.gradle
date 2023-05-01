@@ -57,7 +57,7 @@ android {
 dependencies {
     // [START_EXCLUDE silent]
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.20'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.21'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation "androidx.compose.foundation:foundation:1.4.0-beta01"
