@@ -1,10 +1,12 @@
+// [START maps_android_secrets_gradle_plugin]
 plugins {
+    // [START_EXCLUDE]
     id 'com.android.application'
     id 'kotlin-android'
-    // [START maps_android_secrets_gradle_plugin]
+    // [END_EXCLUDE]
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-    // [END maps_android_secrets_gradle_plugin]
 }
+// [END maps_android_secrets_gradle_plugin]
 
 android {
     compileSdk 33
