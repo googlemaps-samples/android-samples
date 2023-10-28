@@ -40,6 +40,7 @@ android {
     }
 }
 
+// [START maps_android_compose_dependency]
 dependencies {
 
     // [START_EXCLUDE silent]
@@ -55,12 +56,12 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.7.4'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
-
-    testImplementation 'junit:junit:4.13.2'
-
     // [END_EXCLUDE]
+
+    // Android Maps Compose composables for the Maps SDK for Android
     implementation 'com.google.maps.android:maps-compose:4.1.1'
 }
+// [END maps_android_compose_dependency]
 
 secrets {
     // Optionally specify a different file name containing your secrets.

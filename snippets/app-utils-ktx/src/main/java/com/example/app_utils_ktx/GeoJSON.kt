@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.maps.utils.kotlin
+package com.example.app_utils_ktx
 
 import android.content.Context
 import android.graphics.Color
@@ -20,7 +20,7 @@ import android.util.Log
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.data.geojson.*
-import com.google.maps.example.R
+import com.example.app_utils_ktx.R
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.maps.utils.kotlin
+package com.example.app_utils_ktx
 
 import android.content.Context
 import android.graphics.Color
@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.TileOverlayOptions
 import com.google.maps.android.heatmaps.Gradient
 import com.google.maps.android.heatmaps.HeatmapTileProvider
 import com.google.maps.android.heatmaps.WeightedLatLng
-import com.google.maps.example.R
+import com.example.app_utils_ktx.R
 import org.json.JSONArray
 import org.json.JSONException
 import java.util.*

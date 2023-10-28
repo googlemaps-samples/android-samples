@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.maps.utils.kotlin
+package com.example.app_utils_ktx
 
 import android.content.Context
 import android.widget.Toast
@@ -30,12 +30,9 @@ import com.google.maps.android.collections.PolylineManager
 import com.google.maps.android.data.Feature
 import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.kml.KmlLayer
-import com.google.maps.example.R
 import org.json.JSONException
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
-import java.lang.IndexOutOfBoundsException
-import kotlin.jvm.Throws
 
 internal class Multilayer {
     private val map: GoogleMap? = null
