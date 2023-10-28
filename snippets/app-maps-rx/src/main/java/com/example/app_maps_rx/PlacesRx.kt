@@ -1,4 +1,4 @@
-package com.google.maps.example.kotlin
+package com.example.app_maps_rx
 
 import android.util.Log
 import com.google.android.libraries.places.api.model.Place
