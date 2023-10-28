@@ -18,3 +18,6 @@ dependencyResolutionManagement {
 // [END maps_android_settings_dependency_resolution_management]
 include ':app'
 rootProject.name = "Snippets App"
+include ':app-ktx'
+include ':app-utils-ktx'
+include ':app-compose'
