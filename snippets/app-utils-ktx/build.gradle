@@ -5,20 +5,17 @@ plugins {
 }
 
 android {
-    namespace 'com.example.app_ktx'
-    compileSdk 34
+    namespace 'com.example.app_utils_ktx'
+    compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.app_ktx"
+        applicationId "com.example.app_utils_ktx"
         minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
     }
 
     buildTypes {
@@ -36,7 +33,7 @@ android {
     }
 }
 
-// [START maps_android_ktx_install_snippet]
+// [START maps_android_utils_ktx_install_snippet]
 dependencies {
     // [START_EXCLUDE silent]
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.0'
@@ -45,10 +42,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
     // [END_EXCLUDE]
 
-    // KTX for the Maps SDK for Android library
-    implementation 'com.google.maps.android:maps-ktx:5.0.0'
+    // KTX for the Maps SDK for Android Utility Library
+    implementation 'com.google.maps.android:maps-utils-ktx:5.0.0'
 }
-// [END maps_android_ktx_install_snippet]
+// [END maps_android_utils_ktx_install_snippet]
 
 secrets {
     // Optionally specify a different file name containing your secrets.
