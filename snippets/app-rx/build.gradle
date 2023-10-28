@@ -18,6 +18,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -48,7 +52,6 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
 
     // [START_EXCLUDE silent]
-    //implementation project(":maps-rx")
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.2"
     implementation "com.google.android.material:material:1.10.0"

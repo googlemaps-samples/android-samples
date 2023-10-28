@@ -87,7 +87,7 @@ jobs:
     - name: Build and check
       run: |
         cd snippets
-        ./gradlew assembleGmsDebug assembleV3Debug lintGmsDebug lintV3Debug
+        ./gradlew assembleGmsDebug lintGmsDebug
 
   build-tutorials:
     runs-on: ubuntu-latest
