@@ -1,0 +1,63 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
+
+android {
+    namespace 'com.example.app_utils'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.app_utils"
+        minSdk 21
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+// [START maps_android_utils_install_snippet]
+dependencies {
+
+    // [START_EXCLUDE silent]
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // [END_EXCLUDE]
+
+    // Utility Library for Maps SDK for Android
+    // You do not need to add a separate dependency for the Maps SDK for Android
+    // since this library builds in the compatible version of the Maps SDK.
+    implementation 'com.google.maps.android:android-maps-utils:3.7.0'
+}
+// [END maps_android_utils_install_snippet]
+
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = 'local.defaults.properties'
+}

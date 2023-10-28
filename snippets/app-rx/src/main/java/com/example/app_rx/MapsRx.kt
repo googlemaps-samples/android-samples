@@ -1,4 +1,4 @@
-package com.example.app_maps_rx
+package com.example.app_rx
 
 import android.util.Log
 import com.google.android.gms.maps.GoogleMap
