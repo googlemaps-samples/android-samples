@@ -7,15 +7,19 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.mapdemo"
-        minSdkVersion 19
-        targetSdkVersion 33
+        minSdk 19
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+    }
+    buildFeatures {
+        compose true
+        buildConfig = true
     }
     buildTypes {
         release {
