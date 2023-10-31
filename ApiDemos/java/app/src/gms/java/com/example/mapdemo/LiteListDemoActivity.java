@@ -72,13 +72,11 @@ public class LiteListDemoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.layout_linear:
-                mRecyclerView.setLayoutManager(mLinearLayoutManager);
-                break;
-            case R.id.layout_grid:
-                mRecyclerView.setLayoutManager(mGridLayoutManager);
-                break;
+        int id = item.getItemId();
+        if (id == R.id.layout_linear) {
+            mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        } else if (id == R.id.layout_grid) {
+            mRecyclerView.setLayoutManager(mGridLayoutManager);
         }
         return true;
     }

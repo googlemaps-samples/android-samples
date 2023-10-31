@@ -13,8 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kotlindemos">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         This app requires location permissions for the layers demo.

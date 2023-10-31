@@ -140,48 +140,43 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
      */
     private void setSelectedStyle() {
         MapStyleOptions style;
-        switch (mSelectedStyleId) {
-            case R.string.style_label_retro:
-                // Sets the retro style via raw resource JSON.
-                style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro);
-                break;
-            case R.string.style_label_night:
-                // Sets the night style via raw resource JSON.
-                style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
-                break;
-            case R.string.style_label_grayscale:
-                // Sets the grayscale style via raw resource JSON.
-                style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale);
-                break;
-            case R.string.style_label_no_pois_no_transit:
-                // Sets the no POIs or transit style via JSON string.
-                style = new MapStyleOptions("[" +
-                        "  {" +
-                        "    \"featureType\":\"poi.business\"," +
-                        "    \"elementType\":\"all\"," +
-                        "    \"stylers\":[" +
-                        "      {" +
-                        "        \"visibility\":\"off\"" +
-                        "      }" +
-                        "    ]" +
-                        "  }," +
-                        "  {" +
-                        "    \"featureType\":\"transit\"," +
-                        "    \"elementType\":\"all\"," +
-                        "    \"stylers\":[" +
-                        "      {" +
-                        "        \"visibility\":\"off\"" +
-                        "      }" +
-                        "    ]" +
-                        "  }" +
-                        "]");
-                break;
-            case R.string.style_label_default:
-                // Removes previously set style, by setting it to null.
-                style = null;
-                break;
-            default:
-                return;
+        int id = mSelectedStyleId;
+        if (id == R.string.style_label_retro) {
+            // Sets the retro style via raw resource JSON.
+            style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro);
+        } else if (id == R.string.style_label_night) {
+            // Sets the night style via raw resource JSON.
+            style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
+        } else if (id == R.string.style_label_grayscale) {
+            // Sets the grayscale style via raw resource JSON.
+            style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale);
+        } else if (id == R.string.style_label_no_pois_no_transit) {
+            // Sets the no POIs or transit style via JSON string.
+            style = new MapStyleOptions("[" +
+                                                "  {" +
+                                                "    \"featureType\":\"poi.business\"," +
+                                                "    \"elementType\":\"all\"," +
+                                                "    \"stylers\":[" +
+                                                "      {" +
+                                                "        \"visibility\":\"off\"" +
+                                                "      }" +
+                                                "    ]" +
+                                                "  }," +
+                                                "  {" +
+                                                "    \"featureType\":\"transit\"," +
+                                                "    \"elementType\":\"all\"," +
+                                                "    \"stylers\":[" +
+                                                "      {" +
+                                                "        \"visibility\":\"off\"" +
+                                                "      }" +
+                                                "    ]" +
+                                                "  }" +
+                                                "]");
+        } else if (id == R.string.style_label_default) {
+            // Removes previously set style, by setting it to null.
+            style = null;
+        } else {
+            return;
         }
         mMap.setMapStyle(style);
     }
