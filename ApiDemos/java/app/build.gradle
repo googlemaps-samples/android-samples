@@ -7,15 +7,19 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.mapdemo"
-        minSdkVersion 19
-        targetSdkVersion 33
+        minSdk 19
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+    }
+    buildFeatures {
+        compose true
+        buildConfig = true
     }
     buildTypes {
         release {
@@ -30,16 +34,12 @@ android {
             applicationIdSuffix ".gms"
             versionNameSuffix "-gms"
         }
-        v3 {
-            dimension "version"
-            applicationIdSuffix ".v3"
-            versionNameSuffix "-v3"
-        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    namespace "com.example.mapdemo"
 }
 
 dependencies {
@@ -49,40 +49,12 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
 
     // GMS
-    gmsImplementation 'com.google.android.gms:play-services-maps:18.1.0'
-
-    // V3
-    v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
+    gmsImplementation 'com.google.android.gms:play-services-maps:18.2.0'
 
     // Tests
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-}
-
-// Deprecated
-task generateV3(type: Copy) {
-    group "V3 Beta"
-    description "Copies source code from GMS to V3 BETA."
-
-    from 'src/gms/java'
-    into 'src/v3/java'
-    filter { line ->
-        line.replace('com.google.android.gms.maps', 'com.google.android.libraries.maps')
-    }
-    filter(ConcatFilter, prepend: file('../../V3_FILE_HEADER'))
-}
-
-// Deprecated
-task generateV3Layout(type: Copy) {
-    group "V3 Beta"
-    description "Copies layout files from GMS to V3 BETA."
-
-    from 'src/gms/res/layout'
-    into 'src/v3/res/layout'
-    filter { line ->
-        line.replace('com.google.android.gms.maps', 'com.google.android.libraries.maps')
-    }
 }
 
 secrets {

@@ -198,41 +198,39 @@ public class PolygonDemoActivity extends AppCompatActivity
     }
 
     private int getSelectedJointType(int pos) {
-        switch (JOINT_TYPE_NAME_RESOURCE_IDS[pos]) {
-            case R.string.joint_type_bevel:
-                return JointType.BEVEL;
-            case R.string.joint_type_round:
-                return JointType.ROUND;
-            case R.string.joint_type_default:
-                return JointType.DEFAULT;
+        int id = JOINT_TYPE_NAME_RESOURCE_IDS[pos];
+        if (id == R.string.joint_type_bevel) {
+            return JointType.BEVEL;
+        } else if (id == R.string.joint_type_round) {
+            return JointType.ROUND;
+        } else if (id == R.string.joint_type_default) {
+            return JointType.DEFAULT;
         }
         return 0;
     }
 
     private List<PatternItem> getSelectedPattern(int pos) {
-        switch (PATTERN_TYPE_NAME_RESOURCE_IDS[pos]) {
-            case R.string.pattern_solid:
-                return null;
-            case R.string.pattern_dotted:
-                return PATTERN_DOTTED;
-            case R.string.pattern_dashed:
-                return PATTERN_DASHED;
-            case R.string.pattern_mixed:
-                return PATTERN_MIXED;
-            default:
+        int id = PATTERN_TYPE_NAME_RESOURCE_IDS[pos];
+        if (id == R.string.pattern_solid) {
+            return null;
+        } else if (id == R.string.pattern_dotted) {
+            return PATTERN_DOTTED;
+        } else if (id == R.string.pattern_dashed) {
+            return PATTERN_DASHED;
+        } else if (id == R.string.pattern_mixed) {
+            return PATTERN_MIXED;
+        } else {
                 return null;
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        switch (parent.getId()) {
-            case R.id.strokeJointTypeSpinner:
-                mutablePolygon.setStrokeJointType(getSelectedJointType(pos));
-                break;
-            case R.id.strokePatternSpinner:
-                mutablePolygon.setStrokePattern(getSelectedPattern(pos));
-                break;
+        int parentId = parent.getId();
+        if (parentId == R.id.strokeJointTypeSpinner) {
+            mutablePolygon.setStrokeJointType(getSelectedJointType(pos));
+        } else if (parentId == R.id.strokePatternSpinner) {
+            mutablePolygon.setStrokePattern(getSelectedPattern(pos));
         }
     }
 

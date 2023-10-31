@@ -260,17 +260,17 @@ public class CircleDemoActivity extends AppCompatActivity
     }
 
     private List<PatternItem> getSelectedPattern(int pos) {
-        switch (PATTERN_TYPE_NAME_RESOURCE_IDS[pos]) {
-            case R.string.pattern_solid:
-                return null;
-            case R.string.pattern_dotted:
-                return PATTERN_DOTTED;
-            case R.string.pattern_dashed:
-                return PATTERN_DASHED;
-            case R.string.pattern_mixed:
-                return PATTERN_MIXED;
-            default:
-                return null;
+        int id = PATTERN_TYPE_NAME_RESOURCE_IDS[pos];
+        if (id == R.string.pattern_solid) {
+            return null;
+        } else if (id == R.string.pattern_dotted) {
+            return PATTERN_DOTTED;
+        } else if (id == R.string.pattern_dashed) {
+            return PATTERN_DASHED;
+        } else if (id == R.string.pattern_mixed) {
+            return PATTERN_MIXED;
+        } else {
+            return null;
         }
     }
 

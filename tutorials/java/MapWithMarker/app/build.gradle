@@ -4,14 +4,17 @@ plugins {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
         applicationId "com.example.mapwithmarker"
-        minSdkVersion 19
-        targetSdkVersion 33
+        minSdk 19
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        buildConfig = true
     }
     buildTypes {
         release {
@@ -19,20 +22,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    namespace "com.example.mapwithmarker"
 }
 
-// [START maps_android_play_services_maps_dependency]
 dependencies {
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    // [START_EXCLUDE]
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.6.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    // [END_EXCLUDE]
 }
-// [END maps_android_play_services_maps_dependency]
 
 secrets {
     // To add your Maps API key to this project:

@@ -19,19 +19,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.5.0'
-    }
-
-    buildFeatures {
-        compose true
     }
 
     flavorDimensions "version"
@@ -42,12 +38,8 @@ android {
             applicationIdSuffix ".gms"
             versionNameSuffix "-gms"
         }
-        v3 {
-            dimension "version"
-            applicationIdSuffix ".v3"
-            versionNameSuffix "-v3"
-        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -55,7 +47,7 @@ android {
     namespace 'com.google.maps.example'
 }
 
-// [START maps_android_compose_dependency]
+// [START maps_android_play_services_maps_dependency]
 dependencies {
     // [START_EXCLUDE silent]
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -70,23 +62,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
     implementation 'com.google.android.libraries.places:places:3.0.0'
-    gmsImplementation 'com.google.maps.android:maps-ktx:3.4.0'
-    gmsImplementation 'com.google.maps.android:maps-compose:2.15.0'
-    gmsImplementation 'com.google.android.gms:play-services-maps:18.1.0'
-    gmsImplementation 'com.google.maps.android:android-maps-utils:3.5.3'
-    gmsImplementation 'com.google.maps.android:maps-rx:1.0.0'
-    gmsImplementation 'com.google.maps.android:places-rx:1.0.0'
-    v3Implementation 'com.google.android.libraries.maps:maps:3.1.0-beta'
-
-    testImplementation 'junit:junit:4.13.2'
-
     // [END_EXCLUDE]
-    implementation 'com.google.maps.android:maps-compose:2.15.0'
-    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
+    // Maps SDK for Android
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
 }
-// [END maps_android_compose_dependency]
+// [END maps_android_play_services_maps_dependency]
 
 // [START maps_android_secrets_gradle_plugin_config]
 secrets {
