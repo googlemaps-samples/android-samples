@@ -15,8 +15,8 @@
 name: Generate V3 Samples
 
 on:
-  schedule:
-    - cron: '0 */1 * * *'
+  push:
+    branches: [ main ]
   repository_dispatch:
     types: [ generate-v3 ]
 
