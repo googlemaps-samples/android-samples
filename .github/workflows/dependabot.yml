@@ -24,7 +24,7 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' }}
     env:
       PR_URL: ${{github.event.pull_request.html_url}}
-      GITHUB_TOKEN: ${{secrets.SYNCED_GITHUB_TOKEN_REPO}}
+      GITHUB_TOKEN: ${{secrets.SAMPLES_DEPENDABOT_TOKEN}}
     steps:
       - name: approve
         run: gh pr review --approve "$PR_URL"
