@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 The Android Open Source Project
+ * Copyright (C) 2023 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,19 +20,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.MapsInitializer.Renderer;
-import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -41,7 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
  *
  * <p>The main layout lists the demonstrated features, with buttons to launch them.
  */
-public final class MainActivity extends AppCompatActivity implements OnMapsSdkInitializedCallback {
+public final class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -92,47 +84,5 @@ public final class MainActivity extends AppCompatActivity implements OnMapsSdkIn
                     startActivity(new Intent(view.getContext(), demo.activityClass));
                 });
         }
-
-        Spinner spinner = (Spinner) findViewById(R.id.map_renderer_spinner);
-        ArrayAdapter<CharSequence> spinnerAdapter =
-            ArrayAdapter.createFromResource(
-                this, R.array.map_renderer_spinner_array, android.R.layout.simple_spinner_item);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(
-            new OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String preferredRendererName = ((String) spinner.getSelectedItem());
-                    Renderer preferredRenderer;
-
-                    if (preferredRendererName.equals(getString(R.string.latest))) {
-                        preferredRenderer = Renderer.LATEST;
-                    } else if (preferredRendererName.equals(getString(R.string.legacy))) {
-                        preferredRenderer = Renderer.LEGACY;
-                    } else if (preferredRendererName.equals(getString(R.string.default_renderer))) {
-                        preferredRenderer = null;
-                    } else {
-                        Log.i(TAG, "Error setting renderer with name " + preferredRendererName);
-                        return;
-                    }
-                    MapsInitializer.initialize(getApplicationContext(), preferredRenderer, MainActivity.this);
-
-                    // Disable spinner since renderer cannot be changed once map is intitialized.
-                    spinner.setEnabled(false);
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {}
-            });
-    }
-
-    @Override
-    public void onMapsSdkInitialized(MapsInitializer.Renderer renderer) {
-        Toast.makeText(
-            getApplicationContext(),
-            "All demo activities will use " + renderer.toString() + " renderer.",
-            Toast.LENGTH_LONG)
-            .show();
     }
 }
