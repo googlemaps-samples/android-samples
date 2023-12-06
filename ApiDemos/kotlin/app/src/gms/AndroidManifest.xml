@@ -63,6 +63,7 @@
     <activity android:name=".StreetViewPanoramaNavigationDemoActivity" />
     <activity android:name=".StreetViewPanoramaOptionsDemoActivity" />
     <activity android:name=".StreetViewPanoramaViewDemoActivity" />
+    <activity android:name=".StyledMapDemoActivity" />
     <activity android:name=".TagsDemoActivity" />
     <activity android:name=".TileCoordinateDemoActivity" />
     <activity android:name=".TileOverlayDemoActivity" />
