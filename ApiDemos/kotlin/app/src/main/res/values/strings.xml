@@ -28,6 +28,11 @@
     <string name="tile_coordinate_demo_description">Demonstrates how to add a tile overlay with tile coordinates to a map.</string>
     <string name="fade_in">Fade In Tiles</string>
 
+    <!-- Advanced Markers Demo -->
+    <string name="advanced_markers_demo_label">Advanced Markers</string>
+    <string name="advanced_markers_demo_details">Showcases the usage of Advanced Markers.</string>
+    <string name="map_id">YOUR_MAP_ID</string>
+
     <!-- Basic Map Demo -->
     <string name="basic_demo_label">Basic Map</string>
     <string name="basic_demo_details">Launches a map with marker pointing at Sydney.</string>
