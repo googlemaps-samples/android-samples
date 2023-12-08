@@ -203,6 +203,11 @@
     <string name="long_press_screen">long press screen</string>
     <string name="walk_panorama">Walk</string>
 
+    <!-- Advanced Markers Demo -->
+    <string name="advanced_markers_demo_label">Advanced Markers</string>
+    <string name="advanced_markers_demo_details">Showcases the usage of Advanced Markers.</string>
+    <string name="map_id">MY_MAP_ID</string>
+
     <!--    Styling    -->
     <string name="styled_map_demo_label">Styled Map</string>
     <string name="styled_map_demo_description">Demonstrates how to style a map.</string>
