@@ -31,6 +31,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity android:name=".AdvancedMarkersDemoActivity" />
     <activity android:name=".BasicMapDemoActivity" />
     <activity android:name=".BackgroundColorCustomizationDemoActivity" />
     <activity android:name=".BackgroundColorCustomizationProgrammaticDemoActivity" />
