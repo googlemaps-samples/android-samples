@@ -31,6 +31,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".AdvancedMarkersDemoActivity"
+            android:label="@string/advanced_markers_demo_label" />
+        <activity
             android:name=".BasicMapDemoActivity"
             android:label="@string/basic_map_demo_label" />
         <activity
