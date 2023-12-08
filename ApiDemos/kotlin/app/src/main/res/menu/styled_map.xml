@@ -15,8 +15,10 @@
  limitations under the License.
 -->
 
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/map"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    class="com.google.android.gms.maps.SupportMapFragment" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_style_choose"
+        android:title="@string/style_choose"
+        app:showAsAction="always"/>
+</menu>
