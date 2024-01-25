@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
 jobs:
   release:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v2
