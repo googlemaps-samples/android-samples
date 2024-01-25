@@ -30,7 +30,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build-ApiDemos:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
@@ -68,7 +68,7 @@ jobs:
       run: cd WearOS && ./gradlew build
 
   build-Snippets:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
