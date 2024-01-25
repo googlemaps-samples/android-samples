@@ -34,7 +34,7 @@ jobs:
 
     - name: Install NDK
       run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;20.0.5594570"
+        sudo -S ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;20.0.5594570"
 
     - name: Generate V3
       id: gradlew-generate-v3

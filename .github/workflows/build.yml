@@ -44,7 +44,7 @@ jobs:
 
     - name: Uninstall NDK
       run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
+        sudo -S ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
 
     - name: Build and check
       run: |
@@ -82,7 +82,7 @@ jobs:
 
     - name: Uninstall NDK
       run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
+        sudo -S ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
 
     - name: Build and check
       run: |
