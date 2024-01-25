@@ -34,7 +34,7 @@ jobs:
 
     - name: Uninstall NDK
       run: |
-        sudo -S ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
+        ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
 
     - name: Build APKs
       run: |
