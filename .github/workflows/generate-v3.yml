@@ -57,3 +57,6 @@ jobs:
         body: |
             Generating V3 code via `./gradlew generateV3 generateV3Layout`
         branch: googlemaps-bot/generate-v3
+    - name: Uninstall NDK
+      run: |
+        ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'

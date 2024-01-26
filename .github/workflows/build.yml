@@ -42,10 +42,6 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
-    - name: Uninstall NDK
-      run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
-
     - name: Build and check
       run: |
         cd ApiDemos
@@ -79,10 +75,6 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '17'
-
-    - name: Uninstall NDK
-      run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
 
     - name: Build and check
       run: |
