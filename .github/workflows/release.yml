@@ -32,10 +32,6 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Uninstall NDK
-      run: |
-        sudo ${ANDROID_HOME}/tools/bin/sdkmanager --uninstall 'ndk-bundle'
-
     - name: Build APKs
       run: |
         echo "Generating ApiDemos (Java) APKs"
