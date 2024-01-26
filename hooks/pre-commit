@@ -6,7 +6,7 @@
 
 FILE="local.defaults.properties"
 
-if ! grep -q "^MAPS_API_KEY=STUB_API_KEY" "$FILE"; then
+if ! grep -q "^MAPS_API_KEY=DEFAULT_API_KEY" "$FILE"; then
     echo "Error: Commit rejected. Invalid content in $FILE."
     exit 1
 fi
