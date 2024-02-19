@@ -54,7 +54,7 @@ dependencies {
     // [START_EXCLUDE silent]
     implementation "androidx.appcompat:appcompat:1.6.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.7.0"
-    implementation "com.google.android.material:material:1.10.0"
+    implementation "com.google.android.material:material:1.11.0"
     implementation "com.trello.rxlifecycle4:rxlifecycle-android-lifecycle-kotlin:4.0.2"
     implementation "com.google.maps.android:maps-ktx:5.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.10"
