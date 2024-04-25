@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to listen to some {@link GoogleMap} events.
  */
+// [START maps_android_sample_events]
 public class EventsDemoActivity extends AppCompatActivity
         implements OnMapClickListener, OnMapLongClickListener, OnCameraIdleListener,
         OnMapReadyCallback {
@@ -75,3 +76,4 @@ public class EventsDemoActivity extends AppCompatActivity
         cameraTextView.setText(map.getCameraPosition().toString());
     }
 }
+// [END maps_android_sample_events]

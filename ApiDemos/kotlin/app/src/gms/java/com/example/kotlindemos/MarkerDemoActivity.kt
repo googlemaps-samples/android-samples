@@ -61,6 +61,7 @@ import java.util.Random
 /**
  * This shows how to place markers on a map.
  */
+// [START maps_android_sample_marker]
 class MarkerDemoActivity :
         AppCompatActivity(),
         OnMarkerClickListener,
@@ -478,6 +479,7 @@ class MarkerDemoActivity :
         }
     }
 }
+// [END maps_android_sample_marker]
 
 /**
  * This stores the details of a place that used to draw a marker
