@@ -54,6 +54,7 @@ import java.util.List;
 /**
  * This shows how to draw polylines on a map.
  */
+// [START maps_android_sample_polylines]
 public class PolylineDemoActivity extends AppCompatActivity
         implements OnSeekBarChangeListener, OnItemSelectedListener, OnMapReadyCallback {
 
@@ -160,6 +161,7 @@ public class PolylineDemoActivity extends AppCompatActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+    // [START_EXCLUDE silent]
 
     private String[] getResourceStrings(int[] resourceIds) {
         String[] strings = new String[resourceIds.length];
@@ -168,6 +170,7 @@ public class PolylineDemoActivity extends AppCompatActivity
         }
         return strings;
     }
+    // [END_EXCLUDE]
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -219,6 +222,7 @@ public class PolylineDemoActivity extends AppCompatActivity
         });
     }
 
+    // [START_EXCLUDE silent]
     private Cap getSelectedCap(int pos) {
         int id = CAP_TYPE_NAME_RESOURCE_IDS[pos];
         if (id == R.string.cap_butt) {
@@ -319,4 +323,6 @@ public class PolylineDemoActivity extends AppCompatActivity
             mutablePolyline.setClickable(((CheckBox) view).isChecked());
         }
     }
+    // [END_EXCLUDE]
 }
+// [END maps_android_sample_polylines]

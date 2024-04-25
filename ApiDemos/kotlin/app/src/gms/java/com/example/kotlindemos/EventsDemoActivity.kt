@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng
 /**
  * This shows how to listen to some [GoogleMap] events.
  */
+// [START maps_android_sample_events]
 class EventsDemoActivity : AppCompatActivity(), OnMapClickListener,
     OnMapLongClickListener, OnCameraIdleListener, OnMapReadyCallback {
 
@@ -58,7 +59,8 @@ class EventsDemoActivity : AppCompatActivity(), OnMapClickListener,
     }
 
     override fun onCameraIdle() {
-        if(!::map.isInitialized) return
+        if (!::map.isInitialized) return
         cameraTextView.text = map.cameraPosition.toString()
     }
 }
+// [END maps_android_sample_events]

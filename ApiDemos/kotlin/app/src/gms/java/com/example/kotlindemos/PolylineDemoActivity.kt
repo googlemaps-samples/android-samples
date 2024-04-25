@@ -108,6 +108,7 @@ class PolylineDemoActivity :
                                                         R.string.pattern_dotted,
                                                         R.string.pattern_mixed)
 
+    // [START maps_android_sample_polylines]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.polyline_demo)
@@ -156,10 +157,12 @@ class PolylineDemoActivity :
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
+    // [START_EXCLUDE silent]
 
     private fun getResourceStrings(resourceIds: IntArray): List<String> {
         return resourceIds.map { getString(it) }
     }
+    // [END_EXCLUDE]
 
     override fun onMapReady(googleMap: GoogleMap) {
         googleMap
@@ -215,6 +218,7 @@ class PolylineDemoActivity :
             view -> mutablePolyline.isClickable = (view as CheckBox).isChecked
         }
     }
+    // [END maps_android_sample_polylines]
 
     private fun getSelectedCap(pos: Int): Cap? {
         return when (capTypeNameResourceIds[pos]) {

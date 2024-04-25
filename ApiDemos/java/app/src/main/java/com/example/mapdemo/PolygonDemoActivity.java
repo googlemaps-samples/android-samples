@@ -47,6 +47,7 @@ import java.util.List;
 /**
  * This shows how to draw polygons on a map.
  */
+// [START maps_android_sample_polygons]
 public class PolygonDemoActivity extends AppCompatActivity
         implements OnSeekBarChangeListener, OnItemSelectedListener, OnMapReadyCallback {
 
@@ -89,7 +90,6 @@ public class PolygonDemoActivity extends AppCompatActivity
             R.string.pattern_dotted,
             R.string.pattern_mixed,
     };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +131,7 @@ public class PolygonDemoActivity extends AppCompatActivity
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+    // [START_EXCLUDE silent]
 
     private String[] getResourceStrings(int[] resourceIds) {
         String[] strings = new String[resourceIds.length];
@@ -139,6 +140,7 @@ public class PolygonDemoActivity extends AppCompatActivity
         }
         return strings;
     }
+    // [END_EXCLUDE]
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -186,6 +188,7 @@ public class PolygonDemoActivity extends AppCompatActivity
         });
     }
 
+    // [START_EXCLUDE silent]
     /**
      * Creates a List of LatLngs that form a rectangle with the given dimensions.
      */
@@ -286,4 +289,6 @@ public class PolygonDemoActivity extends AppCompatActivity
             mutablePolygon.setClickable(((CheckBox) view).isChecked());
         }
     }
+    // [END_EXCLUDE]
 }
+// [END maps_android_sample_polygons]

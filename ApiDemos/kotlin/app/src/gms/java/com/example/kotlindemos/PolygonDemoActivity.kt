@@ -82,6 +82,7 @@ class PolygonDemoActivity :
     private val patternTypeNameResourceIds = intArrayOf(R.string.pattern_solid, // Default
             R.string.pattern_dashed, R.string.pattern_dotted, R.string.pattern_mixed)
 
+    // [START maps_android_sample_polygons]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.polygon_demo)
@@ -128,10 +129,12 @@ class PolygonDemoActivity :
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
+    // [START_EXCLUDE silent]
 
     private fun getResourceStrings(resourceIds: IntArray): List<String> {
         return resourceIds.map { getString(it) }
     }
+    // [END_EXCLUDE]
 
     override fun onMapReady(googleMap: GoogleMap) {
 
@@ -184,6 +187,7 @@ class PolygonDemoActivity :
         }
 
     }
+    // [END maps_android_sample_polygons]
 
     /**
      * Creates a List of LatLngs that form a rectangle with the given dimensions.
