@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
  */
+// [START maps_android_sample_basic_map]
 public class BasicMapDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     @Override
@@ -49,3 +50,4 @@ public class BasicMapDemoActivity extends AppCompatActivity implements OnMapRead
         map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 }
+// [END maps_android_sample_basic_map]
