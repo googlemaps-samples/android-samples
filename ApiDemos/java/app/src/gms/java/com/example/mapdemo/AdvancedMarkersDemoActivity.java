@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.PinConfig;
  * The following sample showcases how to create Advanced Markers, and use all their customization
  * possibilities.
  */
+// [START maps_android_sample_marker_advanced]
 public class AdvancedMarkersDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final LatLng SINGAPORE = new LatLng(1.3521, 103.8198);
@@ -135,3 +136,4 @@ public class AdvancedMarkersDemoActivity extends AppCompatActivity implements On
         Marker marker5 = map.addMarker(advancedMarkerOptions5);
     }
 }
+// [END maps_android_sample_marker_advanced]

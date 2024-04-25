@@ -46,6 +46,7 @@ private val TAG = AdvancedMarkersDemoActivity::class.java.name
  * The following sample showcases how to create Advanced Markers, and use all their customization
  * possibilities.
  */
+// [START maps_android_sample_marker_advanced]
 class AdvancedMarkersDemoActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,3 +138,4 @@ class AdvancedMarkersDemoActivity : AppCompatActivity(), OnMapReadyCallback {
         val marker5: Marker? = map.addMarker(advancedMarkerOptions5)
     }
 }
+// [END maps_android_sample_marker_advanced]

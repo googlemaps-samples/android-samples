@@ -37,6 +37,7 @@ import com.google.android.gms.maps.SupportMapFragment
  * Permission for [Manifest.permission.ACCESS_FINE_LOCATION] and [Manifest.permission.ACCESS_COARSE_LOCATION]
  * are requested at run time. If either permission is not granted, the Activity is finished with an error message.
  */
+// [START maps_android_sample_my_location]
 class MyLocationDemoActivity : AppCompatActivity(),
     OnMyLocationButtonClickListener,
     OnMyLocationClickListener, OnMapReadyCallback,
@@ -184,3 +185,4 @@ class MyLocationDemoActivity : AppCompatActivity(),
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 }
+// [END maps_android_sample_my_location]
