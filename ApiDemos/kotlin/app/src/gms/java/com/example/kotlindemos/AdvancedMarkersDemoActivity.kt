@@ -63,8 +63,8 @@ class AdvancedMarkersDemoActivity : AppCompatActivity(), OnMapReadyCallback {
             moveCamera(CameraUpdateFactory.newLatLngZoom(SINGAPORE, ZOOM_LEVEL))
         }
 
-        val capabilities: MapCapabilities = map.mapCapabilities
-        Log.d(TAG, "are advanced marker enabled?" + capabilities.isAdvancedMarkersAvailable)
+        val capabilities: MapCapabilities = map.getMapCapabilities()
+        Log.d(TAG, "is advanced marker enabled? " + capabilities.isAdvancedMarkersAvailable)
 
         // This sample sets a view as the iconView for the Advanced Marker
         val textView = TextView(this)
