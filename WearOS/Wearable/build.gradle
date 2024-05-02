@@ -21,7 +21,7 @@ plugins {
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.wearos"
@@ -37,6 +37,13 @@ android {
         }
     }
     namespace 'com.example.wearosmap'
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    kotlin {
+        jvmToolchain(17)
+    }
 }
 
 // [START maps_wear_os_dependencies]
