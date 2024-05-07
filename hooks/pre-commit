@@ -5,8 +5,9 @@
 ## has been modified. Git Hooks are located in the folder .git/hooks
 
 FILE="local.defaults.properties"
+API_KEY_REGEX="AIza[0-9A-Za-z\-_]{35}"
 
-if ! grep -q "^MAPS_API_KEY=DEFAULT_API_KEY" "$FILE"; then
+if grep -qE "^MAPS_API_KEY=$API_KEY_REGEX" "$FILE"; then
     echo "Error: Commit rejected. Invalid content in $FILE."
     exit 1
 fi
