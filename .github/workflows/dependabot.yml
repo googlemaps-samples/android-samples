@@ -17,15 +17,17 @@ on: pull_request
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
   dependabot:
+    needs: test
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     env:
       PR_URL: ${{github.event.pull_request.html_url}}
-      GITHUB_TOKEN: ${{secrets.SAMPLES_DEPENDABOT_TOKEN}}
+      GITHUB_TOKEN: ${{secrets.SYNCED_GITHUB_TOKEN_REPO}}
     steps:
       - name: approve
         run: gh pr review --approve "$PR_URL"
