@@ -31,7 +31,7 @@
     <!-- Advanced Markers Demo -->
     <string name="advanced_markers_demo_label">Advanced Markers</string>
     <string name="advanced_markers_demo_details">Showcases the usage of Advanced Markers.</string>
-    <string name="map_id">YOUR_MAP_ID</string>
+    <string name="map_id">DEMO_MAP_ID</string>
 
     <!-- Basic Map Demo -->
     <string name="basic_demo_label">Basic Map</string>
