@@ -47,7 +47,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // KTX for the Maps SDK for Android Utility Library
-    implementation 'com.google.maps.android:maps-utils-ktx:5.0.0'
+    implementation 'com.google.maps.android:maps-utils-ktx:5.1.0'
 }
 // [END maps_android_utils_ktx_install_snippet]
 
