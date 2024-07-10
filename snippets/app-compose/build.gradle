@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose' version "2.0.0"
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
@@ -24,9 +25,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.5.0'
-    }
+
 
     buildFeatures {
         compose true
