@@ -59,7 +59,7 @@ dependencies {
 
     // GMS
     gmsImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.3'
-    gmsImplementation 'com.google.maps.android:maps-ktx:5.1.0'
+    gmsImplementation 'com.google.maps.android:maps-ktx:5.1.1'
 
     // Below is used to run the easypermissions library to manage location permissions
     // EasyPermissions is needed to help us request for permission to access location
