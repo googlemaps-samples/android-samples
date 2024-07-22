@@ -127,6 +127,8 @@
     <string name="flat">Flat</string>
     <string name="reset_map">Reset</string>
     <string name="map_not_ready">Map is not ready</string>
+    <string name="map_color_scheme_demo_description">Demonstrates how to use the MapColorScheme.</string>
+    <string name="map_color_scheme_demo_label">MapColorScheme</string>
     <string name="markers_demo_description">Demonstrates how to add Markers to a map.</string>
     <string name="markers_demo_label">Markers</string>
     <string name="on_marker_drag">onMarkerDrag.  Current Position: (%1$f, %2$f)</string>
@@ -351,6 +353,9 @@
     <string name="style_label_default">Default</string>
     <string name="style_choose">Choose style</string>
     <string name="style_set_to">Style set to: %1$s</string>
+    <string name="map_color_light_mode">Light</string>
+    <string name="map_color_dark_mode">Dark</string>
+    <string name="map_color_follow_system_mode">Follow System\n</string>
 
 
 </resources>
