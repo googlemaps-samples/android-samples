@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-package com.example.mapdemo.polyline;
+package com.example.mapdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;

@@ -78,6 +78,8 @@
     <string name="map_not_ready">Map is not ready yet</string>
     <string name="map_in_pager_demo_label">Map In Pager</string>
     <string name="map_in_pager_demo_description">Demonstrates how to add a map to a ViewPager.</string>
+    <string name="map_color_scheme_demo_description">Demonstrates how to use the MapColorScheme.</string>
+    <string name="map_color_scheme_demo_label">MapColorScheme</string>
     <string name="marker_demo_label">Markers</string>
     <string name="marker_close_info_window_on_retap_demo_label">Marker Close Info Window on Retap</string>
     <string name="marker_close_info_window_on_retap_demo_description">Demonstrates how to close the info window when the currently selected marker is retapped.</string>
@@ -287,4 +289,8 @@
         description="Text displayed below the Background Color Customization  - Programmatic demo title.">Demonstrates how to programmatically set a custom background color to a map.</string>
     <string name="show_map_tiles">Show Map Tiles</string>
 
+    <!-- Map Color Scheme -->
+    <string name="map_color_light_mode">Light</string>
+    <string name="map_color_dark_mode">Dark</string>
+    <string name="map_color_follow_system_mode">Follow System\n</string>
 </resources>

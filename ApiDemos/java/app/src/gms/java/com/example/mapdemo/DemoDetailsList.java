@@ -15,8 +15,6 @@
 
 package com.example.mapdemo;
 
-import com.example.mapdemo.polyline.PolylineDemoActivity;
-
 /**
  * A list of all the demos we have available.
  */
@@ -79,6 +77,9 @@ public final class DemoDetailsList {
             new DemoDetails(R.string.map_in_pager_demo_label,
                     R.string.map_in_pager_demo_description,
                     MapInPagerDemoActivity.class),
+            new DemoDetails(R.string.map_color_scheme_demo_label,
+                    R.string.map_color_scheme_demo_description,
+                    MapColorSchemeActivity.class),
             new DemoDetails(R.string.marker_demo_label,
                     R.string.marker_demo_description,
                     MarkerDemoActivity.class),

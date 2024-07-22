@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -45,8 +46,9 @@ public final class MainActivity extends AppCompatActivity {
             super(context, R.layout.feature, R.id.title, demos);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             FeatureView featureView;
             if (convertView instanceof FeatureView) {
                 featureView = (FeatureView) convertView;
@@ -75,7 +77,7 @@ public final class MainActivity extends AppCompatActivity {
 
         ListAdapter adapter = new CustomArrayAdapter(this, DemoDetailsList.DEMOS);
 
-        ListView demoListView = (ListView) findViewById(R.id.list);
+        ListView demoListView = findViewById(R.id.list);
         if (demoListView != null) {
             demoListView.setAdapter(adapter);
             demoListView.setOnItemClickListener(

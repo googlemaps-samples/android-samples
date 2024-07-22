@@ -108,9 +108,14 @@ class DemoDetailsList {
                 MapInPagerDemoActivity::class.java
             ),
             DemoDetails(
+                R.string.map_color_scheme_demo_label,
+                R.string.map_color_scheme_demo_description,
+                MapColorSchemeActivity::class.java
+            ),
+            DemoDetails(
                 R.string.markers_demo_label,
                 R.string.markers_demo_description,
-                MarkerDemoActivity::class.java
+                MapColorSchemeActivity::class.java
             ),
             DemoDetails(
                 R.string.multi_map_demo_label,

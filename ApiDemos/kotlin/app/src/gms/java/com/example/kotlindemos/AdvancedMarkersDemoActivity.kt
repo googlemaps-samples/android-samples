@@ -48,13 +48,12 @@ private val TAG = AdvancedMarkersDemoActivity::class.java.name
  */
 // [START maps_android_sample_marker_advanced]
 class AdvancedMarkersDemoActivity : AppCompatActivity(), OnMapReadyCallback {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.advanced_markers_demo)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-
-
     }
 
     override fun onMapReady(map: GoogleMap) {
