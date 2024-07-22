@@ -78,13 +78,16 @@
             android:name=".MapInPagerDemoActivity"
             android:label="@string/map_in_pager_demo_label" />
         <activity
+            android:name=".MapColorSchemeActivity"
+            android:label="@string/marker_demo_label" />
+        <activity
             android:name=".MarkerDemoActivity"
             android:label="@string/marker_demo_label" />
         <activity
             android:name=".MarkerCloseInfoWindowOnRetapDemoActivity"
             android:label="@string/marker_close_info_window_on_retap_demo_label" />
         <activity
-            android:name=".polyline.PolylineDemoActivity"
+            android:name=".PolylineDemoActivity"
             android:label="@string/polyline_demo_label" />
         <activity
             android:name=".MultiMapDemoActivity"
