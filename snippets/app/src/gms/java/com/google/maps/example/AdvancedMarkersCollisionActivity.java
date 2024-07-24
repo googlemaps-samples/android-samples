@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.AdvancedMarkerOptions;
-import com.google.android.gms.maps.model.AdvancedMarkerOptions.CollisionBehavior;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
@@ -33,12 +32,14 @@ class AdvancedMarkersCollisionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // [START maps_android_marker_collision]
-        Marker marker = map.addMarker(
-                new AdvancedMarkerOptions()
-                        .position(new LatLng(10.0, 10.0))
-                        .zIndex(10f) // Optional.
-                        .collisionBehavior(CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY)
-        );
+        // Collision behavior can only be changed in the AdvancedMarkerOptions object.
+        // Changes to collision behavior after a marker has been created are not possible
+        int collisionBehavior = AdvancedMarkerOptions.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+        AdvancedMarkerOptions options = new AdvancedMarkerOptions()
+                .position(new LatLng(10.0, 10.0))
+                .collisionBehavior(collisionBehavior);
+
+        Marker marker = map.addMarker(options);
         // [END maps_android_marker_collision]
     }
 }
