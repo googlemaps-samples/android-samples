@@ -39,17 +39,16 @@ android {
     namespace 'com.example.wearosmap'
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
     kotlin {
-        jvmToolchain(17)
+        jvmToolchain(21)
     }
 }
 
 // [START maps_wear_os_dependencies]
 dependencies {
     // [START_EXCLUDE]
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "androidx.core:core-ktx:1.13.1"
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.0'
     // [END_EXCLUDE]
