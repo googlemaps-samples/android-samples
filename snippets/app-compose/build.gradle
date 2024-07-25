@@ -54,7 +54,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
     implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.3'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
     // [END_EXCLUDE]
 
     // Android Maps Compose composables for the Maps SDK for Android
