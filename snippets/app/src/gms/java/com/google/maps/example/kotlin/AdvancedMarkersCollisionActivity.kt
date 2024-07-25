@@ -20,6 +20,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.AdvancedMarkerOptions
 import com.google.android.gms.maps.model.AdvancedMarkerOptions.CollisionBehavior
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+
 
 class AdvancedMarkersCollisionActivity : AppCompatActivity() {
 
@@ -28,12 +30,14 @@ class AdvancedMarkersCollisionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // [START maps_android_marker_collision]
-        val marker = map.addMarker(
-            AdvancedMarkerOptions()
-                .position(LatLng(10.0, 10.0))
-                .zIndex(10f) // Optional.
-                .collisionBehavior(CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY)
-        )
+        // Collision behavior can only be changed in the AdvancedMarkerOptions object.
+        // Changes to collision behavior after a marker has been created are not possible
+        val collisionBehavior: Int = CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
+        val advancedMarkerOptions: AdvancedMarkerOptions = AdvancedMarkerOptions()
+            .position(LatLng(10.0, 10.0))
+            .collisionBehavior(collisionBehavior)
+
+        val marker: Marker = map.addMarker(advancedMarkerOptions) ?: error("Failed to add marker")
         // [END maps_android_marker_collision]
     }
 }
