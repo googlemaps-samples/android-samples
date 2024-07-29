@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
 
     // GMS
-    gmsImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.3'
+    gmsImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.4'
     gmsImplementation 'com.google.maps.android:maps-ktx:5.1.1'
 
     // Below is used to run the easypermissions library to manage location permissions
