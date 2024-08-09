@@ -37,7 +37,7 @@ private val BANGKOK = LatLng(13.7563, 100.5018)
 private val MANILA = LatLng(14.5995, 120.9842)
 private val HO_CHI_MINH_CITY = LatLng(10.7769, 106.7009)
 
-const val ZOOM_LEVEL = 3.5f
+private const val ZOOM_LEVEL = 3.5f
 
 private val TAG = AdvancedMarkersDemoActivity::class.java.name
 
