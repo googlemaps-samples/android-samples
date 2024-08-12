@@ -63,6 +63,14 @@
     <string name="close_info_window_demo_label">Close Info Window Demo</string>
     <string name="close_info_window_demo_details">Demonstrates how to close the info window when the currently selected marker is retapped.</string>
 
+    <!-- Data Driven Styling Demo -->
+    <string name="data_driven_styling_label">Data Driven Dataset Styling Demo</string>
+    <string name="data_driven_styling_details">Demonstrates how to use Data Driven styling for datasets.</string>
+
+    <!-- Data Driven Boundaries Demo -->
+    <string name="data_driven_boundaries_label">Data Driven Boundaries Demo</string>
+    <string name="data_driven_boundaries_details">Demonstrates how to use Data Driven styling for <boundaries></boundaries>.</string>
+
     <!-- Events Demo -->
     <string name="events_demo_label">Events</string>
     <string name="events_demo_details">Demonstrates event handling.</string>
@@ -235,7 +243,7 @@
     <string name="vr_australia_button">AUS</string>
 
     <!-- Cloud Styling -->
-    <string name="cloud_styling_basic_map_id">26a66b031807a453</string>
+    <string name="cloud_styling_basic_map_id">af17aef5ef5b7899</string>
     <string name="lite_styling_normal_mode">Normal</string>
     <string name="lite_styling_satellite_mode">Satellite</string>
     <string name="lite_styling_hybrid_mode">Hybrid</string>

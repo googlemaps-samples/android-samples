@@ -30,11 +30,6 @@ class DemoDetailsList {
                 AdvancedMarkersDemoActivity::class.java
             ),
             DemoDetails(
-                R.string.advanced_markers_demo_label,
-                R.string.advanced_markers_demo_details,
-                DataDrivenStylingActivity::class.java
-            ),
-            DemoDetails(
                 R.string.basic_demo_label,
                 R.string.basic_demo_details,
                 BasicMapDemoActivity::class.java
@@ -71,6 +66,16 @@ class DemoDetailsList {
                 R.string.close_info_window_demo_label,
                 R.string.close_info_window_demo_details,
                 MarkerCloseInfoWindowOnRetapDemoActivity::class.java
+            ),
+            DemoDetails(
+                R.string.data_driven_styling_label,
+                R.string.data_driven_styling_details,
+                DataDrivenDatasetStylingActivity::class.java
+            ),
+            DemoDetails(
+                R.string.data_driven_boundaries_label,
+                R.string.data_driven_boundaries_details,
+                DataDrivenBoundariesActivity::class.java
             ),
             DemoDetails(
                 R.string.events_demo_label,
