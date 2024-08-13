@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.kotlindemos
+package com.example.kotlindemos.polyline
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
