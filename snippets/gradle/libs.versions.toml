@@ -1,0 +1,37 @@
+[versions]
+espressoCore = "3.6.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+kotlin = "2.0.0"
+coreKtx = "1.13.1"
+appCompat = "1.7.0"
+composeFoundation = "1.7.0-beta06"
+composeMaterial = "1.7.0-beta06"
+mapsKtx = "5.1.1"
+material = "1.12.0"
+constraintLayout = "2.1.4"
+navigation = "2.7.7"
+rxlifecycleAndroidLifecycleKotlin = "4.0.2"
+volley = "1.2.1"
+lifecycleRuntime = "2.8.4"
+places = "3.5.0"
+
+[libraries]
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+ext-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+junit = { module = "junit:junit", version.ref = "junit" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeMaterial" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsKtx" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+rxlifecycle-android-lifecycle-kotlin = { module = "com.trello.rxlifecycle4:rxlifecycle-android-lifecycle-kotlin", version.ref = "rxlifecycleAndroidLifecycleKotlin" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntime" }
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
