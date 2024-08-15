@@ -40,7 +40,7 @@ dependencies {
 
 secrets {
     // Optionally specify a different file name containing your secrets.
-    // The plugin defaults to "local.properties"
+    // If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
     propertiesFileName = "secrets.properties"
 
     // A properties file containing default secret values. This file can be
