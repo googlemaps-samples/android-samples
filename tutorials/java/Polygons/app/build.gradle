@@ -35,6 +35,10 @@ dependencies {
 }
 
 secrets {
+    // Optionally specify a different file name containing your secrets.
+    // If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
+    propertiesFileName = "secrets.properties"
+
     // To add your Maps API key to this project:
     // 1. Open the root project's local.properties file
     // 2. Add this line, where YOUR_API_KEY is your API key:
