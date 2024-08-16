@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         }
 
         if (BuildConfig.MAPS_API_KEY.isEmpty()) {
-            Toast.makeText(this, "Add your own API key in local.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
         }
     }
 
