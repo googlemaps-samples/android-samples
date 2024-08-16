@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 package com.example.mapdemo;
 
 import android.content.Context;
@@ -25,73 +26,73 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * The main activity of the API library demo gallery.
- *
- * <p>The main layout lists the demonstrated features, with buttons to launch them.
+ * <p>
+ * The main layout lists the demonstrated features, with buttons to launch them.
  */
 public final class MainActivity extends AppCompatActivity
-    implements AdapterView.OnItemClickListener {
+        implements AdapterView.OnItemClickListener {
 
-  /** A custom array adapter that shows a {@link FeatureView} containing details about the demo. */
-  private static class CustomArrayAdapter extends ArrayAdapter<DemoDetails> {
 
     /**
-     * @param demos An array containing the details of the demos to be displayed.
+     * A custom array adapter that shows a {@link FeatureView} containing details about the demo.
      */
-    public CustomArrayAdapter(Context context, DemoDetails[] demos) {
-      super(context, R.layout.feature, R.id.title, demos);
+    private static class CustomArrayAdapter extends ArrayAdapter<DemoDetails> {
+
+        /**
+         * @param demos An array containing the details of the demos to be displayed.
+         */
+        public CustomArrayAdapter(Context context, DemoDetails[] demos) {
+            super(context, R.layout.feature, R.id.title, demos);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            FeatureView featureView;
+            if (convertView instanceof FeatureView) {
+                featureView = (FeatureView) convertView;
+            } else {
+                featureView = new FeatureView(getContext());
+            }
+
+            DemoDetails demo = getItem(position);
+
+            featureView.setTitleId(demo.titleId);
+            featureView.setDescriptionId(demo.descriptionId);
+
+            Resources resources = getContext().getResources();
+            String title = resources.getString(demo.titleId);
+            String description = resources.getString(demo.descriptionId);
+            featureView.setContentDescription(title + ". " + description);
+
+            return featureView;
+        }
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-      FeatureView featureView;
-      if (convertView instanceof FeatureView) {
-        featureView = (FeatureView) convertView;
-      } else {
-        featureView = new FeatureView(getContext());
-      }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        ListView list = findViewById(R.id.list);
 
-      DemoDetails demo = getItem(position);
+        ListAdapter adapter = new CustomArrayAdapter(this, DemoDetailsList.DEMOS);
 
-      featureView.setTitleId(demo.titleId);
-      featureView.setDescriptionId(demo.descriptionId);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(this);
+        list.setEmptyView(findViewById(R.id.empty));
 
-      Resources resources = getContext().getResources();
-      String title = resources.getString(demo.titleId);
-      String description = resources.getString(demo.descriptionId);
-      featureView.setContentDescription(title + ". " + description);
-
-      return featureView;
+        if (BuildConfig.MAPS_API_KEY.isEmpty()) {
+            Toast.makeText(this, "Add your own API key in local.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show();
+        }
     }
-  }
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-    ListView list = findViewById(R.id.list);
-
-    ListAdapter adapter = new CustomArrayAdapter(this, DemoDetailsList.DEMOS);
-
-    list.setAdapter(adapter);
-    list.setOnItemClickListener(this);
-    list.setEmptyView(findViewById(R.id.empty));
-
-    if (BuildConfig.MAPS_API_KEY.isEmpty()) {
-      Toast.makeText(
-              this,
-              "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY",
-              Toast.LENGTH_LONG)
-          .show();
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        DemoDetails demo = (DemoDetails) parent.getAdapter().getItem(position);
+        startActivity(new Intent(this, demo.activityClass));
     }
-  }
-
-  @Override
-  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    DemoDetails demo = (DemoDetails) parent.getAdapter().getItem(position);
-    startActivity(new Intent(this, demo.activityClass));
-  }
 }
