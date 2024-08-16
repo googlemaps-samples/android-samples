@@ -1,7 +1,7 @@
 Wear OS Sample
 ===================================
 
-This sample uses the [Google Maps Android API v2](https://developers.google.com/maps/documentation/android/)
+This sample uses the [Google Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk/wear)
 to display a map on Wear OS. It shows the basic setup required for a
 gradle-based Android Studio project that [supports ambient mode](https://developer.android.com/training/wearables/apps/always-on.html).
 
@@ -21,14 +21,21 @@ First download the samples by cloning this repository or downloading an archived
 snapshot. (See the options at the top of the page.)
 
 In Android Studio, use the "Import non-Android Studio project" or
-"Import Project" option. Next select the ApiDemos/ directory that you downloaded
+"Import Project" option. Next select the `WearOS/` directory that you downloaded
 from this repository.
 If prompted for a gradle configuration accept the default settings.
 
 Alternatively use the "gradlew build" command to build the project directly.
 
-Add your API key to the `local.properties` file and call it `GOOGLE_MAPS_API_KEY`.
-See the [quick guide to getting an API key](https://developers.google.com/maps/documentation/android-api/signup).
+See the [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) guide to get an API key.
+
+Open the `secrets.properties` file in your top-level directory, and then add the following code. Replace YOUR_API_KEY with your API key. Store your key in this file because secrets.properties is excluded from being checked into a version control system.
+If the `secrets.properties` file does not exist, create it in the same folder as the `local.properties` file.
+
+```
+MAPS_API_KEY=YOUR_API_KEY
+```
+
 
 Support
 -------
