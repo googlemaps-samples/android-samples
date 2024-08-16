@@ -41,7 +41,7 @@
 
         <!--
             To add your Maps API key to this project:
-            1. Open the root project's local.properties file
+            1. Open the root project's secrets.properties file
             2. Add this line, where YOUR_API_KEY is your API key:
                 MAPS_API_KEY=YOUR_API_KEY
         -->
