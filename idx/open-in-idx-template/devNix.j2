@@ -1,0 +1,34 @@
+# To learn more about how to use Nix to configure your environment
+# see: https://developers.google.com/idx/guides/customize-idx-env
+{ pkgs, ... }: {
+  # Which nixpkgs channel to use.
+  channel = "stable-23.11"; # or "unstable"
+  # Use https://search.nixos.org/packages to find packages
+  packages = [
+    pkgs.jdk21
+  ];
+  # Sets environment variables in the workspace
+  env = {};
+  idx = {
+    workspace = {
+      onCreate = {
+        build-and-wait = "./gradlew assembleDebug && adb -s emulator-5554 wait-for-device";
+        default.openFiles = [ "README.md" ];
+      };
+      onStart = {
+        wait-for-adb = "adb -s emulator-5554 wait-for-device";
+      };
+    };
+    previews = {
+      enable = true;
+      previews = [
+        {
+          command = ["./gradlew" "--continuous" "installDebug"];
+          id = "android";
+          manager = "gradle";
+          activity = "{{ launch_activity }}";
+        }
+      ];
+    };
+  };
+}

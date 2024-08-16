@@ -1,0 +1,35 @@
+{
+    "name": "GMP Android Open in IDX",
+    "description": "This template allows opening Android tutorials in IDX IDE",
+    "categories": ["Backend"],
+    "icon": "https://www.gstatic.com/monospace/231115/logo_python.svg",
+    "publisher": "Sara Navidpour",
+    "params": [
+      {
+        "id": "apikey",
+        "name": "API KEY",
+        "type": "text"
+      },
+      {
+        "id": "giturl",
+        "name": "Git Url",
+        "type": "text",
+        "default": "https://github.com/googlemaps-samples/android-samples"
+      },
+      {
+        "id": "subdir",
+        "name": "Project Subfolder",
+        "type": "text",
+        "default": "tutorials/java/MapWithMarker/"
+      },
+      {
+        "id": "launchactivity",
+        "name": "Android Activity to launch",
+        "type": "text",
+        "default": "com.example.mapwithmarker/.MapsMarkerActivity"
+      }
+    ],
+    "host": {
+      "virtualization": "true"
+   }
+  }  
