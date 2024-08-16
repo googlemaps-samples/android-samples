@@ -1,5 +1,5 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/googlemaps/android-samples)
-![Apache-2.0](https://img.shields.io/badge/license-Apache-blue) 
+![Apache-2.0](https://img.shields.io/badge/license-Apache-blue)
 [![Build demos](https://github.com/googlemaps/android-samples/workflows/Build%20demos/badge.svg)](https://github.com/googlemaps/android-samples/actions?query=workflow%3A%22Build+demos%22)
 [![Discord](https://img.shields.io/discord/676948200904589322)](https://discord.gg/hYsWbmk)
 
@@ -27,7 +27,7 @@ Pre-requisites
 
 * See each sample for pre-requisites.
 * All require up-to-date versions of the Android build tools and the Android support repository.
-* The demo apps require that you add your own Google Maps API key. See [Get an API Key](docs/GET_AN_API_KEY.md) docs for more instructions.
+* The demo apps require that you add your own Google Maps API key. See [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) docs for more instructions.
 
 Getting Started
 ---------------
