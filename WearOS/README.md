@@ -27,6 +27,8 @@ If prompted for a gradle configuration accept the default settings.
 
 Alternatively use the "gradlew build" command to build the project directly.
 
+See the [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) guide to get an API key.
+
 Open the `secrets.properties` file in your top-level directory, and then add the following code. Replace YOUR_API_KEY with your API key. Store your key in this file because secrets.properties is excluded from being checked into a version control system.
 If the `secrets.properties` file does not exist, create it in the same folder as the `local.properties` file.
 
@@ -34,7 +36,6 @@ If the `secrets.properties` file does not exist, create it in the same folder as
 MAPS_API_KEY=YOUR_API_KEY
 ```
 
-See the [guide for adding an API key to your project](https://developers.google.com/maps/documentation/android-sdk/config#step_3_add_your_api_key_to_the_project).
 
 Support
 -------
