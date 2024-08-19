@@ -26,7 +26,7 @@ This sample uses the Gradle build system.
 1. If prompted for a gradle configuration, accept the default settings.
   Alternatively use the `gradlew build` command to build the project directly.
 
-This demo app requires that you add your own Google Maps API key. See [Get an API Key](../../../docs/GET_AN_API_KEY.md) for more instructions.
+This demo app requires that you add your own Google Maps API key. See [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) for more instructions.
 
 Support
 -------
