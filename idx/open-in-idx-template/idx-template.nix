@@ -1,4 +1,4 @@
-{ pkgs, apikey, giturl ? "missingurl", subdir ? "", launchactivity ? "",... }: {
+{ pkgs, apikey, giturl, subdir, launchactivity,... }: {
   packages = [
       pkgs.git
       pkgs.sdkmanager
@@ -14,7 +14,7 @@
     chmod -R +w "$WS_NAME"
     mkdir -p "$WS_NAME/.idx/"
 
-    # Create a secrets.properties file in the repo ane replace the MAPS_API_KEY property with said value
+    # Create a secrets.properties file in the repo and replace the MAPS_API_KEY property with said value
     touch $WS_NAME/secrets.properties
     echo "MAPS_API_KEY=\"${apikey}\"" > $WS_NAME/secrets.properties
 
