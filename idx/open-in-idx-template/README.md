@@ -21,7 +21,7 @@ The example below demonstates how you could open a code sample in IDX. The link 
 
 <a href="https://idx.google.com/new?template=https://github.com/googlemaps-samples/android-samples/idx/open-in-idx-template&giturl=https://github.com/googlemaps-samples/android-samples&subdir=tutorials/java/CurrentPlaceDetailsOnMap/&launchactivity=com.example.currentplacedetailsonmap/.MapsActivityCurrentPlace">
   <img
-    alt="Open in Monospace"
+    alt="Open in IDX"
     src="https://www.gstatic.com/monospace/230815/openinprojectidx.png"
     width="170"
   />
