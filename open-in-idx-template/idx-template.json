@@ -1,7 +1,7 @@
 {
     "name": "Open in IDX for Maps SDK for Android Samples",
     "description": "This template allows opening Android tutorials in IDX IDE",
-    "categories": ["Backend"],
+    "categories": ["Mobile"],
     "icon": "https://developers.google.com/static/maps/images/maps-icon.svg",
     "publisher": "Google LLC",
     "params": [
