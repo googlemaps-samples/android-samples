@@ -1,0 +1,32 @@
+[versions]
+compileSdk = "34"
+gradle = "8.5.2"
+kotlinGradlePlugin = "2.0.0"
+minSdk = "21"
+secretsGradlePlugin = "2.0.1"
+targetSdk = "34"
+versionCode = "1"
+versionName = "1.0"
+kotlin = "2.0.0"
+appcompat = "1.7.0"
+playServicesMaps = "19.0.0"
+places = "3.5.0"
+volley = "1.2.1"
+junit = "4.13.2"
+coreKtx = "1.13.1"
+lifecycleViewModelKtx = "2.8.4"
+espressoCore = "3.0.2"
+javaVersion = "21"
+
+[libraries]
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+secretsGradlePlugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+lifecycleViewModelKtx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewModelKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+espressoCore = { group = "com.android.support.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
