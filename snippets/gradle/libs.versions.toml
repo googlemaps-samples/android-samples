@@ -2,7 +2,7 @@
 espressoCore = "3.6.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 coreKtx = "1.13.1"
 appCompat = "1.7.0"
 composeFoundation = "1.7.0-beta06"
