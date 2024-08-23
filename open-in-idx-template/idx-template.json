@@ -1,0 +1,35 @@
+{
+    "name": "Open in IDX for Maps SDK for Android Samples",
+    "description": "This template allows opening Android tutorials in IDX IDE",
+    "categories": ["Mobile"],
+    "icon": "https://developers.google.com/static/maps/images/maps-icon.svg",
+    "publisher": "Google LLC",
+    "params": [
+      {
+        "id": "apikey",
+        "name": "API KEY",
+        "type": "text"
+      },
+      {
+        "id": "giturl",
+        "name": "Git Url",
+        "type": "text",
+        "default": "https://github.com/googlemaps-samples/android-samples"
+      },
+      {
+        "id": "subdir",
+        "name": "Project Subfolder",
+        "type": "text",
+        "default": "tutorials/java/MapWithMarker/"
+      },
+      {
+        "id": "launchactivity",
+        "name": "Android Activity to launch",
+        "type": "text",
+        "default": "com.example.mapwithmarker/.MapsMarkerActivity"
+      }
+    ],
+    "host": {
+      "virtualization": "true"
+   }
+  }  
