@@ -208,7 +208,7 @@
     <!-- Advanced Markers Demo -->
     <string name="advanced_markers_demo_label">Advanced Markers</string>
     <string name="advanced_markers_demo_details">Showcases the usage of Advanced Markers.</string>
-    <string name="map_id">MY_MAP_ID</string>
+    <string name="map_id">DEMO_MAP_ID</string>
 
     <!--    Styling    -->
     <string name="styled_map_demo_label">Styled Map</string>
