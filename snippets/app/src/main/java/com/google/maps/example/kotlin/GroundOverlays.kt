@@ -45,10 +45,6 @@ internal class GroundOverlays {
 
         // [START maps_android_ground_overlays_change_image]
         // Update the GroundOverlay with a new image of the same dimension
-        // [END maps_android_ground_overlays_remove]
-
-        // [START maps_android_ground_overlays_change_image]
-        // Update the GroundOverlay with a new image of the same dimension
         imageOverlay?.setImage(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
         // [END maps_android_ground_overlays_change_image]
 
