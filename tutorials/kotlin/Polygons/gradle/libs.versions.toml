@@ -1,0 +1,23 @@
+[versions]
+compileSdk = "34"
+minSdk = "21"
+targetSdk = "34"
+versionCode = "1"
+versionName = "1.0"
+kotlin = "1.8.0" # Replace with your Kotlin version if different
+appcompat = "1.7.0"
+playServicesMaps = "19.0.0"
+junit = "4.13.2"
+androidxTestExtJunit = "1.2.1"
+espressoCore = "3.6.1"
+coreKtx = "1.13.1"
+javaVersion = "21"
+
+[libraries]
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidxTestExtJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestExtJunit" }
+espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+kotlinStdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
