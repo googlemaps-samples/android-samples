@@ -1,5 +1,5 @@
 <!--
- Copyright 2020 Google LLC
+ Copyright 2024 Google LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,4 +16,5 @@
 
 <resources>
   <string name="app_name">Snippets App</string>
+  <string name="map_id">13564581852493597319</string>
 </resources>
