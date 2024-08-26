@@ -34,14 +34,6 @@ android {
         multiDexEnabled = true
     }
 
-    productFlavors {
-        create("gms") {
-            dimension = "version"
-            applicationIdSuffix = ".gms"
-            versionNameSuffix = "-gms"
-        }
-    }
-
     buildFeatures {
         buildConfig = true
     }
@@ -79,7 +71,6 @@ dependencies {
     implementation(libs.multidex)
     implementation(libs.volley)
 
-    // GMS
     implementation(libs.lifecycleRuntimeKtx)
     implementation(libs.mapsKtx)
 

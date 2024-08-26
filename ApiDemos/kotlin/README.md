@@ -7,7 +7,7 @@ in Kotlin.
 
 They demonstrate most of the features available in the API.
 
-The Maps SDK for Android samples can be found under the `gms` gradle product
+The Maps SDK for Android samples can be found under the `main` gradle product
 flavor, while the Maps SDK V3 BETA samples can be found under the `v3` gradle
 product flavor. The active product flavor can be modified through
 Android Studio’s “Build Variants” toolbar options.
