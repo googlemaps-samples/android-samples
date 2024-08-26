@@ -45,7 +45,7 @@ jobs:
     - name: Build and check
       run: |
         cd ApiDemos
-        for dir in ./*/ ; do ( cd "$dir" && ./gradlew buildGmsDebugPreBundle ); done
+        for dir in ./*/ ; do ( cd "$dir" && ./gradlew buildDebugPreBundle ); done
 
   build-WearOS:
     runs-on: ubuntu-latest

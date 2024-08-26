@@ -23,13 +23,6 @@ plugins {
 android {
     compileSdk = 34
 
-    productFlavors {
-        create("gms") {
-            dimension = "version"
-            applicationIdSuffix = ".gms"
-            versionNameSuffix = "-gms"
-        }
-    }
 
     defaultConfig {
         applicationId = "com.example.mapdemo"
@@ -67,8 +60,6 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.volley)
     implementation(platform(libs.kotlinBom))
-
-    // GMS
     implementation(libs.playServicesMaps)
 
     // Tests
