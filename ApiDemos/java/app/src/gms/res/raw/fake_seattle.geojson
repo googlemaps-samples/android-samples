@@ -1,0 +1,37 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.335167, 47.608013],
+          [-122.333252, 47.609722],
+          [-122.331707, 47.610774],
+          [-122.330154, 47.611839]
+        ]
+      },
+      "properties": {
+        "name": "Route 1",
+        "description": "A sample route in downtown Seattle"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-122.341064, 47.610689],
+          [-122.339081, 47.612301],
+          [-122.337234, 47.613834],
+          [-122.335525, 47.615264]
+        ]
+      },
+      "properties": {
+        "name": "Route 2",
+        "description": "Another sample route in Seattle"
+      }
+    }
+  ]
+}
