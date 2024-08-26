@@ -25,6 +25,11 @@ import com.google.android.gms.maps.model.FeatureType
 import com.google.android.gms.maps.model.MapCapabilities
 import com.google.android.gms.maps.model.PlaceFeature
 
+/**
+ * This sample showcases how to use the Data-driven styling for boundaries. For more information
+ * on how the Data-driven styling for boundaries work, check out the following link:
+ * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
+ */
 class DataDrivenBoundariesActivity : AppCompatActivity(), OnMapReadyCallback {
 
 

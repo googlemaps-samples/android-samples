@@ -34,9 +34,17 @@ import com.google.android.gms.maps.model.MapCapabilities;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This sample showcases how to use the Data-driven styling for datasets. For more information
+ * on how the Data-driven styling for boundaries work, check out the following link:
+ * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
+ */
 public class DataDrivenDatasetStylingActivity extends AppCompatActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
 
-    private static final LatLng SINGAPORE = new LatLng(1.3521, 103.8198);
+    private static final LatLng SEATTLE = new LatLng(47.6062, -122.3321);
+    private static final LatLng NEW_YORK = new LatLng(40.7128, -74.0060);
+    private static final LatLng FALSE_BAY_CAPE_TOWN = new LatLng(-34.1476, 18.6722);
+
     private static final float ZOOM_LEVEL = 13.5f;
     private static final String TAG = DataDrivenDatasetStylingActivity.class.getName();
     private static FeatureLayer datasetLayer = null;
@@ -53,16 +61,17 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
             mapFragment.getMapAsync(this);
         }
 
-        findViewById(R.id.button_seattle).setOnClickListener(v -> centerMapOnLocation(new LatLng(47.6062, -122.3321))); // Seattle coordinates
-        findViewById(R.id.button_ny).setOnClickListener(v -> centerMapOnLocation(new LatLng(40.7128, -74.0060))); // New York coordinates
-        findViewById(R.id.button_south_africa).setOnClickListener(v -> centerMapOnLocation(new LatLng(-30.5595, 22.9375))); // South Africa coordinates
+        findViewById(R.id.button_seattle).setOnClickListener(v -> centerMapOnLocation(SEATTLE)); // Seattle coordinates
+        findViewById(R.id.button_ny).setOnClickListener(v -> centerMapOnLocation(NEW_YORK)); // New York coordinates
+        findViewById(R.id.button_south_africa).setOnClickListener(v -> centerMapOnLocation(FALSE_BAY_CAPE_TOWN)); // False Bay, Cape Town coordinates
+
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(SINGAPORE, ZOOM_LEVEL));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEATTLE, ZOOM_LEVEL));
 
         MapCapabilities capabilities = map.getMapCapabilities();
         System.out.println("Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());

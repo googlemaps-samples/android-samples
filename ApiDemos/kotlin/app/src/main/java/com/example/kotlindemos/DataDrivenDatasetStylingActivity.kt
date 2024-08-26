@@ -32,7 +32,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapCapabilities
 
 
-private val SINGAPORE = LatLng(1.3521, 103.8198)
+private val SEATTLE = LatLng(47.6062, -122.3321)
+private val NEW_YORK = LatLng(40.7128, -74.0060)
+private val FALSE_BAY_CAPE_TOWN = LatLng(-34.1476, 18.6722)
 
 private const val ZOOM_LEVEL = 13.5f
 
@@ -42,6 +44,11 @@ private var datasetLayer: FeatureLayer? = null
 
 private lateinit var map: GoogleMap
 
+/**
+ * This sample showcases how to use the Data-driven styling for datasets. For more information
+ * on how the Data-driven styling for boundaries work, check out the following link:
+ * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
+ */
 class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
 
     // The globalid of the clicked dataset feature.
@@ -55,15 +62,15 @@ class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback
 
 
         findViewById<Button>(R.id.button_seattle).setOnClickListener {
-            centerMapOnLocation(LatLng(47.6062, -122.3321)) // Seattle coordinates
+            centerMapOnLocation(SEATTLE) // Seattle coordinates
         }
 
         findViewById<Button>(R.id.button_ny).setOnClickListener {
-            centerMapOnLocation(LatLng(40.7128, -74.0060)) // New York coordinates
+            centerMapOnLocation(NEW_YORK) // New York coordinates
         }
 
         findViewById<Button>(R.id.button_south_africa).setOnClickListener {
-            centerMapOnLocation(LatLng(-30.5595, 22.9375)) // South Africa coordinates
+            centerMapOnLocation(FALSE_BAY_CAPE_TOWN) // False Bay, Cape Town coordinates
         }
     }
 
@@ -71,7 +78,7 @@ class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback
         map = googleMap
 
         with(map) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(SINGAPORE, ZOOM_LEVEL))
+            moveCamera(CameraUpdateFactory.newLatLngZoom(SEATTLE, ZOOM_LEVEL))
         }
 
         val capabilities: MapCapabilities = map.mapCapabilities
