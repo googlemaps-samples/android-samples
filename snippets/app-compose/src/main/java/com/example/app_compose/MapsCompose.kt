@@ -39,6 +39,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 fun AddAMap() {
   // [START maps_android_compose_add_a_map]
   val singapore = LatLng(1.35, 103.87)
+  val singaporeState = rememberMarkerState(position = singapore)
   val cameraPositionState = rememberCameraPositionState {
     position = CameraPosition.fromLatLngZoom(singapore, 10f)
   }
@@ -47,7 +48,7 @@ fun AddAMap() {
     cameraPositionState = cameraPositionState
   ) {
     Marker(
-      state = MarkerState(position = singapore),
+      state = MarkerState(position = singaporeState),
       title = "Singapore",
       snippet = "Marker in Singapore"
     )
