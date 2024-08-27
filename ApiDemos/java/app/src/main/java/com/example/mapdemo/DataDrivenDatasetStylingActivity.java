@@ -15,6 +15,8 @@ package com.example.mapdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,7 +76,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEATTLE, ZOOM_LEVEL));
 
         MapCapabilities capabilities = map.getMapCapabilities();
-        System.out.println("Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
+        Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
 
         datasetLayer = map.getFeatureLayer(
                 new FeatureLayerOptions.Builder()

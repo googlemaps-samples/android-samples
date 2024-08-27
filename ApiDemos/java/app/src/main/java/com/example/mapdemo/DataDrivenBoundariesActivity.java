@@ -16,6 +16,8 @@ package com.example.mapdemo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,6 +52,8 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
     private FeatureLayer areaLevel1Layer = null;
     private FeatureLayer countryLayer = null;
 
+    private static final String TAG = DataDrivenBoundariesActivity.class.getName();
+
     private static final LatLng HANA_HAWAII = new LatLng(20.7522, -155.9877); // Hana, Hawaii
     private static final LatLng CENTER_US = new LatLng(39.8283, -98.5795); // Approximate geographical center of the contiguous US
 
@@ -76,7 +80,7 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
         MapCapabilities capabilities = map.getMapCapabilities();
-        System.out.println("Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
+        Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
 
         // Get the LOCALITY feature layer.
         localityLayer = googleMap.getFeatureLayer(
