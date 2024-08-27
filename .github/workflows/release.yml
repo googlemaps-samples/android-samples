@@ -36,12 +36,12 @@ jobs:
       run: |
         echo "Generating ApiDemos (Java) APKs"
         cd $GITHUB_WORKSPACE/ApiDemos/java
-        ./gradlew assembleGms
+        ./gradlew assemble
         cp ./app/build/outputs/apk/gms/debug/app-gms-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-gms-debug.apk
 
         echo "Generating Kotlin (Kotlin) APKs"
         cd $GITHUB_WORKSPACE/ApiDemos/kotlin
-        ./gradlew assembleGms
+        ./gradlew assemble
         cp ./app/build/outputs/apk/gms/debug/app-gms-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-gms-debug.apk
 
     - uses: actions/setup-node@v2
