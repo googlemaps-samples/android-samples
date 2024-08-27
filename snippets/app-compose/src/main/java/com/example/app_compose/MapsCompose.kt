@@ -32,14 +32,14 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberMarkerState
 
 @Composable
 fun AddAMap() {
   // [START maps_android_compose_add_a_map]
   val singapore = LatLng(1.35, 103.87)
-  val singaporeState = rememberMarkerState(position = singapore)
+  val singaporeMarkerState = rememberMarkerState(position = singapore)
   val cameraPositionState = rememberCameraPositionState {
     position = CameraPosition.fromLatLngZoom(singapore, 10f)
   }
@@ -48,7 +48,7 @@ fun AddAMap() {
     cameraPositionState = cameraPositionState
   ) {
     Marker(
-      state = MarkerState(position = singaporeState),
+      state = singaporeMarkerState,
       title = "Singapore",
       snippet = "Marker in Singapore"
     )
