@@ -43,6 +43,7 @@ import java.util.List;
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
  */
+// [START maps_android_data_driven_styling_boundaries]
 public class DataDrivenBoundariesActivity extends AppCompatActivity implements OnMapReadyCallback,
         FeatureLayer.OnFeatureClickListener {
 
@@ -224,3 +225,4 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
         return placeIds;
     }
 }
+// [END maps_android_data_driven_styling_boundaries]

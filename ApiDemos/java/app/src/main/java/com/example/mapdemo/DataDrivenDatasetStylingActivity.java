@@ -41,6 +41,7 @@ import java.util.Map;
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
  */
+// [START maps_android_data_driven_styling_datasets]
 public class DataDrivenDatasetStylingActivity extends AppCompatActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
 
     private static final LatLng SEATTLE = new LatLng(47.6062, -122.3321);
@@ -249,3 +250,4 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         }
     }
 }
+// [END maps_android_data_driven_styling_datasets]
