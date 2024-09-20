@@ -16,7 +16,7 @@
 
     # Create a secrets.properties file in the repo
     touch $WS_NAME/secrets.properties
-    
+
     # Create a secrets.properties variable for each key type in local.defaults.properties
     
     while IFS= read -r line || [[ -n "$line" ]]; do
