@@ -26,7 +26,7 @@
         # Extract the variable name
         keyVar=$(echo "$line" | cut -d '=' -f 1)
         # Define new variable in secrets file
-        echo "$key=\"${apikey}\"" >> $WS_NAME/secrets.properties
+        echo "$keyVar=\"${apikey}\"" >> $WS_NAME/secrets.properties
       fi
     done < $WS_NAME/local.defaults.properties
 
