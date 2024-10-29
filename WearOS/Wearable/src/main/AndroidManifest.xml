@@ -27,7 +27,7 @@
 
         <!-- API key for the Android Maps API v2. The value is defined in local.properties. -->
         <meta-data android:name="com.google.android.geo.API_KEY"
-                   android:value="${GOOGLE_MAPS_API_KEY}"/>
+                   android:value="${MAPS_API_KEY}"/>
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
