@@ -37,10 +37,10 @@
         android:padding="16dp">
 
         <Button
-            android:id="@+id/button_seattle"
+            android:id="@+id/button_kyoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Seattle" />
+            android:text="Kyoto" />
 
         <Button
             android:id="@+id/button_ny"
@@ -49,10 +49,10 @@
             android:text="New York" />
 
         <Button
-            android:id="@+id/button_south_africa"
+            android:id="@+id/button_boulder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="South Africa" />
+            android:text="Boulder" />
     </LinearLayout>
 
 
