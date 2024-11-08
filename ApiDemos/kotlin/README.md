@@ -36,6 +36,30 @@ Alternatively use the `gradlew build` command to build the project directly.
 
 This demo app requires that you add your own Google Maps API key. See [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) for more instructions.
 
+# Using Dataset Styles in Android
+
+This guide explains how to create and apply dataset styles in Android by creating a map style, associating it with a map ID, uploading a dataset, and linking the dataset to the map style.
+
+## 1. Create a Map ID
+To create a new map ID, follow the steps in [Create a map ID](https://developers.google.com/maps/documentation/get-map-id#create-a-map-id). Make sure to set the **Map type** to **Android**.
+
+## 2. Create a New Map Style
+Follow the instructions in [Manage map styles](https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-styles) to create a new style and [associate it with the map ID you just created](https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-styles#associate-style-with-map-id).
+
+## 3. Upload a Dataset
+To include data-driven styling in your map:
+
+1. Upload the dataset on the [Google Maps Platform Datasets](https://console.cloud.google.com/google/maps-apis/datasets) page.
+2. Confirm that the dataset upload is successful (sometimes there can be issues due to an invalid structure).
+
+## 4. Link the Dataset to the Map Style
+To enable data-driven styling:
+
+1. Open your dataset in the [Google Maps Platform Datasets](https://console.cloud.google.com/google/maps-apis/datasets) page.
+2. Click on the **Preview** of the dataset.
+3. Associate the dataset with one of the previously created styles
+
+
 Support
 -------
 
