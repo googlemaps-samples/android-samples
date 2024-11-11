@@ -64,15 +64,40 @@ class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback
 
 
         findViewById<Button>(R.id.button_kyoto).setOnClickListener {
-            centerMapOnLocation(KYOTO) // Seattle coordinates
+            datasetLayer = map.getFeatureLayer(
+                FeatureLayerOptions.Builder()
+                    .featureType(FeatureType.DATASET)
+                    // Specify the dataset ID.
+                    .datasetId("YOUR-DATASET-ID-1")
+                    .build()
+            )
+            styleDatasetsLayerPolygon()
+
+            centerMapOnLocation(KYOTO)
         }
 
         findViewById<Button>(R.id.button_ny).setOnClickListener {
-            centerMapOnLocation(NEW_YORK) // New York coordinates
+            datasetLayer = map.getFeatureLayer(
+                FeatureLayerOptions.Builder()
+                    .featureType(FeatureType.DATASET)
+                    // Specify the dataset ID.
+                    .datasetId("YOUR-DATASET-ID-2")
+                    .build()
+            )
+            styleDatasetsLayer()
+            centerMapOnLocation(NEW_YORK)
         }
 
         findViewById<Button>(R.id.button_boulder).setOnClickListener {
-            centerMapOnLocation(BOULDER) // New York coordinates
+            datasetLayer = map.getFeatureLayer(
+                FeatureLayerOptions.Builder()
+                    .featureType(FeatureType.DATASET)
+                    // Specify the dataset ID.
+                    .datasetId("YOUR-DATASET-ID-3")
+                    .build()
+            )
+            styleDatasetsLayerPolyline()
+            centerMapOnLocation(BOULDER)
         }
     }
 
@@ -91,7 +116,7 @@ class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 // Specify the dataset ID.
-                .datasetId("YOUR-DATASET-ID")
+                .datasetId("YOUR-DATASET-ID-1")
                 .build()
         )
 
