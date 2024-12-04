@@ -115,7 +115,7 @@ class DemoDetailsList {
             DemoDetails(
                 R.string.markers_demo_label,
                 R.string.markers_demo_description,
-                MapColorSchemeActivity::class.java
+                MarkerDemoActivity::class.java
             ),
             DemoDetails(
                 R.string.multi_map_demo_label,
