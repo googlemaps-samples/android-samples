@@ -48,7 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+      
         <activity
             android:name=".AdvancedMarkersDemoActivity"
             android:exported="true" />
@@ -72,6 +72,12 @@
             android:exported="true" />
         <activity
             android:name=".CircleDemoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DataDrivenDatasetStylingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DataDrivenBoundariesActivity"
             android:exported="true" />
         <activity
             android:name=".MarkerCloseInfoWindowOnRetapDemoActivity"

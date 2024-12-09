@@ -208,7 +208,7 @@
     <!-- Advanced Markers Demo -->
     <string name="advanced_markers_demo_label">Advanced Markers</string>
     <string name="advanced_markers_demo_details">Showcases the usage of Advanced Markers.</string>
-    <string name="map_id">MY_MAP_ID</string>
+    <string name="map_id">DEMO_MAP_ID</string>
 
     <!--    Styling    -->
     <string name="styled_map_demo_label">Styled Map</string>
@@ -293,4 +293,12 @@
     <string name="map_color_light_mode">Light</string>
     <string name="map_color_dark_mode">Dark</string>
     <string name="map_color_follow_system_mode">Follow System\n</string>
+
+    <!-- Data Driven Styling Demo -->
+    <string name="data_driven_styling_label">Data Driven Dataset Styling Demo</string>
+    <string name="data_driven_styling_description">Demonstrates how to use Data Driven styling for datasets.</string>
+
+    <!-- Data Driven Boundaries Demo -->
+    <string name="data_driven_boundaries_label">Data Driven Boundaries Demo</string>
+    <string name="data_driven_boundaries_description">Demonstrates how to use Data Driven styling for boundaries.</string>
 </resources>
