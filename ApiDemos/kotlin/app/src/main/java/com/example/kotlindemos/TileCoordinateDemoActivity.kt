@@ -48,9 +48,8 @@ class TileCoordinateDemoActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private class CoordTileProvider(context: Context) : TileProvider {
         private val scaleFactor: Float
-        private val borderTile: Bitmap
         override fun getTile(x: Int, y: Int, zoom: Int): Tile {
-            val coordTile = drawTileCoords(x, y, zoom)
+            val coordTile = createTile(x, y, zoom)
             val stream = ByteArrayOutputStream()
             coordTile!!.compress(Bitmap.CompressFormat.PNG, 0, stream)
             val bitmapData = stream.toByteArray()
@@ -58,14 +57,20 @@ class TileCoordinateDemoActivity : AppCompatActivity(), OnMapReadyCallback {
                 (TILE_SIZE_DP * scaleFactor).toInt(), bitmapData)
         }
 
-        private fun drawTileCoords(x: Int, y: Int, zoom: Int): Bitmap? {
-            // Synchronize copying the bitmap to avoid a race condition in some devices.
-            var copy: Bitmap? = null
-            synchronized(borderTile) { copy = borderTile.copy(Bitmap.Config.ARGB_8888, true) }
-            val canvas = Canvas(copy!!)
+        private fun createTile(x: Int, y: Int, zoom: Int): Bitmap? {
+            val tile = Bitmap.createBitmap((TILE_SIZE_DP * scaleFactor).toInt(),
+                (TILE_SIZE_DP * scaleFactor).toInt(), Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(tile)
+
+            // Draw the tile borders.
+            val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+            borderPaint.style = Paint.Style.STROKE
+            canvas.drawRect(0f, 0f, TILE_SIZE_DP * scaleFactor, TILE_SIZE_DP * scaleFactor,
+                borderPaint)
+
+            // Draw the tile position text.
             val tileCoords = "($x, $y)"
             val zoomLevel = "zoom = $zoom"
-            /* Paint is not thread safe. */
             val mTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
             mTextPaint.textAlign = Paint.Align.CENTER
             mTextPaint.textSize = 18 * scaleFactor
@@ -73,7 +78,8 @@ class TileCoordinateDemoActivity : AppCompatActivity(), OnMapReadyCallback {
                 TILE_SIZE_DP * scaleFactor / 2, mTextPaint)
             canvas.drawText(zoomLevel, TILE_SIZE_DP * scaleFactor / 2,
                 TILE_SIZE_DP * scaleFactor * 2 / 3, mTextPaint)
-            return copy
+
+            return tile
         }
 
         companion object {
@@ -84,13 +90,6 @@ class TileCoordinateDemoActivity : AppCompatActivity(), OnMapReadyCallback {
             /* Scale factor based on density, with a 0.6 multiplier to increase tile generation
              * speed */
             scaleFactor = context.resources.displayMetrics.density * 0.6f
-            val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-            borderPaint.style = Paint.Style.STROKE
-            borderTile = Bitmap.createBitmap((TILE_SIZE_DP * scaleFactor).toInt(),
-                (TILE_SIZE_DP * scaleFactor).toInt(), Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(borderTile)
-            canvas.drawRect(0f, 0f, TILE_SIZE_DP * scaleFactor, TILE_SIZE_DP * scaleFactor,
-                borderPaint)
         }
     }
 }
