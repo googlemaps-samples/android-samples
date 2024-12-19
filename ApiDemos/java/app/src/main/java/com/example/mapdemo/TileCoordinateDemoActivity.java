@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.TileProvider;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -59,24 +60,15 @@ public class TileCoordinateDemoActivity extends AppCompatActivity implements OnM
 
         private final float scaleFactor;
 
-        private final Bitmap borderTile;
-
         public CoordTileProvider(Context context) {
             /* Scale factor based on density, with a 0.6 multiplier to increase tile generation
              * speed */
             scaleFactor = context.getResources().getDisplayMetrics().density * 0.6f;
-            Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            borderPaint.setStyle(Paint.Style.STROKE);
-            borderTile = Bitmap.createBitmap((int) (TILE_SIZE_DP * scaleFactor),
-                    (int) (TILE_SIZE_DP * scaleFactor), android.graphics.Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(borderTile);
-            canvas.drawRect(0, 0, TILE_SIZE_DP * scaleFactor, TILE_SIZE_DP * scaleFactor,
-                    borderPaint);
         }
 
         @Override
         public Tile getTile(int x, int y, int zoom) {
-            Bitmap coordTile = drawTileCoords(x, y, zoom);
+            Bitmap coordTile = createTile(x, y, zoom);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             coordTile.compress(Bitmap.CompressFormat.PNG, 0, stream);
             byte[] bitmapData = stream.toByteArray();
@@ -84,16 +76,23 @@ public class TileCoordinateDemoActivity extends AppCompatActivity implements OnM
                     (int) (TILE_SIZE_DP * scaleFactor), bitmapData);
         }
 
-        private Bitmap drawTileCoords(int x, int y, int zoom) {
-            // Synchronize copying the bitmap to avoid a race condition in some devices.
-            Bitmap copy = null;
-            synchronized (borderTile) {
-                copy = borderTile.copy(android.graphics.Bitmap.Config.ARGB_8888, true);
-            }
-            Canvas canvas = new Canvas(copy);
+        private Bitmap createTile(int x, int y, int zoom) {
+            Bitmap tile =
+                Bitmap.createBitmap(
+                    (int) (TILE_SIZE_DP * scaleFactor),
+                    (int) (TILE_SIZE_DP * scaleFactor),
+                    Config.ARGB_8888);
+            Canvas canvas = new Canvas(tile);
+
+            // Draw the tile borders.
+            Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            borderPaint.setStyle(Paint.Style.STROKE);
+            canvas.drawRect(0, 0, TILE_SIZE_DP * scaleFactor,
+                    TILE_SIZE_DP * scaleFactor, borderPaint);
+
+            // Draw the tile position text.
             String tileCoords = "(" + x + ", " + y + ")";
             String zoomLevel = "zoom = " + zoom;
-            /* Paint is not thread safe. */
             Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mTextPaint.setTextAlign(Paint.Align.CENTER);
             mTextPaint.setTextSize(18 * scaleFactor);
@@ -101,7 +100,8 @@ public class TileCoordinateDemoActivity extends AppCompatActivity implements OnM
                     TILE_SIZE_DP * scaleFactor / 2, mTextPaint);
             canvas.drawText(zoomLevel, TILE_SIZE_DP * scaleFactor / 2,
                     TILE_SIZE_DP * scaleFactor * 2 / 3, mTextPaint);
-            return copy;
+
+            return tile;
         }
     }
 }
