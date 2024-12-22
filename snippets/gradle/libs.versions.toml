@@ -13,7 +13,7 @@ constraintLayout = "2.1.4"
 navigation = "2.7.7"
 rxlifecycleAndroidLifecycleKotlin = "4.0.2"
 volley = "1.2.1"
-lifecycleRuntime = "2.8.4"
+lifecycleRuntime = "2.8.7"
 places = "3.5.0"
 
 [libraries]
