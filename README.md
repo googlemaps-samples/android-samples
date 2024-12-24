@@ -1,12 +1,17 @@
-![GitHub contributors](https://img.shields.io/github/contributors/googlemaps/android-samples)
-![Apache-2.0](https://img.shields.io/badge/license-Apache-blue)
 [![Build demos](https://github.com/googlemaps/android-samples/workflows/Build%20demos/badge.svg)](https://github.com/googlemaps/android-samples/actions?query=workflow%3A%22Build+demos%22)
-[![Discord](https://img.shields.io/discord/676948200904589322)](https://discord.gg/hYsWbmk)
 
-Google Maps SDK for Android Samples
-===================================
+[![Build](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml/badge.svg)](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml)
+
+![GitHub contributors](https://img.shields.io/github/contributors/googlemaps-samples/android-samples?color=green)
+[![GitHub License](https://img.shields.io/github/license/googlemaps-samples/android-samples?color=blue)][license]
+[![StackOverflow](https://img.shields.io/stackexchange/stackoverflow/t/google-maps?color=orange&label=google-maps&logo=stackoverflow)](https://stackoverflow.com/questions/tagged/android+google-maps)
+[![Discord](https://img.shields.io/discord/676948200904589322?color=6A7EC2&logo=discord&logoColor=ffffff)][Discord server]
+
+# Google Maps SDK for Android Samples
 
 <img src="images/screenshots.png" width="1024" />
+
+## Description
 
 Samples demonstrating how to use
 [Maps SDK for Android](https://developers.google.com/maps/documentation/android/).
@@ -21,57 +26,69 @@ setup required for a gradle-based Android Studio project.
 associated with tutorials in the developer's guide. See each sample for a link to the associated guide.
 1. [Snippets](snippets): Snippets for code found in https://developers.google.com/maps/documentation/android-sdk
 
+## Samples in this repo (if more than one)
 
-Pre-requisites
---------------
+- Sample 1
+- Sample 2
+- Sample 3
+
+## Requirements
+
+To run the samples, you will need:
 
 * See each sample for pre-requisites.
 * All require up-to-date versions of the Android build tools and the Android support repository.
 * The demo apps require that you add your own Google Maps API key. See [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) docs for more instructions.
 
-Getting Started
----------------
+- To [sign up with Google Maps Platform]
+- A Google Maps Platform [project] with the **PRODUCT** enabled
+- An [API key] associated with the project above ... follow the [API key instructions] if you're new to the process
+- (optional) Operating system (and any version) requirements
+- (optional) Language(s) (and any version) requirements
+- (others)
+
+## Running the sample(s)
 
 1. Download the samples by cloning this repository
-2. In the welcome screen of Android Studio, select "Open an Existing project"
-3. Select one of the sample directories from this repository
+1. In the welcome screen of Android Studio, select "Open an Existing project"
+1. Select one of the sample directories from this repository
 
 Alternatively, use the `gradlew build` command to build the project directly or download an APK
 under [releases](https://github.com/googlemaps/android-samples/releases).
 
-Support
--------
+## Contributing
 
-- Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
+Contributions are welcome and encouraged! If you'd like to contribute, send us a [pull request] and refer to our [code of conduct] and [contributing guide].
 
-If you have discovered an issue with the Google Maps Platform SDK for Android v2, please see
-the resources here: https://developers.google.com/maps/support/
+## Terms of Service
 
-If you've found an error in these samples, please file an issue:
-https://github.com/googlemaps/android-samples/issues
+This sample uses Google Maps Platform services. Use of Google Maps Platform services through this sample is subject to the Google Maps Platform [Terms of Service].
 
-Patches are encouraged, and may be submitted according to the instructions in
-CONTRIBUTING.md.
+This sample is not a Google Maps Platform Core Service. Therefore, the Google Maps Platform Terms of Service (e.g. Technical Support Services, Service Level Agreements, and Deprecation Policy) do not apply to the code in this sample.
 
-License
--------
-(See each sample directory for details.)
+## Support
 
-Copyright 2015 The Android Open Source Project
+This sample is offered via an open source [license]. It is not governed by the Google Maps Platform Support [Technical Support Services Guidelines], the [SLA], or the [Deprecation Policy]. However, any Google Maps Platform services used by the sample remain subject to the Google Maps Platform Terms of Service.
 
-Copyright 2015 Google, Inc.
+If you find a bug, or have a feature request, please [file an issue] on GitHub. If you would like to get answers to technical questions from other Google Maps Platform developers, ask through one of our [developer community channels]. If you'd like to contribute, please check the [contributing guide].
 
-Licensed to the Apache Software Foundation (ASF) under one or more contributor
-license agreements.  See the NOTICE file distributed with this work for
-additional information regarding copyright ownership.  The ASF licenses this
-file to you under the Apache License, Version 2.0 (the "License"); you may not
-use this file except in compliance with the License.  You may obtain a copy of
-the License at
+You can also discuss this sample on our [Discord server].
 
-  http://www.apache.org/licenses/LICENSE-2.0
+[PRODUCT]: https://developers.google.com/maps/documentation/PRODUCT
+[API key]: https://developers.google.com/maps/documentation/PRODUCT/get-api-key
+[API key instructions]: https://developers.google.com/maps/documentation/PRODUCT/config#step_3_add_your_api_key_to_the_project
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
-License for the specific language governing permissions and limitations under
-the License.
+[code of conduct]: ?tab=coc-ov-file#readme
+[contributing guide]: CONTRIBUTING.md
+[Deprecation Policy]: https://cloud.google.com/maps-platform/terms
+[developer community channels]: https://developers.google.com/maps/developer-community
+[Discord server]: https://discord.gg/hYsWbmk
+[file an issue]: https://github.com/googlemaps-samples/android-samples/issues/new/choose
+[license]: LICENSE
+[pull request]: https://github.com/googlemaps-samples/android-samples/compare
+[project]: https://developers.google.com/maps/documentation/PRODUCT/cloud-setup#enabling-apis
+[Sign up with Google Maps Platform]: https://console.cloud.google.com/google/maps-apis/start
+[SLA]: https://cloud.google.com/maps-platform/terms/sla
+[Technical Support Services Guidelines]: https://cloud.google.com/maps-platform/terms/tssg
+[Terms of Service]: https://cloud.google.com/maps-platform/terms
+
