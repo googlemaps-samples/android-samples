@@ -1,5 +1,3 @@
-[![Build demos](https://github.com/googlemaps/android-samples/workflows/Build%20demos/badge.svg)](https://github.com/googlemaps/android-samples/actions?query=workflow%3A%22Build+demos%22)
-
 [![Build](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml/badge.svg)](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml)
 
 ![GitHub contributors](https://img.shields.io/github/contributors/googlemaps-samples/android-samples?color=green)
@@ -16,6 +14,8 @@
 Samples demonstrating how to use
 [Maps SDK for Android](https://developers.google.com/maps/documentation/android/).
 
+## Samples in this repo (if more than one)
+
 This repo contains the following samples:
 
 1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Maps SDK for Android.
@@ -26,26 +26,15 @@ setup required for a gradle-based Android Studio project.
 associated with tutorials in the developer's guide. See each sample for a link to the associated guide.
 1. [Snippets](snippets): Snippets for code found in https://developers.google.com/maps/documentation/android-sdk
 
-## Samples in this repo (if more than one)
-
-- Sample 1
-- Sample 2
-- Sample 3
-
 ## Requirements
 
 To run the samples, you will need:
 
-* See each sample for pre-requisites.
-* All require up-to-date versions of the Android build tools and the Android support repository.
-* The demo apps require that you add your own Google Maps API key. See [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) docs for more instructions.
-
 - To [sign up with Google Maps Platform]
-- A Google Maps Platform [project] with the **PRODUCT** enabled
+- A Google Maps Platform [project] with the **Maps SDK for Android** enabled
 - An [API key] associated with the project above ... follow the [API key instructions] if you're new to the process
-- (optional) Operating system (and any version) requirements
-- (optional) Language(s) (and any version) requirements
-- (others)
+- See each sample for pre-requisites.
+- All require up-to-date versions of the Android build tools and the Android support repository.
 
 ## Running the sample(s)
 
