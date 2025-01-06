@@ -1,7 +1,7 @@
 [![Build](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml/badge.svg)](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml)
 
-![GitHub contributors](https://img.shields.io/github/contributors/googlemaps-samples/android-samples?color=green)
-[![GitHub License](https://img.shields.io/github/license/googlemaps-samples/android-samples?color=blue)][license]
+![Contributors](https://img.shields.io/github/contributors/googlemaps-samples/android-samples?color=green)
+[![License](https://img.shields.io/github/license/googlemaps-samples/android-samples?color=blue)][license]
 [![StackOverflow](https://img.shields.io/stackexchange/stackoverflow/t/google-maps?color=orange&label=google-maps&logo=stackoverflow)](https://stackoverflow.com/questions/tagged/android+google-maps)
 [![Discord](https://img.shields.io/discord/676948200904589322?color=6A7EC2&logo=discord&logoColor=ffffff)][Discord server]
 
@@ -63,9 +63,9 @@ If you find a bug, or have a feature request, please [file an issue] on GitHub. 
 
 You can also discuss this sample on our [Discord server].
 
-[PRODUCT]: https://developers.google.com/maps/documentation/PRODUCT
-[API key]: https://developers.google.com/maps/documentation/PRODUCT/get-api-key
-[API key instructions]: https://developers.google.com/maps/documentation/PRODUCT/config#step_3_add_your_api_key_to_the_project
+[android-sdk]: https://developers.google.com/maps/documentation/android-sdk
+[API key]: https://developers.google.com/maps/documentation/android-sdk/get-api-key
+[API key instructions]: https://developers.google.com/maps/documentation/android-sdk/config#step_3_add_your_api_key_to_the_project
 
 [code of conduct]: ?tab=coc-ov-file#readme
 [contributing guide]: CONTRIBUTING.md
@@ -75,7 +75,7 @@ You can also discuss this sample on our [Discord server].
 [file an issue]: https://github.com/googlemaps-samples/android-samples/issues/new/choose
 [license]: LICENSE
 [pull request]: https://github.com/googlemaps-samples/android-samples/compare
-[project]: https://developers.google.com/maps/documentation/PRODUCT/cloud-setup#enabling-apis
+[project]: https://developers.google.com/maps/documentation/android-sdk/cloud-setup#enabling-apis
 [Sign up with Google Maps Platform]: https://console.cloud.google.com/google/maps-apis/start
 [SLA]: https://cloud.google.com/maps-platform/terms/sla
 [Technical Support Services Guidelines]: https://cloud.google.com/maps-platform/terms/tssg
