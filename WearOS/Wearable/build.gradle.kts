@@ -21,7 +21,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.wearos"
@@ -52,8 +52,8 @@ android {
 // [START maps_wear_os_dependencies]
 dependencies {
     // [START_EXCLUDE]
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.0")
+    implementation("androidx.core:core-ktx:1.15.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
     // [END_EXCLUDE]
     compileOnly("com.google.android.wearable:wearable:2.9.0")
     implementation("com.google.android.support:wearable:2.9.0")

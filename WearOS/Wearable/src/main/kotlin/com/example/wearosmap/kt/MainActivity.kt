@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var mapFragment: SupportMapFragment
     // [END_EXCLUDE]
 
-    public override fun onCreate(savedState: Bundle?) {
-        super.onCreate(savedState)
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // Set the layout. It only contains a SupportMapFragment and a DismissOverlay.
         setContentView(R.layout.activity_main)
