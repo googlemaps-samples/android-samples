@@ -16,9 +16,7 @@ plugins:
         - "./ApiDemos/kotlin/app/build.gradle.kts"
   - - "@semantic-release/github"
     - assets:
-        - "./ApiDemos-java-gms-debug.apk"
-        - "./ApiDemos-java-v3-debug.apk"
-        - "./ApiDemos-kotlin-gms-debug.apk"
-        - "./ApiDemos-kotlin-v3-debug.apk"
+        - "./ApiDemos-java-debug.apk"
+        - "./ApiDemos-kotlin-debug.apk"
 options:
   debug: true
