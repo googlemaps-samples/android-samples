@@ -1,6 +1,6 @@
 [versions]
 appcompat = "1.7.0"
-recyclerview = "1.3.2"
+recyclerview = "1.4.0"
 volley = "1.2.1"
 kotlinBom = "2.0.0"
 playServicesMaps = "19.0.0"
