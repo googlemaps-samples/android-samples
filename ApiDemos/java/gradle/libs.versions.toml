@@ -2,7 +2,7 @@
 appcompat = "1.7.0"
 recyclerview = "1.4.0"
 volley = "1.2.1"
-kotlinBom = "2.0.21"
+kotlinBom = "2.1.10"
 playServicesMaps = "19.0.0"
 junit = "4.13.2"
 androidxJunit = "1.2.1"
