@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.app_utils"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -68,7 +68,7 @@ dependencies {
     // Utility Library for Maps SDK for Android
     // You do not need to add a separate dependency for the Maps SDK for Android
     // since this library builds in the compatible version of the Maps SDK.
-    implementation("com.google.maps.android:android-maps-utils:3.8.2")
+    implementation("com.google.maps.android:android-maps-utils:3.10.0")
 }
 // [END maps_android_utils_install_snippet]
 

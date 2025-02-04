@@ -30,8 +30,8 @@ class AmbientActivity : AppCompatActivity(), AmbientModeSupport.AmbientCallbackP
 
     private lateinit var mapFragment: SupportMapFragment
 
-    public override fun onCreate(savedState: Bundle?) {
-        super.onCreate(savedState)
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // Set the layout. It only contains a SupportMapFragment and a DismissOverlay.
         setContentView(R.layout.activity_main)

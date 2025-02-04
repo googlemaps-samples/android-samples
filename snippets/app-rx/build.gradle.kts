@@ -64,7 +64,7 @@ dependencies {
     // It is recommended to also include the latest Maps SDK, Places SDK and RxJava so you
     // have the latest features and bug fixes.
     implementation("com.google.android.gms:play-services-maps:19.0.0")
-    implementation("com.google.android.libraries.places:places:3.5.0")
+    implementation("com.google.android.libraries.places:places:4.1.0")
     implementation("io.reactivex.rxjava3:rxjava:3.1.8")
 
     // [START_EXCLUDE silent]

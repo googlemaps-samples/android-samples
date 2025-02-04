@@ -12,11 +12,11 @@
   idx = {
     workspace = {
       onCreate = {
-        build-and-wait = "./gradlew assembleDebug && adb -s emulator-5554 wait-for-device";
+        build-and-wait = "./gradlew assembleDebug && adb -s localhost:5555 wait-for-device";
         default.openFiles = [ "README.md" ];
       };
       onStart = {
-        wait-for-adb = "adb -s emulator-5554 wait-for-device";
+        wait-for-adb = "adb -s localhost:5555 wait-for-device";
       };
     };
     previews = {

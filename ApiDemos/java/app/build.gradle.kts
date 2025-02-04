@@ -23,13 +23,12 @@ plugins {
 android {
     compileSdk = 35
 
-
     defaultConfig {
         applicationId = "com.example.mapdemo"
         minSdk = 21
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.14.0"
         multiDexEnabled = true
     }
 
