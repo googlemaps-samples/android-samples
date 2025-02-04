@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2025 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.ColorUtils;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -44,9 +46,9 @@ import java.util.Map;
 // [START maps_android_data_driven_styling_datasets]
 public class DataDrivenDatasetStylingActivity extends AppCompatActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
 
-    private static final LatLng SEATTLE = new LatLng(47.6062, -122.3321);
+    private static final LatLng BOULDER = new LatLng(40.0150, -105.2705);
     private static final LatLng NEW_YORK = new LatLng(40.7128, -74.0060);
-    private static final LatLng FALSE_BAY_CAPE_TOWN = new LatLng(-34.1476, 18.6722);
+    private static final LatLng KYOTO = new LatLng(35.0016, 135.7681);
 
     private static final float ZOOM_LEVEL = 13.5f;
     private static final String TAG = DataDrivenDatasetStylingActivity.class.getName();
@@ -64,9 +66,36 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
             mapFragment.getMapAsync(this);
         }
 
-        findViewById(R.id.button_seattle).setOnClickListener(v -> centerMapOnLocation(SEATTLE)); // Seattle coordinates
-        findViewById(R.id.button_ny).setOnClickListener(v -> centerMapOnLocation(NEW_YORK)); // New York coordinates
-        findViewById(R.id.button_south_africa).setOnClickListener(v -> centerMapOnLocation(FALSE_BAY_CAPE_TOWN)); // False Bay, Cape Town coordinates
+        findViewById(R.id.button_boulder).setOnClickListener(view -> {
+            datasetLayer = map.getFeatureLayer(
+                    new FeatureLayerOptions.Builder()
+                            .featureType(FeatureType.DATASET)
+                            .datasetId("YOUR-DATASET-ID-1")
+                            .build()
+            );
+            styleDatasetsLayerPolyline();
+            centerMapOnLocation(BOULDER);
+        }); // Boulder coordinates
+        findViewById(R.id.button_ny).setOnClickListener(view -> {
+            datasetLayer = map.getFeatureLayer(
+                    new FeatureLayerOptions.Builder()
+                            .featureType(FeatureType.DATASET)
+                            .datasetId("YOUR-DATASET-ID-2")
+                            .build()
+            );
+            styleDatasetsLayer();
+            centerMapOnLocation(NEW_YORK);
+        }); // New York coordinates
+        findViewById(R.id.button_kyoto).setOnClickListener(view -> {
+            datasetLayer = map.getFeatureLayer(
+                    new FeatureLayerOptions.Builder()
+                            .featureType(FeatureType.DATASET)
+                            .datasetId("YOUR-DATASET-ID-3")
+                            .build()
+            );
+            styleDatasetsLayerPolygon();
+            centerMapOnLocation(KYOTO);
+        }); // Kyoto coordinates
 
     }
 
@@ -74,7 +103,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(SEATTLE, ZOOM_LEVEL));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(BOULDER, ZOOM_LEVEL));
 
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
@@ -88,11 +117,12 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
 
         datasetLayer.addOnFeatureClickListener(this);
 
-        styleDatasetsLayer();
+        styleDatasetsLayerPolyline();
+
 
         // Uncommenting these lines will style the polygons or polylines.
         // styleDatasetsLayerPolygon();
-        // styleDatasetsLayerPolyline();
+        // styleDatasetsLayer();
     }
 
     private void styleDatasetsLayer() {
@@ -161,21 +191,24 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     }
 
     private void styleDatasetsLayerPolygon() {
+        // Create the style factory function.
         FeatureLayer.StyleFactory styleFactory = feature -> {
-            if (feature instanceof DatasetFeature) {
-                Map<String, String> typeCategories = ((DatasetFeature) feature).getDatasetAttributes();
-                String typeCategory = typeCategories.get("typecategory");
+            // Check if the feature is an instance of DatasetFeature.
+            if (feature instanceof DatasetFeature datasetFeature) {
+                // Determine the value of the typecategory attribute.
+                Map<String, String> typeCategories = datasetFeature.getDatasetAttributes();
+                String typeCategory = typeCategories.get("type");
 
+                // Set default colors to green.
                 int fillColor;
                 int strokeColor;
 
-                if ("Undeveloped".equals(typeCategory)) {
+                if ("temple".equals(typeCategory)) {
+                    // Color temples areas blue.
                     fillColor = Color.BLUE;
                     strokeColor = Color.BLUE;
-                } else if ("Parkway".equals(typeCategory)) {
-                    fillColor = Color.RED;
-                    strokeColor = Color.RED;
                 } else {
+                    // Color all other areas green.
                     fillColor = Color.GREEN;
                     strokeColor = Color.GREEN;
                 }
@@ -189,26 +222,72 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
             return null;
         };
 
+        // Apply the style factory function to the feature layer.
         if (datasetLayer != null) {
             datasetLayer.setFeatureStyle(styleFactory);
         }
     }
 
     private void styleDatasetsLayerPolyline() {
+        final int EASY = Color.GREEN;
+        final int MODERATE = Color.BLUE;
+        final int DIFFICULT = Color.RED;
+
+        // Create the style factory function.
         FeatureLayer.StyleFactory styleFactory = feature -> {
-            if (feature instanceof DatasetFeature) {
+            // Set default colors to yellow and point radius to 8.
+            int fillColor = Color.GREEN;
+            int strokeColor = Color.YELLOW;
+            float pointRadius = 8F;
+            float strokeWidth = 3F;
+
+            // Check if the feature is an instance of DatasetFeature.
+            if (feature instanceof DatasetFeature datasetFeature) {
+                Map<String, String> attributes = datasetFeature.getDatasetAttributes();
+                String difficulty = attributes.get("OSMPTrailsOSMPDIFFICULTY");
+                String name = attributes.get("OSMPTrailsOSMPTRAILNAME");
+                String dogsAllowed = attributes.get("OSMPTrailsOSMPDOGREGGEN");
+
+                if ("Easy".equals(difficulty)) {
+                    fillColor = EASY;
+                } else if ("Moderate".equals(difficulty)) {
+                    fillColor = MODERATE;
+                } else if ("Difficult".equals(difficulty)) {
+                    fillColor = DIFFICULT;
+                } else {
+                    Log.w(TAG, name + " -> Unknown difficulty: " + difficulty);
+                    fillColor = Color.MAGENTA;
+                }
+
+                if ("No Dogs".equals(dogsAllowed)) {
+                    fillColor = ColorUtils.setAlphaComponent(fillColor, 66);
+                    strokeWidth = 5f;
+                } else if ("LVS".equals(dogsAllowed)) {
+                    // No change needed
+                } else if ("LR".equals(dogsAllowed) || "RV".equals(dogsAllowed)) {
+                    fillColor = ColorUtils.setAlphaComponent(fillColor, 75);
+                } else {
+                    Log.w(TAG, name + " -> Unknown dogs reg: " + dogsAllowed);
+                }
+
+                strokeColor = fillColor;
+
                 return new FeatureStyle.Builder()
-                        .strokeColor(0xff00ff00)
-                        .strokeWidth(4F)
+                        .fillColor(fillColor)
+                        .strokeColor(strokeColor)
+                        .pointRadius(pointRadius)
+                        .strokeWidth(strokeWidth)
                         .build();
             }
             return null;
         };
 
+        // Apply the style factory function to the feature layer.
         if (datasetLayer != null) {
             datasetLayer.setFeatureStyle(styleFactory);
         }
     }
+
 
     private void centerMapOnLocation(LatLng location) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, ZOOM_LEVEL));
