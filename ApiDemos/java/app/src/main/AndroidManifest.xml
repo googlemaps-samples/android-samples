@@ -92,9 +92,11 @@ limitations under the License.
             android:label="@string/circle_demo_label" />
         <activity
             android:name=".DataDrivenBoundariesActivity"
+            android:exported="true"
             android:label="@string/data_driven_boundaries_label" />
         <activity
             android:name=".DataDrivenDatasetStylingActivity"
+            android:exported="true"
             android:label="@string/data_driven_styling_label" />
         <activity
             android:name=".EventsDemoActivity"
