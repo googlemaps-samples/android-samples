@@ -32,9 +32,11 @@
         android:theme="@style/AppTheme">
         <!--
             To add your Maps API key to this project:
-            1. Open the root project'sl secrets.properties file
+            1. Open the root project's secrets.properties file
             2. Add this line, where YOUR_API_KEY is your API key:
                 MAPS_API_KEY=YOUR_API_KEY
+
+            Note: Do not check-in your API key!
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -75,6 +77,7 @@
             android:exported="true" />
         <activity
             android:name=".DataDrivenDatasetStylingActivity"
+            android:theme="@style/MaterialAppTheme"
             android:exported="true" />
         <activity
             android:name=".DataDrivenBoundariesActivity"

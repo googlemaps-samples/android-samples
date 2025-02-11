@@ -14,11 +14,19 @@
 package com.example.kotlindemos
 
 import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.OnMapReadyCallback
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.annotation.ColorInt
 import androidx.core.graphics.ColorUtils
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.GoogleMap
@@ -32,19 +40,10 @@ import com.google.android.gms.maps.model.FeatureStyle
 import com.google.android.gms.maps.model.FeatureType
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapCapabilities
+import androidx.core.view.WindowCompat
 
-
-private val KYOTO = LatLng(35.0016, 135.7681)
-private val NEW_YORK = LatLng(40.7826, -73.9656)
-private val BOULDER = LatLng(40.0150, -105.2705)
-
-private const val ZOOM_LEVEL = 13.5f
 
 private val TAG = DataDrivenDatasetStylingActivity::class.java.name
-
-private var datasetLayer: FeatureLayer? = null
-
-private lateinit var map: GoogleMap
 
 /**
  * This sample showcases how to use the Data-driven styling for datasets. For more information
@@ -52,147 +51,150 @@ private lateinit var map: GoogleMap
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
  */
 class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
+    private lateinit var mapContainer: ViewGroup
 
-    // The globalid of the clicked dataset feature.
+    private lateinit var map: GoogleMap
+    private val zoomLevel = 13.5f
+
+    private var datasetLayer: FeatureLayer? = null
+
+    // The global id of the clicked dataset feature.
     private var lastGlobalId: String? = null
 
+    private data class DataSet(
+        val datasetId: String,
+        val location: LatLng,
+        val callback: DataDrivenDatasetStylingActivity.() -> Unit
+    )
+
+    private val dataSets = mutableMapOf<String, DataSet>()
+
+    private lateinit var buttonLayout: LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        if (dataSets.isEmpty()) {
+            with(dataSets) {
+                put(getString(R.string.boulder), DataSet(BuildConfig.BOULDER_DATASET_ID, LatLng(40.0150, -105.2705)) { styleBoulderDataset() })
+                put(getString(R.string.new_york), DataSet(BuildConfig.NEW_YORK_DATASET_ID, LatLng(40.786244, -73.962684)) { styleNYCDataset() })
+                put(getString(R.string.kyoto), DataSet(BuildConfig.KYOTO_DATASET_ID, LatLng(35.005081, 135.764385)) { styleKyotoDataset() })
+            }
+        }
+
         setContentView(R.layout.data_driven_styling_demo)
+
+        mapContainer = findViewById(R.id.map_container)
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
 
-
-        findViewById<Button>(R.id.button_kyoto).setOnClickListener {
-            datasetLayer = map.getFeatureLayer(
-                FeatureLayerOptions.Builder()
-                    .featureType(FeatureType.DATASET)
-                    // Specify the dataset ID.
-                    .datasetId("YOUR-DATASET-ID-1")
-                    .build()
-            )
-            styleDatasetsLayerPolygon()
-
-            centerMapOnLocation(KYOTO)
+        // Set the click listener for each of the buttons
+        listOf(R.id.button_kyoto, R.id.button_ny, R.id.button_boulder).forEach { viewId ->
+            findViewById<Button>(viewId).setOnClickListener { view ->
+                switchToDataset((view as Button).text.toString())
+            }
         }
 
-        findViewById<Button>(R.id.button_ny).setOnClickListener {
-            datasetLayer = map.getFeatureLayer(
-                FeatureLayerOptions.Builder()
-                    .featureType(FeatureType.DATASET)
-                    // Specify the dataset ID.
-                    .datasetId("YOUR-DATASET-ID-2")
-                    .build()
-            )
-            styleDatasetsLayer()
-            centerMapOnLocation(NEW_YORK)
-        }
+        buttonLayout = findViewById<View>(R.id.button_kyoto).parent as LinearLayout;
 
-        findViewById<Button>(R.id.button_boulder).setOnClickListener {
+        handleCutout()
+    }
+
+    private fun handleCutout() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.decorView.setOnApplyWindowInsetsListener { _, windowInsets ->
+                val insets = windowInsets.getInsets(WindowInsets.Type.systemBars())
+                val topInset = insets.top
+                mapContainer.setPadding(0, topInset, 0, 0)
+                windowInsets
+            }
+        } else {
+            window.decorView.setOnApplyWindowInsetsListener { view, windowInsets ->
+                val topInset = windowInsets.systemWindowInsetTop
+                mapContainer.setPadding(0, topInset, 0, 0)
+                windowInsets
+            }
+        }
+    }
+
+    /**
+     * Switches the currently displayed dataset on the map to the one identified by the given label.
+     *
+     * This function retrieves a DataSetInfo object from the `dataSets` map using the provided `label`.
+     * If a dataset with the given label exists, it does the following:
+     *   1. Creates a new FeatureLayer for the specified dataset.
+     *   2. Sets the `datasetLayer` property to the newly created FeatureLayer.
+     *   3. Executes the callback function associated with the dataset, passing the current activity instance (this).
+     *   4. Centers the map on the location associated with the dataset.
+     * If no dataset with the given label is found, it displays a Toast message indicating an unknown dataset.
+     *
+     * @param label The label identifying the dataset to switch to. This label should correspond to a key in the `dataSets` map.
+     * @throws IllegalStateException if `map` is not initialized.
+     */
+    private fun switchToDataset(label: String) {
+        dataSets[label]?.let { dataSet ->
             datasetLayer = map.getFeatureLayer(
-                FeatureLayerOptions.Builder()
-                    .featureType(FeatureType.DATASET)
+                with(FeatureLayerOptions.Builder()) {
+                    featureType(FeatureType.DATASET)
                     // Specify the dataset ID.
-                    .datasetId("YOUR-DATASET-ID-3")
-                    .build()
+                    datasetId(dataSet.datasetId)
+                }.build()
             )
-            styleDatasetsLayerPolyline()
-            centerMapOnLocation(BOULDER)
+            dataSet.callback(this)
+            centerMapOnLocation(dataSet.location)
+        } ?: run {
+            Toast.makeText(this, "Unknown dataset: $label", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        with(map) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(KYOTO, ZOOM_LEVEL))
-        }
-
         val capabilities: MapCapabilities = map.mapCapabilities
         println("Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable)
 
-        // Get the DATASET feature layer.
-        datasetLayer = map.getFeatureLayer(
-            FeatureLayerOptions.Builder()
-                .featureType(FeatureType.DATASET)
-                // Specify the dataset ID.
-                .datasetId("YOUR-DATASET-ID-1")
-                .build()
-        )
+        switchToDataset("Boulder")
 
         // Register the click event handler for the Datasets layer.
         datasetLayer?.addOnFeatureClickListener(this)
-
-        styleDatasetsLayer()
-
-        // Uncommenting this line will style the polygons.
-        // styleDatasetsLayerPolygon()
-
-        // Uncommenting this line will style the polylines.
-        // styleDatasetsLayerPolyline()
     }
 
-    private fun styleDatasetsLayer() {
+    private fun styleNYCDataset() {
+        data class Style(
+            @ColorInt val fillColor: Int,
+            @ColorInt val strokeColor: Int,
+            val pointRadius: Float,
+        )
 
-        // Create the style factory function.
+        val largePointRadius = 8F
+        val smallPointRadius = 6F
+        val darkRedBrown = resources.getColor(R.color.darkRedBrown)
+
         val styleFactory = FeatureLayer.StyleFactory { feature: Feature ->
-
-            // Set default colors to to yellow and point radius to 8.
-            var fillColor = Color.GREEN
-            var strokeColor = Color.YELLOW
-            var pointRadius = 8F
-            // Check if the feature is an instance of DatasetFeature.
             if (feature is DatasetFeature) {
-
                 val furColors: MutableMap<String, String> = feature.datasetAttributes
-                // Determine Color attribute.
                 val furColor = furColors["Color"]
-                when (furColor) {
-                    "Black+" -> {
-                        fillColor = Color.BLACK
-                        strokeColor = Color.BLACK
-                    }
 
-                    "Cinnamon+" -> {
-                        fillColor = -0x750000
-                        strokeColor = -0x750000
-                    }
-
-                    "Cinnamon+Gray" -> {
-                        fillColor = -0x750000
-                        strokeColor = -0x750000
-                        pointRadius = 6F
-                    }
-
-                    "Cinnamon+White" -> {
-                        fillColor = -0x750000
-                        strokeColor = Color.WHITE
-                        pointRadius = 6F
-                    }
-
-                    "Gray+" -> fillColor = Color.GRAY
-                    "Gray+Cinnamon" -> {
-                        fillColor = Color.GRAY
-                        strokeColor = -0x750000
-                        pointRadius = 6F
-                    }
-
-                    "Gray+Cinnamon, White" -> {
-                        fillColor = Color.LTGRAY
-                        strokeColor = -0x750000
-                        pointRadius = 6F
-                    }
-
-                    "Gray+White" -> {
-                        fillColor = Color.GRAY
-                        strokeColor = Color.WHITE
-                        pointRadius = 6F
-                    }
+                val style = when (furColor) {
+                    "Black+" -> Style(Color.BLACK, Color.BLACK, largePointRadius)
+                    "Cinnamon+" -> Style(darkRedBrown, darkRedBrown, largePointRadius)
+                    "Cinnamon+Gray" -> Style(darkRedBrown, darkRedBrown, smallPointRadius)
+                    "Cinnamon+White" -> Style(darkRedBrown, Color.WHITE, smallPointRadius)
+                    "Gray+" -> Style(Color.GRAY, Color.YELLOW, largePointRadius) // Default stroke
+                    "Gray+Cinnamon" -> Style(Color.GRAY, darkRedBrown, smallPointRadius)
+                    "Gray+Cinnamon, White" -> Style(Color.LTGRAY, darkRedBrown, smallPointRadius)
+                    "Gray+White" -> Style(Color.GRAY, Color.WHITE, smallPointRadius)
+                    else -> Style(Color.GREEN, Color.YELLOW, largePointRadius) // Default style if furColor is null or doesn't match
                 }
+
                 return@StyleFactory FeatureStyle.Builder()
-                    .fillColor(fillColor)
-                    .strokeColor(strokeColor)
-                    .pointRadius(pointRadius)
+                    .fillColor(style.fillColor)
+                    .strokeColor(style.strokeColor)
+                    .pointRadius(style.pointRadius)
                     .build()
             }
             return@StyleFactory null
@@ -202,7 +204,7 @@ class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback
         datasetLayer?.featureStyle = styleFactory
     }
 
-    private fun styleDatasetsLayerPolygon() {
+    private fun styleKyotoDataset() {
 
         // Create the style factory function.
         val styleFactory = FeatureLayer.StyleFactory { feature: Feature ->
@@ -241,7 +243,7 @@ class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback
         datasetLayer?.featureStyle = styleFactory
     }
 
-    private fun styleDatasetsLayerPolyline() {
+    private fun styleBoulderDataset() {
         val EASY = Color.GREEN
         val MODERATE = Color.BLUE
         val DIFFICULT = Color.RED
@@ -311,7 +313,7 @@ class DataDrivenDatasetStylingActivity : AppCompatActivity(), OnMapReadyCallback
 
 
     private fun centerMapOnLocation(location: LatLng) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, ZOOM_LEVEL))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel))
     }
 
     // Define the click event handler to set lastGlobalId to globalid of selected feature.

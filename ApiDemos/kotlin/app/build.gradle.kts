@@ -48,8 +48,6 @@ android {
     flavorDimensions.add("version")
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 
     lint {
@@ -58,9 +56,14 @@ android {
 
     kotlinOptions {
         freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+        jvmTarget = JavaVersion.VERSION_21.toString()
     }
 
     namespace = "com.example.kotlindemos"
+}
+
+kotlin {
+    jvmToolchain(21) // Specify the JVM toolchain version
 }
 
 dependencies {
@@ -70,9 +73,12 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.multidex)
     implementation(libs.volley)
+    implementation(libs.material)
 
     implementation(libs.lifecycleRuntimeKtx)
     implementation(libs.mapsKtx)
+
+    implementation(libs.activityKtx)
 
     // Below is used to run the easypermissions library to manage location permissions
     // EasyPermissions is needed to help us request for permission to access location
