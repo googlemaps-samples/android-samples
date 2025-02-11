@@ -45,7 +45,7 @@ import java.util.Map;
  * This sample showcases how to use the Data-driven styling for datasets. For more information
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
- *
+ * <p>
  * This is meant to work with the datasets in the res/raw directory.
  */
 // [START maps_android_data_driven_styling_datasets]
@@ -78,12 +78,12 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
      *     This creates a DataSet for Boulder, identified by "Boulder-DataSet-Id", centered on the given coordinates,
      *     and styled using the `styleBoulderDatasetLayer` method.
      * <p>
-     * Note: The actual data associated with each Dataset ID should be managed and retrieved separately based on this ID.
-     */ // TODO: Set the Dataset IDs here.
+     * Note: We have use the secrets plugin to allow us to configure the Dataset IDs in our secrets.properties file.
+     */
     private final DataSet[] dataSets = new DataSet[] {
-            new DataSet("Boulder", "Boulder-DataSet-Id", new LatLng(40.0150, -105.2705), this::styleBoulderDatasetLayer),
-            new DataSet("New York", "New-York-DataSet-Id", new LatLng(40.786244, -73.962684), this::styleNYCDatasetLayer),
-            new DataSet("Kyoto", "Kyoto-DataSet-Id", new LatLng(35.005081, 135.764385), this::styleKyotoDatasetsLayer),
+            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID, new LatLng(40.0150, -105.2705), this::styleBoulderDatasetLayer),
+            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID, new LatLng(40.786244, -73.962684), this::styleNYCDatasetLayer),
+            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID, new LatLng(35.005081, 135.764385), this::styleKyotoDatasetsLayer),
     };
 
     private DataSet findDataSetByLabel(String label) {
@@ -111,17 +111,10 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
             mapFragment.getMapAsync(this);
         }
 
-        findViewById(R.id.button_boulder).setOnClickListener(view -> {
-            switchDataSet(((Button) view).getText().toString());
-        });
-
-        findViewById(R.id.button_ny).setOnClickListener(view -> {
-            switchDataSet(((Button) view).getText().toString());
-        });
-
-        findViewById(R.id.button_kyoto).setOnClickListener(view -> {
-            switchDataSet(((Button) view).getText().toString());
-        });
+        int[] buttonIds = {R.id.button_boulder, R.id.button_ny, R.id.button_kyoto};
+        for (int buttonId : buttonIds) {
+            findViewById(buttonId).setOnClickListener(view -> switchDataSet(((Button) view).getText().toString()));
+        }
     }
 
     /**
@@ -170,11 +163,11 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         FeatureLayer.StyleFactory styleFactory = feature -> {
             int fillColor = Color.GREEN;
             int strokeColor = Color.YELLOW;
-            float pointRadius = 8F;
+            float pointRadius = 12F;
 
             if (feature instanceof DatasetFeature) {
                 Map<String, String> furColors = ((DatasetFeature) feature).getDatasetAttributes();
-                String furColor = furColors.get("CombinationofPrimaryandHighlightColor");
+                String furColor = furColors.get("Color");
 
                 if (furColor != null) {
                     switch (furColor) {
@@ -189,12 +182,12 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
                         case "Cinnamon+Gray":
                             fillColor = 0xFF8B0000; // dark red color
                             strokeColor = 0xFF8B0000;
-                            pointRadius = 6F;
+                            pointRadius = 10F;
                             break;
                         case "Cinnamon+White":
                             fillColor = 0xFF8B0000; // dark red color
                             strokeColor = Color.WHITE;
-                            pointRadius = 6F;
+                            pointRadius = 10F;
                             break;
                         case "Gray+":
                             fillColor = Color.GRAY;
@@ -202,17 +195,17 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
                         case "Gray+Cinnamon":
                             fillColor = Color.GRAY;
                             strokeColor = 0xFF8B0000; // dark red color
-                            pointRadius = 6F;
+                            pointRadius = 10F;
                             break;
                         case "Gray+Cinnamon, White":
                             fillColor = Color.LTGRAY;
                             strokeColor = 0xFF8B0000; // dark red color
-                            pointRadius = 6F;
+                            pointRadius = 10F;
                             break;
                         case "Gray+White":
                             fillColor = Color.GRAY;
                             strokeColor = Color.WHITE;
-                            pointRadius = 6F;
+                            pointRadius = 10F;
                             break;
                     }
                 }
