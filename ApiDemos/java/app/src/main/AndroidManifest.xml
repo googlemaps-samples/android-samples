@@ -33,6 +33,7 @@ limitations under the License.
         android:maxSdkVersion="22" />
 
     <application
+        android:name=".ApiDemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/demo_title"

@@ -16,6 +16,8 @@ package com.example.mapdemo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,17 +40,60 @@ import com.google.android.gms.maps.model.MapCapabilities;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * This sample showcases how to use the Data-driven styling for datasets. For more information
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
+ *
+ * This is meant to work with the datasets in the res/raw directory.
  */
 // [START maps_android_data_driven_styling_datasets]
 public class DataDrivenDatasetStylingActivity extends AppCompatActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
+    private record DataSet(
+            String label,
+            String datasetId,
+            LatLng location,
+            DataDrivenDatasetStylingActivity.DataSet.StylingCallback callback) {
+            public interface StylingCallback {
+                void styleDatasetLayer();
+            }
+    }
 
-    private static final LatLng BOULDER = new LatLng(40.0150, -105.2705);
-    private static final LatLng NEW_YORK = new LatLng(40.7128, -74.0060);
-    private static final LatLng KYOTO = new LatLng(35.0016, 135.7681);
+    /**
+     * An array of DataSet objects representing different geographic locations and their associated data.
+     * Each DataSet contains:
+     *  - A human-readable name (e.g., "Boulder", "New York").
+     *  - A unique Dataset ID, which should correspond to a dataset id in the Datasets console tab.
+     *  - The central latitude and longitude coordinates (LatLng) of the location.
+     *  - A styling function (method reference) that defines how to style the data from that dataset on a map.
+     * <p>
+     * This array is used to configure which datasets are available for display and how they should be presented.
+     * Each element of the array should be a new DataSet object.
+     * Modify the constructor arguments of each DataSet to define your specific data and styles.
+     * The styling function will receive a `Layer` to which it can add elements.
+     * <p>
+     * Example:
+     *   - `new DataSet("Boulder", "Boulder-DataSet-Id", new LatLng(40.0150, -105.2705), this::styleBoulderDatasetLayer)`
+     *     This creates a DataSet for Boulder, identified by "Boulder-DataSet-Id", centered on the given coordinates,
+     *     and styled using the `styleBoulderDatasetLayer` method.
+     * <p>
+     * Note: The actual data associated with each Dataset ID should be managed and retrieved separately based on this ID.
+     */ // TODO: Set the Dataset IDs here.
+    private final DataSet[] dataSets = new DataSet[] {
+            new DataSet("Boulder", "Boulder-DataSet-Id", new LatLng(40.0150, -105.2705), this::styleBoulderDatasetLayer),
+            new DataSet("New York", "New-York-DataSet-Id", new LatLng(40.786244, -73.962684), this::styleNYCDatasetLayer),
+            new DataSet("Kyoto", "Kyoto-DataSet-Id", new LatLng(35.005081, 135.764385), this::styleKyotoDatasetsLayer),
+    };
+
+    private DataSet findDataSetByLabel(String label) {
+        for (DataSet dataSet : dataSets) {
+            if (dataSet.label().equalsIgnoreCase(label)) { // Case-insensitive comparison
+                return dataSet;
+            }
+        }
+        return null; // Return null if no match is found
+    }
 
     private static final float ZOOM_LEVEL = 13.5f;
     private static final String TAG = DataDrivenDatasetStylingActivity.class.getName();
@@ -67,65 +112,61 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         }
 
         findViewById(R.id.button_boulder).setOnClickListener(view -> {
-            datasetLayer = map.getFeatureLayer(
-                    new FeatureLayerOptions.Builder()
-                            .featureType(FeatureType.DATASET)
-                            .datasetId("YOUR-DATASET-ID-1")
-                            .build()
-            );
-            styleDatasetsLayerPolyline();
-            centerMapOnLocation(BOULDER);
-        }); // Boulder coordinates
-        findViewById(R.id.button_ny).setOnClickListener(view -> {
-            datasetLayer = map.getFeatureLayer(
-                    new FeatureLayerOptions.Builder()
-                            .featureType(FeatureType.DATASET)
-                            .datasetId("YOUR-DATASET-ID-2")
-                            .build()
-            );
-            styleDatasetsLayer();
-            centerMapOnLocation(NEW_YORK);
-        }); // New York coordinates
-        findViewById(R.id.button_kyoto).setOnClickListener(view -> {
-            datasetLayer = map.getFeatureLayer(
-                    new FeatureLayerOptions.Builder()
-                            .featureType(FeatureType.DATASET)
-                            .datasetId("YOUR-DATASET-ID-3")
-                            .build()
-            );
-            styleDatasetsLayerPolygon();
-            centerMapOnLocation(KYOTO);
-        }); // Kyoto coordinates
+            switchDataSet(((Button) view).getText().toString());
+        });
 
+        findViewById(R.id.button_ny).setOnClickListener(view -> {
+            switchDataSet(((Button) view).getText().toString());
+        });
+
+        findViewById(R.id.button_kyoto).setOnClickListener(view -> {
+            switchDataSet(((Button) view).getText().toString());
+        });
+    }
+
+    /**
+     * Switches the currently displayed dataset to the one specified by the provided label.
+     * <p>
+     * This method attempts to find a DataSet object associated with the given label.
+     * If a matching DataSet is found, it updates the map's feature layer to display the
+     * data from that dataset. It also applies styling to the new dataset layer and centers
+     * the map on the dataset's specified location.
+     * <p>
+     * If no matching DataSet is found, a toast message is displayed indicating the failure.
+     * <p>
+     * @param label The label of the dataset to switch to. This label should correspond to a
+     *              dataset that has been previously added or loaded.
+     */
+    private void switchDataSet(String label) {
+        DataSet dataSet = findDataSetByLabel(label);
+        if (dataSet == null) {
+            Toast.makeText(this, "Failed to find dataset" + label, Toast.LENGTH_SHORT).show();
+        } else {
+            datasetLayer = map.getFeatureLayer(
+                    new FeatureLayerOptions.Builder()
+                            .featureType(FeatureType.DATASET)
+                            .datasetId(dataSet.datasetId())
+                            .build()
+            );
+            dataSet.callback.styleDatasetLayer();
+            centerMapOnLocation(dataSet.location());
+        }
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(BOULDER, ZOOM_LEVEL));
-
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
 
-        datasetLayer = map.getFeatureLayer(
-                new FeatureLayerOptions.Builder()
-                        .featureType(FeatureType.DATASET)
-                        .datasetId("YOUR-DATASET-ID")
-                        .build()
-        );
+        // Switch to the default dataset which must happen before adding the feature click listener
+        switchDataSet("Boulder");
 
         datasetLayer.addOnFeatureClickListener(this);
-
-        styleDatasetsLayerPolyline();
-
-
-        // Uncommenting these lines will style the polygons or polylines.
-        // styleDatasetsLayerPolygon();
-        // styleDatasetsLayer();
     }
 
-    private void styleDatasetsLayer() {
+    private void styleNYCDatasetLayer() {
         FeatureLayer.StyleFactory styleFactory = feature -> {
             int fillColor = Color.GREEN;
             int strokeColor = Color.YELLOW;
@@ -190,7 +231,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         }
     }
 
-    private void styleDatasetsLayerPolygon() {
+    private void styleKyotoDatasetsLayer() {
         // Create the style factory function.
         FeatureLayer.StyleFactory styleFactory = feature -> {
             // Check if the feature is an instance of DatasetFeature.
@@ -228,7 +269,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         }
     }
 
-    private void styleDatasetsLayerPolyline() {
+    private void styleBoulderDatasetLayer() {
         final int EASY = Color.GREEN;
         final int MODERATE = Color.BLUE;
         final int DIFFICULT = Color.RED;
@@ -330,3 +371,4 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     }
 }
 // [END maps_android_data_driven_styling_datasets]
+
