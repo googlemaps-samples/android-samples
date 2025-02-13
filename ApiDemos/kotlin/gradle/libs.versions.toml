@@ -1,32 +1,36 @@
 [versions]
-gradle = "8.8.0"
-kotlin = "2.1.0"
+activityKtx = "1.10.0"
+androidxJunit = "1.2.1"
 appcompat = "1.7.0"
 cardview = "1.0.0"
-recyclerview = "1.4.0"
-multidex = "2.0.1"
-secretsGradlePlugin = "2.0.1"
-volley = "1.2.1"
+easypermissions = "3.0.0"
+espresso = "3.6.1"
+gradle = "8.8.0"
+junit = "4.13.2"
+kotlin = "2.1.0"
 lifecycle = "2.8.7"
 mapsKtx = "5.1.1"
-easypermissions = "3.0.0"
-junit = "4.13.2"
-androidxJunit = "1.2.1"
-espresso = "3.6.1"
+material = "1.12.0"
+multidex = "2.0.1"
+recyclerview = "1.4.0"
+secretsGradlePlugin = "2.0.1"
+volley = "1.2.1"
 
 [libraries]
-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
-kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlinStdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
+activityKtx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
+androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
-secretsGradlePlugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
-volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
+espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinStdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
 lifecycleRuntimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 mapsKtx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "mapsKtx" }
-easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
-espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
+recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+secretsGradlePlugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }

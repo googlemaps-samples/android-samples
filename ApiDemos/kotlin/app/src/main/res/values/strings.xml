@@ -31,7 +31,7 @@
     <!-- Advanced Markers Demo -->
     <string name="advanced_markers_demo_label">Advanced Markers</string>
     <string name="advanced_markers_demo_details">Showcases the usage of Advanced Markers.</string>
-    <string name="map_id">YOUR_MAP_ID</string>
+    <string name="map_id">DEMO_MAP_ID</string>
 
     <!-- Basic Map Demo -->
     <string name="basic_demo_label">Basic Map</string>
@@ -62,6 +62,14 @@
     <!-- Close Info Window On Retap Demo -->
     <string name="close_info_window_demo_label">Close Info Window Demo</string>
     <string name="close_info_window_demo_details">Demonstrates how to close the info window when the currently selected marker is retapped.</string>
+
+    <!-- Data Driven Styling Demo -->
+    <string name="data_driven_styling_label">Data Driven Dataset Styling Demo</string>
+    <string name="data_driven_styling_details">Demonstrates how to use Data Driven styling for datasets.</string>
+
+    <!-- Data Driven Boundaries Demo -->
+    <string name="data_driven_boundaries_label">Data Driven Boundaries Demo</string>
+    <string name="data_driven_boundaries_details">Demonstrates how to use Data Driven styling for <boundaries></boundaries>.</string>
 
     <!-- Events Demo -->
     <string name="events_demo_label">Events</string>
@@ -343,7 +351,7 @@
         description="Text displayed below the Background Color Customization  - Programmatic demo title.">Demonstrates how to programmatically set a custom background color to a map.</string>
     <string name="show_map_tiles">Show Map Tiles</string>
 
-    <!--    Styling    -->
+    <!-- Styling -->
     <string name="styled_map_demo_label">Styled Map</string>
     <string name="styled_map_demo_description">Demonstrates how to style a map.</string>
     <string name="style_label_retro">Retro</string>
@@ -357,5 +365,8 @@
     <string name="map_color_dark_mode">Dark</string>
     <string name="map_color_follow_system_mode">Follow System\n</string>
 
-
+    <!-- Data Driven Dataset Styling -->
+    <string name="kyoto">Kyoto</string>
+    <string name="new_york">New York</string>
+    <string name="boulder">Boulder</string>
 </resources>

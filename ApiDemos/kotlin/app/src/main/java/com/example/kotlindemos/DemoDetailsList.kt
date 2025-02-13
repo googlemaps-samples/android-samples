@@ -68,6 +68,16 @@ class DemoDetailsList {
                 MarkerCloseInfoWindowOnRetapDemoActivity::class.java
             ),
             DemoDetails(
+                R.string.data_driven_styling_label,
+                R.string.data_driven_styling_details,
+                DataDrivenDatasetStylingActivity::class.java
+            ),
+            DemoDetails(
+                R.string.data_driven_boundaries_label,
+                R.string.data_driven_boundaries_details,
+                DataDrivenBoundariesActivity::class.java
+            ),
+            DemoDetails(
                 R.string.events_demo_label,
                 R.string.events_demo_details,
                 EventsDemoActivity::class.java
