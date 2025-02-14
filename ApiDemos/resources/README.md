@@ -2,20 +2,20 @@ This directory contains sample datasets for demonstrating data-driven styling in
 Data-driven styling allows you to customize the appearance of map features (like points, lines, and
 polygons) based on the data associated with those features.
 
-* **`res/new_york_points.csv`:** This CSV file contains data about squirrel sightings in New York City.
+* **`new_york_points.csv`:** This CSV file contains data about squirrel sightings in New York City.
   Each row represents a sighting, with the location (latitude
   and longitude), date, and other details about the squirrel (e.g., color, size). This data can be
   used to create a map where each squirrel sighting is represented by a point, and the appearance of
   the point (color, icon) can be customized based on the squirrel's attributes.
 
-* **`res/boulder_polylines.geojson`:** This GeoJSON file contains data about trails in Boulder,
+* **`boulder_polylines.geojson`:** This GeoJSON file contains data about trails in Boulder,
   Colorado. Each feature in the file represents a trail, and the geometry is likely a polyline (a
   series of connected points). The file also includes attributes like trail name, difficulty,
   and length. This data can be used to create a map where trails are displayed as lines, and the
   appearance of the lines (color, thickness, pattern) can be customized based on the trail's
   attributes.
 
-* **`res/kyoto_polygons.geojson`:** This GeoJSON file contains data about temples in Kyoto, Japan. Each
+* **`kyoto_polygons.geojson`:** This GeoJSON file contains data about temples in Kyoto, Japan. Each
   feature in the file represents a temple, and the geometry is a polygon (an enclosed area).
 
 **Uploading Data to Google Cloud Console and Using it with Google Maps:**
