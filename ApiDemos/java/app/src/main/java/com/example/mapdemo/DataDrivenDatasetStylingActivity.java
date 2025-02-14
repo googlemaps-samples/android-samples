@@ -59,6 +59,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
             String label,
             String datasetId,
             LatLng location,
+            float zoomLevel,
             DataDrivenDatasetStylingActivity.DataSet.StylingCallback callback) {
             public interface StylingCallback {
                 void styleDatasetLayer();
@@ -86,9 +87,9 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
      * Note: We have use the secrets plugin to allow us to configure the Dataset IDs in our secrets.properties file.
      */
     private final DataSet[] dataSets = new DataSet[] {
-            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID, new LatLng(40.0150, -105.2705), this::styleBoulderDatasetLayer),
-            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID, new LatLng(40.786244, -73.962684), this::styleNYCDatasetLayer),
-            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID, new LatLng(35.005081, 135.764385), this::styleKyotoDatasetsLayer),
+            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID, new LatLng(40.0150, -105.2705), 11f, this::styleBoulderDatasetLayer),
+            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID, new LatLng(40.786244, -73.962684), 14f, this::styleNYCDatasetLayer),
+            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID, new LatLng(35.005081, 135.764385), 13.5f, this::styleKyotoDatasetsLayer),
     };
 
     private DataSet findDataSetByLabel(String label) {
@@ -100,7 +101,6 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         return null; // Return null if no match is found
     }
 
-    private static final float ZOOM_LEVEL = 13.5f;
     private static final String TAG = DataDrivenDatasetStylingActivity.class.getName();
     private static FeatureLayer datasetLayer = null;
     private GoogleMap map;
@@ -167,7 +167,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
                             .build()
             );
             dataSet.callback.styleDatasetLayer();
-            centerMapOnLocation(dataSet.location());
+            centerMapOnLocation(dataSet.location(), dataSet.zoomLevel());
         }
     }
 
@@ -355,8 +355,8 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     }
 
 
-    private void centerMapOnLocation(LatLng location) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, ZOOM_LEVEL));
+    private void centerMapOnLocation(LatLng location, float zoomLevel) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
     }
 
     @Override
