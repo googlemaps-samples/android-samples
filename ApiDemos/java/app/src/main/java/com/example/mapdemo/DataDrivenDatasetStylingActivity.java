@@ -14,14 +14,20 @@
 package com.example.mapdemo;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.ColorUtils;
+import androidx.core.view.WindowCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -100,6 +106,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     private static FeatureLayer datasetLayer = null;
     private GoogleMap map;
     private String lastGlobalId = null;
+    private ViewGroup mapContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +121,39 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         int[] buttonIds = {R.id.button_boulder, R.id.button_ny, R.id.button_kyoto};
         for (int buttonId : buttonIds) {
             findViewById(buttonId).setOnClickListener(view -> switchDataSet(((Button) view).getText().toString()));
+        }
+
+        mapContainer = findViewById(R.id.map_container);
+
+        handleCutout();
+    }
+
+    private void handleCutout() {
+        Window window = getWindow(); // Assuming this method is within an Activity or Fragment
+
+        WindowCompat.setDecorFitsSystemWindows(window, false);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.getDecorView().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @NonNull
+                @Override
+                public WindowInsets onApplyWindowInsets(@NonNull View view, @NonNull WindowInsets windowInsets) {
+                    android.graphics.Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars());
+                    int topInset = insets.top;
+                    mapContainer.setPadding(0, topInset, 0, 0);
+                    return windowInsets;
+                }
+            });
+        } else {
+            window.getDecorView().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @NonNull
+                @Override
+                public WindowInsets onApplyWindowInsets(@NonNull View view, @NonNull WindowInsets windowInsets) {
+                    int topInset = windowInsets.getSystemWindowInsetTop();
+                    mapContainer.setPadding(0, topInset, 0, 0);
+                    return windowInsets;
+                }
+            });
         }
     }
 
@@ -270,8 +310,8 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         // Create the style factory function.
         FeatureLayer.StyleFactory styleFactory = feature -> {
             // Set default colors to yellow and point radius to 8.
-            int fillColor = Color.GREEN;
-            int strokeColor = Color.YELLOW;
+            int fillColor;
+            int strokeColor;
             float pointRadius = 8F;
             float strokeWidth = 3F;
 

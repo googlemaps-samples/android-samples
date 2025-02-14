@@ -301,4 +301,9 @@
     <!-- Data Driven Boundaries Demo -->
     <string name="data_driven_boundaries_label">Data Driven Boundaries Demo</string>
     <string name="data_driven_boundaries_description">Demonstrates how to use Data Driven styling for boundaries.</string>
+
+    <!-- Data Driven Dataset Styling -->
+    <string name="kyoto">Kyoto</string>
+    <string name="new_york">New York</string>
+    <string name="boulder">Boulder</string>
 </resources>

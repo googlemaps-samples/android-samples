@@ -14,46 +14,71 @@
  limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- Map Fragment -->
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_bar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/data_driven_styling_label"
+        app:titleTextColor="?attr/colorOnPrimary"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        />
+
     <fragment
         android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         map:backgroundColor="#fff0b2dd"
         map:mapId="@string/map_id"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        class="com.google.android.gms.maps.SupportMapFragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
 
-    <!-- Buttons to center the map -->
     <LinearLayout
+        android:id="@+id/button_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_boulder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Boulder" />
+            android:layout_margin="4dp"
+            android:padding="8dp"
+            android:text="@string/boulder" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_ny"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New York" />
+            android:layout_margin="4dp"
+            android:padding="8dp"
+            android:text="@string/new_york" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_kyoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kyoto" />
+            android:layout_margin="4dp"
+            android:padding="8dp"
+            android:text="@string/kyoto" />
+
     </LinearLayout>
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

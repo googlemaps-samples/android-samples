@@ -96,6 +96,7 @@ limitations under the License.
             android:label="@string/data_driven_boundaries_label" />
         <activity
             android:name=".DataDrivenDatasetStylingActivity"
+            android:theme="@style/MaterialAppTheme"
             android:exported="true"
             android:label="@string/data_driven_styling_label" />
         <activity

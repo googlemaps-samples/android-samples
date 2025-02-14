@@ -23,4 +23,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+
+    <style name="MaterialAppTheme" parent="Theme.Material3.DynamicColors.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
 </resources>
