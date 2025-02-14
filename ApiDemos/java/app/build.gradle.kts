@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.playServicesMaps)
     implementation(libs.material)
+    implementation(libs.activity)
 
     // Tests
     testImplementation(libs.junit)

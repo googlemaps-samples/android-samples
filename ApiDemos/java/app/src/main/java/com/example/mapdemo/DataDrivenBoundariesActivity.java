@@ -13,13 +13,23 @@
 // limitations under the License.
 package com.example.mapdemo;
 
+import static java.lang.Math.round;
+
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,9 +44,12 @@ import com.google.android.gms.maps.model.FeatureType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapCapabilities;
 import com.google.android.gms.maps.model.PlaceFeature;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This sample showcases how to use the Data-driven styling for boundaries. For more information
@@ -45,7 +58,11 @@ import java.util.List;
  */
 // [START maps_android_data_driven_styling_boundaries]
 public class DataDrivenBoundariesActivity extends AppCompatActivity implements OnMapReadyCallback,
-        FeatureLayer.OnFeatureClickListener {
+        FeatureLayer.OnFeatureClickListener, PopupMenu.OnMenuItemClickListener {
+    private static final String TAG = DataDrivenBoundariesActivity.class.getName();
+
+    private static final LatLng HANA_HAWAII = new LatLng(20.7522, -155.9877); // Hana, Hawaii
+    private static final LatLng CENTER_US = new LatLng(39.8283, -98.5795); // Approximate geographical center of the contiguous US
 
     private GoogleMap map;
 
@@ -53,73 +70,146 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
     private FeatureLayer areaLevel1Layer = null;
     private FeatureLayer countryLayer = null;
 
-    private static final String TAG = DataDrivenBoundariesActivity.class.getName();
+    private final FeatureLayer.StyleFactory localityStyleFactory = getLocalityStyleFactory();
+    private final FeatureLayer.StyleFactory countryStyleFactory = getCountryStyleFactory();
+    private final FeatureLayer.StyleFactory areaLevel1StyleFactory = getAreaLevel1StyleFactory();
 
-    private static final LatLng HANA_HAWAII = new LatLng(20.7522, -155.9877); // Hana, Hawaii
-    private static final LatLng CENTER_US = new LatLng(39.8283, -98.5795); // Approximate geographical center of the contiguous US
+    // Which layers are currently enabled
+    private boolean localityEnabled = true;
+    private boolean adminAreaEnabled = false;
+    private boolean countryEnabled = false;
+
+    private final Set<String> selectedPlaceIds = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.data_driven_boundaries_demo);
+
+        // [START_EXCLUDE silent]
+        if (getString(R.string.map_id).equals("DEMO_MAP_ID")) {
+            // This demo will not work if the map id is not set.
+            Toast.makeText(this, "Map ID is not set.  See README for instructions.", Toast.LENGTH_LONG).show();
+        }
+        // [END_EXCLUDE]
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
 
-        findViewById(R.id.button_hawaii).setOnClickListener(view -> centerMapOnLocation(HANA_HAWAII, 13.5f));
+        findViewById(R.id.button_hawaii).setOnClickListener(view -> centerMapOnLocation(HANA_HAWAII, 11f));
         findViewById(R.id.button_us).setOnClickListener(view -> centerMapOnLocation(CENTER_US, 1f));
+
+        applyInsets(findViewById(R.id.map_container));
+
+        // [START_EXCLUDE silent]
+        setupBoundarySelectorButton();
+        // [END_EXCLUDE]
     }
+
+    // [START_EXCLUDE silent]
+    private void setupBoundarySelectorButton() {
+        MaterialButton stylingTypeButton = findViewById(R.id.button_feature_type);
+        stylingTypeButton.setOnClickListener(v -> {
+                PopupMenu popupMenu = new PopupMenu(this, v);
+                MenuInflater inflater = popupMenu.getMenuInflater();
+                inflater.inflate(R.menu.boundary_types_menu, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(this);
+
+                popupMenu.getMenu().findItem(R.id.boundary_type_locality).setChecked(localityEnabled);
+                popupMenu.getMenu().findItem(R.id.boundary_type_administrative_area_level_1).setChecked(adminAreaEnabled);
+                popupMenu.getMenu().findItem(R.id.boundary_type_country).setChecked(countryEnabled);
+                popupMenu.show();
+        });
+    }
+    // [END_EXCLUDE]
 
     private void centerMapOnLocation(LatLng location, float zoomLevel) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
 
-        // Get the LOCALITY feature layer.
+        if (!capabilities.isDataDrivenStylingAvailable()) {
+            Toast.makeText(
+                    this,
+                    "Data-driven Styling is not available.  See README.md for instructions.",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+
+        // Gets the LOCALITY feature layer.
         localityLayer = googleMap.getFeatureLayer(
                 new FeatureLayerOptions.Builder()
                         .featureType(FeatureType.LOCALITY)
                         .build()
         );
 
-        // Apply style factory function to LOCALITY layer.
-        styleLocalityLayer();
-
-        // Get the ADMINISTRATIVE_AREA_LEVEL_1 feature layer.
+        // Gets the ADMINISTRATIVE_AREA_LEVEL_1 feature layer.
         areaLevel1Layer = googleMap.getFeatureLayer(
                 new FeatureLayerOptions.Builder()
                         .featureType(FeatureType.ADMINISTRATIVE_AREA_LEVEL_1)
                         .build()
         );
 
-        // Apply style factory function to ADMINISTRATIVE_AREA_LEVEL_1 layer.
-        styleAreaLevel1Layer();
-
-        // Get the COUNTRY feature layer.
+        // Gets the COUNTRY feature layer.
         countryLayer = googleMap.getFeatureLayer(
                 new FeatureLayerOptions.Builder()
                         .featureType(FeatureType.COUNTRY)
                         .build()
         );
-
-        // Register the click event handler for the Country layer.
         countryLayer.addOnFeatureClickListener(this);
 
-        // Apply default style to all countries on load to enable clicking.
-        styleCountryLayer();
+        centerMapOnLocation(HANA_HAWAII, 11f);
+
+        // Apply the current set of styles.
+        updateStyles();
     }
 
-    private void styleLocalityLayer() {
-        // Create the style factory function.
-        FeatureLayer.StyleFactory styleFactory = feature -> {
+    /**
+     * Updates the styles of the locality, area level 1, and country layers based on the current
+     * state of the `localityEnabled`, `adminAreaEnabled`, and `countryEnabled` flags.
+     * <p>
+     * For each layer, if the corresponding flag is true, the layer's features will be styled using
+     * the layer specific style factory function.
+     */
+    private void updateStyles() {
+        if (localityLayer != null && areaLevel1Layer != null && countryLayer != null) {
+            localityLayer.setFeatureStyle(localityEnabled ? localityStyleFactory : null);
+            areaLevel1Layer.setFeatureStyle(adminAreaEnabled ? areaLevel1StyleFactory : null);
+            if (countryEnabled) {
+                countryLayer.setFeatureStyle(countryStyleFactory);
+            } else {
+                countryLayer.setFeatureStyle(null);
+            }
+        }
+    }
+
+    /**
+     * Creates a StyleFactory for a FeatureLayer that styles Hana, HI on its Place ID.
+     * <p>
+     * This method defines a style factory that checks if a given feature is a {@link PlaceFeature}.
+     * and if that feature matches "ChIJ0zQtYiWsVHkRk8lRoB1RNPo" (Hana, HI) applies a specific style.
+     * Otherwise, it returns null, indicating no specific styling is applied.
+     *
+     * @return A {@link FeatureLayer.StyleFactory} instance that can be used to style features in a FeatureLayer.
+     *         The factory returns a {@link FeatureStyle} for Hana, HI, and null for other features.
+     */
+    private static FeatureLayer.StyleFactory getLocalityStyleFactory() {
+        int purple = 0x810FCB;
+        // Define a style with purple fill at 50% opacity and
+        // solid purple border.
+        int fillColor = setAlphaValueOnColor(purple, 0.5f);
+        int strokeColor = setAlphaValueOnColor(purple, 1f);
+
+        return feature -> {
             // Check if the feature is an instance of PlaceFeature,
             // which contains a place ID.
             if (feature instanceof PlaceFeature placeFeature) {
@@ -129,24 +219,26 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
                     // Use FeatureStyle.Builder to configure the FeatureStyle object
                     // returned by the style factory function.
                     return new FeatureStyle.Builder()
-                            // Define a style with purple fill at 50% opacity and
-                            // solid purple border.
-                            .fillColor(0x80810FCB)
-                            .strokeColor(0xFF810FCB)
+                            .fillColor(fillColor)
+                            .strokeColor(strokeColor)
                             .build();
                 }
             }
             return null;
         };
-
-        // Apply the style factory function to the feature layer.
-        if (localityLayer != null) {
-            localityLayer.setFeatureStyle(styleFactory);
-        }
     }
 
-    private void styleAreaLevel1Layer() {
-        FeatureLayer.StyleFactory styleFactory = feature -> {
+    /**
+     * Creates a StyleFactory for area level 1 features (e.g., states, provinces).
+     * <p>
+     * This factory provides a semi-transparent fill color for each area level 1 feature.
+     * <p>
+     * @return A StyleFactory that can be used to style area level 1 features on a map.
+     */
+    private static FeatureLayer.StyleFactory getAreaLevel1StyleFactory() {
+        int alpha = (int) (255 * 0.25);
+
+        return feature -> {
             if (feature instanceof PlaceFeature placeFeature) {
 
                 // Return a hueColor in the range [-299,299]. If the value is
@@ -157,64 +249,61 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
                 }
                 return new FeatureStyle.Builder()
                         // Set the fill color for the state based on the hashed hue color.
-                        .fillColor(Color.HSVToColor(150, new float[]{hueColor, 1f, 1f}))
+                        .fillColor(Color.HSVToColor(alpha, new float[]{hueColor, 1f, 1f}))
                         .build();
             }
             return null;
         };
-
-        // Apply the style factory function to the feature layer.
-        if (areaLevel1Layer != null) {
-            areaLevel1Layer.setFeatureStyle(styleFactory);
-        }
     }
 
-    // Set default fill and border for all countries to ensure that they respond
-    // to click events.
-    @RequiresApi(Build.VERSION_CODES.O)
-    private void styleCountryLayer() {
-        FeatureLayer.StyleFactory styleFactory = feature -> new FeatureStyle.Builder()
-                // Set the fill color for the country as white with a 10% opacity.
-                // This requires minApi 26
-                .fillColor(Color.argb(0.1f, 0f, 0f, 0f))
-                // Set border color to solid black.
-                .strokeColor(Color.BLACK)
-                .build();
-
-        // Apply the style factory function to the country feature layer.
-        if (countryLayer != null) {
-            countryLayer.setFeatureStyle(styleFactory);
-        }
+    /**
+     * Creates a StyleFactory for styling country features on a FeatureLayer highlighting selected
+     * countries. Selection is determined via the selectedPlaceIds set.
+     * <p>
+     * *Note:* If the set of selected countries changes, this function must be called to update the
+     * styling.
+     * <p>
+     * @return A FeatureLayer.StyleFactory that can be used to style country features.
+     */
+    private FeatureLayer.StyleFactory getCountryStyleFactory() {
+        int defaultFillColor = setAlphaValueOnColor(Color.BLACK, 0.1f);
+        int selectedFillColor = setAlphaValueOnColor(Color.RED, 0.33f);
+        return feature -> {
+            if (feature instanceof PlaceFeature) {
+                int fillColor = selectedPlaceIds.contains(((PlaceFeature) feature).getPlaceId()) ? selectedFillColor : defaultFillColor;
+                FeatureStyle.Builder build = new FeatureStyle.Builder();
+                return build.fillColor(fillColor).strokeColor(Color.BLACK).build();
+            }
+            return null;
+        };
     }
 
-    // Define the click event handler.
+    /**
+     * Called when a feature is clicked on the map.  It is only applied to the country layer.
+     * <p>
+     * Each time a country is clicked, its place ID is added to the selectedPlaceIds set or removed
+     * if it was already present.  Each time the set is
+     * <p>
+     */
     @Override
-    public void onFeatureClick(FeatureClickEvent event) {
+    public void onFeatureClick(@NonNull FeatureClickEvent event) {
         // Get the list of features affected by the click using
         // getPlaceIds() defined below.
-        List<String> selectedPlaceIds = getPlaceIds(event.getFeatures());
-        if (!selectedPlaceIds.isEmpty()) {
-            FeatureLayer.StyleFactory styleFactory = feature -> {
-                // Use PlaceFeature to get the placeID of the country.
-                if (feature instanceof PlaceFeature) {
-                    if (selectedPlaceIds.contains(((PlaceFeature) feature).getPlaceId())) {
-                        return new FeatureStyle.Builder()
-                                // Set the fill color to red.
-                                .fillColor(Color.RED)
-                                .build();
-                    }
-                }
-                return null;
-            };
+        List<String> newSelectedPlaceIds = getPlaceIds(event.getFeatures());
 
-            // Apply the style factory function to the feature layer.
-            if (countryLayer != null) {
-                countryLayer.setFeatureStyle(styleFactory);
+        for (String placeId : newSelectedPlaceIds) {
+            if (selectedPlaceIds.contains(placeId)) {
+                selectedPlaceIds.remove(placeId);
+            } else {
+                selectedPlaceIds.add(placeId);
             }
         }
+
+        // Reset the feature styling
+        countryLayer.setFeatureStyle(countryStyleFactory);
     }
 
-    // Get a List of place IDs from the FeatureClickEvent object.
+    // Gets a List of place IDs from the FeatureClickEvent object.
     private List<String> getPlaceIds(List<Feature> features) {
         List<String> placeIds = new ArrayList<>();
         for (Feature feature : features) {
@@ -224,5 +313,59 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
         }
         return placeIds;
     }
+
+    private static int setAlphaValueOnColor(int color, float alpha) {
+        return (color & 0x00ffffff) | (round(alpha * 255) << 24);
+    }
+
+    /**
+     * Applies insets to the container view to properly handle window insets.
+     *
+     * @param container the container view to apply insets to
+     */
+    private static void applyInsets(View container) {
+        ViewCompat.setOnApplyWindowInsetsListener(container,
+                (view, insets) -> {
+                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
+                    return insets;
+                }
+        );
+    }
+
+    /**
+     * Handles the click events for menu items in the boundary type selection menu.
+     * This method is called when a user selects a boundary type (locality, administrative area, or country) from the menu.
+     * It toggles the checked state of the selected menu item and updates the corresponding boolean flags (localityEnabled, adminAreaEnabled, countryEnabled).
+     * Finally, it calls the {@link #updateStyles()} method to reflect the changes in the map's display.
+     *
+     * @param item The MenuItem that was clicked.
+     * @return True if the event was handled, false otherwise. In this case it always return true if one of the correct items was selected.
+     */ // [START_EXCLUDE silent]
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Log.d(TAG, "onMenuItemClick: " + item.getItemId());
+        int id = item.getItemId();
+        boolean result = false;
+
+        if (id == R.id.boundary_type_locality) {
+            item.setChecked(!item.isChecked());
+            localityEnabled = item.isChecked();
+            result = true;
+        } else if (id == R.id.boundary_type_administrative_area_level_1) {
+            item.setChecked(!item.isChecked());
+            adminAreaEnabled = item.isChecked();
+            result = true;
+        } else if (id == R.id.boundary_type_country) {
+            item.setChecked(!item.isChecked());
+            countryEnabled = item.isChecked();
+            result = true;
+        }
+
+        updateStyles();
+
+        return result;
+    }
+    // [END_EXCLUDE]
 }
 // [END maps_android_data_driven_styling_boundaries]

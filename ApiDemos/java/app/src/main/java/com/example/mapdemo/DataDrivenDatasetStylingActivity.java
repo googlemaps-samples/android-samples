@@ -14,20 +14,19 @@
 package com.example.mapdemo;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.ColorUtils;
-import androidx.core.view.WindowCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -106,12 +105,19 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     private static FeatureLayer datasetLayer = null;
     private GoogleMap map;
     private String lastGlobalId = null;
-    private ViewGroup mapContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.data_driven_styling_demo);
+
+        // [START_EXCLUDE silent]
+        if (getString(R.string.map_id).equals("DEMO_MAP_ID")) {
+            // This demo will not work if the map id is not set.
+            Toast.makeText(this, "Map ID is not set.  See README for instructions.", Toast.LENGTH_LONG).show();
+        }
+        // [END_EXCLUDE]
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -123,38 +129,17 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
             findViewById(buttonId).setOnClickListener(view -> switchDataSet(((Button) view).getText().toString()));
         }
 
-        mapContainer = findViewById(R.id.map_container);
-
-        handleCutout();
+        applyInsets(findViewById(R.id.map_container));
     }
 
-    private void handleCutout() {
-        Window window = getWindow(); // Assuming this method is within an Activity or Fragment
-
-        WindowCompat.setDecorFitsSystemWindows(window, false);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.getDecorView().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-                @NonNull
-                @Override
-                public WindowInsets onApplyWindowInsets(@NonNull View view, @NonNull WindowInsets windowInsets) {
-                    android.graphics.Insets insets = windowInsets.getInsets(WindowInsets.Type.systemBars());
-                    int topInset = insets.top;
-                    mapContainer.setPadding(0, topInset, 0, 0);
-                    return windowInsets;
+    private static void applyInsets(View container) {
+        ViewCompat.setOnApplyWindowInsetsListener(container,
+                (view, insets) -> {
+                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
+                    return insets;
                 }
-            });
-        } else {
-            window.getDecorView().setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-                @NonNull
-                @Override
-                public WindowInsets onApplyWindowInsets(@NonNull View view, @NonNull WindowInsets windowInsets) {
-                    int topInset = windowInsets.getSystemWindowInsetTop();
-                    mapContainer.setPadding(0, topInset, 0, 0);
-                    return windowInsets;
-                }
-            });
-        }
+        );
     }
 
     /**
@@ -192,6 +177,13 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
 
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
+        if (!capabilities.isDataDrivenStylingAvailable()) {
+            Toast.makeText(
+                    this,
+                    "Data-driven Styling is not available.  See README.md for instructions.",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
 
         // Switch to the default dataset which must happen before adding the feature click listener
         switchDataSet("Boulder");

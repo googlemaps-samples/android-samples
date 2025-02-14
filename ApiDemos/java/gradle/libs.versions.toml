@@ -1,4 +1,5 @@
 [versions]
+activity = "1.10.0"
 androidxJunit = "1.2.1"
 appcompat = "1.7.0"
 espresso = "3.6.1"
@@ -9,6 +10,7 @@ recyclerview = "1.4.0"
 volley = "1.2.1"
 
 [libraries]
+activity = { module = "androidx.activity:activity", version.ref = "activity" }
 androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }

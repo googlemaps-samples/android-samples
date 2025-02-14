@@ -306,4 +306,12 @@
     <string name="kyoto">Kyoto</string>
     <string name="new_york">New York</string>
     <string name="boulder">Boulder</string>
+
+    <!-- Data Driven Boundaries Styling -->
+    <string name="hawaii">Hawaii</string>
+    <string name="united_states">US</string>
+    <string name="locality">Locality</string>
+    <string name="administrative_area_level_1">Administrative Area Level 1</string>
+    <string name="country">Country</string>
+    <string name="boundary_type">Boundary</string>
 </resources>
