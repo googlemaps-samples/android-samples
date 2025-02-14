@@ -58,8 +58,9 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.recyclerview)
     implementation(libs.volley)
-    implementation(platform(libs.kotlinBom))
     implementation(libs.playServicesMaps)
+    implementation(libs.material)
+    implementation(libs.activity)
 
     // Tests
     testImplementation(libs.junit)

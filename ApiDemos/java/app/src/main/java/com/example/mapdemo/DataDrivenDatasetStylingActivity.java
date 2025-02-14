@@ -16,12 +16,17 @@ package com.example.mapdemo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.ColorUtils;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -54,6 +59,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
             String label,
             String datasetId,
             LatLng location,
+            float zoomLevel,
             DataDrivenDatasetStylingActivity.DataSet.StylingCallback callback) {
             public interface StylingCallback {
                 void styleDatasetLayer();
@@ -81,9 +87,9 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
      * Note: We have use the secrets plugin to allow us to configure the Dataset IDs in our secrets.properties file.
      */
     private final DataSet[] dataSets = new DataSet[] {
-            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID, new LatLng(40.0150, -105.2705), this::styleBoulderDatasetLayer),
-            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID, new LatLng(40.786244, -73.962684), this::styleNYCDatasetLayer),
-            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID, new LatLng(35.005081, 135.764385), this::styleKyotoDatasetsLayer),
+            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID, new LatLng(40.0150, -105.2705), 11f, this::styleBoulderDatasetLayer),
+            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID, new LatLng(40.786244, -73.962684), 14f, this::styleNYCDatasetLayer),
+            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID, new LatLng(35.005081, 135.764385), 13.5f, this::styleKyotoDatasetsLayer),
     };
 
     private DataSet findDataSetByLabel(String label) {
@@ -95,7 +101,6 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         return null; // Return null if no match is found
     }
 
-    private static final float ZOOM_LEVEL = 13.5f;
     private static final String TAG = DataDrivenDatasetStylingActivity.class.getName();
     private static FeatureLayer datasetLayer = null;
     private GoogleMap map;
@@ -104,7 +109,15 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.data_driven_styling_demo);
+
+        // [START_EXCLUDE silent]
+        if (getString(R.string.map_id).equals("DEMO_MAP_ID")) {
+            // This demo will not work if the map id is not set.
+            Toast.makeText(this, "Map ID is not set.  See README for instructions.", Toast.LENGTH_LONG).show();
+        }
+        // [END_EXCLUDE]
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -115,6 +128,18 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         for (int buttonId : buttonIds) {
             findViewById(buttonId).setOnClickListener(view -> switchDataSet(((Button) view).getText().toString()));
         }
+
+        applyInsets(findViewById(R.id.map_container));
+    }
+
+    private static void applyInsets(View container) {
+        ViewCompat.setOnApplyWindowInsetsListener(container,
+                (view, insets) -> {
+                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
+                    return insets;
+                }
+        );
     }
 
     /**
@@ -142,7 +167,7 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
                             .build()
             );
             dataSet.callback.styleDatasetLayer();
-            centerMapOnLocation(dataSet.location());
+            centerMapOnLocation(dataSet.location(), dataSet.zoomLevel());
         }
     }
 
@@ -152,6 +177,13 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
 
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
+        if (!capabilities.isDataDrivenStylingAvailable()) {
+            Toast.makeText(
+                    this,
+                    "Data-driven Styling is not available.  See README.md for instructions.",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
 
         // Switch to the default dataset which must happen before adding the feature click listener
         switchDataSet("Boulder");
@@ -270,8 +302,8 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         // Create the style factory function.
         FeatureLayer.StyleFactory styleFactory = feature -> {
             // Set default colors to yellow and point radius to 8.
-            int fillColor = Color.GREEN;
-            int strokeColor = Color.YELLOW;
+            int fillColor;
+            int strokeColor;
             float pointRadius = 8F;
             float strokeWidth = 3F;
 
@@ -323,8 +355,8 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     }
 
 
-    private void centerMapOnLocation(LatLng location) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, ZOOM_LEVEL));
+    private void centerMapOnLocation(LatLng location, float zoomLevel) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
     }
 
     @Override

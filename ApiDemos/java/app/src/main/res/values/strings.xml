@@ -301,4 +301,17 @@
     <!-- Data Driven Boundaries Demo -->
     <string name="data_driven_boundaries_label">Data Driven Boundaries Demo</string>
     <string name="data_driven_boundaries_description">Demonstrates how to use Data Driven styling for boundaries.</string>
+
+    <!-- Data Driven Dataset Styling -->
+    <string name="kyoto">Kyoto</string>
+    <string name="new_york">New York</string>
+    <string name="boulder">Boulder</string>
+
+    <!-- Data Driven Boundaries Styling -->
+    <string name="hawaii">Hawaii</string>
+    <string name="united_states">US</string>
+    <string name="locality">Locality</string>
+    <string name="administrative_area_level_1">Administrative Area Level 1</string>
+    <string name="country">Country</string>
+    <string name="boundary_type">Boundary</string>
 </resources>

@@ -1,20 +1,21 @@
 [versions]
+activity = "1.10.0"
+androidxJunit = "1.2.1"
 appcompat = "1.7.0"
+espresso = "3.6.1"
+junit = "4.13.2"
+material = "1.12.0"
+playServicesMaps = "19.0.0"
 recyclerview = "1.4.0"
 volley = "1.2.1"
-kotlinBom = "2.0.21"
-playServicesMaps = "19.0.0"
-junit = "4.13.2"
-androidxJunit = "1.2.1"
-espresso = "3.6.1"
-
 
 [libraries]
+activity = { module = "androidx.activity:activity", version.ref = "activity" }
+androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
-kotlinBom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlinBom" }
-playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
-espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
