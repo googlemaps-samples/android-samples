@@ -16,9 +16,14 @@ package com.example.mapdemo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,12 +57,24 @@ public class AdvancedMarkersDemoActivity extends AppCompatActivity implements On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.advanced_markers_demo);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+        applyInsets(findViewById(R.id.map_container));
+    }
+
+    private static void applyInsets(View container) {
+        ViewCompat.setOnApplyWindowInsetsListener(container,
+                (view, insets) -> {
+                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
+                    return insets;
+                }
+        );
     }
 
     @Override

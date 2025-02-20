@@ -24,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 /**
  * This shows how to create a simple activity with a custom background color appiled to the map, and
@@ -52,7 +53,7 @@ public class BackgroundColorCustomizationDemoActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        CheckBox mapTypeToggleCheckbox = (CheckBox) findViewById(R.id.map_type_toggle);
+        SwitchMaterial mapTypeToggleCheckbox = findViewById(R.id.map_type_toggle);
         mapTypeToggleCheckbox.setOnCheckedChangeListener(
             (view, isChecked) -> map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 
