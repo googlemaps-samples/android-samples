@@ -14,12 +14,33 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_bar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/background_color_customization_demo_label"
+        app:titleTextColor="?attr/colorOnPrimary" />
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
     <LinearLayout
+        android:background="@color/white"
+        android:baselineAligned="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        android:id="@+id/first_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,7 +49,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/stop_animation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +72,7 @@
             android:gravity="center_horizontal"
             android:layout_weight="1">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +82,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/left_arrow" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +92,7 @@
                 android:layout_toRightOf="@id/scroll_left"
                 android:text="@string/up_arrow" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +102,7 @@
                 android:layout_toRightOf="@id/scroll_left"
                 android:text="@string/down_arrow" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +119,7 @@
             android:layout_gravity="right"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/zoom_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,7 +127,7 @@
                 android:onClick="onZoomIn"
                 android:text="@string/zoom_in" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/zoom_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,7 +142,7 @@
             android:layout_height="fill_parent"
             android:layout_gravity="right">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/tilt_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -129,7 +150,7 @@
                 android:text="@string/tilt_more"
                 android:onClick="onTiltMore" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/tilt_less"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -140,10 +161,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_container"
+        android:id="@+id/second_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/duration_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -159,10 +185,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second_container"
+        android:id="@+id/third_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/sydney"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -170,7 +201,7 @@
             android:layout_weight="0.5"
             android:text="@string/go_to_sydney" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bondi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -179,9 +210,5 @@
             android:text="@string/go_to_bondi" />
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

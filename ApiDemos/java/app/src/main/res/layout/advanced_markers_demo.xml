@@ -11,17 +11,36 @@
  limitations under the License.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <!--We need to add the map id to make advanced markers work. For more information,
     check out https://developers.google.com/maps/documentation/get-map-id#create-a-map-id. -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_bar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/advanced_markers_demo_label"
+        app:titleTextColor="?attr/colorOnPrimary" />
+
     <fragment
         android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
         map:backgroundColor="#fff0b2dd"
-        map:mapId="@string/map_id"
-        class="com.google.android.gms.maps.SupportMapFragment"/>
-</RelativeLayout>
+        map:mapId="@string/map_id" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -126,6 +126,7 @@ public class CameraDemoActivity extends AppCompatActivity implements
     }
 
     // [START_EXCLUDE silent]
+
     /**
      * When the map is not ready the CameraUpdateFactory cannot be used. This should be called on
      * all entry points that call methods on the Google Maps API.
