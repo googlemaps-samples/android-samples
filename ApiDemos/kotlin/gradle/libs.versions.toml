@@ -1,5 +1,5 @@
 [versions]
-activityKtx = "1.10.0"
+activityKtx = "1.10.1"
 androidxJunit = "1.2.1"
 appcompat = "1.7.0"
 cardview = "1.0.0"
