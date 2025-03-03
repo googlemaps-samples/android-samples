@@ -43,7 +43,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
  * This shows how to change the camera position for the map.
  */
 // [START maps_camera_events]
-public class CameraDemoActivity extends AppCompatActivity implements
+public class CameraDemoActivity extends SamplesBaseActivity implements
         OnCameraMoveStartedListener,
         OnCameraMoveListener,
         OnCameraMoveCanceledListener,
@@ -97,6 +97,7 @@ public class CameraDemoActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     // [START_EXCLUDE silent]

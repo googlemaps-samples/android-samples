@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * This shows how to add a ground overlay to a map.
  */
-public class GroundOverlayDemoActivity extends AppCompatActivity
+public class GroundOverlayDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnMapReadyCallback,
         GoogleMap.OnGroundOverlayClickListener {
 
@@ -72,6 +72,7 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

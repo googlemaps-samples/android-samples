@@ -16,6 +16,8 @@ package com.example.mapdemo;
 
 import android.os.Bundle;
 import android.widget.CheckBox;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.common.internal.Preconditions;
@@ -29,8 +31,9 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 /**
  * This shows how to create a simple activity with a custom background color appiled to the map, and
  * add a marker on the map.
+ *
  */
-public class BackgroundColorCustomizationDemoActivity extends AppCompatActivity
+public class BackgroundColorCustomizationDemoActivity extends SamplesBaseActivity
     implements OnMapReadyCallback {
 
     @Override
@@ -43,6 +46,7 @@ public class BackgroundColorCustomizationDemoActivity extends AppCompatActivity
 
         Preconditions.checkNotNull(mapFragment)
             .getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /**

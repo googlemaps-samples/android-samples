@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * This shows how to create a simple activity with a map and a marker on the map.
  */
 // [START maps_android_sample_basic_map]
-public class BasicMapDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class BasicMapDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class BasicMapDemoActivity extends AppCompatActivity implements OnMapRead
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /**

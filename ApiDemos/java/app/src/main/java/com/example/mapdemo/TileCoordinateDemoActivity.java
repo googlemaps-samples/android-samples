@@ -36,7 +36,7 @@ import java.io.ByteArrayOutputStream;
 /**
  * This demonstrates tile overlay coordinates.
  */
-public class TileCoordinateDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class TileCoordinateDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,8 @@ public class TileCoordinateDemoActivity extends AppCompatActivity implements OnM
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

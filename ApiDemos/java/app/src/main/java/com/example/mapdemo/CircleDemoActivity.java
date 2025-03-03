@@ -55,7 +55,7 @@ import java.util.List;
 /**
  * This shows how to draw circles on a map.
  */
-public class CircleDemoActivity extends AppCompatActivity
+public class CircleDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnMarkerDragListener, OnMapLongClickListener,
         OnItemSelectedListener, OnMapReadyCallback {
 
@@ -205,6 +205,7 @@ public class CircleDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     private String[] getResourceStrings(int[] resourceIds) {

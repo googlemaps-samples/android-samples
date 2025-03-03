@@ -18,6 +18,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/map_container"
     android:layout_height="match_parent">
 
   <com.google.android.material.appbar.MaterialToolbar

@@ -16,6 +16,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    android:id="@+id/map_container"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
@@ -24,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:adjustViewBounds="true"></ImageView>
+        android:adjustViewBounds="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"

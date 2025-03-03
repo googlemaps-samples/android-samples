@@ -29,7 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
  * requires forwarding all the important lifecycle methods onto MapView.
  */
-public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class RawMapViewDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private MapView mMapView;
 
@@ -51,6 +51,8 @@ public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapRe
         mMapView.onCreate(mapViewBundle);
 
         mMapView.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

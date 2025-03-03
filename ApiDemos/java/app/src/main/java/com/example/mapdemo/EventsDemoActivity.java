@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * This shows how to listen to some {@link GoogleMap} events.
  */
 // [START maps_android_sample_events]
-public class EventsDemoActivity extends AppCompatActivity
+public class EventsDemoActivity extends SamplesBaseActivity
         implements OnMapClickListener, OnMapLongClickListener, OnCameraIdleListener,
         OnMapReadyCallback {
 
@@ -51,6 +51,7 @@ public class EventsDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

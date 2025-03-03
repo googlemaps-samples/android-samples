@@ -40,7 +40,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Note the use of the view holder pattern with the
  * {@link com.google.android.gms.maps.OnMapReadyCallback}.
  */
-public class LiteListDemoActivity extends AppCompatActivity {
+public class LiteListDemoActivity extends SamplesBaseActivity {
 
     private RecyclerView mRecyclerView;
 
@@ -61,6 +61,7 @@ public class LiteListDemoActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(new MapAdapter(LIST_LOCATIONS));
         mRecyclerView.setRecyclerListener(mRecycleListener);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /** Create a menu to switch between Linear and Grid LayoutManager. */

@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to take a snapshot of the map.
  */
-public class SnapshotDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     /**
      * Note that this may be null if the Google Play services APK is not available.
@@ -50,6 +50,8 @@ public class SnapshotDemoActivity extends AppCompatActivity implements OnMapRead
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

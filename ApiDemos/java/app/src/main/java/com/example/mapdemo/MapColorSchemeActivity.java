@@ -27,7 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.MapColorScheme;
 
-public class MapColorSchemeActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapColorSchemeActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private Button buttonLight;
     private Button buttonDark;
@@ -44,6 +44,7 @@ public class MapColorSchemeActivity extends AppCompatActivity implements OnMapRe
         buttonLight = findViewById(R.id.map_color_light_mode);
         buttonDark = findViewById(R.id.map_color_dark_mode);
         buttonFollowSystem = findViewById(R.id.map_color_follow_system_mode);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

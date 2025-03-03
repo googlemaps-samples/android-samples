@@ -29,7 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * This shows how to retain a map across activity restarts (e.g., from screen rotations), which can
  * be faster than relying on state serialization.
  */
-public class RetainMapDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class RetainMapDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,8 @@ public class RetainMapDemoActivity extends AppCompatActivity implements OnMapRea
         }
 
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

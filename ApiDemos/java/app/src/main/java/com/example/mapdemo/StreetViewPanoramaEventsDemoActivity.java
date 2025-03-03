@@ -35,7 +35,7 @@ import com.google.android.gms.maps.model.StreetViewPanoramaOrientation;
 /**
  * This shows how to listen to some {@link StreetViewPanorama} events.
  */
-public class StreetViewPanoramaEventsDemoActivity extends AppCompatActivity
+public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
         implements OnStreetViewPanoramaChangeListener, OnStreetViewPanoramaCameraChangeListener,
         OnStreetViewPanoramaClickListener, OnStreetViewPanoramaLongClickListener {
 
@@ -91,6 +91,8 @@ public class StreetViewPanoramaEventsDemoActivity extends AppCompatActivity
                         streetViewPanorama.setPosition(SYDNEY);
                     }
                 });
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

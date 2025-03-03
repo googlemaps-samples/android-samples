@@ -42,7 +42,7 @@ import android.widget.Toast;
  * permission is not granted, the Activity is finished with an error message.
  */
 // [START maps_android_sample_my_location]
-public class MyLocationDemoActivity extends AppCompatActivity
+public class MyLocationDemoActivity extends SamplesBaseActivity
     implements
     OnMyLocationButtonClickListener,
     OnMyLocationClickListener,
@@ -72,6 +72,7 @@ public class MyLocationDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

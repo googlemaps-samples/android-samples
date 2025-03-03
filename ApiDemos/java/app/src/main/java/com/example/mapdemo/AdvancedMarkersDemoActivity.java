@@ -41,7 +41,7 @@ import com.google.android.gms.maps.model.PinConfig;
  * possibilities.
  */
 // [START maps_android_sample_marker_advanced]
-public class AdvancedMarkersDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private static final LatLng SINGAPORE = new LatLng(1.3521, 103.8198);
     private static final LatLng KUALA_LUMPUR = new LatLng(3.1390, 101.6869);
@@ -57,7 +57,6 @@ public class AdvancedMarkersDemoActivity extends AppCompatActivity implements On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.advanced_markers_demo);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -67,15 +66,7 @@ public class AdvancedMarkersDemoActivity extends AppCompatActivity implements On
         applyInsets(findViewById(R.id.map_container));
     }
 
-    private static void applyInsets(View container) {
-        ViewCompat.setOnApplyWindowInsetsListener(container,
-                (view, insets) -> {
-                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
-                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
-                    return insets;
-                }
-        );
-    }
+
 
     @Override
     public void onMapReady(GoogleMap map) {

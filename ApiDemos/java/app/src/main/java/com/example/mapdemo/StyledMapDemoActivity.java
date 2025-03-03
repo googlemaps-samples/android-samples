@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * This shows how to style a map with JSON.
  */
-public class StyledMapDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap = null;
 
@@ -73,6 +73,8 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

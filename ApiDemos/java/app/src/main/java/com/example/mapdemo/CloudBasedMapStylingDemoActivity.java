@@ -25,7 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment;
  * to style a map using this method, see:
  * https://developers.google.com/maps/documentation/android-sdk/cloud-based-map-styling
  **/
-public class CloudBasedMapStylingDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class CloudBasedMapStylingDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private static final String MAP_TYPE_KEY = "map_type";
     private GoogleMap map;
@@ -46,6 +46,7 @@ public class CloudBasedMapStylingDemoActivity extends AppCompatActivity implemen
         mapFragment.getMapAsync(this);
 
         setUpButtonListeners();
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

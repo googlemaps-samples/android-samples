@@ -55,7 +55,7 @@ import java.util.List;
  * This shows how to draw polylines on a map.
  */
 // [START maps_android_sample_polylines]
-public class PolylineDemoActivity extends AppCompatActivity
+public class PolylineDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnItemSelectedListener, OnMapReadyCallback {
 
     // City locations for mutable polyline.
@@ -160,6 +160,8 @@ public class PolylineDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
     // [START_EXCLUDE silent]
 

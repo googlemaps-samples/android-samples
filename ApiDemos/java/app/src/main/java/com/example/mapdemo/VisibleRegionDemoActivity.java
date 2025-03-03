@@ -37,7 +37,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * This shows how to use setPadding to allow overlays that obscure part of the map without
  * obscuring the map UI or copyright notices.
  */
-public class VisibleRegionDemoActivity extends AppCompatActivity implements
+public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     /**
@@ -72,6 +72,8 @@ public class VisibleRegionDemoActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

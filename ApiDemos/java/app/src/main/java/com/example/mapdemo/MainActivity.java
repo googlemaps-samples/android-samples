@@ -34,7 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
  *
  * <p>The main layout lists the demonstrated features, with buttons to launch them.
  */
-public final class MainActivity extends AppCompatActivity {
+public final class MainActivity extends SamplesBaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -86,5 +86,6 @@ public final class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(view.getContext(), demo.activityClass));
                 });
         }
+        applyInsets(findViewById(R.id.map_container));
     }
 }

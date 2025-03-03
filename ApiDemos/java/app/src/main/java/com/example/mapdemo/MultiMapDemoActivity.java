@@ -22,11 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to create a simple activity with multiple maps on screen.
  */
-public class MultiMapDemoActivity extends AppCompatActivity {
+public class MultiMapDemoActivity extends SamplesBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.multimap_demo);
+        applyInsets(findViewById(R.id.map_container));
     }
 }

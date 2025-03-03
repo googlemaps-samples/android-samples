@@ -57,7 +57,7 @@ import java.util.Set;
  * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
  */
 // [START maps_android_data_driven_styling_boundaries]
-public class DataDrivenBoundariesActivity extends AppCompatActivity implements OnMapReadyCallback,
+public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements OnMapReadyCallback,
         FeatureLayer.OnFeatureClickListener, PopupMenu.OnMenuItemClickListener {
     private static final String TAG = DataDrivenBoundariesActivity.class.getName();
 
@@ -106,6 +106,7 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
 
         // [START_EXCLUDE silent]
         setupBoundarySelectorButton();
+        applyInsets(findViewById(R.id.map_container));
         // [END_EXCLUDE]
     }
 
@@ -316,21 +317,6 @@ public class DataDrivenBoundariesActivity extends AppCompatActivity implements O
 
     private static int setAlphaValueOnColor(int color, float alpha) {
         return (color & 0x00ffffff) | (round(alpha * 255) << 24);
-    }
-
-    /**
-     * Applies insets to the container view to properly handle window insets.
-     *
-     * @param container the container view to apply insets to
-     */
-    private static void applyInsets(View container) {
-        ViewCompat.setOnApplyWindowInsetsListener(container,
-                (view, insets) -> {
-                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
-                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
-                    return insets;
-                }
-        );
     }
 
     /**

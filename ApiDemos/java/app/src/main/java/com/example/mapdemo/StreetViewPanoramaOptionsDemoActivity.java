@@ -30,7 +30,7 @@ import com.google.android.gms.maps.model.StreetViewSource;
 /**
  * This shows how to create an activity with static streetview (all options have been switched off)
  */
-public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
+public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
 
     // Cole St, San Fran
     private static final LatLng SAN_FRAN = new LatLng(37.765927, -122.449972);
@@ -77,6 +77,8 @@ public class StreetViewPanoramaOptionsDemoActivity extends AppCompatActivity {
                         setPosition();
                     }
                 });
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     private void setPosition() {

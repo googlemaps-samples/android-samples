@@ -29,7 +29,7 @@ import androidx.fragment.app.FragmentTransaction;
 /**
  * Demonstrates how to instantiate a SupportMapFragment programmatically and add a marker to it.
  */
-public class ProgrammaticDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ProgrammaticDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private static final String MAP_FRAGMENT_TAG = "map";
 
@@ -54,6 +54,8 @@ public class ProgrammaticDemoActivity extends AppCompatActivity implements OnMap
             fragmentTransaction.commit();
         }
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override
