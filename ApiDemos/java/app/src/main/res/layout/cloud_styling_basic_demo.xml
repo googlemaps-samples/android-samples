@@ -54,22 +54,22 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:orientation="horizontal">
-      <Button
+      <com.google.android.material.button.MaterialButton
         android:id="@+id/styling_normal_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lite_styling_normal_mode" />
-      <Button
+      <com.google.android.material.button.MaterialButton
         android:id="@+id/styling_satellite_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lite_styling_satellite_mode" />
-      <Button
+      <com.google.android.material.button.MaterialButton
         android:id="@+id/styling_hybrid_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lite_styling_hybrid_mode" />
-      <Button
+      <com.google.android.material.button.MaterialButton
         android:id="@+id/styling_terrain_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

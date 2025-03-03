@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:layout_width="150px">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/vr_normal_button"
                 android:padding="8dp"
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 android:onClick="setNoPadding"
                 android:text="@string/vr_normal_button" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/vr_more_padded_button"
                 android:padding="8dp"
                 android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                 android:onClick="setMorePadding"
                 android:text="@string/vr_more_padded_button" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/vr_soh_button"
                 android:padding="8dp"
                 android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                 android:onClick="moveToOperaHouse"
                 android:text="@string/vr_soh_button" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/vr_sfo_button"
                 android:padding="8dp"
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:onClick="moveToSFO"
                 android:text="@string/vr_sfo_button" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/vr_aus_button"
                 android:padding="8dp"
                 android:layout_width="wrap_content"

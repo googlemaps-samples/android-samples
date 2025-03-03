@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_bar" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/go_to_darwin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lite_demo_introtext" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/go_to_adelaide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/go_to_darwin" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/go_to_australia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
