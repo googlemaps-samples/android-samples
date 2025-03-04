@@ -32,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to close the info window when the currently selected marker is re-tapped.
  */
-public class MarkerCloseInfoWindowOnRetapDemoActivity extends AppCompatActivity implements
+public class MarkerCloseInfoWindowOnRetapDemoActivity extends SamplesBaseActivity implements
         OnMarkerClickListener,
         OnMapClickListener,
         OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
@@ -58,6 +58,8 @@ public class MarkerCloseInfoWindowOnRetapDemoActivity extends AppCompatActivity 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

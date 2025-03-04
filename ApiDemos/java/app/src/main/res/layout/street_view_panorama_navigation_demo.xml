@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2025 Google LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,28 +13,46 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/map_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/street_view_panorama_navigation_demo_label" />
+
+    <LinearLayout
+        android:id="@+id/first_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/get_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRequestPosition"
                 android:text="@string/request_position" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/move_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,57 +63,57 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pan_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:onClick="onPanLeft"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:minWidth="48dp"
+                android:onClick="onPanLeft"
                 android:text="@string/left_arrow" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pan_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/pan_left"
                 android:minWidth="48dp"
                 android:onClick="onPanUp"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@id/pan_left"
                 android:text="@string/up_arrow" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pan_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/pan_up"
+                android:layout_toEndOf="@id/pan_left"
                 android:minWidth="48dp"
                 android:onClick="onPanDown"
-                android:layout_below="@id/pan_up"
-                android:layout_toRightOf="@id/pan_left"
                 android:text="@string/down_arrow" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pan_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/pan_down"
                 android:minWidth="48dp"
                 android:onClick="onPanRight"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/pan_down"
                 android:text="@string/right_arrow" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/zoom_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,7 +121,7 @@
                 android:onClick="onZoomIn"
                 android:text="@string/zoom_in" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/zoom_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,8 +132,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/second_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_container">
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,54 +150,62 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:progress="1000"
-            android:max="5000" />
+            android:max="5000"
+            android:progress="1000" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/third_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second_container">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/sydney"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:onClick="onGoToSydney"
             android:layout_weight="1"
+            android:onClick="onGoToSydney"
             android:text="@string/go_to_sydney" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/sanfran"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:onClick="onGoToSanFran"
             android:layout_weight="1"
+            android:onClick="onGoToSanFran"
             android:text="@string/go_to_san_fran" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/santorini"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:onClick="onGoToSantorini"
             android:layout_weight="1"
+            android:onClick="onGoToSantorini"
             android:text="@string/go_to_santorini" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/invalid"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:onClick="onGoToInvalid"
             android:layout_weight="1"
+            android:onClick="onGoToInvalid"
             android:text="@string/go_to_invalid" />
     </LinearLayout>
 
     <fragment
         android:id="@+id/streetviewpanorama"
+        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment" />
-</LinearLayout>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/third_container" />
+</androidx.constraintlayout.widget.ConstraintLayout>

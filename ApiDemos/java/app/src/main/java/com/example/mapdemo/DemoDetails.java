@@ -35,10 +35,10 @@ public class DemoDetails {
     /**
      * The demo activity's class.
      */
-    public final Class<? extends AppCompatActivity> activityClass;
+    public final Class<? extends SamplesBaseActivity> activityClass;
 
     public DemoDetails(
-            int titleId, int descriptionId, Class<? extends AppCompatActivity> activityClass) {
+            int titleId, int descriptionId, Class<? extends SamplesBaseActivity> activityClass) {
         this.titleId = titleId;
         this.descriptionId = descriptionId;
         this.activityClass = activityClass;

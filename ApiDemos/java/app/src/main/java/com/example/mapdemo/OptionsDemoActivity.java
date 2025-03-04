@@ -22,11 +22,12 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * An activity that creates a map with some initial options.
  */
-public final class OptionsDemoActivity extends AppCompatActivity {
+public final class OptionsDemoActivity extends SamplesBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.options_demo);
+        applyInsets(findViewById(R.id.map_container));
     }
 }

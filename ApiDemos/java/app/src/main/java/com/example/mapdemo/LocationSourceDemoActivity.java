@@ -34,7 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to use a custom location source.
  */
-public class LocationSourceDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class LocationSourceDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     /**
      * A {@link LocationSource} which reports a new location whenever a user long presses the map
@@ -95,6 +95,7 @@ public class LocationSourceDemoActivity extends AppCompatActivity implements OnM
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

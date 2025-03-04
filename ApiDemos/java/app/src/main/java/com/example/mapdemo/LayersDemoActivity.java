@@ -46,7 +46,7 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
 /**
  * Demonstrates the different base layers of a map.
  */
-public class LayersDemoActivity extends AppCompatActivity
+public class LayersDemoActivity extends SamplesBaseActivity
     implements OnItemSelectedListener, OnMapReadyCallback,
     ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -90,6 +90,7 @@ public class LayersDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

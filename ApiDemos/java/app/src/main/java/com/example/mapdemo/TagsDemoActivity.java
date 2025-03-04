@@ -47,7 +47,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 /**
  * This shows how to use setTag/getTag on API objects.
  */
-public class TagsDemoActivity extends AppCompatActivity implements
+public class TagsDemoActivity extends SamplesBaseActivity implements
         OnCircleClickListener,
         OnGroundOverlayClickListener,
         OnMarkerClickListener,
@@ -101,6 +101,8 @@ public class TagsDemoActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

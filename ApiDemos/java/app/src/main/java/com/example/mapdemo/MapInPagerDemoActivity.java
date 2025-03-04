@@ -31,7 +31,7 @@ import androidx.viewpager.widget.ViewPager;
  * This shows how to add a map to a ViewPager. Note the use of
  * {@link ViewGroup#requestTransparentRegion(View)} to reduce jankiness.
  */
-public class MapInPagerDemoActivity extends AppCompatActivity {
+public class MapInPagerDemoActivity extends SamplesBaseActivity {
 
     /** Called when the activity is first created. */
     @Override
@@ -46,6 +46,8 @@ public class MapInPagerDemoActivity extends AppCompatActivity {
         // This is required to avoid a black flash when the map is loaded.  The flash is due
         // to the use of a SurfaceView as the underlying view of the map.
         pager.requestTransparentRegion(pager);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /** A simple fragment that displays a TextView. */

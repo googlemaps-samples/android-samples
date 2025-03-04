@@ -36,7 +36,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * which can be adjusted dynamically
  */
 
-public class StreetViewPanoramaNavigationDemoActivity extends AppCompatActivity {
+public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivity {
 
     // George St, Sydney
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
@@ -82,6 +82,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends AppCompatActivity 
                     }
                 });
         mCustomDurationBar = (SeekBar) findViewById(R.id.duration_bar);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /**

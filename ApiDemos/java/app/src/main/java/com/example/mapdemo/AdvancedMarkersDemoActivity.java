@@ -16,9 +16,14 @@ package com.example.mapdemo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,7 +41,7 @@ import com.google.android.gms.maps.model.PinConfig;
  * possibilities.
  */
 // [START maps_android_sample_marker_advanced]
-public class AdvancedMarkersDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private static final LatLng SINGAPORE = new LatLng(1.3521, 103.8198);
     private static final LatLng KUALA_LUMPUR = new LatLng(3.1390, 101.6869);
@@ -58,7 +63,10 @@ public class AdvancedMarkersDemoActivity extends AppCompatActivity implements On
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
+        applyInsets(findViewById(R.id.map_container));
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap map) {

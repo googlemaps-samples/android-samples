@@ -37,7 +37,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * launch the Google Maps Mobile application, {@link com.google.android.gms.maps.CameraUpdate}s
  * and {@link com.google.android.gms.maps.model.Polygon}s.
  */
-public class LiteDemoActivity extends AppCompatActivity implements
+public class LiteDemoActivity extends SamplesBaseActivity implements
         OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
@@ -73,6 +73,7 @@ public class LiteDemoActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /**

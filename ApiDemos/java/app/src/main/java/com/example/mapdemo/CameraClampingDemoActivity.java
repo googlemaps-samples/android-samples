@@ -34,7 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to constrain the camera to specific boundaries and zoom levels.
  */
-public class CameraClampingDemoActivity extends AppCompatActivity
+public class CameraClampingDemoActivity extends SamplesBaseActivity
         implements OnMapReadyCallback, OnCameraIdleListener {
 
     private static final String TAG = CameraClampingDemoActivity.class.getSimpleName();
@@ -81,6 +81,7 @@ public class CameraClampingDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

@@ -65,7 +65,7 @@ import java.util.Random;
  * This shows how to place markers on a map.
  */
 // [START maps_android_sample_marker]
-public class MarkerDemoActivity extends AppCompatActivity implements
+public class MarkerDemoActivity extends SamplesBaseActivity implements
         OnMarkerClickListener,
         OnInfoWindowClickListener,
         OnMarkerDragListener,
@@ -236,6 +236,8 @@ public class MarkerDemoActivity extends AppCompatActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

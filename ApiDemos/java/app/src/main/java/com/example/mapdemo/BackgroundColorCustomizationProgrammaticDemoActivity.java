@@ -17,6 +17,8 @@ package com.example.mapdemo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.CheckBox;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -31,7 +33,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * This shows how to to instantiate a SupportMapFragment programmatically with a custom background
  * color applied to the map, and add a marker on the map.
  */
-public class BackgroundColorCustomizationProgrammaticDemoActivity extends AppCompatActivity
+public class BackgroundColorCustomizationProgrammaticDemoActivity extends SamplesBaseActivity
     implements OnMapReadyCallback {
 
     private static final String MAP_FRAGMENT_TAG = "map";
@@ -61,6 +63,7 @@ public class BackgroundColorCustomizationProgrammaticDemoActivity extends AppCom
             fragmentTransaction.commit();
         }
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

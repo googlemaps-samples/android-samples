@@ -38,7 +38,7 @@ import java.util.Locale;
 /**
  * This demonstrates how to add a tile overlay to a map.
  */
-public class TileOverlayDemoActivity extends AppCompatActivity
+public class TileOverlayDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnMapReadyCallback {
 
     private static final int TRANSPARENCY_MAX = 100;
@@ -62,6 +62,8 @@ public class TileOverlayDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

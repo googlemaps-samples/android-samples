@@ -54,7 +54,7 @@ import java.util.Map;
  * This is meant to work with the datasets in the res/raw directory.
  */
 // [START maps_android_data_driven_styling_datasets]
-public class DataDrivenDatasetStylingActivity extends AppCompatActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
+public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
     private record DataSet(
             String label,
             String datasetId,
@@ -109,7 +109,6 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.data_driven_styling_demo);
 
         // [START_EXCLUDE silent]
@@ -130,16 +129,6 @@ public class DataDrivenDatasetStylingActivity extends AppCompatActivity implemen
         }
 
         applyInsets(findViewById(R.id.map_container));
-    }
-
-    private static void applyInsets(View container) {
-        ViewCompat.setOnApplyWindowInsetsListener(container,
-                (view, insets) -> {
-                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
-                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
-                    return insets;
-                }
-        );
     }
 
     /**

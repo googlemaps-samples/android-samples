@@ -28,7 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to create a simple activity with streetview
  */
-public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
+public class StreetViewPanoramaViewDemoActivity extends SamplesBaseActivity {
 
     // George St, Sydney
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
@@ -58,6 +58,8 @@ public class StreetViewPanoramaViewDemoActivity extends AppCompatActivity {
             streetViewBundle = savedInstanceState.getBundle(STREETVIEW_BUNDLE_KEY);
         }
         streetViewPanoramaView.onCreate(streetViewBundle);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

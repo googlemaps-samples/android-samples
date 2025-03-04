@@ -36,7 +36,7 @@ import android.widget.Toast;
 /**
  * This shows how UI settings can be toggled.
  */
-public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -67,6 +67,8 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /**

@@ -36,7 +36,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to create a simple activity with streetview and a map
  */
-public class SplitStreetViewPanoramaAndMapDemoActivity extends AppCompatActivity
+public class SplitStreetViewPanoramaAndMapDemoActivity extends SamplesBaseActivity
         implements OnMarkerDragListener, OnStreetViewPanoramaChangeListener {
 
     private static final String MARKER_POSITION_KEY = "MarkerPosition";
@@ -91,6 +91,7 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends AppCompatActivity
                         .draggable(true));
             }
         });
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

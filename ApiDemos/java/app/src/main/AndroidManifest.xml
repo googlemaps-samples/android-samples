@@ -38,7 +38,7 @@ limitations under the License.
         android:icon="@mipmap/ic_launcher"
         android:label="@string/demo_title"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MaterialAppTheme">
 
         <!--
             To add your Maps API key to this project:

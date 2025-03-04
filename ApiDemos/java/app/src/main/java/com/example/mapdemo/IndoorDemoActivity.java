@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * A demo activity showing how to use indoor.
  */
-public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
 
@@ -48,6 +48,7 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override

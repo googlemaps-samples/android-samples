@@ -48,7 +48,7 @@ import java.util.List;
  * This shows how to draw polygons on a map.
  */
 // [START maps_android_sample_polygons]
-public class PolygonDemoActivity extends AppCompatActivity
+public class PolygonDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnItemSelectedListener, OnMapReadyCallback {
 
     private static final LatLng CENTER = new LatLng(-20, 130);
@@ -130,6 +130,8 @@ public class PolygonDemoActivity extends AppCompatActivity
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        applyInsets(findViewById(R.id.map_container));
     }
     // [START_EXCLUDE silent]
 

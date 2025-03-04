@@ -38,7 +38,7 @@ import java.util.Random;
  * This activity shows how to save the state of a MapFragment when the activity is recreated, like
  * after rotation of the device.
  */
-public class SaveStateDemoActivity extends AppCompatActivity {
+public class SaveStateDemoActivity extends SamplesBaseActivity {
 
     /** Default marker position when the activity is first created. */
     private static final LatLng DEFAULT_MARKER_POSITION = new LatLng(48.858179, 2.294576);
@@ -155,6 +155,7 @@ public class SaveStateDemoActivity extends AppCompatActivity {
             }
 
             getMapAsync(this);
+
         }
 
 
