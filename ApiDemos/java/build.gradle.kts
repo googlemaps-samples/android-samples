@@ -22,7 +22,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:8.8.0")
+        classpath("com.android.tools.build:gradle:8.9.0")
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
 
         // NOTE: Do not place your application dependencies here; they belong
