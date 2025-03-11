@@ -36,9 +36,9 @@ class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_basic_map_demo)
+        setContentView(com.example.common_ui.R.layout.basic_demo)
         val mapFragment : SupportMapFragment? =
-                supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+                supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
     }
 

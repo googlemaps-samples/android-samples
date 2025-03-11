@@ -40,13 +40,13 @@ public class CloudBasedMapStylingDemoActivity extends SamplesBaseActivity implem
 
         // The underlying style the map will use has been set in the layout
         // `cloud_styling_basic_demo` under the SupportMapFragment's `map:mapId` attribute.
-        setContentView(R.layout.cloud_styling_basic_demo);
+        setContentView(com.example.common_ui.R.layout.cloud_styling_basic_demo);
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
         setUpButtonListeners();
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override
@@ -56,13 +56,13 @@ public class CloudBasedMapStylingDemoActivity extends SamplesBaseActivity implem
     }
 
     private void setUpButtonListeners() {
-        findViewById(R.id.styling_normal_mode).setOnClickListener(
+        findViewById(com.example.common_ui.R.id.styling_normal_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_NORMAL));
-        findViewById(R.id.styling_satellite_mode).setOnClickListener(
+        findViewById(com.example.common_ui.R.id.styling_satellite_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_SATELLITE));
-        findViewById(R.id.styling_hybrid_mode).setOnClickListener(
+        findViewById(com.example.common_ui.R.id.styling_hybrid_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_HYBRID));
-        findViewById(R.id.styling_terrain_mode).setOnClickListener(
+        findViewById(com.example.common_ui.R.id.styling_terrain_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_TERRAIN));
     }
 

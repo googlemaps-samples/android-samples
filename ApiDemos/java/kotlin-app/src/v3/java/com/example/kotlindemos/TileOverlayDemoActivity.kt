@@ -49,11 +49,11 @@ class TileOverlayDemoActivity : AppCompatActivity(), OnSeekBarChangeListener, On
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tile_overlay_demo)
-        mTransparencyBar = findViewById(R.id.transparencySeekBar)
+        setContentView(com.example.common_ui.R.layout.tile_overlay_demo)
+        mTransparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar)
         mTransparencyBar.max = TRANSPARENCY_MAX
         mTransparencyBar.progress = 0
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 

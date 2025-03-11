@@ -71,22 +71,22 @@ public class LayersDemoActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layers_demo);
+        setContentView(com.example.common_ui.R.layout.layers_demo);
 
-        mSpinner = (Spinner) findViewById(R.id.layers_spinner);
+        mSpinner = (Spinner) findViewById(com.example.common_ui.R.id.layers_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.layers_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                this, R.array.layers_array, android.com.example.common_ui.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.com.example.common_ui.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
-        mTrafficCheckbox = (CheckBox) findViewById(R.id.traffic);
-        mMyLocationCheckbox = (CheckBox) findViewById(R.id.my_location);
-        mBuildingsCheckbox = (CheckBox) findViewById(R.id.buildings);
-        mIndoorCheckbox = (CheckBox) findViewById(R.id.indoor);
+        mTrafficCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.traffic);
+        mMyLocationCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.my_location);
+        mBuildingsCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.buildings);
+        mIndoorCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.indoor);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -102,7 +102,7 @@ public class LayersDemoActivity extends AppCompatActivity
 
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -219,17 +219,17 @@ public class LayersDemoActivity extends AppCompatActivity
         }
 
         String layerName = ((String) mSpinner.getSelectedItem());
-        if (layerName.equals(getString(R.string.normal))) {
+        if (layerName.equals(getString(com.example.common_ui.R.string.normal))) {
             mMap.setMapType(MAP_TYPE_NORMAL);
-        } else if (layerName.equals(getString(R.string.hybrid))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.hybrid))) {
             mMap.setMapType(MAP_TYPE_HYBRID);
 
 
-        } else if (layerName.equals(getString(R.string.satellite))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.satellite))) {
             mMap.setMapType(MAP_TYPE_SATELLITE);
-        } else if (layerName.equals(getString(R.string.terrain))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.terrain))) {
             mMap.setMapType(MAP_TYPE_TERRAIN);
-        } else if (layerName.equals(getString(R.string.none_map))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.none_map))) {
             mMap.setMapType(MAP_TYPE_NONE);
         } else {
             Log.i("LDA", "Error setting layer with name " + layerName);

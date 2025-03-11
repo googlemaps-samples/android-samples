@@ -37,15 +37,15 @@ public class PolylineJointControlFragment extends PolylineControlFragment implem
     private RadioGroup jointRadioGroup;
 
     public PolylineJointControlFragment() {
-        radioIdToJointType.put(R.id.joint_radio_default, JointType.DEFAULT);
-        radioIdToJointType.put(R.id.joint_radio_bevel, JointType.BEVEL);
-        radioIdToJointType.put(R.id.joint_radio_round, JointType.ROUND);
+        radioIdToJointType.put(com.example.common_ui.R.id.joint_radio_default, JointType.DEFAULT);
+        radioIdToJointType.put(com.example.common_ui.R.id.joint_radio_bevel, JointType.BEVEL);
+        radioIdToJointType.put(com.example.common_ui.R.id.joint_radio_round, JointType.ROUND);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_joint_control_fragment, container, false);
-        jointRadioGroup = view.findViewById(R.id.joint_radio);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_joint_control_fragment, container, false);
+        jointRadioGroup = view.findViewById(com.example.common_ui.R.id.joint_radio);
         jointRadioGroup.setOnCheckedChangeListener(this);
         return view;
     }
@@ -78,13 +78,13 @@ public class PolylineJointControlFragment extends PolylineControlFragment implem
 
         switch (polyline.getJointType()) {
             case JointType.DEFAULT:
-                jointRadioGroup.check(R.id.joint_radio_default);
+                jointRadioGroup.check(com.example.common_ui.R.id.joint_radio_default);
                 break;
             case JointType.BEVEL:
-                jointRadioGroup.check(R.id.joint_radio_bevel);
+                jointRadioGroup.check(com.example.common_ui.R.id.joint_radio_bevel);
                 break;
             case JointType.ROUND:
-                jointRadioGroup.check(R.id.joint_radio_round);
+                jointRadioGroup.check(com.example.common_ui.R.id.joint_radio_round);
                 break;
             default:
                 jointRadioGroup.clearCheck();

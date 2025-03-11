@@ -74,12 +74,12 @@ class LiteListDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lite_list_demo)
+        setContentView(com.example.common_ui.R.layout.activity_lite_list_demo)
 
         mapAdapter = MapAdapter()
 
         // Initialise the RecyclerView.
-        recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
+        recyclerView = findViewById<RecyclerView>(com.example.common_ui.R.id.recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
             adapter = mapAdapter
@@ -95,8 +95,8 @@ class LiteListDemoActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         recyclerView.layoutManager = when (item.itemId) {
-            R.id.layout_linear -> linearLayoutManager
-            R.id.layout_grid -> gridLayoutManager
+            com.example.common_ui.R.id.layout_linear -> linearLayoutManager
+            com.example.common_ui.R.id.layout_grid -> gridLayoutManager
             else -> return false
         }
         return true
@@ -115,7 +115,7 @@ class LiteListDemoActivity : AppCompatActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val inflated = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.lite_list_demo_row, parent, false)
+                    .inflate(com.example.common_ui.R.layout.lite_list_demo_row, parent, false)
             return ViewHolder(inflated)
         }
 
@@ -127,8 +127,8 @@ class LiteListDemoActivity : AppCompatActivity() {
                 OnMapReadyCallback {
 
             private val layout: View = view
-            private val mapView: MapView = layout.findViewById(R.id.lite_listrow_map)
-            private val title: TextView = layout.findViewById(R.id.lite_listrow_text)
+            private val mapView: MapView = layout.findViewById(com.example.common_ui.R.id.lite_listrow_map)
+            private val title: TextView = layout.findViewById(com.example.common_ui.R.id.lite_listrow_text)
             private lateinit var map: GoogleMap
             private lateinit var latLng: LatLng
 

@@ -43,11 +43,11 @@ public class SnapshotDemoActivity extends AppCompatActivity implements OnMapRead
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.snapshot_demo);
-        mWaitForMapLoadCheckBox = (CheckBox) findViewById(R.id.wait_for_map_load);
+        setContentView(com.example.common_ui.R.layout.snapshot_demo);
+        mWaitForMapLoadCheckBox = (CheckBox) findViewById(com.example.common_ui.R.id.wait_for_map_load);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -68,7 +68,7 @@ public class SnapshotDemoActivity extends AppCompatActivity implements OnMapRead
             return;
         }
 
-        final ImageView snapshotHolder = (ImageView) findViewById(R.id.snapshot_holder);
+        final ImageView snapshotHolder = (ImageView) findViewById(com.example.common_ui.R.id.snapshot_holder);
 
         final SnapshotReadyCallback callback = new SnapshotReadyCallback() {
             @Override
@@ -94,7 +94,7 @@ public class SnapshotDemoActivity extends AppCompatActivity implements OnMapRead
      * Called when the clear button is clicked.
      */
     public void onClearScreenshot(View view) {
-        ImageView snapshotHolder = (ImageView) findViewById(R.id.snapshot_holder);
+        ImageView snapshotHolder = (ImageView) findViewById(com.example.common_ui.R.id.snapshot_holder);
         snapshotHolder.setImageDrawable(null);
     }
 }

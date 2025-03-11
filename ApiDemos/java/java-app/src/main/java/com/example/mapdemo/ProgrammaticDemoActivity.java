@@ -55,7 +55,7 @@ public class ProgrammaticDemoActivity extends SamplesBaseActivity implements OnM
         }
         mapFragment.getMapAsync(this);
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override

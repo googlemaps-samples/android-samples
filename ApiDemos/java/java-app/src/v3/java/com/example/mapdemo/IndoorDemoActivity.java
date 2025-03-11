@@ -42,10 +42,10 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.indoor_demo);
+        setContentView(com.example.common_ui.R.layout.indoor_demo);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -127,7 +127,7 @@ public class IndoorDemoActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     private void setText(String message) {
-        TextView text = findViewById(R.id.top_text);
+        TextView text = findViewById(com.example.common_ui.R.id.top_text);
         text.setText(message);
     }
 }

@@ -39,12 +39,12 @@ class PolylinePatternControlFragment : PolylineControlFragment(), OnClickListene
     private lateinit var patternTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View {
-        val view = inflater.inflate(R.layout.polyline_pattern_control_fragment, container, false)
-        patternTextView = view.findViewById(R.id.patternTextView)
-        patternSolidBtn = view.findViewById(R.id.patternSolidBtn)
-        patternDottedBtn = view.findViewById(R.id.patternDottedBtn)
-        patternDashedBtn = view.findViewById(R.id.patternDashedBtn)
-        patternMixedBtn = view.findViewById(R.id.patternMixedBtn)
+        val view = inflater.inflate(com.example.common_ui.R.layout.polyline_pattern_control_fragment, container, false)
+        patternTextView = view.findViewById(com.example.common_ui.R.id.patternTextView)
+        patternSolidBtn = view.findViewById(com.example.common_ui.R.id.patternSolidBtn)
+        patternDottedBtn = view.findViewById(com.example.common_ui.R.id.patternDottedBtn)
+        patternDashedBtn = view.findViewById(com.example.common_ui.R.id.patternDashedBtn)
+        patternMixedBtn = view.findViewById(com.example.common_ui.R.id.patternMixedBtn)
         patternSolidBtn.setOnClickListener(this)
         patternDottedBtn.setOnClickListener(this)
         patternDashedBtn.setOnClickListener(this)
@@ -59,18 +59,18 @@ class PolylinePatternControlFragment : PolylineControlFragment(), OnClickListene
         val id: Int = view.id
         val pattern: List<PatternItem>?
         when (id) {
-            R.id.patternSolidBtn -> {
+            com.example.common_ui.R.id.patternSolidBtn -> {
                 pattern = null
             }
-            R.id.patternDottedBtn -> {
+            com.example.common_ui.R.id.patternDottedBtn -> {
                 pattern = listOf(Dot(), Gap(RANDOM.nextFloat() * MAX_GAP_LENGTH))
             }
-            R.id.patternDashedBtn -> {
+            com.example.common_ui.R.id.patternDashedBtn -> {
                 pattern = listOf(
                     Dash(RANDOM.nextFloat() * MAX_DASH_LENGTH),
                     Gap(RANDOM.nextFloat() * MAX_GAP_LENGTH))
             }
-            R.id.patternMixedBtn -> {
+            com.example.common_ui.R.id.patternMixedBtn -> {
                 val size: Int = 2 * (1 + RANDOM.nextInt(MAX_PATTERN_SIZE / 2))
                 pattern = ArrayList(size)
                 for (i in 0 until size) {

@@ -50,13 +50,13 @@ public class LiteListDemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lite_list_demo);
+        setContentView(com.example.common_ui.R.layout.lite_list_demo);
 
         mGridLayoutManager = new GridLayoutManager(this, 2);
         mLinearLayoutManager = new LinearLayoutManager(this);
 
         // Set up the RecyclerView
-        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(com.example.common_ui.R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(new MapAdapter(LIST_LOCATIONS));
@@ -73,10 +73,10 @@ public class LiteListDemoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.layout_linear:
+            case com.example.common_ui.R.id.layout_linear:
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
                 break;
-            case R.id.layout_grid:
+            case com.example.common_ui.R.id.layout_grid:
                 mRecyclerView.setLayoutManager(mGridLayoutManager);
                 break;
         }
@@ -101,7 +101,7 @@ public class LiteListDemoActivity extends AppCompatActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.lite_list_demo_row, parent, false));
+                    .inflate(com.example.common_ui.R.layout.lite_list_demo_row, parent, false));
         }
 
         /**
@@ -140,8 +140,8 @@ public class LiteListDemoActivity extends AppCompatActivity {
             private ViewHolder(View itemView) {
                 super(itemView);
                 layout = itemView;
-                mapView = layout.findViewById(R.id.lite_listrow_map);
-                title = layout.findViewById(R.id.lite_listrow_text);
+                mapView = layout.findViewById(com.example.common_ui.R.id.lite_listrow_map);
+                title = layout.findViewById(com.example.common_ui.R.id.lite_listrow_text);
                 if (mapView != null) {
                     // Initialise the MapView
                     mapView.onCreate(null);

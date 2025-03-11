@@ -51,7 +51,7 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends SamplesBaseActivi
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.split_street_view_panorama_and_map_demo);
+        setContentView(com.example.common_ui.R.layout.split_street_view_panorama_and_map_demo);
 
         final LatLng markerPosition;
         if (savedInstanceState == null) {
@@ -62,7 +62,7 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends SamplesBaseActivi
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
+                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 new OnStreetViewPanoramaReadyCallback() {
                     @Override
@@ -79,7 +79,7 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends SamplesBaseActivi
                 });
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap map) {
@@ -87,11 +87,11 @@ public class SplitStreetViewPanoramaAndMapDemoActivity extends SamplesBaseActivi
                 // Creates a draggable marker. Long press to drag.
                 marker = map.addMarker(new MarkerOptions()
                         .position(markerPosition)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
+                        .icon(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.pegman))
                         .draggable(true));
             }
         });
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override

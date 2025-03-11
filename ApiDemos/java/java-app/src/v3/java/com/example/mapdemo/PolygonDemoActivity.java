@@ -77,57 +77,57 @@ public class PolygonDemoActivity extends AppCompatActivity
     // string resource IDs as identifiers.
 
     private static final int[] JOINT_TYPE_NAME_RESOURCE_IDS = {
-            R.string.joint_type_default, // Default
-            R.string.joint_type_bevel,
-            R.string.joint_type_round,
+            com.example.common_ui.R.string.joint_type_default, // Default
+            com.example.common_ui.R.string.joint_type_bevel,
+            com.example.common_ui.R.string.joint_type_round,
     };
 
     private static final int[] PATTERN_TYPE_NAME_RESOURCE_IDS = {
-            R.string.pattern_solid, // Default
-            R.string.pattern_dashed,
-            R.string.pattern_dotted,
-            R.string.pattern_mixed,
+            com.example.common_ui.R.string.pattern_solid, // Default
+            com.example.common_ui.R.string.pattern_dashed,
+            com.example.common_ui.R.string.pattern_dotted,
+            com.example.common_ui.R.string.pattern_mixed,
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.polygon_demo);
+        setContentView(com.example.common_ui.R.layout.polygon_demo);
 
-        fillHueBar = findViewById(R.id.fillHueSeekBar);
+        fillHueBar = findViewById(com.example.common_ui.R.id.fillHueSeekBar);
         fillHueBar.setMax(MAX_HUE_DEGREES);
         fillHueBar.setProgress(MAX_HUE_DEGREES / 2);
 
-        fillAlphaBar = findViewById(R.id.fillAlphaSeekBar);
+        fillAlphaBar = findViewById(com.example.common_ui.R.id.fillAlphaSeekBar);
         fillAlphaBar.setMax(MAX_ALPHA);
         fillAlphaBar.setProgress(MAX_ALPHA / 2);
 
-        strokeWidthBar = findViewById(R.id.strokeWidthSeekBar);
+        strokeWidthBar = findViewById(com.example.common_ui.R.id.strokeWidthSeekBar);
         strokeWidthBar.setMax(MAX_WIDTH_PX);
         strokeWidthBar.setProgress(MAX_WIDTH_PX / 3);
 
-        strokeHueBar = findViewById(R.id.strokeHueSeekBar);
+        strokeHueBar = findViewById(com.example.common_ui.R.id.strokeHueSeekBar);
         strokeHueBar.setMax(MAX_HUE_DEGREES);
         strokeHueBar.setProgress(0);
 
-        strokeAlphaBar = findViewById(R.id.strokeAlphaSeekBar);
+        strokeAlphaBar = findViewById(com.example.common_ui.R.id.strokeAlphaSeekBar);
         strokeAlphaBar.setMax(MAX_ALPHA);
         strokeAlphaBar.setProgress(MAX_ALPHA);
 
-        strokeJointTypeSpinner = findViewById(R.id.strokeJointTypeSpinner);
+        strokeJointTypeSpinner = findViewById(com.example.common_ui.R.id.strokeJointTypeSpinner);
         strokeJointTypeSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
+                this, android.com.example.common_ui.R.layout.simple_spinner_item,
                 getResourceStrings(JOINT_TYPE_NAME_RESOURCE_IDS)));
 
-        strokePatternSpinner = findViewById(R.id.strokePatternSpinner);
+        strokePatternSpinner = findViewById(com.example.common_ui.R.id.strokePatternSpinner);
         strokePatternSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
+                this, android.com.example.common_ui.R.layout.simple_spinner_item,
                 getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
-        clickabilityCheckbox = findViewById(R.id.toggleClickability);
+        clickabilityCheckbox = findViewById(com.example.common_ui.R.id.toggleClickability);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -142,7 +142,7 @@ public class PolygonDemoActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap map) {
         // Override the default content description on the view, for accessibility mode.
-        map.setContentDescription(getString(R.string.polygon_demo_description));
+        map.setContentDescription(getString(com.example.common_ui.R.string.polygon_demo_description));
 
         int fillColorArgb = Color.HSVToColor(
                 fillAlphaBar.getProgress(), new float[]{fillHueBar.getProgress(), 1, 1});
@@ -198,11 +198,11 @@ public class PolygonDemoActivity extends AppCompatActivity
 
     private int getSelectedJointType(int pos) {
         switch (JOINT_TYPE_NAME_RESOURCE_IDS[pos]) {
-            case R.string.joint_type_bevel:
+            case com.example.common_ui.R.string.joint_type_bevel:
                 return JointType.BEVEL;
-            case R.string.joint_type_round:
+            case com.example.common_ui.R.string.joint_type_round:
                 return JointType.ROUND;
-            case R.string.joint_type_default:
+            case com.example.common_ui.R.string.joint_type_default:
                 return JointType.DEFAULT;
         }
         return 0;
@@ -210,13 +210,13 @@ public class PolygonDemoActivity extends AppCompatActivity
 
     private List<PatternItem> getSelectedPattern(int pos) {
         switch (PATTERN_TYPE_NAME_RESOURCE_IDS[pos]) {
-            case R.string.pattern_solid:
+            case com.example.common_ui.R.string.pattern_solid:
                 return null;
-            case R.string.pattern_dotted:
+            case com.example.common_ui.R.string.pattern_dotted:
                 return PATTERN_DOTTED;
-            case R.string.pattern_dashed:
+            case com.example.common_ui.R.string.pattern_dashed:
                 return PATTERN_DASHED;
-            case R.string.pattern_mixed:
+            case com.example.common_ui.R.string.pattern_mixed:
                 return PATTERN_MIXED;
             default:
                 return null;
@@ -226,10 +226,10 @@ public class PolygonDemoActivity extends AppCompatActivity
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         switch (parent.getId()) {
-            case R.id.strokeJointTypeSpinner:
+            case com.example.common_ui.R.id.strokeJointTypeSpinner:
                 mutablePolygon.setStrokeJointType(getSelectedJointType(pos));
                 break;
-            case R.id.strokePatternSpinner:
+            case com.example.common_ui.R.id.strokePatternSpinner:
                 mutablePolygon.setStrokePattern(getSelectedPattern(pos));
                 break;
         }

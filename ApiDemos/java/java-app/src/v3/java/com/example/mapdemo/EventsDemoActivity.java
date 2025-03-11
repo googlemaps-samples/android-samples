@@ -42,13 +42,13 @@ public class EventsDemoActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.events_demo);
+        setContentView(com.example.common_ui.R.layout.events_demo);
 
-        tapTextView = findViewById(R.id.tap_text);
-        cameraTextView = findViewById(R.id.camera_text);
+        tapTextView = findViewById(com.example.common_ui.R.id.tap_text);
+        cameraTextView = findViewById(com.example.common_ui.R.id.camera_text);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 

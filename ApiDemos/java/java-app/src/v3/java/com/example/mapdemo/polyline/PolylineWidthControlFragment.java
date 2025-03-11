@@ -36,11 +36,11 @@ public class PolylineWidthControlFragment extends PolylineControlFragment implem
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_width_control_fragment, container, false);
-        widthBar = view.findViewById(R.id.widthSeekBar);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_width_control_fragment, container, false);
+        widthBar = view.findViewById(com.example.common_ui.R.id.widthSeekBar);
         widthBar.setMax(WIDTH_MAX);
         widthBar.setOnSeekBarChangeListener(this);
-        widthTextView = view.findViewById(R.id.widthTextView);
+        widthTextView = view.findViewById(com.example.common_ui.R.id.widthTextView);
         return view;
     }
 

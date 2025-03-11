@@ -38,12 +38,12 @@ class MapColorSchemeActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.map_color_scheme_demo)
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        setContentView(com.example.common_ui.R.layout.map_color_scheme_demo)
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        buttonLight = findViewById(R.id.map_color_light_mode)
-        buttonDark = findViewById(R.id.map_color_dark_mode)
-        buttonFollowSystem = findViewById(R.id.map_color_follow_system_mode)
+        buttonLight = findViewById(com.example.common_ui.R.id.map_color_light_mode)
+        buttonDark = findViewById(com.example.common_ui.R.id.map_color_dark_mode)
+        buttonFollowSystem = findViewById(com.example.common_ui.R.id.map_color_follow_system_mode)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

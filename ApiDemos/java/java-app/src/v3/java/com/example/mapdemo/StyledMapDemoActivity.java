@@ -47,16 +47,16 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
 
     // Stores the ID of the currently selected style, so that we can re-apply it when
     // the activity restores state, for example when the device changes orientation.
-    private int mSelectedStyleId = R.string.style_label_default;
+    private int mSelectedStyleId = com.example.common_ui.R.string.style_label_default;
 
     // These are simply the string resource IDs for each of the style names. We use them
     // as identifiers when choosing which style to apply.
     private int mStyleIds[] = {
-            R.string.style_label_retro,
-            R.string.style_label_night,
-            R.string.style_label_grayscale,
-            R.string.style_label_no_pois_no_transit,
-            R.string.style_label_default,
+            com.example.common_ui.R.string.style_label_retro,
+            com.example.common_ui.R.string.style_label_night,
+            com.example.common_ui.R.string.style_label_grayscale,
+            com.example.common_ui.R.string.style_label_no_pois_no_transit,
+            com.example.common_ui.R.string.style_label_default,
     };
 
     private static final LatLng SYDNEY = new LatLng(-33.8688, 151.2093);
@@ -67,10 +67,10 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
         if (savedInstanceState != null) {
             mSelectedStyleId = savedInstanceState.getInt(SELECTED_STYLE);
         }
-        setContentView(R.layout.styled_map_demo);
+        setContentView(com.example.common_ui.R.layout.styled_map_demo);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -96,7 +96,7 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_style_choose) {
+        if (item.getItemId() == com.example.common_ui.R.id.menu_style_choose) {
             showStylesDialog();
         }
         return true;
@@ -117,13 +117,13 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.style_choose));
+        builder.setTitle(getString(com.example.common_ui.R.string.style_choose));
         builder.setItems(styleNames.toArray(new CharSequence[styleNames.size()]),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mSelectedStyleId = mStyleIds[which];
-                        String msg = getString(R.string.style_set_to, getString(mSelectedStyleId));
+                        String msg = getString(com.example.common_ui.R.string.style_set_to, getString(mSelectedStyleId));
                         Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, msg);
                         setSelectedStyle();
@@ -140,19 +140,19 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
     private void setSelectedStyle() {
         MapStyleOptions style;
         switch (mSelectedStyleId) {
-            case R.string.style_label_retro:
+            case com.example.common_ui.R.string.style_label_retro:
                 // Sets the retro style via raw resource JSON.
-                style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro);
+                style = MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_retro);
                 break;
-            case R.string.style_label_night:
+            case com.example.common_ui.R.string.style_label_night:
                 // Sets the night style via raw resource JSON.
-                style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
+                style = MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_night);
                 break;
-            case R.string.style_label_grayscale:
+            case com.example.common_ui.R.string.style_label_grayscale:
                 // Sets the grayscale style via raw resource JSON.
-                style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale);
+                style = MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_grayscale);
                 break;
-            case R.string.style_label_no_pois_no_transit:
+            case com.example.common_ui.R.string.style_label_no_pois_no_transit:
                 // Sets the no POIs or transit style via JSON string.
                 style = new MapStyleOptions("[" +
                         "  {" +
@@ -175,7 +175,7 @@ public class StyledMapDemoActivity extends AppCompatActivity implements OnMapRea
                         "  }" +
                         "]");
                 break;
-            case R.string.style_label_default:
+            case com.example.common_ui.R.string.style_label_default:
                 // Removes previously set style, by setting it to null.
                 style = null;
                 break;

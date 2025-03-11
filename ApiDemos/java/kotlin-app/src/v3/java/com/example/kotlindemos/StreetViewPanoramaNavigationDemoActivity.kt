@@ -62,10 +62,10 @@ class StreetViewPanoramaNavigationDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_street_view_panorama_navigation_demo)
+        setContentView(com.example.common_ui.R.layout.activity_street_view_panorama_navigation_demo)
 
         val streetViewPanoramaFragment = supportFragmentManager
-                .findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment
+                .findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment
         streetViewPanoramaFragment.getStreetViewPanoramaAsync { panorama ->
             streetViewPanorama = panorama
             // Only set the panorama to sydney on startup (when no panoramas have been
@@ -75,7 +75,7 @@ class StreetViewPanoramaNavigationDemoActivity : AppCompatActivity() {
             }
         }
 
-        customDurationBar = findViewById(R.id.duration_bar)
+        customDurationBar = findViewById(com.example.common_ui.R.id.duration_bar)
     }
 
     /**
@@ -85,7 +85,7 @@ class StreetViewPanoramaNavigationDemoActivity : AppCompatActivity() {
      */
     private fun checkReadyThen(stuffToDo : () -> Unit) {
         if (!::streetViewPanorama.isInitialized) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show()
         } else {
             stuffToDo()
         }
@@ -96,10 +96,10 @@ class StreetViewPanoramaNavigationDemoActivity : AppCompatActivity() {
      */
     fun onGoToLocation(view: View) {
         when (view.id) {
-            R.id.sydney -> streetViewPanorama.setPosition(sydney)
-            R.id.sanfrancisco -> streetViewPanorama.setPosition(sanFrancisco)
-            R.id.santorini -> streetViewPanorama.setPosition(santoriniPanoId)
-            R.id.invalid -> streetViewPanorama.setPosition(invalid)
+            com.example.common_ui.R.id.sydney -> streetViewPanorama.setPosition(sydney)
+            com.example.common_ui.R.id.sanfrancisco -> streetViewPanorama.setPosition(sanFrancisco)
+            com.example.common_ui.R.id.santorini -> streetViewPanorama.setPosition(santoriniPanoId)
+            com.example.common_ui.R.id.invalid -> streetViewPanorama.setPosition(invalid)
         }
     }
 
@@ -119,16 +119,16 @@ class StreetViewPanoramaNavigationDemoActivity : AppCompatActivity() {
         checkReadyThen {
             with(streetViewPanorama.panoramaCamera) {
                 when (view.id) {
-                    R.id.zoom_in -> updateStreetViewPanorama(zoom + ZOOM_BY, tilt, bearing)
-                    R.id.zoom_out -> updateStreetViewPanorama(zoom - ZOOM_BY, tilt, bearing)
-                    R.id.pan_left -> updateStreetViewPanorama(zoom, tilt, bearing - PAN_BY_DEGREES)
-                    R.id.pan_right -> updateStreetViewPanorama(zoom, tilt, bearing + PAN_BY_DEGREES)
-                    R.id.pan_up -> {
+                    com.example.common_ui.R.id.zoom_in -> updateStreetViewPanorama(zoom + ZOOM_BY, tilt, bearing)
+                    com.example.common_ui.R.id.zoom_out -> updateStreetViewPanorama(zoom - ZOOM_BY, tilt, bearing)
+                    com.example.common_ui.R.id.pan_left -> updateStreetViewPanorama(zoom, tilt, bearing - PAN_BY_DEGREES)
+                    com.example.common_ui.R.id.pan_right -> updateStreetViewPanorama(zoom, tilt, bearing + PAN_BY_DEGREES)
+                    com.example.common_ui.R.id.pan_up -> {
                         var newTilt = tilt + PAN_BY_DEGREES
                         if (newTilt > 90) newTilt = 90f
                         updateStreetViewPanorama(zoom, newTilt, bearing)
                     }
-                    R.id.pan_down -> {
+                    com.example.common_ui.R.id.pan_down -> {
                         var newTilt = tilt - PAN_BY_DEGREES
                         if (newTilt < -90) newTilt = -90f
                         updateStreetViewPanorama(zoom, newTilt, bearing)

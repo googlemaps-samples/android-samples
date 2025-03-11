@@ -67,11 +67,11 @@ public class LiteDemoActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         // Set the layout
-        setContentView(R.layout.lite_demo);
+        setContentView(com.example.common_ui.R.layout.lite_demo);
 
         // Get the map and register for the ready callback
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
     }
 

@@ -32,14 +32,14 @@ class PolylineColorControlFragment : PolylineControlFragment(), OnSeekBarChangeL
     private lateinit var argbTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View {
-        val view: View = inflater.inflate(R.layout.polyline_color_control_fragment, container, false)
-        alphaBar = view.findViewById(R.id.alphaSeekBar)
+        val view: View = inflater.inflate(com.example.common_ui.R.layout.polyline_color_control_fragment, container, false)
+        alphaBar = view.findViewById(com.example.common_ui.R.id.alphaSeekBar)
         alphaBar.max = ALPHA_MAX
         alphaBar.setOnSeekBarChangeListener(this)
-        hueBar = view.findViewById(R.id.hueSeekBar)
+        hueBar = view.findViewById(com.example.common_ui.R.id.hueSeekBar)
         hueBar.max = HUE_MAX
         hueBar.setOnSeekBarChangeListener(this)
-        argbTextView = view.findViewById(R.id.argbTextView) as TextView
+        argbTextView = view.findViewById(com.example.common_ui.R.id.argbTextView) as TextView
         return view
     }
 

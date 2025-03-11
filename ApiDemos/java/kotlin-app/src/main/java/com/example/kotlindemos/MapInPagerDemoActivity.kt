@@ -33,9 +33,9 @@ class MapInPagerDemoActivity : SamplesBaseActivity() {
   /** Called when the activity is first created.  */
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.map_in_pager_demo)
+    setContentView(com.example.common_ui.R.layout.map_in_pager_demo)
     val adapter = MyAdapter(supportFragmentManager)
-    val pager = findViewById<ViewPager>(R.id.pager)
+    val pager = findViewById<ViewPager>(com.example.common_ui.R.id.pager)
     pager.adapter = adapter
 
     // This is required to avoid a black flash when the map is loaded.  The flash is due
@@ -48,7 +48,7 @@ class MapInPagerDemoActivity : SamplesBaseActivity() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               bundle: Bundle?): View? {
-      return inflater.inflate(R.layout.text_fragment, container, false)
+      return inflater.inflate(com.example.common_ui.R.layout.text_fragment, container, false)
     }
   }
 

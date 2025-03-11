@@ -59,13 +59,13 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ui_settings_demo);
+        setContentView(com.example.common_ui.R.layout.ui_settings_demo);
 
-        mMyLocationButtonCheckbox = (CheckBox) findViewById(R.id.mylocationbutton_toggle);
-        mMyLocationLayerCheckbox = (CheckBox) findViewById(R.id.mylocationlayer_toggle);
+        mMyLocationButtonCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.mylocationbutton_toggle);
+        mMyLocationLayerCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.mylocationlayer_toggle);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -83,20 +83,20 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
         mUiSettings = mMap.getUiSettings();
 
         // Keep the UI Settings state in sync with the checkboxes.
-        mUiSettings.setZoomControlsEnabled(isChecked(R.id.zoom_buttons_toggle));
-        mUiSettings.setCompassEnabled(isChecked(R.id.compass_toggle));
-        mUiSettings.setMyLocationButtonEnabled(isChecked(R.id.mylocationbutton_toggle));
-        mUiSettings.setScrollGesturesEnabled(isChecked(R.id.scroll_toggle));
-        mUiSettings.setZoomGesturesEnabled(isChecked(R.id.zoom_gestures_toggle));
-        mUiSettings.setTiltGesturesEnabled(isChecked(R.id.tilt_toggle));
-        mUiSettings.setRotateGesturesEnabled(isChecked(R.id.rotate_toggle));
+        mUiSettings.setZoomControlsEnabled(isChecked(com.example.common_ui.R.id.zoom_buttons_toggle));
+        mUiSettings.setCompassEnabled(isChecked(com.example.common_ui.R.id.compass_toggle));
+        mUiSettings.setMyLocationButtonEnabled(isChecked(com.example.common_ui.R.id.mylocationbutton_toggle));
+        mUiSettings.setScrollGesturesEnabled(isChecked(com.example.common_ui.R.id.scroll_toggle));
+        mUiSettings.setZoomGesturesEnabled(isChecked(com.example.common_ui.R.id.zoom_gestures_toggle));
+        mUiSettings.setTiltGesturesEnabled(isChecked(com.example.common_ui.R.id.tilt_toggle));
+        mUiSettings.setRotateGesturesEnabled(isChecked(com.example.common_ui.R.id.rotate_toggle));
         if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mMap.setMyLocationEnabled(isChecked(R.id.mylocationlayer_toggle));
+        mMap.setMyLocationEnabled(isChecked(com.example.common_ui.R.id.mylocationlayer_toggle));
     }
 
     /**
@@ -105,7 +105,7 @@ public class UiSettingsDemoActivity extends AppCompatActivity implements OnMapRe
      */
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

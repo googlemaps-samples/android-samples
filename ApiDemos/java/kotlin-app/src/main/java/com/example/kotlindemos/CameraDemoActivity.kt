@@ -83,16 +83,16 @@ class CameraDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.camera_demo)
+        setContentView(com.example.common_ui.R.layout.camera_demo)
         // [START_EXCLUDE silent]
-        animateToggle = findViewById(R.id.animate)
-        customDurationToggle = findViewById(R.id.duration_toggle)
-        customDurationBar = findViewById(R.id.duration_bar)
+        animateToggle = findViewById(com.example.common_ui.R.id.animate)
+        customDurationToggle = findViewById(com.example.common_ui.R.id.duration_toggle)
+        customDurationBar = findViewById(com.example.common_ui.R.id.duration_bar)
 
         updateEnabledState()
         // [END_EXCLUDE]
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -131,7 +131,7 @@ class CameraDemoActivity :
      */
     private fun checkReadyThen(stuffToDo: () -> Unit) {
         if (!::map.isInitialized) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show()
         } else {
             stuffToDo()
         }

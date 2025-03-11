@@ -27,7 +27,7 @@ public class MultiMapDemoActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.multimap_demo);
-        applyInsets(findViewById(R.id.map_container));
+        setContentView(com.example.common_ui.R.layout.multimap_demo);
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 }

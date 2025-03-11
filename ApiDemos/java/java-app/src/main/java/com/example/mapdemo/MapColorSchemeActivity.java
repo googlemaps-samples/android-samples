@@ -36,15 +36,15 @@ public class MapColorSchemeActivity extends SamplesBaseActivity implements OnMap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map_color_scheme_demo);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        setContentView(com.example.common_ui.R.layout.map_color_scheme_demo);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-        buttonLight = findViewById(R.id.map_color_light_mode);
-        buttonDark = findViewById(R.id.map_color_dark_mode);
-        buttonFollowSystem = findViewById(R.id.map_color_follow_system_mode);
-        applyInsets(findViewById(R.id.map_container));
+        buttonLight = findViewById(com.example.common_ui.R.id.map_color_light_mode);
+        buttonDark = findViewById(com.example.common_ui.R.id.map_color_dark_mode);
+        buttonFollowSystem = findViewById(com.example.common_ui.R.id.map_color_follow_system_mode);
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override

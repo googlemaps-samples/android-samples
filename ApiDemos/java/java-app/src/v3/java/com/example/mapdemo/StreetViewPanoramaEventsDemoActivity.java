@@ -63,16 +63,16 @@ public class StreetViewPanoramaEventsDemoActivity extends AppCompatActivity
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.street_view_panorama_events_demo);
+        setContentView(com.example.common_ui.R.layout.street_view_panorama_events_demo);
 
-        panoChangeTimesTextView = findViewById(R.id.change_pano);
-        panoCameraChangeTextView = findViewById(R.id.change_camera);
-        panoClickTextView = findViewById(R.id.click_pano);
-        panoLongClickTextView = findViewById(R.id.long_click_pano);
+        panoChangeTimesTextView = findViewById(com.example.common_ui.R.id.change_pano);
+        panoCameraChangeTextView = findViewById(com.example.common_ui.R.id.change_camera);
+        panoClickTextView = findViewById(com.example.common_ui.R.id.click_pano);
+        panoLongClickTextView = findViewById(com.example.common_ui.R.id.long_click_pano);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
+                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 panorama -> {
                     streetViewPanorama = panorama;

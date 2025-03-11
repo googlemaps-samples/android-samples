@@ -64,9 +64,9 @@ class MarkerCloseInfoWindowOnRetapDemoActivity :
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_marker_close_info_window_on_retap_demo)
+    setContentView(com.example.common_ui.R.layout.marker_close_info_window_on_retap_demo)
 
-    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
     OnMapAndViewReadyListener(mapFragment, this)
   }
 
@@ -83,7 +83,7 @@ class MarkerCloseInfoWindowOnRetapDemoActivity :
       // when the map is clicked. Clear the currently selected marker.
       setOnMapClickListener { selectedMarker = null }
 
-      setContentDescription(getString(R.string.close_info_window_demo_details))
+      setContentDescription(getString(com.example.common_ui.R.string.marker_close_info_window_on_retap_demo_description))
 
       // Add markers to different cities in Australia and include it in bounds
       val bounds = LatLngBounds.Builder()

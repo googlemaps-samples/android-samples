@@ -85,19 +85,19 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.camera_demo);
+        setContentView(com.example.common_ui.R.layout.camera_demo);
         // [START_EXCLUDE silent]
-        animateToggle = findViewById(R.id.animate);
-        customDurationToggle = findViewById(R.id.duration_toggle);
-        customDurationBar = findViewById(R.id.duration_bar);
+        animateToggle = findViewById(com.example.common_ui.R.id.animate);
+        customDurationToggle = findViewById(com.example.common_ui.R.id.duration_toggle);
+        customDurationBar = findViewById(com.example.common_ui.R.id.duration_bar);
 
         updateEnabledState();
         // [END_EXCLUDE]
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     // [START_EXCLUDE silent]
@@ -134,7 +134,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
      */
     private boolean checkReady() {
         if (map == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

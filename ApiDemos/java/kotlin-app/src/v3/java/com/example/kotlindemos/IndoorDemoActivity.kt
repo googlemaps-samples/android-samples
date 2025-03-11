@@ -40,9 +40,9 @@ class IndoorDemoActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.indoor_demo)
+        setContentView(com.example.common_ui.R.layout.indoor_demo)
         val mapFragment =
-            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
 
@@ -130,7 +130,7 @@ class IndoorDemoActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setText(message: String) {
-        val text = findViewById<TextView>(R.id.top_text)
+        val text = findViewById<TextView>(com.example.common_ui.R.id.top_text)
         text.text = message
     }
 }

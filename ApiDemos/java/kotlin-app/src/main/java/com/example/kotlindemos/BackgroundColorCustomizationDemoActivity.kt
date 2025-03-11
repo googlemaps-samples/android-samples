@@ -33,8 +33,8 @@ import com.google.android.gms.maps.model.LatLng
 class BackgroundColorCustomizationDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.background_color_customization_demo)
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        setContentView(com.example.common_ui.R.layout.background_color_customization_demo)
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
 
@@ -45,7 +45,7 @@ class BackgroundColorCustomizationDemoActivity : SamplesBaseActivity(), OnMapRea
     override fun onMapReady(map: GoogleMap) {
         map.mapType = GoogleMap.MAP_TYPE_NONE
 
-        val mapTypeToggleCheckbox = findViewById<CheckBox>(R.id.map_type_toggle)
+        val mapTypeToggleCheckbox = findViewById<CheckBox>(com.example.common_ui.R.id.map_type_toggle)
         mapTypeToggleCheckbox.setOnCheckedChangeListener { _, isChecked ->
             map.mapType = if (isChecked) GoogleMap.MAP_TYPE_NORMAL else GoogleMap.MAP_TYPE_NONE
         }

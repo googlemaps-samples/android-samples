@@ -37,17 +37,17 @@ public class PolylineColorControlFragment extends PolylineControlFragment implem
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_color_control_fragment, container, false);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_color_control_fragment, container, false);
 
-        alphaBar = view.findViewById(R.id.alphaSeekBar);
+        alphaBar = view.findViewById(com.example.common_ui.R.id.alphaSeekBar);
         alphaBar.setMax(ALPHA_MAX);
         alphaBar.setOnSeekBarChangeListener(this);
 
-        hueBar = view.findViewById(R.id.hueSeekBar);
+        hueBar = view.findViewById(com.example.common_ui.R.id.hueSeekBar);
         hueBar.setMax(HUE_MAX);
         hueBar.setOnSeekBarChangeListener(this);
 
-        argbTextView = (TextView) view.findViewById(R.id.argbTextView);
+        argbTextView = (TextView) view.findViewById(com.example.common_ui.R.id.argbTextView);
         return view;
     }
 

@@ -30,8 +30,8 @@ import com.google.maps.android.ktx.awaitMap
 class RetainMapDemoActivity : SamplesBaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_basic_map_demo)
-    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+    setContentView(com.example.common_ui.R.layout.basic_demo)
+    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
     if (savedInstanceState == null) {
       // First incarnation of this activity.
       mapFragment.retainInstance = true

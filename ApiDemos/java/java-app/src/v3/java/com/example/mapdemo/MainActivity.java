@@ -47,7 +47,7 @@ public final class MainActivity extends AppCompatActivity
          * @param demos An array containing the details of the demos to be displayed.
          */
         public CustomArrayAdapter(Context context, DemoDetails[] demos) {
-            super(context, R.layout.feature, R.id.title, demos);
+            super(context, com.example.common_ui.R.layout.feature, com.example.common_ui.R.id.title, demos);
         }
 
         @Override
@@ -76,14 +76,14 @@ public final class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        ListView list = findViewById(R.id.list);
+        setContentView(com.example.common_ui.R.layout.main);
+        ListView list = findViewById(com.example.common_ui.R.id.list);
 
         ListAdapter adapter = new CustomArrayAdapter(this, DemoDetailsList.DEMOS);
 
         list.setAdapter(adapter);
         list.setOnItemClickListener(this);
-        list.setEmptyView(findViewById(R.id.empty));
+        list.setEmptyView(findViewById(com.example.common_ui.R.id.empty));
 
         if (BuildConfig.MAPS_API_KEY.isEmpty()) {
             Toast.makeText(this, "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show();

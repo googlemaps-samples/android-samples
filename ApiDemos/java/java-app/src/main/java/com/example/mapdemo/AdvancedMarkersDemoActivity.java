@@ -57,13 +57,13 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.advanced_markers_demo);
+        setContentView(com.example.common_ui.R.layout.advanced_markers_demo);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
 

@@ -42,10 +42,10 @@ class LiteDemoActivity : AppCompatActivity(), OnGlobalLayoutAndMapReadyListener 
         super.onCreate(savedInstanceState)
 
         // Set the layout
-        setContentView(R.layout.lite_demo)
+        setContentView(com.example.common_ui.R.layout.lite_demo)
 
         // Get the map and register for the ready callback
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
     }
 

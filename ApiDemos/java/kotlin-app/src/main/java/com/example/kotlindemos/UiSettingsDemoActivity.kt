@@ -38,9 +38,9 @@ class UiSettingsDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ui_settings_demo)
+        setContentView(com.example.common_ui.R.layout.ui_settings_demo)
         val mapFragment: SupportMapFragment =
-                supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+                supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -50,15 +50,14 @@ class UiSettingsDemoActivity :
         enableMyLocation()
         // Set all the settings of the map to match the current state of the checkboxes
         with(map.uiSettings) {
-            isZoomControlsEnabled = isChecked(R.id.zoom_button)
-            isCompassEnabled = isChecked(R.id.compass_button)
-            isMyLocationButtonEnabled = isChecked(R.id.myloc_button)
-            isIndoorLevelPickerEnabled = isChecked(R.id.level_button)
-            isMapToolbarEnabled = isChecked(R.id.maptoolbar_button)
-            isZoomGesturesEnabled = isChecked(R.id.zoomgest_button)
-            isScrollGesturesEnabled = isChecked(R.id.scrollgest_button)
-            isTiltGesturesEnabled = isChecked(R.id.tiltgest_button)
-            isRotateGesturesEnabled = isChecked(R.id.rotategest_button)
+            isZoomControlsEnabled = isChecked(com.example.common_ui.R.id.zoom_buttons_toggle)
+            isCompassEnabled = isChecked(com.example.common_ui.R.id.compass_toggle)
+            isMyLocationButtonEnabled = isChecked(com.example.common_ui.R.id.mylocationbutton_toggle)
+            isIndoorLevelPickerEnabled = isChecked(com.example.common_ui.R.id.mylocationlayer_toggle)
+            isZoomGesturesEnabled = isChecked(com.example.common_ui.R.id.zoom_gestures_toggle)
+            isScrollGesturesEnabled = isChecked(com.example.common_ui.R.id.scroll_toggle)
+            isTiltGesturesEnabled = isChecked(com.example.common_ui.R.id.tilt_toggle)
+            isRotateGesturesEnabled = isChecked(com.example.common_ui.R.id.rotate_toggle)
         }
     }
 
@@ -70,15 +69,14 @@ class UiSettingsDemoActivity :
         val isChecked: Boolean = view.isChecked
         with(map.uiSettings) {
             when (view.id) {
-                R.id.zoom_button -> isZoomControlsEnabled = isChecked
-                R.id.compass_button -> isCompassEnabled = isChecked
-                R.id.myloc_button -> isMyLocationButtonEnabled = isChecked
-                R.id.level_button -> isIndoorLevelPickerEnabled = isChecked
-                R.id.maptoolbar_button -> isMapToolbarEnabled = isChecked
-                R.id.zoomgest_button -> isZoomGesturesEnabled = isChecked
-                R.id.scrollgest_button -> isScrollGesturesEnabled = isChecked
-                R.id.tiltgest_button -> isTiltGesturesEnabled = isChecked
-                R.id.rotategest_button -> isRotateGesturesEnabled = isChecked
+                com.example.common_ui.R.id.zoom_buttons_toggle -> isZoomControlsEnabled = isChecked
+                com.example.common_ui.R.id.compass_toggle -> isCompassEnabled = isChecked
+                com.example.common_ui.R.id.mylocationbutton_toggle -> isMyLocationButtonEnabled = isChecked
+                com.example.common_ui.R.id.mylocationlayer_toggle -> isIndoorLevelPickerEnabled = isChecked
+                com.example.common_ui.R.id.zoom_gestures_toggle -> isZoomGesturesEnabled = isChecked
+                com.example.common_ui.R.id.scroll_toggle -> isScrollGesturesEnabled = isChecked
+                com.example.common_ui.R.id.tilt_toggle -> isTiltGesturesEnabled = isChecked
+                com.example.common_ui.R.id.rotate_toggle -> isRotateGesturesEnabled = isChecked
             }
         }
     }
@@ -109,7 +107,7 @@ class UiSettingsDemoActivity :
         if (hasLocationPermission()) {
             map.isMyLocationEnabled = true
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.location),
+            EasyPermissions.requestPermissions(this, getString(com.example.common_ui.R.string.location),
                     REQUEST_CODE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
             )
         }

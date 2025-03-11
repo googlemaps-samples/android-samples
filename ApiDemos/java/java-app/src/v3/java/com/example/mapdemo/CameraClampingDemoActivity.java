@@ -69,15 +69,15 @@ public class CameraClampingDemoActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.camera_clamping_demo);
+        setContentView(com.example.common_ui.R.layout.camera_clamping_demo);
 
         mMap = null;
         resetMinMaxZoom();
 
-        mCameraTextView = (TextView) findViewById(R.id.camera_text);
+        mCameraTextView = (TextView) findViewById(com.example.common_ui.R.id.camera_text);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -103,7 +103,7 @@ public class CameraClampingDemoActivity extends AppCompatActivity
      */
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

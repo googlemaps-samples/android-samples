@@ -66,14 +66,14 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.visible_region_demo);
-        mMessageView = (TextView) findViewById(R.id.message_text);
+        setContentView(com.example.common_ui.R.layout.visible_region_demo);
+        mMessageView = (TextView) findViewById(com.example.common_ui.R.id.message_text);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override
@@ -100,7 +100,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
      */
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -138,7 +138,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         if (!checkReady()) {
             return;
         }
-        View mapView = (getSupportFragmentManager().findFragmentById(R.id.map)).getView();
+        View mapView = (getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map)).getView();
         int left = 150;
         int top = 0;
         int right = mapView.getWidth() / 3;

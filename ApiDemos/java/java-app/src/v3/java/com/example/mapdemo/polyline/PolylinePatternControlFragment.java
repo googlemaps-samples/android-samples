@@ -50,13 +50,13 @@ public class PolylinePatternControlFragment extends PolylineControlFragment impl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_pattern_control_fragment, container, false);
-        patternTextView = view.findViewById(R.id.patternTextView);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_pattern_control_fragment, container, false);
+        patternTextView = view.findViewById(com.example.common_ui.R.id.patternTextView);
 
-        patternSolidBtn = view.findViewById(R.id.patternSolidBtn);
-        patternDottedBtn = view.findViewById(R.id.patternDottedBtn);
-        patternDashedBtn = view.findViewById(R.id.patternDashedBtn);
-        patternMixedBtn = view.findViewById(R.id.patternMixedBtn);
+        patternSolidBtn = view.findViewById(com.example.common_ui.R.id.patternSolidBtn);
+        patternDottedBtn = view.findViewById(com.example.common_ui.R.id.patternDottedBtn);
+        patternDashedBtn = view.findViewById(com.example.common_ui.R.id.patternDashedBtn);
+        patternMixedBtn = view.findViewById(com.example.common_ui.R.id.patternMixedBtn);
 
         patternSolidBtn.setOnClickListener(this);
         patternDottedBtn.setOnClickListener(this);
@@ -73,16 +73,16 @@ public class PolylinePatternControlFragment extends PolylineControlFragment impl
 
         int id = view.getId();
         List<PatternItem> pattern;
-        if (id == R.id.patternSolidBtn) {
+        if (id == com.example.common_ui.R.id.patternSolidBtn) {
             pattern = null;
-        } else if (id == R.id.patternDottedBtn) {
+        } else if (id == com.example.common_ui.R.id.patternDottedBtn) {
             pattern = Arrays.asList(new Dot(), new Gap(RANDOM.nextFloat() * MAX_GAP_LENGTH));
-        } else if (id == R.id.patternDashedBtn) {
+        } else if (id == com.example.common_ui.R.id.patternDashedBtn) {
             pattern =
                 Arrays.asList(
                     new Dash(RANDOM.nextFloat() * MAX_DASH_LENGTH),
                     new Gap(RANDOM.nextFloat() * MAX_GAP_LENGTH));
-        } else if (id == R.id.patternMixedBtn) {
+        } else if (id == com.example.common_ui.R.id.patternMixedBtn) {
             int size = 2 * (1 + RANDOM.nextInt(MAX_PATTERN_SIZE / 2));
             pattern = new ArrayList<>(size);
             for (int i = 0; i < size; i++) {

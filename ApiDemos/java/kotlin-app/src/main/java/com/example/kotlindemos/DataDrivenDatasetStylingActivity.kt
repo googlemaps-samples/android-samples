@@ -77,27 +77,27 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         if (dataSets.isEmpty()) {
             with(dataSets) {
-                put(getString(R.string.boulder), DataSet(BuildConfig.BOULDER_DATASET_ID, LatLng(40.0150, -105.2705)) { styleBoulderDataset() })
-                put(getString(R.string.new_york), DataSet(BuildConfig.NEW_YORK_DATASET_ID, LatLng(40.786244, -73.962684)) { styleNYCDataset() })
-                put(getString(R.string.kyoto), DataSet(BuildConfig.KYOTO_DATASET_ID, LatLng(35.005081, 135.764385)) { styleKyotoDataset() })
+                put(getString(com.example.common_ui.R.string.boulder), DataSet(BuildConfig.BOULDER_DATASET_ID, LatLng(40.0150, -105.2705)) { styleBoulderDataset() })
+                put(getString(com.example.common_ui.R.string.new_york), DataSet(BuildConfig.NEW_YORK_DATASET_ID, LatLng(40.786244, -73.962684)) { styleNYCDataset() })
+                put(getString(com.example.common_ui.R.string.kyoto), DataSet(BuildConfig.KYOTO_DATASET_ID, LatLng(35.005081, 135.764385)) { styleKyotoDataset() })
             }
         }
 
-        setContentView(R.layout.data_driven_styling_demo)
+        setContentView(com.example.common_ui.R.layout.data_driven_styling_demo)
 
-        mapContainer = findViewById(R.id.map_container)
+        mapContainer = findViewById(com.example.common_ui.R.id.map_container)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
 
         // Set the click listener for each of the buttons
-        listOf(R.id.button_kyoto, R.id.button_ny, R.id.button_boulder).forEach { viewId ->
+        listOf(com.example.common_ui.R.id.button_kyoto, com.example.common_ui.R.id.button_ny, com.example.common_ui.R.id.button_boulder).forEach { viewId ->
             findViewById<Button>(viewId).setOnClickListener { view ->
                 switchToDataset((view as Button).text.toString())
             }
         }
 
-        buttonLayout = findViewById<View>(R.id.button_kyoto).parent as LinearLayout;
+        buttonLayout = findViewById<View>(com.example.common_ui.R.id.button_kyoto).parent as LinearLayout;
 
         handleCutout()
     }

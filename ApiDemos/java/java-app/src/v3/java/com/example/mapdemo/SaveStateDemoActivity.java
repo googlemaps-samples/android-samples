@@ -214,6 +214,6 @@ public class SaveStateDemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.save_state_demo);
+        setContentView(com.example.common_ui.R.layout.save_state_demo);
     }
 }

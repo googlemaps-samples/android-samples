@@ -38,8 +38,8 @@ class MarkerCollisionDemoActivity : AppCompatActivity(), OnMapReadyCallback {
     private var map: GoogleMap? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.marker_collision_demo)
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        setContentView(com.example.common_ui.R.layout.marker_collision_demo)
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
     }
 

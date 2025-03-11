@@ -54,19 +54,19 @@ class PolylineDemoActivity : AppCompatActivity(), OnMapReadyCallback, OnPageChan
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.multicolor_polyline_demo)
+        setContentView(com.example.common_ui.R.layout.multicolor_polyline_demo)
         pagerAdapter = PolylineControlFragmentPagerAdapter(
             supportFragmentManager,
             /* isLiteMode= */false
         )
-        pager = findViewById(R.id.pager)
+        pager = findViewById(com.example.common_ui.R.id.pager)
         pager.adapter = pagerAdapter
 
         // onPageSelected(0) isn't invoked once views are ready, so post a Runnable to
         // refreshControlPanel() for the first time instead...
         pager.post { refreshControlPanel() }
-        polylineRadio = findViewById(R.id.polyline_radio)
-        val mapFragment: SupportMapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        polylineRadio = findViewById(com.example.common_ui.R.id.polyline_radio)
+        val mapFragment: SupportMapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -122,7 +122,7 @@ class PolylineDemoActivity : AppCompatActivity(), OnMapReadyCallback, OnPageChan
                 .clickable(true))
         map.moveCamera(CameraUpdateFactory.newLatLng(SYDNEY))
         selectedPolyline = australiaPolyline
-        polylineRadio.check(R.id.polyline_radio_australia)
+        polylineRadio.check(com.example.common_ui.R.id.polyline_radio_australia)
         pager.addOnPageChangeListener(this)
         polylineRadio.setOnCheckedChangeListener(this)
         map.setOnPolylineClickListener(this)
@@ -139,16 +139,16 @@ class PolylineDemoActivity : AppCompatActivity(), OnMapReadyCallback, OnPageChan
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (checkedId) {
-            R.id.polyline_radio_australia -> {
+            com.example.common_ui.R.id.polyline_radio_australia -> {
                 selectedPolyline = australiaPolyline
             }
-            R.id.polyline_radio_sydney -> {
+            com.example.common_ui.R.id.polyline_radio_sydney -> {
                 selectedPolyline = sydneyPolyline
             }
-            R.id.polyline_radio_melbourne -> {
+            com.example.common_ui.R.id.polyline_radio_melbourne -> {
                 selectedPolyline = melbournePolyline
             }
-            R.id.polyline_radio_world -> {
+            com.example.common_ui.R.id.polyline_radio_world -> {
                 selectedPolyline = worldPolyline
             }
         }

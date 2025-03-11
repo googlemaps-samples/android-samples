@@ -35,11 +35,11 @@ public class StreetViewPanoramaBasicDemoActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.street_view_panorama_basic_demo);
+        setContentView(com.example.common_ui.R.layout.street_view_panorama_basic_demo);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
+                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 new OnStreetViewPanoramaReadyCallback() {
                     @Override
@@ -52,6 +52,6 @@ public class StreetViewPanoramaBasicDemoActivity extends SamplesBaseActivity {
                     }
                 });
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 }

@@ -34,12 +34,12 @@ public class PolylineOtherOptionsControlFragment extends PolylineControlFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_other_options_control_fragment, container, false);
-        clickabilityCheckBox = view.findViewById(R.id.clickabilityCheckBox);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_other_options_control_fragment, container, false);
+        clickabilityCheckBox = view.findViewById(com.example.common_ui.R.id.clickabilityCheckBox);
         clickabilityCheckBox.setOnClickListener(this);
-        geodesicCheckBox = view.findViewById(R.id.geodesicCheckBox);
+        geodesicCheckBox = view.findViewById(com.example.common_ui.R.id.geodesicCheckBox);
         geodesicCheckBox.setOnClickListener(this);
-        visibilityCheckBox = view.findViewById(R.id.visibilityCheckBox);
+        visibilityCheckBox = view.findViewById(com.example.common_ui.R.id.visibilityCheckBox);
         visibilityCheckBox.setOnClickListener(this);
         return view;
     }

@@ -48,12 +48,12 @@ class GroundOverlayDemoActivity : AppCompatActivity(), OnSeekBarChangeListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.ground_overlay_demo)
-        transparencyBar = findViewById(R.id.transparencySeekBar)
+        setContentView(com.example.common_ui.R.layout.ground_overlay_demo)
+        transparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar)
         transparencyBar.max = TRANSPARENCY_MAX
         transparencyBar.progress = 0
         val mapFragment =
-            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
 
@@ -69,8 +69,8 @@ class GroundOverlayDemoActivity : AppCompatActivity(), OnSeekBarChangeListener,
             )
         )
         images.clear()
-        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
-        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_prudential_sunny))
+        images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_nj_1922))
+        images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_prudential_sunny))
 
         // Add a small, rotated overlay that is clickable by default
         // (set by the initial state of the checkbox.)
@@ -79,7 +79,7 @@ class GroundOverlayDemoActivity : AppCompatActivity(), OnSeekBarChangeListener,
                 .image(images[1]).anchor(0f, 1f)
                 .position(NEAR_NEWARK, 4300f, 3025f)
                 .bearing(30f)
-                .clickable((findViewById<View>(R.id.toggleClickability) as CheckBox).isChecked)
+                .clickable((findViewById<View>(com.example.common_ui.R.id.toggleClickability) as CheckBox).isChecked)
         )
 
         // Add a large overlay at Newark on top of the smaller overlay.

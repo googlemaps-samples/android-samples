@@ -67,11 +67,11 @@ class LayersDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layers_demo)
+        setContentView(com.example.common_ui.R.layout.layers_demo)
 
-        spinner = findViewById<Spinner>(R.id.layers_spinner).apply {
+        spinner = findViewById<Spinner>(com.example.common_ui.R.id.layers_spinner).apply {
             adapter = ArrayAdapter.createFromResource(this@LayersDemoActivity,
-                    R.array.layers_array, android.R.layout.simple_spinner_item).apply {
+                    com.example.common_ui.R.array.layers_array, android.R.layout.simple_spinner_item).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     }
 
@@ -79,12 +79,12 @@ class LayersDemoActivity :
             onItemSelectedListener = this@LayersDemoActivity
         }
 
-        myLocationCheckbox = findViewById(R.id.my_location)
-        buildingsCheckbox = findViewById(R.id.buildings)
-        indoorCheckbox = findViewById(R.id.indoor)
-        trafficCheckbox = findViewById(R.id.traffic)
+        myLocationCheckbox = findViewById(com.example.common_ui.R.id.my_location)
+        buildingsCheckbox = findViewById(com.example.common_ui.R.id.buildings)
+        indoorCheckbox = findViewById(com.example.common_ui.R.id.indoor)
+        trafficCheckbox = findViewById(com.example.common_ui.R.id.traffic)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -95,8 +95,8 @@ class LayersDemoActivity :
         super.onResumeFragments()
         if (showPermissionDeniedDialog) {
             AlertDialog.Builder(this).apply {
-                setPositiveButton(R.string.ok, null)
-                setMessage(R.string.location_permission_denied)
+                setPositiveButton(com.example.common_ui.R.string.ok, null)
+                setMessage(com.example.common_ui.R.string.location_permission_denied)
                 create()
             }.show()
             showPermissionDeniedDialog = false
@@ -158,7 +158,7 @@ class LayersDemoActivity :
         } else {
             // if permissions are not currently granted, request permissions
             EasyPermissions.requestPermissions(this,
-                    getString(R.string.permission_rationale_location),
+                    getString(com.example.common_ui.R.string.permission_rationale_location),
                     LOCATION_PERMISSION_REQUEST_CODE, *permissions)
         }
     }
@@ -172,11 +172,11 @@ class LayersDemoActivity :
         if (!::map.isInitialized) return
 
         map.mapType = when (spinner.selectedItem) {
-            getString(R.string.normal) -> MAP_TYPE_NORMAL
-            getString(R.string.hybrid) -> MAP_TYPE_HYBRID
-            getString(R.string.satellite) -> MAP_TYPE_SATELLITE
-            getString(R.string.terrain) -> MAP_TYPE_TERRAIN
-            getString(R.string.none_map) -> MAP_TYPE_NONE
+            getString(com.example.common_ui.R.string.normal) -> MAP_TYPE_NORMAL
+            getString(com.example.common_ui.R.string.hybrid) -> MAP_TYPE_HYBRID
+            getString(com.example.common_ui.R.string.satellite) -> MAP_TYPE_SATELLITE
+            getString(com.example.common_ui.R.string.terrain) -> MAP_TYPE_TERRAIN
+            getString(com.example.common_ui.R.string.none_map) -> MAP_TYPE_NONE
             else -> {
                 map.mapType // do not change map type
                 Log.e(TAG, "Error setting layer with name ${spinner.selectedItem}")

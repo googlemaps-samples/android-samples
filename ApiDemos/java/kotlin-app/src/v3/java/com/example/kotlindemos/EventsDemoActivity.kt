@@ -41,10 +41,10 @@ class EventsDemoActivity : AppCompatActivity(), OnMapClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.events_demo)
-        tapTextView = findViewById(R.id.tap_text)
-        cameraTextView = findViewById(R.id.camera_text)
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        setContentView(com.example.common_ui.R.layout.events_demo)
+        tapTextView = findViewById(com.example.common_ui.R.id.tap_text)
+        cameraTextView = findViewById(com.example.common_ui.R.id.camera_text)
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
 

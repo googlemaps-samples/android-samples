@@ -52,17 +52,17 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.street_view_panorama_options_demo);
+        setContentView(com.example.common_ui.R.layout.street_view_panorama_options_demo);
 
-        streetNameCheckbox = findViewById(R.id.streetnames);
-        navigationCheckbox = findViewById(R.id.navigation);
-        zoomCheckbox = findViewById(R.id.zoom);
-        panningCheckbox = findViewById(R.id.panning);
-        outdoorCheckbox = findViewById(R.id.outdoor);
+        streetNameCheckbox = findViewById(com.example.common_ui.R.id.streetnames);
+        navigationCheckbox = findViewById(com.example.common_ui.R.id.navigation);
+        zoomCheckbox = findViewById(com.example.common_ui.R.id.zoom);
+        panningCheckbox = findViewById(com.example.common_ui.R.id.panning);
+        outdoorCheckbox = findViewById(com.example.common_ui.R.id.outdoor);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
+                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 panorama -> {
                     streetViewPanorama = panorama;
@@ -78,7 +78,7 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
                     }
                 });
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     private void setPosition() {
@@ -91,7 +91,7 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
 
     private boolean checkReady() {
         if (streetViewPanorama == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

@@ -110,11 +110,11 @@ class MarkerDemoActivity :
 
         // These are both view groups containing an ImageView with id "badge" and two
         // TextViews with id "title" and "snippet".
-        private val window: View = layoutInflater.inflate(R.layout.custom_info_window, null)
-        private val contents: View = layoutInflater.inflate(R.layout.custom_info_contents, null)
+        private val window: View = layoutInflater.inflate(com.example.common_ui.R.layout.custom_info_window, null)
+        private val contents: View = layoutInflater.inflate(com.example.common_ui.R.layout.custom_info_contents, null)
 
         override fun getInfoWindow(marker: Marker): View? {
-            if (options.checkedRadioButtonId != R.id.custom_info_window) {
+            if (options.checkedRadioButtonId != com.example.common_ui.R.id.custom_info_window) {
                 // This means that getInfoContents will be called.
                 return null
             }
@@ -123,7 +123,7 @@ class MarkerDemoActivity :
         }
 
         override fun getInfoContents(marker: Marker): View? {
-            if (options.checkedRadioButtonId != R.id.custom_info_contents) {
+            if (options.checkedRadioButtonId != com.example.common_ui.R.id.custom_info_contents) {
                 // This means that the default info contents will be used.
                 return null
             }
@@ -133,20 +133,20 @@ class MarkerDemoActivity :
 
         private fun render(marker: Marker, view: View) {
             val badge = when (marker.title!!) {
-                "Brisbane" -> R.drawable.badge_qld
-                "Adelaide" -> R.drawable.badge_sa
-                "Sydney" -> R.drawable.badge_nsw
-                "Melbourne" -> R.drawable.badge_victoria
-                "Perth" -> R.drawable.badge_wa
-                in "Darwin Marker 1".."Darwin Marker 4" -> R.drawable.badge_nt
+                "Brisbane" -> com.example.common_ui.R.drawable.badge_qld
+                "Adelaide" -> com.example.common_ui.R.drawable.badge_sa
+                "Sydney" -> com.example.common_ui.R.drawable.badge_nsw
+                "Melbourne" -> com.example.common_ui.R.drawable.badge_victoria
+                "Perth" -> com.example.common_ui.R.drawable.badge_wa
+                in "Darwin Marker 1".."Darwin Marker 4" -> com.example.common_ui.R.drawable.badge_nt
                 else -> 0 // Passing 0 to setImageResource will clear the image view.
             }
 
-            view.findViewById<ImageView>(R.id.badge).setImageResource(badge)
+            view.findViewById<ImageView>(com.example.common_ui.R.id.badge).setImageResource(badge)
 
             // Set the title and snippet for the custom info window
             val title: String? = marker.title
-            val titleUi = view.findViewById<TextView>(R.id.title)
+            val titleUi = view.findViewById<TextView>(com.example.common_ui.R.id.title)
 
             if (title != null) {
                 // Spannable string allows us to edit the formatting of the text.
@@ -158,7 +158,7 @@ class MarkerDemoActivity :
             }
 
             val snippet: String? = marker.snippet
-            val snippetUi = view.findViewById<TextView>(R.id.snippet)
+            val snippetUi = view.findViewById<TextView>(com.example.common_ui.R.id.snippet)
             if (snippet != null && snippet.length > 12) {
                 snippetUi.text = SpannableString(snippet).apply {
                     setSpan(ForegroundColorSpan(Color.MAGENTA), 0, 10, 0)
@@ -172,11 +172,11 @@ class MarkerDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.marker_demo)
+        setContentView(com.example.common_ui.R.layout.marker_demo)
 
-        topText = findViewById(R.id.top_text)
+        topText = findViewById(com.example.common_ui.R.id.top_text)
 
-        rotationBar = findViewById<SeekBar>(R.id.rotationSeekBar).apply {
+        rotationBar = findViewById<SeekBar>(com.example.common_ui.R.id.rotationSeekBar).apply {
             max = 360
             setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
 
@@ -197,9 +197,9 @@ class MarkerDemoActivity :
             } )
         }
 
-        flatBox = findViewById(R.id.flat)
+        flatBox = findViewById(com.example.common_ui.R.id.flat)
 
-        options = findViewById<RadioGroup>(R.id.custom_info_window_options).apply {
+        options = findViewById<RadioGroup>(com.example.common_ui.R.id.custom_info_window_options).apply {
             setOnCheckedChangeListener { _, _ ->
                 if (lastSelectedMarker?.isInfoWindowShown == true) {
                     // Refresh the info window when the info window's content has changed.
@@ -210,7 +210,7 @@ class MarkerDemoActivity :
             }
         }
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
     }
 
@@ -275,7 +275,7 @@ class MarkerDemoActivity :
                         position = places.getValue("SYDNEY"),
                         title = "Sydney",
                         snippet = "Population: 4,627,300",
-                        icon = BitmapDescriptorFactory.fromResource(R.drawable.arrow),
+                        icon = BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.arrow),
                         infoWindowAnchorX = 0.5f,
                         infoWindowAnchorY = 0.5f
                 ),
@@ -293,7 +293,7 @@ class MarkerDemoActivity :
                         position = places.getValue("ALICE_SPRINGS"),
                         title = "Alice Springs",
                         icon = vectorToBitmap(
-                                R.drawable.ic_android, Color.parseColor("#A4C639"))
+                                com.example.common_ui.R.drawable.ic_android, Color.parseColor("#A4C639"))
                 ),
 
                 // More markers for good measure
@@ -455,15 +455,15 @@ class MarkerDemoActivity :
     }
 
     override fun onMarkerDragStart(marker : Marker) {
-        topText.text = getString(R.string.on_marker_drag_start)
+        topText.text = getString(com.example.common_ui.R.string.on_marker_drag_start)
     }
 
     override fun onMarkerDragEnd(marker : Marker) {
-        topText.text = getString(R.string.on_marker_drag_end)
+        topText.text = getString(com.example.common_ui.R.string.on_marker_drag_end)
     }
 
     override fun onMarkerDrag(marker : Marker) {
-        topText.text = getString(R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
+        topText.text = getString(com.example.common_ui.R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
     }
 
     /**
@@ -473,7 +473,7 @@ class MarkerDemoActivity :
      */
     private fun checkReadyThen(stuffToDo : () -> Unit) {
         if (!::map.isInitialized) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show()
         } else {
             stuffToDo()
         }

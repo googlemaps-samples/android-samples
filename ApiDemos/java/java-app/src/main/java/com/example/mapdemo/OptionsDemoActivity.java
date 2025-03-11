@@ -27,7 +27,7 @@ public final class OptionsDemoActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.options_demo);
-        applyInsets(findViewById(R.id.map_container));
+        setContentView(com.example.common_ui.R.layout.options_demo);
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 }

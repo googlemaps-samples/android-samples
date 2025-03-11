@@ -32,8 +32,8 @@ class PolylineJointControlFragment : PolylineControlFragment(), OnCheckedChangeL
     private lateinit var jointRadioGroup: RadioGroup
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View {
-        val view = inflater.inflate(R.layout.polyline_joint_control_fragment, container, false)
-        jointRadioGroup = view.findViewById(R.id.joint_radio)
+        val view = inflater.inflate(com.example.common_ui.R.layout.polyline_joint_control_fragment, container, false)
+        jointRadioGroup = view.findViewById(com.example.common_ui.R.id.joint_radio)
         jointRadioGroup.setOnCheckedChangeListener(this)
         return view
     }
@@ -60,16 +60,16 @@ class PolylineJointControlFragment : PolylineControlFragment(), OnCheckedChangeL
             jointRadioGroup.getChildAt(i).isEnabled = true
         }
         when (polyline?.jointType) {
-            JointType.DEFAULT -> jointRadioGroup.check(R.id.joint_radio_default)
-            JointType.BEVEL -> jointRadioGroup.check(R.id.joint_radio_bevel)
-            JointType.ROUND -> jointRadioGroup.check(R.id.joint_radio_round)
+            JointType.DEFAULT -> jointRadioGroup.check(com.example.common_ui.R.id.joint_radio_default)
+            JointType.BEVEL -> jointRadioGroup.check(com.example.common_ui.R.id.joint_radio_bevel)
+            JointType.ROUND -> jointRadioGroup.check(com.example.common_ui.R.id.joint_radio_round)
             else -> jointRadioGroup.clearCheck()
         }
     }
 
     init {
-        radioIdToJointType[R.id.joint_radio_default] = JointType.DEFAULT
-        radioIdToJointType[R.id.joint_radio_bevel] = JointType.BEVEL
-        radioIdToJointType[R.id.joint_radio_round] = JointType.ROUND
+        radioIdToJointType[com.example.common_ui.R.id.joint_radio_default] = JointType.DEFAULT
+        radioIdToJointType[com.example.common_ui.R.id.joint_radio_bevel] = JointType.BEVEL
+        radioIdToJointType[com.example.common_ui.R.id.joint_radio_round] = JointType.ROUND
     }
 }

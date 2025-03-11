@@ -39,11 +39,11 @@ class SplitStreetViewPanoramaAndMapDemoActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.split_street_view_panorama_and_map_demo)
+        setContentView(com.example.common_ui.R.layout.split_street_view_panorama_and_map_demo)
         val markerPosition = savedInstanceState?.getParcelable(MARKER_POSITION_KEY) ?: SYDNEY
 
         val streetViewPanoramaFragment =
-            supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
+            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama ->
             streetViewPanorama = panorama
             streetViewPanorama?.setOnStreetViewPanoramaChangeListener(
@@ -54,14 +54,14 @@ class SplitStreetViewPanoramaAndMapDemoActivity : AppCompatActivity(),
             savedInstanceState ?: streetViewPanorama?.setPosition(SYDNEY)
         }
         val mapFragment =
-            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync { map ->
             map.setOnMarkerDragListener(this@SplitStreetViewPanoramaAndMapDemoActivity)
             // Creates a draggable marker. Long press to drag.
             marker = map.addMarker(
                 MarkerOptions()
                     .position(markerPosition)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
+                    .icon(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.pegman))
                     .draggable(true)
             )
         }

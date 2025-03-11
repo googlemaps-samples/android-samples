@@ -76,22 +76,22 @@ public class PolylineSpansControlFragment extends PolylineControlFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_spans_control_fragment, container, false);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_spans_control_fragment, container, false);
 
-        spanCountBar = view.findViewById(R.id.spansSeekBar);
+        spanCountBar = view.findViewById(com.example.common_ui.R.id.spansSeekBar);
         spanCountBar.setMax(SPAN_COUNT_MAX);
         spanCountBar.setOnSeekBarChangeListener(this);
 
-        spanCountTextView = view.findViewById(R.id.spansTextView);
+        spanCountTextView = view.findViewById(com.example.common_ui.R.id.spansTextView);
 
-        gradientToggle = view.findViewById(R.id.gradientToggle);
+        gradientToggle = view.findViewById(com.example.common_ui.R.id.gradientToggle);
         gradientToggle.setOnCheckedChangeListener(
             (buttonView, isChecked) -> {
                 polylineGradientStates.put(polyline, isChecked);
                 updateSpans();
             });
 
-        polylineStampStyleRadioGroup = view.findViewById(R.id.polyline_stamp_style_radio_group);
+        polylineStampStyleRadioGroup = view.findViewById(com.example.common_ui.R.id.polyline_stamp_style_radio_group);
         polylineStampStyleRadioGroup.setVisibility(View.INVISIBLE);
 
         if (isLiteMode) {
@@ -125,9 +125,9 @@ public class PolylineSpansControlFragment extends PolylineControlFragment
                     ? StrokeStyle.gradientBuilder(polyline.getColor(), invertedPolylineColor)
                     : StrokeStyle.colorBuilder(color);
 
-            if (selectedStampStyleId == R.id.polyline_texture_style) {
+            if (selectedStampStyleId == com.example.common_ui.R.id.polyline_texture_style) {
                 strokeStyleBuilder.stamp(
-                    TextureStyle.newBuilder(BitmapDescriptorFactory.fromResource(R.drawable.ook))
+                    TextureStyle.newBuilder(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.ook))
                         .build());
             }
 

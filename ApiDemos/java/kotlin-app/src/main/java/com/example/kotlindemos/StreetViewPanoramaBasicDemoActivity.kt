@@ -24,10 +24,10 @@ import com.google.android.gms.maps.model.LatLng
 class StreetViewPanoramaBasicDemoActivity : SamplesBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.street_view_panorama_basic_demo)
+        setContentView(com.example.common_ui.R.layout.street_view_panorama_basic_demo)
 
         val streetViewPanoramaFragment =
-            supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
+            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
 
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama ->
             // Only set the panorama to SYDNEY on startup (when no panoramas have been

@@ -43,7 +43,7 @@ public class BackgroundColorCustomizationProgrammaticDemoActivity extends Sample
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.background_color_customization_programmatic_demo);
+        setContentView(com.example.common_ui.R.layout.background_color_customization_programmatic_demo);
 
         // It isn't possible to set a fragment's id programmatically so we set a tag instead and
         // search for it using that.
@@ -59,18 +59,18 @@ public class BackgroundColorCustomizationProgrammaticDemoActivity extends Sample
 
             // Then we add the fragment using a FragmentTransaction.
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.map, mapFragment, MAP_FRAGMENT_TAG);
+            fragmentTransaction.replace(com.example.common_ui.R.id.map, mapFragment, MAP_FRAGMENT_TAG);
             fragmentTransaction.commit();
         }
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        CheckBox mapTypeToggleCheckbox = (CheckBox) findViewById(R.id.map_type_toggle);
+        CheckBox mapTypeToggleCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.map_type_toggle);
         mapTypeToggleCheckbox.setOnCheckedChangeListener(
             (view, isChecked) -> map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 

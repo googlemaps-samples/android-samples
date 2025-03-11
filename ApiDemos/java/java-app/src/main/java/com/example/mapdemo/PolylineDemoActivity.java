@@ -99,69 +99,69 @@ public class PolylineDemoActivity extends SamplesBaseActivity
     // string resource IDs as identifiers.
 
     private static final int[] CAP_TYPE_NAME_RESOURCE_IDS = {
-            R.string.cap_butt, // Default
-            R.string.cap_round,
-            R.string.cap_square,
-            R.string.cap_image,
+            com.example.common_ui.R.string.cap_butt, // Default
+            com.example.common_ui.R.string.cap_round,
+            com.example.common_ui.R.string.cap_square,
+            com.example.common_ui.R.string.cap_image,
     };
 
     private static final int[] JOINT_TYPE_NAME_RESOURCE_IDS = {
-            R.string.joint_type_default, // Default
-            R.string.joint_type_bevel,
-            R.string.joint_type_round,
+            com.example.common_ui.R.string.joint_type_default, // Default
+            com.example.common_ui.R.string.joint_type_bevel,
+            com.example.common_ui.R.string.joint_type_round,
     };
 
     private static final int[] PATTERN_TYPE_NAME_RESOURCE_IDS = {
-            R.string.pattern_solid, // Default
-            R.string.pattern_dashed,
-            R.string.pattern_dotted,
-            R.string.pattern_mixed,
+            com.example.common_ui.R.string.pattern_solid, // Default
+            com.example.common_ui.R.string.pattern_dashed,
+            com.example.common_ui.R.string.pattern_dotted,
+            com.example.common_ui.R.string.pattern_mixed,
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.polyline_demo);
+        setContentView(com.example.common_ui.R.layout.polyline_demo);
 
-        hueBar = findViewById(R.id.hueSeekBar);
+        hueBar = findViewById(com.example.common_ui.R.id.hueSeekBar);
         hueBar.setMax(MAX_HUE_DEGREES);
         hueBar.setProgress(0);
 
-        alphaBar = findViewById(R.id.alphaSeekBar);
+        alphaBar = findViewById(com.example.common_ui.R.id.alphaSeekBar);
         alphaBar.setMax(MAX_ALPHA);
         alphaBar.setProgress(MAX_ALPHA);
 
-        widthBar = findViewById(R.id.widthSeekBar);
+        widthBar = findViewById(com.example.common_ui.R.id.widthSeekBar);
         widthBar.setMax(MAX_WIDTH_PX);
         widthBar.setProgress(MAX_WIDTH_PX / 2);
 
-        startCapSpinner = findViewById(R.id.startCapSpinner);
+        startCapSpinner = findViewById(com.example.common_ui.R.id.startCapSpinner);
         startCapSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
 
-        endCapSpinner = findViewById(R.id.endCapSpinner);
+        endCapSpinner = findViewById(com.example.common_ui.R.id.endCapSpinner);
         endCapSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
 
-        jointTypeSpinner = findViewById(R.id.jointTypeSpinner);
+        jointTypeSpinner = findViewById(com.example.common_ui.R.id.jointTypeSpinner);
         jointTypeSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(JOINT_TYPE_NAME_RESOURCE_IDS)));
 
-        patternSpinner = findViewById(R.id.patternSpinner);
+        patternSpinner = findViewById(com.example.common_ui.R.id.patternSpinner);
         patternSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
-        clickabilityCheckbox = findViewById(R.id.toggleClickability);
+        clickabilityCheckbox = findViewById(com.example.common_ui.R.id.toggleClickability);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
     // [START_EXCLUDE silent]
 
@@ -178,7 +178,7 @@ public class PolylineDemoActivity extends SamplesBaseActivity
     public void onMapReady(GoogleMap map) {
 
         // Override the default content description on the view, for accessibility mode.
-        map.setContentDescription(getString(R.string.polyline_demo_description));
+        map.setContentDescription(getString(com.example.common_ui.R.string.polyline_demo_description));
 
         // A geodesic polyline that goes around the world.
         map.addPolyline(new PolylineOptions()
@@ -227,15 +227,15 @@ public class PolylineDemoActivity extends SamplesBaseActivity
     // [START_EXCLUDE silent]
     private Cap getSelectedCap(int pos) {
         int id = CAP_TYPE_NAME_RESOURCE_IDS[pos];
-        if (id == R.string.cap_butt) {
+        if (id == com.example.common_ui.R.string.cap_butt) {
             return new ButtCap();
-        } else if (id == R.string.cap_square) {
+        } else if (id == com.example.common_ui.R.string.cap_square) {
             return new SquareCap();
-        } else if (id == R.string.cap_round) {
+        } else if (id == com.example.common_ui.R.string.cap_round) {
             return new RoundCap();
-        } else if (id == R.string.cap_image) {
+        } else if (id == com.example.common_ui.R.string.cap_image) {
             return new CustomCap(
-                    BitmapDescriptorFactory.fromResource(R.drawable.chevron),
+                    BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.chevron),
                     CUSTOM_CAP_IMAGE_REF_WIDTH_PX);
         }
         return null;
@@ -243,11 +243,11 @@ public class PolylineDemoActivity extends SamplesBaseActivity
 
     private int getSelectedJointType(int pos) {
         int id = JOINT_TYPE_NAME_RESOURCE_IDS[pos];
-        if (id == R.string.joint_type_bevel) {
+        if (id == com.example.common_ui.R.string.joint_type_bevel) {
             return JointType.BEVEL;
-        } else if (id == R.string.joint_type_round) {
+        } else if (id == com.example.common_ui.R.string.joint_type_round) {
             return JointType.ROUND;
-        } else if (id == R.string.joint_type_default) {
+        } else if (id == com.example.common_ui.R.string.joint_type_default) {
             return JointType.DEFAULT;
         }
         return 0;
@@ -255,13 +255,13 @@ public class PolylineDemoActivity extends SamplesBaseActivity
 
     private List<PatternItem> getSelectedPattern(int pos) {
         int id = PATTERN_TYPE_NAME_RESOURCE_IDS[pos];
-        if (id == R.string.pattern_solid) {
+        if (id == com.example.common_ui.R.string.pattern_solid) {
             return null;
-        } else if (id == R.string.pattern_dotted) {
+        } else if (id == com.example.common_ui.R.string.pattern_dotted) {
             return PATTERN_DOTTED;
-        } else if (id == R.string.pattern_dashed) {
+        } else if (id == com.example.common_ui.R.string.pattern_dashed) {
             return PATTERN_DASHED;
-        } else if (id == R.string.pattern_mixed) {
+        } else if (id == com.example.common_ui.R.string.pattern_mixed) {
             return PATTERN_MIXED;
         } else {
             return null;
@@ -271,13 +271,13 @@ public class PolylineDemoActivity extends SamplesBaseActivity
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         int parentId = parent.getId();
-        if (parentId == R.id.startCapSpinner) {
+        if (parentId == com.example.common_ui.R.id.startCapSpinner) {
             mutablePolyline.setStartCap(getSelectedCap(pos));
-        } else if (parentId == R.id.endCapSpinner) {
+        } else if (parentId == com.example.common_ui.R.id.endCapSpinner) {
             mutablePolyline.setEndCap(getSelectedCap(pos));
-        } else if (parentId == R.id.jointTypeSpinner) {
+        } else if (parentId == com.example.common_ui.R.id.jointTypeSpinner) {
             mutablePolyline.setJointType(getSelectedJointType(pos));
-        } else if (parentId == R.id.patternSpinner) {
+        } else if (parentId == com.example.common_ui.R.id.patternSpinner) {
             mutablePolyline.setPattern(getSelectedPattern(pos));
         }
     }

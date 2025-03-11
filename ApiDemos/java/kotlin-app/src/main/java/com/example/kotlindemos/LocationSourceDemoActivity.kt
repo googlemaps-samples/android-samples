@@ -42,8 +42,8 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_basic_map_demo)
-    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+    setContentView(com.example.common_ui.R.layout.basic_demo)
+    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
     lifecycleScope.launchWhenCreated {
       val map = mapFragment.awaitMap()
       init(map = map)

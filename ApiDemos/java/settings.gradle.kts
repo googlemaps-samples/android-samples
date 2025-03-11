@@ -16,3 +16,4 @@
 
 include(":java-app")
 include(":kotlin-app")
+include(":common-ui")

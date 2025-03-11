@@ -43,8 +43,8 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
   private lateinit var map: GoogleMap
   private lateinit var cameraTextView: TextView
   private val buttonIdToLatLngBoundsCameraMap = mapOf(
-    Pair(R.id.clamp_latlng_adelaide, Pair(ADELAIDE, ADELAIDE_CAMERA)),
-    Pair(R.id.clamp_latlng_pacific, Pair(PACIFIC, PACIFIC_CAMERA)),
+    Pair(com.example.common_ui.R.id.clamp_latlng_adelaide, Pair(ADELAIDE, ADELAIDE_CAMERA)),
+    Pair(com.example.common_ui.R.id.clamp_latlng_pacific, Pair(PACIFIC, PACIFIC_CAMERA)),
   )
 
   /**
@@ -60,9 +60,9 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
   @OptIn(ExperimentalCoroutinesApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.camera_clamping_demo)
-    cameraTextView = findViewById(R.id.camera_text)
-    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+    setContentView(com.example.common_ui.R.layout.camera_clamping_demo)
+    cameraTextView = findViewById(com.example.common_ui.R.id.camera_text)
+    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
     lifecycleScope.launchWhenCreated {
       map = mapFragment.awaitMap()
       launch {
@@ -76,19 +76,19 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
 
   private fun setButtonClickListeners() {
     // Min/max zooms
-    findViewById<Button>(R.id.clamp_min_zoom).setOnClickListener {
+    findViewById<Button>(com.example.common_ui.R.id.clamp_min_zoom).setOnClickListener {
       minZoom += ZOOM_DELTA
       // Constrains the minimum zoom level.
       map.setMinZoomPreference(minZoom)
       toast("Min zoom preference set to: $minZoom")
     }
-    findViewById<Button>(R.id.clamp_max_zoom).setOnClickListener {
+    findViewById<Button>(com.example.common_ui.R.id.clamp_max_zoom).setOnClickListener {
       maxZoom -= ZOOM_DELTA
       // Constrains the maximum zoom level.
       map.setMaxZoomPreference(maxZoom)
       toast("Max zoom preference set to: $maxZoom")
     }
-    findViewById<Button>(R.id.clamp_zoom_reset).setOnClickListener {
+    findViewById<Button>(com.example.common_ui.R.id.clamp_zoom_reset).setOnClickListener {
       resetMinMaxZoom()
       map.resetMinMaxZoomPreference()
       toast("Min/Max zoom preferences reset.")
@@ -101,9 +101,9 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
         map.animateCamera(CameraUpdateFactory.newCameraPosition(camera))
       }
     }
-    findViewById<Button>(R.id.clamp_latlng_adelaide).setOnClickListener(clampListener)
-    findViewById<Button>(R.id.clamp_latlng_pacific).setOnClickListener(clampListener)
-    findViewById<Button>(R.id.clamp_latlng_reset).setOnClickListener {
+    findViewById<Button>(com.example.common_ui.R.id.clamp_latlng_adelaide).setOnClickListener(clampListener)
+    findViewById<Button>(com.example.common_ui.R.id.clamp_latlng_pacific).setOnClickListener(clampListener)
+    findViewById<Button>(com.example.common_ui.R.id.clamp_latlng_reset).setOnClickListener {
       map.setLatLngBoundsForCameraTarget(null)
       toast("LatLngBounds clamp reset.")
     }

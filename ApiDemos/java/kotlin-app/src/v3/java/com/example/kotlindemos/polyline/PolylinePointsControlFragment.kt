@@ -52,16 +52,16 @@ class PolylinePointsControlFragment : PolylineControlFragment(), View.OnTouchLis
         })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View {
-        val view: View = inflater.inflate(R.layout.polyline_points_control_fragment, container, false)
-        (view.findViewById(R.id.move_up) as View).setOnTouchListener(this)
-        (view.findViewById(R.id.move_down) as View).setOnTouchListener(this)
-        (view.findViewById(R.id.move_left) as View).setOnTouchListener(this)
-        (view.findViewById(R.id.move_right) as View).setOnTouchListener(this)
-        val fpsEditText: EditText = view.findViewById(R.id.fps_edittext) as EditText
+        val view: View = inflater.inflate(com.example.common_ui.R.layout.polyline_points_control_fragment, container, false)
+        (view.findViewById(com.example.common_ui.R.id.move_up) as View).setOnTouchListener(this)
+        (view.findViewById(com.example.common_ui.R.id.move_down) as View).setOnTouchListener(this)
+        (view.findViewById(com.example.common_ui.R.id.move_left) as View).setOnTouchListener(this)
+        (view.findViewById(com.example.common_ui.R.id.move_right) as View).setOnTouchListener(this)
+        val fpsEditText: EditText = view.findViewById(com.example.common_ui.R.id.fps_edittext) as EditText
         fpsEditText.setOnEditorActionListener(this)
         fpsEditText.onFocusChangeListener = this
         setFrameRate(fpsEditText)
-        val stepEditText: EditText = view.findViewById(R.id.step_edittext) as EditText
+        val stepEditText: EditText = view.findViewById(com.example.common_ui.R.id.step_edittext) as EditText
         stepEditText.setOnEditorActionListener(this)
         stepEditText.onFocusChangeListener = this
         setStepSize(stepEditText)
@@ -87,16 +87,16 @@ class PolylinePointsControlFragment : PolylineControlFragment(), View.OnTouchLis
 
     private fun setMoveDirection(buttonId: Int) {
         moveDirection = when (buttonId) {
-            R.id.move_up -> {
+            com.example.common_ui.R.id.move_up -> {
                 MoveDirection.UP
             }
-            R.id.move_down -> {
+            com.example.common_ui.R.id.move_down -> {
                 MoveDirection.DOWN
             }
-            R.id.move_left -> {
+            com.example.common_ui.R.id.move_left -> {
                 MoveDirection.LEFT
             }
-            R.id.move_right -> {
+            com.example.common_ui.R.id.move_right -> {
                 MoveDirection.RIGHT
             }
             else -> {
@@ -111,9 +111,9 @@ class PolylinePointsControlFragment : PolylineControlFragment(), View.OnTouchLis
             return false
         }
         val textViewId: Int = textView.getId()
-        if (textViewId == R.id.fps_edittext) {
+        if (textViewId == com.example.common_ui.R.id.fps_edittext) {
             setFrameRate(textView)
-        } else if (textViewId == R.id.step_edittext) {
+        } else if (textViewId == com.example.common_ui.R.id.step_edittext) {
             setStepSize(textView)
         }
         return false
@@ -124,9 +124,9 @@ class PolylinePointsControlFragment : PolylineControlFragment(), View.OnTouchLis
             return
         }
         val viewId: Int = view.getId()
-        if (viewId == R.id.fps_edittext) {
+        if (viewId == com.example.common_ui.R.id.fps_edittext) {
             setFrameRate(view as TextView)
-        } else if (viewId == R.id.step_edittext) {
+        } else if (viewId == com.example.common_ui.R.id.step_edittext) {
             setStepSize(view as TextView)
         }
     }

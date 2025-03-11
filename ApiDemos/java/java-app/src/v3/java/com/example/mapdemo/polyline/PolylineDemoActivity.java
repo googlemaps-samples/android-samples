@@ -72,22 +72,22 @@ public class PolylineDemoActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.polyline_demo);
+        setContentView(com.example.common_ui.R.layout.polyline_demo);
 
         pagerAdapter =
             new PolylineControlFragmentPagerAdapter(
                 getSupportFragmentManager(), /* isLiteMode= */ false);
-        pager = findViewById(R.id.pager);
+        pager = findViewById(com.example.common_ui.R.id.pager);
         pager.setAdapter(pagerAdapter);
 
         // onPageSelected(0) isn't invoked once views are ready, so post a Runnable to
         // refreshControlPanel() for the first time instead...
         pager.post(this::refreshControlPanel);
 
-        polylineRadio = findViewById(R.id.polyline_radio);
+        polylineRadio = findViewById(com.example.common_ui.R.id.polyline_radio);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -149,7 +149,7 @@ public class PolylineDemoActivity extends AppCompatActivity implements
 
         map.moveCamera(CameraUpdateFactory.newLatLng(SYDNEY));
         selectedPolyline = australiaPolyline;
-        polylineRadio.check(R.id.polyline_radio_australia);
+        polylineRadio.check(com.example.common_ui.R.id.polyline_radio_australia);
 
         pager.addOnPageChangeListener(this);
         polylineRadio.setOnCheckedChangeListener(this);
@@ -168,13 +168,13 @@ public class PolylineDemoActivity extends AppCompatActivity implements
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (checkedId == R.id.polyline_radio_australia) {
+        if (checkedId == com.example.common_ui.R.id.polyline_radio_australia) {
             selectedPolyline = australiaPolyline;
-        } else if (checkedId == R.id.polyline_radio_sydney) {
+        } else if (checkedId == com.example.common_ui.R.id.polyline_radio_sydney) {
             selectedPolyline = sydneyPolyline;
-        } else if (checkedId == R.id.polyline_radio_melbourne) {
+        } else if (checkedId == com.example.common_ui.R.id.polyline_radio_melbourne) {
             selectedPolyline = melbournePolyline;
-        } else if (checkedId == R.id.polyline_radio_world) {
+        } else if (checkedId == com.example.common_ui.R.id.polyline_radio_world) {
             selectedPolyline = worldPolyline;
         }
         refreshControlPanel();

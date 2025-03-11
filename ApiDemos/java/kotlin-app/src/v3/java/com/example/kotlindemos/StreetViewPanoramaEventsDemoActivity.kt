@@ -51,15 +51,15 @@ class StreetViewPanoramaEventsDemoActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.street_view_panorama_events_demo)
+        setContentView(com.example.common_ui.R.layout.street_view_panorama_events_demo)
 
-        panoChangeTimesTextView = findViewById(R.id.change_pano)
-        panoCameraChangeTextView = findViewById(R.id.change_camera)
-        panoClickTextView = findViewById(R.id.click_pano)
-        panoLongClickTextView = findViewById(R.id.long_click_pano)
+        panoChangeTimesTextView = findViewById(com.example.common_ui.R.id.change_pano)
+        panoCameraChangeTextView = findViewById(com.example.common_ui.R.id.change_camera)
+        panoClickTextView = findViewById(com.example.common_ui.R.id.click_pano)
+        panoLongClickTextView = findViewById(com.example.common_ui.R.id.long_click_pano)
 
         val streetViewPanoramaFragment =
-            supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
+            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama ->
             streetViewPanorama = panorama
             streetViewPanorama.setOnStreetViewPanoramaChangeListener(

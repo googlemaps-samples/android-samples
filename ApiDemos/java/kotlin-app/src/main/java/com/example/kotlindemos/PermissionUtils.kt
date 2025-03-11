@@ -93,8 +93,8 @@ object PermissionUtils {
             finishActivity =
                 arguments?.getBoolean(ARGUMENT_FINISH_ACTIVITY) ?: false
             return AlertDialog.Builder(activity)
-                .setMessage(R.string.location_permission_denied)
-                .setPositiveButton(android.R.string.ok, null)
+                .setMessage(com.example.common_ui.R.string.location_permission_denied)
+                .setPositiveButton(com.example.common_ui.R.string.ok, null)
                 .create()
         }
 
@@ -102,7 +102,7 @@ object PermissionUtils {
             super.onDismiss(dialog)
             if (finishActivity) {
                 Toast.makeText(
-                    activity, R.string.permission_required_toast,
+                    activity, com.example.common_ui.R.string.permission_required_toast,
                     Toast.LENGTH_SHORT
                 ).show()
                 activity?.finish()
@@ -145,8 +145,8 @@ object PermissionUtils {
             finishActivity =
                 arguments?.getBoolean(ARGUMENT_FINISH_ACTIVITY) ?: false
             return AlertDialog.Builder(activity)
-                .setMessage(R.string.permission_rationale_location)
-                .setPositiveButton(android.R.string.ok) { dialog, which -> // After click on Ok, request the permission.
+                .setMessage(com.example.common_ui.R.string.permission_rationale_location)
+                .setPositiveButton(com.example.common_ui.R.string.ok) { dialog, which -> // After click on Ok, request the permission.
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(
@@ -167,7 +167,7 @@ object PermissionUtils {
             if (finishActivity) {
                 Toast.makeText(
                     activity,
-                    R.string.permission_required_toast,
+                    com.example.common_ui.R.string.permission_required_toast,
                     Toast.LENGTH_SHORT
                 ).show()
                 activity?.finish()

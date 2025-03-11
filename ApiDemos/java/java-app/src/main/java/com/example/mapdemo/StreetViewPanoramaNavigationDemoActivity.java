@@ -64,11 +64,11 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.street_view_panorama_navigation_demo);
+        setContentView(com.example.common_ui.R.layout.street_view_panorama_navigation_demo);
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama);
+                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 new OnStreetViewPanoramaReadyCallback() {
                     @Override
@@ -81,8 +81,8 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         }
                     }
                 });
-        mCustomDurationBar = (SeekBar) findViewById(R.id.duration_bar);
-        applyInsets(findViewById(R.id.map_container));
+        mCustomDurationBar = (SeekBar) findViewById(com.example.common_ui.R.id.duration_bar);
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     /**
@@ -91,7 +91,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
      */
     private boolean checkReady() {
         if (mStreetViewPanorama == null) {
-            Toast.makeText(this, R.string.panorama_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.panorama_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

@@ -73,24 +73,24 @@ public class LayersDemoActivity extends SamplesBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layers_demo);
+        setContentView(com.example.common_ui.R.layout.layers_demo);
 
-        mSpinner = findViewById(R.id.layers_spinner);
+        mSpinner = findViewById(com.example.common_ui.R.id.layers_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-            this, R.array.layers_array, android.R.layout.simple_spinner_item);
+            this, com.example.common_ui.R.array.layers_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
 
-        mTrafficCheckbox = findViewById(R.id.traffic);
-        mMyLocationCheckbox = findViewById(R.id.my_location);
-        mBuildingsCheckbox = findViewById(R.id.buildings);
-        mIndoorCheckbox = findViewById(R.id.indoor);
+        mTrafficCheckbox = findViewById(com.example.common_ui.R.id.traffic);
+        mMyLocationCheckbox = findViewById(com.example.common_ui.R.id.my_location);
+        mBuildingsCheckbox = findViewById(com.example.common_ui.R.id.buildings);
+        mIndoorCheckbox = findViewById(com.example.common_ui.R.id.indoor);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override
@@ -105,7 +105,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
 
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -225,17 +225,17 @@ public class LayersDemoActivity extends SamplesBaseActivity
         }
 
         String layerName = ((String) mSpinner.getSelectedItem());
-        if (layerName.equals(getString(R.string.normal))) {
+        if (layerName.equals(getString(com.example.common_ui.R.string.normal))) {
             mMap.setMapType(MAP_TYPE_NORMAL);
-        } else if (layerName.equals(getString(R.string.hybrid))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.hybrid))) {
             mMap.setMapType(MAP_TYPE_HYBRID);
 
 
-        } else if (layerName.equals(getString(R.string.satellite))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.satellite))) {
             mMap.setMapType(MAP_TYPE_SATELLITE);
-        } else if (layerName.equals(getString(R.string.terrain))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.terrain))) {
             mMap.setMapType(MAP_TYPE_TERRAIN);
-        } else if (layerName.equals(getString(R.string.none_map))) {
+        } else if (layerName.equals(getString(com.example.common_ui.R.string.none_map))) {
             mMap.setMapType(MAP_TYPE_NONE);
         } else {
             Log.i("LDA", "Error setting layer with name " + layerName);

@@ -22,6 +22,6 @@ import android.os.Bundle
 class MultiMapDemoActivity : SamplesBaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.multimap_demo)
+    setContentView(com.example.common_ui.R.layout.multimap_demo)
   }
 }

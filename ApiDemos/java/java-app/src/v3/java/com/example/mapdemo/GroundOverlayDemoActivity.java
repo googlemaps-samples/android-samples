@@ -63,14 +63,14 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ground_overlay_demo);
+        setContentView(com.example.common_ui.R.layout.ground_overlay_demo);
 
-        transparencyBar = findViewById(R.id.transparencySeekBar);
+        transparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar);
         transparencyBar.setMax(TRANSPARENCY_MAX);
         transparencyBar.setProgress(0);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -82,8 +82,8 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11));
 
         images.clear();
-        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922));
-        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_prudential_sunny));
+        images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_nj_1922));
+        images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_prudential_sunny));
 
         // Add a small, rotated overlay that is clickable by default
         // (set by the initial state of the checkbox.)
@@ -91,7 +91,7 @@ public class GroundOverlayDemoActivity extends AppCompatActivity
                 .image(images.get(1)).anchor(0, 1)
                 .position(NEAR_NEWARK, 4300f, 3025f)
                 .bearing(30)
-                .clickable(((CheckBox) findViewById(R.id.toggleClickability)).isChecked()));
+                .clickable(((CheckBox) findViewById(com.example.common_ui.R.id.toggleClickability)).isChecked()));
 
         // Add a large overlay at Newark on top of the smaller overlay.
         groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()

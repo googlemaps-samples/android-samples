@@ -35,7 +35,7 @@ import java.util.ArrayList
 class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
-    private var mSelectedStyleId = R.string.style_label_default
+    private var mSelectedStyleId = com.example.common_ui.R.string.style_label_default
 
     companion object {
         private const val TAG = "StyledMapDemoActivity"
@@ -44,11 +44,11 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     }
 
     private val mStyleIds = intArrayOf(
-            R.string.style_label_retro,
-            R.string.style_label_night,
-            R.string.style_label_grayscale,
-            R.string.style_label_no_pois_no_transit,
-            R.string.style_label_default
+            com.example.common_ui.R.string.style_label_retro,
+            com.example.common_ui.R.string.style_label_night,
+            com.example.common_ui.R.string.style_label_grayscale,
+            com.example.common_ui.R.string.style_label_no_pois_no_transit,
+            com.example.common_ui.R.string.style_label_default
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,10 +56,10 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         if (savedInstanceState != null) {
             mSelectedStyleId = savedInstanceState.getInt(SELECTED_STYLE)
         }
-        setContentView(R.layout.styled_map_demo)
+        setContentView(com.example.common_ui.R.layout.styled_map_demo)
 
         val mapFragment =
-                supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+                supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -80,7 +80,7 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_style_choose) {
+        if (item.itemId == com.example.common_ui.R.id.menu_style_choose) {
             showStylesDialog()
         }
         return true
@@ -93,11 +93,11 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         }
 
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.style_choose))
+        builder.setTitle(getString(com.example.common_ui.R.string.style_choose))
         builder.setItems(styleNames.toTypedArray<CharSequence>(),
                 DialogInterface.OnClickListener { _, which ->
                     mSelectedStyleId = mStyleIds[which]
-                    val msg = getString(R.string.style_set_to, getString(mSelectedStyleId))
+                    val msg = getString(com.example.common_ui.R.string.style_set_to, getString(mSelectedStyleId))
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
                     setSelectedStyle()
@@ -109,13 +109,13 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         val style: MapStyleOptions?
         val id = mSelectedStyleId
         style = when (id) {
-            R.string.style_label_retro ->
-                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro)
-            R.string.style_label_night ->
-                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night)
-            R.string.style_label_grayscale ->
-                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale)
-            R.string.style_label_no_pois_no_transit ->
+            com.example.common_ui.R.string.style_label_retro ->
+                MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_retro)
+            com.example.common_ui.R.string.style_label_night ->
+                MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_night)
+            com.example.common_ui.R.string.style_label_grayscale ->
+                MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_grayscale)
+            com.example.common_ui.R.string.style_label_no_pois_no_transit ->
                 MapStyleOptions(
                         "[" +
                                 "  {" +
@@ -138,7 +138,7 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
                                 "  }" +
                                 "]"
                 )
-            R.string.style_label_default -> null
+            com.example.common_ui.R.string.style_label_default -> null
             else -> return
         }
         mMap?.setMapStyle(style)

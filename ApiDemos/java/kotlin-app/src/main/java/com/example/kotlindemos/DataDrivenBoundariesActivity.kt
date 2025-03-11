@@ -56,16 +56,16 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.data_driven_boundaries_demo)
+        setContentView(com.example.common_ui.R.layout.data_driven_boundaries_demo)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
 
-        findViewById<Button>(R.id.button_hawaii).setOnClickListener {
+        findViewById<Button>(com.example.common_ui.R.id.button_hawaii).setOnClickListener {
             centerMapOnLocation(HANA_HAWAII, 13.5f) // Seattle coordinates
         }
 
-        findViewById<Button>(R.id.button_us).setOnClickListener {
+        findViewById<Button>(com.example.common_ui.R.id.button_us).setOnClickListener {
             centerMapOnLocation(CENTER_US, 1f) // New York coordinates
         }
     }

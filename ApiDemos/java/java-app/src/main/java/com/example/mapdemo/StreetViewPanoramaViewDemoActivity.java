@@ -59,7 +59,7 @@ public class StreetViewPanoramaViewDemoActivity extends SamplesBaseActivity {
         }
         streetViewPanoramaView.onCreate(streetViewBundle);
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override

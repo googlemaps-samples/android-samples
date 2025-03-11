@@ -26,6 +26,6 @@ public class MultiMapDemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.multimap_demo);
+        setContentView(com.example.common_ui.R.layout.multimap_demo);
     }
 }

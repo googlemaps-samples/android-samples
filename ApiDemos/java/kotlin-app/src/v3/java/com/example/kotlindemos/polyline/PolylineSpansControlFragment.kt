@@ -56,19 +56,19 @@ class PolylineSpansControlFragment : PolylineControlFragment(), SeekBar.OnSeekBa
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View {
-        val view = inflater.inflate(R.layout.polyline_spans_control_fragment, container, false)
-        spanCountBar = view.findViewById(R.id.spansSeekBar)
+        val view = inflater.inflate(com.example.common_ui.R.layout.polyline_spans_control_fragment, container, false)
+        spanCountBar = view.findViewById(com.example.common_ui.R.id.spansSeekBar)
         spanCountBar.max = SPAN_COUNT_MAX
         spanCountBar.setOnSeekBarChangeListener(this)
-        spanCountTextView = view.findViewById(R.id.spansTextView)
-        gradientToggle = view.findViewById(R.id.gradientToggle)
+        spanCountTextView = view.findViewById(com.example.common_ui.R.id.spansTextView)
+        gradientToggle = view.findViewById(com.example.common_ui.R.id.gradientToggle)
         gradientToggle.setOnCheckedChangeListener { _, isChecked ->
             polyline?.let {
                 polylineGradientStates[it] = isChecked
             }
             updateSpans()
         }
-        polylineStampStyleRadioGroup = view.findViewById(R.id.polyline_stamp_style_radio_group)
+        polylineStampStyleRadioGroup = view.findViewById(com.example.common_ui.R.id.polyline_stamp_style_radio_group)
         polylineStampStyleRadioGroup.visibility = View.INVISIBLE
         if (isLiteMode) {
             gradientToggle.visibility = View.INVISIBLE
@@ -98,9 +98,9 @@ class PolylineSpansControlFragment : PolylineControlFragment(), SeekBar.OnSeekBa
             val color = if (i % 2 == 0) polyline.color else invertedPolylineColor
             val segmentCount = (polyline.points.size - 1).toDouble() / count
             val strokeStyleBuilder: StrokeStyle.Builder = if (gradientToggle.isChecked) StrokeStyle.gradientBuilder(polyline.color, invertedPolylineColor) else StrokeStyle.colorBuilder(color)
-            if (selectedStampStyleId == R.id.polyline_texture_style) {
+            if (selectedStampStyleId == com.example.common_ui.R.id.polyline_texture_style) {
                 strokeStyleBuilder.stamp(
-                    TextureStyle.newBuilder(BitmapDescriptorFactory.fromResource(R.drawable.ook))
+                    TextureStyle.newBuilder(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.ook))
                         .build())
             }
             newSpans.add(StyleSpan(strokeStyleBuilder.build(), segmentCount))

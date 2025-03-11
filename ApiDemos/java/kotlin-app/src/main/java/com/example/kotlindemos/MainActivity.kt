@@ -40,12 +40,12 @@ class MainActivity : SamplesBaseActivity(), AdapterView.OnItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(com.example.common_ui.R.layout.main)
         val listAdapter: ListAdapter = CustomArrayAdapter(this, DemoDetailsList.DEMOS)
 
         // Find the view that will show empty message if there is no demo in DemoDetailsList.DEMOS
-        val emptyMessage = findViewById<View>(R.id.empty)
-        with(findViewById<ListView>(R.id.list)) {
+        val emptyMessage = findViewById<View>(com.example.common_ui.R.id.empty)
+        with(findViewById<ListView>(com.example.common_ui.R.id.list)) {
             adapter = listAdapter
             onItemClickListener = this@MainActivity
             emptyView = emptyMessage
@@ -54,6 +54,7 @@ class MainActivity : SamplesBaseActivity(), AdapterView.OnItemClickListener {
         if (BuildConfig.MAPS_API_KEY.isEmpty()) {
             Toast.makeText(this, "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
         }
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     /**
@@ -64,7 +65,7 @@ class MainActivity : SamplesBaseActivity(), AdapterView.OnItemClickListener {
      */
     @SuppressLint("ResourceType")
     class CustomArrayAdapter(context: Context, demos: List<DemoDetails>) :
-            ArrayAdapter<DemoDetails>(context, R.layout.feature, demos) {
+            ArrayAdapter<DemoDetails>(context, com.example.common_ui.R.layout.feature, demos) {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val demo: DemoDetails? = getItem(position)

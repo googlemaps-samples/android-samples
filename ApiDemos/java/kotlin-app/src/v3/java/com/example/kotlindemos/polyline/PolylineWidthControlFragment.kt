@@ -31,11 +31,11 @@ class PolylineWidthControlFragment : PolylineControlFragment(), SeekBar.OnSeekBa
     private lateinit var widthTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View {
-        val view = inflater.inflate(R.layout.polyline_width_control_fragment, container, false)
-        widthBar = view.findViewById(R.id.widthSeekBar)
+        val view = inflater.inflate(com.example.common_ui.R.layout.polyline_width_control_fragment, container, false)
+        widthBar = view.findViewById(com.example.common_ui.R.id.widthSeekBar)
         widthBar.max = WIDTH_MAX
         widthBar.setOnSeekBarChangeListener(this)
-        widthTextView = view.findViewById(R.id.widthTextView)
+        widthTextView = view.findViewById(com.example.common_ui.R.id.widthTextView)
         return view
     }
 

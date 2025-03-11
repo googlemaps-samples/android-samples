@@ -49,7 +49,7 @@ public class ProgrammaticDemoActivity extends AppCompatActivity implements OnMap
             // Then we add it using a FragmentTransaction.
             FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(android.R.id.content, mapFragment, MAP_FRAGMENT_TAG);
+            fragmentTransaction.add(android.com.example.common_ui.R.id.content, mapFragment, MAP_FRAGMENT_TAG);
             fragmentTransaction.commit();
         }
         mapFragment.getMapAsync(this);

@@ -87,11 +87,11 @@ class TagsDemoActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tags_demo)
+        setContentView(com.example.common_ui.R.layout.tags_demo)
 
-        tagText = findViewById(R.id.tag_text)
+        tagText = findViewById(com.example.common_ui.R.id.tag_text)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
     }
 
@@ -125,7 +125,7 @@ class TagsDemoActivity : AppCompatActivity(),
 
             // Override the default content description on the view, for accessibility mode.
             // Ideally this string would be localised.
-            setContentDescription(getString(R.string.tags_demo_map_description))
+            setContentDescription(getString(com.example.common_ui.R.string.tags_demo_map_description))
 
             // include all places we have markers for in the initial view of the map
             val boundsBuilder = LatLngBounds.Builder()
@@ -153,7 +153,7 @@ class TagsDemoActivity : AppCompatActivity(),
 
             // A ground overlay at Sydney.
             addGroundOverlay(GroundOverlayOptions().apply {
-                image(BitmapDescriptorFactory.fromResource(R.drawable.harbour_bridge))
+                image(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.harbour_bridge))
                 position(places.getValue("SYDNEY"), 700000f)
                 clickable(true)
             }).run {

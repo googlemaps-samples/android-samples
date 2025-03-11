@@ -94,15 +94,15 @@ public class TagsDemoActivity extends SamplesBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tags_demo);
+        setContentView(com.example.common_ui.R.layout.tags_demo);
 
-        mTagText = (TextView) findViewById(R.id.tag_text);
+        mTagText = (TextView) findViewById(com.example.common_ui.R.id.tag_text);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override
@@ -133,7 +133,7 @@ public class TagsDemoActivity extends SamplesBaseActivity implements
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localised.
-        map.setContentDescription(getString(R.string.tags_demo_map_description));
+        map.setContentDescription(getString(com.example.common_ui.R.string.tags_demo_map_description));
 
         // Create bounds that include all locations of the map.
         LatLngBounds bounds = new LatLngBounds.Builder()
@@ -159,7 +159,7 @@ public class TagsDemoActivity extends SamplesBaseActivity implements
 
         // A ground overlay at Sydney.
         mSydneyGroundOverlay = mMap.addGroundOverlay(new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.harbour_bridge))
+                .image(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.harbour_bridge))
                 .position(SYDNEY, 700000)
                 .clickable(true));
         mSydneyGroundOverlay.setTag(new CustomTag("Sydney ground overlay"));

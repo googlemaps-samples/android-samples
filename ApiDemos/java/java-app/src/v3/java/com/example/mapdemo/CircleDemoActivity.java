@@ -95,10 +95,10 @@ public class CircleDemoActivity extends AppCompatActivity
     // string resource IDs as identifiers.
 
     private static final int[] PATTERN_TYPE_NAME_RESOURCE_IDS = {
-            R.string.pattern_solid, // Default
-            R.string.pattern_dashed,
-            R.string.pattern_dotted,
-            R.string.pattern_mixed,
+            com.example.common_ui.R.string.pattern_solid, // Default
+            com.example.common_ui.R.string.pattern_dashed,
+            com.example.common_ui.R.string.pattern_dotted,
+            com.example.common_ui.R.string.pattern_mixed,
     };
 
     private class DraggableCircle {
@@ -173,37 +173,37 @@ public class CircleDemoActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.circle_demo);
+        setContentView(com.example.common_ui.R.layout.circle_demo);
 
-        fillHueBar = findViewById(R.id.fillHueSeekBar);
+        fillHueBar = findViewById(com.example.common_ui.R.id.fillHueSeekBar);
         fillHueBar.setMax(MAX_HUE_DEGREES);
         fillHueBar.setProgress(MAX_HUE_DEGREES / 2);
 
-        fillAlphaBar = findViewById(R.id.fillAlphaSeekBar);
+        fillAlphaBar = findViewById(com.example.common_ui.R.id.fillAlphaSeekBar);
         fillAlphaBar.setMax(MAX_ALPHA);
         fillAlphaBar.setProgress(MAX_ALPHA / 2);
 
-        strokeWidthBar = findViewById(R.id.strokeWidthSeekBar);
+        strokeWidthBar = findViewById(com.example.common_ui.R.id.strokeWidthSeekBar);
         strokeWidthBar.setMax(MAX_WIDTH_PX);
         strokeWidthBar.setProgress(MAX_WIDTH_PX / 3);
 
-        strokeHueBar = findViewById(R.id.strokeHueSeekBar);
+        strokeHueBar = findViewById(com.example.common_ui.R.id.strokeHueSeekBar);
         strokeHueBar.setMax(MAX_HUE_DEGREES);
         strokeHueBar.setProgress(0);
 
-        strokeAlphaBar = findViewById(R.id.strokeAlphaSeekBar);
+        strokeAlphaBar = findViewById(com.example.common_ui.R.id.strokeAlphaSeekBar);
         strokeAlphaBar.setMax(MAX_ALPHA);
         strokeAlphaBar.setProgress(MAX_ALPHA);
 
-        strokePatternSpinner = findViewById(R.id.strokePatternSpinner);
+        strokePatternSpinner = findViewById(com.example.common_ui.R.id.strokePatternSpinner);
         strokePatternSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
+                this, android.com.example.common_ui.R.layout.simple_spinner_item,
                 getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
-        clickabilityCheckbox = findViewById(R.id.toggleClickability);
+        clickabilityCheckbox = findViewById(com.example.common_ui.R.id.toggleClickability);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -218,7 +218,7 @@ public class CircleDemoActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // Override the default content description on the view, for accessibility mode.
-        googleMap.setContentDescription(getString(R.string.map_circle_description));
+        googleMap.setContentDescription(getString(com.example.common_ui.R.string.map_circle_description));
 
         map = googleMap;
         map.setOnMarkerDragListener(this);
@@ -261,13 +261,13 @@ public class CircleDemoActivity extends AppCompatActivity
 
     private List<PatternItem> getSelectedPattern(int pos) {
         switch (PATTERN_TYPE_NAME_RESOURCE_IDS[pos]) {
-            case R.string.pattern_solid:
+            case com.example.common_ui.R.string.pattern_solid:
                 return null;
-            case R.string.pattern_dotted:
+            case com.example.common_ui.R.string.pattern_dotted:
                 return PATTERN_DOTTED;
-            case R.string.pattern_dashed:
+            case com.example.common_ui.R.string.pattern_dashed:
                 return PATTERN_DASHED;
-            case R.string.pattern_mixed:
+            case com.example.common_ui.R.string.pattern_mixed:
                 return PATTERN_MIXED;
             default:
                 return null;
@@ -276,7 +276,7 @@ public class CircleDemoActivity extends AppCompatActivity
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if (parent.getId() == R.id.strokePatternSpinner) {
+        if (parent.getId() == com.example.common_ui.R.id.strokePatternSpinner) {
             for (DraggableCircle draggableCircle : circles) {
                 draggableCircle.setStrokePattern(getSelectedPattern(pos));
             }
@@ -345,7 +345,7 @@ public class CircleDemoActivity extends AppCompatActivity
     @Override
     public void onMapLongClick(LatLng point) {
         // We know the center, let's place the outline at a point 3/4 along the view.
-        View view = getSupportFragmentManager().findFragmentById(R.id.map).getView();
+        View view = getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map).getView();
         LatLng radiusLatLng = map.getProjection().fromScreenLocation(new Point(
                 view.getHeight() * 3 / 4, view.getWidth() * 3 / 4));
 

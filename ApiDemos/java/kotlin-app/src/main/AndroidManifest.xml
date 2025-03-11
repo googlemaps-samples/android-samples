@@ -29,7 +29,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MaterialAppTheme">
         <!--
             To add your Maps API key to this project:
             1. Open the root project's secrets.properties file

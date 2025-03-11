@@ -50,33 +50,33 @@ public class LiteListDemoActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.lite_list_demo);
+        setContentView(com.example.common_ui.R.layout.lite_list_demo);
 
         mGridLayoutManager = new GridLayoutManager(this, 2);
         mLinearLayoutManager = new LinearLayoutManager(this);
 
         // Set up the RecyclerView
-        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView = findViewById(com.example.common_ui.R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(new MapAdapter(LIST_LOCATIONS));
         mRecyclerView.setRecyclerListener(mRecycleListener);
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     /** Create a menu to switch between Linear and Grid LayoutManager. */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.lite_list_menu, menu);
+        getMenuInflater().inflate(com.example.common_ui.R.menu.lite_list_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.layout_linear) {
+        if (id == com.example.common_ui.R.id.layout_linear) {
             mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        } else if (id == R.id.layout_grid) {
+        } else if (id == com.example.common_ui.R.id.layout_grid) {
             mRecyclerView.setLayoutManager(mGridLayoutManager);
         }
         return true;
@@ -100,7 +100,7 @@ public class LiteListDemoActivity extends SamplesBaseActivity {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             return new ViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.lite_list_demo_row, parent, false));
+                    .inflate(com.example.common_ui.R.layout.lite_list_demo_row, parent, false));
         }
 
         /**
@@ -139,8 +139,8 @@ public class LiteListDemoActivity extends SamplesBaseActivity {
             private ViewHolder(View itemView) {
                 super(itemView);
                 layout = itemView;
-                mapView = layout.findViewById(R.id.lite_listrow_map);
-                title = layout.findViewById(R.id.lite_listrow_text);
+                mapView = layout.findViewById(com.example.common_ui.R.id.lite_listrow_map);
+                title = layout.findViewById(com.example.common_ui.R.id.lite_listrow_text);
                 if (mapView != null) {
                     // Initialise the MapView
                     mapView.onCreate(null);

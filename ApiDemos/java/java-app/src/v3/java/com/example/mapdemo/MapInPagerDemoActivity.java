@@ -41,10 +41,10 @@ public class MapInPagerDemoActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map_in_pager_demo);
+        setContentView(com.example.common_ui.R.layout.map_in_pager_demo);
         mAdapter = new MyAdapter(getSupportFragmentManager());
 
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(com.example.common_ui.R.id.pager);
         mPager.setAdapter(mAdapter);
 
         // This is required to avoid a black flash when the map is loaded.  The flash is due
@@ -57,7 +57,7 @@ public class MapInPagerDemoActivity extends AppCompatActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-            return inflater.inflate(R.layout.text_fragment, container, false);
+            return inflater.inflate(com.example.common_ui.R.layout.text_fragment, container, false);
         }
     }
 

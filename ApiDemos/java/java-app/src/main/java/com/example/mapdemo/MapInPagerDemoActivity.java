@@ -37,17 +37,17 @@ public class MapInPagerDemoActivity extends SamplesBaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map_in_pager_demo);
+        setContentView(com.example.common_ui.R.layout.map_in_pager_demo);
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
 
-        ViewPager pager = findViewById(R.id.pager);
+        ViewPager pager = findViewById(com.example.common_ui.R.id.pager);
         pager.setAdapter(adapter);
 
         // This is required to avoid a black flash when the map is loaded.  The flash is due
         // to the use of a SurfaceView as the underlying view of the map.
         pager.requestTransparentRegion(pager);
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     /** A simple fragment that displays a TextView. */
@@ -55,7 +55,7 @@ public class MapInPagerDemoActivity extends SamplesBaseActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-            return inflater.inflate(R.layout.text_fragment, container, false);
+            return inflater.inflate(com.example.common_ui.R.layout.text_fragment, container, false);
         }
     }
 

@@ -66,6 +66,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
+
+    implementation(project(":common-ui"))
 }
 
 secrets {

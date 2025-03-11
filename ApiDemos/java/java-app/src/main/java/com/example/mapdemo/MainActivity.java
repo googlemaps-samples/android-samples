@@ -43,7 +43,7 @@ public final class MainActivity extends SamplesBaseActivity {
 
         /** @param demos An array containing the details of the demos to be displayed. */
         public CustomArrayAdapter(Context context, DemoDetails[] demos) {
-            super(context, R.layout.feature, R.id.title, demos);
+            super(context, com.example.common_ui.R.layout.feature, com.example.common_ui.R.id.title, demos);
         }
 
         @NonNull
@@ -73,11 +73,11 @@ public final class MainActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(com.example.common_ui.R.layout.main);
 
         ListAdapter adapter = new CustomArrayAdapter(this, DemoDetailsList.DEMOS);
 
-        ListView demoListView = findViewById(R.id.list);
+        ListView demoListView = findViewById(com.example.common_ui.R.id.list);
         if (demoListView != null) {
             demoListView.setAdapter(adapter);
             demoListView.setOnItemClickListener(
@@ -86,6 +86,6 @@ public final class MainActivity extends SamplesBaseActivity {
                     startActivity(new Intent(view.getContext(), demo.activityClass));
                 });
         }
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 }

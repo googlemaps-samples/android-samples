@@ -39,14 +39,14 @@ public class BackgroundColorCustomizationDemoActivity extends SamplesBaseActivit
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.background_color_customization_demo);
+        setContentView(com.example.common_ui.R.layout.background_color_customization_demo);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
 
         Preconditions.checkNotNull(mapFragment)
             .getMapAsync(this);
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     /**
@@ -57,7 +57,7 @@ public class BackgroundColorCustomizationDemoActivity extends SamplesBaseActivit
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        SwitchMaterial mapTypeToggleCheckbox = findViewById(R.id.map_type_toggle);
+        SwitchMaterial mapTypeToggleCheckbox = findViewById(com.example.common_ui.R.id.map_type_toggle);
         mapTypeToggleCheckbox.setOnCheckedChangeListener(
             (view, isChecked) -> map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 

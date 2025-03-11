@@ -76,10 +76,10 @@ class CircleDemoActivity :
 
     // These are the options for stroke patterns
     private val patterns: List<Pair<Int, List<PatternItem>?>> = listOf(
-            Pair(R.string.pattern_solid, null),
-            Pair(R.string.pattern_dashed, patternDashed),
-            Pair(R.string.pattern_dotted, patternDotted),
-            Pair(R.string.pattern_mixed, patternMixed)
+            Pair(com.example.common_ui.R.string.pattern_solid, null),
+            Pair(com.example.common_ui.R.string.pattern_dashed, patternDashed),
+            Pair(com.example.common_ui.R.string.pattern_dotted, patternDotted),
+            Pair(com.example.common_ui.R.string.pattern_mixed, patternMixed)
     )
 
     private lateinit var map: GoogleMap
@@ -159,42 +159,42 @@ class CircleDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_circle_demo)
+        setContentView(com.example.common_ui.R.layout.circle_demo)
 
         // Set all the SeekBars
-        fillHueBar = findViewById<SeekBar>(R.id.fillHueSeekBar).apply {
+        fillHueBar = findViewById<SeekBar>(com.example.common_ui.R.id.fillHueSeekBar).apply {
             max = MAX_HUE_DEGREE
             progress = MAX_HUE_DEGREE / 2
         }
-        fillAlphaBar = findViewById<SeekBar>(R.id.fillAlphaSeekBar).apply {
+        fillAlphaBar = findViewById<SeekBar>(com.example.common_ui.R.id.fillAlphaSeekBar).apply {
             max = MAX_ALPHA
             progress = MAX_ALPHA / 2
         }
-        strokeWidthBar = findViewById<SeekBar>(R.id.strokeWidthSeekBar).apply {
+        strokeWidthBar = findViewById<SeekBar>(com.example.common_ui.R.id.strokeWidthSeekBar).apply {
             max = MAX_WIDTH_PX
             progress = MAX_WIDTH_PX / 3
         }
-        strokeHueBar = findViewById<SeekBar>(R.id.strokeHueSeekBar).apply {
+        strokeHueBar = findViewById<SeekBar>(com.example.common_ui.R.id.strokeHueSeekBar).apply {
             max = MAX_HUE_DEGREE
             progress = 0
         }
-        strokeAlphaBar = findViewById<SeekBar>(R.id.strokeAlphaSeekBar).apply {
+        strokeAlphaBar = findViewById<SeekBar>(com.example.common_ui.R.id.strokeAlphaSeekBar).apply {
             max = MAX_ALPHA
             progress = MAX_ALPHA
         }
 
-        strokePatternSpinner = findViewById<Spinner>(R.id.strokePatternSpinner).apply {
+        strokePatternSpinner = findViewById<Spinner>(com.example.common_ui.R.id.strokePatternSpinner).apply {
             adapter = ArrayAdapter(this@CircleDemoActivity,
                     android.R.layout.simple_spinner_item,
                     getResourceStrings())
         }
 
-        clickabilityCheckbox = findViewById(R.id.toggleClickability)
+        clickabilityCheckbox = findViewById(com.example.common_ui.R.id.toggleClickability)
         clickabilityCheckbox.setOnClickListener {
             toggleClickability(it)
         }
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
@@ -210,10 +210,10 @@ class CircleDemoActivity :
         // we need to initialise map before creating a circle
         with(map) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 4.0f))
-            setContentDescription(getString(R.string.circle_demo_details))
+            setContentDescription(getString(com.example.common_ui.R.string.circle_demo_description))
             setOnMapLongClickListener { point ->
                 // We know the center, let's place the outline at a point 3/4 along the view.
-                val view: View = supportFragmentManager.findFragmentById(R.id.map)?.view
+                val view: View = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map)?.view
                         ?: return@setOnMapLongClickListener
                 val radiusLatLng = map.projection.fromScreenLocation(
                         Point(view.height * 3 / 4, view.width * 3 / 4))
@@ -262,7 +262,7 @@ class CircleDemoActivity :
     private fun getSelectedPattern(pos: Int): List<PatternItem>? = patterns[pos].second
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-        if (parent.id == R.id.strokePatternSpinner) {
+        if (parent.id == com.example.common_ui.R.id.strokePatternSpinner) {
             circles.map { it.setStrokePattern(getSelectedPattern(pos)) }
         }
     }

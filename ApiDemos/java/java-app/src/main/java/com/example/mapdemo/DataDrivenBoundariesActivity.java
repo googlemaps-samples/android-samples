@@ -85,44 +85,44 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.data_driven_boundaries_demo);
+        setContentView(com.example.common_ui.R.layout.data_driven_boundaries_demo);
 
         // [START_EXCLUDE silent]
-        if (getString(R.string.map_id).equals("DEMO_MAP_ID")) {
+        if (getString(com.example.common_ui.R.string.map_id).equals("DEMO_MAP_ID")) {
             // This demo will not work if the map id is not set.
             Toast.makeText(this, "Map ID is not set.  See README for instructions.", Toast.LENGTH_LONG).show();
         }
         // [END_EXCLUDE]
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
 
-        findViewById(R.id.button_hawaii).setOnClickListener(view -> centerMapOnLocation(HANA_HAWAII, 11f));
-        findViewById(R.id.button_us).setOnClickListener(view -> centerMapOnLocation(CENTER_US, 1f));
+        findViewById(com.example.common_ui.R.id.button_hawaii).setOnClickListener(view -> centerMapOnLocation(HANA_HAWAII, 11f));
+        findViewById(com.example.common_ui.R.id.button_us).setOnClickListener(view -> centerMapOnLocation(CENTER_US, 1f));
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
 
         // [START_EXCLUDE silent]
         setupBoundarySelectorButton();
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
         // [END_EXCLUDE]
     }
 
     // [START_EXCLUDE silent]
     private void setupBoundarySelectorButton() {
-        MaterialButton stylingTypeButton = findViewById(R.id.button_feature_type);
+        MaterialButton stylingTypeButton = findViewById(com.example.common_ui.R.id.button_feature_type);
         stylingTypeButton.setOnClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(this, v);
                 MenuInflater inflater = popupMenu.getMenuInflater();
-                inflater.inflate(R.menu.boundary_types_menu, popupMenu.getMenu());
+                inflater.inflate(com.example.common_ui.R.menu.boundary_types_menu, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(this);
 
-                popupMenu.getMenu().findItem(R.id.boundary_type_locality).setChecked(localityEnabled);
-                popupMenu.getMenu().findItem(R.id.boundary_type_administrative_area_level_1).setChecked(adminAreaEnabled);
-                popupMenu.getMenu().findItem(R.id.boundary_type_country).setChecked(countryEnabled);
+                popupMenu.getMenu().findItem(com.example.common_ui.R.id.boundary_type_locality).setChecked(localityEnabled);
+                popupMenu.getMenu().findItem(com.example.common_ui.R.id.boundary_type_administrative_area_level_1).setChecked(adminAreaEnabled);
+                popupMenu.getMenu().findItem(com.example.common_ui.R.id.boundary_type_country).setChecked(countryEnabled);
                 popupMenu.show();
         });
     }
@@ -334,15 +334,15 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
         int id = item.getItemId();
         boolean result = false;
 
-        if (id == R.id.boundary_type_locality) {
+        if (id == com.example.common_ui.R.id.boundary_type_locality) {
             item.setChecked(!item.isChecked());
             localityEnabled = item.isChecked();
             result = true;
-        } else if (id == R.id.boundary_type_administrative_area_level_1) {
+        } else if (id == com.example.common_ui.R.id.boundary_type_administrative_area_level_1) {
             item.setChecked(!item.isChecked());
             adminAreaEnabled = item.isChecked();
             result = true;
-        } else if (id == R.id.boundary_type_country) {
+        } else if (id == com.example.common_ui.R.id.boundary_type_country) {
             item.setChecked(!item.isChecked());
             countryEnabled = item.isChecked();
             result = true;

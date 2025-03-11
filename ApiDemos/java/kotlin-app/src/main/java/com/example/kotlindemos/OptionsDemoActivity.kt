@@ -21,6 +21,6 @@ import android.os.Bundle
 class OptionsDemoActivity : SamplesBaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.options_demo)
+    setContentView(com.example.common_ui.R.layout.options_demo)
   }
 }

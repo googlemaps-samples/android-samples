@@ -37,7 +37,7 @@ public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.raw_mapview_demo);
+        setContentView(com.example.common_ui.R.layout.raw_mapview_demo);
 
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
@@ -46,7 +46,7 @@ public class RawMapViewDemoActivity extends AppCompatActivity implements OnMapRe
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
-        mMapView = (MapView) findViewById(R.id.map);
+        mMapView = (MapView) findViewById(com.example.common_ui.R.id.map);
         mMapView.onCreate(mapViewBundle);
 
         mMapView.getMapAsync(this);

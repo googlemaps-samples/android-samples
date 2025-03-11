@@ -60,19 +60,19 @@ public class PolylinePointsControlFragment extends PolylineControlFragment imple
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_points_control_fragment, container, false);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_points_control_fragment, container, false);
 
-        view.findViewById(R.id.move_up).setOnTouchListener(this);
-        view.findViewById(R.id.move_down).setOnTouchListener(this);
-        view.findViewById(R.id.move_left).setOnTouchListener(this);
-        view.findViewById(R.id.move_right).setOnTouchListener(this);
+        view.findViewById(com.example.common_ui.R.id.move_up).setOnTouchListener(this);
+        view.findViewById(com.example.common_ui.R.id.move_down).setOnTouchListener(this);
+        view.findViewById(com.example.common_ui.R.id.move_left).setOnTouchListener(this);
+        view.findViewById(com.example.common_ui.R.id.move_right).setOnTouchListener(this);
 
-        EditText fpsEditText = (EditText) view.findViewById(R.id.fps_edittext);
+        EditText fpsEditText = (EditText) view.findViewById(com.example.common_ui.R.id.fps_edittext);
         fpsEditText.setOnEditorActionListener(this);
         fpsEditText.setOnFocusChangeListener(this);
         setFrameRate(fpsEditText);
 
-        EditText stepEditText = (EditText) view.findViewById(R.id.step_edittext);
+        EditText stepEditText = (EditText) view.findViewById(com.example.common_ui.R.id.step_edittext);
         stepEditText.setOnEditorActionListener(this);
         stepEditText.setOnFocusChangeListener(this);
         setStepSize(stepEditText);
@@ -99,13 +99,13 @@ public class PolylinePointsControlFragment extends PolylineControlFragment imple
     }
 
     private void setMoveDirection(int buttonId) {
-        if (buttonId == R.id.move_up) {
+        if (buttonId == com.example.common_ui.R.id.move_up) {
             moveDirection = MoveDirection.UP;
-        } else if (buttonId == R.id.move_down) {
+        } else if (buttonId == com.example.common_ui.R.id.move_down) {
             moveDirection = MoveDirection.DOWN;
-        } else if (buttonId == R.id.move_left) {
+        } else if (buttonId == com.example.common_ui.R.id.move_left) {
             moveDirection = MoveDirection.LEFT;
-        } else if (buttonId == R.id.move_right) {
+        } else if (buttonId == com.example.common_ui.R.id.move_right) {
             moveDirection = MoveDirection.RIGHT;
         } else {
             moveDirection = null;
@@ -120,9 +120,9 @@ public class PolylinePointsControlFragment extends PolylineControlFragment imple
         }
 
         int textViewId = textView.getId();
-        if (textViewId == R.id.fps_edittext) {
+        if (textViewId == com.example.common_ui.R.id.fps_edittext) {
             setFrameRate(textView);
-        } else if (textViewId == R.id.step_edittext) {
+        } else if (textViewId == com.example.common_ui.R.id.step_edittext) {
             setStepSize(textView);
         }
         return false;
@@ -135,9 +135,9 @@ public class PolylinePointsControlFragment extends PolylineControlFragment imple
         }
 
         int viewId = view.getId();
-        if (viewId == R.id.fps_edittext) {
+        if (viewId == com.example.common_ui.R.id.fps_edittext) {
             setFrameRate((TextView) view);
-        } else if (viewId == R.id.step_edittext) {
+        } else if (viewId == com.example.common_ui.R.id.step_edittext) {
             setStepSize((TextView) view);
         }
     }

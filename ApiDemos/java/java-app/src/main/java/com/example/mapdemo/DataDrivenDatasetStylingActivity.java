@@ -109,26 +109,26 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.data_driven_styling_demo);
+        setContentView(com.example.common_ui.R.layout.data_driven_styling_demo);
 
         // [START_EXCLUDE silent]
-        if (getString(R.string.map_id).equals("DEMO_MAP_ID")) {
+        if (getString(com.example.common_ui.R.string.map_id).equals("DEMO_MAP_ID")) {
             // This demo will not work if the map id is not set.
             Toast.makeText(this, "Map ID is not set.  See README for instructions.", Toast.LENGTH_LONG).show();
         }
         // [END_EXCLUDE]
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
 
-        int[] buttonIds = {R.id.button_boulder, R.id.button_ny, R.id.button_kyoto};
+        int[] buttonIds = {com.example.common_ui.R.id.button_boulder, com.example.common_ui.R.id.button_ny, com.example.common_ui.R.id.button_kyoto};
         for (int buttonId : buttonIds) {
             findViewById(buttonId).setOnClickListener(view -> switchDataSet(((Button) view).getText().toString()));
         }
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     /**

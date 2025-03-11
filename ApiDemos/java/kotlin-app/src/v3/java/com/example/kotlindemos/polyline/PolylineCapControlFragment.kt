@@ -39,23 +39,23 @@ class PolylineCapControlFragment : PolylineControlFragment(), OnCheckedChangeLis
     private lateinit var endCapRadioGroup: RadioGroup
 
     init {
-        radioIdToStartCap[R.id.start_cap_radio_butt] = ButtCap()
-        radioIdToStartCap[R.id.start_cap_radio_square] = SquareCap()
-        radioIdToStartCap[R.id.start_cap_radio_round] = RoundCap()
-        radioIdToStartCap[R.id.start_cap_radio_custom_chevron] = CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.chevron), CHEVRON_REF_WIDTH)
-        radioIdToStartCap[R.id.start_cap_radio_custom_ook] = CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ook), OOK_REF_WIDTH)
-        radioIdToEndCap[R.id.end_cap_radio_butt] = ButtCap()
-        radioIdToEndCap[R.id.end_cap_radio_square] = SquareCap()
-        radioIdToEndCap[R.id.end_cap_radio_round] = RoundCap()
-        radioIdToEndCap[R.id.end_cap_radio_custom_chevron] = CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.chevron),
+        radioIdToStartCap[com.example.common_ui.R.id.start_cap_radio_butt] = ButtCap()
+        radioIdToStartCap[com.example.common_ui.R.id.start_cap_radio_square] = SquareCap()
+        radioIdToStartCap[com.example.common_ui.R.id.start_cap_radio_round] = RoundCap()
+        radioIdToStartCap[com.example.common_ui.R.id.start_cap_radio_custom_chevron] = CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.chevron), CHEVRON_REF_WIDTH)
+        radioIdToStartCap[com.example.common_ui.R.id.start_cap_radio_custom_ook] = CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.ook), OOK_REF_WIDTH)
+        radioIdToEndCap[com.example.common_ui.R.id.end_cap_radio_butt] = ButtCap()
+        radioIdToEndCap[com.example.common_ui.R.id.end_cap_radio_square] = SquareCap()
+        radioIdToEndCap[com.example.common_ui.R.id.end_cap_radio_round] = RoundCap()
+        radioIdToEndCap[com.example.common_ui.R.id.end_cap_radio_custom_chevron] = CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.chevron),
             CHEVRON_REF_WIDTH)
-        radioIdToEndCap[R.id.end_cap_radio_custom_ook] = CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ook), OOK_REF_WIDTH)
+        radioIdToEndCap[com.example.common_ui.R.id.end_cap_radio_custom_ook] = CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.ook), OOK_REF_WIDTH)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View {
-        val view: View = inflater.inflate(R.layout.polyline_cap_control_fragment, container, false)
-        startCapRadioGroup = view.findViewById(R.id.start_cap_radio)
-        endCapRadioGroup = view.findViewById(R.id.end_cap_radio)
+        val view: View = inflater.inflate(com.example.common_ui.R.layout.polyline_cap_control_fragment, container, false)
+        startCapRadioGroup = view.findViewById(com.example.common_ui.R.id.start_cap_radio)
+        endCapRadioGroup = view.findViewById(com.example.common_ui.R.id.end_cap_radio)
         startCapRadioGroup.setOnCheckedChangeListener(this)
         endCapRadioGroup.setOnCheckedChangeListener(this)
         return view
@@ -66,12 +66,12 @@ class PolylineCapControlFragment : PolylineControlFragment(), OnCheckedChangeLis
             return
         }
         val groupId = group.getId()
-        if (groupId == R.id.start_cap_radio) {
+        if (groupId == com.example.common_ui.R.id.start_cap_radio) {
             val startCap = radioIdToStartCap[checkedId]
             startCap?.let {
                 polyline?.setStartCap(it)
             }
-        } else if (groupId == R.id.end_cap_radio) {
+        } else if (groupId == com.example.common_ui.R.id.end_cap_radio) {
             val endCap = radioIdToEndCap[checkedId]
             endCap?.let {
                 polyline?.setEndCap(it)
@@ -96,17 +96,17 @@ class PolylineCapControlFragment : PolylineControlFragment(), OnCheckedChangeLis
         }
         when (val startCap = polyline?.startCap) {
             is ButtCap -> {
-                startCapRadioGroup.check(R.id.start_cap_radio_butt)
+                startCapRadioGroup.check(com.example.common_ui.R.id.start_cap_radio_butt)
             }
             is SquareCap -> {
-                startCapRadioGroup.check(R.id.start_cap_radio_square)
+                startCapRadioGroup.check(com.example.common_ui.R.id.start_cap_radio_square)
             }
             is RoundCap -> {
-                startCapRadioGroup.check(R.id.start_cap_radio_round)
+                startCapRadioGroup.check(com.example.common_ui.R.id.start_cap_radio_round)
             }
             is CustomCap -> {
                 startCapRadioGroup.check(
-                    if (isOok(startCap)) R.id.start_cap_radio_custom_ook else R.id.start_cap_radio_custom_chevron)
+                    if (isOok(startCap)) com.example.common_ui.R.id.start_cap_radio_custom_ook else com.example.common_ui.R.id.start_cap_radio_custom_chevron)
             }
             else -> {
                 startCapRadioGroup.clearCheck()
@@ -117,17 +117,17 @@ class PolylineCapControlFragment : PolylineControlFragment(), OnCheckedChangeLis
         }
         when (val endCap = polyline?.endCap) {
             is ButtCap -> {
-                endCapRadioGroup.check(R.id.end_cap_radio_butt)
+                endCapRadioGroup.check(com.example.common_ui.R.id.end_cap_radio_butt)
             }
             is SquareCap -> {
-                endCapRadioGroup.check(R.id.end_cap_radio_square)
+                endCapRadioGroup.check(com.example.common_ui.R.id.end_cap_radio_square)
             }
             is RoundCap -> {
-                endCapRadioGroup.check(R.id.end_cap_radio_round)
+                endCapRadioGroup.check(com.example.common_ui.R.id.end_cap_radio_round)
             }
             is CustomCap -> {
                 endCapRadioGroup.check(
-                    if (isOok(endCap)) R.id.end_cap_radio_custom_ook else R.id.end_cap_radio_custom_chevron)
+                    if (isOok(endCap)) com.example.common_ui.R.id.end_cap_radio_custom_ook else com.example.common_ui.R.id.end_cap_radio_custom_chevron)
             }
             else -> {
                 endCapRadioGroup.clearCheck()

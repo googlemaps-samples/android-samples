@@ -54,35 +54,35 @@ public class PolylineCapControlFragment extends PolylineControlFragment implemen
     private RadioGroup endCapRadioGroup;
 
     public PolylineCapControlFragment() {
-        radioIdToStartCap.put(R.id.start_cap_radio_butt, new ButtCap());
-        radioIdToStartCap.put(R.id.start_cap_radio_square, new SquareCap());
-        radioIdToStartCap.put(R.id.start_cap_radio_round, new RoundCap());
+        radioIdToStartCap.put(com.example.common_ui.R.id.start_cap_radio_butt, new ButtCap());
+        radioIdToStartCap.put(com.example.common_ui.R.id.start_cap_radio_square, new SquareCap());
+        radioIdToStartCap.put(com.example.common_ui.R.id.start_cap_radio_round, new RoundCap());
         radioIdToStartCap.put(
-            R.id.start_cap_radio_custom_chevron,
-            new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.chevron),
+            com.example.common_ui.R.id.start_cap_radio_custom_chevron,
+            new CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.chevron),
                 CHEVRON_REF_WIDTH));
         radioIdToStartCap.put(
-            R.id.start_cap_radio_custom_ook,
-            new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ook), OOK_REF_WIDTH));
+            com.example.common_ui.R.id.start_cap_radio_custom_ook,
+            new CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.ook), OOK_REF_WIDTH));
 
-        radioIdToEndCap.put(R.id.end_cap_radio_butt, new ButtCap());
-        radioIdToEndCap.put(R.id.end_cap_radio_square, new SquareCap());
-        radioIdToEndCap.put(R.id.end_cap_radio_round, new RoundCap());
+        radioIdToEndCap.put(com.example.common_ui.R.id.end_cap_radio_butt, new ButtCap());
+        radioIdToEndCap.put(com.example.common_ui.R.id.end_cap_radio_square, new SquareCap());
+        radioIdToEndCap.put(com.example.common_ui.R.id.end_cap_radio_round, new RoundCap());
         radioIdToEndCap.put(
-            R.id.end_cap_radio_custom_chevron,
-            new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.chevron),
+            com.example.common_ui.R.id.end_cap_radio_custom_chevron,
+            new CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.chevron),
                 CHEVRON_REF_WIDTH));
         radioIdToEndCap.put(
-            R.id.end_cap_radio_custom_ook,
-            new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ook), OOK_REF_WIDTH));
+            com.example.common_ui.R.id.end_cap_radio_custom_ook,
+            new CustomCap(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.ook), OOK_REF_WIDTH));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        View view = inflater.inflate(R.layout.polyline_cap_control_fragment, container, false);
+        View view = inflater.inflate(com.example.common_ui.R.layout.polyline_cap_control_fragment, container, false);
 
-        startCapRadioGroup = view.findViewById(R.id.start_cap_radio);
-        endCapRadioGroup = view.findViewById(R.id.end_cap_radio);
+        startCapRadioGroup = view.findViewById(com.example.common_ui.R.id.start_cap_radio);
+        endCapRadioGroup = view.findViewById(com.example.common_ui.R.id.end_cap_radio);
 
         startCapRadioGroup.setOnCheckedChangeListener(this);
         endCapRadioGroup.setOnCheckedChangeListener(this);
@@ -96,12 +96,12 @@ public class PolylineCapControlFragment extends PolylineControlFragment implemen
         }
 
         int groupId = group.getId();
-        if (groupId == R.id.start_cap_radio) {
+        if (groupId == com.example.common_ui.R.id.start_cap_radio) {
             Cap startCap = radioIdToStartCap.get(checkedId);
             if (startCap != null) {
                 polyline.setStartCap(startCap);
             }
-        } else if (groupId == R.id.end_cap_radio) {
+        } else if (groupId == com.example.common_ui.R.id.end_cap_radio) {
             Cap endCap = radioIdToEndCap.get(checkedId);
             if (endCap != null) {
                 polyline.setEndCap(endCap);
@@ -128,16 +128,16 @@ public class PolylineCapControlFragment extends PolylineControlFragment implemen
         }
         Cap startCap = polyline.getStartCap();
         if (startCap instanceof ButtCap) {
-            startCapRadioGroup.check(R.id.start_cap_radio_butt);
+            startCapRadioGroup.check(com.example.common_ui.R.id.start_cap_radio_butt);
         } else if (startCap instanceof SquareCap) {
-            startCapRadioGroup.check(R.id.start_cap_radio_square);
+            startCapRadioGroup.check(com.example.common_ui.R.id.start_cap_radio_square);
         } else if (startCap instanceof RoundCap) {
-            startCapRadioGroup.check(R.id.start_cap_radio_round);
+            startCapRadioGroup.check(com.example.common_ui.R.id.start_cap_radio_round);
         } else if (startCap instanceof CustomCap) {
             startCapRadioGroup.check(
                 isOok((CustomCap) startCap)
-                    ? R.id.start_cap_radio_custom_ook
-                    : R.id.start_cap_radio_custom_chevron);
+                    ? com.example.common_ui.R.id.start_cap_radio_custom_ook
+                    : com.example.common_ui.R.id.start_cap_radio_custom_chevron);
         } else {
             startCapRadioGroup.clearCheck();
         }
@@ -147,16 +147,16 @@ public class PolylineCapControlFragment extends PolylineControlFragment implemen
         }
         Cap endCap = polyline.getEndCap();
         if (endCap instanceof ButtCap) {
-            endCapRadioGroup.check(R.id.end_cap_radio_butt);
+            endCapRadioGroup.check(com.example.common_ui.R.id.end_cap_radio_butt);
         } else if (endCap instanceof SquareCap) {
-            endCapRadioGroup.check(R.id.end_cap_radio_square);
+            endCapRadioGroup.check(com.example.common_ui.R.id.end_cap_radio_square);
         } else if (endCap instanceof RoundCap) {
-            endCapRadioGroup.check(R.id.end_cap_radio_round);
+            endCapRadioGroup.check(com.example.common_ui.R.id.end_cap_radio_round);
         } else if (endCap instanceof CustomCap) {
             endCapRadioGroup.check(
                 isOok((CustomCap) endCap)
-                    ? R.id.end_cap_radio_custom_ook
-                    : R.id.end_cap_radio_custom_chevron);
+                    ? com.example.common_ui.R.id.end_cap_radio_custom_ook
+                    : com.example.common_ui.R.id.end_cap_radio_custom_chevron);
         } else {
             endCapRadioGroup.clearCheck();
         }
