@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-include(":app")
+include(":java-app")
+include(":kotlin-app")
