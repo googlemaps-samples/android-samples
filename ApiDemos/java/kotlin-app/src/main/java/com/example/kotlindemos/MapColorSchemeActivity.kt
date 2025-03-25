@@ -17,7 +17,9 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -38,12 +40,13 @@ class MapColorSchemeActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.map_color_scheme_demo)
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+        setContentView(R.layout.map_color_scheme_demo)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        buttonLight = findViewById(com.example.common_ui.R.id.map_color_light_mode)
-        buttonDark = findViewById(com.example.common_ui.R.id.map_color_dark_mode)
-        buttonFollowSystem = findViewById(com.example.common_ui.R.id.map_color_follow_system_mode)
+        buttonLight = findViewById(R.id.map_color_light_mode)
+        buttonDark = findViewById(R.id.map_color_dark_mode)
+        buttonFollowSystem = findViewById(R.id.map_color_follow_system_mode)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

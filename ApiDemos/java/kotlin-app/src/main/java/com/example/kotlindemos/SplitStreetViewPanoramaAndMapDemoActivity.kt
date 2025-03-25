@@ -14,6 +14,8 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.StreetViewPanorama
@@ -32,11 +34,11 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.split_street_view_panorama_and_map_demo)
+        setContentView(R.layout.split_street_view_panorama_and_map_demo)
         val markerPosition = savedInstanceState?.getParcelable(MARKER_POSITION_KEY) ?: SYDNEY
 
         val streetViewPanoramaFragment =
-            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
+            supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama ->
             streetViewPanorama = panorama
             streetViewPanorama?.setOnStreetViewPanoramaChangeListener(
@@ -47,17 +49,18 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
             savedInstanceState ?: streetViewPanorama?.setPosition(SYDNEY)
         }
         val mapFragment =
-            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync { map ->
             map.setOnMarkerDragListener(this@SplitStreetViewPanoramaAndMapDemoActivity)
             // Creates a draggable marker. Long press to drag.
             marker = map.addMarker(
                 MarkerOptions()
                     .position(markerPosition)
-                    .icon(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.pegman))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
                     .draggable(true)
             )
         }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

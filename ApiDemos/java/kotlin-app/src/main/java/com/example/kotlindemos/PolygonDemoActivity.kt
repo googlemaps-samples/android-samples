@@ -25,6 +25,7 @@ import android.widget.SeekBar
 import android.widget.Spinner
 import android.widget.CheckBox
 import android.widget.ArrayAdapter
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.Dash
@@ -76,58 +77,61 @@ class PolygonDemoActivity :
     // These are the options for polygon stroke joints and patterns. We use their
     // string resource IDs as identifiers.
 
-    private val jointTypeNameResourceIds = intArrayOf(com.example.common_ui.R.string.joint_type_default, // Default
-            com.example.common_ui.R.string.joint_type_bevel, com.example.common_ui.R.string.joint_type_round)
+    private val jointTypeNameResourceIds = intArrayOf(
+        R.string.joint_type_default, // Default
+            R.string.joint_type_bevel, R.string.joint_type_round)
 
-    private val patternTypeNameResourceIds = intArrayOf(com.example.common_ui.R.string.pattern_solid, // Default
-            com.example.common_ui.R.string.pattern_dashed, com.example.common_ui.R.string.pattern_dotted, com.example.common_ui.R.string.pattern_mixed)
+    private val patternTypeNameResourceIds = intArrayOf(
+        R.string.pattern_solid, // Default
+            R.string.pattern_dashed, R.string.pattern_dotted, R.string.pattern_mixed)
 
     // [START maps_android_sample_polygons]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.polygon_demo)
+        setContentView(R.layout.polygon_demo)
 
-        fillHueBar = findViewById<SeekBar>(com.example.common_ui.R.id.fillHueSeekBar).apply {
+        fillHueBar = findViewById<SeekBar>(R.id.fillHueSeekBar).apply {
             max = MAX_HUE_DEGREES
             progress = MAX_HUE_DEGREES / 2
         }
 
-        fillAlphaBar = findViewById<SeekBar>(com.example.common_ui.R.id.fillAlphaSeekBar).apply {
+        fillAlphaBar = findViewById<SeekBar>(R.id.fillAlphaSeekBar).apply {
             max = MAX_ALPHA
             progress = MAX_ALPHA / 2
         }
 
-        strokeWidthBar = findViewById<SeekBar>(com.example.common_ui.R.id.strokeWidthSeekBar).apply {
+        strokeWidthBar = findViewById<SeekBar>(R.id.strokeWidthSeekBar).apply {
             max = MAX_WIDTH_PX
             progress = MAX_WIDTH_PX / 3
         }
 
-        strokeHueBar = findViewById<SeekBar>(com.example.common_ui.R.id.strokeHueSeekBar).apply {
+        strokeHueBar = findViewById<SeekBar>(R.id.strokeHueSeekBar).apply {
             max = MAX_HUE_DEGREES
             progress = 0
         }
 
-        strokeAlphaBar = findViewById<SeekBar>(com.example.common_ui.R.id.strokeAlphaSeekBar).apply {
+        strokeAlphaBar = findViewById<SeekBar>(R.id.strokeAlphaSeekBar).apply {
             max = MAX_ALPHA
             progress = MAX_ALPHA
         }
 
-        strokeJointTypeSpinner = findViewById<Spinner>(com.example.common_ui.R.id.strokeJointTypeSpinner).apply {
+        strokeJointTypeSpinner = findViewById<Spinner>(R.id.strokeJointTypeSpinner).apply {
             adapter = ArrayAdapter(
                     this@PolygonDemoActivity, android.R.layout.simple_spinner_item,
                     getResourceStrings(jointTypeNameResourceIds))
         }
 
-        strokePatternSpinner = findViewById<Spinner>(com.example.common_ui.R.id.strokePatternSpinner).apply {
+        strokePatternSpinner = findViewById<Spinner>(R.id.strokePatternSpinner).apply {
             adapter = ArrayAdapter(
                     this@PolygonDemoActivity, android.R.layout.simple_spinner_item,
                     getResourceStrings(patternTypeNameResourceIds))
         }
 
-        clickabilityCheckbox = findViewById(com.example.common_ui.R.id.toggleClickability)
+        clickabilityCheckbox = findViewById(R.id.toggleClickability)
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
     // [START_EXCLUDE silent]
 
@@ -148,7 +152,7 @@ class PolygonDemoActivity :
 
         with(googleMap) {
             // Override the default content description on the view, for accessibility mode.
-            setContentDescription(getString(com.example.common_ui.R.string.polygon_demo_description))
+            setContentDescription(getString(R.string.polygon_demo_description))
             // Move the googleMap so that it is centered on the mutable polygon.
             moveCamera(CameraUpdateFactory.newLatLngZoom(center, 4f))
 
@@ -207,19 +211,19 @@ class PolygonDemoActivity :
 
     private fun getSelectedJointType(pos: Int): Int {
         return when (jointTypeNameResourceIds[pos]) {
-            com.example.common_ui.R.string.joint_type_bevel -> JointType.BEVEL
-            com.example.common_ui.R.string.joint_type_round -> JointType.ROUND
-            com.example.common_ui.R.string.joint_type_default -> JointType.DEFAULT
+            R.string.joint_type_bevel -> JointType.BEVEL
+            R.string.joint_type_round -> JointType.ROUND
+            R.string.joint_type_default -> JointType.DEFAULT
             else -> 0
         }
     }
 
     private fun getSelectedPattern(pos: Int): List<PatternItem>? {
         return when (patternTypeNameResourceIds[pos]) {
-            com.example.common_ui.R.string.pattern_solid -> null
-            com.example.common_ui.R.string.pattern_dotted -> patternDotted
-            com.example.common_ui.R.string.pattern_dashed -> patternDashed
-            com.example.common_ui.R.string.pattern_mixed -> patternMixed
+            R.string.pattern_solid -> null
+            R.string.pattern_dotted -> patternDotted
+            R.string.pattern_dashed -> patternDashed
+            R.string.pattern_mixed -> patternMixed
             else -> null
         }
     }
@@ -285,9 +289,9 @@ class PolygonDemoActivity :
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int,
                                 id: Long) {
         when (parent?.id) {
-            com.example.common_ui.R.id.strokeJointTypeSpinner ->
+            R.id.strokeJointTypeSpinner ->
                 mutablePolygon.strokeJointType = getSelectedJointType(pos)
-            com.example.common_ui.R.id.strokePatternSpinner ->
+            R.id.strokePatternSpinner ->
                 mutablePolygon.strokePattern = getSelectedPattern(pos)
         }
     }

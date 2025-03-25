@@ -23,6 +23,7 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.SeekBar
 import android.widget.Toast
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -83,17 +84,18 @@ class CameraDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.camera_demo)
+        setContentView(R.layout.camera_demo)
         // [START_EXCLUDE silent]
-        animateToggle = findViewById(com.example.common_ui.R.id.animate)
-        customDurationToggle = findViewById(com.example.common_ui.R.id.duration_toggle)
-        customDurationBar = findViewById(com.example.common_ui.R.id.duration_bar)
+        animateToggle = findViewById(R.id.animate)
+        customDurationToggle = findViewById(R.id.duration_toggle)
+        customDurationBar = findViewById(R.id.duration_bar)
 
         updateEnabledState()
         // [END_EXCLUDE]
 
         val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     // [START_EXCLUDE silent]

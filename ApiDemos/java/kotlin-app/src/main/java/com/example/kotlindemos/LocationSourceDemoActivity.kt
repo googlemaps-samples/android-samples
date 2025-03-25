@@ -18,13 +18,14 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.lifecycleScope
+import com.example.common_ui.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener
 import com.google.android.gms.maps.LocationSource
@@ -42,13 +43,14 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.basic_demo)
-    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+    setContentView(R.layout.basic_demo)
+    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
     lifecycleScope.launchWhenCreated {
       val map = mapFragment.awaitMap()
       init(map = map)
     }
     lifecycle.addObserver(locationSource)
+    applyInsets(findViewById<View?>(R.id.map_container))
   }
 
   @SuppressLint("MissingPermission")

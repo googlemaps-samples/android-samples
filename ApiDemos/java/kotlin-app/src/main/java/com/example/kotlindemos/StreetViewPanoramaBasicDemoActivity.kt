@@ -14,6 +14,8 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
@@ -24,16 +26,17 @@ import com.google.android.gms.maps.model.LatLng
 class StreetViewPanoramaBasicDemoActivity : SamplesBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.street_view_panorama_basic_demo)
+        setContentView(R.layout.street_view_panorama_basic_demo)
 
         val streetViewPanoramaFragment =
-            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
+            supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
 
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama ->
             // Only set the panorama to SYDNEY on startup (when no panoramas have been
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: panorama.setPosition(SYDNEY)
         }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     companion object {

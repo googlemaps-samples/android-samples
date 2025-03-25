@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.example.common_ui.R
 import com.google.android.gms.maps.SupportMapFragment
 
 /**
@@ -33,14 +34,15 @@ class MapInPagerDemoActivity : SamplesBaseActivity() {
   /** Called when the activity is first created.  */
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.map_in_pager_demo)
+    setContentView(R.layout.map_in_pager_demo)
     val adapter = MyAdapter(supportFragmentManager)
-    val pager = findViewById<ViewPager>(com.example.common_ui.R.id.pager)
+    val pager = findViewById<ViewPager>(R.id.pager)
     pager.adapter = adapter
 
     // This is required to avoid a black flash when the map is loaded.  The flash is due
     // to the use of a SurfaceView as the underlying view of the map.
     pager.requestTransparentRegion(pager)
+    applyInsets(findViewById<View?>(R.id.map_container))
   }
 
   /** A simple fragment that displays a TextView.  */
@@ -48,7 +50,7 @@ class MapInPagerDemoActivity : SamplesBaseActivity() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               bundle: Bundle?): View? {
-      return inflater.inflate(com.example.common_ui.R.layout.text_fragment, container, false)
+      return inflater.inflate(R.layout.text_fragment, container, false)
     }
   }
 

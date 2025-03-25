@@ -23,6 +23,7 @@ import android.view.View
 import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.TextView
+import com.example.common_ui.R
 
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -62,18 +63,18 @@ class VisibleRegionDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.visible_region_demo)
-        messageView = findViewById(com.example.common_ui.R.id.message_text)
+        setContentView(R.layout.visible_region_demo)
+        messageView = findViewById(R.id.message_text)
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
 
-        normalButton = findViewById(com.example.common_ui.R.id.vr_normal_button)
-        morePaddedButton = findViewById(com.example.common_ui.R.id.vr_more_padded_button)
-        operaHouseButton = findViewById(com.example.common_ui.R.id.vr_soh_button)
-        sfoButton = findViewById(com.example.common_ui.R.id.vr_sfo_button)
-        australiaButton = findViewById(com.example.common_ui.R.id.vr_aus_button)
-
+        normalButton = findViewById(R.id.vr_normal_button)
+        morePaddedButton = findViewById(R.id.vr_more_padded_button)
+        operaHouseButton = findViewById(R.id.vr_soh_button)
+        sfoButton = findViewById(R.id.vr_sfo_button)
+        australiaButton = findViewById(R.id.vr_aus_button)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -90,7 +91,8 @@ class VisibleRegionDemoActivity :
             addMarker(MarkerOptions().position(operaHouseLatLng).title("Sydney Opera House"))
             // Add a camera idle listener that displays the current camera position in a TextView
             setOnCameraIdleListener {
-                messageView.text = getString(com.example.common_ui.R.string.camera_change_message,
+                messageView.text = getString(
+                    R.string.camera_change_message,
                         this@VisibleRegionDemoActivity.map.cameraPosition)
             }
         }
@@ -103,7 +105,7 @@ class VisibleRegionDemoActivity :
         // increases the amount of padding along the right and bottom of the map
         morePaddedButton.setOnClickListener {
             // get the view that contains the map
-            val mapView: View? = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map)?.view
+            val mapView: View? = supportFragmentManager.findFragmentById(R.id.map)?.view
             animatePadding(150, 0, (mapView?.width ?: 0) / 3,
                     (mapView?.height ?: 0)/ 4)
         }

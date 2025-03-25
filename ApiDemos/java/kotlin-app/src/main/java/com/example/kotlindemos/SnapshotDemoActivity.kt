@@ -20,6 +20,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 
 import androidx.lifecycle.lifecycleScope
+import com.example.common_ui.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -29,49 +30,51 @@ import com.google.maps.android.ktx.awaitMap
  * This shows how to take a snapshot of the map.
  */
 class SnapshotDemoActivity : SamplesBaseActivity() {
-  /**
-   * Note that this may be null if the Google Play services APK is not available.
-   */
-  private lateinit var map: GoogleMap
-  private lateinit var waitForMapLoadCheckBox: CheckBox
-  private lateinit var snapshotHolder: ImageView
+    /**
+     * Note that this may be null if the Google Play services APK is not available.
+     */
+    private lateinit var map: GoogleMap
+    private lateinit var waitForMapLoadCheckBox: CheckBox
+    private lateinit var snapshotHolder: ImageView
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.snapshot_demo)
-    waitForMapLoadCheckBox = findViewById(com.example.common_ui.R.id.wait_for_map_load)
-    snapshotHolder = findViewById(com.example.common_ui.R.id.snapshot_holder)
-    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
-    lifecycleScope.launchWhenCreated {
-      map = mapFragment.awaitMap()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.snapshot_demo)
+        waitForMapLoadCheckBox = findViewById(R.id.wait_for_map_load)
+        snapshotHolder = findViewById(R.id.snapshot_holder)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        lifecycleScope.launchWhenCreated {
+            map = mapFragment.awaitMap()
+        }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
-  }
 
-  fun onScreenshot(view: View) {
-    takeSnapshot();
-  }
-
-  fun onClearScreenshot(view: View) {
-    val snapshotHolder = this.findViewById<ImageView>(com.example.common_ui.R.id.snapshot_holder);
-    snapshotHolder.setImageDrawable(null);
-  }
-
-  private fun takeSnapshot() {
-    val callback =
-      SnapshotReadyCallback { snapshot -> // Callback is called from the main thread, so we can modify the ImageView safely.
-        snapshotHolder.setImageBitmap(snapshot)
-      }
-    if (waitForMapLoadCheckBox.isChecked) {
-      map.setOnMapLoadedCallback { map.snapshot(callback) }
-    } else {
-      map.snapshot(callback)
+    fun onScreenshot(view: View) {
+        takeSnapshot()
     }
-  }
 
-  /**
-   * Called when the clear button is clicked.
-   */
-  private fun clearSnapshot() {
-    snapshotHolder.setImageDrawable(null)
-  }
+    fun onClearScreenshot(view: View) {
+        val snapshotHolder =
+            this.findViewById<ImageView>(R.id.snapshot_holder)
+        snapshotHolder.setImageDrawable(null)
+    }
+
+    private fun takeSnapshot() {
+        val callback =
+            SnapshotReadyCallback { snapshot -> // Callback is called from the main thread, so we can modify the ImageView safely.
+                snapshotHolder.setImageBitmap(snapshot)
+            }
+        if (waitForMapLoadCheckBox.isChecked) {
+            map.setOnMapLoadedCallback { map.snapshot(callback) }
+        } else {
+            map.snapshot(callback)
+        }
+    }
+
+    /**
+     * Called when the clear button is clicked.
+     */
+    private fun clearSnapshot() {
+        snapshotHolder.setImageDrawable(null)
+    }
 }

@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 
@@ -61,6 +62,7 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         val mapFragment =
                 supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        applyInsets(findViewById<View?>(com.example.common_ui.R.id.map_container))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

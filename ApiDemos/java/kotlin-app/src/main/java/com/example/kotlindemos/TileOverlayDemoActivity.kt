@@ -20,6 +20,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -42,12 +43,13 @@ class TileOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener, 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.tile_overlay_demo)
-        mTransparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar)
+        setContentView(R.layout.tile_overlay_demo)
+        mTransparencyBar = findViewById(R.id.transparencySeekBar)
         mTransparencyBar.max = TRANSPARENCY_MAX
         mTransparencyBar.progress = 0
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {

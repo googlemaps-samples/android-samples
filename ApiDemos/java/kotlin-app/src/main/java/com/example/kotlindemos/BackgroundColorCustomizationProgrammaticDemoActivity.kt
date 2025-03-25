@@ -18,15 +18,15 @@ import android.graphics.Color
 import com.google.android.gms.maps.OnMapReadyCallback
 import android.os.Bundle
 import android.view.View
-import com.example.kotlindemos.R
 import com.google.android.gms.maps.SupportMapFragment
-import com.example.kotlindemos.BackgroundColorCustomizationProgrammaticDemoActivity
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.GoogleMap
 import android.widget.CheckBox
-import android.widget.CompoundButton
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
+import com.example.common_ui.R
+import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 /**
  * This shows how to to instantiate a SupportMapFragment programmatically with a custom background
@@ -36,7 +36,7 @@ class BackgroundColorCustomizationProgrammaticDemoActivity : SamplesBaseActivity
                                                              OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.background_color_customization_programmatic_demo)
+        setContentView(R.layout.background_color_customization_programmatic_demo)
 
         // It isn't possible to set a fragment's id programmatically so we set a tag instead and
         // search for it using that.
@@ -55,16 +55,17 @@ class BackgroundColorCustomizationProgrammaticDemoActivity : SamplesBaseActivity
 
             // Then we add the fragment using a FragmentTransaction.
             val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(com.example.common_ui.R.id.map, mapFragment, MAP_FRAGMENT_TAG)
+            fragmentTransaction.replace(R.id.map, mapFragment, MAP_FRAGMENT_TAG)
             fragmentTransaction.commit()
         } else {
             mapFragment.getMapAsync(this)
         }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {
         map.mapType = GoogleMap.MAP_TYPE_NONE
-        val mapTypeToggleCheckbox = findViewById<CheckBox>(com.example.common_ui.R.id.map_type_toggle)
+        val mapTypeToggleCheckbox = findViewById<CheckBox>(R.id.map_type_toggle)
         mapTypeToggleCheckbox.setOnCheckedChangeListener { _, isChecked ->
             map.mapType = if (isChecked) GoogleMap.MAP_TYPE_NORMAL else GoogleMap.MAP_TYPE_NONE
         }

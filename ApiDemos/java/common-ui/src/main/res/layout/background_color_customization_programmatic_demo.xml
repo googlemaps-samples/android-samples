@@ -55,14 +55,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.checkbox.MaterialCheckBox
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/map_type_toggle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:checked="false"
-            android:paddingEnd="5dp"
-            android:text="@string/show_map_tiles" />
+            android:layout_height="48dp"
+            android:text="@string/show_map_tiles"
+            android:checked="false"/>
     </FrameLayout>
 
     <com.google.android.material.appbar.MaterialToolbar

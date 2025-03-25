@@ -18,7 +18,9 @@ package com.example.kotlindemos
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -80,12 +82,13 @@ class TagsDemoActivity : SamplesBaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.tags_demo)
+        setContentView(R.layout.tags_demo)
 
-        tagText = findViewById(com.example.common_ui.R.id.tag_text)
+        tagText = findViewById(R.id.tag_text)
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -118,7 +121,7 @@ class TagsDemoActivity : SamplesBaseActivity(),
 
             // Override the default content description on the view, for accessibility mode.
             // Ideally this string would be localised.
-            setContentDescription(getString(com.example.common_ui.R.string.tags_demo_map_description))
+            setContentDescription(getString(R.string.tags_demo_map_description))
 
             // include all places we have markers for in the initial view of the map
             val boundsBuilder = LatLngBounds.Builder()
@@ -146,7 +149,7 @@ class TagsDemoActivity : SamplesBaseActivity(),
 
             // A ground overlay at Sydney.
             addGroundOverlay(GroundOverlayOptions().apply {
-                image(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.harbour_bridge))
+                image(BitmapDescriptorFactory.fromResource(R.drawable.harbour_bridge))
                 position(places.getValue("SYDNEY"), 700000f)
                 clickable(true)
             })?.run {

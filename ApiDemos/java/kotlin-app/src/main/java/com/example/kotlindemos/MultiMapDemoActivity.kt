@@ -14,6 +14,8 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
+import com.example.common_ui.R
 
 
 /**
@@ -22,6 +24,7 @@ import android.os.Bundle
 class MultiMapDemoActivity : SamplesBaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.multimap_demo)
+    setContentView(R.layout.multimap_demo)
+    applyInsets(findViewById<View?>(R.id.map_container))
   }
 }

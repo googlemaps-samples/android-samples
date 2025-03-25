@@ -16,6 +16,7 @@ package com.example.kotlindemos
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -33,10 +34,11 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.indoor_demo)
+        setContentView(R.layout.indoor_demo)
         val mapFragment =
-            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

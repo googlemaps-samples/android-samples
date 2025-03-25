@@ -16,6 +16,7 @@ package com.example.kotlindemos
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import com.example.common_ui.R
 
 import com.example.kotlindemos.OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -35,11 +36,12 @@ class LiteDemoActivity : SamplesBaseActivity(), OnGlobalLayoutAndMapReadyListene
         super.onCreate(savedInstanceState)
 
         // Set the layout
-        setContentView(com.example.common_ui.R.layout.lite_demo)
+        setContentView(R.layout.lite_demo)
 
         // Get the map and register for the ready callback
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     /**

@@ -14,6 +14,7 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import com.example.common_ui.R
 
 /**
  * An activity that creates a map with some initial options.
@@ -21,6 +22,6 @@ import android.os.Bundle
 class OptionsDemoActivity : SamplesBaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.options_demo)
+    setContentView(R.layout.options_demo)
   }
 }

@@ -14,12 +14,13 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.lifecycleScope
+import com.example.common_ui.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
 
@@ -28,20 +29,22 @@ import com.google.maps.android.ktx.awaitMap
  * be faster than relying on state serialization.
  */
 class RetainMapDemoActivity : SamplesBaseActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.basic_demo)
-    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
-    if (savedInstanceState == null) {
-      // First incarnation of this activity.
-      mapFragment.retainInstance = true
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.basic_demo)
+        val mapFragment =
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        if (savedInstanceState == null) {
+            // First incarnation of this activity.
+            mapFragment.retainInstance = true
+        }
+        lifecycleScope.launchWhenCreated {
+            val map = mapFragment.awaitMap()
+            map.addMarker {
+                position(LatLng(0.0, 0.0))
+                title("Marker")
+            }
+        }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
-    lifecycleScope.launchWhenCreated {
-      val map = mapFragment.awaitMap()
-      map.addMarker {
-        position(LatLng(0.0, 0.0))
-        title("Marker")
-      }
-    }
-  }
 }

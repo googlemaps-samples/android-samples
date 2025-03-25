@@ -78,6 +78,7 @@ class LiteListDemoActivity : SamplesBaseActivity() {
             adapter = mapAdapter
             setRecyclerListener(recycleListener)
         }
+        applyInsets(findViewById<View?>(com.example.common_ui.R.id.map_container))
     }
 
     /** Create options menu to switch between the linear and grid layout managers. */

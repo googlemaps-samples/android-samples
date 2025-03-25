@@ -15,6 +15,7 @@ package com.example.kotlindemos
 
 import android.R
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -25,30 +26,31 @@ import com.google.maps.android.ktx.awaitMap
  * Demonstrates how to instantiate a SupportMapFragment programmatically and add a marker to it.
  */
 class ProgrammaticDemoActivity : SamplesBaseActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    // It isn't possible to set a fragment's id programmatically so we set a tag instead and
-    // search for it using that.
-    val mapFragment =
-      supportFragmentManager.findFragmentByTag(MAP_FRAGMENT_TAG) as SupportMapFragment? ?:
-      SupportMapFragment.newInstance().also {
-        // Then we add it using a FragmentTransaction.
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.content, it, MAP_FRAGMENT_TAG)
-        fragmentTransaction.commit()
-      }
+        // It isn't possible to set a fragment's id programmatically so we set a tag instead and
+        // search for it using that.
+        val mapFragment =
+            supportFragmentManager.findFragmentByTag(MAP_FRAGMENT_TAG) as SupportMapFragment?
+                ?: SupportMapFragment.newInstance().also {
+                    // Then we add it using a FragmentTransaction.
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.add(R.id.content, it, MAP_FRAGMENT_TAG)
+                    fragmentTransaction.commit()
+                }
 
-    lifecycleScope.launchWhenCreated {
-      val map = mapFragment.awaitMap()
-      map.addMarker {
-        position(LatLng(0.0, 0.0))
-        title("Marker")
-      }
+        lifecycleScope.launchWhenCreated {
+            val map = mapFragment.awaitMap()
+            map.addMarker {
+                position(LatLng(0.0, 0.0))
+                title("Marker")
+            }
+        }
+      applyInsets(findViewById<View?>(com.example.common_ui.R.id.map_container))
     }
-  }
 
-  companion object {
-    private const val MAP_FRAGMENT_TAG = "map"
-  }
+    companion object {
+        private const val MAP_FRAGMENT_TAG = "map"
+    }
 }

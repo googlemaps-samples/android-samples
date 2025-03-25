@@ -14,7 +14,9 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.StreetViewPanorama
 import com.google.android.gms.maps.StreetViewPanorama.*
@@ -44,15 +46,15 @@ class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.street_view_panorama_events_demo)
+        setContentView(R.layout.street_view_panorama_events_demo)
 
-        panoChangeTimesTextView = findViewById(com.example.common_ui.R.id.change_pano)
-        panoCameraChangeTextView = findViewById(com.example.common_ui.R.id.change_camera)
-        panoClickTextView = findViewById(com.example.common_ui.R.id.click_pano)
-        panoLongClickTextView = findViewById(com.example.common_ui.R.id.long_click_pano)
+        panoChangeTimesTextView = findViewById(R.id.change_pano)
+        panoCameraChangeTextView = findViewById(R.id.change_camera)
+        panoClickTextView = findViewById(R.id.click_pano)
+        panoLongClickTextView = findViewById(R.id.long_click_pano)
 
         val streetViewPanoramaFragment =
-            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
+            supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama ->
             streetViewPanorama = panorama
             streetViewPanorama.setOnStreetViewPanoramaChangeListener(
@@ -72,6 +74,7 @@ class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: streetViewPanorama.setPosition(SYDNEY)
         }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onStreetViewPanoramaChange(location: StreetViewPanoramaLocation) {

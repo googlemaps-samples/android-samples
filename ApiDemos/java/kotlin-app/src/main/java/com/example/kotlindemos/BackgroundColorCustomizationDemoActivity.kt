@@ -14,18 +14,15 @@
 package com.example.kotlindemos
 
 
-import com.google.android.gms.maps.OnMapReadyCallback
 import android.os.Bundle
 import android.view.View
-import com.example.kotlindemos.R
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.GoogleMap
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import com.google.android.gms.common.internal.Preconditions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.switchmaterial.SwitchMaterial
+import com.example.common_ui.R
 /**
  * This shows how to create a simple activity with a custom background color appiled to the map, and
  * add a marker on the map.
@@ -33,9 +30,10 @@ import com.google.android.gms.maps.model.LatLng
 class BackgroundColorCustomizationDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.background_color_customization_demo)
+        setContentView(R.layout.background_color_customization_demo)
         val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     /**
@@ -45,7 +43,7 @@ class BackgroundColorCustomizationDemoActivity : SamplesBaseActivity(), OnMapRea
     override fun onMapReady(map: GoogleMap) {
         map.mapType = GoogleMap.MAP_TYPE_NONE
 
-        val mapTypeToggleCheckbox = findViewById<CheckBox>(com.example.common_ui.R.id.map_type_toggle)
+        val mapTypeToggleCheckbox = findViewById<SwitchMaterial>(R.id.map_type_toggle)
         mapTypeToggleCheckbox.setOnCheckedChangeListener { _, isChecked ->
             map.mapType = if (isChecked) GoogleMap.MAP_TYPE_NORMAL else GoogleMap.MAP_TYPE_NONE
         }

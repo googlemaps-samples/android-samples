@@ -18,6 +18,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -41,13 +42,14 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.ground_overlay_demo)
-        transparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar)
+        setContentView(R.layout.ground_overlay_demo)
+        transparencyBar = findViewById(R.id.transparencySeekBar)
         transparencyBar.max = TRANSPARENCY_MAX
         transparencyBar.progress = 0
         val mapFragment =
-            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -62,8 +64,8 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
             )
         )
         images.clear()
-        images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_nj_1922))
-        images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_prudential_sunny))
+        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
+        images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_prudential_sunny))
 
         // Add a small, rotated overlay that is clickable by default
         // (set by the initial state of the checkbox.)
@@ -72,7 +74,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
                 .image(images[1]).anchor(0f, 1f)
                 .position(NEAR_NEWARK, 4300f, 3025f)
                 .bearing(30f)
-                .clickable((findViewById<View>(com.example.common_ui.R.id.toggleClickability) as CheckBox).isChecked)
+                .clickable((findViewById<View>(R.id.toggleClickability) as CheckBox).isChecked)
         )
 
         // Add a large overlay at Newark on top of the smaller overlay.

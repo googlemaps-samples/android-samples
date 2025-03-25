@@ -17,6 +17,8 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
+import com.example.common_ui.R
 
 import com.example.kotlindemos.OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -64,10 +66,11 @@ class MarkerCloseInfoWindowOnRetapDemoActivity :
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.marker_close_info_window_on_retap_demo)
+    setContentView(R.layout.marker_close_info_window_on_retap_demo)
 
-    val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
     OnMapAndViewReadyListener(mapFragment, this)
+    applyInsets(findViewById<View?>(R.id.map_container))
   }
 
   override fun onMapReady(googleMap: GoogleMap?) {
@@ -83,7 +86,7 @@ class MarkerCloseInfoWindowOnRetapDemoActivity :
       // when the map is clicked. Clear the currently selected marker.
       setOnMapClickListener { selectedMarker = null }
 
-      setContentDescription(getString(com.example.common_ui.R.string.marker_close_info_window_on_retap_demo_description))
+      setContentDescription(getString(R.string.marker_close_info_window_on_retap_demo_description))
 
       // Add markers to different cities in Australia and include it in bounds
       val bounds = LatLngBounds.Builder()

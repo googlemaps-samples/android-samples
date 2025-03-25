@@ -21,6 +21,7 @@ import android.widget.TextView
 import android.widget.Toast
 
 import androidx.lifecycle.lifecycleScope
+import com.example.common_ui.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -60,8 +61,8 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
   @OptIn(ExperimentalCoroutinesApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.camera_clamping_demo)
-    cameraTextView = findViewById(com.example.common_ui.R.id.camera_text)
+    setContentView(R.layout.camera_clamping_demo)
+    cameraTextView = findViewById(R.id.camera_text)
     val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
     lifecycleScope.launchWhenCreated {
       map = mapFragment.awaitMap()
@@ -72,6 +73,7 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
       }
       setButtonClickListeners()
     }
+    applyInsets(findViewById<View?>(R.id.map_container))
   }
 
   private fun setButtonClickListeners() {

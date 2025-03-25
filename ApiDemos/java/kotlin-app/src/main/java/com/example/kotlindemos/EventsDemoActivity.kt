@@ -14,7 +14,9 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
@@ -35,11 +37,12 @@ class EventsDemoActivity : SamplesBaseActivity(), OnMapClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.events_demo)
-        tapTextView = findViewById(com.example.common_ui.R.id.tap_text)
-        cameraTextView = findViewById(com.example.common_ui.R.id.camera_text)
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+        setContentView(R.layout.events_demo)
+        tapTextView = findViewById(R.id.tap_text)
+        cameraTextView = findViewById(R.id.camera_text)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

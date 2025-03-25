@@ -24,6 +24,7 @@ package com.example.kotlindemos
 
 import android.os.Bundle
 import android.view.View
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -45,10 +46,11 @@ class CloudBasedMapStylingDemoActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         // The underlying style the map will use has been set in the layout
         // `cloud_styling_basic_demo` under the SupportMapFragment's `map:mapId` attribute.
-        setContentView(com.example.common_ui.R.layout.cloud_styling_basic_demo)
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+        setContentView(R.layout.cloud_styling_basic_demo)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
         setUpButtonListeners()
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -57,10 +59,10 @@ class CloudBasedMapStylingDemoActivity : SamplesBaseActivity(), OnMapReadyCallba
     }
 
     private fun setUpButtonListeners() {
-        findViewById<View>(com.example.common_ui.R.id.styling_normal_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_NORMAL) }
-        findViewById<View>(com.example.common_ui.R.id.styling_satellite_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_SATELLITE) }
-        findViewById<View>(com.example.common_ui.R.id.styling_hybrid_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_HYBRID) }
-        findViewById<View>(com.example.common_ui.R.id.styling_terrain_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_TERRAIN) }
+        findViewById<View>(R.id.styling_normal_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_NORMAL) }
+        findViewById<View>(R.id.styling_satellite_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_SATELLITE) }
+        findViewById<View>(R.id.styling_hybrid_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_HYBRID) }
+        findViewById<View>(R.id.styling_terrain_mode).setOnClickListener { setMapType(GoogleMap.MAP_TYPE_TERRAIN) }
     }
 
     private fun setMapType(mapType: Int) {

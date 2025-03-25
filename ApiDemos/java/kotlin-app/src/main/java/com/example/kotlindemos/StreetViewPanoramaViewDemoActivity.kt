@@ -14,7 +14,9 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.StreetViewPanoramaOptions
 import com.google.android.gms.maps.StreetViewPanoramaView
@@ -43,6 +45,7 @@ class StreetViewPanoramaViewDemoActivity : SamplesBaseActivity() {
         // StreetViewPanoramaView requires that the Bundle you pass contain _ONLY_
         // StreetViewPanoramaView SDK objects or sub-Bundles.
         streetViewPanoramaView.onCreate(savedInstanceState?.getBundle(STREETVIEW_BUNDLE_KEY))
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     override fun onResume() {

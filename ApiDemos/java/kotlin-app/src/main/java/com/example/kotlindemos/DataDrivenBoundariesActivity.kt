@@ -16,8 +16,10 @@ package com.example.kotlindemos
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.annotation.RequiresApi
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -56,18 +58,19 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.data_driven_boundaries_demo)
+        setContentView(R.layout.data_driven_boundaries_demo)
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
 
-        findViewById<Button>(com.example.common_ui.R.id.button_hawaii).setOnClickListener {
+        findViewById<Button>(R.id.button_hawaii).setOnClickListener {
             centerMapOnLocation(HANA_HAWAII, 13.5f) // Seattle coordinates
         }
 
-        findViewById<Button>(com.example.common_ui.R.id.button_us).setOnClickListener {
+        findViewById<Button>(R.id.button_us).setOnClickListener {
             centerMapOnLocation(CENTER_US, 1f) // New York coordinates
         }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     private fun centerMapOnLocation(location: LatLng, zoomLevel: Float) {

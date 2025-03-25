@@ -17,6 +17,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
+import com.example.common_ui.R
 
 import com.google.android.gms.maps.StreetViewPanorama
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
@@ -37,14 +38,14 @@ class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.street_view_panorama_options_demo)
-        streetNameCheckbox = findViewById(com.example.common_ui.R.id.streetnames)
-        navigationCheckbox = findViewById(com.example.common_ui.R.id.navigation)
-        zoomCheckbox = findViewById(com.example.common_ui.R.id.zoom)
-        panningCheckbox = findViewById(com.example.common_ui.R.id.panning)
-        outdoorCheckbox = findViewById(com.example.common_ui.R.id.outdoor)
+        setContentView(R.layout.street_view_panorama_options_demo)
+        streetNameCheckbox = findViewById(R.id.streetnames)
+        navigationCheckbox = findViewById(R.id.navigation)
+        zoomCheckbox = findViewById(R.id.zoom)
+        panningCheckbox = findViewById(R.id.panning)
+        outdoorCheckbox = findViewById(R.id.outdoor)
         val streetViewPanoramaFragment =
-            supportFragmentManager.findFragmentById(com.example.common_ui.R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
+            supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama ->
             streetViewPanorama = panorama
             panorama.isStreetNamesEnabled = streetNameCheckbox.isChecked()
@@ -56,6 +57,7 @@ class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: setPosition()
         }
+        applyInsets(findViewById<View?>(R.id.map_container))
     }
 
     private fun setPosition() {
@@ -68,7 +70,7 @@ class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
 
     private fun checkReady(): Boolean {
         if (streetViewPanorama == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
             return false
         }
         return true
