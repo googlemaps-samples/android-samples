@@ -23,6 +23,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+//noinspection UnusedImport
+import com.example.common_ui.R; // <-- Keep this import
+
+import androidx.annotation.Nullable;
+
 import java.util.Objects;
 
 /**
@@ -37,6 +42,8 @@ import java.util.Objects;
  */
 public class ApiDemoApplication extends Application {
     private static final String TAG = "ApiDemoApplication";
+    private boolean mapIdSet = false;
+    private String mapId = null;
 
     @Override
     public void onCreate() {
@@ -73,5 +80,26 @@ public class ApiDemoApplication extends Application {
             Log.e(TAG, "Error accessing meta-data.", e); // Handle the case where meta-data is completely missing.
             throw new RuntimeException("Error accessing meta-data in manifest", e);
         }
+    }
+
+    /**
+     * Retrieves the map ID from the BuildConfig or string resource.
+     *
+     * @return The valid map ID or null if no valid map ID is found.
+     */
+    @Nullable
+    public String getMapId() {
+        if (!mapIdSet) {
+            if (!BuildConfig.MAP_ID.equals("MAP_ID")) {
+                mapId = BuildConfig.MAP_ID;
+            } else if (!getString(R.string.map_id).equals("DEMO_MAP_ID")) {
+                mapId = getString(R.string.map_id);
+            } else {
+                Log.w(TAG, "Map ID is not set. See README for instructions.");
+                Toast.makeText(this, "Map ID is not set. Some features may not work. See README for instructions.", Toast.LENGTH_LONG).show();
+            }
+            mapIdSet = true;
+        }
+        return mapId;
     }
 }

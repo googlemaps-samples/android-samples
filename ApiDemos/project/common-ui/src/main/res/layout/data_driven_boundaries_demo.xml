@@ -35,17 +35,15 @@
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         />
 
-    <fragment
-        android:id="@+id/map"
+    <FrameLayout
+        android:id="@+id/map_fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        map:backgroundColor="#fff0b2dd"
-        map:mapId="@string/map_id"
-        class="com.google.android.gms.maps.SupportMapFragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar"
+        />
 
     <!-- Buttons to center the map -->
     <LinearLayout

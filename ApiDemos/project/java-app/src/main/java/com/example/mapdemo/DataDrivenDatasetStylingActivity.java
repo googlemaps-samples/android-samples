@@ -27,9 +27,15 @@ import androidx.core.graphics.ColorUtils;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+//noinspection UnusedImport
+import com.example.common_ui.R; // <-- Keep this import
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.DatasetFeature;
@@ -109,26 +115,46 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.data_driven_styling_demo);
+        setContentView(R.layout.data_driven_styling_demo);
 
         // [START_EXCLUDE silent]
-        if (getString(com.example.common_ui.R.string.map_id).equals("DEMO_MAP_ID")) {
-            // This demo will not work if the map id is not set.
-            Toast.makeText(this, "Map ID is not set.  See README for instructions.", Toast.LENGTH_LONG).show();
+        // 1. Get the Application instance and cast it
+        ApiDemoApplication app = (ApiDemoApplication) getApplication();
+
+        // 2. Call the getMapId() method
+        String mapId = app.getMapId();
+
+        if (mapId == null) {
+            finish();
+            return;
         }
         // [END_EXCLUDE]
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+        // --- Programmatically Create and Add Map Fragment ---
+        // 1. Create GoogleMapOptions
+        GoogleMapOptions mapOptions = new GoogleMapOptions();
 
-        int[] buttonIds = {com.example.common_ui.R.id.button_boulder, com.example.common_ui.R.id.button_ny, com.example.common_ui.R.id.button_kyoto};
+        // 2. Set the mapId from the secrets.properties file
+        mapOptions.mapId(BuildConfig.MAP_ID); // Use the mapId retrieved earlier
+
+        // 3. Create SupportMapFragment instance with options
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance(mapOptions);
+        mapFragment.getMapAsync(this);
+
+        // 4. Add the fragment to your FrameLayout container using FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.map_fragment_container, mapFragment); // Use the container ID from XML
+        fragmentTransaction.commit();
+        // --- End Programmatic Creation ---
+
+
+        int[] buttonIds = {R.id.button_boulder, R.id.button_ny, R.id.button_kyoto};
         for (int buttonId : buttonIds) {
             findViewById(buttonId).setOnClickListener(view -> switchDataSet(((Button) view).getText().toString()));
         }
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(findViewById(R.id.map_container));
     }
 
     /**

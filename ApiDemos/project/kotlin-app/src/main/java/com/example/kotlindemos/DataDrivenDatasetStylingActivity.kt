@@ -41,6 +41,7 @@ import com.google.android.gms.maps.model.FeatureType
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapCapabilities
 import androidx.core.view.WindowCompat
+import com.google.android.gms.maps.GoogleMapOptions
 
 
 private val TAG = DataDrivenDatasetStylingActivity::class.java.name
@@ -75,6 +76,14 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        val mapId = (application as ApiDemoApplication).mapId
+
+        // --- Map ID Check ---
+        if (mapId == null) {
+            finish()
+            return // Exit early if no valid Map ID
+        }
+
         if (dataSets.isEmpty()) {
             with(dataSets) {
                 put(getString(com.example.common_ui.R.string.boulder), DataSet(BuildConfig.BOULDER_DATASET_ID, LatLng(40.0150, -105.2705)) { styleBoulderDataset() })
@@ -87,8 +96,23 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         mapContainer = findViewById(com.example.common_ui.R.id.map_container)
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(this)
+        // --- Programmatically create and add the map fragment ---
+        // 1. Create GoogleMapOptions
+        val mapOptions = GoogleMapOptions().apply {
+            // 2. Set the mapId using your BuildConfig field
+            mapId(mapId)
+        }
+
+        // 3. Create SupportMapFragment instance with options
+        val mapFragment = SupportMapFragment.newInstance(mapOptions)
+
+        // 4. Add the fragment to your FrameLayout container
+        supportFragmentManager.beginTransaction()
+            .replace(com.example.common_ui.R.id.map_fragment_container, mapFragment) // Use the container ID from XML
+            .commit()
+        // --- End of programmatic creation ---
+
+        mapFragment.getMapAsync(this)
 
         // Set the click listener for each of the buttons
         listOf(com.example.common_ui.R.id.button_kyoto, com.example.common_ui.R.id.button_ny, com.example.common_ui.R.id.button_boulder).forEach { viewId ->

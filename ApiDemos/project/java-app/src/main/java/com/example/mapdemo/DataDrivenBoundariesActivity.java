@@ -20,19 +20,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+//noinspection UnusedImport
+import com.example.common_ui.R; // <-- Keep this import
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Feature;
@@ -47,8 +48,8 @@ import com.google.android.gms.maps.model.PlaceFeature;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -85,44 +86,63 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(com.example.common_ui.R.layout.data_driven_boundaries_demo);
+        setContentView(R.layout.data_driven_boundaries_demo);
 
         // [START_EXCLUDE silent]
-        if (getString(com.example.common_ui.R.string.map_id).equals("DEMO_MAP_ID")) {
-            // This demo will not work if the map id is not set.
-            Toast.makeText(this, "Map ID is not set.  See README for instructions.", Toast.LENGTH_LONG).show();
+        // 1. Get the Application instance and cast it
+        ApiDemoApplication app = (ApiDemoApplication) getApplication();
+
+        // 2. Call the getMapId() method
+        String mapId = app.getMapId();
+
+        if (mapId == null) {
+            finish();
+            return;
         }
         // [END_EXCLUDE]
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
-        if (mapFragment != null) {
-            mapFragment.getMapAsync(this);
-        }
+        // --- Programmatically Create and Add Map Fragment ---
+        // 1. Create GoogleMapOptions
+        GoogleMapOptions mapOptions = new GoogleMapOptions();
 
-        findViewById(com.example.common_ui.R.id.button_hawaii).setOnClickListener(view -> centerMapOnLocation(HANA_HAWAII, 11f));
-        findViewById(com.example.common_ui.R.id.button_us).setOnClickListener(view -> centerMapOnLocation(CENTER_US, 1f));
+        // 2. Set the mapId from the secrets.properties file
+        mapOptions.mapId(mapId);
+        // 3. Create SupportMapFragment instance with options
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance(mapOptions);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        // 4. Add the fragment to your FrameLayout container using FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.map_fragment_container, mapFragment); // Use the container ID from XML
+        fragmentTransaction.commit();
+        // --- End Programmatic Creation ---
+
+        mapFragment.getMapAsync(this);
+
+        findViewById(R.id.button_hawaii).setOnClickListener(view -> centerMapOnLocation(HANA_HAWAII, 11f));
+        findViewById(R.id.button_us).setOnClickListener(view -> centerMapOnLocation(CENTER_US, 1f));
+
+        applyInsets(findViewById(R.id.map_container));
+
+        setupBoundarySelectorButton();
 
         // [START_EXCLUDE silent]
-        setupBoundarySelectorButton();
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(findViewById(R.id.map_container));
         // [END_EXCLUDE]
     }
 
-    // [START_EXCLUDE silent]
     private void setupBoundarySelectorButton() {
-        MaterialButton stylingTypeButton = findViewById(com.example.common_ui.R.id.button_feature_type);
+        MaterialButton stylingTypeButton = findViewById(R.id.button_feature_type);
         stylingTypeButton.setOnClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(this, v);
                 MenuInflater inflater = popupMenu.getMenuInflater();
-                inflater.inflate(com.example.common_ui.R.menu.boundary_types_menu, popupMenu.getMenu());
+                inflater.inflate(R.menu.boundary_types_menu, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(this);
 
-                popupMenu.getMenu().findItem(com.example.common_ui.R.id.boundary_type_locality).setChecked(localityEnabled);
-                popupMenu.getMenu().findItem(com.example.common_ui.R.id.boundary_type_administrative_area_level_1).setChecked(adminAreaEnabled);
-                popupMenu.getMenu().findItem(com.example.common_ui.R.id.boundary_type_country).setChecked(countryEnabled);
+                popupMenu.getMenu().findItem(R.id.boundary_type_locality).setChecked(localityEnabled);
+                popupMenu.getMenu().findItem(R.id.boundary_type_administrative_area_level_1).setChecked(adminAreaEnabled);
+                popupMenu.getMenu().findItem(R.id.boundary_type_country).setChecked(countryEnabled);
                 popupMenu.show();
         });
     }
@@ -334,15 +354,15 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
         int id = item.getItemId();
         boolean result = false;
 
-        if (id == com.example.common_ui.R.id.boundary_type_locality) {
+        if (id == R.id.boundary_type_locality) {
             item.setChecked(!item.isChecked());
             localityEnabled = item.isChecked();
             result = true;
-        } else if (id == com.example.common_ui.R.id.boundary_type_administrative_area_level_1) {
+        } else if (id == R.id.boundary_type_administrative_area_level_1) {
             item.setChecked(!item.isChecked());
             adminAreaEnabled = item.isChecked();
             result = true;
-        } else if (id == com.example.common_ui.R.id.boundary_type_country) {
+        } else if (id == R.id.boundary_type_country) {
             item.setChecked(!item.isChecked());
             countryEnabled = item.isChecked();
             result = true;
