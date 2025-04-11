@@ -52,7 +52,7 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
 
     // These are simply the string resource IDs for each of the style names. We use them
     // as identifiers when choosing which style to apply.
-    private int mStyleIds[] = {
+    private final int[] mStyleIds = {
             com.example.common_ui.R.string.style_label_retro,
             com.example.common_ui.R.string.style_label_night,
             com.example.common_ui.R.string.style_label_grayscale,

@@ -47,7 +47,7 @@ public class TileCoordinateDemoActivity extends SamplesBaseActivity implements O
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(findViewById(com.example.common_ui.R.id.map));
     }
 
     @Override

@@ -150,8 +150,8 @@ object PermissionUtils {
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
+                            permission.ACCESS_FINE_LOCATION,
+                            permission.ACCESS_COARSE_LOCATION
                         ),
                         requestCode
                     )

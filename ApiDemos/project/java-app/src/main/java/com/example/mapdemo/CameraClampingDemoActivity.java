@@ -76,7 +76,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         mMap = null;
         resetMinMaxZoom();
 
-        mCameraTextView = (TextView) findViewById(com.example.common_ui.R.id.camera_text);
+        mCameraTextView = findViewById(com.example.common_ui.R.id.camera_text);
 
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);

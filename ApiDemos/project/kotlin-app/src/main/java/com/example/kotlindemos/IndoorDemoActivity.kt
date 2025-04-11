@@ -125,7 +125,7 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     }
 
     private fun setText(message: String) {
-        val text = findViewById<TextView>(com.example.common_ui.R.id.top_text)
+        val text = findViewById<TextView>(R.id.top_text)
         text.text = message
     }
 }

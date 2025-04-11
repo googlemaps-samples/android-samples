@@ -90,7 +90,7 @@ public class LiteListDemoActivity extends SamplesBaseActivity {
      */
     private class MapAdapter extends RecyclerView.Adapter<MapAdapter.ViewHolder> {
 
-        private NamedLocation[] namedLocations;
+        private final NamedLocation[] namedLocations;
 
         private MapAdapter(NamedLocation[] locations) {
             super();
@@ -194,7 +194,7 @@ public class LiteListDemoActivity extends SamplesBaseActivity {
      * Sets the map type to {@link com.google.android.gms.maps.GoogleMap#MAP_TYPE_NONE} and clears
      * the map.
      */
-    private RecyclerView.RecyclerListener mRecycleListener = new RecyclerView.RecyclerListener() {
+    private final RecyclerView.RecyclerListener mRecycleListener = new RecyclerView.RecyclerListener() {
 
         @Override
         public void onViewRecycled(RecyclerView.ViewHolder holder) {

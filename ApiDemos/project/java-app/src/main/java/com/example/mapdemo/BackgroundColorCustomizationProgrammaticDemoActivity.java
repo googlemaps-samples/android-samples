@@ -70,7 +70,7 @@ public class BackgroundColorCustomizationProgrammaticDemoActivity extends Sample
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        CheckBox mapTypeToggleCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.map_type_toggle);
+        CheckBox mapTypeToggleCheckbox = findViewById(com.example.common_ui.R.id.map_type_toggle);
         mapTypeToggleCheckbox.setOnCheckedChangeListener(
             (view, isChecked) -> map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 

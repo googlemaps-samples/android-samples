@@ -55,7 +55,7 @@ public class TileOverlayDemoActivity extends SamplesBaseActivity
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.tile_overlay_demo);
 
-        transparencyBar = (SeekBar) findViewById(com.example.common_ui.R.id.transparencySeekBar);
+        transparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar);
         transparencyBar.setMax(TRANSPARENCY_MAX);
         transparencyBar.setProgress(0);
 

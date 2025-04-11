@@ -67,7 +67,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.visible_region_demo);
-        mMessageView = (TextView) findViewById(com.example.common_ui.R.id.message_text);
+        mMessageView = findViewById(com.example.common_ui.R.id.message_text);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);

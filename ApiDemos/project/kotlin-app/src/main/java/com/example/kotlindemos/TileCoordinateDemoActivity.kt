@@ -57,7 +57,7 @@ class TileCoordinateDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
                 (TILE_SIZE_DP * scaleFactor).toInt(), bitmapData)
         }
 
-        private fun createTile(x: Int, y: Int, zoom: Int): Bitmap? {
+        private fun createTile(x: Int, y: Int, zoom: Int): Bitmap {
             val tile = Bitmap.createBitmap((TILE_SIZE_DP * scaleFactor).toInt(),
                 (TILE_SIZE_DP * scaleFactor).toInt(), Bitmap.Config.ARGB_8888)
             val canvas = Canvas(tile)

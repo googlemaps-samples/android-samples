@@ -23,7 +23,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
+//noinspection UnusedImport
+import com.example.common_ui.R; // <-- Keep this import
 
 /**
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
@@ -38,7 +41,7 @@ public class RawMapViewDemoActivity extends SamplesBaseActivity implements OnMap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.raw_mapview_demo);
+        setContentView(R.layout.raw_mapview_demo);
 
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
@@ -47,16 +50,16 @@ public class RawMapViewDemoActivity extends SamplesBaseActivity implements OnMap
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
-        mMapView = (MapView) findViewById(com.example.common_ui.R.id.map);
+        mMapView = findViewById(R.id.map);
         mMapView.onCreate(mapViewBundle);
 
         mMapView.getMapAsync(this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(mMapView);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);

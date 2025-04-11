@@ -61,8 +61,8 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.ui_settings_demo);
 
-        mMyLocationButtonCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.mylocationbutton_toggle);
-        mMyLocationLayerCheckbox = (CheckBox) findViewById(com.example.common_ui.R.id.mylocationlayer_toggle);
+        mMyLocationButtonCheckbox = findViewById(com.example.common_ui.R.id.mylocationbutton_toggle);
+        mMyLocationLayerCheckbox = findViewById(com.example.common_ui.R.id.mylocationlayer_toggle);
 
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);

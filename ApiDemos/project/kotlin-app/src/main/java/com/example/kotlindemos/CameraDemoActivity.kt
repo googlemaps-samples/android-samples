@@ -93,7 +93,7 @@ class CameraDemoActivity :
         updateEnabledState()
         // [END_EXCLUDE]
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         applyInsets(findViewById<View?>(R.id.map_container))
     }
@@ -133,7 +133,7 @@ class CameraDemoActivity :
      */
     private fun checkReadyThen(stuffToDo: () -> Unit) {
         if (!::map.isInitialized) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
         } else {
             stuffToDo()
         }

@@ -38,9 +38,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 
+import com.example.common_ui.R;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import android.text.SpannableString;
@@ -98,13 +99,13 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         private final View mContents;
 
         CustomInfoWindowAdapter() {
-            mWindow = getLayoutInflater().inflate(com.example.common_ui.R.layout.custom_info_window, null);
-            mContents = getLayoutInflater().inflate(com.example.common_ui.R.layout.custom_info_contents, null);
+            mWindow = getLayoutInflater().inflate(R.layout.custom_info_window, null);
+            mContents = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
         }
 
         @Override
         public View getInfoWindow(Marker marker) {
-            if (mOptions.getCheckedRadioButtonId() != com.example.common_ui.R.id.custom_info_window) {
+            if (mOptions.getCheckedRadioButtonId() != R.id.custom_info_window) {
                 // This means that getInfoContents will be called.
                 return null;
             }
@@ -114,7 +115,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
         @Override
         public View getInfoContents(Marker marker) {
-            if (mOptions.getCheckedRadioButtonId() != com.example.common_ui.R.id.custom_info_contents) {
+            if (mOptions.getCheckedRadioButtonId() != R.id.custom_info_contents) {
                 // This means that the default info contents will be used.
                 return null;
             }
@@ -126,31 +127,31 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
             int badge;
             // Use the equals() method on a Marker to check for equals.  Do not use ==.
             if (marker.equals(mBrisbane)) {
-                badge = com.example.common_ui.R.drawable.badge_qld;
+                badge = R.drawable.badge_qld;
             } else if (marker.equals(mAdelaide)) {
-                badge = com.example.common_ui.R.drawable.badge_sa;
+                badge = R.drawable.badge_sa;
             } else if (marker.equals(mSydney)) {
-                badge = com.example.common_ui.R.drawable.badge_nsw;
+                badge = R.drawable.badge_nsw;
             } else if (marker.equals(mMelbourne)) {
-                badge = com.example.common_ui.R.drawable.badge_victoria;
+                badge = R.drawable.badge_victoria;
             } else if (marker.equals(mPerth)) {
-                badge = com.example.common_ui.R.drawable.badge_wa;
+                badge = R.drawable.badge_wa;
             } else if (marker.equals(mDarwin1)) {
-                badge = com.example.common_ui.R.drawable.badge_nt;
+                badge = R.drawable.badge_nt;
             } else if (marker.equals(mDarwin2)) {
-                badge = com.example.common_ui.R.drawable.badge_nt;
+                badge = R.drawable.badge_nt;
             } else if (marker.equals(mDarwin3)) {
-                badge = com.example.common_ui.R.drawable.badge_nt;
+                badge = R.drawable.badge_nt;
             } else if (marker.equals(mDarwin4)) {
-                badge = com.example.common_ui.R.drawable.badge_nt;
+                badge = R.drawable.badge_nt;
             } else {
                 // Passing 0 to setImageResource will clear the image view.
                 badge = 0;
             }
-            ((ImageView) view.findViewById(com.example.common_ui.R.id.badge)).setImageResource(badge);
+            ((ImageView) view.findViewById(R.id.badge)).setImageResource(badge);
 
             String title = marker.getTitle();
-            TextView titleUi = ((TextView) view.findViewById(com.example.common_ui.R.id.title));
+            TextView titleUi = view.findViewById(R.id.title);
             if (title != null) {
                 // Spannable string allows us to edit the formatting of the text.
                 SpannableString titleText = new SpannableString(title);
@@ -161,7 +162,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
             }
 
             String snippet = marker.getSnippet();
-            TextView snippetUi = ((TextView) view.findViewById(com.example.common_ui.R.id.snippet));
+            TextView snippetUi = view.findViewById(R.id.snippet);
             if (snippet != null && snippet.length() > 12) {
                 SpannableString snippetText = new SpannableString(snippet);
                 snippetText.setSpan(new ForegroundColorSpan(Color.MAGENTA), 0, 10, 0);
@@ -212,17 +213,17 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.marker_demo);
+        setContentView(R.layout.marker_demo);
 
-        mTopText = (TextView) findViewById(com.example.common_ui.R.id.top_text);
+        mTopText = findViewById(R.id.top_text);
 
-        mRotationBar = (SeekBar) findViewById(com.example.common_ui.R.id.rotationSeekBar);
+        mRotationBar = findViewById(R.id.rotationSeekBar);
         mRotationBar.setMax(360);
         mRotationBar.setOnSeekBarChangeListener(this);
 
-        mFlatBox = (CheckBox) findViewById(com.example.common_ui.R.id.flat);
+        mFlatBox = findViewById(R.id.flat);
 
-        mOptions = (RadioGroup) findViewById(com.example.common_ui.R.id.custom_info_window_options);
+        mOptions = findViewById(R.id.custom_info_window_options);
         mOptions.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -234,10 +235,10 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         });
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override
@@ -289,7 +290,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
                 .position(SYDNEY)
                 .title("Sydney")
                 .snippet("Population: 4,627,300")
-                .icon(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.arrow))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow))
                 .infoWindowAnchor(0.5f, 0.5f));
 
         // Creates a draggable marker. Long press to drag.
@@ -335,7 +336,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         // Vector drawable resource as a marker icon.
         mMap.addMarker(new MarkerOptions()
                 .position(ALICE_SPRINGS)
-                .icon(vectorToBitmap(com.example.common_ui.R.drawable.ic_android, Color.parseColor("#A4C639")))
+                .icon(vectorToBitmap(R.drawable.ic_android, Color.parseColor("#A4C639")))
                 .title("Alice Springs"));
 
         // Creates a marker rainbow demonstrating how to create default marker icons of different
@@ -374,7 +375,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

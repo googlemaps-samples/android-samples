@@ -35,7 +35,7 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
     // Cole St, San Fran
     private static final LatLng SAN_FRAN = new LatLng(37.765927, -122.449972);
 
-    private static int RADIUS = 20;
+    private static final int RADIUS = 20;
 
     private StreetViewPanorama streetViewPanorama;
 

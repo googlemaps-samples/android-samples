@@ -48,10 +48,10 @@ class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
             supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama ->
             streetViewPanorama = panorama
-            panorama.isStreetNamesEnabled = streetNameCheckbox.isChecked()
-            panorama.isUserNavigationEnabled = navigationCheckbox.isChecked()
-            panorama.isZoomGesturesEnabled = zoomCheckbox.isChecked()
-            panorama.isPanningGesturesEnabled = panningCheckbox.isChecked()
+            panorama.isStreetNamesEnabled = streetNameCheckbox.isChecked
+            panorama.isUserNavigationEnabled = navigationCheckbox.isChecked
+            panorama.isZoomGesturesEnabled = zoomCheckbox.isChecked
+            panorama.isPanningGesturesEnabled = panningCheckbox.isChecked
 
             // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
             // loaded which is when the savedInstanceState is null).

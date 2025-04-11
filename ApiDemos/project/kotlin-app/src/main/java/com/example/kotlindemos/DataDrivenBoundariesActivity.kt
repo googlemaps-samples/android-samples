@@ -28,7 +28,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.Feature
 import com.google.android.gms.maps.model.FeatureClickEvent
 import com.google.android.gms.maps.model.FeatureLayer
 import com.google.android.gms.maps.model.FeatureLayerOptions

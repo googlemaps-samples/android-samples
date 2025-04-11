@@ -135,9 +135,9 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
 
     fun onRequestPosition(view: View) {
         checkReadyThen {
-            streetViewPanorama.location?.let {
+            streetViewPanorama.location.let {
                 Toast.makeText(view.context, streetViewPanorama.location.position.toString(),
-                        Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -146,7 +146,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     fun onMovePosition(view: View) {
         val location = streetViewPanorama.location
         val camera = streetViewPanorama.panoramaCamera
-        location?.links?.let {
+        location.links?.let {
             val link = location.links.findClosestLinkToBearing(camera.bearing)
             streetViewPanorama.setPosition(link.panoId)
         }

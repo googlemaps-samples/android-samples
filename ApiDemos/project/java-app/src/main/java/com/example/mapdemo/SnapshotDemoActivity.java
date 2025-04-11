@@ -45,7 +45,7 @@ public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.snapshot_demo);
-        mWaitForMapLoadCheckBox = (CheckBox) findViewById(com.example.common_ui.R.id.wait_for_map_load);
+        mWaitForMapLoadCheckBox = findViewById(com.example.common_ui.R.id.wait_for_map_load);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
@@ -71,7 +71,7 @@ public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapRe
             return;
         }
 
-        final ImageView snapshotHolder = (ImageView) findViewById(com.example.common_ui.R.id.snapshot_holder);
+        final ImageView snapshotHolder = findViewById(com.example.common_ui.R.id.snapshot_holder);
 
         final SnapshotReadyCallback callback = new SnapshotReadyCallback() {
             @Override
@@ -97,7 +97,7 @@ public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapRe
      * Called when the clear button is clicked.
      */
     public void onClearScreenshot(View view) {
-        ImageView snapshotHolder = (ImageView) findViewById(com.example.common_ui.R.id.snapshot_holder);
+        ImageView snapshotHolder = findViewById(com.example.common_ui.R.id.snapshot_holder);
         snapshotHolder.setImageDrawable(null);
     }
 }

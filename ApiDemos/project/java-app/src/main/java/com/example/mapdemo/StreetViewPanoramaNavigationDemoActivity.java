@@ -81,7 +81,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         }
                     }
                 });
-        mCustomDurationBar = (SeekBar) findViewById(com.example.common_ui.R.id.duration_bar);
+        mCustomDurationBar = findViewById(com.example.common_ui.R.id.duration_bar);
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 

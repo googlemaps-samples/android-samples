@@ -141,10 +141,6 @@ class PolygonDemoActivity :
     // [END_EXCLUDE]
 
     override fun onMapReady(googleMap: GoogleMap) {
-
-        // return early if the map was not initialised properly
-        googleMap ?: return
-
         val fillColorArgb = Color.HSVToColor(
                 fillAlphaBar.progress, floatArrayOf(fillHueBar.progress.toFloat(), 1f, 1f))
         val strokeColorArgb = Color.HSVToColor(

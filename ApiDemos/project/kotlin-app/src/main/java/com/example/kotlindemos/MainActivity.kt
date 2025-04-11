@@ -33,8 +33,6 @@ import com.example.common_ui.R
  */
 class MainActivity : SamplesBaseActivity(), AdapterView.OnItemClickListener {
 
-    private val TAG = MainActivity::class.java.simpleName
-
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val demo: DemoDetails = parent?.adapter?.getItem(position) as DemoDetails
         startActivity(Intent(this, demo.activityClass))
@@ -60,14 +58,14 @@ class MainActivity : SamplesBaseActivity(), AdapterView.OnItemClickListener {
         if (BuildConfig.MAPS_API_KEY.isEmpty()) {
             Toast.makeText(this, "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY", Toast.LENGTH_LONG).show()
         }
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(findViewById(R.id.map_container))
     }
 
     /**
      * A custom array adapter that shows a {@link FeatureView} containing details about the demo.
      *
-     * @property context current activity
-     * @property demos An array containing the details of the demos to be displayed.
+     * @param context current activity
+     * @param demos An array containing the details of the demos to be displayed.
      */
     @SuppressLint("ResourceType")
     class CustomArrayAdapter(context: Context, demos: List<DemoDetails>) :

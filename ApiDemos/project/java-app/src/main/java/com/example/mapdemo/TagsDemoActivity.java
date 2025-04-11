@@ -96,7 +96,7 @@ public class TagsDemoActivity extends SamplesBaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.tags_demo);
 
-        mTagText = (TextView) findViewById(com.example.common_ui.R.id.tag_text);
+        mTagText = findViewById(com.example.common_ui.R.id.tag_text);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);

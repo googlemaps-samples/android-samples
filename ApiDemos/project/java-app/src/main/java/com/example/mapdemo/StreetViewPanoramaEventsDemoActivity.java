@@ -113,7 +113,7 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
         if (point != null) {
             panoClickTimes++;
             panoClickTextView.setText(
-                    "Times clicked=" + panoClickTimes + " : " + point.toString());
+                    "Times clicked=" + panoClickTimes + " : " + point);
             streetViewPanorama.animateTo(
                     new StreetViewPanoramaCamera.Builder()
                             .orientation(orientation)
@@ -128,7 +128,7 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
         if (point != null) {
             panoLongClickTimes++;
             panoLongClickTextView.setText(
-                    "Times long clicked=" + panoLongClickTimes + " : " + point.toString());
+                    "Times long clicked=" + panoLongClickTimes + " : " + point);
         }
     }
 }

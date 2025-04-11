@@ -47,8 +47,6 @@ class UiSettingsDemoActivity :
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        // Return early if map is not initialised properly
-        map = googleMap ?: return
         enableMyLocation()
         // Set all the settings of the map to match the current state of the checkboxes
         with(map.uiSettings) {

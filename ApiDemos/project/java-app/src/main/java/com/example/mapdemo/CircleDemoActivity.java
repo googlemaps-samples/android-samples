@@ -78,7 +78,7 @@ public class CircleDemoActivity extends SamplesBaseActivity
 
     private GoogleMap map;
 
-    private List<DraggableCircle> circles = new ArrayList<>(1);
+    private final List<DraggableCircle> circles = new ArrayList<>(1);
 
     private int fillColorArgb;
     private int strokeColorArgb;
