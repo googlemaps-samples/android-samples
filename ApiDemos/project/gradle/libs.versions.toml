@@ -1,0 +1,42 @@
+[versions]
+activity = "1.10.1"
+activityKtx = "1.10.1"
+androidxJunit = "1.2.1"
+appcompat = "1.7.0"
+cardview = "1.0.0"
+easypermissions = "3.0.0"
+espresso = "3.6.1"
+gradle = "8.8.0"
+junit = "4.13.2"
+kotlin = "2.1.10"
+lifecycle = "2.8.7"
+mapsKtx = "5.1.1"
+material = "1.12.0"
+multidex = "2.0.1"
+playServicesMaps = "19.1.0"
+recyclerview = "1.4.0"
+secretsGradlePlugin = "2.0.1"
+volley = "1.2.1"
+coreKtx = "1.15.0"
+
+[libraries]
+activity = { module = "androidx.activity:activity", version.ref = "activity" }
+activityKtx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
+androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
+easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
+espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinStdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
+lifecycleRuntimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+mapsKtx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "mapsKtx" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
+playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+secretsGradlePlugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
