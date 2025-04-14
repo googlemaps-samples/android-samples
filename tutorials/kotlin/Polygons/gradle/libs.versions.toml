@@ -10,7 +10,7 @@ playServicesMaps = "19.0.0"
 junit = "4.13.2"
 androidxTestExtJunit = "1.2.1"
 espressoCore = "3.6.1"
-coreKtx = "1.13.1"
+coreKtx = "1.16.0"
 javaVersion = "21"
 
 [libraries]
