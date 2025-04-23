@@ -72,7 +72,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // Android Maps Compose composables for the Maps SDK for Android
-    implementation("com.google.maps.android:maps-compose:6.4.1")
+    implementation("com.google.maps.android:maps-compose:6.6.0")
 }
 // [END maps_android_compose_dependency]
 
