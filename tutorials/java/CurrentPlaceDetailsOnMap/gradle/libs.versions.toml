@@ -1,6 +1,6 @@
 [versions]
 compileSdk = "34"
-gradle = "8.5.2"
+gradle = "8.9.2"
 minSdk = "21"
 secretsGradlePlugin = "2.0.1"
 targetSdk = "34"
