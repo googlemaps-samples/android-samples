@@ -44,13 +44,10 @@ jobs:
 
     - name: Build and check
       run: |
-        cd ApiDemos
-        for dir in ./*/ ; do 
-          if [[ "$dir" != "./resources/" ]]; then 
-            ( cd "$dir" && ./gradlew buildDebugPreBundle ) 
-          fi 
-        done
-        
+        cd ApiDemos/project
+        ./gradlew :java-app:buildDebugPreBundle
+        ./gradlew :kotlin-app:buildDebugPreBundle
+
   build-WearOS:
     runs-on: ubuntu-latest
     timeout-minutes: 45
