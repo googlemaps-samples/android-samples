@@ -48,7 +48,7 @@ jobs:
         ./gradlew :java-app:buildDebugPreBundle
         ./gradlew :kotlin-app:buildDebugPreBundle
 
-build-WearOS:
+  build-WearOS:
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
