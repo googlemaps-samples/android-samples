@@ -28,7 +28,7 @@ This sample use the Gradle build system.
 First download the samples by cloning this repository or downloading an archived snapshot. (See the options at the top of the page.)
 
 In Android Studio, use "Open an existing Android Studio project".
-Next select the `ApiDemos/java/` directory that you downloaded from this repository.
+Next select the `ApiDemos/project/` directory that you downloaded from this repository.
 If prompted for a gradle configuration accept the default settings. 
 
 Alternatively use the `gradlew build` command to build the project directly.
