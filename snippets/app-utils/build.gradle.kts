@@ -22,12 +22,12 @@ plugins {
 
 android {
     namespace = "com.example.app_utils"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.app_utils"
         minSdk = 23
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -48,8 +48,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "21"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
     }
 }
 
@@ -68,7 +70,7 @@ dependencies {
     // Utility Library for Maps SDK for Android
     // You do not need to add a separate dependency for the Maps SDK for Android
     // since this library builds in the compatible version of the Maps SDK.
-    implementation("com.google.maps.android:android-maps-utils:3.10.0")
+    implementation("com.google.maps.android:android-maps-utils:3.12.0")
 }
 // [END maps_android_utils_install_snippet]
 

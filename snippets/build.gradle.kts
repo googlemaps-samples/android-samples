@@ -23,8 +23,8 @@ buildscript {
 // [END maps_android_secrets_gradle_plugin_project_level_config]
 
 plugins {
-    id("com.android.application") version "8.8.0" apply false
-    id("org.jetbrains.kotlin.android") version "2.1.0" apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.org.jetbrains.kotlin.android) apply false
 }
 
 tasks.register<Delete>("clean") {
