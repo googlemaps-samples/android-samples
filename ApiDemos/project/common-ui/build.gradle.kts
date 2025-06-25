@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.coreKtx)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.playServicesMaps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
