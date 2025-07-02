@@ -70,7 +70,7 @@ dependencies {
     // Utility Library for Maps SDK for Android
     // You do not need to add a separate dependency for the Maps SDK for Android
     // since this library builds in the compatible version of the Maps SDK.
-    implementation("com.google.maps.android:android-maps-utils:3.12.0")
+    implementation("com.google.maps.android:android-maps-utils:3.14.0")
 }
 // [END maps_android_utils_install_snippet]
 
