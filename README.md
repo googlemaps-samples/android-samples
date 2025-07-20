@@ -1,9 +1,4 @@
-[![Build](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml/badge.svg)](https://github.com/googlemaps-samples/android-samples/actions/workflows/build.yml)
-
-![Contributors](https://img.shields.io/github/contributors/googlemaps-samples/android-samples?color=green)
-[![License](https://img.shields.io/github/license/googlemaps-samples/android-samples?color=blue)][license]
-[![StackOverflow](https://img.shields.io/stackexchange/stackoverflow/t/google-maps?color=orange&label=google-maps&logo=stackoverflow)](https://stackoverflow.com/questions/tagged/android+google-maps)
-[![Discord](https://img.shields.io/discord/676948200904589322?color=6A7EC2&logo=discord&logoColor=ffffff)][Discord server]
+8200904589322?color=6A7EC2&logo=discord&logoColor=ffffff)][Discord server]
 
 # Google Maps SDK for Android Samples
 
@@ -14,7 +9,7 @@
 Samples demonstrating how to use
 [Maps SDK for Android](https://developers.google.com/maps/documentation/android/).
 
-## Samples in this repo (if more than one)
+## Samples in this repo (ii less than one)
 
 This repo contains the following samples:
 
