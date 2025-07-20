@@ -45,8 +45,12 @@ jobs:
     - name: Build and check
       run: |
         cd ApiDemos
-        for dir in ./*/ ; do ( cd "$dir" && ./gradlew buildDebugPreBundle ); done
-
+        for dir in ./*/ ; do 
+          if [[ "$dir" != "./resources/" ]]; then 
+            ( cd "$dir" && ./gradlew buildDebugPreBundle ) 
+          fi 
+        done
+        
   build-WearOS:
     runs-on: ubuntu-latest
     timeout-minutes: 45
@@ -79,7 +83,7 @@ jobs:
     - name: Build and check
       run: |
         cd snippets
-        ./gradlew assembleDebug lintGmsDebug
+        ./gradlew assembleDebug lintDebug
 
   build-tutorials:
     runs-on: ubuntu-latest

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    Copyright 2025 Google LLC
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true">
+        <!-- Hardcode layout_height because it's convoluted to work around a limitation of ViewPager to
+             make "wrap_content" works). Let's not bother for a demo app. -->
+        <androidx.viewpager.widget.PagerTitleStrip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top" />
+    </androidx.viewpager.widget.ViewPager>
+    <fragment
+        android:id="@+id/map"
+        class="com.google.android.libraries.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/scroll"
+        android:layout_below="@id/pager" />
+    <HorizontalScrollView
+        android:id="@id/scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:scrollbarSize="5dip">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/polyline_selection" />
+            <RadioGroup
+                android:id="@+id/polyline_radio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/polyline_radio_australia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/polyline_australia" />
+                <RadioButton
+                    android:id="@+id/polyline_radio_sydney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/polyline_sydney" />
+                <RadioButton
+                    android:id="@+id/polyline_radio_melbourne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/polyline_melbourne" />
+                <RadioButton
+                    android:id="@+id/polyline_radio_world"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/polyline_world" />
+            </RadioGroup>
+        </LinearLayout>
+    </HorizontalScrollView>
+</RelativeLayout>

@@ -35,14 +35,13 @@ jobs:
     - name: Build APKs
       run: |
         echo "Generating ApiDemos (Java) APKs"
-        cd $GITHUB_WORKSPACE/ApiDemos/java
+        cd $GITHUB_WORKSPACE/ApiDemos/project/
         ./gradlew assemble
-        cp ./app/build/outputs/apk/debug/app-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-debug.apk
+        cp ./java-app/build/outputs/apk/debug/java-app-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-debug.apk
 
         echo "Generating Kotlin (Kotlin) APKs"
-        cd $GITHUB_WORKSPACE/ApiDemos/kotlin
         ./gradlew assemble
-        cp ./app/build/outputs/apk/debug/app-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-debug.apk
+        cp ./kotlin-app/build/outputs/apk/debug/kotlin-app-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-debug.apk
 
     - uses: actions/setup-node@v2
       with:

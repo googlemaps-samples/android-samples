@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.places)
     implementation(libs.volley)
     implementation(platform(libs.kotlinBom))
+    implementation (libs.material)
     testImplementation(libs.junit)
 }
 
