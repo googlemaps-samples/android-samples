@@ -17,18 +17,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
+    alias(libs.plugins.compose.compiler)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
     namespace = "com.example.app_compose"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.app_compose"
         minSdk = 23
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -50,8 +50,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "21"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
     }
 }
 
@@ -72,7 +74,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // Android Maps Compose composables for the Maps SDK for Android
-    implementation("com.google.maps.android:maps-compose:6.4.0")
+    implementation("com.google.maps.android:maps-compose:6.4.1")
 }
 // [END maps_android_compose_dependency]
 

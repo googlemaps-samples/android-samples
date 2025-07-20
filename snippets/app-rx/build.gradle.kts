@@ -22,12 +22,12 @@ plugins {
 
 android {
     namespace = "com.example.app_maps_rx"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.app_maps_rx"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -48,8 +48,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "21"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
     }
 }
 
@@ -63,8 +65,8 @@ dependencies {
 
     // It is recommended to also include the latest Maps SDK, Places SDK and RxJava so you
     // have the latest features and bug fixes.
-    implementation("com.google.android.gms:play-services-maps:19.0.0")
-    implementation("com.google.android.libraries.places:places:4.1.0")
+    implementation("com.google.android.gms:play-services-maps:19.2.0")
+    implementation("com.google.android.libraries.places:places:4.3.1")
     implementation("io.reactivex.rxjava3:rxjava:3.1.8")
 
     // [START_EXCLUDE silent]

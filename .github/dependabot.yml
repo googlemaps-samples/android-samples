@@ -15,14 +15,14 @@
 version: 2
 updates:
 - package-ecosystem: gradle
-  directory: "/./ApiDemos/java"
+  directory: "/./ApiDemos/project/java-app"
   schedule:
     interval: "weekly"
   open-pull-requests-limit: 10
   commit-message:
     prefix: chore(deps)
 - package-ecosystem: gradle
-  directory: "/./ApiDemos/kotlin"
+  directory: "/./ApiDemos/project/kotlin-app"
   schedule:
     interval: "weekly"
   open-pull-requests-limit: 10

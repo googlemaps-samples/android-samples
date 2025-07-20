@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ Copyright 2025 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/map_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/street_view_panorama_navigation_demo_label" />
+
+    <LinearLayout
+        android:id="@+id/first_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/get_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRequestPosition"
+                android:text="@string/request_position" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/move_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onMovePosition"
+                android:text="@string/walk_panorama" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pan_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:minWidth="48dp"
+                android:onClick="onPanLeft"
+                android:text="@string/left_arrow" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pan_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/pan_left"
+                android:minWidth="48dp"
+                android:onClick="onPanUp"
+                android:text="@string/up_arrow" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pan_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pan_up"
+                android:layout_toEndOf="@id/pan_left"
+                android:minWidth="48dp"
+                android:onClick="onPanDown"
+                android:text="@string/down_arrow" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pan_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/pan_down"
+                android:minWidth="48dp"
+                android:onClick="onPanRight"
+                android:text="@string/right_arrow" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/zoom_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:onClick="onZoomIn"
+                android:text="@string/zoom_in" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/zoom_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:onClick="onZoomOut"
+                android:text="@string/zoom_out" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/second_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_container">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/duration" />
+
+        <SeekBar
+            android:id="@+id/duration_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="5000"
+            android:progress="1000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/third_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second_container">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sydney"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:onClick="onGoToSydney"
+            android:text="@string/go_to_sydney" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sanfran"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:onClick="onGoToSanFran"
+            android:text="@string/go_to_san_fran" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/santorini"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:onClick="onGoToSantorini"
+            android:text="@string/go_to_santorini" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/invalid"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:onClick="onGoToInvalid"
+            android:text="@string/go_to_invalid" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/streetviewpanorama"
+        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/third_container" />
+</androidx.constraintlayout.widget.ConstraintLayout>

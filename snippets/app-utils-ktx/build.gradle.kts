@@ -22,12 +22,12 @@ plugins {
 
 android {
     namespace = "com.example.app_utils_ktx"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.app_utils_ktx"
         minSdk = 23
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -50,8 +50,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = "21"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
     }
 }
 
@@ -65,7 +67,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // KTX for the Maps SDK for Android Utility Library
-    implementation("com.google.maps.android:maps-utils-ktx:5.1.1")
+    implementation("com.google.maps.android:maps-utils-ktx:5.2.0")
 }
 // [END maps_android_utils_ktx_install_snippet]
 

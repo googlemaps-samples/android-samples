@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright 2025 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.google.android.libraries.maps.SupportMapFragment" />
+        <!-- A small label at the top of the screen. -->
+        <TextView
+            android:id="@+id/top_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+    <!-- A set of test buttons. -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/focused_bulding_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onFocusedBuildingInfo"
+                    android:text="@string/focused_building_info" />
+
+                <Button
+                    android:id="@+id/toggle_level_picker_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onToggleLevelPicker"
+                    android:text="@string/toggle_level_picker" />
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/focused_level_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onVisibleLevelInfo"
+                    android:text="@string/focused_level_info" />
+
+                <Button
+                    android:id="@+id/higher_level_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onHigherLevel"
+                    android:text="@string/activate_higher_level" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>

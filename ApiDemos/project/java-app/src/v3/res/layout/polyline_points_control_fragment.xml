@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright 2025 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView android:text="Frame rate:" />
+            <EditText
+                android:id="@+id/fps_edittext"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:minWidth="64dp"
+                android:text="60.0" />
+            <TextView android:text="fps" />
+            <TextView
+                android:minWidth="48dp"
+                android:visibility="invisible" />
+            <Button
+                android:id="@+id/move_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:text="@string/up_arrow" />
+            <TextView
+                android:minWidth="48dp"
+                android:visibility="invisible" />
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView android:text="LatLng step:" />
+            <EditText
+                android:id="@+id/step_edittext"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:minWidth="64dp"
+                android:text="0.05" />
+            <TextView android:text="\u00B0" />
+            <Button
+                android:id="@+id/move_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:text="@string/left_arrow" />
+            <Button
+                android:id="@+id/move_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:text="@string/down_arrow" />
+            <Button
+                android:id="@+id/move_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48dp"
+                android:text="@string/right_arrow" />
+        </TableRow>
+    </TableLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|top"
+        android:singleLine="false"
+        android:text="HOLD\narrow\nto\nmove\npoly" />
+</LinearLayout>

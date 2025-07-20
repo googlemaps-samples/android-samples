@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.coreKtx)
     implementation(libs.lifecycleViewModelKtx)
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${libs.versions.kotlin.get()}")
+    implementation(libs.material)
 }
 
 secrets {
