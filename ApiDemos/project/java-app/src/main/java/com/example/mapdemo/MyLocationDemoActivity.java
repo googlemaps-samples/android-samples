@@ -41,7 +41,7 @@ import android.widget.Toast;
  * android.Manifest.permission#ACCESS_COARSE_LOCATION} are requested at run time. If either
  * permission is not granted, the Activity is finished with an error message.
  */
-// [START maps_android_sample_my_location]
+// [START maps_android_sample_my_location]       
 public class MyLocationDemoActivity extends SamplesBaseActivity
     implements
     OnMyLocationButtonClickListener,
