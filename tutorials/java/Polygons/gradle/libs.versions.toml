@@ -9,7 +9,7 @@ playServicesMaps = "19.2.0"
 kotlinBom = "2.2.0"
 junit = "4.13.2"
 androidxTestExtJunit = "1.2.1"
-espressoCore = "3.6.1"
+espressoCore = "3.7.0"
 agp = "8.10.1"
 
 [libraries]
