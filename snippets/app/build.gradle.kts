@@ -81,7 +81,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // Maps SDK for Android
-    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    implementation("com.google.android.gms:play-services-maps:19.2.0")
 }
 // [END maps_android_play_services_maps_dependency]
 
