@@ -1,7 +1,7 @@
 [versions]
-espressoCore = "3.6.1"
+espressoCore = "3.7.0"
 junit = "4.13.2"
-junitVersion = "1.2.1"
+junitVersion = "1.3.0"
 kotlin = "2.2.0"
 coreKtx = "1.16.0"
 appCompat = "1.7.1"
@@ -10,13 +10,13 @@ composeMaterial = "1.8.3"
 mapsKtx = "5.2.0"
 material = "1.12.0"
 constraintLayout = "2.2.1"
-navigation = "2.9.0"
+navigation = "2.9.3"
 rxlifecycleAndroidLifecycleKotlin = "4.0.2"
 volley = "1.2.1"
-lifecycleRuntime = "2.9.1"
-places = "4.3.1"
+lifecycleRuntime = "2.9.2"
+places = "4.4.1"
 secretsGradlePlugin = "2.0.1"
-agp = "8.10.1"
+agp = "8.12.0"
 
 [libraries]
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
