@@ -16,7 +16,7 @@ volley = "1.2.1"
 lifecycleRuntime = "2.9.2"
 places = "4.4.1"
 secretsGradlePlugin = "2.0.1"
-agp = "8.12.0"
+agp = "8.13.0"
 
 [libraries]
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
