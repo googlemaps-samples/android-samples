@@ -12,7 +12,7 @@ androidxTestExtJunit = "1.2.1"
 espressoCore = "3.6.1"
 coreKtx = "1.16.0"
 javaVersion = "21"
-gradle = "8.10.1"
+gradle = "8.13.0"
 kotlinGradlePlugin = "2.2.0"
 secretsGradlePlugin = "2.0.1"
 
