@@ -11,7 +11,7 @@ appcompat = "1.7.1"
 playServicesMaps = "19.2.0"
 places = "4.3.1"
 volley = "1.2.1"
-kotlinBom = "2.0.0"
+kotlinBom = "2.2.20"
 junit = "4.13.2"
 
 [libraries]
