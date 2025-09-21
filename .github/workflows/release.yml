@@ -2,7 +2,15 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# You may obtain a echo "Generating ApiDemos (Java) APKs"
+cd $GITHUB_WORKSPACE/ApiDemos/java # Or adjust to the correct path
+./gradlew assemble
+cp ./app/build/outputs/apk/debug/app-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-debug.apk
+
+echo "Generating Kotlin (Kotlin) APKs"
+cd $GITHUB_WORKSPACE/ApiDemos/kotlin # Or adjust to the correct path
+./gradlew assemble
+cp ./app/build/outputs/apk/debug/app-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-debug.apkcopy of the License at
 #
 #      http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -30,31 +38,63 @@ jobs:
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: '21'
+ name: CI Release
 
-    - name: Build APKs
+on:
+  push:
+    branches:
+      - main # Or whatever branch you want to trigger this on
+
+jobs:
+  build-apks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: List GITHUB_WORKSPACE contents (for debugging)
+      run: |
+        echo "Current GITHUB_WORKSPACE: ${{ github.workspace }}"
+        ls -F ${{ github.workspace }}
+        ls -F ${{ github.workspace }}/ApiDemos # Check this path specifically
+
+    - name: Build ApiDemos (Java) APK
       run: |
         echo "Generating ApiDemos (Java) APKs"
-        cd $GITHUB_WORKSPACE/ApiDemos/project/
+        # Adjust the path below if 'ApiDemos' is directly in the root of the checked out repo
+        # If your 'ApiDemos' directory is at the root of your repository,
+        # then the path will likely be ${{ github.workspace }}/ApiDemos/java
+        cd ${{ github.workspace }}/ApiDemos/java
         ./gradlew assemble
-        cp ./java-app/build/outputs/apk/debug/java-app-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-debug.apk
+        cp ./app/build/outputs/apk/debug/app-debug.apk ${{ github.workspace }}/ApiDemos-java-debug.apk
 
+    - name: Build ApiDemos (Kotlin) APK
+      run: |
         echo "Generating Kotlin (Kotlin) APKs"
+        # Adjust the path below if 'ApiDemos' is directly in the root of the checked out repo
+        # If your 'ApiDemos' directory is at the root of your repository,
+        # then the path will likely be ${{ github.workspace }}/ApiDemos/kotlin
+        cd ${{ github.workspace }}/ApiDemos/kotlin
         ./gradlew assemble
-        cp ./kotlin-app/build/outputs/apk/debug/kotlin-app-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-debug.apk
+        cp ./app/build/outputs/apk/debug/app-debug.apk ${{ github.workspace }}/ApiDemos-kotlin-debug.apk
 
-    - uses: actions/setup-node@v2
+    # You can add more steps here, e.g., for uploading artifacts
+    - name: Upload Java APK artifact
+      uses: actions/upload-artifact@v4
       with:
-        node-version: '14'
+        name: ApiDemos-java-debug-apk
+        path: ${{ github.workspace }}/ApiDemos-java-debug.apk
 
-    - name: Semantic Release
-      uses: cycjimmy/semantic-release-action@v3.4.1
+    - name: Upload Kotlin APK artifact
+      uses: actions/upload-artifact@v4
       with:
-        extra_plugins: |
-          "@semantic-release/commit-analyzer@8.0.1"
-          "@semantic-release/release-notes-generator@9.0.3"
-          "@google/semantic-release-replace-plugin@1.2.0"
-          "@semantic-release/git@9.0.1"
-          "@semantic-release/github@7.2.3"
-      env:
-        GH_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
+        name: ApiDemos-kotlin-debug-apk
+        path: ${{ github.workspace }}/ApiDemos-kotlin-debug.apk
