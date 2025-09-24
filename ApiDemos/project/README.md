@@ -1,7 +1,7 @@
 Google Maps Android API Demos
 ===================================
 
-These are demos for the [Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk) in Java and Kotlin programming language.
+These are demos for the [Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk) in Java and Kotlin programming languages.
 
 They demonstrate most of the features available in the API.
 
