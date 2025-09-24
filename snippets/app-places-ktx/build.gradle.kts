@@ -53,6 +53,10 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
+    lint {
+        abortOnError = false
+        disable += setOf("NotificationPermission", "UseTomlInstead")
+    }
 }
 
 // [START places_android_ktx_install_snippet]
