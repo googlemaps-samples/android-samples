@@ -198,7 +198,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
      */
     private Marker mLastSelectedMarker;
 
-    private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
+    private final List<Marker> mMarkerRainbow = new ArrayList<>();
 
     private TextView mTopText;
 

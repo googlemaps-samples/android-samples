@@ -25,8 +25,6 @@ import android.widget.CheckBox
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import com.example.common_ui.R
-import com.google.android.material.checkbox.MaterialCheckBox
-import com.google.android.material.switchmaterial.SwitchMaterial
 
 /**
  * This shows how to to instantiate a SupportMapFragment programmatically with a custom background

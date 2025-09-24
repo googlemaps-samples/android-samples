@@ -277,9 +277,9 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         val styleFactory = FeatureLayer.StyleFactory { feature: Feature ->
 
             // Set default colors to to yellow and point radius to 8.
-            var fillColor = Color.GREEN
-            var strokeColor = Color.YELLOW
-            var pointRadius = 8F
+            var fillColor: Int
+            var strokeColor: Int
+            val pointRadius = 8F
             var strokeWidth = 3F
             // Check if the feature is an instance of DatasetFeature.
             if (feature is DatasetFeature) {

@@ -13,7 +13,6 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-import android.Manifest
 import android.Manifest.permission
 import android.app.AlertDialog
 import android.app.Dialog

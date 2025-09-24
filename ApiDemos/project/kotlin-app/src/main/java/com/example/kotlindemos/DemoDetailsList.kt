@@ -16,8 +16,6 @@
 
 package com.example.kotlindemos
 
-import com.example.kotlindemos.polyline.PolylineDemoActivity
-
 /**
  * A list of all the demos we have available.
  */
