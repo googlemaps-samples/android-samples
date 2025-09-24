@@ -2,7 +2,7 @@ Google Maps Android API Sample: Polylines and Polygons
 ==========================================================
 
 This sample goes hand in hand with a tutorial for the Google Maps Android API:
-[Polylines and Polygons to Represent Routes and Areas](https://developers.google.com/maps/documentation/android-api/polygon-tutorial).
+[Polylines and Polygons to Represent Routes and Areas](https://developers.google.com/maps/documentation/android-sdk/polygon-tutorial).
 
 Prerequisites
 --------------
@@ -31,7 +31,7 @@ Support
 Stack Overflow: https://stackoverflow.com/questions/tagged/android+google-maps
 
 If you have discovered an issue with the Google Maps Android API v2, please see
-the resources here: https://developers.google.com/maps/documentation/android-api/support
+the resources here: https://developers.google.com/maps/documentation/android-sdk/support
 
 If you've found an error in these samples, please file an issue:
 https://github.com/googlemaps/android-samples/issues
