@@ -17,6 +17,9 @@ lifecycleRuntime = "2.9.2"
 places = "4.4.1"
 secretsGradlePlugin = "2.0.1"
 agp = "8.12.0"
+compileSdk = "36"
+minSdk = "24"
+targetSdk = "36"
 
 [libraries]
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }

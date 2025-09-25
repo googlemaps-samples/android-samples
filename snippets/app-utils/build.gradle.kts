@@ -21,13 +21,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.app_utils"
-    compileSdk = 36
-
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
-        applicationId = "com.example.app_utils"
-        minSdk = 23
-        targetSdk = 36
+        applicationId = "com.google.maps.example.utils"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
