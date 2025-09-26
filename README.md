@@ -12,7 +12,7 @@
 ## Description
 
 Samples demonstrating how to use
-[Maps SDK for Android](https://developers.google.com/maps/documentation/android/).
+[Maps SDK for Android](https://developers.google.com/maps/documentation/android-sdk).
 
 ## Samples in this repo (if more than one)
 

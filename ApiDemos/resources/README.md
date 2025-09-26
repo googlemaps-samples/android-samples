@@ -24,7 +24,7 @@ To use this data with data-driven styling in Google Maps, you'll need to upload 
 Cloud Console and create a dataset. Here's a general outline of the process:
 
 ## 1. Create a Map ID
-To create a new map ID, follow the steps in [Create a map ID](https://developers.google.com/maps/documentation/get-map-id#create-a-map-id).
+To create a new map ID, follow the steps in [Create a map ID](https://developers.google.com/maps/documentation/android-sdk/map-ids/mapid-over).
 Make sure to set the **Map type** to **Android**.
 
 ## 2. Create a New Map Style
