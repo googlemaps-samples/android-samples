@@ -15,19 +15,18 @@
  */
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
-    namespace = "com.example.app_places_ktx"
-    compileSdk = 36
-
+    namespace = "com.google.maps.example.placesktx"
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
-        applicationId = "com.example.app_places_ktx"
-        minSdk = 23
-        targetSdk = 36
+        applicationId = "com.google.maps.example.placesktx"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -40,8 +39,11 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -52,6 +54,16 @@ android {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
+
+    lint {
+        lintConfig = file("lint.xml")
     }
 }
 
@@ -68,7 +80,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // KTX for the Places SDK for Android library
-    implementation("com.google.maps.android:places-ktx:3.3.1")
+    implementation(libs.places.ktx)
 }
 // [END places_android_ktx_install_snippet]
 

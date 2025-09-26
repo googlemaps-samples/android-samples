@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
+import com.google.maps.example.utils.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +45,7 @@ class Heatmaps {
 
     // [START maps_android_utils_heatmap_simple]
     private void addHeatMap() {
-        List<LatLng> latLngs = null;
+        List<LatLng> latLngs = new ArrayList<>();
 
         // Get the data: latitude/longitude positions of police stations.
         try {
@@ -101,6 +102,8 @@ class Heatmaps {
         TileOverlay tileOverlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
         // [END maps_android_utils_heatmap_customize]
 
+        assert tileOverlay != null;
+
         // [START maps_android_utils_heatmap_customize_opacity]
         provider.setOpacity(0.7);
         tileOverlay.clearTileCache();
@@ -108,7 +111,7 @@ class Heatmaps {
 
         // [START maps_android_utils_heatmap_customize_dataset]
         List<WeightedLatLng> data = new ArrayList<>();
-        provider.setWeightedData(data);
+        provider.updateData(data);
         tileOverlay.clearTileCache();
         // [END maps_android_utils_heatmap_customize_dataset]
 

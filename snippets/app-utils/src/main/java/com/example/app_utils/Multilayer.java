@@ -31,6 +31,7 @@ import com.google.maps.android.collections.PolygonManager;
 import com.google.maps.android.collections.PolylineManager;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
 import com.google.maps.android.data.kml.KmlLayer;
+import com.google.maps.example.utils.R;
 
 import org.json.JSONException;
 import org.xmlpull.v1.XmlPullParserException;
