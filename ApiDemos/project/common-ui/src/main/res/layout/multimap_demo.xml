@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/multi_map_demo_label" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map1"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
@@ -43,7 +43,7 @@
         app:cameraTargetLng="-74.00"
         app:cameraZoom="8" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map2"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
@@ -56,7 +56,7 @@
         app:cameraTargetLng="-0.12"
         app:cameraZoom="8" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map3"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
@@ -69,7 +69,7 @@
         app:cameraTargetLng="2.35"
         app:cameraZoom="8" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map4"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright 2025 Google LLC
  *
@@ -22,12 +24,12 @@ plugins {
 }
 
 android {
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.kotlindemos"
         minSdk = 21
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.16.0"
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
@@ -54,15 +56,13 @@ android {
         abortOnError = false
     }
 
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
-        jvmTarget = JavaVersion.VERSION_21.toString()
-    }
-
     namespace = "com.example.kotlindemos"
 }
 
 kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
     jvmToolchain(21) // Specify the JVM toolchain version
 }
 

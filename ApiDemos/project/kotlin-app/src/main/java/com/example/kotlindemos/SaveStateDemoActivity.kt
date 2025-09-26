@@ -24,12 +24,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.maps.android.ktx.CameraEvent
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
-import com.google.maps.android.ktx.cameraEvents
 import kotlinx.android.parcel.Parcelize
-import kotlinx.coroutines.flow.collect
 import java.util.Random
 
 /**

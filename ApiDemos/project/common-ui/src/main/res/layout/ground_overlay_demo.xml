@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/ground_overlay_demo_label" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"

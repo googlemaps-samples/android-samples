@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/indoor_demo_label" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:layout_width="0dp"
         android:layout_height="0dp"

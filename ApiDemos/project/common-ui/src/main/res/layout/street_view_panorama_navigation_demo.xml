@@ -199,7 +199,7 @@
             android:text="@string/go_to_invalid" />
     </LinearLayout>
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/streetviewpanorama"
         class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"
         android:layout_width="match_parent"

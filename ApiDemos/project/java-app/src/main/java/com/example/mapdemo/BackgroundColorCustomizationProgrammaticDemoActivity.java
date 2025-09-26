@@ -16,11 +16,7 @@ package com.example.mapdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.CheckBox;
-
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -28,6 +24,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 /**
  * This shows how to to instantiate a SupportMapFragment programmatically with a custom background
@@ -70,7 +67,7 @@ public class BackgroundColorCustomizationProgrammaticDemoActivity extends Sample
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        CheckBox mapTypeToggleCheckbox = findViewById(com.example.common_ui.R.id.map_type_toggle);
+        SwitchMaterial mapTypeToggleCheckbox = findViewById(com.example.common_ui.R.id.map_type_toggle);
         mapTypeToggleCheckbox.setOnCheckedChangeListener(
             (view, isChecked) -> map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 
