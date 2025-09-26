@@ -17,7 +17,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.secrets.gradle.plugin)
 }
 
@@ -39,7 +38,6 @@ android {
 
     buildFeatures {
         buildConfig = true
-        compose = true
     }
 
     buildTypes {
