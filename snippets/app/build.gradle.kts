@@ -17,15 +17,18 @@
 // [START maps_android_secrets_gradle_plugin]
 plugins {
     // [START_EXCLUDE]
-    id("com.android.application")
-    id("kotlin-android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     // [END_EXCLUDE]
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 // [END maps_android_secrets_gradle_plugin]
 
 android {
+    namespace = "com.google.maps.example"
     compileSdk = libs.versions.compileSdk.get().toInt()
+
     defaultConfig {
         applicationId = "com.google.maps.example"
         minSdk = libs.versions.minSdk.get().toInt()
@@ -37,12 +40,16 @@ android {
 
     buildFeatures {
         buildConfig = true
+        compose = true
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -56,11 +63,11 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
     }
-    namespace = "com.google.maps.example"
 }
 
 // [START maps_android_play_services_maps_dependency]
@@ -81,7 +88,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // Maps SDK for Android
-    implementation("com.google.android.gms:play-services-maps:19.2.0")
+    implementation(libs.play.services.maps)
 }
 // [END maps_android_play_services_maps_dependency]
 

@@ -15,12 +15,14 @@
  */
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
+    namespace = "com.google.maps.example.rx"
     compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
         applicationId = "com.google.maps.example.rx"
@@ -34,12 +36,16 @@ android {
 
     buildFeatures {
         buildConfig = true
+        compose = true
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -51,21 +57,27 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
 }
 
 // [START maps_android_maps_rx_install]
 dependencies {
     // RxJava bindings for the Maps SDK
-    implementation("com.google.maps.android:maps-rx:1.0.0")
+    implementation(libs.maps.rx)
 
     // RxJava bindings for the Places SDK
-    implementation("com.google.maps.android:places-rx:1.0.0")
+    implementation(libs.places.rx)
 
     // It is recommended to also include the latest Maps SDK, Places SDK and RxJava so you
     // have the latest features and bug fixes.
-    implementation("com.google.android.gms:play-services-maps:19.2.0")
-    implementation("com.google.android.libraries.places:places:4.4.1")
-    implementation("io.reactivex.rxjava3:rxjava:3.1.11")
+    implementation(libs.play.services.maps)
+    implementation(libs.places)
+    implementation(libs.rxjava)
 
     // [START_EXCLUDE silent]
     implementation(libs.appcompat)
