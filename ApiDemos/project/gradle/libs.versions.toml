@@ -22,7 +22,6 @@ playServicesMaps = "19.2.0"
 recyclerview = "1.4.0"
 secretsGradlePlugin = "2.0.1"
 volley = "1.2.1"
-coreKtx = "1.17.0"
 
 [libraries]
 activity = { module = "androidx.activity:activity", version.ref = "activity" }
