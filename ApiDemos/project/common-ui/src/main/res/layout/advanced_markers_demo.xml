@@ -31,9 +31,8 @@
         app:title="@string/advanced_markers_demo_label"
         app:titleTextColor="?attr/colorOnPrimary" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
-        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

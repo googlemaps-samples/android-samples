@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright 2025 Google LLC
  *
@@ -58,6 +60,9 @@ android {
 }
 
 kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+    }
     jvmToolchain(21) // Specify the JVM toolchain version
     compilerOptions {
         freeCompilerArgs.add("-Xopt-in=kotlin.RequiresOptIn")

@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/map_color_scheme_demo_label" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"

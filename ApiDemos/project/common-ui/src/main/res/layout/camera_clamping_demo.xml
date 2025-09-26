@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/background_color_customization_demo_label"
         app:titleTextColor="?attr/colorOnPrimary" />
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container"

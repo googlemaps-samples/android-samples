@@ -50,7 +50,7 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
     private static final LatLng NEAR_NEWARK =
             new LatLng(NEWARK.latitude - 0.001, NEWARK.longitude - 0.025);
 
-    private final List<BitmapDescriptor> images = new ArrayList<BitmapDescriptor>();
+    private final List<BitmapDescriptor> images = new ArrayList<>();
 
     private GroundOverlay groundOverlay;
 

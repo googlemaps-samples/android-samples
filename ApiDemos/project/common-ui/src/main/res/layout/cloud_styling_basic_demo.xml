@@ -33,7 +33,7 @@
       app:titleTextColor="?attr/colorOnPrimary"
       style="@style/Widget.MaterialComponents.Toolbar.Primary"
       />
-  <fragment
+  <androidx.fragment.app.FragmentContainerView
     android:id="@+id/map"
     class="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"

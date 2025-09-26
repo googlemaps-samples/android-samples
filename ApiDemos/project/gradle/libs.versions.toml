@@ -22,10 +22,10 @@ playServicesMaps = "19.2.0"
 recyclerview = "1.4.0"
 secretsGradlePlugin = "2.0.1"
 volley = "1.2.1"
+coreKtx = "1.17.0"
 
 [libraries]
 activity = { module = "androidx.activity:activity", version.ref = "activity" }
-activityKtx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }

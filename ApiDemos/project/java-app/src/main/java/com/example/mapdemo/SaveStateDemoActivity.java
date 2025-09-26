@@ -30,8 +30,6 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.Random;
 
 /**
@@ -70,7 +68,7 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
     static class MarkerInfo implements Parcelable {
 
         public static final Parcelable.Creator<MarkerInfo> CREATOR =
-                new Parcelable.Creator<MarkerInfo>() {
+                new Parcelable.Creator<>() {
                     @Override
                     public MarkerInfo createFromParcel(Parcel in) {
                         return new MarkerInfo(in);
