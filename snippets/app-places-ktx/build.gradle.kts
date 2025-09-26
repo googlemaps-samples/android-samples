@@ -17,7 +17,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.secrets.gradle.plugin)
 }
 
@@ -36,7 +35,6 @@ android {
 
     buildFeatures {
         buildConfig = true
-        compose = true
     }
 
     buildTypes {
@@ -62,6 +60,10 @@ android {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(21))
         }
+    }
+
+    lint {
+        lintConfig = file("lint.xml")
     }
 }
 

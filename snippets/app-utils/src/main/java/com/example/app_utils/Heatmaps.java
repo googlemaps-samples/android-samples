@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
+import com.google.maps.example.utils.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
