@@ -180,7 +180,7 @@
             android:name=".VisibleRegionDemoActivity"
             android:exported="true" />
         <activity
-            android:name=".polyline.PolylineDemoActivity"
+            android:name=".PolylineDemoActivity"
             android:exported="true" />
     </application>
 

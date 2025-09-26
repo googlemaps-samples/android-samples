@@ -61,6 +61,10 @@ android {
             languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
+
+    lint {
+        lintConfig = file("lint.xml")
+    }
 }
 
 // [START places_android_ktx_install_snippet]

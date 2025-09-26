@@ -25,7 +25,6 @@ volley = "1.2.1"
 
 [libraries]
 activity = { module = "androidx.activity:activity", version.ref = "activity" }
-activityKtx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidxJunit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }

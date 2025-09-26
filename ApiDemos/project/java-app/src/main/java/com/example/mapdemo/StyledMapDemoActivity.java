@@ -22,15 +22,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +84,7 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(@NonNull GoogleMap map) {
         mMap = map;
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 14));
         setSelectedStyle();
@@ -122,15 +121,12 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(com.example.common_ui.R.string.style_choose));
         builder.setItems(styleNames.toArray(new CharSequence[styleNames.size()]),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mSelectedStyleId = mStyleIds[which];
-                        String msg = getString(com.example.common_ui.R.string.style_set_to, getString(mSelectedStyleId));
-                        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, msg);
-                        setSelectedStyle();
-                    }
+                (dialog, which) -> {
+                    mSelectedStyleId = mStyleIds[which];
+                    String msg = getString(com.example.common_ui.R.string.style_set_to, getString(mSelectedStyleId));
+                    Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, msg);
+                    setSelectedStyle();
                 });
         builder.show();
     }

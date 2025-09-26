@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/split_street_view_panorama_and_map_demo_label" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/streetviewpanorama"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
         android:layout_width="0dp"
         android:layout_height="0dp"
