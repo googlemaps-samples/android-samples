@@ -10,7 +10,7 @@ appcompat = "1.7.1"
 junit = "4.13.2"
 androidxTestExtJunit = "1.2.1"
 espressoCore = "3.6.1"
-agp = "8.10.1"
+agp = "8.13.0"
 
 [libraries]
 playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
