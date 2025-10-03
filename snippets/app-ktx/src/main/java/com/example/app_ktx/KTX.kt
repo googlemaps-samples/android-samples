@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.cameraMoveEvents
+import com.google.maps.example.ktx.R
 import kotlinx.coroutines.launch
 
 internal class KTX : AppCompatActivity() {

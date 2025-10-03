@@ -22,6 +22,7 @@ import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.kml.KmlContainer;
 import com.google.maps.android.data.kml.KmlLayer;
 import com.google.maps.android.data.kml.KmlPlacemark;
+import com.google.maps.example.utils.R;
 
 import org.xmlpull.v1.XmlPullParserException;
 

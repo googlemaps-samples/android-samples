@@ -28,6 +28,7 @@ import com.google.maps.android.data.geojson.GeoJsonLineString;
 import com.google.maps.android.data.geojson.GeoJsonLineStringStyle;
 import com.google.maps.android.data.geojson.GeoJsonPoint;
 import com.google.maps.android.data.geojson.GeoJsonPointStyle;
+import com.google.maps.example.utils.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -22,7 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -71,17 +71,14 @@ public class MapInPagerDemoActivity extends SamplesBaseActivity {
             return 3;
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                case 1:
-                    return new TextFragment();
-                case 2:
-                    return SupportMapFragment.newInstance();
-                default:
-                    return null;
-            }
+            return switch (position) {
+                case 0, 1 -> new TextFragment();
+                case 2 -> SupportMapFragment.newInstance();
+                default -> throw new IllegalStateException("Unexpected value: " + position);
+            };
         }
     }
 }

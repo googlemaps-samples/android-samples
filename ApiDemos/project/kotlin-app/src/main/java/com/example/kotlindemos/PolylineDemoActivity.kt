@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.kotlindemos.polyline
+package com.example.kotlindemos
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -43,8 +43,6 @@ import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Spinner
 
-import com.example.kotlindemos.R
-import com.example.kotlindemos.SamplesBaseActivity
 import java.util.Arrays
 
 /**

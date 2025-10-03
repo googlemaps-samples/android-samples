@@ -54,6 +54,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         setContentView(com.example.common_ui.R.layout.advanced_markers_demo)
         val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {

@@ -1,43 +1,63 @@
 [versions]
+androidMapsUtils = "3.19.0"
+compileSdk = "36"
+mapsCompose = "6.10.0"
+mapsRx = "1.0.0"
+minSdk = "24"
+placesKtx = "3.5.0"
+rxjava = "3.1.12"
+targetSdk = "36"
+
+agp = "8.13.0"
+appCompat = "1.7.1"
+composeFoundation = "1.9.2"
+composeMaterial = "1.9.2"
+constraintLayout = "2.2.1"
+coreKtx = "1.17.0"
 espressoCore = "3.7.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 kotlin = "2.2.20"
-coreKtx = "1.17.0"
-appCompat = "1.7.1"
-composeFoundation = "1.9.1"
-composeMaterial = "1.9.1"
+lifecycleRuntime = "2.9.4"
 mapsKtx = "5.2.0"
 material = "1.13.0"
-constraintLayout = "2.2.1"
-navigation = "2.9.4"
-rxlifecycleAndroidLifecycleKotlin = "4.0.2"
-volley = "1.2.1"
-lifecycleRuntime = "2.9.4"
+navigation = "2.9.5"
 places = "4.4.1"
-agp = "8.13.0"
+play-services-maps = "19.2.0"
+rxlifecycleAndroidLifecycleKotlin = "4.0.2"
+secretsGradlePlugin = "2.0.1"
+volley = "1.2.1"
 
 [libraries]
+android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeMaterial" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
 ext-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeMaterial" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntime" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsKtx" }
+maps-rx = { module = "com.google.maps.android:maps-rx", version.ref = "mapsRx" }
+maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsKtx" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+places-ktx = { module = "com.google.maps.android:places-ktx", version.ref = "placesKtx" }
+places-rx = { module = "com.google.maps.android:places-rx", version.ref = "mapsRx" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 rxlifecycle-android-lifecycle-kotlin = { module = "com.trello.rxlifecycle4:rxlifecycle-android-lifecycle-kotlin", version.ref = "rxlifecycleAndroidLifecycleKotlin" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntime" }
-places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
 
 [plugins]
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }

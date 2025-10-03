@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.Tile
 import com.google.android.gms.maps.model.TileOverlayOptions
 import com.google.android.gms.maps.model.TileProvider
 import java.io.ByteArrayOutputStream
+import androidx.core.graphics.createBitmap
 
 /**
  * This demonstrates tile overlay coordinates.
@@ -47,19 +48,23 @@ class TileCoordinateDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     }
 
     private class CoordTileProvider(context: Context) : TileProvider {
-        private val scaleFactor: Float
+        /* Scale factor based on density, with a 0.6 multiplier to increase tile generation
+         * speed */
+        private val scaleFactor: Float = context.resources.displayMetrics.density * 0.6f
         override fun getTile(x: Int, y: Int, zoom: Int): Tile {
             val coordTile = createTile(x, y, zoom)
             val stream = ByteArrayOutputStream()
-            coordTile!!.compress(Bitmap.CompressFormat.PNG, 0, stream)
+            coordTile.compress(Bitmap.CompressFormat.PNG, 0, stream)
             val bitmapData = stream.toByteArray()
             return Tile((TILE_SIZE_DP * scaleFactor).toInt(),
                 (TILE_SIZE_DP * scaleFactor).toInt(), bitmapData)
         }
 
         private fun createTile(x: Int, y: Int, zoom: Int): Bitmap {
-            val tile = Bitmap.createBitmap((TILE_SIZE_DP * scaleFactor).toInt(),
-                (TILE_SIZE_DP * scaleFactor).toInt(), Bitmap.Config.ARGB_8888)
+            val tile = createBitmap(
+                (TILE_SIZE_DP * scaleFactor).toInt(),
+                (TILE_SIZE_DP * scaleFactor).toInt()
+            )
             val canvas = Canvas(tile)
 
             // Draw the tile borders.
@@ -84,12 +89,6 @@ class TileCoordinateDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
         companion object {
             private const val TILE_SIZE_DP = 256
-        }
-
-        init {
-            /* Scale factor based on density, with a 0.6 multiplier to increase tile generation
-             * speed */
-            scaleFactor = context.resources.displayMetrics.density * 0.6f
         }
     }
 }
