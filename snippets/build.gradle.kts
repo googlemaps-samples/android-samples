@@ -20,6 +20,5 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.secrets.gradle.plugin) apply false
-
 }
 // [END maps_android_secrets_gradle_plugin_project_level_config]

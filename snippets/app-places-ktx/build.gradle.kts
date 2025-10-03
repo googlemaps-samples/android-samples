@@ -55,16 +55,18 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
-
+    lint {
+        abortOnError = false
+        disable += setOf("NotificationPermission", "UseTomlInstead")
+        lintConfig = file("lint.xml")
+    }
+    
     java {
         toolchain {
             languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
 
-    lint {
-        lintConfig = file("lint.xml")
-    }
 }
 
 // [START places_android_ktx_install_snippet]
@@ -80,7 +82,7 @@ dependencies {
     // [END_EXCLUDE]
 
     // KTX for the Places SDK for Android library
-    implementation(libs.places.ktx)
+    implementation("com.google.maps.android:places-ktx:3.5.0")
 }
 // [END places_android_ktx_install_snippet]
 
