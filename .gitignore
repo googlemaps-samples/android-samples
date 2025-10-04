@@ -1,8 +1,0 @@
-build/
-.idea
-.gradle
-*.iml
-local.properties
-secrets.properties
-.DS_Store
-.java-version
