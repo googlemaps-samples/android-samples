@@ -9,7 +9,7 @@ kotlinBom = "2.0.0"
 appcompat = "1.7.1"
 junit = "4.13.2"
 androidxTestExtJunit = "1.2.1"
-espressoCore = "3.6.1"
+espressoCore = "3.7.0"
 agp = "8.10.1"
 
 [libraries]
