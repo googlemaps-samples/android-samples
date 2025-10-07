@@ -22,14 +22,13 @@ lifecycleRuntime = "2.9.4"
 mapsKtx = "5.2.0"
 material = "1.13.0"
 navigation = "2.9.5"
-places = "4.4.1"
+places = "5.0.0"
 play-services-maps = "19.2.0"
 rxlifecycleAndroidLifecycleKotlin = "4.0.2"
 secretsGradlePlugin = "2.0.1"
 volley = "1.2.1"
 
 [libraries]
-android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
 compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeMaterial" }
@@ -41,7 +40,6 @@ junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntime" }
-maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 maps-ktx = { module = "com.google.maps.android:maps-ktx", version.ref = "mapsKtx" }
 maps-rx = { module = "com.google.maps.android:maps-rx", version.ref = "mapsRx" }
 maps-utils-ktx = { module = "com.google.maps.android:maps-utils-ktx", version.ref = "mapsKtx" }
@@ -49,10 +47,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
-places-ktx = { module = "com.google.maps.android:places-ktx", version.ref = "placesKtx" }
 places-rx = { module = "com.google.maps.android:places-rx", version.ref = "mapsRx" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
-rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 rxlifecycle-android-lifecycle-kotlin = { module = "com.trello.rxlifecycle4:rxlifecycle-android-lifecycle-kotlin", version.ref = "rxlifecycleAndroidLifecycleKotlin" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
