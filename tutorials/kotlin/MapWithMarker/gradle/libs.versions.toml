@@ -14,7 +14,7 @@ playServicesMaps = "19.2.0"
 junit = "4.13.2"
 androidxTestExtJunit = "1.2.1"
 espressoCore = "3.6.1"
-javaVersion = "21"
+javaVersion = "17"
 
 [libraries]
 coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

@@ -57,14 +57,16 @@ android {
     }
 
     namespace = "com.example.kotlindemos"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 kotlin {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_21)
-    }
-    jvmToolchain(21) // Specify the JVM toolchain version
-    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
         freeCompilerArgs.add("-Xopt-in=kotlin.RequiresOptIn")
     }
 }

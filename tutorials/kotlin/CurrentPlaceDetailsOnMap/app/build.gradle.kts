@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 /*
  * Copyright 2024 Google LLC
  *
@@ -52,6 +54,12 @@ android {
     }
 
     namespace = "com.example.currentplacedetailsonmap"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 dependencies {

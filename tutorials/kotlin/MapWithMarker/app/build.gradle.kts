@@ -1,4 +1,6 @@
-/*
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+ 
+ /*
  * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,6 +51,12 @@ android {
     }
 
     namespace = "com.example.mapwithmarker"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 dependencies {
