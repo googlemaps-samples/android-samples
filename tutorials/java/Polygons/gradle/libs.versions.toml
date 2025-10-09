@@ -10,7 +10,7 @@ kotlinBom = "2.2.0"
 junit = "4.13.2"
 androidxTestExtJunit = "1.2.1"
 espressoCore = "3.6.1"
-agp = "8.10.1"
+agp = "8.13.0"
 
 [libraries]
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
