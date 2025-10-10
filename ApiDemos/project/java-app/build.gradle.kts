@@ -57,7 +57,6 @@ android {
     namespace = "com.example.mapdemo"
 
     lint {
-        abortOnError = false
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 }

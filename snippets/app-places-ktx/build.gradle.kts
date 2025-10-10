@@ -56,7 +56,6 @@ android {
         }
     }
     lint {
-        abortOnError = false
         disable += setOf("NotificationPermission", "UseTomlInstead")
         lintConfig = file("lint.xml")
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile

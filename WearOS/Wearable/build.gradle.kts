@@ -41,7 +41,6 @@ android {
     namespace = "com.example.wearosmap"
 
     lint {
-        abortOnError = false
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 
