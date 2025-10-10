@@ -206,18 +206,18 @@ This file tracks the progress of refactoring `android:onClick` attributes to use
   - [ ] Replaced in `java-app`
   - [ ] Replaced in `kotlin-app`
   - [ ] Removed from XML
-- [ ] `showDarwin`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `showAdelaide`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `showAustralia`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
+- [x] `showDarwin`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `showAdelaide`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `showAustralia`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
 - [ ] `onStreetNamesToggled`
   - [ ] Replaced in `java-app`
   - [ ] Replaced in `kotlin-app`

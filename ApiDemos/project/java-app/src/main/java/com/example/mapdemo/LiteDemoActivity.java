@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.example.common_ui.databinding.LiteDemoBinding;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import android.graphics.Color;
@@ -62,18 +63,23 @@ public class LiteDemoActivity extends SamplesBaseActivity implements
 
     private GoogleMap map;
 
+    private LiteDemoBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Set the layout
-        setContentView(com.example.common_ui.R.layout.lite_demo);
+        binding = LiteDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Get the map and register for the ready callback
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
+
+        binding.goToDarwin.setOnClickListener(this::showDarwin);
+        binding.goToAdelaide.setOnClickListener(this::showAdelaide);
+        binding.goToAustralia.setOnClickListener(this::showAustralia);
     }
 
     /**
