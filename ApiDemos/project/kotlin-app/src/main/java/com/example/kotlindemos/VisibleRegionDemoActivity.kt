@@ -21,11 +21,7 @@ import android.os.Handler
 import android.os.SystemClock
 import android.view.View
 import android.view.animation.OvershootInterpolator
-import android.widget.Button
-import android.widget.TextView
-import com.example.common_ui.R
-
-
+import com.example.common_ui.databinding.VisibleRegionDemoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -38,22 +34,16 @@ import com.google.android.gms.maps.model.MarkerOptions
  * obscuring the map UI or copyright notices.
  */
 class VisibleRegionDemoActivity :
-        SamplesBaseActivity(),
-        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+    SamplesBaseActivity(),
+    OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private val operaHouseLatLng = LatLng(-33.85704, 151.21522)
     private val sfoLatLng = LatLng(37.614631, -122.385153)
     private val australiaBounds = LatLngBounds(LatLng(-44.0, 113.0),
-            LatLng(-10.0, 154.0))
+        LatLng(-10.0, 154.0))
 
     private lateinit var map: GoogleMap
-
-    private lateinit var messageView: TextView
-    private lateinit var normalButton: Button
-    private lateinit var morePaddedButton: Button
-    private lateinit var operaHouseButton: Button
-    private lateinit var sfoButton: Button
-    private lateinit var australiaButton: Button
+    private lateinit var binding: VisibleRegionDemoBinding
 
     /** Keep track of current values for padding, so we can animate from them.  */
     private var currentLeft = 150
@@ -63,18 +53,19 @@ class VisibleRegionDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.visible_region_demo)
-        messageView = findViewById(R.id.message_text)
+        binding = VisibleRegionDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        binding.vrNormalButton.setOnClickListener { setNoPadding() }
+        binding.vrMorePaddedButton.setOnClickListener { setMorePadding() }
+        binding.vrSohButton.setOnClickListener { moveToOperaHouse() }
+        binding.vrSfoButton.setOnClickListener { moveToSFO() }
+        binding.vrAusButton.setOnClickListener { moveToAUS() }
+
+        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
-
-        normalButton = findViewById(R.id.vr_normal_button)
-        morePaddedButton = findViewById(R.id.vr_more_padded_button)
-        operaHouseButton = findViewById(R.id.vr_soh_button)
-        sfoButton = findViewById(R.id.vr_sfo_button)
-        australiaButton = findViewById(R.id.vr_aus_button)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        
+        applyInsets(binding.mapContainer)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -91,36 +82,40 @@ class VisibleRegionDemoActivity :
             addMarker(MarkerOptions().position(operaHouseLatLng).title("Sydney Opera House"))
             // Add a camera idle listener that displays the current camera position in a TextView
             setOnCameraIdleListener {
-                messageView.text = getString(
-                    R.string.camera_change_message,
-                        this@VisibleRegionDemoActivity.map.cameraPosition)
+                binding.messageText.text = getString(
+                    com.example.common_ui.R.string.camera_change_message,
+                    this@VisibleRegionDemoActivity.map.cameraPosition)
             }
         }
 
-        normalButton.setOnClickListener {
-            animatePadding(150, 0, 0, 0)
-        }
 
-        // listener for when the 'more' padding button is clicked
-        // increases the amount of padding along the right and bottom of the map
-        morePaddedButton.setOnClickListener {
-            // get the view that contains the map
-            val mapView: View? = supportFragmentManager.findFragmentById(R.id.map)?.view
-            animatePadding(150, 0, (mapView?.width ?: 0) / 3,
-                    (mapView?.height ?: 0)/ 4)
-        }
+    }
 
-        operaHouseButton.setOnClickListener {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(operaHouseLatLng, 16f))
-        }
+    private fun setNoPadding() {
+        if (!::map.isInitialized) return
+        animatePadding(150, 0, 0, 0)
+    }
 
-        sfoButton.setOnClickListener {
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(sfoLatLng, 18f))
-        }
+    private fun setMorePadding() {
+        if (!::map.isInitialized) return
+        val mapView: View? = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map)?.view
+        animatePadding(150, 0, (mapView?.width ?: 0) / 3,
+            (mapView?.height ?: 0)/ 4)
+    }
 
-        australiaButton.setOnClickListener {
-            map.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
-        }
+    private fun moveToOperaHouse() {
+        if (!::map.isInitialized) return
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(operaHouseLatLng, 16f))
+    }
+
+    private fun moveToSFO() {
+        if (!::map.isInitialized) return
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sfoLatLng, 18f))
+    }
+
+    private fun moveToAUS() {
+        if (!::map.isInitialized) return
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
     }
 
     // this function smoothly changes the amount of padding over a period of time

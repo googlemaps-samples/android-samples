@@ -49,14 +49,28 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     private val ZOOM_BY = 0.5f
 
     private lateinit var streetViewPanorama: StreetViewPanorama
-    private lateinit var customDurationBar: SeekBar
+    private lateinit var binding: com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding
 
     private val duration: Long
-        get() = customDurationBar.progress.toLong()
+        get() = binding.durationBar.progress.toLong()
 
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.street_view_panorama_navigation_demo)
+        binding = com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.sanfran.setOnClickListener { onGoToSanFran() }
+        binding.sydney.setOnClickListener { onGoToSydney() }
+        binding.santorini.setOnClickListener { onGoToSantorini() }
+        binding.invalid.setOnClickListener { onGoToInvalid() }
+        binding.zoomIn.setOnClickListener { onZoomIn() }
+        binding.zoomOut.setOnClickListener { onZoomOut() }
+        binding.panLeft.setOnClickListener { onPanLeft() }
+        binding.panRight.setOnClickListener { onPanRight() }
+        binding.panUp.setOnClickListener { onPanUp() }
+        binding.panDown.setOnClickListener { onPanDown() }
+        binding.getPosition.setOnClickListener { onRequestPosition() }
+        binding.movePosition.setOnClickListener { onMovePosition() }
 
         val streetViewPanoramaFragment = supportFragmentManager
                 .findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment
@@ -68,9 +82,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
                 streetViewPanorama.setPosition(sydney)
             }
         }
-
-        customDurationBar = findViewById(R.id.duration_bar)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     /**
@@ -86,16 +98,20 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
         }
     }
 
-    /**
-     * Called when the Go To Location button is pressed
-     */
-    fun onGoToLocation(view: View) {
-        when (view.id) {
-            R.id.sydney -> streetViewPanorama.setPosition(sydney)
-            R.id.sanfran -> streetViewPanorama.setPosition(sanFrancisco)
-            R.id.santorini -> streetViewPanorama.setPosition(santoriniPanoId)
-            R.id.invalid -> streetViewPanorama.setPosition(invalid)
-        }
+    private fun onGoToSydney() {
+        checkReadyThen { streetViewPanorama.setPosition(sydney) }
+    }
+
+    private fun onGoToSanFran() {
+        checkReadyThen { streetViewPanorama.setPosition(sanFrancisco) }
+    }
+
+    private fun onGoToSantorini() {
+        checkReadyThen { streetViewPanorama.setPosition(santoriniPanoId) }
+    }
+
+    private fun onGoToInvalid() {
+        checkReadyThen { streetViewPanorama.setPosition(invalid) }
     }
 
     /**
@@ -110,40 +126,68 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
         } .build(), duration)
     }
 
-    fun onButtonClicked(view: View) {
+    private fun onZoomIn() {
         checkReadyThen {
             with(streetViewPanorama.panoramaCamera) {
-                when (view.id) {
-                    R.id.zoom_in -> updateStreetViewPanorama(zoom + ZOOM_BY, tilt, bearing)
-                    R.id.zoom_out -> updateStreetViewPanorama(zoom - ZOOM_BY, tilt, bearing)
-                    R.id.pan_left -> updateStreetViewPanorama(zoom, tilt, bearing - PAN_BY_DEGREES)
-                    R.id.pan_right -> updateStreetViewPanorama(zoom, tilt, bearing + PAN_BY_DEGREES)
-                    R.id.pan_up -> {
-                        var newTilt = tilt + PAN_BY_DEGREES
-                        if (newTilt > 90) newTilt = 90f
-                        updateStreetViewPanorama(zoom, newTilt, bearing)
-                    }
-                    R.id.pan_down -> {
-                        var newTilt = tilt - PAN_BY_DEGREES
-                        if (newTilt < -90) newTilt = -90f
-                        updateStreetViewPanorama(zoom, newTilt, bearing)
-                    }
-                }
+                updateStreetViewPanorama(zoom + ZOOM_BY, tilt, bearing)
             }
         }
     }
 
-    fun onRequestPosition(view: View) {
+    private fun onZoomOut() {
+        checkReadyThen {
+            with(streetViewPanorama.panoramaCamera) {
+                updateStreetViewPanorama(zoom - ZOOM_BY, tilt, bearing)
+            }
+        }
+    }
+
+    private fun onPanLeft() {
+        checkReadyThen {
+            with(streetViewPanorama.panoramaCamera) {
+                updateStreetViewPanorama(zoom, tilt, bearing - PAN_BY_DEGREES)
+            }
+        }
+    }
+
+    private fun onPanRight() {
+        checkReadyThen {
+            with(streetViewPanorama.panoramaCamera) {
+                updateStreetViewPanorama(zoom, tilt, bearing + PAN_BY_DEGREES)
+            }
+        }
+    }
+
+    private fun onPanUp() {
+        checkReadyThen {
+            with(streetViewPanorama.panoramaCamera) {
+                var newTilt = tilt + PAN_BY_DEGREES
+                if (newTilt > 90) newTilt = 90f
+                updateStreetViewPanorama(zoom, newTilt, bearing)
+            }
+        }
+    }
+
+    private fun onPanDown() {
+        checkReadyThen {
+            with(streetViewPanorama.panoramaCamera) {
+                var newTilt = tilt - PAN_BY_DEGREES
+                if (newTilt < -90) newTilt = -90f
+                updateStreetViewPanorama(zoom, newTilt, bearing)
+            }
+        }
+    }
+
+    private fun onRequestPosition() {
         checkReadyThen {
             streetViewPanorama.location.let {
-                Toast.makeText(view.context, streetViewPanorama.location.position.toString(),
+                Toast.makeText(this, streetViewPanorama.location.position.toString(),
                     Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    fun onMovePosition(view: View) {
+    private fun onMovePosition() {
         val location = streetViewPanorama.location
         val camera = streetViewPanorama.panoramaCamera
         location.links?.let {

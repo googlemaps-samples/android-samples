@@ -2,58 +2,58 @@
 
 This file tracks the progress of refactoring `android:onClick` attributes to use View Binding and programmatic click listeners.
 
-- [ ] `setNoPadding`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `setMorePadding`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `moveToOperaHouse`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `moveToSFO`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `moveToAUS`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onScreenshot`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onClearScreenshot`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onRequestPosition`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onMovePosition`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onPanLeft`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onPanUp`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onPanDown`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onPanRight`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
+- [x] `setNoPadding`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `setMorePadding`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `moveToOperaHouse`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `moveToSFO`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `moveToAUS`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onScreenshot`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onClearScreenshot`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onRequestPosition`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onMovePosition`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onPanLeft`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onPanUp`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onPanDown`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onPanRight`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
 - [x] `onZoomIn`
   - [x] Replaced in `java-app`
   - [x] Replaced in `kotlin-app`
@@ -66,22 +66,22 @@ This file tracks the progress of refactoring `android:onClick` attributes to use
   - [x] Replaced in `java-app`
   - [x] Replaced in `kotlin-app`
   - [x] Removed from XML
-- [ ] `onGoToSanFran`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onGoToSantorini`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onGoToInvalid`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `toggleClickability`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
+- [x] `onGoToSanFran`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onGoToSantorini`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `onGoToInvalid`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
+- [x] `toggleClickability`
+  - [x] Replaced in `java-app`
+  - [x] Replaced in `kotlin-app`
+  - [x] Removed from XML
 - [ ] `onClearMap`
   - [ ] Replaced in `java-app`
   - [ ] Replaced in `kotlin-app`

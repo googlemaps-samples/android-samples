@@ -71,15 +71,13 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
+            android:id="@+id/screenshot_button"
             android:layout_height="wrap_content"
-            android:onClick="onScreenshot"
-            android:text="@string/snapshot_take_button" />
+            android:text="@string/snapshot_take_button"/>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
+            android:id="@+id/clear_button"
             android:layout_height="wrap_content"
-            android:onClick="onClearScreenshot"
-            android:text="@string/snapshot_clear_button" />
+            android:text="@string/snapshot_clear_button"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

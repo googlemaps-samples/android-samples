@@ -14,14 +14,6 @@
 
 package com.example.mapdemo;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -30,15 +22,23 @@ import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.common_ui.databinding.VisibleRegionDemoBinding;
+import com.example.mapdemo.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * This shows how to use setPadding to allow overlays that obscure part of the map without
  * obscuring the map UI or copyright notices.
  */
 public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
-        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+    OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     /**
      * Note that this may be null if the Google Play services APK is not available.
@@ -50,9 +50,9 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     private static final LatLng SFO = new LatLng(37.614631, -122.385153);
 
     private static final LatLngBounds AUS = new LatLngBounds(
-            new LatLng(-44, 113), new LatLng(-10, 154));
+        new LatLng(-44, 113), new LatLng(-10, 154));
 
-    private TextView mMessageView;
+    private VisibleRegionDemoBinding binding;
 
     /** Keep track of current values for padding, so we can animate from them. */
     int currentLeft = 150;
@@ -66,14 +66,20 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.visible_region_demo);
-        mMessageView = findViewById(com.example.common_ui.R.id.message_text);
+        binding = VisibleRegionDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.vrNormalButton.setOnClickListener(v -> setNoPadding());
+        binding.vrMorePaddedButton.setOnClickListener(this::setMorePadding);
+        binding.vrSohButton.setOnClickListener(this::moveToOperaHouse);
+        binding.vrSfoButton.setOnClickListener(this::moveToSFO);
+        binding.vrAusButton.setOnClickListener(this::moveToAUS);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -86,12 +92,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         // Add a marker to the Opera House.
         mMap.addMarker(new MarkerOptions().position(SOH).title("Sydney Opera House"));
         // Add a camera idle listener.
-        mMap.setOnCameraIdleListener(new OnCameraIdleListener() {
-            @Override
-            public void onCameraIdle() {
-                mMessageView.setText("CameraChangeListener: " + mMap.getCameraPosition());
-            }
-        });
+        mMap.setOnCameraIdleListener(() -> binding.messageText.setText("CameraChangeListener: " + mMap.getCameraPosition()));
     }
 
     /**
@@ -127,7 +128,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(AUS, 0));
     }
 
-    public void setNoPadding(View view) {
+    private void setNoPadding() {
         if (!checkReady()) {
             return;
         }
@@ -147,7 +148,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     }
 
     public void animatePadding(
-            final int toLeft, final int toTop, final int toRight, final int toBottom) {
+        final int toLeft, final int toTop, final int toRight, final int toBottom) {
 
         final Handler handler = new Handler();
         final long start = SystemClock.uptimeMillis();

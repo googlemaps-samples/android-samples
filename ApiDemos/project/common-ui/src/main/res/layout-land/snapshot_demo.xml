@@ -57,13 +57,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onScreenshot"
             android:text="@string/snapshot_take_button" />
 
         <Button
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClearScreenshot"
-            android:text="@string/snapshot_clear_button" />
+            android:text="@string/snapshot_clear_button"/>
     </LinearLayout>
 </LinearLayout>

@@ -89,13 +89,7 @@ class CircleDemoActivity :
     private var fillColorArgb : Int = 0
     private var strokeColorArgb: Int = 0
 
-    private lateinit var fillHueBar: SeekBar
-    private lateinit var fillAlphaBar: SeekBar
-    private lateinit var strokeWidthBar: SeekBar
-    private lateinit var strokeHueBar: SeekBar
-    private lateinit var strokeAlphaBar: SeekBar
-    private lateinit var strokePatternSpinner: Spinner
-    private lateinit var clickabilityCheckbox: CheckBox
+    private lateinit var binding: com.example.common_ui.databinding.CircleDemoBinding
 
     /**
      * This class contains information about a circle, including its markers
@@ -117,11 +111,11 @@ class CircleDemoActivity :
                 CircleOptions().apply {
                     center(center)
                     radius(radiusMeters)
-                    strokeWidth(strokeWidthBar.progress.toFloat())
+                    strokeWidth(binding.strokeWidthSeekBar.progress.toFloat())
                     strokeColor(strokeColorArgb)
                     fillColor(fillColorArgb)
-                    clickable(clickabilityCheckbox.isChecked)
-                    strokePattern(getSelectedPattern(strokePatternSpinner.selectedItemPosition))
+                    clickable(binding.toggleClickability.isChecked)
+                    strokePattern(getSelectedPattern(binding.strokePatternSpinner.selectedItemPosition))
                 })
 
         fun onMarkerMoved(marker: Marker): Boolean {
@@ -142,7 +136,7 @@ class CircleDemoActivity :
         fun onStyleChange() {
             // [circle] is treated as implicit this inside the with block
             with(circle) {
-                strokeWidth = strokeWidthBar.progress.toFloat()
+                strokeWidth = binding.strokeWidthSeekBar.progress.toFloat()
                 strokeColor = strokeColorArgb
                 fillColor = fillColorArgb
             }
@@ -152,51 +146,51 @@ class CircleDemoActivity :
             circle.strokePattern = pattern
         }
 
-        fun setClickable(clickable: Boolean) {
-            circle.isClickable = clickable
+        fun setClickable(boolean: Boolean) {
+            circle.isClickable = boolean
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.circle_demo)
+        binding = com.example.common_ui.databinding.CircleDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Set all the SeekBars
-        fillHueBar = findViewById<SeekBar>(R.id.fillHueSeekBar).apply {
+        binding.fillHueSeekBar.apply {
             max = MAX_HUE_DEGREE
             progress = MAX_HUE_DEGREE / 2
         }
-        fillAlphaBar = findViewById<SeekBar>(R.id.fillAlphaSeekBar).apply {
+        binding.fillAlphaSeekBar.apply {
             max = MAX_ALPHA
             progress = MAX_ALPHA / 2
         }
-        strokeWidthBar = findViewById<SeekBar>(R.id.strokeWidthSeekBar).apply {
+        binding.strokeWidthSeekBar.apply {
             max = MAX_WIDTH_PX
             progress = MAX_WIDTH_PX / 3
         }
-        strokeHueBar = findViewById<SeekBar>(R.id.strokeHueSeekBar).apply {
+        binding.strokeHueSeekBar.apply {
             max = MAX_HUE_DEGREE
             progress = 0
         }
-        strokeAlphaBar = findViewById<SeekBar>(R.id.strokeAlphaSeekBar).apply {
+        binding.strokeAlphaSeekBar.apply {
             max = MAX_ALPHA
             progress = MAX_ALPHA
         }
 
-        strokePatternSpinner = findViewById<Spinner>(R.id.strokePatternSpinner).apply {
+        binding.strokePatternSpinner.apply {
             adapter = ArrayAdapter(this@CircleDemoActivity,
                     android.R.layout.simple_spinner_item,
                     getResourceStrings())
         }
 
-        clickabilityCheckbox = findViewById(R.id.toggleClickability)
-        clickabilityCheckbox.setOnClickListener {
-            toggleClickability(it)
+        binding.toggleClickability.setOnClickListener {
+            toggleClickability()
         }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     /** Get all the strings of patterns and return them as Array. */
@@ -241,23 +235,23 @@ class CircleDemoActivity :
             setOnCircleClickListener { c -> c.strokeColor = c.strokeColor xor 0x00ffffff }
         }
 
-        fillColorArgb = Color.HSVToColor(fillAlphaBar.progress,
-                floatArrayOf(fillHueBar.progress.toFloat(), 1f, 1f))
-        strokeColorArgb = Color.HSVToColor(strokeAlphaBar.progress,
-                floatArrayOf(strokeHueBar.progress.toFloat(), 1f, 1f))
+        fillColorArgb = Color.HSVToColor(binding.fillAlphaSeekBar.progress,
+                floatArrayOf(binding.fillHueSeekBar.progress.toFloat(), 1f, 1f))
+        strokeColorArgb = Color.HSVToColor(binding.strokeAlphaSeekBar.progress,
+                floatArrayOf(binding.strokeHueSeekBar.progress.toFloat(), 1f, 1f))
 
         val circle = DraggableCircle(sydney, DEFAULT_RADIUS_METERS)
         circles.add(circle)
 
         // Set listeners for all the SeekBar
-        fillHueBar.setOnSeekBarChangeListener(this)
-        fillAlphaBar.setOnSeekBarChangeListener(this)
+        binding.fillHueSeekBar.setOnSeekBarChangeListener(this)
+        binding.fillAlphaSeekBar.setOnSeekBarChangeListener(this)
 
-        strokeWidthBar.setOnSeekBarChangeListener(this)
-        strokeHueBar.setOnSeekBarChangeListener(this)
-        strokeAlphaBar.setOnSeekBarChangeListener(this)
+        binding.strokeWidthSeekBar.setOnSeekBarChangeListener(this)
+        binding.strokeHueSeekBar.setOnSeekBarChangeListener(this)
+        binding.strokeAlphaSeekBar.setOnSeekBarChangeListener(this)
 
-        strokePatternSpinner.onItemSelectedListener = this
+        binding.strokePatternSpinner.onItemSelectedListener = this
     }
 
     private fun getSelectedPattern(pos: Int): List<PatternItem>? = patterns[pos].second
@@ -283,18 +277,18 @@ class CircleDemoActivity :
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         // Update the fillColorArgb if the SeekBars for it is changed, otherwise keep the old value
         fillColorArgb = when (seekBar) {
-            fillHueBar -> Color.HSVToColor(Color.alpha(fillColorArgb),
+            binding.fillHueSeekBar -> Color.HSVToColor(Color.alpha(fillColorArgb),
                     floatArrayOf(progress.toFloat(), 1f, 1f))
-            fillAlphaBar -> Color.argb(progress, Color.red(fillColorArgb),
+            binding.fillAlphaSeekBar -> Color.argb(progress, Color.red(fillColorArgb),
                     Color.green(fillColorArgb), Color.blue(fillColorArgb))
             else -> fillColorArgb
         }
 
         // Set the strokeColorArgb if the SeekBars for it is changed, otherwise keep the old value
         strokeColorArgb = when (seekBar) {
-            strokeHueBar -> Color.HSVToColor(Color.alpha(strokeColorArgb),
+            binding.strokeHueSeekBar -> Color.HSVToColor(Color.alpha(strokeColorArgb),
                     floatArrayOf(progress.toFloat(), 1f, 1f))
-            strokeAlphaBar -> Color.argb(progress, Color.red(strokeColorArgb),
+            binding.strokeAlphaSeekBar -> Color.argb(progress, Color.red(strokeColorArgb),
                     Color.green(strokeColorArgb), Color.blue(strokeColorArgb))
             else -> strokeColorArgb
         }
@@ -308,8 +302,8 @@ class CircleDemoActivity :
     }
 
     /** Listener for the Clickable CheckBox, to set if all the circles can be click */
-    fun toggleClickability(view: View) {
-        circles.map { it.setClickable((view as CheckBox).isChecked) }
+    private fun toggleClickability() {
+        circles.map { it.setClickable(binding.toggleClickability.isChecked) }
     }
 }
 

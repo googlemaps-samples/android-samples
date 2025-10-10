@@ -13,8 +13,9 @@ This file summarizes the progress, successful strategies, and lessons learned du
 3.  **Refactored Activities:**
     *   **`VisibleRegionDemoActivity`**: Fully refactored for both `java-app` and `kotlin-app`. All `onClick` attributes (`setNoPadding`, `setMorePadding`, `moveToOperaHouse`, `moveToSFO`, `moveToAUS`) have been replaced.
     *   **`SnapshotDemoActivity`**: Fully refactored for both `java-app` and `kotlin-app`. The `onScreenshot` and `onClearScreenshot` `onClick` attributes have been replaced.
-    *   **`UiSettingsDemoActivity`**: Fully refactored. All `onClick` attributes have been replaced.
     *   **`CameraDemoActivity`**: Fully refactored. All `onClick` attributes have been replaced.
+    *   **`UiSettingsDemoActivity`**: Fully refactored. All `onClick` attributes have been replaced.
+    *   **`LiteDemoActivity`**: Fully refactored. All `onClick` attributes have been replaced.
     *   **`OptionsDemoActivity`**: Fixed a lint error that was blocking the build.
 
 ### Skipped Tasks
