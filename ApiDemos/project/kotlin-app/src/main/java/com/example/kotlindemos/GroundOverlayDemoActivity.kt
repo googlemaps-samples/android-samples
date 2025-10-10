@@ -37,19 +37,21 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
     private val images: MutableList<BitmapDescriptor> = ArrayList()
     private var groundOverlay: GroundOverlay? = null
     private var groundOverlayRotated: GroundOverlay? = null
-    private lateinit var transparencyBar: SeekBar
+    private lateinit var binding: com.example.common_ui.databinding.GroundOverlayDemoBinding
     private var currentEntry = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.ground_overlay_demo)
-        transparencyBar = findViewById(R.id.transparencySeekBar)
-        transparencyBar.max = TRANSPARENCY_MAX
-        transparencyBar.progress = 0
+        binding = com.example.common_ui.databinding.GroundOverlayDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.transparencySeekBar.max = TRANSPARENCY_MAX
+        binding.transparencySeekBar.progress = 0
+        binding.switchImage.setOnClickListener { switchImage() }
+        binding.toggleClickability.setOnClickListener { toggleClickability() }
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -74,7 +76,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
                 .image(images[1]).anchor(0f, 1f)
                 .position(NEAR_NEWARK, 4300f, 3025f)
                 .bearing(30f)
-                .clickable((findViewById<View>(R.id.toggleClickability) as CheckBox).isChecked)
+                .clickable(binding.toggleClickability.isChecked)
         )
 
         // Add a large overlay at Newark on top of the smaller overlay.
@@ -83,7 +85,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
                 .image(images[currentEntry]).anchor(0f, 1f)
                 .position(NEWARK, 8600f, 6500f)
         )
-        transparencyBar.setOnSeekBarChangeListener(this)
+        binding.transparencySeekBar.setOnSeekBarChangeListener(this)
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localised.
@@ -98,7 +100,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         groundOverlay?.transparency = progress.toFloat() / TRANSPARENCY_MAX.toFloat()
     }
 
-    fun switchImage(view: View?) {
+    private fun switchImage() {
         val overlay = groundOverlay ?: return
         currentEntry = (currentEntry + 1) % images.size
         overlay.setImage(images[currentEntry])
@@ -113,13 +115,8 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         overlayRotated.transparency = 0.5f - overlayRotated.transparency
     }
 
-    /**
-     * Toggles the clickability of the smaller, rotated overlay based on the state of the View that
-     * triggered this call.
-     * This callback is defined on the CheckBox in the layout for this Activity.
-     */
-    fun toggleClickability(view: View) {
-        groundOverlayRotated?.isClickable = (view as CheckBox).isChecked
+    private fun toggleClickability() {
+        groundOverlayRotated?.isClickable = binding.toggleClickability.isChecked
     }
 
     companion object {

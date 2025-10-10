@@ -41,7 +41,7 @@
             android:id="@+id/streetnames"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onStreetNamesToggled"
+
             android:checked="true"
             android:text="@string/streetnames" />
 
@@ -73,8 +73,6 @@
             android:id="@+id/outdoor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onOutdoorToggled"
-            android:checked="true"
             android:text="@string/outdoor_only" />
     </LinearLayout>
 

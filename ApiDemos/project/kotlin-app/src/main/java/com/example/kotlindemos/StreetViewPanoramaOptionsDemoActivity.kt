@@ -30,41 +30,40 @@ import com.google.android.gms.maps.model.StreetViewSource
  */
 class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
     private var streetViewPanorama: StreetViewPanorama? = null
-    private lateinit var streetNameCheckbox: CheckBox
-    private lateinit var navigationCheckbox: CheckBox
-    private lateinit var zoomCheckbox: CheckBox
-    private lateinit var panningCheckbox: CheckBox
-    private lateinit var outdoorCheckbox: CheckBox
+    private lateinit var binding: com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.street_view_panorama_options_demo)
-        streetNameCheckbox = findViewById(R.id.streetnames)
-        navigationCheckbox = findViewById(R.id.navigation)
-        zoomCheckbox = findViewById(R.id.zoom)
-        panningCheckbox = findViewById(R.id.panning)
-        outdoorCheckbox = findViewById(R.id.outdoor)
+        binding = com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.streetnames.setOnClickListener { onStreetNamesToggled() }
+        binding.navigation.setOnClickListener { onNavigationToggled() }
+        binding.zoom.setOnClickListener { onZoomToggled() }
+        binding.panning.setOnClickListener { onPanningToggled() }
+        binding.outdoor.setOnClickListener { onOutdoorToggled() }
+
         val streetViewPanoramaFragment =
             supportFragmentManager.findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment?
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama ->
             streetViewPanorama = panorama
-            panorama.isStreetNamesEnabled = streetNameCheckbox.isChecked
-            panorama.isUserNavigationEnabled = navigationCheckbox.isChecked
-            panorama.isZoomGesturesEnabled = zoomCheckbox.isChecked
-            panorama.isPanningGesturesEnabled = panningCheckbox.isChecked
+            panorama.isStreetNamesEnabled = binding.streetnames.isChecked
+            panorama.isUserNavigationEnabled = binding.navigation.isChecked
+            panorama.isZoomGesturesEnabled = binding.zoom.isChecked
+            panorama.isPanningGesturesEnabled = binding.panning.isChecked
 
             // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: setPosition()
         }
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     private fun setPosition() {
         streetViewPanorama?.setPosition(
             SAN_FRAN,
             RADIUS,
-            if (outdoorCheckbox.isChecked) StreetViewSource.OUTDOOR else StreetViewSource.DEFAULT
+            if (binding.outdoor.isChecked) StreetViewSource.OUTDOOR else StreetViewSource.DEFAULT
         )
     }
 
@@ -76,35 +75,35 @@ class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
         return true
     }
 
-    fun onStreetNamesToggled(view: View?) {
+    private fun onStreetNamesToggled() {
         if (!checkReady()) {
             return
         }
-        streetViewPanorama?.isStreetNamesEnabled = streetNameCheckbox.isChecked
+        streetViewPanorama?.isStreetNamesEnabled = binding.streetnames.isChecked
     }
 
-    fun onNavigationToggled(view: View?) {
+    private fun onNavigationToggled() {
         if (!checkReady()) {
             return
         }
-        streetViewPanorama?.isUserNavigationEnabled = navigationCheckbox.isChecked
+        streetViewPanorama?.isUserNavigationEnabled = binding.navigation.isChecked
     }
 
-    fun onZoomToggled(view: View?) {
+    private fun onZoomToggled() {
         if (!checkReady()) {
             return
         }
-        streetViewPanorama?.isZoomGesturesEnabled = zoomCheckbox.isChecked
+        streetViewPanorama?.isZoomGesturesEnabled = binding.zoom.isChecked
     }
 
-    fun onPanningToggled(view: View?) {
+    private fun onPanningToggled() {
         if (!checkReady()) {
             return
         }
-        streetViewPanorama?.isPanningGesturesEnabled = panningCheckbox.isChecked
+        streetViewPanorama?.isPanningGesturesEnabled = binding.panning.isChecked
     }
 
-    fun onOutdoorToggled(view: View?) {
+    private fun onOutdoorToggled() {
         if (!checkReady()) {
             return
         }

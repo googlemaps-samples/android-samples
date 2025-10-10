@@ -56,23 +56,26 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
 
     private GroundOverlay groundOverlayRotated;
 
-    private SeekBar transparencyBar;
+    private com.example.common_ui.databinding.GroundOverlayDemoBinding binding;
 
     private int currentEntry = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.ground_overlay_demo);
+        binding = com.example.common_ui.databinding.GroundOverlayDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        transparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar);
-        transparencyBar.setMax(TRANSPARENCY_MAX);
-        transparencyBar.setProgress(0);
+        binding.transparencySeekBar.setMax(TRANSPARENCY_MAX);
+        binding.transparencySeekBar.setProgress(0);
+
+        binding.switchImage.setOnClickListener(v -> switchImage());
+        binding.toggleClickability.setOnClickListener(v -> toggleClickability());
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -92,14 +95,14 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
                 .image(images.get(1)).anchor(0, 1)
                 .position(NEAR_NEWARK, 4300f, 3025f)
                 .bearing(30)
-                .clickable(((CheckBox) findViewById(com.example.common_ui.R.id.toggleClickability)).isChecked()));
+                .clickable(binding.toggleClickability.isChecked()));
 
         // Add a large overlay at Newark on top of the smaller overlay.
         groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
                 .image(images.get(currentEntry)).anchor(0, 1)
                 .position(NEWARK, 8600f, 6500f));
 
-        transparencyBar.setOnSeekBarChangeListener(this);
+        binding.transparencySeekBar.setOnSeekBarChangeListener(this);
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localised.
@@ -121,7 +124,7 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         }
     }
 
-    public void switchImage(View view) {
+    private void switchImage() {
         currentEntry = (currentEntry + 1) % images.size();
         groundOverlay.setImage(images.get(currentEntry));
     }
@@ -135,14 +138,9 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         groundOverlayRotated.setTransparency(0.5f - groundOverlayRotated.getTransparency());
     }
 
-    /**
-     * Toggles the clickability of the smaller, rotated overlay based on the state of the View that
-     * triggered this call.
-     * This callback is defined on the CheckBox in the layout for this Activity.
-     */
-    public void toggleClickability(View view) {
+    private void toggleClickability() {
         if (groundOverlayRotated != null) {
-            groundOverlayRotated.setClickable(((CheckBox) view).isChecked());
+            groundOverlayRotated.setClickable(binding.toggleClickability.isChecked());
         }
     }
 }

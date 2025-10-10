@@ -51,14 +51,14 @@ class UiSettingsDemoActivity :
 
         applyInsets(binding.mapContainer)
 
-        binding.zoomButtonsToggle.setOnClickListener { setZoomButtonsEnabled(it) }
-        binding.compassToggle.setOnClickListener { setCompassEnabled(it) }
-        binding.mylocationbuttonToggle.setOnClickListener { setMyLocationButtonEnabled(it) }
-        binding.mylocationlayerToggle.setOnClickListener { setMyLocationLayerEnabled(it) }
-        binding.scrollToggle.setOnClickListener { setScrollGesturesEnabled(it) }
-        binding.zoomGesturesToggle.setOnClickListener { setZoomGesturesEnabled(it) }
-        binding.tiltToggle.setOnClickListener { setTiltGesturesEnabled(it) }
-        binding.rotateToggle.setOnClickListener { setRotateGesturesEnabled(it) }
+        binding.zoomButtonsToggle.setOnClickListener { setZoomButtonsEnabled() }
+        binding.compassToggle.setOnClickListener { setCompassEnabled() }
+        binding.mylocationbuttonToggle.setOnClickListener { setMyLocationButtonEnabled() }
+        binding.mylocationlayerToggle.setOnClickListener { setMyLocationLayerEnabled() }
+        binding.scrollToggle.setOnClickListener { setScrollGesturesEnabled() }
+        binding.zoomGesturesToggle.setOnClickListener { setZoomGesturesEnabled() }
+        binding.tiltToggle.setOnClickListener { setTiltGesturesEnabled() }
+        binding.rotateToggle.setOnClickListener { setRotateGesturesEnabled() }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -94,21 +94,21 @@ class UiSettingsDemoActivity :
         return true
     }
 
-    fun setZoomButtonsEnabled(v: View) {
+    private fun setZoomButtonsEnabled() {
         if (!checkReady()) {
             return
         }
-        uiSettings.isZoomControlsEnabled = (v as CheckBox).isChecked
+        uiSettings.isZoomControlsEnabled = binding.zoomButtonsToggle.isChecked
     }
 
-    fun setCompassEnabled(v: View) {
+    private fun setCompassEnabled() {
         if (!checkReady()) {
             return
         }
-        uiSettings.isCompassEnabled = (v as CheckBox).isChecked
+        uiSettings.isCompassEnabled = binding.compassToggle.isChecked
     }
 
-    fun setMyLocationButtonEnabled(v: View) {
+    private fun setMyLocationButtonEnabled() {
         if (!checkReady()) {
             return
         }
@@ -116,7 +116,7 @@ class UiSettingsDemoActivity :
             == PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
-            uiSettings.isMyLocationButtonEnabled = (v as CheckBox).isChecked
+            uiSettings.isMyLocationButtonEnabled = binding.mylocationbuttonToggle.isChecked
         } else {
             // Uncheck the box and request missing location permission.
             binding.mylocationbuttonToggle.isChecked = false
@@ -126,7 +126,7 @@ class UiSettingsDemoActivity :
     }
 
     @SuppressLint("MissingPermission")
-    fun setMyLocationLayerEnabled(v: View) {
+    private fun setMyLocationLayerEnabled() {
         if (!checkReady()) {
             return
         }
@@ -134,7 +134,7 @@ class UiSettingsDemoActivity :
             == PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
-            map.isMyLocationEnabled = (v as CheckBox).isChecked
+            map.isMyLocationEnabled = binding.mylocationlayerToggle.isChecked
         } else {
             // Uncheck the box and request missing location permission.
             binding.mylocationlayerToggle.isChecked = false
@@ -143,31 +143,31 @@ class UiSettingsDemoActivity :
         }
     }
 
-    fun setScrollGesturesEnabled(v: View) {
+    private fun setScrollGesturesEnabled() {
         if (!checkReady()) {
             return
         }
-        uiSettings.isScrollGesturesEnabled = (v as CheckBox).isChecked
+        uiSettings.isScrollGesturesEnabled = binding.scrollToggle.isChecked
     }
 
-    fun setZoomGesturesEnabled(v: View) {
+    private fun setZoomGesturesEnabled() {
         if (!checkReady()) {
             return
         }
-        uiSettings.isZoomGesturesEnabled = (v as CheckBox).isChecked
+        uiSettings.isZoomGesturesEnabled = binding.zoomGesturesToggle.isChecked
     }
 
-    fun setTiltGesturesEnabled(v: View) {
+    private fun setTiltGesturesEnabled() {
         if (!checkReady()) {
             return
         }
-        uiSettings.isTiltGesturesEnabled = (v as CheckBox).isChecked
+        uiSettings.isTiltGesturesEnabled = binding.tiltToggle.isChecked
     }
 
-    fun setRotateGesturesEnabled(v: View) {
+    private fun setRotateGesturesEnabled() {
         if (!checkReady()) {
             return
         }
-        uiSettings.isRotateGesturesEnabled = (v as CheckBox).isChecked
+        uiSettings.isRotateGesturesEnabled = binding.rotateToggle.isChecked
     }
 }

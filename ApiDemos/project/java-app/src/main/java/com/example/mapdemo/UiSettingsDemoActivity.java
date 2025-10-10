@@ -43,10 +43,6 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
 
     private UiSettings mUiSettings;
 
-    private CheckBox mMyLocationButtonCheckbox;
-
-    private CheckBox mMyLocationLayerCheckbox;
-
     private static final int MY_LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     private static final int LOCATION_LAYER_PERMISSION_REQUEST_CODE = 2;
@@ -65,30 +61,20 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         binding = UiSettingsDemoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        mMyLocationButtonCheckbox = binding.mylocationbuttonToggle;
-        mMyLocationLayerCheckbox = binding.mylocationlayerToggle;
-
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
         applyInsets(binding.mapContainer);
 
-        binding.zoomButtonsToggle.setOnClickListener(this::setZoomButtonsEnabled);
-        binding.compassToggle.setOnClickListener(this::setCompassEnabled);
-        binding.mylocationbuttonToggle.setOnClickListener(this::setMyLocationButtonEnabled);
-        binding.mylocationlayerToggle.setOnClickListener(this::setMyLocationLayerEnabled);
-        binding.scrollToggle.setOnClickListener(this::setScrollGesturesEnabled);
-        binding.zoomGesturesToggle.setOnClickListener(this::setZoomGesturesEnabled);
-        binding.tiltToggle.setOnClickListener(this::setTiltGesturesEnabled);
-        binding.rotateToggle.setOnClickListener(this::setRotateGesturesEnabled);
-    }
-
-    /**
-     * Returns whether the checkbox with the given id is checked.
-     */
-    private boolean isChecked(int id) {
-        return ((CheckBox) findViewById(id)).isChecked();
+        binding.zoomButtonsToggle.setOnClickListener(v -> setZoomButtonsEnabled());
+        binding.compassToggle.setOnClickListener(v -> setCompassEnabled());
+        binding.mylocationbuttonToggle.setOnClickListener(v -> setMyLocationButtonEnabled());
+        binding.mylocationlayerToggle.setOnClickListener(v -> setMyLocationLayerEnabled());
+        binding.scrollToggle.setOnClickListener(v -> setScrollGesturesEnabled());
+        binding.zoomGesturesToggle.setOnClickListener(v -> setZoomGesturesEnabled());
+        binding.tiltToggle.setOnClickListener(v -> setTiltGesturesEnabled());
+        binding.rotateToggle.setOnClickListener(v -> setRotateGesturesEnabled());
     }
 
     @SuppressLint("MissingPermission")
@@ -99,13 +85,13 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         mUiSettings = mMap.getUiSettings();
 
         // Keep the UI Settings state in sync with the checkboxes.
-        mUiSettings.setZoomControlsEnabled(isChecked(com.example.common_ui.R.id.zoom_buttons_toggle));
-        mUiSettings.setCompassEnabled(isChecked(com.example.common_ui.R.id.compass_toggle));
-        mUiSettings.setMyLocationButtonEnabled(isChecked(com.example.common_ui.R.id.mylocationbutton_toggle));
-        mUiSettings.setScrollGesturesEnabled(isChecked(com.example.common_ui.R.id.scroll_toggle));
-        mUiSettings.setZoomGesturesEnabled(isChecked(com.example.common_ui.R.id.zoom_gestures_toggle));
-        mUiSettings.setTiltGesturesEnabled(isChecked(com.example.common_ui.R.id.tilt_toggle));
-        mUiSettings.setRotateGesturesEnabled(isChecked(com.example.common_ui.R.id.rotate_toggle));
+        mUiSettings.setZoomControlsEnabled(binding.zoomButtonsToggle.isChecked());
+        mUiSettings.setCompassEnabled(binding.compassToggle.isChecked());
+        mUiSettings.setMyLocationButtonEnabled(binding.mylocationbuttonToggle.isChecked());
+        mUiSettings.setScrollGesturesEnabled(binding.scrollToggle.isChecked());
+        mUiSettings.setZoomGesturesEnabled(binding.zoomGesturesToggle.isChecked());
+        mUiSettings.setTiltGesturesEnabled(binding.tiltToggle.isChecked());
+        mUiSettings.setRotateGesturesEnabled(binding.rotateToggle.isChecked());
 
         if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
@@ -113,7 +99,7 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
             != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mMap.setMyLocationEnabled(isChecked(com.example.common_ui.R.id.mylocationlayer_toggle));
+        mMap.setMyLocationEnabled(binding.mylocationlayerToggle.isChecked());
     }
 
     /**
@@ -128,25 +114,25 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         return true;
     }
 
-    public void setZoomButtonsEnabled(View v) {
+    private void setZoomButtonsEnabled() {
         if (!checkReady()) {
             return;
         }
         // Enables/disables the zoom controls (+/- buttons in the bottom-right of the map for LTR
         // locale or bottom-left for RTL locale).
-        mUiSettings.setZoomControlsEnabled(((CheckBox) v).isChecked());
+        mUiSettings.setZoomControlsEnabled(binding.zoomButtonsToggle.isChecked());
     }
 
-    public void setCompassEnabled(View v) {
+    private void setCompassEnabled() {
         if (!checkReady()) {
             return;
         }
         // Enables/disables the compass (icon in the top-left for LTR locale or top-right for RTL
         // locale that indicates the orientation of the map).
-        mUiSettings.setCompassEnabled(((CheckBox) v).isChecked());
+        mUiSettings.setCompassEnabled(binding.compassToggle.isChecked());
     }
 
-    public void setMyLocationButtonEnabled(View v) {
+    private void setMyLocationButtonEnabled() {
         if (!checkReady()) {
             return;
         }
@@ -158,17 +144,17 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
             == PackageManager.PERMISSION_GRANTED
             || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
-            mUiSettings.setMyLocationButtonEnabled(mMyLocationButtonCheckbox.isChecked());
+            mUiSettings.setMyLocationButtonEnabled(binding.mylocationbuttonToggle.isChecked());
         } else {
             // Uncheck the box and request missing location permission.
-            mMyLocationButtonCheckbox.setChecked(false);
+            binding.mylocationbuttonToggle.setChecked(false);
             PermissionUtils
                 .requestLocationPermissions(this, MY_LOCATION_PERMISSION_REQUEST_CODE, false);
         }
     }
 
     @SuppressLint("MissingPermission")
-    public void setMyLocationLayerEnabled(View v) {
+    private void setMyLocationLayerEnabled() {
         if (!checkReady()) {
             return;
         }
@@ -179,45 +165,45 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
             == PackageManager.PERMISSION_GRANTED ||
             ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(mMyLocationLayerCheckbox.isChecked());
+            mMap.setMyLocationEnabled(binding.mylocationlayerToggle.isChecked());
         } else {
             // Uncheck the box and request missing location permission.
-            mMyLocationLayerCheckbox.setChecked(false);
+            binding.mylocationlayerToggle.setChecked(false);
             PermissionUtils
                 .requestLocationPermissions(this, LOCATION_LAYER_PERMISSION_REQUEST_CODE, false);
         }
     }
 
-    public void setScrollGesturesEnabled(View v) {
+    private void setScrollGesturesEnabled() {
         if (!checkReady()) {
             return;
         }
         // Enables/disables scroll gestures (i.e. panning the map).
-        mUiSettings.setScrollGesturesEnabled(((CheckBox) v).isChecked());
+        mUiSettings.setScrollGesturesEnabled(binding.scrollToggle.isChecked());
     }
 
-    public void setZoomGesturesEnabled(View v) {
+    private void setZoomGesturesEnabled() {
         if (!checkReady()) {
             return;
         }
         // Enables/disables zoom gestures (i.e., double tap, pinch & stretch).
-        mUiSettings.setZoomGesturesEnabled(((CheckBox) v).isChecked());
+        mUiSettings.setZoomGesturesEnabled(binding.zoomGesturesToggle.isChecked());
     }
 
-    public void setTiltGesturesEnabled(View v) {
+    private void setTiltGesturesEnabled() {
         if (!checkReady()) {
             return;
         }
         // Enables/disables tilt gestures.
-        mUiSettings.setTiltGesturesEnabled(((CheckBox) v).isChecked());
+        mUiSettings.setTiltGesturesEnabled(binding.tiltToggle.isChecked());
     }
 
-    public void setRotateGesturesEnabled(View v) {
+    private void setRotateGesturesEnabled() {
         if (!checkReady()) {
             return;
         }
         // Enables/disables rotate gestures.
-        mUiSettings.setRotateGesturesEnabled(((CheckBox) v).isChecked());
+        mUiSettings.setRotateGesturesEnabled(binding.rotateToggle.isChecked());
     }
 
     @SuppressLint("MissingPermission")
@@ -232,7 +218,7 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
                     permission.ACCESS_COARSE_LOCATION)
             ) {
                 mUiSettings.setMyLocationButtonEnabled(true);
-                mMyLocationButtonCheckbox.setChecked(true);
+                binding.mylocationbuttonToggle.setChecked(true);
             } else {
                 mLocationPermissionDenied = true;
             }
@@ -245,7 +231,7 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
                     permission.ACCESS_COARSE_LOCATION)
             ) {
                 mMap.setMyLocationEnabled(true);
-                mMyLocationLayerCheckbox.setChecked(true);
+                binding.mylocationlayerToggle.setChecked(true);
             } else {
                 mLocationPermissionDenied = true;
             }

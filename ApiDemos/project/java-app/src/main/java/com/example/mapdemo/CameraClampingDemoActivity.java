@@ -65,23 +65,28 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
      */
     private float mMaxZoom;
 
-    private TextView mCameraTextView;
+    private com.example.common_ui.databinding.CameraClampingDemoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(com.example.common_ui.R.layout.camera_clamping_demo);
+        binding = com.example.common_ui.databinding.CameraClampingDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         mMap = null;
         resetMinMaxZoom();
 
-        mCameraTextView = findViewById(com.example.common_ui.R.id.camera_text);
+        binding.clampLatlngAdelaide.setOnClickListener(v -> onClampToAdelaide());
+        binding.clampLatlngPacific.setOnClickListener(v -> onClampToPacific());
+        binding.clampLatlngReset.setOnClickListener(v -> onLatLngClampReset());
+        binding.clampMinZoom.setOnClickListener(v -> onSetMinZoomClamp());
+        binding.clampMaxZoom.setOnClickListener(v -> onSetMaxZoomClamp());
+        binding.clampZoomReset.setOnClickListener(v -> onMinMaxZoomClampReset());
 
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -97,7 +102,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
 
     @Override
     public void onCameraIdle() {
-        mCameraTextView.setText(mMap.getCameraPosition().toString());
+        binding.cameraText.setText(mMap.getCameraPosition().toString());
     }
 
     /**
@@ -121,11 +126,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         mMaxZoom = DEFAULT_MAX_ZOOM;
     }
 
-    /**
-     * Click handler for clamping to Adelaide button.
-     * @param view
-     */
-    public void onClampToAdelaide(View view) {
+    private void onClampToAdelaide() {
         if (!checkReady()) {
             return;
         }
@@ -133,11 +134,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(ADELAIDE_CAMERA));
     }
 
-    /**
-     * Click handler for clamping to Pacific button.
-     * @param view
-     */
-    public void onClampToPacific(View view) {
+    private void onClampToPacific() {
         if (!checkReady()) {
             return;
         }
@@ -145,7 +142,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(PACIFIC_CAMERA));
     }
 
-    public void onLatLngClampReset(View view) {
+    private void onLatLngClampReset() {
         if (!checkReady()) {
             return;
         }
@@ -154,7 +151,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         toast("LatLngBounds clamp reset.");
     }
 
-    public void onSetMinZoomClamp(View view) {
+    private void onSetMinZoomClamp() {
         if (!checkReady()) {
             return;
         }
@@ -164,7 +161,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         toast("Min zoom preference set to: " + mMinZoom);
     }
 
-    public void onSetMaxZoomClamp(View view) {
+    private void onSetMaxZoomClamp() {
         if (!checkReady()) {
             return;
         }
@@ -174,7 +171,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         toast("Max zoom preference set to: " + mMaxZoom);
     }
 
-    public void onMinMaxZoomClampReset(View view) {
+    private void onMinMaxZoomClampReset() {
         if (!checkReady()) {
             return;
         }

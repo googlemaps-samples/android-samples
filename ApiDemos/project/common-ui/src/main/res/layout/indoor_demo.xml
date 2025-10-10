@@ -66,7 +66,7 @@
                     android:id="@+id/focused_bulding_info_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="onFocusedBuildingInfo"
+
                     android:text="@string/focused_building_info" />
 
                 <com.google.android.material.button.MaterialButton

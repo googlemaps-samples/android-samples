@@ -54,11 +54,7 @@ class LayersDemoActivity :
 
     private lateinit var map: GoogleMap
 
-    private lateinit var trafficCheckbox: CheckBox
-    private lateinit var myLocationCheckbox: CheckBox
-    private lateinit var buildingsCheckbox: CheckBox
-    private lateinit var indoorCheckbox: CheckBox
-    private lateinit var spinner: Spinner
+    private lateinit var binding: com.example.common_ui.databinding.LayersDemoBinding
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -68,9 +64,10 @@ class LayersDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layers_demo)
+        binding = com.example.common_ui.databinding.LayersDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        spinner = findViewById<Spinner>(R.id.layers_spinner).apply {
+        binding.layersSpinner.apply {
             adapter = ArrayAdapter.createFromResource(this@LayersDemoActivity,
                     R.array.layers_array, android.R.layout.simple_spinner_item).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -80,14 +77,14 @@ class LayersDemoActivity :
             onItemSelectedListener = this@LayersDemoActivity
         }
 
-        myLocationCheckbox = findViewById(R.id.my_location)
-        buildingsCheckbox = findViewById(R.id.buildings)
-        indoorCheckbox = findViewById(R.id.indoor)
-        trafficCheckbox = findViewById(R.id.traffic)
+        binding.traffic.setOnClickListener { onTrafficToggled() }
+        binding.myLocation.setOnClickListener { onMyLocationToggled() }
+        binding.buildings.setOnClickListener { onBuildingsToggled() }
+        binding.indoor.setOnClickListener { onIndoorToggled() }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     /**
@@ -113,37 +110,14 @@ class LayersDemoActivity :
 
         // check the state of all checkboxes and update the map accordingly
         with(map) {
-            isTrafficEnabled = trafficCheckbox.isChecked
-            isBuildingsEnabled = buildingsCheckbox.isChecked
-            isIndoorEnabled = indoorCheckbox.isChecked
+            isTrafficEnabled = binding.traffic.isChecked
+            isBuildingsEnabled = binding.buildings.isChecked
+            isIndoorEnabled = binding.indoor.isChecked
         }
 
         // Must deal with the location checkbox separately as must check that
         // location permission have been granted before enabling the 'My Location' layer.
-        if (myLocationCheckbox.isChecked) enableMyLocation()
-
-
-        // attach a listener to each checkbox
-        trafficCheckbox.setOnClickListener {
-            map.isTrafficEnabled = trafficCheckbox.isChecked
-        }
-
-        buildingsCheckbox.setOnClickListener {
-            map.isBuildingsEnabled = buildingsCheckbox.isChecked
-        }
-
-        indoorCheckbox.setOnClickListener {
-            map.isIndoorEnabled = indoorCheckbox.isChecked
-        }
-
-        // if this box is checked, must check for permission before enabling the My Location layer
-        myLocationCheckbox.setOnClickListener {
-            if (!myLocationCheckbox.isChecked) {
-                map.isMyLocationEnabled = false
-            } else {
-                enableMyLocation()
-            }
-        }
+        if (binding.myLocation.isChecked) enableMyLocation()
     }
 
     @SuppressLint("MissingPermission")
@@ -173,7 +147,7 @@ class LayersDemoActivity :
         // point map may not be ready yet.
         if (!::map.isInitialized) return
 
-        map.mapType = when (spinner.selectedItem) {
+        map.mapType = when (binding.layersSpinner.selectedItem) {
             getString(R.string.normal) -> MAP_TYPE_NORMAL
             getString(R.string.hybrid) -> MAP_TYPE_HYBRID
             getString(R.string.satellite) -> MAP_TYPE_SATELLITE
@@ -181,7 +155,7 @@ class LayersDemoActivity :
             getString(R.string.none_map) -> MAP_TYPE_NONE
             else -> {
                 map.mapType // do not change map type
-                Log.e(TAG, "Error setting layer with name ${spinner.selectedItem}")
+                Log.e(TAG, "Error setting layer with name ${binding.layersSpinner.selectedItem}")
             }
         }
     }
@@ -199,7 +173,7 @@ class LayersDemoActivity :
     override fun onPermissionsDenied(requestCode: Int, list: List<String>) {
         // Un-check the box until the layer has been enabled
         // and show dialog box with permission rationale.
-        myLocationCheckbox.isChecked = false
+        binding.myLocation.isChecked = false
         showPermissionDeniedDialog = true
     }
 
@@ -218,4 +192,23 @@ class LayersDemoActivity :
         // Do nothing.
     }
 
+    private fun onTrafficToggled() {
+        map.isTrafficEnabled = binding.traffic.isChecked
+    }
+
+    private fun onMyLocationToggled() {
+        if (!binding.myLocation.isChecked) {
+            map.isMyLocationEnabled = false
+        } else {
+            enableMyLocation()
+        }
+    }
+
+    private fun onBuildingsToggled() {
+        map.isBuildingsEnabled = binding.buildings.isChecked
+    }
+
+    private fun onIndoorToggled() {
+        map.isIndoorEnabled = binding.indoor.isChecked
+    }
 }
