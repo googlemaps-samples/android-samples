@@ -68,6 +68,7 @@ android {
     }
 
     lint {
+        disable += setOf("MissingInflatedId")
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 }
