@@ -27,6 +27,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.AdvancedMarkerOptions;
@@ -54,15 +55,58 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
 
     private static final String TAG = AdvancedMarkersDemoActivity.class.getName();
 
+    /**
+     * This method is called when the activity is first created.
+     *
+     * It sets up the activity's layout and then initializes the map.
+     *
+     * The key logic here is to check if the developer has provided a Map ID in the
+     * `strings.xml` file.
+     *
+     * If the `R.string.map_id` value is not the default "DEMO_MAP_ID", it means a
+     * custom Map ID has been provided. In this case, we can rely on the simpler setup
+     * where the `SupportMapFragment` is inflated directly from the XML layout, and it
+     * will automatically use the Map ID from the string resource.
+     *
+     * However, if the `R.string.map_id` is still the default value, we fall back to a
+     * programmatic setup. This involves:
+     * 1. Retrieving the Map ID from the `secrets.properties` file, which is managed by the
+     *    `ApiDemoApplication` class.
+     * 2. Creating a `GoogleMapOptions` object.
+     * 3. Explicitly setting the retrieved `mapId` on the `GoogleMapOptions`. This step is
+     *    **critical** because Advanced Markers will not work without a valid Map ID.
+     * 4. Creating a new `SupportMapFragment` instance with these options and replacing the
+     *    placeholder fragment in the layout.
+     *
+     * This dual approach ensures that the demo can run seamlessly while also providing a
+     * clear path for developers to use their own Map IDs, which is a requirement for using
+     * Advanced Markers.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.advanced_markers_demo);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
-        if (mapFragment != null) {
+        if (!getString(com.example.common_ui.R.string.map_id).equals("DEMO_MAP_ID")) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+            if (mapFragment != null) {
+                mapFragment.getMapAsync(this);
+            }
+        } else {
+            String mapId = ((ApiDemoApplication) getApplication()).getMapId();
+            if (mapId == null) {
+                finish();
+                return;
+            }
+
+            GoogleMapOptions mapOptions = new GoogleMapOptions().mapId(mapId);
+            SupportMapFragment mapFragment = SupportMapFragment.newInstance(mapOptions);
+            getSupportFragmentManager().beginTransaction()
+                .replace(com.example.common_ui.R.id.map, mapFragment)
+                .commit();
             mapFragment.getMapAsync(this);
         }
+
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
