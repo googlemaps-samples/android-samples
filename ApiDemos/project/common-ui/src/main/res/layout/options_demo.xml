@@ -14,22 +14,28 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<androidx.fragment.app.FragmentContainerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/map"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/map_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    class="com.google.android.gms.maps.SupportMapFragment"
-    map:cameraBearing="112.5"
-    map:cameraTargetLat="-33.796923"
-    map:cameraTargetLng="150.922433"
-    map:cameraTilt="30"
-    map:cameraZoom="13"
-    map:mapType="normal"
-    map:uiCompass="false"
-    map:uiRotateGestures="true"
-    map:uiScrollGestures="false"
-    map:uiTiltGestures="true"
-    map:uiZoomControls="false"
-    map:uiZoomGestures="true" />
+    android:layout_height="match_parent">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        app:cameraBearing="112.5"
+        app:cameraTargetLat="-33.796923"
+        app:cameraTargetLng="150.922433"
+        app:cameraTilt="30"
+        app:cameraZoom="13"
+        app:mapType="normal"
+        app:uiCompass="false"
+        app:uiRotateGestures="true"
+        app:uiScrollGestures="false"
+        app:uiTiltGestures="true"
+        app:uiZoomControls="false"
+        app:uiZoomGestures="true" />
+</androidx.constraintlayout.widget.ConstraintLayout>

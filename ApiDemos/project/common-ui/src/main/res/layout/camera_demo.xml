@@ -54,7 +54,6 @@
                 android:id="@+id/stop_animation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onStopAnimation"
                 android:text="@string/stop_animation" />
 
             <ToggleButton
@@ -62,7 +61,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:onClick="onToggleAnimate"
                 android:textOn="@string/animate"
                 android:textOff="@string/animate" />
         </LinearLayout>
@@ -78,7 +76,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onScrollLeft"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="@string/left_arrow" />
@@ -88,7 +85,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onScrollUp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@id/scroll_left"
                 android:text="@string/up_arrow" />
@@ -98,7 +94,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onScrollDown"
                 android:layout_below="@id/scroll_up"
                 android:layout_toRightOf="@id/scroll_left"
                 android:text="@string/down_arrow" />
@@ -108,7 +103,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onScrollRight"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/scroll_down"
                 android:text="@string/right_arrow" />
@@ -125,7 +119,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onZoomIn"
                 android:text="@string/zoom_in" />
 
             <com.google.android.material.button.MaterialButton
@@ -133,7 +126,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onZoomOut"
                 android:text="@string/zoom_out" />
         </LinearLayout>
 
@@ -148,16 +140,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:text="@string/tilt_more"
-                android:onClick="onTiltMore" />
+                android:text="@string/tilt_more" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/tilt_less"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:text="@string/tilt_less"
-                android:onClick="onTiltLess" />
+                android:text="@string/tilt_less" />
         </LinearLayout>
     </LinearLayout>
 
@@ -174,7 +164,6 @@
             android:id="@+id/duration_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onToggleCustomDuration"
             android:text="@string/duration" />
 
         <SeekBar
@@ -198,7 +187,6 @@
             android:id="@+id/sydney"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="onGoToSydney"
             android:layout_weight="0.5"
             android:text="@string/go_to_sydney" />
 
@@ -206,7 +194,6 @@
             android:id="@+id/bondi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="onGoToBondi"
             android:layout_weight="0.5"
             android:text="@string/go_to_bondi" />
     </LinearLayout>

@@ -16,212 +16,158 @@
 
 package com.example.kotlindemos
 
+
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
-import com.example.common_ui.R // Ensure correct R import
-
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.example.common_ui.R
+import com.example.common_ui.databinding.UiSettingsDemoBinding
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
-
-const val REQUEST_CODE_LOCATION = 123
+import com.google.android.gms.maps.UiSettings
 
 class UiSettingsDemoActivity :
     SamplesBaseActivity(),
-    OnMapReadyCallback,
-    EasyPermissions.PermissionCallbacks { // Added EasyPermissions.PermissionCallbacks
+    OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-
-    // Checkboxes - Find them once in onCreate for efficiency
-    private lateinit var zoomButtonCheckbox: CheckBox
-    private lateinit var compassCheckbox: CheckBox
-    private lateinit var myLocationButtonCheckbox: CheckBox
-    private lateinit var myLocationLayerCheckbox: CheckBox
-    private lateinit var scrollCheckbox: CheckBox
-    private lateinit var zoomGesturesCheckbox: CheckBox
-    private lateinit var tiltCheckbox: CheckBox
-    private lateinit var rotateCheckbox: CheckBox
+    private lateinit var uiSettings: UiSettings
+    private lateinit var binding: UiSettingsDemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.ui_settings_demo)
+        binding = UiSettingsDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Find checkboxes
-        zoomButtonCheckbox = findViewById(R.id.zoom_buttons_toggle)
-        compassCheckbox = findViewById(R.id.compass_toggle)
-        myLocationButtonCheckbox = findViewById(R.id.mylocationbutton_toggle)
-        myLocationLayerCheckbox = findViewById(R.id.mylocationlayer_toggle)
-        scrollCheckbox = findViewById(R.id.scroll_toggle)
-        zoomGesturesCheckbox = findViewById(R.id.zoom_gestures_toggle)
-        tiltCheckbox = findViewById(R.id.tilt_toggle)
-        rotateCheckbox = findViewById(R.id.rotate_toggle)
-
-        // Programmatic Map Fragment Creation (assuming ApiDemoApplication provides mapId)
-        val mapId = (application as? ApiDemoApplication)?.mapId // Safely get mapId
-        // Use default map options if mapId isn't available (or handle error)
-        val mapOptions = GoogleMapOptions().apply {
-            mapId?.let { mapId(it) } // Set mapId if available
-        }
-
-        val mapFragment = SupportMapFragment.newInstance(mapOptions)
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.map_fragment_container, mapFragment)
-        }.commit()
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
+
+        binding.zoomButtonsToggle.setOnClickListener { setZoomButtonsEnabled(it) }
+        binding.compassToggle.setOnClickListener { setCompassEnabled(it) }
+        binding.mylocationbuttonToggle.setOnClickListener { setMyLocationButtonEnabled(it) }
+        binding.mylocationlayerToggle.setOnClickListener { setMyLocationLayerEnabled(it) }
+        binding.scrollToggle.setOnClickListener { setScrollGesturesEnabled(it) }
+        binding.zoomGesturesToggle.setOnClickListener { setZoomGesturesEnabled(it) }
+        binding.tiltToggle.setOnClickListener { setTiltGesturesEnabled(it) }
+        binding.rotateToggle.setOnClickListener { setRotateGesturesEnabled(it) }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap // Assign the map instance
+        map = googleMap
+        uiSettings = map.uiSettings
 
-        // Set initial UI settings based on checkbox states BEFORE setting listeners
-        updateUiSettingsFromCheckboxes()
-
-        // Attempt to enable MyLocation layer immediately if checkbox is initially checked
-        // AND permission is already granted. If permission needed, request happens here.
-        if (myLocationLayerCheckbox.isChecked) {
-            enableMyLocation()
-        }
-
-        // Set listeners AFTER initial setup
-        setupCheckboxListeners()
-    }
-
-    /** Updates the GoogleMap UI settings based on the current state of checkboxes. */
-    @SuppressLint("MissingPermission") // Permissions checked before enabling myLocationLayer
-    private fun updateUiSettingsFromCheckboxes() {
-        if (!::map.isInitialized) return // Ensure map is ready
-
-        with(map.uiSettings) {
-            isZoomControlsEnabled = zoomButtonCheckbox.isChecked
-            isCompassEnabled = compassCheckbox.isChecked
-            isMyLocationButtonEnabled = myLocationButtonCheckbox.isChecked
-            // isIndoorLevelPickerEnabled = false // Or handle based on context if needed
-            isScrollGesturesEnabled = scrollCheckbox.isChecked
-            isZoomGesturesEnabled = zoomGesturesCheckbox.isChecked
-            isTiltGesturesEnabled = tiltCheckbox.isChecked
-            isRotateGesturesEnabled = rotateCheckbox.isChecked
-        }
-        // My Location Layer state is handled separately due to permissions
-        // See enableMyLocation() and setMyLocationLayerEnabled()
-    }
-
-
-    /** Sets up onClickListeners for all the UI settings checkboxes. */
-    private fun setupCheckboxListeners() {
-        if (!::map.isInitialized) return // Ensure map is ready
-
-        zoomButtonCheckbox.setOnClickListener { it: CheckBox -> map.uiSettings.isZoomControlsEnabled = it.isChecked }
-        compassCheckbox.setOnClickListener { it: CheckBox ->  map.uiSettings.isCompassEnabled = it.isChecked }
-        myLocationButtonCheckbox.setOnClickListener { it: CheckBox ->  map.uiSettings.isMyLocationButtonEnabled = it.isChecked }
-        scrollCheckbox.setOnClickListener { it: CheckBox ->  map.uiSettings.isScrollGesturesEnabled = it.isChecked }
-        zoomGesturesCheckbox.setOnClickListener { it: CheckBox ->  map.uiSettings.isZoomGesturesEnabled = it.isChecked }
-        tiltCheckbox.setOnClickListener { it: CheckBox ->  map.uiSettings.isTiltGesturesEnabled = it.isChecked }
-        rotateCheckbox.setOnClickListener { it: CheckBox ->  map.uiSettings.isRotateGesturesEnabled = it.isChecked }
-
-        // Special handling for My Location Layer due to permissions
-        myLocationLayerCheckbox.setOnClickListener { view ->
-            setMyLocationLayerEnabled((view as CheckBox).isChecked)
-        }
-    }
-
-    /** Toggles the My Location layer based on checkbox state and permissions. */
-    @SuppressLint("MissingPermission") // Permissions are checked/requested by enableMyLocation()
-    private fun setMyLocationLayerEnabled(enabled: Boolean) {
-        if (!::map.isInitialized) return
-
-        if (enabled) {
-            // Attempt to enable the layer, requesting permission if necessary.
-            enableMyLocation()
-        } else {
-            // Disable the layer. No permission needed for this.
-            map.isMyLocationEnabled = false
-        }
-    }
-
-    /**
-     * enableMyLocation() checks for permission and enables the My Location layer
-     * *only* if permission is granted and the checkbox is checked.
-     * If permission is not granted, it requests it.
-     */
-    @SuppressLint("MissingPermission")
-    @AfterPermissionGranted(REQUEST_CODE_LOCATION)
-    private fun enableMyLocation() {
-        if (hasLocationPermission()) {
-            // Permission is granted, enable layer only if the checkbox is checked.
-            if (::map.isInitialized) { // Check map again just in case
-                map.isMyLocationEnabled = myLocationLayerCheckbox.isChecked
-            }
-        } else {
-            // Permission is not granted, request it.
-            EasyPermissions.requestPermissions(
+        // Keep the UI Settings state in sync with the checkboxes.
+        uiSettings.isZoomControlsEnabled = binding.zoomButtonsToggle.isChecked
+        uiSettings.isCompassEnabled = binding.compassToggle.isChecked
+        uiSettings.isMyLocationButtonEnabled = binding.mylocationbuttonToggle.isChecked
+        if (ActivityCompat.checkSelfPermission(
                 this,
-                "Location permission is required for this demo",
-                REQUEST_CODE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            )
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
         }
+        map.isMyLocationEnabled = binding.mylocationlayerToggle.isChecked
+        uiSettings.isScrollGesturesEnabled = binding.scrollToggle.isChecked
+        uiSettings.isZoomGesturesEnabled = binding.zoomGesturesToggle.isChecked
+        uiSettings.isTiltGesturesEnabled = binding.tiltToggle.isChecked
+        uiSettings.isRotateGesturesEnabled = binding.rotateToggle.isChecked
     }
 
-    /** Returns whether the checkbox with the given id is checked (used only for initial setup now) */
-    // private fun isChecked(id: Int) = findViewById<CheckBox>(id)?.isChecked ?: false
-    // Can be removed or kept if needed elsewhere. Using direct member variables now.
-
-
-    // --- EasyPermissions Methods ---
-
-    private fun hasLocationPermission(): Boolean {
-        return EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION)
+    private fun checkReady(): Boolean {
+        if (!::map.isInitialized) {
+            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        // Forward result to EasyPermissions
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    fun setZoomButtonsEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        uiSettings.isZoomControlsEnabled = (v as CheckBox).isChecked
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        if (requestCode == REQUEST_CODE_LOCATION) {
-            // Permission was granted, try enabling the layer again
-            // The @AfterPermissionGranted method `enableMyLocation` will be called automatically by EasyPermissions.
-            // Log.d("UiSettingsDemo", "Location permission granted.") // Optional logging
+    fun setCompassEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        uiSettings.isCompassEnabled = (v as CheckBox).isChecked
+    }
+
+    fun setMyLocationButtonEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            uiSettings.isMyLocationButtonEnabled = (v as CheckBox).isChecked
+        } else {
+            // Uncheck the box and request missing location permission.
+            binding.mylocationbuttonToggle.isChecked = false
+            PermissionUtils
+                .requestLocationPermissions(this, 1, false)
         }
     }
 
     @SuppressLint("MissingPermission")
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (requestCode == REQUEST_CODE_LOCATION) {
-            // Permission was denied. Ensure the checkbox reflects the state (layer is off).
-            myLocationLayerCheckbox.isChecked = false
-            if (::map.isInitialized) {
-                map.isMyLocationEnabled = false // Ensure layer is off
-            }
-            // Optional: Show a message to the user explaining why the feature is disabled.
-            Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_SHORT).show()
-
-            // If rationale should be shown (permission permanently denied), EasyPermissions can help
-            if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-                // Consider showing dialog guiding user to app settings
-                // new AppSettingsDialog.Builder(this).build().show() // Example using EasyPermissions helper
-            }
+    fun setMyLocationLayerEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            map.isMyLocationEnabled = (v as CheckBox).isChecked
+        } else {
+            // Uncheck the box and request missing location permission.
+            binding.mylocationlayerToggle.isChecked = false
+            PermissionUtils
+                .requestLocationPermissions(this, 2, false)
         }
     }
 
-    // Helper extension function for concise listener setting (optional but nice)
-    private inline fun CheckBox.setOnClickListener(crossinline listener: (view: CheckBox) -> Unit) {
-        this.setOnClickListener { listener(it as CheckBox) }
+    fun setScrollGesturesEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        uiSettings.isScrollGesturesEnabled = (v as CheckBox).isChecked
+    }
+
+    fun setZoomGesturesEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        uiSettings.isZoomGesturesEnabled = (v as CheckBox).isChecked
+    }
+
+    fun setTiltGesturesEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        uiSettings.isTiltGesturesEnabled = (v as CheckBox).isChecked
+    }
+
+    fun setRotateGesturesEnabled(v: View) {
+        if (!checkReady()) {
+            return
+        }
+        uiSettings.isRotateGesturesEnabled = (v as CheckBox).isChecked
     }
 }

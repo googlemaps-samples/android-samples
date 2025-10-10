@@ -19,6 +19,7 @@ import android.annotation.SuppressLint;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.example.common_ui.databinding.UiSettingsDemoBinding;
 import com.google.android.gms.maps.UiSettings;
 
 import android.Manifest;
@@ -56,19 +57,31 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
      */
     private boolean mLocationPermissionDenied = false;
 
+    private UiSettingsDemoBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.ui_settings_demo);
+        binding = UiSettingsDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        mMyLocationButtonCheckbox = findViewById(com.example.common_ui.R.id.mylocationbutton_toggle);
-        mMyLocationLayerCheckbox = findViewById(com.example.common_ui.R.id.mylocationlayer_toggle);
+        mMyLocationButtonCheckbox = binding.mylocationbuttonToggle;
+        mMyLocationLayerCheckbox = binding.mylocationlayerToggle;
 
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
+
+        binding.zoomButtonsToggle.setOnClickListener(this::setZoomButtonsEnabled);
+        binding.compassToggle.setOnClickListener(this::setCompassEnabled);
+        binding.mylocationbuttonToggle.setOnClickListener(this::setMyLocationButtonEnabled);
+        binding.mylocationlayerToggle.setOnClickListener(this::setMyLocationLayerEnabled);
+        binding.scrollToggle.setOnClickListener(this::setScrollGesturesEnabled);
+        binding.zoomGesturesToggle.setOnClickListener(this::setZoomGesturesEnabled);
+        binding.tiltToggle.setOnClickListener(this::setTiltGesturesEnabled);
+        binding.rotateToggle.setOnClickListener(this::setRotateGesturesEnabled);
     }
 
     /**
