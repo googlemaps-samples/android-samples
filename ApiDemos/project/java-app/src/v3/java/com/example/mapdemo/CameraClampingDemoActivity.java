@@ -65,6 +65,7 @@ public class CameraClampingDemoActivity extends AppCompatActivity
 
     private TextView mCameraTextView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

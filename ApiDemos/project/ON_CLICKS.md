@@ -2,275 +2,52 @@
 
 This file tracks the progress of refactoring `android:onClick` attributes to use View Binding and programmatic click listeners.
 
-- [x] `setNoPadding`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setMorePadding`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `moveToOperaHouse`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `moveToSFO`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `moveToAUS`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onScreenshot`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onClearScreenshot`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onRequestPosition`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onMovePosition`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onPanLeft`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onPanUp`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onPanDown`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onPanRight`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onZoomIn`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onZoomOut`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onGoToSydney`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onGoToSanFran`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onGoToSantorini`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onGoToInvalid`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `toggleClickability`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [ ] `onClearMap`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onResetMap`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [ ] `onToggleFlat`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [x] `onFocusedBuildingInfo`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onToggleLevelPicker`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onVisibleLevelInfo`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onHigherLevel`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onTrafficToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onMyLocationToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onBuildingsToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onIndoorToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onStopAnimation`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onToggleAnimate`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onScrollLeft`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onScrollUp`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onScrollDown`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onScrollRight`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onTiltMore`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onTiltLess`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onToggleCustomDuration`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onGoToBondi`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setZoomButtonsEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setCompassEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setMyLocationButtonEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setMyLocationLayerEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setScrollGesturesEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setZoomGesturesEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setTiltGesturesEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setRotateGesturesEnabled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `setFadeIn`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `switchImage`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `showDarwin`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `showAdelaide`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `showAustralia`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onStreetNamesToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onNavigationToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onZoomToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onPanningToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onOutdoorToggled`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
+## `common-ui/src/main/res/layout/camera_clamping_demo.xml`
+
 - [x] `onSetMinZoomClamp`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
 - [x] `onSetMaxZoomClamp`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
 - [x] `onMinMaxZoomClampReset`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onClampToAdelaide`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
 - [x] `onClampToPacific`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
 - [x] `onLatLngClampReset`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [ ] `onClick`
-  - [ ] Replaced in `java-app`
-  - [ ] Replaced in `kotlin-app`
-  - [ ] Removed from XML
-- [x] `onButtonClicked`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
-- [x] `onGoToLocation`
-  - [x] Replaced in `java-app`
-  - [x] Replaced in `kotlin-app`
-  - [x] Removed from XML
+
+## `common-ui/src/main/res/layout/ground_overlay_demo.xml`
+
+- [ ] `toggleClickability`
+
+## `common-ui/src/main/res/layout/indoor_demo.xml`
+
+- [ ] `onToggleLevelPicker`
+- [ ] `onVisibleLevelInfo`
+- [ ] `onHigherLevel`
+
+## `common-ui/src/main/res/layout/layers_demo.xml`
+
+- [ ] `onMyLocationToggled`
+- [ ] `onBuildingsToggled`
+- [ ] `onIndoorToggled`
+
+## `common-ui/src/main/res/layout/marker_demo.xml`
+
+- [ ] `onToggleFlat`
+
+## `common-ui/src/main/res/layout/polygon_demo.xml`
+
+- [ ] `toggleClickability`
+
+## `common-ui/src/main/res/layout/polyline_demo.xml`
+
+- [ ] `toggleClickability`
+
+## `common-ui/src/main/res/layout/street_view_panorama_navigation_demo.xml`
+
+- [ ] `onPanUp`
+- [ ] `onPanDown`
+- [ ] `onPanRight`
+- [ ] `onZoomIn`
+- [ ] `onZoomOut`
+
+## `common-ui/src/main/res/layout/street_view_panorama_options_demo.xml`
+
+- [ ] `onNavigationToggled`
+- [ ] `onZoomToggled`
+- [ ] `onPanningToggled`

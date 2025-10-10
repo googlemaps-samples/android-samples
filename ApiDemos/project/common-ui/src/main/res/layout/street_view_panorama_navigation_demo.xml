@@ -74,7 +74,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:minWidth="48dp"
-                android:onClick="onPanLeft"
+
                 android:text="@string/left_arrow" />
 
             <com.google.android.material.button.MaterialButton

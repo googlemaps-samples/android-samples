@@ -68,7 +68,7 @@
                 android:id="@+id/clamp_min_zoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onSetMinZoomClamp"
+
                 android:text="@string/clamp_min_zoom" />
 
             <com.google.android.material.button.MaterialButton
