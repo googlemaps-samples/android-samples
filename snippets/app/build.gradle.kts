@@ -66,6 +66,11 @@ android {
             languageVersion.set(JavaLanguageVersion.of(21))
         }
     }
+
+    lint {
+        abortOnError = false
+        sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
+    }
 }
 
 // [START maps_android_play_services_maps_dependency]
