@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2025 Google LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,58 +21,66 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <com.google.android.material.appbar.MaterialToolbar
-      android:id="@+id/top_bar"
-      android:layout_width="0dp"
-      android:layout_height="?attr/actionBarSize"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:title="@string/cloud_styling_label"
-      app:titleTextColor="?attr/colorOnPrimary"
-      style="@style/Widget.MaterialComponents.Toolbar.Primary"
-      />
-  <androidx.fragment.app.FragmentContainerView
-    android:id="@+id/map"
-    class="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    map:cameraTargetLat="47.6089945"
-    map:cameraTargetLng="-122.3410462"
-    map:cameraZoom="14"
-    map:mapId="@string/cloud_styling_basic_map_id" />
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_bar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/cloud_styling_label"
+        app:titleTextColor="?attr/colorOnPrimary" />
 
-  <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#D000"
-    android:orientation="vertical"
-    android:padding="5dp">
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        map:cameraTargetLat="47.6089945"
+        map:cameraTargetLng="-122.3410462"
+        map:cameraZoom="14"
+        map:mapId="@string/cloud_styling_basic_map_id" />
+
     <LinearLayout
-      android:id="@+id/cloud_styling_basic_demo_mode_buttons"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/styling_normal_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lite_styling_normal_mode" />
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/styling_satellite_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lite_styling_satellite_mode" />
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/styling_hybrid_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lite_styling_hybrid_mode" />
-      <com.google.android.material.button.MaterialButton
-        android:id="@+id/styling_terrain_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lite_styling_terrain_mode" />
+        android:background="#D000"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/cloud_styling_basic_demo_mode_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/styling_normal_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lite_styling_normal_mode" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/styling_satellite_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lite_styling_satellite_mode" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/styling_hybrid_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lite_styling_hybrid_mode" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/styling_terrain_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lite_styling_terrain_mode" />
+        </LinearLayout>
     </LinearLayout>
-  </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

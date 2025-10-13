@@ -47,7 +47,7 @@ android {
     }
 
     lint {
-        disable += setOf("MissingInflatedId")
+        disable += setOf("MissingInflatedId", "OnClick")
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
     kotlin {
