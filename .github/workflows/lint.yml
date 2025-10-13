@@ -1,0 +1,144 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Lint and Upload SARIF
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Run Android Lint for ApiDemos/project/kotlin-app
+        run: ./gradlew :kotlin-app:lintDebug
+        working-directory: ApiDemos/project
+
+      - name: Upload SARIF for ApiDemos/project/kotlin-app
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ApiDemos/project/kotlin-app/build/reports/lint-results-debug.sarif
+          category: ApiDemos-kotlin-app
+
+      - name: Run Android Lint for ApiDemos/project/java-app
+        run: ./gradlew :java-app:lintDebug
+        working-directory: ApiDemos/project
+
+      - name: Upload SARIF for ApiDemos/project/java-app
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ApiDemos/project/java-app/build/reports/lint-results-debug.sarif
+          category: ApiDemos-java-app
+
+      - name: Run Android Lint for ApiDemos/project/common-ui
+        run: ./gradlew :common-ui:lintDebug
+        working-directory: ApiDemos/project
+
+      - name: Upload SARIF for ApiDemos/project/common-ui
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ApiDemos/project/common-ui/build/reports/lint-results-debug.sarif
+          category: ApiDemos-common-ui
+
+      - name: Run Android Lint for snippets/app
+        run: ./gradlew :app:lintGmsDebug
+        working-directory: snippets
+
+      - name: Upload SARIF for snippets/app
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snippets/app/build/reports/lint-results-debug.sarif
+          category: snippets-app
+
+      - name: Run Android Lint for snippets/app-utils
+        run: ./gradlew :app-utils:lintDebug
+        working-directory: snippets
+
+      - name: Upload SARIF for snippets/app-utils
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snippets/app-utils/build/reports/lint-results-debug.sarif
+          category: snippets-app-utils
+
+      - name: Run Android Lint for snippets/app-utils-ktx
+        run: ./gradlew :app-utils-ktx:lintDebug
+        working-directory: snippets
+
+      - name: Upload SARIF for snippets/app-utils-ktx
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snippets/app-utils-ktx/build/reports/lint-results-debug.sarif
+          category: snippets-app-utils-ktx
+
+      - name: Run Android Lint for snippets/app-rx
+        run: ./gradlew :app-rx:lintDebug
+        working-directory: snippets
+
+      - name: Upload SARIF for snippets/app-rx
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snippets/app-rx/build/reports/lint-results-debug.sarif
+          category: snippets-app-rx
+
+      - name: Run Android Lint for snippets/app-places-ktx
+        run: ./gradlew :app-places-ktx:lintDebug
+        working-directory: snippets
+
+      - name: Upload SARIF for snippets/app-places-ktx
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snippets/app-places-ktx/build/reports/lint-results-debug.sarif
+          category: snippets-app-places-ktx
+
+      - name: Run Android Lint for snippets/app-ktx
+        run: ./gradlew :app-ktx:lintDebug
+        working-directory: snippets
+
+      - name: Upload SARIF for snippets/app-ktx
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snippets/app-ktx/build/reports/lint-results-debug.sarif
+          category: snippets-app-ktx
+
+      - name: Run Android Lint for snippets/app-compose
+        run: ./gradlew :app-compose:lintDebug
+        working-directory: snippets
+
+      - name: Upload SARIF for snippets/app-compose
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: snippets/app-compose/build/reports/lint-results-debug.sarif
+          category: snippets-app-compose
+
+      - name: Run Android Lint for WearOS/Wearable
+        run: ./gradlew :Wearable:lintDebug
+        working-directory: WearOS
+
+      - name: Upload SARIF for WearOS/Wearable
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: WearOS/Wearable/build/reports/lint-results-debug.sarif
+          category: WearOS-Wearable

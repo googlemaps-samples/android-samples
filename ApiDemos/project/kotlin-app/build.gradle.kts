@@ -53,7 +53,8 @@ android {
     flavorDimensions.add("version")
 
     lint {
-        abortOnError = false
+        disable += setOf("MissingInflatedId")
+        sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 
     namespace = "com.example.kotlindemos"

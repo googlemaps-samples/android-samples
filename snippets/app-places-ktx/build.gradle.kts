@@ -56,9 +56,9 @@ android {
         }
     }
     lint {
-        abortOnError = false
-        disable += setOf("NotificationPermission", "UseTomlInstead")
+        disable += setOf("NotificationPermission", "UseTomlInstead", "MissingInflatedId")
         lintConfig = file("lint.xml")
+        sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
     
     java {

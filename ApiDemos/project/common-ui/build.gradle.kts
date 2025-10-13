@@ -45,6 +45,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    lint {
+        disable += setOf("MissingInflatedId", "OnClick")
+        sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
+    }
     kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)

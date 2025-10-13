@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2025 Google LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +15,8 @@
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/map_container"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -30,20 +29,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/background_color_customization_demo_label"
         app:titleTextColor="?attr/colorOnPrimary" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_height="match_parent" />
+
     <LinearLayout
+        android:id="@+id/first_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:baselineAligned="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
-        android:id="@+id/first_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toBottomOf="@id/top_bar">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -63,54 +64,54 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:onClick="onToggleAnimate"
-                android:textOn="@string/animate"
-                android:textOff="@string/animate" />
+                android:textOff="@string/animate"
+                android:textOn="@string/animate" />
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:onClick="onScrollLeft"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:minWidth="48dp"
+                android:onClick="onScrollLeft"
                 android:text="@string/left_arrow" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:onClick="onScrollUp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@id/scroll_left"
+                android:minWidth="48dp"
+                android:onClick="onScrollUp"
                 android:text="@string/up_arrow" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:onClick="onScrollDown"
                 android:layout_below="@id/scroll_up"
                 android:layout_toRightOf="@id/scroll_left"
+                android:minWidth="48dp"
+                android:onClick="onScrollDown"
                 android:text="@string/down_arrow" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/scroll_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minWidth="48dp"
-                android:onClick="onScrollRight"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/scroll_down"
+                android:minWidth="48dp"
+                android:onClick="onScrollRight"
                 android:text="@string/right_arrow" />
         </RelativeLayout>
 
@@ -138,37 +139,37 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_gravity="right">
+            android:layout_gravity="right"
+            android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/tilt_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:text="@string/tilt_more"
-                android:onClick="onTiltMore" />
+                android:onClick="onTiltMore"
+                android:text="@string/tilt_more" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/tilt_less"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:text="@string/tilt_less"
-                android:onClick="onTiltLess" />
+                android:onClick="onTiltLess"
+                android:text="@string/tilt_less" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/second_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/first_container"
-        android:id="@+id/second_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toBottomOf="@id/first_container">
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/duration_toggle"
@@ -186,28 +187,28 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/third_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/second_container"
-        android:id="@+id/third_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toBottomOf="@id/second_container">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sydney"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="onGoToSydney"
             android:layout_weight="0.5"
+            android:onClick="onGoToSydney"
             android:text="@string/go_to_sydney" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bondi"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="onGoToBondi"
             android:layout_weight="0.5"
+            android:onClick="onGoToBondi"
             android:text="@string/go_to_bondi" />
     </LinearLayout>
 
