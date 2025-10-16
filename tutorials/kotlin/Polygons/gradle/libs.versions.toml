@@ -13,7 +13,7 @@ espressoCore = "3.6.1"
 coreKtx = "1.16.0"
 javaVersion = "17"
 gradle = "8.10.1"
-kotlinGradlePlugin = "2.2.0"
+kotlinGradlePlugin = "2.2.20"
 secretsGradlePlugin = "2.0.1"
 
 [libraries]
