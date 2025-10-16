@@ -58,7 +58,7 @@ android {
 dependencies {
     // [START_EXCLUDE]
     implementation("androidx.core:core-ktx:1.15.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.20")
     // [END_EXCLUDE]
     compileOnly("com.google.android.wearable:wearable:2.9.0")
     implementation("com.google.android.support:wearable:2.9.0")
