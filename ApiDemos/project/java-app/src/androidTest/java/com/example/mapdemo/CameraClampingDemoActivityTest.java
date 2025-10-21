@@ -11,13 +11,15 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
+import com.example.mapdemo.truth.LatLngBoundsSubject;
+import com.example.mapdemo.truth.LatLngSubject;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class CameraClampingDemoActivityTest {
@@ -49,7 +51,7 @@ public class CameraClampingDemoActivityTest {
             LatLngBounds adelaideBounds = new LatLngBounds(
                 new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
             CameraPosition cameraPosition = activity.mMap.getCameraPosition();
-            assertTrue("Camera should be inside Adelaide bounds", adelaideBounds.contains(cameraPosition.target));
+            LatLngBoundsSubject.assertThat(adelaideBounds).containsWithTolerance(cameraPosition.target);
         });
     }
 
@@ -68,7 +70,7 @@ public class CameraClampingDemoActivityTest {
             LatLngBounds pacificBounds = new LatLngBounds(
                 new LatLng(-45, 160), new LatLng(45, -160));
             CameraPosition cameraPosition = activity.mMap.getCameraPosition();
-            assertTrue("Camera should be inside Pacific bounds", pacificBounds.contains(cameraPosition.target));
+            LatLngBoundsSubject.assertThat(pacificBounds).containsWithTolerance(cameraPosition.target);
         });
     }
 
@@ -88,8 +90,7 @@ public class CameraClampingDemoActivityTest {
         // 4. Assert the camera is now at the new position (0,0)
         scenario.onActivity(activity -> {
             CameraPosition cameraPosition = activity.mMap.getCameraPosition();
-            assertEquals("Camera latitude should be at reset position", 0, cameraPosition.target.latitude, 1e-5);
-            assertEquals("Camera longitude should be at reset position", 0, cameraPosition.target.longitude, 1e-5);
+            LatLngSubject.assertThat(cameraPosition.target).isNear(new LatLng(0, 0));
         });
     }
 

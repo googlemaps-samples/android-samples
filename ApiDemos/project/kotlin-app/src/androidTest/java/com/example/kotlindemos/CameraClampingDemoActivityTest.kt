@@ -10,6 +10,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.example.kotlindemos.truth.LatLngBoundsSubject
+import com.example.kotlindemos.truth.LatLngSubject
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -48,16 +50,7 @@ class CameraClampingDemoActivityTest {
                 LatLng(-35.0, 138.58), LatLng(-34.9, 138.61)
             )
             val cameraPosition: CameraPosition = activity.map.cameraPosition
-            val epsilon = 1e-5
-            assert(
-                cameraPosition.target.latitude <= CameraClampingDemoActivity.ADELAIDE_BOUNDS.northeast.latitude + epsilon &&
-                cameraPosition.target.latitude >= CameraClampingDemoActivity.ADELAIDE_BOUNDS.southwest.latitude - epsilon &&
-                cameraPosition.target.longitude <= CameraClampingDemoActivity.ADELAIDE_BOUNDS.northeast.longitude + epsilon &&
-                cameraPosition.target.longitude >= CameraClampingDemoActivity.ADELAIDE_BOUNDS.southwest.longitude - epsilon
-            ) {
-                "Camera target lat/lng: (${cameraPosition.target.latitude},${cameraPosition.target.longitude}) is not within ADELAIDE_BOUNDS ${CameraClampingDemoActivity.ADELAIDE_BOUNDS}"
-            }
-
+            LatLngBoundsSubject.assertThat(adelaideBounds).containsWithTolerance(cameraPosition.target)
         }
     }
 
@@ -77,15 +70,7 @@ class CameraClampingDemoActivityTest {
                 LatLng(-45.0, 160.0), LatLng(45.0, -160.0)
             )
             val cameraPosition: CameraPosition = activity.map.cameraPosition
-            val epsilon = 1e-5
-            assert(
-                cameraPosition.target.latitude <= pacificBounds.northeast.latitude + epsilon &&
-                cameraPosition.target.latitude >= pacificBounds.southwest.latitude - epsilon &&
-                (cameraPosition.target.longitude >= pacificBounds.southwest.longitude - epsilon ||
-                cameraPosition.target.longitude <= pacificBounds.northeast.longitude + epsilon)
-            ) {
-                "Camera target lat/lng: (${cameraPosition.target.latitude},${cameraPosition.target.longitude}) is not within PACIFIC_BOUNDS $pacificBounds"
-            }
+            LatLngBoundsSubject.assertThat(pacificBounds).containsWithTolerance(cameraPosition.target)
         }
     }
 
@@ -105,8 +90,7 @@ class CameraClampingDemoActivityTest {
         // 4. Assert the camera is now at the new position (0,0)
         scenario.onActivity { activity ->
             val cameraPosition = activity.map.cameraPosition
-            assertEquals("Camera latitude should be at reset position", 0.0, cameraPosition.target.latitude, 1e-5)
-            assertEquals("Camera longitude should be at reset position", 0.0, cameraPosition.target.longitude, 1e-5)
+            LatLngSubject.assertThat(cameraPosition.target).isNear(LatLng(0.0, 0.0))
         }
     }
 

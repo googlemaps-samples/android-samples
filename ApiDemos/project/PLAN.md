@@ -23,3 +23,25 @@
 
 4.  **Progress Logging:**
     *   Maintain a summary of progress in `PROGRESS.md`.
+
+### Transition to Google Truth for Assertions
+
+**Goal:** Improve assertion readability and maintainability by migrating from standard JUnit asserts to Google Truth, and create custom subjects for geospatial types.
+
+1.  **Add Google Truth Dependency:**
+    *   Add `androidTestImplementation("com.google.truth:truth:1.1.3")` to the `build.gradle.kts` file for both the `java-app` and `kotlin-app` modules.
+
+2.  **Create Custom Truth Subjects:**
+    *   **`LatLngSubject`:** Create a custom subject for `LatLng` objects.
+        *   This will provide an `isNear()` assertion to check if two points are within a given tolerance of each other.
+        *   Implement for both Java and Kotlin test sources.
+    *   **`LatLngBoundsSubject`:** Create a custom subject for `LatLngBounds`.
+        *   This will provide a `containsWithTolerance()` assertion to check if a `LatLng` is within the bounds, accounting for floating-point inaccuracies.
+        *   Implement for both Java and Kotlin test sources.
+
+3.  **Refactor Existing Tests:**
+    *   Update `CameraClampingDemoActivityTest` in both Java and Kotlin modules to use the new `LatLngBoundsSubject` and its `containsWithTolerance()` method.
+    *   This will replace the manual, verbose, and ugly epsilon comparisons.
+
+4.  **Verification:**
+    *   Run `./gradlew :java-app:connectedCheck` and `./gradlew :kotlin-app:connectedCheck` to confirm that all tests still pass after the refactoring.

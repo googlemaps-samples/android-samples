@@ -73,6 +73,7 @@ dependencies {
     androidTestImplementation(libs.espressoIdlingResource)
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
+    androidTestImplementation(libs.truth)
 }
 
 secrets {
