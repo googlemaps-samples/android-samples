@@ -14,9 +14,6 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 
 import androidx.lifecycle.lifecycleScope
@@ -37,12 +34,9 @@ import kotlinx.coroutines.launch
  */
 class CameraClampingDemoActivity : SamplesBaseActivity() {
 
-  private lateinit var map: GoogleMap
+  internal lateinit var map: GoogleMap
   private lateinit var binding: com.example.common_ui.databinding.CameraClampingDemoBinding
-  private val buttonIdToLatLngBoundsCameraMap = mapOf(
-    Pair(R.id.clamp_latlng_adelaide, Pair(ADELAIDE, ADELAIDE_CAMERA)),
-    Pair(R.id.clamp_latlng_pacific, Pair(PACIFIC, PACIFIC_CAMERA)),
-  )
+
 
   /**
    * Internal min zoom level that can be toggled via the demo.
@@ -73,7 +67,6 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
   }
 
   private fun setButtonClickListeners() {
-    // Min/max zooms
     binding.clampMinZoom.setOnClickListener {
       minZoom += ZOOM_DELTA
       // Constrains the minimum zoom level.
@@ -91,16 +84,14 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
       map.resetMinMaxZoomPreference()
       toast("Min/Max zoom preferences reset.")
     }
-
-    // Clamp
-    val clampListener: (View) -> Unit = { view ->
-      buttonIdToLatLngBoundsCameraMap[view.id]?.let { (latLngBounds, camera) ->
-        map.setLatLngBoundsForCameraTarget(latLngBounds)
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(camera))
-      }
+    binding.clampLatlngAdelaide.setOnClickListener {
+      map.setLatLngBoundsForCameraTarget(ADELAIDE)
+      map.animateCamera(CameraUpdateFactory.newCameraPosition(ADELAIDE_CAMERA))
     }
-    binding.clampLatlngAdelaide.setOnClickListener(clampListener)
-    binding.clampLatlngPacific.setOnClickListener(clampListener)
+    binding.clampLatlngPacific.setOnClickListener {
+      map.setLatLngBoundsForCameraTarget(PACIFIC)
+      map.animateCamera(CameraUpdateFactory.newCameraPosition(PACIFIC_CAMERA))
+    }
     binding.clampLatlngReset.setOnClickListener {
       map.setLatLngBoundsForCameraTarget(null)
       toast("LatLngBounds clamp reset.")

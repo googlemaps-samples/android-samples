@@ -1,17 +1,17 @@
 package com.example.mapdemo;
 
 import androidx.test.espresso.IdlingResource;
-
 import com.google.android.gms.maps.GoogleMap;
 
-public class MapIdlingResource implements IdlingResource, GoogleMap.OnMapLoadedCallback {
+public class MapIdlingResource implements IdlingResource, GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveStartedListener {
+    private final GoogleMap map;
     private ResourceCallback callback;
-    private boolean isIdle;
+    private boolean isIdle = true;
 
     public MapIdlingResource(GoogleMap map) {
-        if (map != null) {
-            map.setOnMapLoadedCallback(this);
-        }
+        this.map = map;
+        map.setOnCameraIdleListener(this);
+        map.setOnCameraMoveStartedListener(this);
     }
 
     @Override
@@ -30,10 +30,15 @@ public class MapIdlingResource implements IdlingResource, GoogleMap.OnMapLoadedC
     }
 
     @Override
-    public void onMapLoaded() {
+    public void onCameraIdle() {
         isIdle = true;
         if (callback != null) {
             callback.onTransitionToIdle();
         }
+    }
+
+    @Override
+    public void onCameraMoveStarted(int reason) {
+        isIdle = false;
     }
 }

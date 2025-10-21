@@ -53,7 +53,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
     private static final CameraPosition PACIFIC_CAMERA = new CameraPosition.Builder()
             .target(new LatLng(0, -180)).zoom(4.0f).bearing(0).tilt(0).build();
 
-    private GoogleMap mMap;
+    protected GoogleMap mMap;
 
     /**
      * Internal min zoom level that can be toggled via the demo.

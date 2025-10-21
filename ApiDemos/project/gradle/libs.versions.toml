@@ -31,6 +31,7 @@ cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card
 coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
 espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+espressoIdlingResource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espresso" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

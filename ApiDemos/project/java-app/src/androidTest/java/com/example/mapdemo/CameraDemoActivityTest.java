@@ -20,10 +20,11 @@ import static org.junit.Assert.assertEquals;
 public class CameraDemoActivityTest {
 
     private MapIdlingResource idlingResource;
+    private ActivityScenario<CameraDemoActivity> scenario;
 
     @Before
     public void setUp() {
-        ActivityScenario<CameraDemoActivity> scenario = ActivityScenario.launch(CameraDemoActivity.class);
+        scenario = ActivityScenario.launch(CameraDemoActivity.class);
         scenario.onActivity(activity -> {
             idlingResource = new MapIdlingResource(activity.getMap());
             IdlingRegistry.getInstance().register(idlingResource);
@@ -34,7 +35,7 @@ public class CameraDemoActivityTest {
     public void testGoToBondi() {
         Espresso.onView(ViewMatchers.withText("Go to Bondi")).perform(ViewActions.click());
 
-        ActivityScenario.launch(CameraDemoActivity.class).onActivity(activity -> {
+        scenario.onActivity(activity -> {
             CameraPosition cameraPosition = activity.getMap().getCameraPosition();
             assertEquals(CameraDemoActivity.BONDI.target.latitude, cameraPosition.target.latitude, 1e-5);
             assertEquals(CameraDemoActivity.BONDI.target.longitude, cameraPosition.target.longitude, 1e-5);
@@ -44,5 +45,6 @@ public class CameraDemoActivityTest {
     @After
     public void tearDown() {
         IdlingRegistry.getInstance().unregister(idlingResource);
+        scenario.close();
     }
 }

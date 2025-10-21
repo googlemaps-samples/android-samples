@@ -30,6 +30,7 @@ android {
         versionCode = 1
         versionName = "1.16.0"
         multiDexEnabled = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
@@ -65,14 +66,13 @@ dependencies {
     implementation(libs.playServicesMaps)
     implementation(libs.material)
     implementation(libs.activity)
+    implementation(project(":common-ui"))
 
     // Tests
     testImplementation(libs.junit)
-    androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.5.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    implementation(project(":common-ui"))
+    androidTestImplementation(libs.espressoIdlingResource)
+    androidTestImplementation(libs.androidxJunit)
+    androidTestImplementation(libs.espressoCore)
 }
 
 secrets {
