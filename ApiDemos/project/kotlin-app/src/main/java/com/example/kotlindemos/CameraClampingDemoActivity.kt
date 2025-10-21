@@ -67,31 +67,37 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
   }
 
   private fun setButtonClickListeners() {
+
     binding.clampMinZoom.setOnClickListener {
       minZoom += ZOOM_DELTA
       // Constrains the minimum zoom level.
       map.setMinZoomPreference(minZoom)
       toast("Min zoom preference set to: $minZoom")
     }
+
     binding.clampMaxZoom.setOnClickListener {
       maxZoom -= ZOOM_DELTA
       // Constrains the maximum zoom level.
       map.setMaxZoomPreference(maxZoom)
       toast("Max zoom preference set to: $maxZoom")
     }
+
     binding.clampZoomReset.setOnClickListener {
       resetMinMaxZoom()
       map.resetMinMaxZoomPreference()
       toast("Min/Max zoom preferences reset.")
     }
+
     binding.clampLatlngAdelaide.setOnClickListener {
-      map.setLatLngBoundsForCameraTarget(ADELAIDE)
+      map.setLatLngBoundsForCameraTarget(ADELAIDE_BOUNDS)
       map.animateCamera(CameraUpdateFactory.newCameraPosition(ADELAIDE_CAMERA))
     }
+
     binding.clampLatlngPacific.setOnClickListener {
       map.setLatLngBoundsForCameraTarget(PACIFIC)
       map.animateCamera(CameraUpdateFactory.newCameraPosition(PACIFIC_CAMERA))
     }
+
     binding.clampLatlngReset.setOnClickListener {
       map.setLatLngBoundsForCameraTarget(null)
       toast("LatLngBounds clamp reset.")
@@ -101,7 +107,6 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
   private fun onCameraIdle() {
     binding.cameraText.text = map.cameraPosition.toString()
   }
-
 
   private fun toast(msg: String) {
     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
@@ -117,7 +122,7 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
     private const val ZOOM_DELTA = 2.0f
     private const val DEFAULT_MIN_ZOOM = 2.0f
     private const val DEFAULT_MAX_ZOOM = 22.0f
-    private val ADELAIDE = LatLngBounds(
+    val ADELAIDE_BOUNDS = LatLngBounds(
       LatLng(-35.0, 138.58), LatLng(-34.9, 138.61))
     private val ADELAIDE_CAMERA = CameraPosition.Builder()
       .target(LatLng(-34.92873, 138.59995)).zoom(20.0f).bearing(0f).tilt(0f).build()

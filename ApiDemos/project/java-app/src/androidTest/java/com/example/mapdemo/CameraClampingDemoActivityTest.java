@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class CameraClampingDemoActivityTest {
@@ -35,36 +36,60 @@ public class CameraClampingDemoActivityTest {
 
     @Test
     public void testClampToAdelaide() {
+        // 1. Clamp to Adelaide
         Espresso.onView(ViewMatchers.withText("Clamp to Adelaide")).perform(ViewActions.click());
+
+        // 2. Try to move the camera outside the bounds
         scenario.onActivity(activity -> {
-            LatLngBounds expectedBounds = new LatLngBounds(
+            activity.mMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLng(new LatLng(0, 0)));
+        });
+
+        // 3. Assert that the camera is still inside the Adelaide bounds
+        scenario.onActivity(activity -> {
+            LatLngBounds adelaideBounds = new LatLngBounds(
                 new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
-            // It's not possible to get the LatLngBounds from the map, so we check the camera position.
             CameraPosition cameraPosition = activity.mMap.getCameraPosition();
-            assertEquals(-34.92873, cameraPosition.target.latitude, 1e-5);
-            assertEquals(138.59995, cameraPosition.target.longitude, 1e-5);
+            assertTrue("Camera should be inside Adelaide bounds", adelaideBounds.contains(cameraPosition.target));
         });
     }
 
     @Test
     public void testClampToPacific() {
+        // 1. Clamp to Pacific
         Espresso.onView(ViewMatchers.withText("Clamp to Pacific")).perform(ViewActions.click());
+
+        // 2. Try to move the camera outside the bounds
         scenario.onActivity(activity -> {
-            // It's not possible to get the LatLngBounds from the map, so we check the camera position.
+            activity.mMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLng(new LatLng(45, 0)));
+        });
+
+        // 3. Assert that the camera is still inside the Pacific bounds
+        scenario.onActivity(activity -> {
+            LatLngBounds pacificBounds = new LatLngBounds(
+                new LatLng(-45, 160), new LatLng(45, -160));
             CameraPosition cameraPosition = activity.mMap.getCameraPosition();
-            assertEquals(0, cameraPosition.target.latitude, 1e-5);
-            assertEquals(-180, cameraPosition.target.longitude, 1e-5);
+            assertTrue("Camera should be inside Pacific bounds", pacificBounds.contains(cameraPosition.target));
         });
     }
 
     @Test
     public void testLatLngClampReset() {
+        // 1. Clamp to Adelaide first
         Espresso.onView(ViewMatchers.withText("Clamp to Adelaide")).perform(ViewActions.click());
+
+        // 2. Reset the clamp
         Espresso.onView(ViewMatchers.withText("Reset LatLng Bounds")).perform(ViewActions.click());
+
+        // 3. Verify the clamp is gone by moving the camera far away
         scenario.onActivity(activity -> {
-            // This is a best-effort check, as there is no public getter for the camera target bounds.
-            // We assume that if the clamp was reset, the bounds would be null.
-            // A more robust test would involve moving the camera and checking if it goes outside the previous bounds.
+            activity.mMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLng(new LatLng(0, 0)));
+        });
+
+        // 4. Assert the camera is now at the new position (0,0)
+        scenario.onActivity(activity -> {
+            CameraPosition cameraPosition = activity.mMap.getCameraPosition();
+            assertEquals("Camera latitude should be at reset position", 0, cameraPosition.target.latitude, 1e-5);
+            assertEquals("Camera longitude should be at reset position", 0, cameraPosition.target.longitude, 1e-5);
         });
     }
 

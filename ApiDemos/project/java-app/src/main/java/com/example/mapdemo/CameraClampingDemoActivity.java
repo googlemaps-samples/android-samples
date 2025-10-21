@@ -25,11 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This shows how to constrain the camera to specific boundaries and zoom levels.
@@ -43,7 +39,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
     private static final float DEFAULT_MIN_ZOOM = 2.0f;
     private static final float DEFAULT_MAX_ZOOM = 22.0f;
 
-    private static final LatLngBounds ADELAIDE = new LatLngBounds(
+    static final LatLngBounds ADELAIDE_BOUNDS = new LatLngBounds(
             new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
     private static final CameraPosition ADELAIDE_CAMERA = new CameraPosition.Builder()
             .target(new LatLng(-34.92873, 138.59995)).zoom(20.0f).bearing(0).tilt(0).build();
@@ -130,7 +126,7 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         if (!checkReady()) {
             return;
         }
-        mMap.setLatLngBoundsForCameraTarget(ADELAIDE);
+        mMap.setLatLngBoundsForCameraTarget(ADELAIDE_BOUNDS);
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(ADELAIDE_CAMERA));
     }
 

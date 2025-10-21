@@ -1,6 +1,5 @@
 package com.example.kotlindemos
 
-import android.util.Log
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
@@ -35,37 +34,79 @@ class CameraClampingDemoActivityTest {
 
     @Test
     fun testClampToAdelaide() {
+        // 1. Clamp to Adelaide
         onView(withText("Clamp to Adelaide")).perform(click())
+
+        // 2. Try to move the camera outside the bounds
         scenario.onActivity { activity ->
-            val expectedBounds = LatLngBounds(
+            activity.map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(0.0, 0.0)))
+        }
+
+        // 3. Assert that the camera is still inside the Adelaide bounds
+        scenario.onActivity { activity ->
+            val adelaideBounds = LatLngBounds(
                 LatLng(-35.0, 138.58), LatLng(-34.9, 138.61)
             )
-            // It's not possible to get the LatLngBounds from the map, so we check the camera position.
             val cameraPosition: CameraPosition = activity.map.cameraPosition
-            assertEquals(-34.92873, cameraPosition.target.latitude, 1e-5)
-            assertEquals(138.59995, cameraPosition.target.longitude, 1e-5)
+            val epsilon = 1e-5
+            assert(
+                cameraPosition.target.latitude <= CameraClampingDemoActivity.ADELAIDE_BOUNDS.northeast.latitude + epsilon &&
+                cameraPosition.target.latitude >= CameraClampingDemoActivity.ADELAIDE_BOUNDS.southwest.latitude - epsilon &&
+                cameraPosition.target.longitude <= CameraClampingDemoActivity.ADELAIDE_BOUNDS.northeast.longitude + epsilon &&
+                cameraPosition.target.longitude >= CameraClampingDemoActivity.ADELAIDE_BOUNDS.southwest.longitude - epsilon
+            ) {
+                "Camera target lat/lng: (${cameraPosition.target.latitude},${cameraPosition.target.longitude}) is not within ADELAIDE_BOUNDS ${CameraClampingDemoActivity.ADELAIDE_BOUNDS}"
+            }
+
         }
     }
 
     @Test
     fun testClampToPacific() {
+        // 1. Clamp to Pacific
         onView(withText("Clamp to Pacific")).perform(click())
+
+        // 2. Try to move the camera outside the bounds
         scenario.onActivity { activity ->
-            // It's not possible to get the LatLngBounds from the map, so we check the camera position.
+            activity.map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(45.0, 0.0)))
+        }
+
+        // 3. Assert that the camera is still inside the Pacific bounds
+        scenario.onActivity { activity ->
+            val pacificBounds = LatLngBounds(
+                LatLng(-45.0, 160.0), LatLng(45.0, -160.0)
+            )
             val cameraPosition: CameraPosition = activity.map.cameraPosition
-            assertEquals(0.0, cameraPosition.target.latitude, 1e-5)
-            assertEquals(-180.0, cameraPosition.target.longitude, 1e-5)
+            val epsilon = 1e-5
+            assert(
+                cameraPosition.target.latitude <= pacificBounds.northeast.latitude + epsilon &&
+                cameraPosition.target.latitude >= pacificBounds.southwest.latitude - epsilon &&
+                (cameraPosition.target.longitude >= pacificBounds.southwest.longitude - epsilon ||
+                cameraPosition.target.longitude <= pacificBounds.northeast.longitude + epsilon)
+            ) {
+                "Camera target lat/lng: (${cameraPosition.target.latitude},${cameraPosition.target.longitude}) is not within PACIFIC_BOUNDS $pacificBounds"
+            }
         }
     }
 
     @Test
     fun testLatLngClampReset() {
+        // 1. Clamp to Adelaide first
         onView(withText("Clamp to Adelaide")).perform(click())
+
+        // 2. Reset the clamp
         onView(withText("Reset LatLng Bounds")).perform(click())
-        scenario.onActivity {
-            // This is a best-effort check, as there is no public getter for the camera target bounds.
-            // We assume that if the clamp was reset, the bounds would be null.
-            // A more robust test would involve moving the camera and checking if it goes outside the previous bounds.
+
+        // 3. Verify the clamp is gone by moving the camera far away
+        scenario.onActivity { activity ->
+            activity.map.moveCamera(CameraUpdateFactory.newLatLng(LatLng(0.0, 0.0)))
+        }
+
+        // 4. Assert the camera is now at the new position (0,0)
+        scenario.onActivity { activity ->
+            val cameraPosition = activity.map.cameraPosition
+            assertEquals("Camera latitude should be at reset position", 0.0, cameraPosition.target.latitude, 1e-5)
+            assertEquals("Camera longitude should be at reset position", 0.0, cameraPosition.target.longitude, 1e-5)
         }
     }
 
