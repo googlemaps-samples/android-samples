@@ -75,7 +75,6 @@
             android:layout_alignBottom="@+id/switchImage"
             android:layout_toEndOf="@+id/switchImage"
             android:checked="true"
-            android:onClick="toggleClickability"
             android:text="@string/clickable" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

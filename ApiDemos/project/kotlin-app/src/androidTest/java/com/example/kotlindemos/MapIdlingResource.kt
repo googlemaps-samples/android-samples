@@ -32,4 +32,11 @@ class MapIdlingResource(private val map: GoogleMap?) : IdlingResource, GoogleMap
     override fun onCameraMoveStarted(reason: Int) {
         isIdle = false
     }
+
+    fun waitForIdle() {
+        // Wait for the map to become idle.
+        while (!isIdleNow) {
+            Thread.sleep(10)
+        }
+    }
 }

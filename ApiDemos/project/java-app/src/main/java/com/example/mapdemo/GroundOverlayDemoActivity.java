@@ -52,9 +52,9 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
 
     private final List<BitmapDescriptor> images = new ArrayList<>();
 
-    private GroundOverlay groundOverlay;
-
-    private GroundOverlay groundOverlayRotated;
+    public GoogleMap mMap;
+    public GroundOverlay groundOverlay;
+    public GroundOverlay groundOverlayRotated;
 
     private com.example.common_ui.databinding.GroundOverlayDemoBinding binding;
 
@@ -69,17 +69,20 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         binding.transparencySeekBar.setMax(TRANSPARENCY_MAX);
         binding.transparencySeekBar.setProgress(0);
 
+        binding.toggleClickability.setOnClickListener(v -> toggleClickability());
         binding.switchImage.setOnClickListener(v -> switchImage());
         binding.toggleClickability.setOnClickListener(v -> toggleClickability());
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
         applyInsets(binding.mapContainer);
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
+        this.mMap = map;
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this);
 

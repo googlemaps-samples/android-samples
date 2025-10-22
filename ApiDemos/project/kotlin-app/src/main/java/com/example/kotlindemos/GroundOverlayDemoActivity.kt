@@ -36,7 +36,8 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
 
     private val images: MutableList<BitmapDescriptor> = ArrayList()
     private var groundOverlay: GroundOverlay? = null
-    private var groundOverlayRotated: GroundOverlay? = null
+    internal var groundOverlayRotated: GroundOverlay? = null
+    lateinit var map: GoogleMap
     private lateinit var binding: com.example.common_ui.databinding.GroundOverlayDemoBinding
     private var currentEntry = 0
 
@@ -46,6 +47,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         setContentView(binding.root)
         binding.transparencySeekBar.max = TRANSPARENCY_MAX
         binding.transparencySeekBar.progress = 0
+        binding.toggleClickability.setOnClickListener { toggleClickability() }
         binding.switchImage.setOnClickListener { switchImage() }
         binding.toggleClickability.setOnClickListener { toggleClickability() }
         val mapFragment =
@@ -54,8 +56,11 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         applyInsets(binding.mapContainer)
     }
 
+    var mapReady = false
+
     override fun onMapReady(map: GoogleMap) {
-        map
+        this.map = map
+        mapReady = true
 
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this)
