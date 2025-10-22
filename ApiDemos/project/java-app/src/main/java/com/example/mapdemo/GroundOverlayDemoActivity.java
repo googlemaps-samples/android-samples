@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,38 +25,36 @@ import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This shows how to add a ground overlay to a map.
+ * This demo shows how to add a ground overlay to a map.
+ * <p>
+ * A ground overlay is an image that is fixed to a map. Unlike markers, ground overlays are
+ * oriented against the Earth's surface rather than the screen. Rotating, tilting, or zooming the
+ * map changes the orientation of the camera, but not the overlay.
  */
 public class GroundOverlayDemoActivity extends SamplesBaseActivity
-        implements OnSeekBarChangeListener, OnMapReadyCallback,
-        GoogleMap.OnGroundOverlayClickListener {
+    implements OnSeekBarChangeListener, OnMapReadyCallback,
+    GoogleMap.OnGroundOverlayClickListener {
 
     private static final int TRANSPARENCY_MAX = 100;
-
     private static final LatLng NEWARK = new LatLng(40.714086, -74.228697);
-
     private static final LatLng NEAR_NEWARK =
-            new LatLng(NEWARK.latitude - 0.001, NEWARK.longitude - 0.025);
+        new LatLng(NEWARK.latitude - 0.001, NEWARK.longitude - 0.025);
 
     private final List<BitmapDescriptor> images = new ArrayList<>();
 
+    // These are public for testing purposes only.
     public GoogleMap mMap;
     public GroundOverlay groundOverlay;
     public GroundOverlay groundOverlayRotated;
 
     private com.example.common_ui.databinding.GroundOverlayDemoBinding binding;
-
     private int currentEntry = 0;
 
     @Override
@@ -69,46 +66,61 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         binding.transparencySeekBar.setMax(TRANSPARENCY_MAX);
         binding.transparencySeekBar.setProgress(0);
 
-        binding.toggleClickability.setOnClickListener(v -> toggleClickability());
+        // Set up programmatic click listeners for the buttons.
         binding.switchImage.setOnClickListener(v -> switchImage());
         binding.toggleClickability.setOnClickListener(v -> toggleClickability());
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         applyInsets(binding.mapContainer);
     }
 
+    /**
+     * This is called when the map is ready to be used.
+     */
     @Override
     public void onMapReady(GoogleMap map) {
         this.mMap = map;
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this);
 
+        // Move the camera to the Newark area.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11));
 
+        // Prepare the BitmapDescriptor objects. Using a BitmapDescriptorFactory is the most
+        // memory-efficient way to create the images that will be used for the overlays.
         images.clear();
         images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_nj_1922));
         images.add(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.newark_prudential_sunny));
 
-        // Add a small, rotated overlay that is clickable by default
-        // (set by the initial state of the checkbox.)
+        // Add a small, rotated overlay that is clickable by default.
+        // The initial state of the "Clickable" checkbox determines its clickability.
         groundOverlayRotated = map.addGroundOverlay(new GroundOverlayOptions()
-                .image(images.get(1)).anchor(0, 1)
-                .position(NEAR_NEWARK, 4300f, 3025f)
-                .bearing(30)
-                .clickable(binding.toggleClickability.isChecked()));
+            // The image to use for the overlay.
+            .image(images.get(1))
+            // The anchor point for the overlay. By default, the anchor is the center of the
+            // image. Here, we set it to the top-left corner.
+            .anchor(0, 1)
+            // The location of the anchor point on the map, the width of the overlay in meters,
+            // and the height of the overlay in meters.
+            .position(NEAR_NEWARK, 4300f, 3025f)
+            // The bearing of the overlay in degrees, clockwise from north.
+            .bearing(30)
+            // The initial clickability of the overlay.
+            .clickable(binding.toggleClickability.isChecked()));
 
         // Add a large overlay at Newark on top of the smaller overlay.
         groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
-                .image(images.get(currentEntry)).anchor(0, 1)
-                .position(NEWARK, 8600f, 6500f));
+            .image(images.get(currentEntry))
+            .anchor(0, 1)
+            .position(NEWARK, 8600f, 6500f));
 
         binding.transparencySeekBar.setOnSeekBarChangeListener(this);
 
-        // Override the default content description on the view, for accessibility mode.
-        // Ideally this string would be localised.
+        // Override the default content description on the view for accessibility mode.
+        // Ideally this string would be localized.
         map.setContentDescription("Google Map with ground overlay.");
     }
 
@@ -120,29 +132,43 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
     public void onStartTrackingTouch(SeekBar seekBar) {
     }
 
+    /**
+     * This is called when the transparency SeekBar is changed.
+     */
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        // Update the transparency of the main ground overlay. The transparency ranges from
+        // 0 (completely opaque) to 1 (completely transparent).
         if (groundOverlay != null) {
             groundOverlay.setTransparency((float) progress / (float) TRANSPARENCY_MAX);
         }
     }
 
+    /**
+     * Cycles through the available images for the main ground overlay.
+     */
     private void switchImage() {
+        // The modulo operator (%) is a convenient way to cycle through the images.
         currentEntry = (currentEntry + 1) % images.size();
         groundOverlay.setImage(images.get(currentEntry));
     }
 
     /**
-     * Toggles the visibility between 100% and 50% when a {@link GroundOverlay} is clicked.
+     * This is called when a ground overlay is clicked.
      */
     @Override
     public void onGroundOverlayClick(GroundOverlay groundOverlay) {
-        // Toggle transparency value between 0.0f and 0.5f. Initial default value is 0.0f.
+        // In this demo, we only toggle the transparency of the smaller, rotated overlay.
+        // The transparency is toggled between 0.0f (opaque) and 0.5f (semi-transparent).
         groundOverlayRotated.setTransparency(0.5f - groundOverlayRotated.getTransparency());
     }
 
+    /**
+     * Toggles the clickability of the smaller, rotated ground overlay.
+     */
     private void toggleClickability() {
         if (groundOverlayRotated != null) {
+            // The clickability of an overlay can be changed at any time.
             groundOverlayRotated.setClickable(binding.toggleClickability.isChecked());
         }
     }

@@ -11,33 +11,42 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 package com.example.kotlindemos
 
 import android.os.Bundle
-import android.view.View
-import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.example.common_ui.R
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnGroundOverlayClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
-import java.util.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.GroundOverlay
+import com.google.android.gms.maps.model.GroundOverlayOptions
+import com.google.android.gms.maps.model.LatLng
 
 /**
- * This shows how to add a ground overlay to a map.
+ * This demo shows how to add a ground overlay to a map.
+ *
+ * A ground overlay is an image that is fixed to a map. Unlike markers, ground overlays are
+ * oriented against the Earth's surface rather than the screen. Rotating, tilting, or zooming the
+ * map changes the orientation of the camera, but not the overlay.
  */
 class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener,
     OnMapReadyCallback, OnGroundOverlayClickListener {
 
     private val images: MutableList<BitmapDescriptor> = ArrayList()
     private var groundOverlay: GroundOverlay? = null
+
+    // These are internal for testing purposes only.
     internal var groundOverlayRotated: GroundOverlay? = null
-    lateinit var map: GoogleMap
+    internal lateinit var map: GoogleMap
+    internal var mapReady = false
+
     private lateinit var binding: com.example.common_ui.databinding.GroundOverlayDemoBinding
     private var currentEntry = 0
 
@@ -45,55 +54,70 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         super.onCreate(savedInstanceState)
         binding = com.example.common_ui.databinding.GroundOverlayDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.transparencySeekBar.max = TRANSPARENCY_MAX
         binding.transparencySeekBar.progress = 0
-        binding.toggleClickability.setOnClickListener { toggleClickability() }
+
+        // Set up programmatic click listeners for the buttons.
+        // This is a better practice than using the android:onClick XML attribute, as it keeps
+        // all the view logic in the Activity code.
         binding.switchImage.setOnClickListener { switchImage() }
         binding.toggleClickability.setOnClickListener { toggleClickability() }
+
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
         applyInsets(binding.mapContainer)
     }
 
-    var mapReady = false
-
-    override fun onMapReady(map: GoogleMap) {
-        this.map = map
-        mapReady = true
+    /**
+     * This is called when the map is ready to be used.
+     */
+    override fun onMapReady(googleMap: GoogleMap) {
+        this.map = googleMap
+        this.mapReady = true
 
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this)
-        map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                NEWARK,
-                11f
-            )
-        )
+
+        // Move the camera to the Newark area.
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11f))
+
+        // Prepare the BitmapDescriptor objects. Using a BitmapDescriptorFactory is the most
+        // memory-efficient way to create the images that will be used for the overlays.
         images.clear()
         images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
         images.add(BitmapDescriptorFactory.fromResource(R.drawable.newark_prudential_sunny))
 
-        // Add a small, rotated overlay that is clickable by default
-        // (set by the initial state of the checkbox.)
+        // Add a small, rotated overlay that is clickable by default.
+        // The initial state of the "Clickable" checkbox determines its clickability.
         groundOverlayRotated = map.addGroundOverlay(
             GroundOverlayOptions()
-                .image(images[1]).anchor(0f, 1f)
+                // The image to use for the overlay.
+                .image(images[1])
+                // The anchor point for the overlay. By default, the anchor is the center of the
+                // image. Here, we set it to the top-left corner.
+                .anchor(0f, 1f)
+                // The location of the anchor point on the map, the width of the overlay in meters,
+                // and the height of the overlay in meters.
                 .position(NEAR_NEWARK, 4300f, 3025f)
+                // The bearing of the overlay in degrees, clockwise from north.
                 .bearing(30f)
+                // The initial clickability of the overlay.
                 .clickable(binding.toggleClickability.isChecked)
         )
 
         // Add a large overlay at Newark on top of the smaller overlay.
         groundOverlay = map.addGroundOverlay(
             GroundOverlayOptions()
-                .image(images[currentEntry]).anchor(0f, 1f)
+                .image(images[currentEntry])
+                .anchor(0f, 1f)
                 .position(NEWARK, 8600f, 6500f)
         )
         binding.transparencySeekBar.setOnSeekBarChangeListener(this)
 
-        // Override the default content description on the view, for accessibility mode.
-        // Ideally this string would be localised.
+        // Override the default content description on the view for accessibility mode.
+        // Ideally this string would be localized.
         map.setContentDescription("Google Map with ground overlay.")
     }
 
@@ -101,26 +125,40 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
+    /**
+     * This is called when the transparency SeekBar is changed.
+     */
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        // Update the transparency of the main ground overlay. The transparency ranges from
+        // 0 (completely opaque) to 1 (completely transparent).
         groundOverlay?.transparency = progress.toFloat() / TRANSPARENCY_MAX.toFloat()
     }
 
+    /**
+     * Cycles through the available images for the main ground overlay.
+     */
     private fun switchImage() {
-        val overlay = groundOverlay ?: return
+        // The modulo operator (%) is a convenient way to cycle through the images.
         currentEntry = (currentEntry + 1) % images.size
-        overlay.setImage(images[currentEntry])
+        groundOverlay?.setImage(images[currentEntry])
     }
 
     /**
-     * Toggles the visibility between 100% and 50% when a [GroundOverlay] is clicked.
+     * This is called when a ground overlay is clicked.
      */
     override fun onGroundOverlayClick(groundOverlay: GroundOverlay) {
-        // Toggle transparency value between 0.0f and 0.5f. Initial default value is 0.0f.
-        val overlayRotated = groundOverlayRotated ?: return
-        overlayRotated.transparency = 0.5f - overlayRotated.transparency
+        // In this demo, we only toggle the transparency of the smaller, rotated overlay.
+        // The transparency is toggled between 0.0f (opaque) and 0.5f (semi-transparent).
+        groundOverlayRotated?.let {
+            it.transparency = 0.5f - it.transparency
+        }
     }
 
+    /**
+     * Toggles the clickability of the smaller, rotated ground overlay.
+     */
     private fun toggleClickability() {
+        // The clickability of an overlay can be changed at any time.
         groundOverlayRotated?.isClickable = binding.toggleClickability.isChecked
     }
 

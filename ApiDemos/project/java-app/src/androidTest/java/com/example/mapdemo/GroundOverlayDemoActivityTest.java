@@ -54,6 +54,11 @@ public class GroundOverlayDemoActivityTest {
         });
 
         Espresso.onView(ViewMatchers.withId(com.example.common_ui.R.id.map)).perform(ViewActions.click());
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         idlingResource.waitForIdle();
 
         scenario.onActivity(activity -> {
