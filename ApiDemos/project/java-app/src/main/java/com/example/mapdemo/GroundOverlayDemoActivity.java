@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -42,6 +43,8 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
     implements OnSeekBarChangeListener, OnMapReadyCallback,
     GoogleMap.OnGroundOverlayClickListener {
 
+    private static final String TAG = GroundOverlayDemoActivity.class.getName();
+
     private static final int TRANSPARENCY_MAX = 100;
     private static final LatLng NEWARK = new LatLng(40.714086, -74.228697);
     private static final LatLng NEAR_NEWARK =
@@ -54,8 +57,13 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
     public GroundOverlay groundOverlay;
     public GroundOverlay groundOverlayRotated;
 
+    public int groundOverlayRotatedClickCount = 0;
+    public int mapClickCount = 0;
+
     private com.example.common_ui.databinding.GroundOverlayDemoBinding binding;
     private int currentEntry = 0;
+
+    public boolean mapReady = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +97,13 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         // Move the camera to the Newark area.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11));
 
+        map.moveCamera(CameraUpdateFactory.scrollBy(100f, 100f));
+
+        map.setOnMapClickListener(ll -> {
+            Point point = mMap.getProjection().toScreenLocation(ll);
+            mapClickCount += 1;
+        });
+
         // Prepare the BitmapDescriptor objects. Using a BitmapDescriptorFactory is the most
         // memory-efficient way to create the images that will be used for the overlays.
         images.clear();
@@ -112,16 +127,18 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
             .clickable(binding.toggleClickability.isChecked()));
 
         // Add a large overlay at Newark on top of the smaller overlay.
-                groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
-                        .image(images.get(currentEntry)).anchor(0, 1)
-                        .position(NEWARK, 8600f, 6500f));
-                groundOverlay.setTag(images.get(currentEntry));
+        groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
+                .image(images.get(currentEntry)).anchor(0, 1)
+                .position(NEWARK, 8600f, 6500f));
+        groundOverlay.setTag(images.get(currentEntry));
 
         binding.transparencySeekBar.setOnSeekBarChangeListener(this);
 
         // Override the default content description on the view for accessibility mode.
         // Ideally this string would be localized.
         map.setContentDescription("Google Map with ground overlay.");
+
+        mapReady = true;
     }
 
     @Override
@@ -155,6 +172,7 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
      */
     @Override
     public void onGroundOverlayClick(GroundOverlay groundOverlay) {
+        groundOverlayRotatedClickCount += 1;
         // In this demo, we only toggle the transparency of the smaller, rotated overlay.
         // The transparency is toggled between 0.0f (opaque) and 0.5f (semi-transparent).
         groundOverlayRotated.setTransparency(0.5f - groundOverlayRotated.getTransparency());

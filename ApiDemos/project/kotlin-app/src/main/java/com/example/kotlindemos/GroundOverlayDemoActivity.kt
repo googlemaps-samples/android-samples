@@ -17,7 +17,6 @@ package com.example.kotlindemos
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import android.widget.Toast
 import com.example.common_ui.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -40,8 +39,7 @@ import com.google.android.gms.maps.model.LatLng
 class GroundOverlayDemoActivity : SamplesBaseActivity(),
     OnSeekBarChangeListener,
     OnMapReadyCallback,
-    OnGroundOverlayClickListener,
-    GoogleMap.OnMapClickListener
+    OnGroundOverlayClickListener
 {
 
     private val images: MutableList<BitmapDescriptor> = ArrayList()
@@ -49,6 +47,9 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
 
     // These are internal for testing purposes only.
     internal var groundOverlayRotated: GroundOverlay? = null
+
+    internal var groundOverlayRotatedClickCount = 0
+
     internal lateinit var map: GoogleMap
     internal var mapReady = false
 
@@ -66,8 +67,12 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
         // Set up programmatic click listeners for the buttons.
         // This is a better practice than using the android:onClick XML attribute, as it keeps
         // all the view logic in the Activity code.
-        binding.switchImage.setOnClickListener { switchImage() }
-        binding.toggleClickability.setOnClickListener { toggleClickability() }
+        binding.switchImage.setOnClickListener {
+            switchImage()
+        }
+        binding.toggleClickability.setOnClickListener {
+            toggleClickability()
+        }
 
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -84,10 +89,10 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this)
 
-        map.setOnMapClickListener(this)
-
         // Move the camera to the Newark area.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11f))
+
+        map.moveCamera(CameraUpdateFactory.scrollBy(100f, 100f))
 
         // Prepare the BitmapDescriptor objects. Using a BitmapDescriptorFactory is the most
         // memory-efficient way to create the images that will be used for the overlays.
@@ -159,6 +164,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
     override fun onGroundOverlayClick(groundOverlay: GroundOverlay) {
         // In this demo, we only toggle the transparency of the smaller, rotated overlay.
         // The transparency is toggled between 0.0f (opaque) and 0.5f (semi-transparent).
+        groundOverlayRotatedClickCount += 1
         groundOverlayRotated?.let {
             if (it.transparency < 0.25f) {
                 it.transparency = 0.5f
@@ -173,22 +179,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
      */
     private fun toggleClickability() {
         // The clickability of an overlay can be changed at any time.
-        android.util.Log.d(TAG, "Clickability toggled!")
         groundOverlayRotated?.isClickable = binding.toggleClickability.isChecked
-    }
-
-    override fun onMapClick(p0: LatLng) {
-        Toast.makeText(
-            this,
-            "Clicked on ${p0.latitude}, ${p0.longitude}",
-            Toast.LENGTH_SHORT
-        ).show()
-
-        val clickedGroundOverlay = groundOverlayRotated
-        if (clickedGroundOverlay != null && clickedGroundOverlay.bounds.contains(p0)) {
-            clickedGroundOverlay.transparency = 0.5f - clickedGroundOverlay.transparency
-        }
-
     }
 
     companion object {

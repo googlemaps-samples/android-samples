@@ -1,5 +1,6 @@
 package com.example.kotlindemos
 
+import android.view.View
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
@@ -14,6 +15,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.example.common_ui.R
 
 @RunWith(AndroidJUnit4::class)
 class GroundOverlayDemoActivityTest {
@@ -44,6 +46,7 @@ class GroundOverlayDemoActivityTest {
             IdlingRegistry.getInstance().register(idlingResource)
             groundOverlay = activity.groundOverlayRotated!!
         }
+        Thread.sleep(2000)
     }
 
     @Test
@@ -53,6 +56,7 @@ class GroundOverlayDemoActivityTest {
         // Get the initial transparency and position of the overlay on the UI thread.
         var initialTransparency = 0f
         scenario.onActivity { activity ->
+            assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(0)
             initialTransparency = groundOverlay.transparency
         }
 
@@ -63,14 +67,16 @@ class GroundOverlayDemoActivityTest {
 
         // This is not ideal, but it's a simple way to make the test reliable.
         Thread.sleep(200)
+        idlingResource.waitForIdle()
 
         // Verify that the transparency has changed, indicating the click was successful.
-        scenario.onActivity {
+        scenario.onActivity { activity ->
+            assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(1)
             assertThat(groundOverlay.transparency).isNotEqualTo(initialTransparency)
         }
 
         // Disable clickability by clicking the checkbox.
-        onView(withId(com.example.common_ui.R.id.toggleClickability)).perform(click())
+        onView(withId(R.id.toggleClickability)).perform(click())
 
         // Get the transparency after the first click.
         var transparencyAfterToggle = 0f
@@ -93,10 +99,14 @@ class GroundOverlayDemoActivityTest {
     private fun clickOnMapAt(latLng: LatLng) {
         val coordinates = FloatArray(2)
         scenario.onActivity { activity ->
+            val mapLocation = IntArray(2)
+            activity.findViewById<View>(R.id.map).getLocationOnScreen(mapLocation)
+
             val projection = activity.map.projection
             val screenPosition = projection.toScreenLocation(latLng)
-            coordinates[0] = screenPosition.x.toFloat()
-            coordinates[1] = screenPosition.y.toFloat()
+
+            coordinates[0] = screenPosition.x.toFloat() + mapLocation[0]
+            coordinates[1] = screenPosition.y.toFloat() + mapLocation[1]
         }
 
         val clickAction = androidx.test.espresso.action.GeneralClickAction(
@@ -106,7 +116,7 @@ class GroundOverlayDemoActivityTest {
             android.view.InputDevice.SOURCE_UNKNOWN,
             android.view.MotionEvent.BUTTON_PRIMARY
         )
-        onView(withId(com.example.common_ui.R.id.map)).perform(clickAction)
+        onView(withId(R.id.map)).perform(clickAction)
     }
 
     @Test
@@ -116,7 +126,7 @@ class GroundOverlayDemoActivityTest {
             initialTransparency = activity.groundOverlay!!.transparency
         }
 
-        onView(withId(com.example.common_ui.R.id.transparencySeekBar)).perform(click())
+        onView(withId(R.id.transparencySeekBar)).perform(click())
 
         scenario.onActivity { activity ->
             assertThat(activity.groundOverlay!!.transparency).isNotEqualTo(initialTransparency)
@@ -131,10 +141,65 @@ class GroundOverlayDemoActivityTest {
             initialBitmapDescriptor = activity.groundOverlay!!.tag as BitmapDescriptor
         }
 
-        onView(withId(com.example.common_ui.R.id.switchImage)).perform(click())
+        onView(withId(R.id.switchImage)).perform(click())
 
         scenario.onActivity { activity ->
             assertThat(activity.groundOverlay!!.tag as BitmapDescriptor).isNotEqualTo(initialBitmapDescriptor)
+        }
+    }
+
+    @Test
+    fun testToggleClickability_DisablesClicks() {
+        // Verify the overlay is initially clickable.
+        var initialTransparency = 0f
+        scenario.onActivity {
+            initialTransparency = groundOverlay.transparency
+        }
+
+        val clickPosition = LatLng(40.71398657613997, -74.24413025379181)
+
+        clickOnMapAt(clickPosition)
+
+        Thread.sleep(2000)
+
+        scenario.onActivity {
+            assertThat(groundOverlay.transparency).isNotEqualTo(initialTransparency)
+        }
+
+        // Disable clickability.
+        onView(withId(R.id.toggleClickability)).perform(click())
+
+        // Now, clicking the map should not change the transparency.
+        var transparencyAfterToggle = 0f
+        scenario.onActivity {
+            transparencyAfterToggle = groundOverlay.transparency
+        }
+
+        clickOnMapAt(clickPosition)
+        Thread.sleep(200)
+
+        scenario.onActivity {
+            assertThat(groundOverlay.transparency).isEqualTo(transparencyAfterToggle)
+        }
+    }
+
+    @Test
+    fun testToggleClickability_ReEnablesClicks() {
+        // Disable and then re-enable clickability.
+        onView(withId(R.id.toggleClickability)).perform(click())
+        onView(withId(R.id.toggleClickability)).perform(click())
+
+        var initialTransparency = 0f
+        scenario.onActivity {
+            initialTransparency = groundOverlay.transparency
+        }
+
+        val clickPosition = LatLng(40.71398657613997, -74.24413025379181)
+        clickOnMapAt(clickPosition)
+        Thread.sleep(200)
+
+        scenario.onActivity {
+            assertThat(groundOverlay.transparency).isNotEqualTo(initialTransparency)
         }
     }
 

@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(project(":common-ui"))
+    implementation(libs.uiautomator)
 
     // Tests
     testImplementation(libs.junit)
