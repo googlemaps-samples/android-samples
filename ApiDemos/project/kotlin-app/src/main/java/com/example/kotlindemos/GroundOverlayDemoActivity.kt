@@ -40,7 +40,7 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
     OnMapReadyCallback, OnGroundOverlayClickListener {
 
     private val images: MutableList<BitmapDescriptor> = ArrayList()
-    private var groundOverlay: GroundOverlay? = null
+    internal var groundOverlay: GroundOverlay? = null
 
     // These are internal for testing purposes only.
     internal var groundOverlayRotated: GroundOverlay? = null
@@ -108,12 +108,12 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         )
 
         // Add a large overlay at Newark on top of the smaller overlay.
-        groundOverlay = map.addGroundOverlay(
-            GroundOverlayOptions()
-                .image(images[currentEntry])
-                .anchor(0f, 1f)
-                .position(NEWARK, 8600f, 6500f)
-        )
+                groundOverlay = map.addGroundOverlay(
+                    GroundOverlayOptions()
+                        .image(images[currentEntry]).anchor(0f, 1f)
+                        .position(NEWARK, 8600f, 6500f)
+                )
+                groundOverlay?.tag = images[currentEntry]
         binding.transparencySeekBar.setOnSeekBarChangeListener(this)
 
         // Override the default content description on the view for accessibility mode.
@@ -138,9 +138,10 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
      * Cycles through the available images for the main ground overlay.
      */
     private fun switchImage() {
-        // The modulo operator (%) is a convenient way to cycle through the images.
+        val overlay = groundOverlay ?: return
         currentEntry = (currentEntry + 1) % images.size
-        groundOverlay?.setImage(images[currentEntry])
+        overlay.setImage(images[currentEntry])
+        overlay.tag = images[currentEntry]
     }
 
     /**

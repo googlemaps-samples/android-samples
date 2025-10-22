@@ -6,6 +6,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.GroundOverlay
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
@@ -76,6 +77,35 @@ class GroundOverlayDemoActivityTest {
 
         scenario.onActivity {
             assertThat(groundOverlay.transparency).isEqualTo(transparencyAfterToggle)
+        }
+    }
+
+    @Test
+    fun testTransparencySeekBar() {
+        var initialTransparency = 0f
+        scenario.onActivity { activity ->
+            initialTransparency = activity.groundOverlay!!.transparency
+        }
+
+        onView(withId(com.example.common_ui.R.id.transparencySeekBar)).perform(click())
+
+        scenario.onActivity { activity ->
+            assertThat(activity.groundOverlay!!.transparency).isNotEqualTo(initialTransparency)
+            assertThat(activity.groundOverlayRotated!!.transparency).isEqualTo(initialTransparency)
+        }
+    }
+
+    @Test
+    fun testSwitchImageButton() {
+        var initialBitmapDescriptor: BitmapDescriptor? = null
+        scenario.onActivity { activity ->
+            initialBitmapDescriptor = activity.groundOverlay!!.tag as BitmapDescriptor
+        }
+
+        onView(withId(com.example.common_ui.R.id.switchImage)).perform(click())
+
+        scenario.onActivity { activity ->
+            assertThat(activity.groundOverlay!!.tag as BitmapDescriptor).isNotEqualTo(initialBitmapDescriptor)
         }
     }
 

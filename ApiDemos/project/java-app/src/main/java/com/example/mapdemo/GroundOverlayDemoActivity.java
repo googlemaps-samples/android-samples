@@ -112,10 +112,10 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
             .clickable(binding.toggleClickability.isChecked()));
 
         // Add a large overlay at Newark on top of the smaller overlay.
-        groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
-            .image(images.get(currentEntry))
-            .anchor(0, 1)
-            .position(NEWARK, 8600f, 6500f));
+                groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
+                        .image(images.get(currentEntry)).anchor(0, 1)
+                        .position(NEWARK, 8600f, 6500f));
+                groundOverlay.setTag(images.get(currentEntry));
 
         binding.transparencySeekBar.setOnSeekBarChangeListener(this);
 
@@ -144,13 +144,10 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         }
     }
 
-    /**
-     * Cycles through the available images for the main ground overlay.
-     */
     private void switchImage() {
-        // The modulo operator (%) is a convenient way to cycle through the images.
         currentEntry = (currentEntry + 1) % images.size();
         groundOverlay.setImage(images.get(currentEntry));
+        groundOverlay.setTag(images.get(currentEntry));
     }
 
     /**
