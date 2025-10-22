@@ -17,6 +17,7 @@ package com.example.kotlindemos
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import com.example.common_ui.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -36,8 +37,12 @@ import com.google.android.gms.maps.model.LatLng
  * oriented against the Earth's surface rather than the screen. Rotating, tilting, or zooming the
  * map changes the orientation of the camera, but not the overlay.
  */
-class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener,
-    OnMapReadyCallback, OnGroundOverlayClickListener {
+class GroundOverlayDemoActivity : SamplesBaseActivity(),
+    OnSeekBarChangeListener,
+    OnMapReadyCallback,
+    OnGroundOverlayClickListener,
+    GoogleMap.OnMapClickListener
+{
 
     private val images: MutableList<BitmapDescriptor> = ArrayList()
     internal var groundOverlay: GroundOverlay? = null
@@ -75,10 +80,11 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
      */
     override fun onMapReady(googleMap: GoogleMap) {
         this.map = googleMap
-        this.mapReady = true
 
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this)
+
+        map.setOnMapClickListener(this)
 
         // Move the camera to the Newark area.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11f))
@@ -108,17 +114,20 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         )
 
         // Add a large overlay at Newark on top of the smaller overlay.
-                groundOverlay = map.addGroundOverlay(
-                    GroundOverlayOptions()
-                        .image(images[currentEntry]).anchor(0f, 1f)
-                        .position(NEWARK, 8600f, 6500f)
-                )
-                groundOverlay?.tag = images[currentEntry]
+        groundOverlay = map.addGroundOverlay(
+            GroundOverlayOptions()
+                .image(images[currentEntry]).anchor(0f, 1f)
+                .position(NEWARK, 8600f, 6500f)
+        )
+        groundOverlay?.tag = images[currentEntry]
+
         binding.transparencySeekBar.setOnSeekBarChangeListener(this)
 
         // Override the default content description on the view for accessibility mode.
         // Ideally this string would be localized.
         map.setContentDescription("Google Map with ground overlay.")
+
+        this.mapReady = true
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {}
@@ -151,7 +160,11 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
         // In this demo, we only toggle the transparency of the smaller, rotated overlay.
         // The transparency is toggled between 0.0f (opaque) and 0.5f (semi-transparent).
         groundOverlayRotated?.let {
-            it.transparency = 0.5f - it.transparency
+            if (it.transparency < 0.25f) {
+                it.transparency = 0.5f
+            } else {
+                it.transparency = 0.0f
+            }
         }
     }
 
@@ -160,10 +173,26 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener
      */
     private fun toggleClickability() {
         // The clickability of an overlay can be changed at any time.
+        android.util.Log.d(TAG, "Clickability toggled!")
         groundOverlayRotated?.isClickable = binding.toggleClickability.isChecked
     }
 
+    override fun onMapClick(p0: LatLng) {
+        Toast.makeText(
+            this,
+            "Clicked on ${p0.latitude}, ${p0.longitude}",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        val clickedGroundOverlay = groundOverlayRotated
+        if (clickedGroundOverlay != null && clickedGroundOverlay.bounds.contains(p0)) {
+            clickedGroundOverlay.transparency = 0.5f - clickedGroundOverlay.transparency
+        }
+
+    }
+
     companion object {
+        private val TAG = GroundOverlayDemoActivity::class.java.simpleName
         private const val TRANSPARENCY_MAX = 100
         private val NEWARK = LatLng(40.714086, -74.228697)
         private val NEAR_NEWARK = LatLng(

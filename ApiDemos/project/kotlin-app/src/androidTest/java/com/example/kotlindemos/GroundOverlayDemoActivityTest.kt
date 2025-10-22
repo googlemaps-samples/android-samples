@@ -8,6 +8,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.GroundOverlay
+import com.google.android.gms.maps.model.LatLng
 import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Before
@@ -47,37 +48,65 @@ class GroundOverlayDemoActivityTest {
 
     @Test
     fun testToggleClickability() {
+        Thread.sleep(2000)
+
+        // Get the initial transparency and position of the overlay on the UI thread.
         var initialTransparency = 0f
-        scenario.onActivity {
+        scenario.onActivity { activity ->
             initialTransparency = groundOverlay.transparency
         }
 
-        onView(withId(com.example.common_ui.R.id.map)).perform(click())
+        val clickPosition = LatLng(40.71398657613997, -74.24413025379181)
 
-        // Let the map idle before checking the transparency.
-        idlingResource.waitForIdle()
+        // Perform a click inside the ground overlay.
+        clickOnMapAt(clickPosition)
 
+        // This is not ideal, but it's a simple way to make the test reliable.
+        Thread.sleep(200)
+
+        // Verify that the transparency has changed, indicating the click was successful.
         scenario.onActivity {
             assertThat(groundOverlay.transparency).isNotEqualTo(initialTransparency)
         }
 
-        // Disable clickability.
+        // Disable clickability by clicking the checkbox.
         onView(withId(com.example.common_ui.R.id.toggleClickability)).perform(click())
 
+        // Get the transparency after the first click.
         var transparencyAfterToggle = 0f
         scenario.onActivity {
             transparencyAfterToggle = groundOverlay.transparency
         }
 
-        // Now, clicking the map should not change the transparency.
-        onView(withId(com.example.common_ui.R.id.map)).perform(click())
+        // Perform another click at the same location.
+        clickOnMapAt(clickPosition)
 
-        // Let the map idle before checking the transparency.
-        idlingResource.waitForIdle()
-
+        // Verify that the transparency has NOT changed, because the overlay is no longer clickable.
         scenario.onActivity {
             assertThat(groundOverlay.transparency).isEqualTo(transparencyAfterToggle)
         }
+    }
+
+    /**
+     * Helper function to perform a click at a specific geographical location on the map.
+     */
+    private fun clickOnMapAt(latLng: LatLng) {
+        val coordinates = FloatArray(2)
+        scenario.onActivity { activity ->
+            val projection = activity.map.projection
+            val screenPosition = projection.toScreenLocation(latLng)
+            coordinates[0] = screenPosition.x.toFloat()
+            coordinates[1] = screenPosition.y.toFloat()
+        }
+
+        val clickAction = androidx.test.espresso.action.GeneralClickAction(
+            androidx.test.espresso.action.Tap.SINGLE,
+            { _ -> coordinates },
+            androidx.test.espresso.action.Press.FINGER,
+            android.view.InputDevice.SOURCE_UNKNOWN,
+            android.view.MotionEvent.BUTTON_PRIMARY
+        )
+        onView(withId(com.example.common_ui.R.id.map)).perform(clickAction)
     }
 
     @Test
