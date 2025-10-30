@@ -5,6 +5,9 @@ build/
 # Local configuration file (sdk path, etc)
 local.properties
 
+# Secrets
+secrets.properties
+
 # Log/OS Files
 *.log
 
@@ -19,9 +22,6 @@ output-metadata.json
 # IntelliJ
 *.iml
 .idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
 
 # Keystore files
 *.jks
@@ -32,21 +32,3 @@ google-services.json
 
 # Android Profiling
 *.hprof
-=======
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
-/app/google-services.json
-/secrets.properties

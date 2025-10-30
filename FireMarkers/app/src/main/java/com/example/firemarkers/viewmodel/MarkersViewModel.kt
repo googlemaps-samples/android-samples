@@ -19,6 +19,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -83,10 +85,13 @@ class MarkersViewModel @Inject constructor(
     private val firebaseConnection: FirebaseConnection
 ) : ViewModel() {
 
-    private val viewModelId = UUID.randomUUID().toString().substring(0, 4)
+    internal val viewModelId = UUID.randomUUID().toString().substring(0, 4)
     private val _markers = MutableStateFlow<List<MarkerData>>(emptyList())
     private val _animationStateDB = MutableStateFlow(AnimationState())
     private var animationJob: Job? = null
+
+    private val _errorEvents = MutableSharedFlow<String>()
+    val errorEvents = _errorEvents.asSharedFlow()
 
     val markers: StateFlow<List<MarkerData>> = combine(
         _markers,
@@ -137,6 +142,9 @@ class MarkersViewModel @Inject constructor(
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e(TAG, "[$viewModelId] Database error on markers: ${error.message}")
+                    viewModelScope.launch {
+                        _errorEvents.emit("Database error on markers: ${error.message}")
+                    }
                 }
             })
     }
@@ -167,6 +175,9 @@ class MarkersViewModel @Inject constructor(
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e(TAG, "[$viewModelId] DB error on animation: ${error.message}")
+                    viewModelScope.launch {
+                        _errorEvents.emit("DB error on animation: ${error.message}")
+                    }
                 }
             })
     }
@@ -328,11 +339,11 @@ class MarkersViewModel @Inject constructor(
      * @property controllerId The unique ID of the ViewModel instance currently driving the animation.
      * @property timestamp The server-side timestamp of the last state update.
      */
-    private data class AnimationState(
+    internal data class AnimationState(
         val running: Boolean = false,
         val fraction: Double = 0.0,
         val direction: Double = 1.0,
-        val controllerId: String = "",
+        internal val controllerId: String = "",
         val timestamp: Long = 0
     ) {
         /**

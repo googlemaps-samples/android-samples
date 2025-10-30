@@ -1,81 +1,70 @@
-digraph FireMarkersArchitecture {
-    bgcolor="#fafafa"
-    node [shape=box, style="rounded,filled", fontname="Arial", fontsize=10];
-    edge [fontname="Arial", fontsize=9];
+digraph Architecture {
+    rankdir=TB;
+    node [shape=box, style=rounded];
 
-    // Define clusters for grouping
-    subgraph cluster_firebase {
+    subgraph "cluster_firebase" {
         label="Firebase Cloud";
         style="filled";
-        color="#FFEBEE";
-        DB [label="Firebase Realtime Database
-/markers", fillcolor="#FFCDD2"];
+        color="lightgrey";
+        MarkersDB [label="Firebase Realtime Database
+/markers"];
+        AnimationDB [label="Firebase Realtime Database
+/animation"];
     }
 
-    subgraph cluster_android_app {
+    subgraph "cluster_android" {
         label="Android App";
         style="filled";
-        color="#E3F2FD";
+        color="lightgrey";
 
-        subgraph cluster_ui_layer {
+        subgraph "cluster_ui" {
             label="UI Layer (View)";
-            style="filled";
-            color="#BBDEFB";
-            MainActivity [label="MainActivity"];
-            MapScreen [label="MapScreen Composable"];
-            TopAppBar [label="TopAppBar Actions
-(Cycle, Seed, Clear)", shape=diamond];
-            GoogleMap [label="GoogleMap Composable"];
+            A [label="MainActivity"];
+            B [label="MapScreen Composable"];
+            C [label="TopAppBar Actions
+(toggleAnimation, seedDatabase, clearMarkers, takeControl)"];
+            D [label="GoogleMap Composable"];
         }
 
-        subgraph cluster_viewmodel_layer {
+        subgraph "cluster_vm" {
             label="State & Logic Layer (ViewModel)";
-            style="filled";
-            color="#C5E1A5";
-            MarkersViewModel [label="MarkersViewModel"];
+            VM [label="MarkersViewModel"];
         }
 
-        subgraph cluster_data_layer {
+        subgraph "cluster_data" {
             label="Data Layer";
-            style="filled";
-            color="#FFF9C4";
-            FirebaseConnection [label="FirebaseConnection"];
-            MarkerData [label="MarkerData Model", shape=ellipse];
+            FC [label="FirebaseConnection"];
+            SD [label="ShapeData"];
+            M [label="MarkerData Model"];
         }
 
-        subgraph cluster_di_layer {
+        subgraph "cluster_di" {
             label="Dependency Injection";
-            style="filled";
-            color="#F5F5F5";
             Hilt [label="Hilt/Dagger"];
         }
     }
 
-    // --- Define Relationships ---
+    // --- Interactions ---
+    A -> B;
+    B -> C;
+    B -> D [label="Renders Markers"];
+    C -> VM [label="Calls function"];
+    VM -> FC [label="Uses"];
+    VM -> SD [label="Reads shape vectors"];
+    
+    // Controller writes to Firebase
+    VM -> AnimationDB [label="Writes animation state"];
+    VM -> MarkersDB [label="Writes marker data"];
 
-    // UI Flow
-    MainActivity -> MapScreen;
-    MapScreen -> TopAppBar [label=" exposes controls"];
-    MapScreen -> GoogleMap [label=" contains"];
+    // All clients listen for real-time updates
+    MarkersDB -> FC [label="Real-time updates", style=dashed];
+    AnimationDB -> FC [label="Real-time updates", style=dashed];
+    
+    FC -> VM;
+    VM -> B [label="Updates StateFlow"];
+    VM -> M [label="Uses Model"];
 
-    // User Interaction
-    TopAppBar -> MarkersViewModel [label=" calls function"];
-
-    // ViewModel to Data Layer
-    MarkersViewModel -> FirebaseConnection [label=" uses"];
-    MarkersViewModel -> MarkerData [label=" uses model", style=dashed];
-
-
-    // Data Layer to Firebase
-    FirebaseConnection -> DB [label=" reads/writes to"];
-    DB -> FirebaseConnection [label=" real-time updates", style=dashed, color=blue];
-
-    // Data Flow back to UI
-    FirebaseConnection -> MarkersViewModel [style=dashed, color=blue];
-    MarkersViewModel -> MapScreen [label=" updates StateFlow", style=dashed, color=blue];
-
-
-    // Dependency Injection
-    Hilt -> FirebaseConnection [label=" injects", style=dotted, arrowhead=empty];
-    Hilt -> MarkersViewModel [label=" injects", style=dotted, arrowhead=empty];
+    // --- DI Graph ---
+    Hilt -> FC [label="Injects"];
+    Hilt -> VM [label="Injects"];
 }

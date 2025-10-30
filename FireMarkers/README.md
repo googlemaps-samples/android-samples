@@ -17,6 +17,8 @@ The app displays a set of markers that can animate between two complex shapes: a
 *   **Procedural Animation:** Implementing a client-side animation loop that smoothly interpolates marker properties (latitude, longitude, and color) between two predefined vector shapes.
 *   **Hilt for Dependency Injection:** Using Hilt to provide a singleton `FirebaseDatabase` instance to the application's ViewModel.
 
+For a detailed visual guide to the project's structure and data flow, see the [**ARCHITECTURE.md**](ARCHITECTURE.md) file.
+
 ## Getting Started
 
 This sample uses the Gradle build system. To build the app, use the `gradlew build` command or use "Import Project" in Android Studio.
@@ -54,18 +56,20 @@ For this sample to work, your Realtime Database must be configured with public r
   }
 }
 ```
-**Note:** These rules are for demonstration purposes only. For a production app, you should implement more secure rules.
+**Note:** These rules are for demonstration purposes only and are **insecure**. They allow anyone to read or write to your database. For a production app, you must implement more restrictive rules to protect your data. See the official guide on [**Securing Realtime Database Rules**](https://firebase.google.com/docs/database/security) for more information.
 
 **3. Add your Google Maps API Key:**
 
 The app requires a Google Maps API key to display the map.
 
 1.  Follow the [**Maps SDK for Android documentation**](https://developers.google.com/maps/documentation/android-sdk/get-api-key) to get an API key.
-2.  Create a file named `secrets.properties` in the `app/` directory of the project.
+2.  Create a file named `secrets.properties` in the project's root directory (at the same level as `local.properties`).
 3.  Add your API key to the `secrets.properties` file, like this:
     ```
     MAPS_API_KEY="YOUR_API_KEY"
     ```
     (Replace `YOUR_API_KEY` with the key you obtained). The project is configured to read this key via the Secrets Gradle Plugin.
+
+> **⚠️ IMPORTANT SECURITY NOTE:** You must prevent your API key from being checked into source control. The included `.gitignore` file is configured to ignore the `secrets.properties` file. **Do not remove this entry.** Committing your API key to a public repository can lead to unauthorized use and result in unexpected charges to your account.
 
 Once you have completed these steps, you can run the app on your device or emulator.

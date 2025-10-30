@@ -12,9 +12,7 @@ plugins {
 
 android {
     namespace = "com.example.firemarkers"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.firemarkers"
@@ -61,7 +59,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -79,6 +76,8 @@ dependencies {
     implementation(libs.hilt.android)
 
     testImplementation(libs.google.truth)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.turbine)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.database)
