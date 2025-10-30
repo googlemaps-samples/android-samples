@@ -343,7 +343,7 @@ class MarkersViewModel @Inject constructor(
         val running: Boolean = false,
         val fraction: Double = 0.0,
         val direction: Double = 1.0,
-        internal val controllerId: String = "",
+        val controllerId: String = "",
         val timestamp: Long = 0
     ) {
         /**
