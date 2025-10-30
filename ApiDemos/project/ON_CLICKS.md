@@ -12,7 +12,7 @@ This file tracks the progress of refactoring `android:onClick` attributes to use
 
 ## `common-ui/src/main/res/layout/ground_overlay_demo.xml`
 
-- [ ] `toggleClickability`
+- [x] `toggleClickability`
 
 ## `common-ui/src/main/res/layout/indoor_demo.xml`
 

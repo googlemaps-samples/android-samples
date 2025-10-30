@@ -24,10 +24,6 @@ import com.google.android.gms.maps.model.IndoorLevel;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -36,7 +32,7 @@ import java.util.List;
  */
 public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
-    private GoogleMap map;
+    GoogleMap map;
 
     private boolean showLevelPicker = true;
 

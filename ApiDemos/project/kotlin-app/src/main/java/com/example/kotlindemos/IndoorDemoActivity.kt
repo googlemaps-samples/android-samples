@@ -14,14 +14,12 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import com.example.common_ui.R
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.IndoorBuilding
 import com.google.android.gms.maps.model.LatLng
 
 /**
@@ -29,9 +27,13 @@ import com.google.android.gms.maps.model.LatLng
  */
 class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
-    private lateinit var map: GoogleMap
+    internal lateinit var map: GoogleMap
     private var showLevelPicker = true
     private lateinit var binding: com.example.common_ui.databinding.IndoorDemoBinding
+
+    internal var activeLevelIndex: Int? = null
+
+    internal var mapReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,19 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.614631, -122.385153), 18f))
+
+        map.setOnIndoorStateChangeListener(
+            object : GoogleMap.OnIndoorStateChangeListener {
+                override fun onIndoorBuildingFocused() {
+                }
+
+                override fun onIndoorLevelActivated(p0: IndoorBuilding) {
+                    activeLevelIndex = p0.activeLevelIndex
+                }
+            }
+        )
+
+        this.mapReady = true
     }
 
     private fun onToggleLevelPicker() {
