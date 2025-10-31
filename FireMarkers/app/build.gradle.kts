@@ -43,7 +43,15 @@ plugins {
     // ---------------------------------------------------------------------------------------------
     alias(libs.plugins.secrets.gradle.plugin) // Manages secrets and API keys.
     alias(libs.plugins.kotlin.serialization)  // Provides Kotlin serialization capabilities.
-    id("com.google.gms.google-services")      // Integrates Google services, like Firebase.
+}
+
+gradle.projectsEvaluated {
+    if (rootProject.file("app/google-services.json").exists()) {
+        project(":app").pluginManager.apply("com.google.gms.google-services")
+        println("Applied Google Services plugin.")
+    } else {
+        println("google-services.json not found — skipping plugin application")
+    }
 }
 
 android {
@@ -81,6 +89,10 @@ android {
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
+    }
+
+    lint {
+        sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 }
 
