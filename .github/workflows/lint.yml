@@ -142,3 +142,13 @@ jobs:
         with:
           sarif_file: WearOS/Wearable/build/reports/lint-results-debug.sarif
           category: WearOS-Wearable
+
+      - name: Run Android Lint for FireMarkers/app
+        run: ./gradlew :app:lintDebug
+        working-directory: FireMarkers
+
+      - name: Upload SARIF for FireMarkers/app
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: FireMarkers/app/build/reports/lint-results-debug.sarif
+          category: FireMarkers-app
