@@ -1,0 +1,70 @@
+digraph Architecture {
+    rankdir=TB;
+    node [shape=box, style=rounded];
+
+    subgraph "cluster_firebase" {
+        label="Firebase Cloud";
+        style="filled";
+        color="lightgrey";
+        MarkersDB [label="Firebase Realtime Database
+/markers"];
+        AnimationDB [label="Firebase Realtime Database
+/animation"];
+    }
+
+    subgraph "cluster_android" {
+        label="Android App";
+        style="filled";
+        color="lightgrey";
+
+        subgraph "cluster_ui" {
+            label="UI Layer (View)";
+            A [label="MainActivity"];
+            B [label="MapScreen Composable"];
+            C [label="TopAppBar Actions
+(toggleAnimation, seedDatabase, clearMarkers, takeControl)"];
+            D [label="GoogleMap Composable"];
+        }
+
+        subgraph "cluster_vm" {
+            label="State & Logic Layer (ViewModel)";
+            VM [label="MarkersViewModel"];
+        }
+
+        subgraph "cluster_data" {
+            label="Data Layer";
+            FC [label="FirebaseConnection"];
+            SD [label="ShapeData"];
+            M [label="MarkerData Model"];
+        }
+
+        subgraph "cluster_di" {
+            label="Dependency Injection";
+            Hilt [label="Hilt/Dagger"];
+        }
+    }
+
+    // --- Interactions ---
+    A -> B;
+    B -> C;
+    B -> D [label="Renders Markers"];
+    C -> VM [label="Calls function"];
+    VM -> FC [label="Uses"];
+    VM -> SD [label="Reads shape vectors"];
+    
+    // Controller writes to Firebase
+    VM -> AnimationDB [label="Writes animation state"];
+    VM -> MarkersDB [label="Writes marker data"];
+
+    // All clients listen for real-time updates
+    MarkersDB -> FC [label="Real-time updates", style=dashed];
+    AnimationDB -> FC [label="Real-time updates", style=dashed];
+    
+    FC -> VM;
+    VM -> B [label="Updates StateFlow"];
+    VM -> M [label="Uses Model"];
+
+    // --- DI Graph ---
+    Hilt -> FC [label="Injects"];
+    Hilt -> VM [label="Injects"];
+}

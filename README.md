@@ -19,6 +19,7 @@ Samples demonstrating how to use
 This repo contains the following samples:
 
 1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Maps SDK for Android.
+1. [FireMarkers](FireMarkers): Demonstrates how to use Firebase Realtime Database to drive synchronized, live animations on a Google Map across multiple devices using a controller/agent architecture.
 1. [WearOS](WearOS):
 Displays a map on a Wear OS device. This sample demonstrates the basic
 setup required for a gradle-based Android Studio project.
