@@ -82,19 +82,19 @@ class CircleDemoActivity :
             Pair(R.string.pattern_mixed, patternMixed)
     )
 
-    private lateinit var map: GoogleMap
+    internal lateinit var map: GoogleMap
 
-    private val circles = ArrayList<DraggableCircle>(1)
+    internal val circles = ArrayList<DraggableCircle>(1)
 
     private var fillColorArgb : Int = 0
     private var strokeColorArgb: Int = 0
 
-    private lateinit var binding: com.example.common_ui.databinding.CircleDemoBinding
+    internal lateinit var binding: com.example.common_ui.databinding.CircleDemoBinding
 
     /**
      * This class contains information about a circle, including its markers
      */
-    private inner class DraggableCircle(center: LatLng, private var radiusMeters: Double) {
+    internal inner class DraggableCircle(center: LatLng, private var radiusMeters: Double) {
         private val centerMarker: Marker? = map.addMarker(MarkerOptions().apply {
             position(center)
             draggable(true)
@@ -107,7 +107,7 @@ class CircleDemoActivity :
                     draggable(true)
                 })
 
-        private val circle: Circle = map.addCircle(
+        internal val circle: Circle = map.addCircle(
                 CircleOptions().apply {
                     center(center)
                     radius(radiusMeters)

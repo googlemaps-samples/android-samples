@@ -40,6 +40,7 @@ kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ver
 kotlinStdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
 lifecycleRuntimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 mapsKtx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "mapsKtx" }
+mapsUtilsKtx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "mapsKtx" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }

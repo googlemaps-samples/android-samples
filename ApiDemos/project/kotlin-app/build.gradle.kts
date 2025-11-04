@@ -84,6 +84,7 @@ dependencies {
 
     implementation(libs.lifecycleRuntimeKtx)
     implementation(libs.mapsKtx)
+    implementation(libs.mapsUtilsKtx)
 
     implementation(libs.activity)
 

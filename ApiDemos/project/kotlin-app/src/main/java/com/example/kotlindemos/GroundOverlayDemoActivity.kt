@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.example.common_ui.R
+import com.example.kotlindemos.utils.MapProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnGroundOverlayClickListener
@@ -36,22 +37,22 @@ import com.google.android.gms.maps.model.LatLng
  * oriented against the Earth's surface rather than the screen. Rotating, tilting, or zooming the
  * map changes the orientation of the camera, but not the overlay.
  */
-class GroundOverlayDemoActivity : SamplesBaseActivity(),
+class GroundOverlayDemoActivity :  SamplesBaseActivity(),
     OnSeekBarChangeListener,
     OnMapReadyCallback,
-    OnGroundOverlayClickListener
+    OnGroundOverlayClickListener,
+    MapProvider
 {
-
     private val images: MutableList<BitmapDescriptor> = ArrayList()
-    internal var groundOverlay: GroundOverlay? = null
+    internal lateinit var groundOverlay: GroundOverlay
 
     // These are internal for testing purposes only.
-    internal var groundOverlayRotated: GroundOverlay? = null
+    internal lateinit var groundOverlayRotated: GroundOverlay
 
     internal var groundOverlayRotatedClickCount = 0
 
-    internal lateinit var map: GoogleMap
-    internal var mapReady = false
+    override lateinit var map: GoogleMap
+    override var mapReady = false
 
     private lateinit var binding: com.example.common_ui.databinding.GroundOverlayDemoBinding
     private var currentEntry = 0
@@ -116,15 +117,16 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
                 .bearing(30f)
                 // The initial clickability of the overlay.
                 .clickable(binding.toggleClickability.isChecked)
-        )
+        ) ?: error("Expected a non null addGroundOverlay")
 
         // Add a large overlay at Newark on top of the smaller overlay.
         groundOverlay = map.addGroundOverlay(
             GroundOverlayOptions()
                 .image(images[currentEntry]).anchor(0f, 1f)
                 .position(NEWARK, 8600f, 6500f)
-        )
-        groundOverlay?.tag = images[currentEntry]
+        ) ?: error("Expected a non null addGroundOverlay")
+
+        groundOverlay.tag = images[currentEntry]
 
         binding.transparencySeekBar.setOnSeekBarChangeListener(this)
 
@@ -145,17 +147,16 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         // Update the transparency of the main ground overlay. The transparency ranges from
         // 0 (completely opaque) to 1 (completely transparent).
-        groundOverlay?.transparency = progress.toFloat() / TRANSPARENCY_MAX.toFloat()
+        groundOverlay.transparency = progress.toFloat() / TRANSPARENCY_MAX.toFloat()
     }
 
     /**
      * Cycles through the available images for the main ground overlay.
      */
     private fun switchImage() {
-        val overlay = groundOverlay ?: return
         currentEntry = (currentEntry + 1) % images.size
-        overlay.setImage(images[currentEntry])
-        overlay.tag = images[currentEntry]
+        groundOverlay.setImage(images[currentEntry])
+        groundOverlay.tag = images[currentEntry]
     }
 
     /**
@@ -165,12 +166,8 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
         // In this demo, we only toggle the transparency of the smaller, rotated overlay.
         // The transparency is toggled between 0.0f (opaque) and 0.5f (semi-transparent).
         groundOverlayRotatedClickCount += 1
-        groundOverlayRotated?.let {
-            if (it.transparency < 0.25f) {
-                it.transparency = 0.5f
-            } else {
-                it.transparency = 0.0f
-            }
+        with(groundOverlayRotated) {
+            transparency = if (transparency < 0.25f) 0.5f else 0.0f
         }
     }
 
@@ -179,14 +176,14 @@ class GroundOverlayDemoActivity : SamplesBaseActivity(),
      */
     private fun toggleClickability() {
         // The clickability of an overlay can be changed at any time.
-        groundOverlayRotated?.isClickable = binding.toggleClickability.isChecked
+        groundOverlayRotated.isClickable = binding.toggleClickability.isChecked
     }
 
     companion object {
         private val TAG = GroundOverlayDemoActivity::class.java.simpleName
         private const val TRANSPARENCY_MAX = 100
-        private val NEWARK = LatLng(40.714086, -74.228697)
-        private val NEAR_NEWARK = LatLng(
+        internal val NEWARK = LatLng(40.714086, -74.228697)
+        internal val NEAR_NEWARK = LatLng(
             NEWARK.latitude - 0.001,
             NEWARK.longitude - 0.025
         )

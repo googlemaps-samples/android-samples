@@ -76,14 +76,14 @@ public class CircleDemoActivity extends SamplesBaseActivity
     private static final List<PatternItem> PATTERN_DASHED = Arrays.asList(DASH, GAP);
     private static final List<PatternItem> PATTERN_MIXED = Arrays.asList(DOT, GAP, DOT, DASH, GAP);
 
-    private GoogleMap map;
+    protected GoogleMap map;
 
-    private final List<DraggableCircle> circles = new ArrayList<>(1);
+    protected final List<DraggableCircle> circles = new ArrayList<>(1);
 
     private int fillColorArgb;
     private int strokeColorArgb;
 
-    private com.example.common_ui.databinding.CircleDemoBinding binding;
+    protected com.example.common_ui.databinding.CircleDemoBinding binding;
 
     // These are the options for stroke patterns. We use their
     // string resource IDs as identifiers.
@@ -95,10 +95,10 @@ public class CircleDemoActivity extends SamplesBaseActivity
             com.example.common_ui.R.string.pattern_mixed,
     };
 
-    private class DraggableCircle {
+    protected class DraggableCircle {
         private final Marker centerMarker;
         private final Marker radiusMarker;
-        private final Circle circle;
+        public final Circle circle;
         private double radiusMeters;
 
         public DraggableCircle(LatLng center, double radiusMeters) {
