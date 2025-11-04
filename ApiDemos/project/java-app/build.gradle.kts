@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.activity)
     implementation(project(":common-ui"))
     implementation(libs.uiautomator)
+    implementation(libs.mapsUtilsKtx)
 
     // Tests
     testImplementation(libs.junit)
