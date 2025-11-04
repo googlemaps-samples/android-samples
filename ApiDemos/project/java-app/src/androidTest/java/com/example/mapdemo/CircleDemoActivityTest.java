@@ -120,11 +120,7 @@ public class CircleDemoActivityTest extends MapDemoActivityTest<CircleDemoActivi
 
         // It can take a moment for the new circle to be rendered. A brief pause
         // helps prevent the test from failing intermittently.
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        idlingResource.waitForIdle(200);
 
         // 3. Restore camera and verify results
         scenario.onActivity(activity -> {

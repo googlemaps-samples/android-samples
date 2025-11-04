@@ -29,6 +29,8 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
+import com.example.mapdemo.utils.MapProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,7 @@ import java.util.List;
  */
 public class GroundOverlayDemoActivity extends SamplesBaseActivity
     implements OnSeekBarChangeListener, OnMapReadyCallback,
-    GoogleMap.OnGroundOverlayClickListener {
+    GoogleMap.OnGroundOverlayClickListener, MapProvider {
 
     private static final String TAG = GroundOverlayDemoActivity.class.getName();
 
@@ -53,17 +55,27 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
     private final List<BitmapDescriptor> images = new ArrayList<>();
 
     // These are public for testing purposes only.
-    public GoogleMap mMap;
-    public GroundOverlay groundOverlay;
-    public GroundOverlay groundOverlayRotated;
+    GoogleMap mMap;
+    GroundOverlay groundOverlay;
+    GroundOverlay groundOverlayRotated;
 
-    public int groundOverlayRotatedClickCount = 0;
-    public int mapClickCount = 0;
+    int groundOverlayRotatedClickCount = 0;
+    int mapClickCount = 0;
 
-    private com.example.common_ui.databinding.GroundOverlayDemoBinding binding;
+    com.example.common_ui.databinding.GroundOverlayDemoBinding binding;
     private int currentEntry = 0;
 
-    public boolean mapReady = false;
+    boolean mapReady = false;
+
+    @Override
+    public GoogleMap getMap() {
+        return mMap;
+    }
+
+    @Override
+    public boolean isMapReady() {
+        return mapReady;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -52,4 +52,23 @@ public class MapIdlingResource implements IdlingResource, GoogleMap.OnCameraIdle
             }
         }
     }
+
+    public void waitForIdle(long additionalDelay) {
+        // Wait for the map to become idle.
+        while (!isIdleNow()) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (additionalDelay > 0) {
+            try {
+                Thread.sleep(additionalDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
