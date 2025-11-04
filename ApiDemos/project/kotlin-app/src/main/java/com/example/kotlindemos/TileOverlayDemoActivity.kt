@@ -39,17 +39,18 @@ import java.util.*
 class TileOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener, OnMapReadyCallback {
 
     private lateinit var mMoonTiles: TileOverlay
-    private lateinit var mTransparencyBar: SeekBar
+    private lateinit var binding: com.example.common_ui.databinding.TileOverlayDemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tile_overlay_demo)
-        mTransparencyBar = findViewById(R.id.transparencySeekBar)
-        mTransparencyBar.max = TRANSPARENCY_MAX
-        mTransparencyBar.progress = 0
+        binding = com.example.common_ui.databinding.TileOverlayDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.transparencySeekBar.max = TRANSPARENCY_MAX
+        binding.transparencySeekBar.progress = 0
+        binding.fadeInToggle.setOnClickListener { setFadeIn() }
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -70,11 +71,11 @@ class TileOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener, 
             }
         }
         mMoonTiles = map.addTileOverlay(TileOverlayOptions().tileProvider(tileProvider))!!
-        mTransparencyBar.setOnSeekBarChangeListener(this)
+        binding.transparencySeekBar.setOnSeekBarChangeListener(this)
     }
 
-    fun setFadeIn(view: View) {
-        mMoonTiles.fadeIn = (view as CheckBox).isChecked
+    private fun setFadeIn() {
+        mMoonTiles.fadeIn = binding.fadeInToggle.isChecked
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {}

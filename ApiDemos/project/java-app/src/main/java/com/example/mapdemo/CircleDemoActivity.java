@@ -83,13 +83,7 @@ public class CircleDemoActivity extends SamplesBaseActivity
     private int fillColorArgb;
     private int strokeColorArgb;
 
-    private SeekBar fillHueBar;
-    private SeekBar fillAlphaBar;
-    private SeekBar strokeWidthBar;
-    private SeekBar strokeHueBar;
-    private SeekBar strokeAlphaBar;
-    private Spinner strokePatternSpinner;
-    private CheckBox clickabilityCheckbox;
+    private com.example.common_ui.databinding.CircleDemoBinding binding;
 
     // These are the options for stroke patterns. We use their
     // string resource IDs as identifiers.
@@ -120,10 +114,10 @@ public class CircleDemoActivity extends SamplesBaseActivity
             circle = map.addCircle(new CircleOptions()
                     .center(center)
                     .radius(radiusMeters)
-                    .strokeWidth(strokeWidthBar.getProgress())
+                    .strokeWidth(binding.strokeWidthSeekBar.getProgress())
                     .strokeColor(strokeColorArgb)
                     .fillColor(fillColorArgb)
-                    .clickable(clickabilityCheckbox.isChecked()));
+                    .clickable(binding.toggleClickability.isChecked()));
         }
 
         public boolean onMarkerMoved(Marker marker) {
@@ -142,7 +136,7 @@ public class CircleDemoActivity extends SamplesBaseActivity
         }
 
         public void onStyleChange() {
-            circle.setStrokeWidth(strokeWidthBar.getProgress());
+            circle.setStrokeWidth(binding.strokeWidthSeekBar.getProgress());
             circle.setStrokeColor(strokeColorArgb);
             circle.setFillColor(fillColorArgb);
         }
@@ -173,39 +167,34 @@ public class CircleDemoActivity extends SamplesBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.circle_demo);
+        binding = com.example.common_ui.databinding.CircleDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        fillHueBar = findViewById(com.example.common_ui.R.id.fillHueSeekBar);
-        fillHueBar.setMax(MAX_HUE_DEGREES);
-        fillHueBar.setProgress(MAX_HUE_DEGREES / 2);
+        binding.fillHueSeekBar.setMax(MAX_HUE_DEGREES);
+        binding.fillHueSeekBar.setProgress(MAX_HUE_DEGREES / 2);
 
-        fillAlphaBar = findViewById(com.example.common_ui.R.id.fillAlphaSeekBar);
-        fillAlphaBar.setMax(MAX_ALPHA);
-        fillAlphaBar.setProgress(MAX_ALPHA / 2);
+        binding.fillAlphaSeekBar.setMax(MAX_ALPHA);
+        binding.fillAlphaSeekBar.setProgress(MAX_ALPHA / 2);
 
-        strokeWidthBar = findViewById(com.example.common_ui.R.id.strokeWidthSeekBar);
-        strokeWidthBar.setMax(MAX_WIDTH_PX);
-        strokeWidthBar.setProgress(MAX_WIDTH_PX / 3);
+        binding.strokeWidthSeekBar.setMax(MAX_WIDTH_PX);
+        binding.strokeWidthSeekBar.setProgress(MAX_WIDTH_PX / 3);
 
-        strokeHueBar = findViewById(com.example.common_ui.R.id.strokeHueSeekBar);
-        strokeHueBar.setMax(MAX_HUE_DEGREES);
-        strokeHueBar.setProgress(0);
+        binding.strokeHueSeekBar.setMax(MAX_HUE_DEGREES);
+        binding.strokeHueSeekBar.setProgress(0);
 
-        strokeAlphaBar = findViewById(com.example.common_ui.R.id.strokeAlphaSeekBar);
-        strokeAlphaBar.setMax(MAX_ALPHA);
-        strokeAlphaBar.setProgress(MAX_ALPHA);
+        binding.strokeAlphaSeekBar.setMax(MAX_ALPHA);
+        binding.strokeAlphaSeekBar.setProgress(MAX_ALPHA);
 
-        strokePatternSpinner = findViewById(com.example.common_ui.R.id.strokePatternSpinner);
-        strokePatternSpinner.setAdapter(new ArrayAdapter<>(
+        binding.strokePatternSpinner.setAdapter(new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item,
                 getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
-        clickabilityCheckbox = findViewById(com.example.common_ui.R.id.toggleClickability);
+        binding.toggleClickability.setOnClickListener(v -> toggleClickability());
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     private String[] getResourceStrings(int[] resourceIds) {
@@ -226,18 +215,18 @@ public class CircleDemoActivity extends SamplesBaseActivity
         map.setOnMapLongClickListener(this);
 
         fillColorArgb = Color.HSVToColor(
-                fillAlphaBar.getProgress(), new float[]{fillHueBar.getProgress(), 1, 1});
+                binding.fillAlphaSeekBar.getProgress(), new float[]{binding.fillHueSeekBar.getProgress(), 1, 1});
         strokeColorArgb = Color.HSVToColor(
-                strokeAlphaBar.getProgress(), new float[]{strokeHueBar.getProgress(), 1, 1});
+                binding.strokeAlphaSeekBar.getProgress(), new float[]{binding.strokeHueSeekBar.getProgress(), 1, 1});
 
-        fillHueBar.setOnSeekBarChangeListener(this);
-        fillAlphaBar.setOnSeekBarChangeListener(this);
+        binding.fillHueSeekBar.setOnSeekBarChangeListener(this);
+        binding.fillAlphaSeekBar.setOnSeekBarChangeListener(this);
 
-        strokeWidthBar.setOnSeekBarChangeListener(this);
-        strokeHueBar.setOnSeekBarChangeListener(this);
-        strokeAlphaBar.setOnSeekBarChangeListener(this);
+        binding.strokeWidthSeekBar.setOnSeekBarChangeListener(this);
+        binding.strokeHueSeekBar.setOnSeekBarChangeListener(this);
+        binding.strokeAlphaSeekBar.setOnSeekBarChangeListener(this);
 
-        strokePatternSpinner.setOnItemSelectedListener(this);
+        binding.strokePatternSpinner.setOnItemSelectedListener(this);
 
         DraggableCircle circle = new DraggableCircle(SYDNEY, DEFAULT_RADIUS_METERS);
         circles.add(circle);
@@ -254,7 +243,7 @@ public class CircleDemoActivity extends SamplesBaseActivity
             }
         });
 
-        List<PatternItem> pattern = getSelectedPattern(strokePatternSpinner.getSelectedItemPosition());
+        List<PatternItem> pattern = getSelectedPattern(binding.strokePatternSpinner.getSelectedItemPosition());
         for (DraggableCircle draggableCircle : circles) {
             draggableCircle.setStrokePattern(pattern);
         }
@@ -301,16 +290,16 @@ public class CircleDemoActivity extends SamplesBaseActivity
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (seekBar == fillHueBar) {
+        if (seekBar == binding.fillHueSeekBar) {
             fillColorArgb =
                     Color.HSVToColor(Color.alpha(fillColorArgb), new float[]{progress, 1, 1});
-        } else if (seekBar == fillAlphaBar) {
+        } else if (seekBar == binding.fillAlphaSeekBar) {
             fillColorArgb = Color.argb(progress, Color.red(fillColorArgb),
                     Color.green(fillColorArgb), Color.blue(fillColorArgb));
-        } else if (seekBar == strokeHueBar) {
+        } else if (seekBar == binding.strokeHueSeekBar) {
             strokeColorArgb =
                     Color.HSVToColor(Color.alpha(strokeColorArgb), new float[]{progress, 1, 1});
-        } else if (seekBar == strokeAlphaBar) {
+        } else if (seekBar == binding.strokeAlphaSeekBar) {
             strokeColorArgb = Color.argb(progress, Color.red(strokeColorArgb),
                     Color.green(strokeColorArgb), Color.blue(strokeColorArgb));
         }
@@ -355,8 +344,8 @@ public class CircleDemoActivity extends SamplesBaseActivity
         circles.add(circle);
     }
 
-    public void toggleClickability(View view) {
-        boolean clickable = ((CheckBox) view).isChecked();
+    private void toggleClickability() {
+        boolean clickable = binding.toggleClickability.isChecked();
         // Set each of the circles to be clickable or not, based on the
         // state of the checkbox.
         for (DraggableCircle draggableCircle : circles) {

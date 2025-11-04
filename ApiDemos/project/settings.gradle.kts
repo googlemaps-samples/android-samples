@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
+include(":common-ui")
 include(":java-app")
 include(":kotlin-app")
-include(":common-ui")

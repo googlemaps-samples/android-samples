@@ -33,37 +33,29 @@ class SnapshotDemoActivity : SamplesBaseActivity() {
      * Note that this may be null if the Google Play services APK is not available.
      */
     private lateinit var map: GoogleMap
-    private lateinit var waitForMapLoadCheckBox: CheckBox
-    private lateinit var snapshotHolder: ImageView
+    private lateinit var binding: com.example.common_ui.databinding.SnapshotDemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.snapshot_demo)
-        waitForMapLoadCheckBox = findViewById(R.id.wait_for_map_load)
-        snapshotHolder = findViewById(R.id.snapshot_holder)
+        binding = com.example.common_ui.databinding.SnapshotDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.screenshotButton?.setOnClickListener { takeSnapshot() }
+        binding.clearButton?.setOnClickListener { clearSnapshot() }
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         lifecycleScope.launchWhenCreated {
             map = mapFragment.awaitMap()
         }
-        applyInsets(findViewById<View?>(R.id.map_container))
-    }
-
-    fun onScreenshot(view: View) {
-        takeSnapshot()
-    }
-
-    fun onClearScreenshot(view: View) {
-        val snapshotHolder =
-            this.findViewById<ImageView>(R.id.snapshot_holder)
-        snapshotHolder.setImageDrawable(null)
+        applyInsets(binding.mapContainer)
     }
 
     private fun takeSnapshot() {
         val callback =
             SnapshotReadyCallback { snapshot -> // Callback is called from the main thread, so we can modify the ImageView safely.
-                snapshotHolder.setImageBitmap(snapshot)
+                binding.snapshotHolder.setImageBitmap(snapshot)
             }
-        if (waitForMapLoadCheckBox.isChecked) {
+        if ((binding.waitForMapLoad as CheckBox).isChecked) {
             map.setOnMapLoadedCallback { map.snapshot(callback) }
         } else {
             map.snapshot(callback)
@@ -74,6 +66,6 @@ class SnapshotDemoActivity : SamplesBaseActivity() {
      * Called when the clear button is clicked.
      */
     private fun clearSnapshot() {
-        snapshotHolder.setImageDrawable(null)
+        binding.snapshotHolder.setImageDrawable(null)
     }
 }

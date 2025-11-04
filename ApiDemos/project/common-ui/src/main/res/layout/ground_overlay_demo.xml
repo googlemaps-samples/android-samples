@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/transparencySeekBar"
-            android:onClick="switchImage"
+
             android:text="@string/switch_image" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -75,7 +75,6 @@
             android:layout_alignBottom="@+id/switchImage"
             android:layout_toEndOf="@+id/switchImage"
             android:checked="true"
-            android:onClick="toggleClickability"
             android:text="@string/clickable" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,7 +58,7 @@
             android:id="@+id/traffic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onTrafficToggled"
+
             android:text="@string/traffic" />
 
         <CheckBox

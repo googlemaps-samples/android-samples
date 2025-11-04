@@ -42,7 +42,6 @@
         android:id="@+id/go_to_darwin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="showDarwin"
         android:text="@string/lite_go_to_darwin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lite_demo_introtext" />
@@ -51,7 +50,6 @@
         android:id="@+id/go_to_adelaide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="showAdelaide"
         android:text="@string/lite_go_to_adelaide"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/go_to_darwin" />
@@ -60,7 +58,6 @@
         android:id="@+id/go_to_australia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="showAustralia"
         android:text="@string/lite_go_to_australia"
         app:layout_constraintStart_toEndOf="@id/go_to_darwin"
         app:layout_constraintStart_toStartOf="parent"

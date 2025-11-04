@@ -30,8 +30,8 @@
     <string name="circle_demo_label">Circles</string>
     <string name="circle_demo_description">Demonstrates how to add Circles to a map.</string>
 
-    <string name="camera_clamping_demo_label">Camera Clamping</string>
-    <string name="camera_clamping_demo_description">Demonstrates how to constrain the camera to specific boundaries and zoom levels.</string>
+    <string name="camera_clamping_demo_description">Demonstrates how to use Camera Clamping.</string>
+    <string name="camera_clamping_demo_label">Camera Clamping Demo</string>
     <string name="clamp_latlng_adelaide">Clamp to Adelaide</string>
     <string name="clamp_latlng_pacific">Clamp to Pacific</string>
     <string name="clamp_latlng_reset">Reset LatLng Bounds</string>

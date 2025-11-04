@@ -30,11 +30,13 @@ android {
         versionCode = 1
         versionName = "1.18.0"
         multiDexEnabled = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -69,13 +71,15 @@ dependencies {
     implementation(libs.playServicesMaps)
     implementation(libs.material)
     implementation(libs.activity)
+    implementation(project(":common-ui"))
+    implementation(libs.uiautomator)
 
     // Tests
     testImplementation(libs.junit)
+    androidTestImplementation(libs.espressoIdlingResource)
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
-
-    implementation(project(":common-ui"))
+    androidTestImplementation(libs.truth)
 }
 
 secrets {

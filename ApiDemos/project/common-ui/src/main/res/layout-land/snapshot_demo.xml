@@ -16,6 +16,7 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -56,13 +57,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onScreenshot"
             android:text="@string/snapshot_take_button" />
 
         <Button
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClearScreenshot"
-            android:text="@string/snapshot_clear_button" />
+            android:text="@string/snapshot_clear_button"/>
     </LinearLayout>
 </LinearLayout>

@@ -14,6 +14,7 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.databinding.VisibleRegionDemoBinding;
 import com.google.android.libraries.maps.CameraUpdateFactory;
 import com.google.android.libraries.maps.GoogleMap;
 import com.google.android.libraries.maps.GoogleMap.OnCameraIdleListener;
@@ -23,6 +24,7 @@ import com.google.android.libraries.maps.model.CameraPosition;
 import com.google.android.libraries.maps.model.LatLng;
 import com.google.android.libraries.maps.model.LatLngBounds;
 
+import com.example.common_ui.databinding.CameraClampingDemoBinding;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -65,11 +67,21 @@ public class CameraClampingDemoActivity extends AppCompatActivity
 
     private TextView mCameraTextView;
 
+    private CameraClampingDemoBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(com.example.common_ui.R.layout.camera_clamping_demo);
+        binding = CameraClampingDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.clampMinZoom.setOnClickListener(this::onSetMinZoomClamp);
+        binding.clampMaxZoom.setOnClickListener(this::onSetMaxZoomClamp);
+        binding.clampZoomReset.setOnClickListener(this::onMinMaxZoomClampReset);
+        binding.clampLatlngAdelaide.setOnClickListener(this::onClampToAdelaide);
+        binding.clampLatlngPacific.setOnClickListener(this::onClampToPacific);
+        binding.clampLatlngReset.setOnClickListener(this::onLatLngClampReset);
 
         mMap = null;
         resetMinMaxZoom();

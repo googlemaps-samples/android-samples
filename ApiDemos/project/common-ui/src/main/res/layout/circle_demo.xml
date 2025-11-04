@@ -122,14 +122,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
 
-                <CheckBox
-                    android:id="@+id/toggleClickability"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:onClick="toggleClickability"
-                    android:text="@string/clickable" />
-            </TableRow>
+                        <CheckBox
+                            android:id="@+id/toggleClickability"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="@string/clickable" />            </TableRow>
 
         </TableLayout>
 

@@ -14,14 +14,12 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import com.example.common_ui.R
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.IndoorBuilding
 import com.google.android.gms.maps.model.LatLng
 
 /**
@@ -29,37 +27,56 @@ import com.google.android.gms.maps.model.LatLng
  */
 class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
-    private lateinit var map: GoogleMap
+    internal lateinit var map: GoogleMap
     private var showLevelPicker = true
+    private lateinit var binding: com.example.common_ui.databinding.IndoorDemoBinding
+
+    internal var activeLevelIndex: Int? = null
+
+    internal var mapReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.indoor_demo)
+        binding = com.example.common_ui.databinding.IndoorDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.toggleLevelPickerButton.setOnClickListener { onToggleLevelPicker() }
+        binding.focusedBuldingInfoButton.setOnClickListener { onFocusedBuildingInfo() }
+        binding.focusedLevelInfoButton.setOnClickListener { onVisibleLevelInfo() }
+        binding.higherLevelButton.setOnClickListener { onHigherLevel() }
+
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.614631, -122.385153), 18f))
+
+        map.setOnIndoorStateChangeListener(
+            object : GoogleMap.OnIndoorStateChangeListener {
+                override fun onIndoorBuildingFocused() {
+                }
+
+                override fun onIndoorLevelActivated(p0: IndoorBuilding) {
+                    activeLevelIndex = p0.activeLevelIndex
+                }
+            }
+        )
+
+        this.mapReady = true
     }
 
-    /**
-     * Called when the toggle level picker button is clicked.
-     */
-    fun onToggleLevelPicker(view: View?) {
+    private fun onToggleLevelPicker() {
         if (!::map.isInitialized) return
 
         showLevelPicker = !showLevelPicker
         map.uiSettings.isIndoorLevelPickerEnabled = showLevelPicker
     }
 
-    /**
-     * Called when the focused building info is clicked.
-     */
-    fun onFocusedBuildingInfo(view: View?) {
+    private fun onFocusedBuildingInfo() {
         if (!::map.isInitialized) return
 
         val building = map.focusedBuilding
@@ -77,10 +94,7 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         }
     }
 
-    /**
-     * Called when the focused level info is clicked.
-     */
-    fun onVisibleLevelInfo(view: View?) {
+    private fun onVisibleLevelInfo() {
         if (!::map.isInitialized) return
 
         val building = map.focusedBuilding
@@ -96,10 +110,7 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         }
     }
 
-    /**
-     * Called when the activate higher level is clicked.
-     */
-    fun onHigherLevel(view: View?) {
+    private fun onHigherLevel() {
         if (!::map.isInitialized) return
 
         val building = map.focusedBuilding
@@ -125,7 +136,6 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     }
 
     private fun setText(message: String) {
-        val text = findViewById<TextView>(R.id.top_text)
-        text.text = message
+        binding.topText.text = message
     }
 }

@@ -89,6 +89,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     private static final LatLng ALICE_SPRINGS = new LatLng(-24.6980, 133.8807);
 
+    private com.example.common_ui.databinding.MarkerDemoBinding binding;
+
     /** Demonstrates customizing the info window and/or its contents. */
     class CustomInfoWindowAdapter implements InfoWindowAdapter {
 
@@ -105,7 +107,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
         @Override
         public View getInfoWindow(Marker marker) {
-            if (mOptions.getCheckedRadioButtonId() != R.id.custom_info_window) {
+            if (binding.customInfoWindowOptions.getCheckedRadioButtonId() != R.id.custom_info_window) {
                 // This means that getInfoContents will be called.
                 return null;
             }
@@ -115,7 +117,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
         @Override
         public View getInfoContents(Marker marker) {
-            if (mOptions.getCheckedRadioButtonId() != R.id.custom_info_contents) {
+            if (binding.customInfoWindowOptions.getCheckedRadioButtonId() != R.id.custom_info_contents) {
                 // This means that the default info contents will be used.
                 return null;
             }
@@ -200,31 +202,18 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     private final List<Marker> mMarkerRainbow = new ArrayList<>();
 
-    private TextView mTopText;
-
-    private SeekBar mRotationBar;
-
-    private CheckBox mFlatBox;
-
-    private RadioGroup mOptions;
-
     private final Random mRandom = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.marker_demo);
+        binding = com.example.common_ui.databinding.MarkerDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        mTopText = findViewById(R.id.top_text);
+        binding.rotationSeekBar.setMax(360);
+        binding.rotationSeekBar.setOnSeekBarChangeListener(this);
 
-        mRotationBar = findViewById(R.id.rotationSeekBar);
-        mRotationBar.setMax(360);
-        mRotationBar.setOnSeekBarChangeListener(this);
-
-        mFlatBox = findViewById(R.id.flat);
-
-        mOptions = findViewById(R.id.custom_info_window_options);
-        mOptions.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        binding.customInfoWindowOptions.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (mLastSelectedMarker != null && mLastSelectedMarker.isInfoWindowShown()) {
@@ -234,11 +223,15 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
             }
         });
 
+        binding.clearMap.setOnClickListener(v -> onClearMap());
+        binding.resetMap.setOnClickListener(v -> onResetMap());
+        binding.flat.setOnClickListener(v -> onToggleFlat());
+
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
-        applyInsets(findViewById(R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -341,8 +334,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
         // Creates a marker rainbow demonstrating how to create default marker icons of different
         // hues (colors).
-        float rotation = mRotationBar.getProgress();
-        boolean flat = mFlatBox.isChecked();
+        float rotation = binding.rotationSeekBar.getProgress();
+        boolean flat = binding.flat.isChecked();
 
         int numMarkersInRainbow = 12;
         for (int i = 0; i < numMarkersInRainbow; i++) {
@@ -381,16 +374,14 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         return true;
     }
 
-    /** Called when the Clear button is clicked. */
-    public void onClearMap(View view) {
+    private void onClearMap() {
         if (!checkReady()) {
             return;
         }
         mMap.clear();
     }
 
-    /** Called when the Reset button is clicked. */
-    public void onResetMap(View view) {
+    private void onResetMap() {
         if (!checkReady()) {
             return;
         }
@@ -399,12 +390,11 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         addMarkersToMap();
     }
 
-    /** Called when the Reset button is clicked. */
-    public void onToggleFlat(View view) {
+    private void onToggleFlat() {
         if (!checkReady()) {
             return;
         }
-        boolean flat = mFlatBox.isChecked();
+        boolean flat = binding.flat.isChecked();
         for (Marker marker : mMarkerRainbow) {
             marker.setFlat(flat);
         }
@@ -495,17 +485,17 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-        mTopText.setText("onMarkerDragStart");
+        binding.topText.setText("onMarkerDragStart");
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-        mTopText.setText("onMarkerDragEnd");
+        binding.topText.setText("onMarkerDragEnd");
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
-        mTopText.setText("onMarkerDrag.  Current Position: " + marker.getPosition());
+        binding.topText.setText("onMarkerDrag.  Current Position: " + marker.getPosition());
     }
 
 }

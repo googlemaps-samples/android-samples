@@ -24,10 +24,6 @@ import com.google.android.gms.maps.model.IndoorLevel;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -36,19 +32,27 @@ import java.util.List;
  */
 public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
-    private GoogleMap map;
+    GoogleMap map;
 
     private boolean showLevelPicker = true;
+
+    private com.example.common_ui.databinding.IndoorDemoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.indoor_demo);
+        binding = com.example.common_ui.databinding.IndoorDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.toggleLevelPickerButton.setOnClickListener(v -> onToggleLevelPicker());
+        binding.focusedBuldingInfoButton.setOnClickListener(v -> onFocusedBuildingInfo());
+        binding.focusedLevelInfoButton.setOnClickListener(v -> onVisibleLevelInfo());
+        binding.higherLevelButton.setOnClickListener(v -> onHigherLevel());
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -57,18 +61,12 @@ public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapRead
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.614631, -122.385153), 18));
     }
 
-    /**
-     * Called when the toggle level picker button is clicked.
-     */
-    public void onToggleLevelPicker(View view) {
+    private void onToggleLevelPicker() {
         showLevelPicker = !showLevelPicker;
         map.getUiSettings().setIndoorLevelPickerEnabled(showLevelPicker);
     }
 
-    /**
-     * Called when the focused building info is clicked.
-     */
-    public void onFocusedBuildingInfo(View view) {
+    private void onFocusedBuildingInfo() {
         IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
             StringBuilder s = new StringBuilder();
@@ -84,10 +82,7 @@ public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapRead
         }
     }
 
-    /**
-     * Called when the focused level info is clicked.
-     */
-    public void onVisibleLevelInfo(View view) {
+    private void onVisibleLevelInfo() {
         IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
             IndoorLevel level =
@@ -102,10 +97,7 @@ public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapRead
         }
     }
 
-    /**
-     * Called when the activate higher level is clicked.
-     */
-    public void onHigherLevel(View view) {
+    private void onHigherLevel() {
         IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
             List<IndoorLevel> levels = building.getLevels();
@@ -129,7 +121,6 @@ public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapRead
     }
 
     private void setText(String message) {
-        TextView text = findViewById(com.example.common_ui.R.id.top_text);
-        text.setText(message);
+        binding.topText.setText(message);
     }
 }
