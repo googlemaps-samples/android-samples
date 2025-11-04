@@ -10,6 +10,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.GeneralClickAction
 import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Tap
+import androidx.test.espresso.action.Tapper
 import androidx.test.espresso.matcher.ViewMatchers
 import com.example.common_ui.R
 import com.example.kotlindemos.MapIdlingResource
@@ -68,14 +69,21 @@ abstract class MapDemoActivityTest<T>(
         scenario.close()
     }
 
-    protected fun clickOnMapAt(latLng: LatLng) {
-        clickOnMapAt(latLng, map, mapView)
+    protected fun clickOnMapAt(
+        latLng: LatLng,
+        tapType: Tapper = Tap.SINGLE) {
+        clickOnMapAt(latLng, map, mapView, tapType)
     }
 
     /**
      * Helper function to perform a click at a specific geographical location on the map.
      */
-    protected fun clickOnMapAt(latLng: LatLng, map: GoogleMap, mapView: View) {
+    protected fun clickOnMapAt(
+        latLng: LatLng,
+        map: GoogleMap,
+        mapView: View,
+        tapType: Tapper = Tap.SINGLE
+    ) {
         val coordinates = FloatArray(2)
         scenario.onActivity { activity ->
             val mapLocation = IntArray(2)
@@ -89,11 +97,11 @@ abstract class MapDemoActivityTest<T>(
         }
 
         val clickAction = GeneralClickAction(
-            Tap.SINGLE,
-            { _ -> coordinates },
-            Press.FINGER,
-            InputDevice.SOURCE_UNKNOWN,
-            MotionEvent.BUTTON_PRIMARY
+            /* tapper = */ tapType,
+            /* coordinatesProvider = */ { _ -> coordinates },
+            /* precisionDescriber = */ Press.FINGER,
+            /* inputDevice = */ InputDevice.SOURCE_UNKNOWN,
+            /* buttonState = */ MotionEvent.BUTTON_PRIMARY
         )
         Espresso.onView(ViewMatchers.withId(R.id.map)).perform(clickAction)
     }

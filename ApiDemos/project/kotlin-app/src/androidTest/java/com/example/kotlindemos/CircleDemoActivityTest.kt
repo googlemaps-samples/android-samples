@@ -1,7 +1,7 @@
 package com.example.kotlindemos
 
-import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.Tap
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -9,27 +9,17 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.common_ui.R
 import com.example.kotlindemos.truth.LatLngSubject.Companion.assertThat
+import com.example.kotlindemos.utils.MapDemoActivityTest
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.common.truth.Truth.assertThat
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class CircleDemoActivityTest {
-
-    private lateinit var idlingResource: MapIdlingResource
-    private lateinit var scenario: ActivityScenario<CircleDemoActivity>
-
-    @Before
-    fun setUp() {
-        scenario = ActivityScenario.launch(CircleDemoActivity::class.java)
-        scenario.onActivity { activity ->
-            idlingResource = MapIdlingResource(activity.map)
-            androidx.test.espresso.IdlingRegistry.getInstance().register(idlingResource)
-        }
-    }
+class CircleDemoActivityTest :
+    MapDemoActivityTest<CircleDemoActivity>(CircleDemoActivity::class.java) {
 
     @Test
     fun testMapIsDisplayed() {
@@ -104,24 +94,57 @@ class CircleDemoActivityTest {
 
     @Test
     fun testLongClickAddsNewCircle() {
+        lateinit var camera: CameraPosition
+
+        // 1. Initial state check and camera setup
         scenario.onActivity { activity ->
+            // Assert that there is initially only one circle on the map.
             assertThat(activity.circles).hasSize(1)
+
+            // Store the initial camera position so we can restore it later.
+            camera = map.cameraPosition
+
+            // Move the camera to center on the target coordinates (HERE_BE_DRAGONS).
+            // The clickOnMapAt() function translates a LatLng coordinate to screen pixels.
+            // This translation loses precision, especially if the map is zoomed out.
+            // By zoom in on the target, we ensure the click is more accurate.
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(HERE_BE_DRAGONS, 12.0f))
         }
 
-        // Perform a long click at a location far from Sydney
-//        onView(withId(R.id.map)).perform(longClick(LatLng(0.0, 0.0)))
+        // Wait for the map to finish moving and become idle.
+        idlingResource.waitForIdle()
+
+        // 2. Perform the action
+        // Simulate a long click on the map at the specified coordinates.
+        clickOnMapAt(HERE_BE_DRAGONS, tapType = Tap.LONG)
+
+        // It can take a moment for the new circle to be added to the map. A brief pause
+        // helps prevent the test from failing intermittently.
+        Thread.sleep(200)
+
+        // 3. Restore camera and verify results
+        scenario.onActivity {
+            // Restore the camera to its original position.
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(camera))
+        }
+
+        idlingResource.waitForIdle()
 
         scenario.onActivity { activity ->
+            // Assert that a new circle was added.
             assertThat(activity.circles).hasSize(2)
             val newCircle = activity.circles[1].circle
-            assertThat(newCircle.center).isNear(LatLng(0.0, 0.0))
-            assertThat(newCircle.radius).isNotEqualTo(0.0)
+
+            // Verify the new circle is located at the target coordinates, allowing for a
+            // small margin of error (10 meters) due to the LatLng-to-pixel conversion.
+            assertThat(newCircle.center).isWithin(10).of(HERE_BE_DRAGONS)
+
+            // We cannot test the exact size since it is dependent on the screen resolution
+            assertThat(newCircle.radius).isAtLeast(1000.0)
         }
     }
 
-    @After
-    fun tearDown() {
-        androidx.test.espresso.IdlingRegistry.getInstance().unregister(idlingResource)
-        scenario.close()
+    companion object {
+        val HERE_BE_DRAGONS = LatLng(-34.91459615762562, 138.60572619793246)
     }
 }

@@ -18,15 +18,13 @@ package com.example.kotlindemos
 
 import android.graphics.Color
 import android.graphics.Point
-import android.location.Location
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CheckBox
 import android.widget.SeekBar
-import android.widget.Spinner
 import com.example.common_ui.R
+import com.example.kotlindemos.utils.MapProvider
 
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -43,36 +41,25 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PatternItem
+import com.google.maps.android.ktx.utils.sphericalDistance
+import com.google.maps.android.ktx.utils.withSphericalOffset
 
 import java.util.ArrayList
-import java.util.Arrays
 
 /**
  * This shows how to draw circles on a map.
  */
-class CircleDemoActivity :
-        SamplesBaseActivity(),
-        SeekBar.OnSeekBarChangeListener,
-        AdapterView.OnItemSelectedListener,
-        OnMapReadyCallback {
-
-    private val DEFAULT_RADIUS_METERS = 1000000.0
-
-    private val MAX_WIDTH_PX = 50
-    private val MAX_HUE_DEGREE = 360
-
-    private val MAX_ALPHA = 255
-    private val PATTERN_DASH_LENGTH = 100
-    private val PATTERN_GAP_LENGTH = 200
-
-    private val sydney = LatLng(-33.87365, 151.20689)
-
+class CircleDemoActivity : SamplesBaseActivity(),
+    SeekBar.OnSeekBarChangeListener,
+    AdapterView.OnItemSelectedListener,
+    OnMapReadyCallback,
+    MapProvider {
     private val dot = Dot()
     private val dash = Dash(PATTERN_DASH_LENGTH.toFloat())
     private val gap = Gap(PATTERN_GAP_LENGTH.toFloat())
-    private val patternDotted = Arrays.asList(dot, gap)
-    private val patternDashed = Arrays.asList(dash, gap)
-    private val patternMixed = Arrays.asList(dot, gap, dot, dash, gap)
+    private val patternDotted = listOf(dot, gap)
+    private val patternDashed = listOf(dash, gap)
+    private val patternMixed = listOf(dot, gap, dot, dash, gap)
 
     // These are the options for stroke patterns
     private val patterns: List<Pair<Int, List<PatternItem>?>> = listOf(
@@ -82,7 +69,9 @@ class CircleDemoActivity :
             Pair(R.string.pattern_mixed, patternMixed)
     )
 
-    internal lateinit var map: GoogleMap
+    override lateinit var map: GoogleMap
+
+    override var mapReady = false
 
     internal val circles = ArrayList<DraggableCircle>(1)
 
@@ -102,7 +91,7 @@ class CircleDemoActivity :
 
         private val radiusMarker: Marker? = map.addMarker(
                 MarkerOptions().apply {
-                    position(center.getPointAtDistance(radiusMeters))
+                    position(center.withSphericalOffset(radiusMeters, 90.0))
                     icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
                     draggable(true)
                 })
@@ -122,10 +111,11 @@ class CircleDemoActivity :
             when (marker) {
                 centerMarker -> {
                     circle.center = marker.position
-                    radiusMarker?.position = marker.position.getPointAtDistance(radiusMeters)
+                    radiusMarker?.position = marker.position.withSphericalOffset(radiusMeters, 90.0)
                 }
                 radiusMarker -> {
-                    radiusMeters = centerMarker?.position?.distanceFrom(radiusMarker.position)!!
+                    radiusMeters =
+                        centerMarker?.position?.sphericalDistance(radiusMarker.position)!!
                     circle.radius = radiusMeters
                 }
                 else -> return false
@@ -204,16 +194,19 @@ class CircleDemoActivity :
         map = googleMap
         // we need to initialise map before creating a circle
         with(map) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 4.0f))
+            moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 4.0f))
             setContentDescription(getString(R.string.circle_demo_description))
             setOnMapLongClickListener { point ->
-                // We know the center, let's place the outline at a point 3/4 along the view.
+                // We know the center, let's place the outline at a point 1/4 along the view.
+                val viewRatio = 1.0 / 4.0
                 val view: View = supportFragmentManager.findFragmentById(R.id.map)?.view
                         ?: return@setOnMapLongClickListener
                 val radiusLatLng = map.projection.fromScreenLocation(
-                        Point(view.height * 3 / 4, view.width * 3 / 4))
+                        Point((view.height * viewRatio).toInt(),
+                            (view.width * viewRatio).toInt())
+                )
                 // Create the circle.
-                val newCircle = DraggableCircle(point, point.distanceFrom(radiusLatLng))
+                val newCircle = DraggableCircle(point, point.sphericalDistance(radiusLatLng))
                 circles.add(newCircle)
             }
 
@@ -240,7 +233,7 @@ class CircleDemoActivity :
         strokeColorArgb = Color.HSVToColor(binding.strokeAlphaSeekBar.progress,
                 floatArrayOf(binding.strokeHueSeekBar.progress.toFloat(), 1f, 1f))
 
-        val circle = DraggableCircle(sydney, DEFAULT_RADIUS_METERS)
+        val circle = DraggableCircle(SYDNEY, DEFAULT_RADIUS_METERS)
         circles.add(circle)
 
         // Set listeners for all the SeekBar
@@ -252,6 +245,8 @@ class CircleDemoActivity :
         binding.strokeAlphaSeekBar.setOnSeekBarChangeListener(this)
 
         binding.strokePatternSpinner.onItemSelectedListener = this
+
+        mapReady = true
     }
 
     private fun getSelectedPattern(pos: Int): List<PatternItem>? = patterns[pos].second
@@ -305,20 +300,16 @@ class CircleDemoActivity :
     private fun toggleClickability() {
         circles.map { it.setClickable(binding.toggleClickability.isChecked) }
     }
-}
 
-/**
- * Extension function to find the distance from this to another LatLng object
- */
-private fun LatLng.distanceFrom(other: LatLng): Double {
-    val result = FloatArray(1)
-    Location.distanceBetween(latitude, longitude, other.latitude, other.longitude, result)
-    return result[0].toDouble()
-}
+    companion object {
+        internal val SYDNEY = LatLng(-33.87365, 151.20689)
+        private const val DEFAULT_RADIUS_METERS = 1_000_000.0
 
-private fun LatLng.getPointAtDistance(distance: Double): LatLng {
-    val radiusOfEarth = 6371009.0
-    val radiusAngle = (Math.toDegrees(distance / radiusOfEarth)
-            / Math.cos(Math.toRadians(latitude)))
-    return LatLng(latitude, longitude + radiusAngle)
+        private const val MAX_WIDTH_PX = 50
+        private const val MAX_HUE_DEGREE = 360
+
+        private const val MAX_ALPHA = 255
+        private const val PATTERN_DASH_LENGTH = 100
+        private const val PATTERN_GAP_LENGTH = 200
+    }
 }

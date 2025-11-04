@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.common.truth.FailureMetadata
 import com.google.common.truth.Subject
 import com.google.common.truth.Truth
+import com.google.maps.android.SphericalUtil
 import kotlin.math.abs
 
 /**
@@ -31,6 +32,28 @@ class LatLngSubject private constructor(
             abs(actual.longitude - expected.longitude) > tolerance
         ) {
             failWithActual("expected to be near", expected)
+        }
+    }
+
+    /**
+     * Starts a chained assertion to check the distance of the actual [LatLng] from an expected value.
+     */
+    fun isWithin(tolerance: Number): LatLngDistanceSubject {
+        return LatLngDistanceSubject(tolerance.toDouble())
+    }
+
+    /**
+     * A subject for asserting the distance between two [LatLng] objects.
+     */
+    inner class LatLngDistanceSubject(private val tolerance: Double) {
+        /**
+         * Asserts that the actual [LatLng] is within [tolerance] meters of the [expected] [LatLng].
+         */
+        fun of(expected: LatLng) {
+            val distance = SphericalUtil.computeDistanceBetween(actual, expected)
+            if (distance > tolerance) {
+                failWithActual("expected to be within $tolerance meters of $expected [was $distance meters away]", expected)
+            }
         }
     }
 
