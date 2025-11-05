@@ -32,7 +32,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map1"
-        class="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map2"
-        class="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toEndOf="@+id/map1"
@@ -58,7 +58,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map3"
-        class="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +71,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map4"
-        class="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toEndOf="@+id/map3"

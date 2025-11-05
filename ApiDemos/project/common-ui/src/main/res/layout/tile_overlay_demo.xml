@@ -23,7 +23,7 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
     <LinearLayout
         android:layout_width="wrap_content"

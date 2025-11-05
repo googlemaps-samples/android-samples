@@ -49,16 +49,14 @@
                 android:id="@+id/get_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="@string/request_position" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/move_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-
                 android:text="@string/walk_panorama" />
+
         </LinearLayout>
 
         <RelativeLayout
@@ -74,7 +72,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:minWidth="48dp"
-
                 android:text="@string/left_arrow" />
 
             <com.google.android.material.button.MaterialButton
@@ -169,7 +166,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-
             android:text="@string/go_to_sydney" />
 
         <com.google.android.material.button.MaterialButton
@@ -178,7 +174,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-
             android:text="@string/go_to_san_fran" />
 
         <com.google.android.material.button.MaterialButton
@@ -187,7 +182,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-
             android:text="@string/go_to_santorini" />
 
         <com.google.android.material.button.MaterialButton
@@ -196,13 +190,13 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-
             android:text="@string/go_to_invalid" />
+
     </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/streetviewpanorama"
-        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"
+        android:name="com.google.android.gms.maps.SupportStreetViewPanoramaFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

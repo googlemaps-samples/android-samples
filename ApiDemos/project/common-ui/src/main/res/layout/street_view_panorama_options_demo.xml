@@ -24,7 +24,7 @@
         android:id="@+id/streetviewpanorama"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportStreetViewPanoramaFragment" />
+        android:name="com.google.android.gms.maps.SupportStreetViewPanoramaFragment" />
 
     <!-- A set of test checkboxes. -->
 
@@ -41,7 +41,6 @@
             android:id="@+id/streetnames"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:checked="true"
             android:text="@string/streetnames" />
 
