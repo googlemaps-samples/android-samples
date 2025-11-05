@@ -28,16 +28,13 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.view.animation.BounceInterpolator
-import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.example.common_ui.R
@@ -56,8 +53,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.ArrayList
 import java.util.Random
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * This shows how to place markers on a map.
@@ -343,8 +341,9 @@ class MarkerDemoActivity :
         (0 until numMarkersInRainbow).mapTo(markerRainbow) {
             map.addMarker(MarkerOptions().apply{
                 position(LatLng(
-                    -30 + 10 * Math.sin(it * Math.PI / (numMarkersInRainbow - 1)),
-                    135 - 10 * Math.cos(it * Math.PI / (numMarkersInRainbow - 1))))
+                    -30 + 10 * sin(it * Math.PI / (numMarkersInRainbow - 1)),
+                    135 - 10 * cos(it * Math.PI / (numMarkersInRainbow - 1))
+                ))
                 title("Marker $it")
                 icon(BitmapDescriptorFactory.defaultMarker((it * 360 / numMarkersInRainbow)
                                                                .toFloat()))
@@ -411,8 +410,10 @@ class MarkerDemoActivity :
             handler.post(object : Runnable {
                 override fun run() {
                     val elapsed = SystemClock.uptimeMillis() - start
-                    val t = Math.max(
-                            1 - interpolator.getInterpolation(elapsed.toFloat() / duration), 0f)
+                    val t =
+                        (1 - interpolator.getInterpolation(elapsed.toFloat() / duration)).coerceAtLeast(
+                            0f
+                        )
                     marker.setAnchor(0.5f, 1.0f + 2 * t)
 
                     // Post again 16ms later.

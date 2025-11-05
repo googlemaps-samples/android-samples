@@ -196,6 +196,7 @@ class LayersDemoActivity :
         map.isTrafficEnabled = binding.traffic.isChecked
     }
 
+    @SuppressLint("MissingPermission")
     private fun onMyLocationToggled() {
         if (!binding.myLocation.isChecked) {
             map.isMyLocationEnabled = false
