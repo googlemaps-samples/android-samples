@@ -32,7 +32,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
-        class="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -55,7 +55,6 @@
                 android:id="@+id/stop_animation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onStopAnimation"
                 android:text="@string/stop_animation" />
 
             <ToggleButton
@@ -63,9 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:onClick="onToggleAnimate"
-                android:textOff="@string/animate"
-                android:textOn="@string/animate" />
+                android:textOn="@string/animate"
+                android:textOff="@string/animate" />
         </LinearLayout>
 
         <RelativeLayout
@@ -126,7 +124,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onZoomIn"
                 android:text="@string/zoom_in" />
 
             <com.google.android.material.button.MaterialButton
@@ -134,7 +131,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onZoomOut"
                 android:text="@string/zoom_out" />
         </LinearLayout>
 
@@ -149,7 +145,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onTiltMore"
                 android:text="@string/tilt_more" />
 
             <com.google.android.material.button.MaterialButton
@@ -157,7 +152,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="48dp"
-                android:onClick="onTiltLess"
                 android:text="@string/tilt_less" />
         </LinearLayout>
     </LinearLayout>
@@ -175,12 +169,11 @@
             android:id="@+id/duration_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onToggleCustomDuration"
             android:text="@string/duration" />
 
         <SeekBar
             android:id="@+id/duration_bar"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:max="5000" />

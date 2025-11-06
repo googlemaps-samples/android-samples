@@ -41,7 +41,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -71,15 +71,15 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/screenshot_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onScreenshot"
-            android:text="@string/snapshot_take_button" />
+            android:text="@string/snapshot_take_button"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/clear_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClearScreenshot"
-            android:text="@string/snapshot_clear_button" />
+            android:text="@string/snapshot_clear_button"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

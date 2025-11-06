@@ -48,22 +48,23 @@ public class TileOverlayDemoActivity extends SamplesBaseActivity
             "https://mw1.google.com/mw-planetary/lunar/lunarmaps_v1/clem_bw/%d/%d/%d.jpg";
 
     private TileOverlay moonTiles;
-    private SeekBar transparencyBar;
+    private com.example.common_ui.databinding.TileOverlayDemoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.tile_overlay_demo);
+        binding = com.example.common_ui.databinding.TileOverlayDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        transparencyBar = findViewById(com.example.common_ui.R.id.transparencySeekBar);
-        transparencyBar.setMax(TRANSPARENCY_MAX);
-        transparencyBar.setProgress(0);
+        binding.transparencySeekBar.setMax(TRANSPARENCY_MAX);
+        binding.transparencySeekBar.setProgress(0);
+        binding.fadeInToggle.setOnClickListener(v -> setFadeIn());
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -87,14 +88,14 @@ public class TileOverlayDemoActivity extends SamplesBaseActivity
         };
 
         moonTiles = map.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
-        transparencyBar.setOnSeekBarChangeListener(this);
+        binding.transparencySeekBar.setOnSeekBarChangeListener(this);
     }
 
-    public void setFadeIn(View v) {
+    private void setFadeIn() {
         if (moonTiles == null) {
             return;
         }
-        moonTiles.setFadeIn(((CheckBox) v).isChecked());
+        moonTiles.setFadeIn(binding.fadeInToggle.isChecked());
     }
 
     @Override

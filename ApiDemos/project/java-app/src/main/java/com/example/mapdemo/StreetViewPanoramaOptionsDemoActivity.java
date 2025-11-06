@@ -39,26 +39,19 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
 
     private StreetViewPanorama streetViewPanorama;
 
-    private CheckBox streetNameCheckbox;
-
-    private CheckBox navigationCheckbox;
-
-    private CheckBox zoomCheckbox;
-
-    private CheckBox panningCheckbox;
-
-    private CheckBox outdoorCheckbox;
+    private com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding binding;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.street_view_panorama_options_demo);
+        binding = com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        streetNameCheckbox = findViewById(com.example.common_ui.R.id.streetnames);
-        navigationCheckbox = findViewById(com.example.common_ui.R.id.navigation);
-        zoomCheckbox = findViewById(com.example.common_ui.R.id.zoom);
-        panningCheckbox = findViewById(com.example.common_ui.R.id.panning);
-        outdoorCheckbox = findViewById(com.example.common_ui.R.id.outdoor);
+        binding.streetnames.setOnClickListener(v -> onStreetNamesToggled());
+        binding.navigation.setOnClickListener(v -> onNavigationToggled());
+        binding.zoom.setOnClickListener(v -> onZoomToggled());
+        binding.panning.setOnClickListener(v -> onPanningToggled());
+        binding.outdoor.setOnClickListener(v -> onOutdoorToggled());
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
@@ -66,10 +59,10 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 panorama -> {
                     streetViewPanorama = panorama;
-                    panorama.setStreetNamesEnabled(streetNameCheckbox.isChecked());
-                    panorama.setUserNavigationEnabled(navigationCheckbox.isChecked());
-                    panorama.setZoomGesturesEnabled(zoomCheckbox.isChecked());
-                    panorama.setPanningGesturesEnabled(panningCheckbox.isChecked());
+                    panorama.setStreetNamesEnabled(binding.streetnames.isChecked());
+                    panorama.setUserNavigationEnabled(binding.navigation.isChecked());
+                    panorama.setZoomGesturesEnabled(binding.zoom.isChecked());
+                    panorama.setPanningGesturesEnabled(binding.panning.isChecked());
 
                     // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
                     // loaded which is when the savedInstanceState is null).
@@ -78,14 +71,14 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
                     }
                 });
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     private void setPosition() {
         streetViewPanorama.setPosition(
                 SAN_FRAN,
                 RADIUS,
-                outdoorCheckbox.isChecked() ? StreetViewSource.OUTDOOR : StreetViewSource.DEFAULT
+                binding.outdoor.isChecked() ? StreetViewSource.OUTDOOR : StreetViewSource.DEFAULT
         );
     }
 
@@ -97,35 +90,35 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
         return true;
     }
 
-    public void onStreetNamesToggled(View view) {
+    private void onStreetNamesToggled() {
         if (!checkReady()) {
             return;
         }
-        streetViewPanorama.setStreetNamesEnabled(streetNameCheckbox.isChecked());
+        streetViewPanorama.setStreetNamesEnabled(binding.streetnames.isChecked());
     }
 
-    public void onNavigationToggled(View view) {
+    private void onNavigationToggled() {
         if (!checkReady()) {
             return;
         }
-        streetViewPanorama.setUserNavigationEnabled(navigationCheckbox.isChecked());
+        streetViewPanorama.setUserNavigationEnabled(binding.navigation.isChecked());
     }
 
-    public void onZoomToggled(View view) {
+    private void onZoomToggled() {
         if (!checkReady()) {
             return;
         }
-        streetViewPanorama.setZoomGesturesEnabled(zoomCheckbox.isChecked());
+        streetViewPanorama.setZoomGesturesEnabled(binding.zoom.isChecked());
     }
 
-    public void onPanningToggled(View view) {
+    private void onPanningToggled() {
         if (!checkReady()) {
             return;
         }
-        streetViewPanorama.setPanningGesturesEnabled(panningCheckbox.isChecked());
+        streetViewPanorama.setPanningGesturesEnabled(binding.panning.isChecked());
     }
 
-    public void onOutdoorToggled(View view) {
+    private void onOutdoorToggled() {
         if (!checkReady()) {
             return;
         }

@@ -36,7 +36,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -52,19 +52,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:onClick="onClearMap"
-                    android:text="@string/clear_map" />
+        <Button
+            android:id="@+id/clear_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clear_map" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:onClick="onResetMap"
-                    android:text="@string/reset_map" />
+        <Button
+            android:id="@+id/reset_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_map" />
             </LinearLayout>
 
             <RadioGroup
@@ -113,13 +111,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/flat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onToggleFlat"
-                android:text="@string/flat"
-                android:textSize="14sp" />
+        <CheckBox
+            android:id="@+id/flat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flat" />
 
             <TextView
                 android:layout_width="wrap_content"

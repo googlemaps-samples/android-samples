@@ -15,13 +15,15 @@ gradle = "8.13.0"
 junit = "4.13.2"
 kotlin = "2.2.20"
 lifecycle = "2.9.4"
-mapsKtx = "5.2.0"
+mapsKtx = "5.2.1"
 material = "1.13.0"
 multidex = "2.0.1"
 playServicesMaps = "19.2.0"
 recyclerview = "1.4.0"
 secretsGradlePlugin = "2.0.1"
 volley = "1.2.1"
+truth = "1.1.3"
+uiautomator = "2.3.0"
 
 [libraries]
 activity = { module = "androidx.activity:activity", version.ref = "activity" }
@@ -31,15 +33,19 @@ cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card
 coreKtx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
 espressoCore = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+espressoIdlingResource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espresso" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlinStdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
 lifecycleRuntimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 mapsKtx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "mapsKtx" }
+mapsUtilsKtx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "mapsKtx" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 playServicesMaps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 secretsGradlePlugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }

@@ -59,12 +59,26 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
 
     private StreetViewPanorama mStreetViewPanorama;
 
-    private SeekBar mCustomDurationBar;
+    private com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding binding;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.street_view_panorama_navigation_demo);
+        binding = com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.sanfran.setOnClickListener(v -> onGoToSanFran());
+        binding.sydney.setOnClickListener(v -> onGoToSydney());
+        binding.santorini.setOnClickListener(v -> onGoToSantorini());
+        binding.invalid.setOnClickListener(v -> onGoToInvalid());
+        binding.zoomIn.setOnClickListener(v -> onZoomIn());
+        binding.zoomOut.setOnClickListener(v -> onZoomOut());
+        binding.panLeft.setOnClickListener(v -> onPanLeft());
+        binding.panRight.setOnClickListener(v -> onPanRight());
+        binding.panUp.setOnClickListener(v -> onPanUp());
+        binding.panDown.setOnClickListener(v -> onPanDown());
+        binding.getPosition.setOnClickListener(v -> onRequestPosition());
+        binding.movePosition.setOnClickListener(v -> onMovePosition());
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
@@ -81,8 +95,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         }
                     }
                 });
-        mCustomDurationBar = findViewById(com.example.common_ui.R.id.duration_bar);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     /**
@@ -97,47 +110,35 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
         return true;
     }
 
-    /**
-     * Called when the Go To San Fran button is clicked.
-     */
-    public void onGoToSanFran(View view) {
+    private void onGoToSanFran() {
         if (!checkReady()) {
             return;
         }
         mStreetViewPanorama.setPosition(SAN_FRAN, 30);
     }
 
-    /**
-     * Called when the Animate To Sydney button is clicked.
-     */
-    public void onGoToSydney(View view) {
+    private void onGoToSydney() {
         if (!checkReady()) {
             return;
         }
         mStreetViewPanorama.setPosition(SYDNEY);
     }
 
-    /**
-     * Called when the Animate To Santorini button is clicked.
-     */
-    public void onGoToSantorini(View view) {
+    private void onGoToSantorini() {
         if (!checkReady()) {
             return;
         }
         mStreetViewPanorama.setPosition(SANTORINI);
     }
 
-    /**
-     * Called when the Animate To Invalid button is clicked.
-     */
-    public void onGoToInvalid(View view) {
+    private void onGoToInvalid() {
         if (!checkReady()) {
             return;
         }
         mStreetViewPanorama.setPosition(INVALID);
     }
 
-    public void onZoomIn(View view) {
+    private void onZoomIn() {
         if (!checkReady()) {
             return;
         }
@@ -150,7 +151,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         .build(), getDuration());
     }
 
-    public void onZoomOut(View view) {
+    private void onZoomOut() {
         if (!checkReady()) {
             return;
         }
@@ -163,7 +164,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         .build(), getDuration());
     }
 
-    public void onPanLeft(View view) {
+    private void onPanLeft() {
         if (!checkReady()) {
             return;
         }
@@ -176,7 +177,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         .build(), getDuration());
     }
 
-    public void onPanRight(View view) {
+    private void onPanRight() {
         if (!checkReady()) {
             return;
         }
@@ -190,7 +191,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
 
     }
 
-    public void onPanUp(View view) {
+    private void onPanUp() {
         if (!checkReady()) {
             return;
         }
@@ -208,7 +209,7 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         .build(), getDuration());
     }
 
-    public void onPanDown(View view) {
+    private void onPanDown() {
         if (!checkReady()) {
             return;
         }
@@ -226,17 +227,17 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
                         .build(), getDuration());
     }
 
-    public void onRequestPosition(View view) {
+    private void onRequestPosition() {
         if (!checkReady()) {
             return;
         }
         if (mStreetViewPanorama.getLocation() != null) {
-            Toast.makeText(view.getContext(), mStreetViewPanorama.getLocation().position.toString(),
+            Toast.makeText(this, mStreetViewPanorama.getLocation().position.toString(),
                     Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void onMovePosition(View view) {
+    private void onMovePosition() {
         StreetViewPanoramaLocation location = mStreetViewPanorama.getLocation();
         StreetViewPanoramaCamera camera = mStreetViewPanorama.getPanoramaCamera();
         if (location != null && location.links != null) {
@@ -266,6 +267,6 @@ public class StreetViewPanoramaNavigationDemoActivity extends SamplesBaseActivit
     }
 
     private long getDuration() {
-        return mCustomDurationBar.getProgress();
+        return binding.durationBar.getProgress();
     }
 }

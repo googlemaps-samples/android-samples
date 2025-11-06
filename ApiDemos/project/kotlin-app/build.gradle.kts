@@ -38,6 +38,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -83,6 +84,7 @@ dependencies {
 
     implementation(libs.lifecycleRuntimeKtx)
     implementation(libs.mapsKtx)
+    implementation(libs.mapsUtilsKtx)
 
     implementation(libs.activity)
 
@@ -94,6 +96,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
+    androidTestImplementation(libs.truth)
 
     implementation(project(":common-ui"))
 }

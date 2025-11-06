@@ -54,15 +54,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
 
     private GoogleMap mMap;
 
-    private CheckBox mTrafficCheckbox;
-
-    private CheckBox mMyLocationCheckbox;
-
-    private CheckBox mBuildingsCheckbox;
-
-    private CheckBox mIndoorCheckbox;
-
-    private Spinner mSpinner;
+    private com.example.common_ui.databinding.LayersDemoBinding binding;
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in {@link
@@ -73,24 +65,24 @@ public class LayersDemoActivity extends SamplesBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.layers_demo);
+        binding = com.example.common_ui.databinding.LayersDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        mSpinner = findViewById(com.example.common_ui.R.id.layers_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             this, com.example.common_ui.R.array.layers_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
-        mSpinner.setOnItemSelectedListener(this);
+        binding.layersSpinner.setAdapter(adapter);
+        binding.layersSpinner.setOnItemSelectedListener(this);
 
-        mTrafficCheckbox = findViewById(com.example.common_ui.R.id.traffic);
-        mMyLocationCheckbox = findViewById(com.example.common_ui.R.id.my_location);
-        mBuildingsCheckbox = findViewById(com.example.common_ui.R.id.buildings);
-        mIndoorCheckbox = findViewById(com.example.common_ui.R.id.indoor);
+        binding.traffic.setOnClickListener(v -> onTrafficToggled());
+        binding.myLocation.setOnClickListener(v -> onMyLocationToggled());
+        binding.buildings.setOnClickListener(v -> onBuildingsToggled());
+        binding.indoor.setOnClickListener(v -> onIndoorToggled());
 
         SupportMapFragment mapFragment =
             (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -111,10 +103,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
         return true;
     }
 
-    /**
-     * Called when the Traffic checkbox is clicked.
-     */
-    public void onTrafficToggled(View view) {
+    private void onTrafficToggled() {
         updateTraffic();
     }
 
@@ -122,13 +111,10 @@ public class LayersDemoActivity extends SamplesBaseActivity
         if (!checkReady()) {
             return;
         }
-        mMap.setTrafficEnabled(mTrafficCheckbox.isChecked());
+        mMap.setTrafficEnabled(binding.traffic.isChecked());
     }
 
-    /**
-     * Called when the MyLocation checkbox is clicked.
-     */
-    public void onMyLocationToggled(View view) {
+    private void onMyLocationToggled() {
         updateMyLocation();
     }
 
@@ -138,7 +124,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
             return;
         }
 
-        if (!mMyLocationCheckbox.isChecked()) {
+        if (!binding.myLocation.isChecked()) {
             mMap.setMyLocationEnabled(false);
             return;
         }
@@ -151,7 +137,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
             mMap.setMyLocationEnabled(true);
         } else {
             // Uncheck the box until the layer has been enabled and request missing permission.
-            mMyLocationCheckbox.setChecked(false);
+            binding.myLocation.setChecked(false);
             PermissionUtils
                 .requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE,false);
         }
@@ -168,7 +154,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
         if (PermissionUtils.isPermissionGranted(permissions, results,
             permission.ACCESS_FINE_LOCATION)) {
             mMap.setMyLocationEnabled(true);
-            mMyLocationCheckbox.setChecked(true);
+            binding.myLocation.setChecked(true);
         } else {
             mShowPermissionDeniedDialog = true;
         }
@@ -184,10 +170,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
         }
     }
 
-    /**
-     * Called when the Buildings checkbox is clicked.
-     */
-    public void onBuildingsToggled(View view) {
+    private void onBuildingsToggled() {
         updateBuildings();
     }
 
@@ -195,13 +178,10 @@ public class LayersDemoActivity extends SamplesBaseActivity
         if (!checkReady()) {
             return;
         }
-        mMap.setBuildingsEnabled(mBuildingsCheckbox.isChecked());
+        mMap.setBuildingsEnabled(binding.buildings.isChecked());
     }
 
-    /**
-     * Called when the Indoor checkbox is clicked.
-     */
-    public void onIndoorToggled(View view) {
+    private void onIndoorToggled() {
         updateIndoor();
     }
 
@@ -209,7 +189,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
         if (!checkReady()) {
             return;
         }
-        mMap.setIndoorEnabled(mIndoorCheckbox.isChecked());
+        mMap.setIndoorEnabled(binding.indoor.isChecked());
     }
 
     @Override
@@ -224,7 +204,7 @@ public class LayersDemoActivity extends SamplesBaseActivity
             return;
         }
 
-        String layerName = ((String) mSpinner.getSelectedItem());
+        String layerName = ((String) binding.layersSpinner.getSelectedItem());
         if (layerName.equals(getString(com.example.common_ui.R.string.normal))) {
             mMap.setMapType(MAP_TYPE_NORMAL);
         } else if (layerName.equals(getString(com.example.common_ui.R.string.hybrid))) {

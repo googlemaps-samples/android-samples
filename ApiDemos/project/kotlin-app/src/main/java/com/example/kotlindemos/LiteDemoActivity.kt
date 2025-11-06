@@ -17,7 +17,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.example.common_ui.R
-
+import com.example.common_ui.databinding.LiteDemoBinding
 import com.example.kotlindemos.OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -32,16 +32,21 @@ import com.google.android.gms.maps.model.*
  */
 class LiteDemoActivity : SamplesBaseActivity(), OnGlobalLayoutAndMapReadyListener {
     private lateinit var map: GoogleMap
+    private lateinit var binding: LiteDemoBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Set the layout
-        setContentView(R.layout.lite_demo)
+        binding = LiteDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Get the map and register for the ready callback
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
+
+        binding.goToDarwin.setOnClickListener { showDarwin(it) }
+        binding.goToAdelaide.setOnClickListener { showAdelaide(it) }
+        binding.goToAustralia.setOnClickListener { showAustralia(it) }
     }
 
     /**
@@ -90,10 +95,12 @@ class LiteDemoActivity : SamplesBaseActivity(), OnGlobalLayoutAndMapReadyListene
      */
     override fun onMapReady(googleMap: GoogleMap?) {
         // return early if the map was not initialised properly
-        map = googleMap ?: return
-        addMarkers()
-        addPolyObjects()
-        showAustralia(null)
+        if (googleMap != null) {
+            map = googleMap
+            addMarkers()
+            addPolyObjects()
+            showAustralia(null)
+        }
     }
 
     /**

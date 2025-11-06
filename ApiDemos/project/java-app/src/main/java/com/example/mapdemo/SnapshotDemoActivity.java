@@ -39,19 +39,22 @@ public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapRe
      */
     private GoogleMap mMap;
 
-    private CheckBox mWaitForMapLoadCheckBox;
+    private com.example.common_ui.databinding.SnapshotDemoBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.snapshot_demo);
-        mWaitForMapLoadCheckBox = findViewById(com.example.common_ui.R.id.wait_for_map_load);
+        binding = com.example.common_ui.databinding.SnapshotDemoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        binding.screenshotButton.setOnClickListener(v -> takeSnapshot());
+        binding.clearButton.setOnClickListener(v -> clearSnapshot());
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(binding.mapContainer);
     }
 
     @Override
@@ -59,19 +62,12 @@ public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapRe
         mMap = map;
     }
 
-    /**
-     * Called when the snapshot button is clicked.
-     */
-    public void onScreenshot(View view) {
-        takeSnapshot();
-    }
-
     private void takeSnapshot() {
         if (mMap == null) {
             return;
         }
 
-        final ImageView snapshotHolder = findViewById(com.example.common_ui.R.id.snapshot_holder);
+        final ImageView snapshotHolder = binding.snapshotHolder;
 
         final SnapshotReadyCallback callback = new SnapshotReadyCallback() {
             @Override
@@ -81,7 +77,7 @@ public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapRe
             }
         };
 
-        if (mWaitForMapLoadCheckBox.isChecked()) {
+        if (((CheckBox) binding.waitForMapLoad).isChecked()) {
             mMap.setOnMapLoadedCallback(new OnMapLoadedCallback() {
                 @Override
                 public void onMapLoaded() {
@@ -93,11 +89,7 @@ public class SnapshotDemoActivity extends SamplesBaseActivity implements OnMapRe
         }
     }
 
-    /**
-     * Called when the clear button is clicked.
-     */
-    public void onClearScreenshot(View view) {
-        ImageView snapshotHolder = findViewById(com.example.common_ui.R.id.snapshot_holder);
-        snapshotHolder.setImageDrawable(null);
+    private void clearSnapshot() {
+        binding.snapshotHolder.setImageDrawable(null);
     }
 }

@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/background_color_customization_demo_label"
+        app:title="@string/camera_clamping_demo_label"
         app:titleTextColor="?attr/colorOnPrimary" />
     <androidx.fragment.app.FragmentContainerView
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/container"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/map"
-        class="com.google.android.gms.maps.SupportMapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         map:cameraMaxZoomPreference="14.0"
@@ -68,21 +68,18 @@
                 android:id="@+id/clamp_min_zoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onSetMinZoomClamp"
                 android:text="@string/clamp_min_zoom" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clamp_max_zoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onSetMaxZoomClamp"
                 android:text="@string/clamp_max_zoom" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clamp_zoom_reset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onMinMaxZoomClampReset"
                 android:text="@string/clamp_zoom_reset" />
         </LinearLayout>
 
@@ -96,7 +93,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:onClick="onClampToAdelaide"
                 android:text="@string/clamp_latlng_adelaide" />
 
             <com.google.android.material.button.MaterialButton
@@ -104,14 +100,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:onClick="onClampToPacific"
                 android:text="@string/clamp_latlng_pacific" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clamp_latlng_reset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onLatLngClampReset"
                 android:text="@string/clamp_latlng_reset" />
         </LinearLayout>
 

@@ -28,16 +28,13 @@ import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.view.animation.BounceInterpolator
-import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.example.common_ui.R
@@ -56,8 +53,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.ArrayList
 import java.util.Random
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * This shows how to place markers on a map.
@@ -98,11 +96,7 @@ class MarkerDemoActivity :
             "ALICE_SPRINGS" to LatLng(-24.6980, 133.8807)
     )
 
-    /** These can be lateinit as they are set in onCreate */
-    private lateinit var topText: TextView
-    private lateinit var rotationBar: SeekBar
-    private lateinit var flatBox: CheckBox
-    private lateinit var options: RadioGroup
+    private lateinit var binding: com.example.common_ui.databinding.MarkerDemoBinding
 
     private val random = Random()
 
@@ -115,7 +109,7 @@ class MarkerDemoActivity :
         private val contents: View = layoutInflater.inflate(R.layout.custom_info_contents, null)
 
         override fun getInfoWindow(marker: Marker): View? {
-            if (options.checkedRadioButtonId != R.id.custom_info_window) {
+            if (binding.customInfoWindowOptions.checkedRadioButtonId != R.id.custom_info_window) {
                 // This means that getInfoContents will be called.
                 return null
             }
@@ -124,7 +118,7 @@ class MarkerDemoActivity :
         }
 
         override fun getInfoContents(marker: Marker): View? {
-            if (options.checkedRadioButtonId != R.id.custom_info_contents) {
+            if (binding.customInfoWindowOptions.checkedRadioButtonId != R.id.custom_info_contents) {
                 // This means that the default info contents will be used.
                 return null
             }
@@ -173,11 +167,10 @@ class MarkerDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.marker_demo)
+        binding = com.example.common_ui.databinding.MarkerDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        topText = findViewById(R.id.top_text)
-
-        rotationBar = findViewById<SeekBar>(R.id.rotationSeekBar).apply {
+        binding.rotationSeekBar.apply {
             max = 360
             setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
 
@@ -198,9 +191,7 @@ class MarkerDemoActivity :
             } )
         }
 
-        flatBox = findViewById(R.id.flat)
-
-        options = findViewById<RadioGroup>(R.id.custom_info_window_options).apply {
+        binding.customInfoWindowOptions.apply {
             setOnCheckedChangeListener { _, _ ->
                 if (lastSelectedMarker?.isInfoWindowShown == true) {
                     // Refresh the info window when the info window's content has changed.
@@ -211,9 +202,13 @@ class MarkerDemoActivity :
             }
         }
 
+        binding.clearMap.setOnClickListener { onClearMap() }
+        binding.resetMap.setOnClickListener { onResetMap() }
+        binding.flat.setOnClickListener { onToggleFlat() }
+
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
     }
 
     /**
@@ -346,13 +341,14 @@ class MarkerDemoActivity :
         (0 until numMarkersInRainbow).mapTo(markerRainbow) {
             map.addMarker(MarkerOptions().apply{
                 position(LatLng(
-                    -30 + 10 * Math.sin(it * Math.PI / (numMarkersInRainbow - 1)),
-                    135 - 10 * Math.cos(it * Math.PI / (numMarkersInRainbow - 1))))
+                    -30 + 10 * sin(it * Math.PI / (numMarkersInRainbow - 1)),
+                    135 - 10 * cos(it * Math.PI / (numMarkersInRainbow - 1))
+                ))
                 title("Marker $it")
                 icon(BitmapDescriptorFactory.defaultMarker((it * 360 / numMarkersInRainbow)
                                                                .toFloat()))
-                flat(flatBox.isChecked)
-                rotation(rotationBar.progress.toFloat())
+                flat(binding.flat.isChecked)
+                rotation(binding.rotationSeekBar.progress.toFloat())
             })!!
         }
     }
@@ -376,25 +372,19 @@ class MarkerDemoActivity :
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
-    /** Called when the Clear button is clicked.  */
-    @Suppress("UNUSED_PARAMETER")
-    fun onClearMap(view: View) {
+    private fun onClearMap() {
         checkReadyThen { map.clear() }
     }
 
-    /** Called when the Reset button is clicked.  */
-    @Suppress("UNUSED_PARAMETER")
-    fun onResetMap(view: View) {
+    private fun onResetMap() {
         checkReadyThen {
             map.clear()
             addMarkersToMap()
         }
     }
 
-    /** Called when the Flat check box is checked or unchecked */
-    @Suppress("UNUSED_PARAMETER")
-    fun onToggleFlat(view: View) {
-        checkReadyThen { markerRainbow.map { marker -> marker.isFlat = flatBox.isChecked } }
+    private fun onToggleFlat() {
+        checkReadyThen { markerRainbow.map { marker -> marker.isFlat = binding.flat.isChecked } }
     }
 
     //
@@ -420,8 +410,10 @@ class MarkerDemoActivity :
             handler.post(object : Runnable {
                 override fun run() {
                     val elapsed = SystemClock.uptimeMillis() - start
-                    val t = Math.max(
-                            1 - interpolator.getInterpolation(elapsed.toFloat() / duration), 0f)
+                    val t =
+                        (1 - interpolator.getInterpolation(elapsed.toFloat() / duration)).coerceAtLeast(
+                            0f
+                        )
                     marker.setAnchor(0.5f, 1.0f + 2 * t)
 
                     // Post again 16ms later.
@@ -457,15 +449,15 @@ class MarkerDemoActivity :
     }
 
     override fun onMarkerDragStart(marker : Marker) {
-        topText.text = getString(R.string.on_marker_drag_start)
+        binding.topText.text = getString(R.string.on_marker_drag_start)
     }
 
     override fun onMarkerDragEnd(marker : Marker) {
-        topText.text = getString(R.string.on_marker_drag_end)
+        binding.topText.text = getString(R.string.on_marker_drag_end)
     }
 
     override fun onMarkerDrag(marker : Marker) {
-        topText.text = getString(R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
+        binding.topText.text = getString(R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
     }
 
     /**

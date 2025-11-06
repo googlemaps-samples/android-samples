@@ -37,7 +37,7 @@ public class OnMapAndViewReadyListener implements OnGlobalLayoutListener, OnMapR
     }
 
     private final SupportMapFragment mapFragment;
-    private final View mapView;
+    private View mapView;
     private final OnGlobalLayoutAndMapReadyListener devCallback;
 
     private boolean isViewReady;
@@ -47,7 +47,6 @@ public class OnMapAndViewReadyListener implements OnGlobalLayoutListener, OnMapR
     public OnMapAndViewReadyListener(
             SupportMapFragment mapFragment, OnGlobalLayoutAndMapReadyListener devCallback) {
         this.mapFragment = mapFragment;
-        mapView = mapFragment.getView();
         this.devCallback = devCallback;
         isViewReady = false;
         isMapReady = false;
@@ -57,15 +56,6 @@ public class OnMapAndViewReadyListener implements OnGlobalLayoutListener, OnMapR
     }
 
     private void registerListeners() {
-        // View layout.
-        if ((mapView.getWidth() != 0) && (mapView.getHeight() != 0)) {
-            // View has already completed layout.
-            isViewReady = true;
-        } else {
-            // Map has not undergone layout, register a View observer.
-            mapView.getViewTreeObserver().addOnGlobalLayoutListener(this);
-        }
-
         // GoogleMap. Note if the GoogleMap is already ready it will still fire the callback later.
         mapFragment.getMapAsync(this);
     }
@@ -75,6 +65,17 @@ public class OnMapAndViewReadyListener implements OnGlobalLayoutListener, OnMapR
         // NOTE: The GoogleMap API specifies the listener is removed just prior to invocation.
         this.googleMap = googleMap;
         isMapReady = true;
+
+        // View layout.
+        mapView = mapFragment.getView();
+        if ((mapView.getWidth() != 0) && (mapView.getHeight() != 0)) {
+            // View has already completed layout.
+            isViewReady = true;
+        } else {
+            // Map has not undergone layout, register a View observer.
+            mapView.getViewTreeObserver().addOnGlobalLayoutListener(this);
+        }
+
         fireCallbackIfReady();
     }
 

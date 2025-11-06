@@ -37,6 +37,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.example.common_ui.databinding.CameraDemoBinding
 import com.google.android.gms.maps.model.PolylineOptions
 
 /**
@@ -80,22 +81,38 @@ class CameraDemoActivity :
     private lateinit var customDurationBar: SeekBar
     private var currPolylineOptions: PolylineOptions? = null
     private var isCanceled = false
+    private lateinit var binding: CameraDemoBinding
     // [END_EXCLUDE]
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.camera_demo)
+        binding = CameraDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         // [START_EXCLUDE silent]
-        animateToggle = findViewById(R.id.animate)
-        customDurationToggle = findViewById(R.id.duration_toggle)
-        customDurationBar = findViewById(R.id.duration_bar)
+        animateToggle = binding.animate
+        customDurationToggle = binding.durationToggle
+        customDurationBar = binding.durationBar
 
         updateEnabledState()
         // [END_EXCLUDE]
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(binding.mapContainer)
+
+        binding.bondi.setOnClickListener(this::onGoToBondi)
+        binding.sydney.setOnClickListener(this::onGoToSydney)
+        binding.stopAnimation.setOnClickListener(this::onStopAnimation)
+        binding.animate.setOnClickListener(this::onToggleAnimate)
+        binding.scrollLeft.setOnClickListener(this::onScrollLeft)
+        binding.scrollUp.setOnClickListener(this::onScrollUp)
+        binding.scrollDown.setOnClickListener(this::onScrollDown)
+        binding.scrollRight.setOnClickListener(this::onScrollRight)
+        binding.zoomIn.setOnClickListener(this::onZoomIn)
+        binding.zoomOut.setOnClickListener(this::onZoomOut)
+        binding.tiltMore.setOnClickListener(this::onTiltMore)
+        binding.tiltLess.setOnClickListener(this::onTiltLess)
+        binding.durationToggle.setOnClickListener(this::onToggleCustomDuration)
     }
 
     // [START_EXCLUDE silent]
