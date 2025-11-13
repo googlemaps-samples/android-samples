@@ -59,7 +59,7 @@ kotlinx-datetime = "0.7.1"
 # and testing.
 # -------------------------------------------------------------------------------------------------
 androidx-activity-compose = "1.11.0"
-androidx-compose-bom = "2025.10.01"
+androidx-compose-bom = "2025.11.00"
 androidx-core-ktx = "1.17.0"
 androidx-espresso-core = "3.7.0"
 androidx-hilt-navigation-compose = "1.3.0"
@@ -103,8 +103,8 @@ turbine = "1.2.1"
 # Android Gradle Plugin (AGP), Kotlin plugins, and utility plugins like the Secrets Gradle Plugin
 # for managing API keys.
 # -------------------------------------------------------------------------------------------------
-android-gradle-plugin = "8.13.0"
-google-services = "4.4.2"
+android-gradle-plugin = "8.13.1"
+google-services = "4.4.4"
 ksp = "2.2.20-2.0.4"
 secrets-gradle-plugin = "2.0.1"
 
