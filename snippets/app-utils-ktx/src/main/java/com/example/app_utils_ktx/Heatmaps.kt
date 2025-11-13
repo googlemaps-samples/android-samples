@@ -37,11 +37,11 @@ internal class Heatmaps {
 
     // [START maps_android_utils_heatmap_simple]
     private fun addHeatMap() {
-        var latLngs: List<LatLng?>? = null
+        var latLngs: List<LatLng> = emptyList()
 
         // Get the data: latitude/longitude positions of police stations.
         try {
-            latLngs = readItems(R.raw.police_stations)
+            latLngs = readItems(R.raw.police_stations).filterNotNull()
         } catch (e: JSONException) {
             Toast.makeText(context, "Problem reading list of locations.", Toast.LENGTH_LONG)
                 .show()

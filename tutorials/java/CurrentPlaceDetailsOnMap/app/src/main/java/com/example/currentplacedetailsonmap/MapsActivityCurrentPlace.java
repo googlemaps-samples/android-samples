@@ -316,8 +316,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
-            List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS,
-                    Place.Field.LAT_LNG);
+            List<Place.Field> placeFields = Arrays.asList(Place.Field.DISPLAY_NAME, Place.Field.FORMATTED_ADDRESS,
+                    Place.Field.LOCATION);
 
             // Use the builder to create a FindCurrentPlaceRequest.
             FindCurrentPlaceRequest request =
@@ -350,11 +350,11 @@ public class MapsActivityCurrentPlace extends AppCompatActivity
 
                         for (PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
                             // Build a list of likely places to show the user.
-                            likelyPlaceNames[i] = placeLikelihood.getPlace().getName();
-                            likelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
+                            likelyPlaceNames[i] = placeLikelihood.getPlace().getDisplayName();
+                            likelyPlaceAddresses[i] = placeLikelihood.getPlace().getFormattedAddress();
                             likelyPlaceAttributions[i] = placeLikelihood.getPlace()
                                     .getAttributions();
-                            likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
+                            likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLocation();
 
                             i++;
                             if (i > (count - 1)) {
