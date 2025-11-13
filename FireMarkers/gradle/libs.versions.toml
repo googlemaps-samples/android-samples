@@ -104,6 +104,7 @@ turbine = "1.2.1"
 # for managing API keys.
 # -------------------------------------------------------------------------------------------------
 android-gradle-plugin = "8.13.0"
+google-services = "4.4.2"
 ksp = "2.2.20-2.0.4"
 secrets-gradle-plugin = "2.0.1"
 
@@ -181,6 +182,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 # and handling dependency injection with Hilt and KSP.
 # -------------------------------------------------------------------------------------------------
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
