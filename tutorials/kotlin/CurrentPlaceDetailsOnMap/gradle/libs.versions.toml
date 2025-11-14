@@ -15,7 +15,7 @@ places = "4.3.1"
 volley = "1.2.1"
 junit = "4.13.2"
 coreKtx = "1.16.0"
-lifecycleViewModelKtx = "2.9.1"
+lifecycleViewModelKtx = "2.9.4"
 espressoCore = "3.0.2"
 javaVersion = "17"
 
