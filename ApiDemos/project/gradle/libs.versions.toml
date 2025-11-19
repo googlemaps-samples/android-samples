@@ -24,6 +24,7 @@ secretsGradlePlugin = "2.0.1"
 volley = "1.2.1"
 truth = "1.1.3"
 uiautomator = "2.3.0"
+rules = "1.6.0-alpha06"
 
 [libraries]
 activity = { module = "androidx.activity:activity", version.ref = "activity" }
@@ -49,3 +50,4 @@ secretsGradlePlugin = { module = "com.google.android.libraries.mapsplatform.secr
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+rules = { group = "androidx.test", name = "rules", version.ref = "rules" }

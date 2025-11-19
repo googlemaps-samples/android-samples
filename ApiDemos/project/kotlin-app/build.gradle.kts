@@ -97,6 +97,7 @@ dependencies {
     androidTestImplementation(libs.androidxJunit)
     androidTestImplementation(libs.espressoCore)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.rules)
 
     implementation(project(":common-ui"))
 }
@@ -111,4 +112,16 @@ secrets {
     // A properties file containing default secret values. This file can be
     // checked in version control.
     defaultPropertiesFileName = "local.defaults.properties"
+}
+
+tasks.register("visualVerification") {
+    dependsOn("connectedAndroidTest")
+    doLast {
+        println("Running visual verification with Gemini...")
+        // Ensure the Python script is executable or run with python interpreter
+        exec {
+            workingDir = project.rootProject.projectDir
+            commandLine("python3", "analyze_screenshots.py")
+        }
+    }
 }

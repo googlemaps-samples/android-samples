@@ -19,6 +19,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -30,6 +31,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import androidx.test.runner.screenshot.Screenshot
+import java.io.File
 
 
 @RunWith(AndroidJUnit4::class)
@@ -37,6 +40,15 @@ class CameraClampingDemoActivityTest {
 
     private lateinit var idlingResource: MapIdlingResource
     private lateinit var scenario: ActivityScenario<CameraClampingDemoActivity>
+
+    @get:Rule
+    val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    @get:Rule
+    val screenshotTestWatcher = ScreenshotTestWatcher()
 
     @Before
     fun setUp() {
@@ -51,6 +63,18 @@ class CameraClampingDemoActivityTest {
     fun testClampToAdelaide() {
         // 1. Clamp to Adelaide
         onView(withText("Clamp to Adelaide")).perform(click())
+
+        // Capture screenshot after clamping
+        val filename = "testClampToAdelaide_afterClamp"
+        try {
+            val capture = Screenshot.capture()
+            capture.name = filename
+            capture.process(setOf(ScreenshotTestWatcher.CustomScreenCaptureProcessor()))
+            println("Screenshot captured: $filename to ${File(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_PICTURES), "screenshots")}")
+        } catch (e: Exception) {
+            System.err.println("Failed to capture screenshot: ${e.message}")
+            e.printStackTrace()
+        }
 
         // 2. Try to move the camera outside the bounds
         scenario.onActivity { activity ->
