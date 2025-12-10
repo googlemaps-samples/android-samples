@@ -6,3 +6,7 @@ local.properties
 secrets.properties
 .DS_Store
 .java-version
+
+# This covers new IDEs, like Antigravity
+.vscode/
+**/bin/
