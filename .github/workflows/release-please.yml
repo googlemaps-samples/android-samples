@@ -1,17 +1,3 @@
-# Copyright 2025 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 on:
   push:
     branches:
@@ -30,37 +16,6 @@ jobs:
       - uses: googleapis/release-please-action@v4
         id: release
         with:
-          command: manifest
           token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
-          
-      - name: Checkout
-        uses: actions/checkout@v2
-        if: ${{ steps.release.outputs.release_created }}
-        with:
-            token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
-
-      - name: set up Java 21
-        uses: actions/setup-java@v3
-        if: ${{ steps.release.outputs.release_created }}
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Build APKs
-        if: ${{ steps.release.outputs.release_created }}
-        run: |
-          echo "Generating ApiDemos (Java) APKs"
-          cd $GITHUB_WORKSPACE/ApiDemos/project/
-          ./gradlew assemble
-          cp ./java-app/build/outputs/apk/debug/java-app-debug.apk $GITHUB_WORKSPACE/ApiDemos-java-debug.apk
-  
-          echo "Generating Kotlin (Kotlin) APKs"
-          ./gradlew assemble
-          cp ./kotlin-app/build/outputs/apk/debug/kotlin-app-debug.apk $GITHUB_WORKSPACE/ApiDemos-kotlin-debug.apk
-
-      - name: Upload Release Artifacts
-        if: ${{ steps.release.outputs.release_created }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
-        run: |
-          gh release upload ${{ steps.release.outputs.tag_name }} ./ApiDemos-java-debug.apk ./ApiDemos-kotlin-debug.apk
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
