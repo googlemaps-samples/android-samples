@@ -2,7 +2,6 @@
     "packages": {
         ".": {
             "release-type": "simple",
-            "package-name": "android-samples",
             "extra-files": [
                 "ApiDemos/project/java-app/build.gradle.kts",
                 "ApiDemos/project/kotlin-app/build.gradle.kts"
