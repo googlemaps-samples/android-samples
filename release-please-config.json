@@ -1,0 +1,11 @@
+{
+    "packages": {
+        ".": {
+            "release-type": "simple",
+            "extra-files": [
+                "ApiDemos/project/java-app/build.gradle.kts",
+                "ApiDemos/project/kotlin-app/build.gradle.kts"
+            ]
+        }
+    }
+}

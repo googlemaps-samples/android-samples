@@ -31,7 +31,9 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
+        // {x-release-please-start-version}
         versionName = "1.19.0"
+        // {x-release-please-end}
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
