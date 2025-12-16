@@ -49,7 +49,7 @@ internal class Heatmaps {
 
         // Create a heat map tile provider, passing it the latlngs of the police stations.
         val provider = HeatmapTileProvider.Builder()
-            .data(latLngs)
+            .data(latLngs?.filterNotNull() ?: emptyList())
             .build()
 
         // Add a tile overlay to the map, using the heat map tile provider.
