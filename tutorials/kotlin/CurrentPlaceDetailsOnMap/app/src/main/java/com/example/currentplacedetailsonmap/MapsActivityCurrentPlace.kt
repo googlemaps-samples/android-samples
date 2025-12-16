@@ -279,7 +279,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
         }
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
-            val placeFields = listOf(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+            val placeFields = listOf(Place.Field.DISPLAY_NAME, Place.Field.FORMATTED_ADDRESS, Place.Field.LOCATION)
 
             // Use the builder to create a FindCurrentPlaceRequest.
             val request = FindCurrentPlaceRequest.newInstance(placeFields)
@@ -304,10 +304,10 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
                     likelyPlaceLatLngs = arrayOfNulls(count)
                     for (placeLikelihood in likelyPlaces?.placeLikelihoods ?: emptyList()) {
                         // Build a list of likely places to show the user.
-                        likelyPlaceNames[i] = placeLikelihood.place.name
-                        likelyPlaceAddresses[i] = placeLikelihood.place.address
+                        likelyPlaceNames[i] = placeLikelihood.place.displayName
+                        likelyPlaceAddresses[i] = placeLikelihood.place.formattedAddress
                         likelyPlaceAttributions[i] = placeLikelihood.place.attributions
-                        likelyPlaceLatLngs[i] = placeLikelihood.place.latLng
+                        likelyPlaceLatLngs[i] = placeLikelihood.place.location
                         i++
                         if (i > count - 1) {
                             break
