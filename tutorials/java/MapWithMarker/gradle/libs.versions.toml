@@ -8,7 +8,7 @@ playServicesMaps = "19.2.0"
 kotlinBom = "2.0.0"
 appcompat = "1.7.1"
 junit = "4.13.2"
-androidxTestExtJunit = "1.2.1"
+androidxTestExtJunit = "1.3.0"
 espressoCore = "3.6.1"
 agp = "8.10.1"
 
