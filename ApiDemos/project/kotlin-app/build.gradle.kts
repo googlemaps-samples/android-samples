@@ -32,7 +32,7 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         // {x-release-please-start-version}
-        versionName = "1.20.0"
+        versionName = "1.20.1"
         // {x-release-please-end}
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
