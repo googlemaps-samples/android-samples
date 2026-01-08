@@ -7,7 +7,7 @@
 
 # Google Maps SDK for Android Samples
 
-<img src="images/screenshots.png" width="1024" />
+<img src="images/screenshots.png" width="1164" />
 
 ## Description
 
@@ -19,13 +19,13 @@ Samples demonstrating how to use
 This repo contains the following samples:
 
 1. [ApiDemos](ApiDemos): A collection of small demos showing most features of the Maps SDK for Android.
-1. [FireMarkers](FireMarkers): Demonstrates how to use Firebase Realtime Database to drive synchronized, live animations on a Google Map across multiple devices using a controller/agent architecture.
-1. [WearOS](WearOS):
+2. [FireMarkers](FireMarkers): Demonstrates how to use Firebase Realtime Database to drive synchronized, live animations on a Google Map across multiple devices using a controller/agent architecture.
+3. [WearOS](WearOS):
 Displays a map on a Wear OS device. This sample demonstrates the basic
 setup required for a gradle-based Android Studio project.
-1. [Tutorials](https://github.com/googlemaps/android-samples/tree/main/tutorials): Samples
+4. [Tutorials](https://github.com/googlemaps/android-samples/tree/main/tutorials): Samples
 associated with tutorials in the developer's guide. See each sample for a link to the associated guide.
-1. [Snippets](snippets): Snippets for code found in https://developers.google.com/maps/documentation/android-sdk
+5. [Snippets](snippets): Snippets for code found in https://developers.google.com/maps/documentation/android-sdk
 
 ## Requirements
 
