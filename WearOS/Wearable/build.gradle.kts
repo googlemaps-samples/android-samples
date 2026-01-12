@@ -57,7 +57,7 @@ android {
 // [START maps_wear_os_dependencies]
 dependencies {
     // [START_EXCLUDE]
-    implementation("androidx.core:core-ktx:1.15.0")
+    implementation("androidx.core:core-ktx:1.17.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
     // [END_EXCLUDE]
     compileOnly("com.google.android.wearable:wearable:2.9.0")
