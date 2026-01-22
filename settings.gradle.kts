@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// [START maps_android_settings_plugin_management]
 pluginManagement {
     repositories {
         google()
@@ -21,7 +22,9 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+// [END maps_android_settings_plugin_management]
 
+// [START maps_android_settings_dependency_resolution_management]
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -29,6 +32,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+// [END maps_android_settings_dependency_resolution_management]
 
 rootProject.name = "android-samples"
 
