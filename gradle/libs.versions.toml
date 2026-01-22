@@ -30,8 +30,9 @@ truth = "1.4.5"
 uiautomator = "2.3.0"
 compose = "1.7.6"
 composeBom = "2024.12.01"
+hiltNavigationCompose = "1.2.0"
 dagger = "2.57.2"
-firebaseBom = "34.10.0"
+firebaseBom = "33.10.0"
 kotlinxDatetime = "0.7.1"
 kotlinxCoroutinesTest = "1.10.2"
 robolectric = "4.16"
@@ -78,7 +79,7 @@ truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
 
-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "activityKtx" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "compose" }
