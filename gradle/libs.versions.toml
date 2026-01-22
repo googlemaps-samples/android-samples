@@ -28,9 +28,10 @@ secretsGradlePlugin = "2.0.1"
 volley = "1.2.1"
 truth = "1.4.5"
 uiautomator = "2.3.0"
-composeBom = "2025.10.01"
+compose = "1.7.6"
+composeBom = "2024.12.01"
 dagger = "2.57.2"
-firebaseBom = "34.5.0"
+firebaseBom = "34.10.0"
 kotlinxDatetime = "0.7.1"
 kotlinxCoroutinesTest = "1.10.2"
 robolectric = "4.16"
@@ -62,7 +63,7 @@ maps-ktx = { group = "com.google.maps.android", name = "maps-ktx", version.ref =
 maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "mapsKtx" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-material3 = { module = "androidx.compose.material3:material3" }
+material3 = { module = "androidx.compose.material3:material3", version = "1.3.1" }
 multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
@@ -70,21 +71,21 @@ play-services-maps = { group = "com.google.android.gms", name = "play-services-m
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.0" }
-compose-foundation = { module = "androidx.compose.foundation:foundation" }
-compose-material = { module = "androidx.compose.material:material" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
 
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "activityKtx" }
-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-ui = { module = "androidx.compose.ui:ui" }
-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "compose" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 maps-rx = { module = "com.google.maps.android:maps-rx", version = "1.0.0" }
 places-rx = { module = "com.google.maps.android:places-rx", version = "1.0.0" }
@@ -92,7 +93,7 @@ rxlifecycle-android-lifecycle-kotlin = { module = "com.trello.rxlifecycle4:rxlif
 
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-database = { module = "com.google.firebase:firebase-database" }
+firebase-database = { module = "com.google.firebase:firebase-database", version = "21.0.0" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
