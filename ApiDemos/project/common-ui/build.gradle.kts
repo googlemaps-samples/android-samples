@@ -66,11 +66,11 @@ android {
 
 dependencies {
 
-    implementation(libs.coreKtx)
+    implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.playServicesMaps)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidxJunit)
-    androidTestImplementation(libs.espressoCore)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.espresso.core)
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,11 @@
  * limitations under the License.
  */
 
-include(":app")
+plugins {
+    id("com.android.application") version "8.13.2" apply false
+    id("com.android.library") version "8.13.2" apply false
+    id("org.jetbrains.kotlin.android") version "2.2.21" apply false
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
+    id("com.google.dagger.hilt.android") version "2.57.2" apply false
+    alias(libs.plugins.ksp) apply false
+}

@@ -63,7 +63,7 @@ android {
         minSdk = 24
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = libs.versions.versionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -104,16 +104,16 @@ dependencies {
     // They provide core functionalities, lifecycle-aware components, and the Jetpack Compose UI
     // toolkit for building the app's user interface.
     // ---------------------------------------------------------------------------------------------
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.material.icons.extended)
-    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.core.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.activity.compose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.material3)
+    implementation(libs.material.icons.extended)
+    implementation(libs.hilt.navigation.compose)
 
     // ---------------------------------------------------------------------------------------------
     //                                  Dependency Injection
@@ -162,7 +162,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.robolectric)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.google.truth)
+    testImplementation(libs.truth)
     testImplementation(libs.mockito.kotlin)
 
     // ---------------------------------------------------------------------------------------------
@@ -181,10 +181,10 @@ dependencies {
     // AndroidX Test libraries for JUnit and Espresso, as well as Compose-specific testing tools
     // for UI testing.
     // ---------------------------------------------------------------------------------------------
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.ui.test.junit4)
 
     // ---------------------------------------------------------------------------------------------
     //                                    Debug Tools
@@ -192,8 +192,8 @@ dependencies {
     // These dependencies are only included in the debug build. They provide tools for inspecting
     // and debugging the application's UI and other components.
     // ---------------------------------------------------------------------------------------------
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
 }
 
 secrets {
