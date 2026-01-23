@@ -17,10 +17,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
  */
 
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-parcelize")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
@@ -31,9 +31,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
-        // {x-release-please-start-version}
-        versionName = "1.20.1"
-        // {x-release-please-end}
+        versionName = libs.versions.versionName.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
     }
@@ -77,16 +75,16 @@ kotlin {
 
 dependencies {
     implementation(libs.appcompat)
-    implementation(libs.kotlinStdlib)
+    implementation(libs.kotlin.stdlib)
     implementation(libs.cardview)
     implementation(libs.recyclerview)
     implementation(libs.multidex)
     implementation(libs.volley)
     implementation(libs.material)
 
-    implementation(libs.lifecycleRuntimeKtx)
-    implementation(libs.mapsKtx)
-    implementation(libs.mapsUtilsKtx)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.maps.ktx)
+    implementation(libs.maps.utils.ktx)
 
     implementation(libs.activity)
 
@@ -96,11 +94,11 @@ dependencies {
 
     // Tests
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidxJunit)
-    androidTestImplementation(libs.espressoCore)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.truth)
 
-    implementation(project(":common-ui"))
+    implementation(project(":ApiDemos:common-ui"))
 }
 
 secrets {

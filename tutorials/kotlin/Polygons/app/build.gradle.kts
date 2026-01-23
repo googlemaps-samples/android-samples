@@ -61,14 +61,14 @@ kotlin {
 
 dependencies {
     implementation(libs.appcompat)
-    implementation(libs.playServicesMaps)
-    implementation(libs.coreKtx)
-    implementation(libs.kotlinStdlib)
+    implementation(libs.play.services.maps)
+    implementation(libs.core.ktx)
+    implementation(libs.kotlin.stdlib)
 
     // Tests
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidxTestExtJunit)
-    androidTestImplementation(libs.espressoCore)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }
 
 secrets {

@@ -39,7 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.firemarkers.ui.theme.FireMarkersTheme
 import com.example.firemarkers.viewmodel.MarkersViewModel
 import com.google.android.gms.maps.model.BitmapDescriptorFactory

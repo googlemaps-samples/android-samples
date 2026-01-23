@@ -32,22 +32,19 @@ jobs:
     timeout-minutes: 45
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         distribution: 'adopt'
         java-version: '21'
 
     - name: Build and check
       run: |
-        cd ApiDemos
-        for dir in ./*/ ; do 
-          if [[ "$dir" != "./resources/" ]]; then 
-            ( cd "$dir" && ./gradlew buildDebugPreBundle ) 
-          fi 
-        done
+        ./gradlew :ApiDemos:java-app:assembleDebug
+        ./gradlew :ApiDemos:kotlin-app:assembleDebug
+        ./gradlew :ApiDemos:common-ui:assembleDebug
         
 
   build-WearOS:
@@ -55,77 +52,72 @@ jobs:
     timeout-minutes: 45
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         distribution: 'adopt'
         java-version: '21'
 
     - name: Build and check
-      run: cd WearOS && ./gradlew build
+      run: ./gradlew :WearOS:Wearable:assembleDebug
 
   build-FireMarkers:
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         distribution: 'adopt'
         java-version: '21'
 
     - name: Build and check
-      run: cd FireMarkers && ./gradlew build
+      run: ./gradlew :FireMarkers:app:assembleDebug
 
   build-Snippets:
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         distribution: 'adopt'
         java-version: '21'
 
     - name: Build and check
       run: |
-        cd snippets
-        ./gradlew assembleDebug lintDebug
+        ./gradlew :snippets:app:assembleDebug
+        ./gradlew :snippets:app-ktx:assembleDebug
+        ./gradlew :snippets:app-utils-ktx:assembleDebug
+        ./gradlew :snippets:app-compose:assembleDebug
+        ./gradlew :snippets:app-places-ktx:assembleDebug
+        ./gradlew :snippets:app-rx:assembleDebug
+        ./gradlew :snippets:app-utils:assembleDebug
 
   build-tutorials:
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         distribution: 'adopt'
         java-version: '21'
 
     - name: Build and check
       run: |
-        cd tutorials
-        for dir in ./*/
-        do
-          cd "$dir"
-          for tutorial in ./*/
-          do
-            cd "$tutorial" && ./gradlew buildDebug
-            cd ..
-          done
-          cd ..
-        done
+        ./gradlew :tutorials:kotlin:Polygons:assembleDebug
 
   test: # used as required status check
     runs-on: ubuntu-latest

@@ -15,9 +15,9 @@
  */
 
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
     id("project-report")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
@@ -28,9 +28,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
-        // {x-release-please-start-version}
-        versionName = "1.20.1"
-        // {x-release-please-end}
+        versionName = libs.versions.versionName.get()
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,18 +68,18 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.recyclerview)
     implementation(libs.volley)
-    implementation(libs.playServicesMaps)
+    implementation(libs.play.services.maps)
     implementation(libs.material)
     implementation(libs.activity)
-    implementation(project(":common-ui"))
+    implementation(project(":ApiDemos:common-ui"))
     implementation(libs.uiautomator)
-    implementation(libs.mapsUtilsKtx)
+    implementation(libs.maps.utils.ktx)
 
     // Tests
     testImplementation(libs.junit)
-    androidTestImplementation(libs.espressoIdlingResource)
-    androidTestImplementation(libs.androidxJunit)
-    androidTestImplementation(libs.espressoCore)
+    androidTestImplementation(libs.espresso.idling.resource)
+    androidTestImplementation(libs.junit)
+    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.truth)
 }
 
