@@ -15,9 +15,9 @@
  */
 
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
     id("project-report")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
