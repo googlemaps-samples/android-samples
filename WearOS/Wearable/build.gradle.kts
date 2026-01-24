@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@ plugins {
 }
 
 android {
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.wearos"
-        minSdk = 23
-        targetSdk = 31
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = libs.versions.versionName.get()
     }
@@ -34,7 +34,7 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -45,10 +45,6 @@ android {
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 
-    kotlinOptions {
-        jvmTarget = "21"
-    }
-
     kotlin {
         jvmToolchain(21)
     }
@@ -57,15 +53,16 @@ android {
 // [START maps_wear_os_dependencies]
 dependencies {
     // [START_EXCLUDE]
-    implementation("androidx.core:core-ktx:1.15.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.21")
+    implementation(libs.core.ktx)
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.kotlin.stdlib)
     // [END_EXCLUDE]
-    compileOnly("com.google.android.wearable:wearable:2.9.0")
-    implementation("com.google.android.support:wearable:2.9.0")
-    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    compileOnly(libs.wearable.compile)
+    implementation(libs.wearable.support)
+    implementation(libs.play.services.maps)
 
     // This dependency is necessary for ambient mode
-    implementation("androidx.wear:wear:1.3.0")
+    implementation(libs.wear)
 }
 // [END maps_wear_os_dependencies]
 
