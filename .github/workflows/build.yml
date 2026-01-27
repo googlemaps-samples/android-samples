@@ -40,6 +40,9 @@ jobs:
         distribution: 'adopt'
         java-version: '21'
 
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
+
     - name: Build and check
       run: |
         ./gradlew :ApiDemos:java-app:assembleDebug
@@ -60,6 +63,9 @@ jobs:
         distribution: 'adopt'
         java-version: '21'
 
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
+
     - name: Build and check
       run: ./gradlew :WearOS:Wearable:assembleDebug
 
@@ -76,6 +82,9 @@ jobs:
         distribution: 'adopt'
         java-version: '21'
 
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
+
     - name: Build and check
       run: ./gradlew :FireMarkers:app:assembleDebug
 
@@ -91,6 +100,9 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '21'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
 
     - name: Build and check
       run: |
@@ -114,6 +126,9 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '21'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
 
     - name: Build and check
       run: |
