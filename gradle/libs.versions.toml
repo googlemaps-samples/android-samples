@@ -37,10 +37,8 @@ materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
 mapsCompose = "7.0.0"
-mapsKtx = "5.2.2"
-mapsRx = "1.0.1"
+mapsKtx = "6.0.0"
 places = "5.1.1"
-placesRx = "1.0.1"
 playServicesMaps = "20.0.0"
 secretsGradlePlugin = "2.0.1"
 
@@ -67,7 +65,6 @@ firebaseDatabase = "22.0.1"
 
 # Third Party
 easypermissions = "3.0.0"
-rxlifecycle = "4.0.2"
 volley = "1.2.1"
 
 [libraries]
@@ -105,10 +102,8 @@ ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", versio
 # Maps & Places
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 maps-ktx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "mapsKtx" }
-maps-rx = { module = "com.google.maps.android:maps-rx", version.ref = "mapsRx" }
 maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "mapsKtx" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
-places-rx = { module = "com.google.maps.android:places-rx", version.ref = "placesRx" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 
 # Wear OS
@@ -142,7 +137,6 @@ firebase-database = { module = "com.google.firebase:firebase-database", version.
 
 # Third Party
 easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
-rxlifecycle-android-lifecycle-kotlin = { module = "com.trello.rxlifecycle4:rxlifecycle-android-lifecycle-kotlin", version.ref = "rxlifecycle" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 
 [plugins]

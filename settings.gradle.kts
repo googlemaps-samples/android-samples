@@ -22,6 +22,9 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
 // [END maps_android_settings_plugin_management]
 
 // [START maps_android_settings_dependency_resolution_management]
@@ -64,8 +67,6 @@ include(":snippets:app-compose")
 project(":snippets:app-compose").projectDir = file("snippets/app-compose")
 include(":snippets:app-places-ktx")
 project(":snippets:app-places-ktx").projectDir = file("snippets/app-places-ktx")
-include(":snippets:app-rx")
-project(":snippets:app-rx").projectDir = file("snippets/app-rx")
 include(":snippets:app-utils")
 project(":snippets:app-utils").projectDir = file("snippets/app-utils")
 

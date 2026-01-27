@@ -156,7 +156,7 @@ class MarkersViewModelTest {
         listenerCaptor.firstValue.onCancelled(error)
         testDispatcher.scheduler.advanceUntilIdle()
 
-        assertThat(errorMessage).isEqualTo("DB error on animation: Test Error")
+        assertThat(errorMessage).isEqualTo("Database error (animation): Test Error")
         job.cancel()
     }
 }

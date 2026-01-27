@@ -43,6 +43,14 @@ To run the samples, you will need:
 1. In the welcome screen of Android Studio, select "Open an Existing project"
 1. Select one of the sample directories from this repository
 
+## verifying the build
+
+To verify that all samples build and pass tests, run:
+
+```bash
+./scripts/verify_all.sh
+```
+
 Alternatively, use the `gradlew build` command to build the project directly or download an APK
 under [releases](https://github.com/googlemaps/android-samples/releases).
 
