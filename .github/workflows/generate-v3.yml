@@ -33,6 +33,9 @@ jobs:
         distribution: 'adopt'
         java-version: 17
 
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v5
+
     - name: Install NDK
       run: |
         sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;20.0.5594570"
