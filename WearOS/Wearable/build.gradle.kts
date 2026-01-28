@@ -57,12 +57,33 @@ dependencies {
     implementation(platform(libs.kotlin.bom))
     implementation(libs.kotlin.stdlib)
     // [END_EXCLUDE]
-    compileOnly(libs.wearable.compile) // com.google.android.wearable:wearable:2.9.0
-    implementation(libs.wearable.support) // com.google.android.support:wearable:2.9.0
-    implementation(libs.play.services.maps) // com.google.android.gms:play-services-maps:20.0.0
+    // Modern Android projects use version catalogs to manage dependencies.  To include the necessary dependencies,
+    // first add the following to your libs.versions.toml file:
+    //
+    // [versions]
+    // playServicesMaps = "20.0.0"
+    // wear = "1.3.0"
+    // wearable = "2.9.0"
+    //
+    // [libraries]
+    // play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+    // wear = { group = "androidx.wear", name = "wear", version.ref = "wear" }
+    // wearable-compile = { group = "com.google.android.wearable", name = "wearable", version.ref = "wearable" }
+    // wearable-support = { group = "com.google.android.support", name = "wearable", version.ref = "wearable" }
+
+    compileOnly(libs.wearable.compile)
+    implementation(libs.wearable.support)
+    implementation(libs.play.services.maps)
 
     // This dependency is necessary for ambient mode
     implementation(libs.wear)
+    
+    // If your project does not use a version catalog, you can use the following dependencies instead:
+    //
+    //    compileOnly("com.google.android.wearable:wearable:2.9.0")
+    //    implementation("com.google.android.support:wearable:2.9.0")
+    //    implementation("com.google.android.gms:play-services-maps:20.0.0")
+    //    implementation("androidx.wear:wear:1.3.0")
 }
 // [END maps_wear_os_dependencies]
 

@@ -49,6 +49,19 @@ def update_file(file_path, versions, check_only=False):
         (
              r'(implementation\(libs\.play\.services\.maps\)\s*//\s*com\.google\.android\.gms:play-services-maps:)([\d\.]+)',
             f'\\g<1>{versions.get("playServicesMaps", "UNKNOWN")}'
+        ),
+        # Replacements for the "How-To" comment block
+        (
+            r'(//\s*wearable\s*=\s*")([\d\.]+)',
+            f'\\g<1>{versions.get("wearable", "UNKNOWN")}'
+        ),
+        (
+            r'(//\s*playServicesMaps\s*=\s*")([\d\.]+)',
+            f'\\g<1>{versions.get("playServicesMaps", "UNKNOWN")}'
+        ),
+        (
+            r'(//\s*wear\s*=\s*")([\d\.]+)',
+            f'\\g<1>{versions.get("wear", "UNKNOWN")}'
         )
     ]
 
