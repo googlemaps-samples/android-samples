@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/googlemaps-samples/android-samples/compare/v1.20.1...v2.0.0) (2026-01-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* This release upgrades the Maps SDK to v20.0.0, which may require code changes for the new renderer and other API adjustments.
+
+### Features
+
+* update to Maps SDK 2.0.0 ([#2346](https://github.com/googlemaps-samples/android-samples/issues/2346)) ([7e0db8c](https://github.com/googlemaps-samples/android-samples/commit/7e0db8ca3738f30915371ba2f890734f1ab849e7))
+
 ## [1.20.1](https://github.com/googlemaps-samples/android-samples/compare/v1.20.0...v1.20.1) (2026-01-07)
 
 
