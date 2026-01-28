@@ -44,7 +44,6 @@ jobs:
           ./gradlew :snippets:app:lintGmsDebug
           ./gradlew :snippets:app-utils:lintDebug
           ./gradlew :snippets:app-utils-ktx:lintDebug
-          ./gradlew :snippets:app-rx:lintDebug
           ./gradlew :snippets:app-places-ktx:lintDebug
           ./gradlew :snippets:app-ktx:lintDebug
           ./gradlew :snippets:app-compose:lintDebug
@@ -86,12 +85,6 @@ jobs:
         with:
           sarif_file: snippets/app-utils-ktx/build/reports/lint-results-debug.sarif
           category: snippets-app-utils-ktx
-
-      - name: Upload SARIF for snippets:app-rx
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: snippets/app-rx/build/reports/lint-results-debug.sarif
-          category: snippets-app-rx
 
       - name: Upload SARIF for snippets:app-places-ktx
         uses: github/codeql-action/upload-sarif@v3
