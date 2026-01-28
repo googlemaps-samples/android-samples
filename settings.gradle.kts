@@ -23,7 +23,6 @@ pluginManagement {
     }
 }
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 // [END maps_android_settings_plugin_management]
 
