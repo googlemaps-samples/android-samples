@@ -24,6 +24,14 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+
+echo "Checking documentation versions sync..."
+python3 scripts/update_docs_versions.py --check || {
+  echo "FAILURE: Documentation versions are out of sync with Version Catalog."
+  echo "Run 'python3 scripts/update_docs_versions.py' to fix."
+  exit 1
+}
+
 echo "Starting project verification..."
 
 # List of modules to check
