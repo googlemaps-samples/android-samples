@@ -18,7 +18,7 @@
 plugins {
     // [START_EXCLUDE]
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.android)
     // [END_EXCLUDE]
     alias(libs.plugins.secrets.gradle.plugin)
 }

@@ -45,13 +45,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)  // Provides Kotlin serialization capabilities.
 }
 
-gradle.projectsEvaluated {
-    if (rootProject.file("app/google-services.json").exists()) {
-        project(":app").pluginManager.apply("com.google.gms.google-services")
-        println("Applied Google Services plugin.")
-    } else {
-        println("google-services.json not found — skipping plugin application")
-    }
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+    println("Applied Google Services plugin.")
+} else {
+    println("google-services.json not found — skipping Google Services plugin")
 }
 
 android {

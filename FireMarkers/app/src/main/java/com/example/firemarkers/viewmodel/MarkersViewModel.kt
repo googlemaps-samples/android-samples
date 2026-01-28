@@ -154,10 +154,7 @@ class MarkersViewModel @Inject constructor(
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e(TAG, "[$viewModelId] Database error on markers: ${error.message}")
-                    viewModelScope.launch {
-                        _errorEvents.emit("Database error on markers: ${error.message}")
-                    }
+                    handleDatabaseError(error, "markers")
                 }
             })
     }
@@ -187,12 +184,21 @@ class MarkersViewModel @Inject constructor(
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e(TAG, "[$viewModelId] DB error on animation: ${error.message}")
-                    viewModelScope.launch {
-                        _errorEvents.emit("DB error on animation: ${error.message}")
-                    }
+                    handleDatabaseError(error, "animation")
                 }
             })
+    }
+
+    private fun handleDatabaseError(error: DatabaseError, context: String) {
+        val msg = if (error.code == DatabaseError.PERMISSION_DENIED) {
+            "Permission Denied ($context): Check your Firebase Database Rules."
+        } else {
+            "Database error ($context): ${error.message}"
+        }
+        Log.e(TAG, "[$viewModelId] $msg")
+        viewModelScope.launch {
+            _errorEvents.emit(msg)
+        }
     }
 
     /**

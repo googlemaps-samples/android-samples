@@ -59,7 +59,7 @@ class FireMarkersApplication : Application() {
             val mapsApiKey =
                 bundle.getString("com.google.android.geo.API_KEY") // Key name is important!
 
-            if (mapsApiKey == null || mapsApiKey.isBlank() || mapsApiKey == "DEFAULT_API_KEY") {
+            if (mapsApiKey.isNullOrBlank() || mapsApiKey == "DEFAULT_API_KEY") {
                 Toast.makeText(
                     this,
                     "Maps API Key was not set in secrets.properties",

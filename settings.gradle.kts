@@ -26,7 +26,7 @@ pluginManagement {
 
 // [START maps_android_settings_dependency_resolution_management]
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
@@ -63,8 +63,6 @@ include(":snippets:app-compose")
 project(":snippets:app-compose").projectDir = file("snippets/app-compose")
 include(":snippets:app-places-ktx")
 project(":snippets:app-places-ktx").projectDir = file("snippets/app-places-ktx")
-include(":snippets:app-rx")
-project(":snippets:app-rx").projectDir = file("snippets/app-rx")
 include(":snippets:app-utils")
 project(":snippets:app-utils").projectDir = file("snippets/app-utils")
 
