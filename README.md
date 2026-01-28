@@ -43,7 +43,7 @@ To run the samples, you will need:
 1. In the welcome screen of Android Studio, select "Open an Existing project"
 1. Select one of the sample directories from this repository
 
-## verifying the build
+## Verifying the build
 
 To verify that all samples build and pass tests, run:
 
