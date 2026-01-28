@@ -22,13 +22,11 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-plugins {
-}
 // [END maps_android_settings_plugin_management]
 
 // [START maps_android_settings_dependency_resolution_management]
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()

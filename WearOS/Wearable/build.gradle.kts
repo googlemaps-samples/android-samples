@@ -57,9 +57,9 @@ dependencies {
     implementation(platform(libs.kotlin.bom))
     implementation(libs.kotlin.stdlib)
     // [END_EXCLUDE]
-    compileOnly(libs.wearable.compile)
-    implementation(libs.wearable.support)
-    implementation(libs.play.services.maps)
+    compileOnly(libs.wearable.compile) // com.google.android.wearable:wearable:2.9.0
+    implementation(libs.wearable.support) // com.google.android.support:wearable:2.9.0
+    implementation(libs.play.services.maps) // com.google.android.gms:play-services-maps:20.0.0
 
     // This dependency is necessary for ambient mode
     implementation(libs.wear)
