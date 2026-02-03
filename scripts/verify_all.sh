@@ -53,11 +53,48 @@ MODULES=(
 )
 
 # Parse arguments
-RUN_CONNECTED=false
-if [[ "$1" == "--connected" ]]; then
-    RUN_CONNECTED=true
-    echo "Running with Connected Android Tests..."
-fi
+RUN_CONNECTED_WEAR=false
+RUN_CONNECTED_MOBILE=false
+
+print_usage() {
+    echo "Usage: $0 [OPTIONS]"
+    echo ""
+    echo "Verifies all Android modules in the project by running assemble, test, and lint."
+    echo ""
+    echo "Options:"
+    echo "  -h, --help           Show this help message and exit"
+    echo "  --connected-wear     Run connected instrumentation tests for Wear OS modules"
+    echo "  --connected-mobile   Run connected instrumentation tests for Mobile (Handheld) modules"
+    echo "  --connected          Run ALL connected tests (Wear OS + Mobile) - Warning: Requires multiple emulators"
+    echo ""
+}
+
+for arg in "$@"; do
+    case $arg in
+        -h|--help)
+            print_usage
+            exit 0
+            ;;
+        --connected-wear)
+            RUN_CONNECTED_WEAR=true
+            echo "Running with Connected Wear OS Tests..."
+            ;;
+        --connected-mobile)
+            RUN_CONNECTED_MOBILE=true
+            echo "Running with Connected Mobile Tests..."
+            ;;
+        --connected)
+            RUN_CONNECTED_WEAR=true
+            RUN_CONNECTED_MOBILE=true
+            echo "Warning: Running ALL connected tests. This requires multiple simultaneous emulators (Wear + Handheld) or may fail."
+            ;;
+        *)
+            echo "Unknown option: $arg"
+            print_usage
+            exit 1
+            ;;
+    esac
+done
 
 # Function to run verification for a module
 verify_module() {
@@ -76,19 +113,16 @@ verify_module() {
     fi
 
     # Define connected test task if enabled
-    if [ "$RUN_CONNECTED" = true ]; then
+    if [ "$RUN_CONNECTED_WEAR" = true ] && [[ "$module" == ":WearOS:Wearable" ]]; then
+         connectedTask=":connectedDebugAndroidTest"
+    elif [ "$RUN_CONNECTED_MOBILE" = true ] && [[ "$module" != ":WearOS:Wearable" ]]; then
         if [[ "$module" == ":snippets:app" ]]; then
              connectedTask=":connectedGmsDebugAndroidTest"
         else
              connectedTask=":connectedDebugAndroidTest"
         fi
-        
-        # Check if the module actually has this task (simple heuristic or hardcode for known modules)
-        # For now, we know WearOS has it. We can try running it and ignore if task not found? 
-        # Or better, just run it for all and iterate. 
-        # But some modules might not have android tests setups. 
-        # Let's rely on the list.
     fi
+    # Note: If both flags are set, both types run (for their respective modules).
 
     # Build command
     local cmd="./gradlew $module$assembleTask $module$testTask $module$lintTask"
