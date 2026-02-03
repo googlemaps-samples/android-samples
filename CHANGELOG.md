@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/googlemaps-samples/android-samples/compare/v2.0.0...v2.0.1) (2026-02-03)
+
+
+### Bug Fixes
+
+* Resolve WearOS NoClassDefFoundError and add regression tests ([#2349](https://github.com/googlemaps-samples/android-samples/issues/2349)) ([e4f2883](https://github.com/googlemaps-samples/android-samples/commit/e4f288375a4b1bc9a2c03a3d051f740ff0726bcd))
+
 ## [2.0.0](https://github.com/googlemaps-samples/android-samples/compare/v1.20.1...v2.0.0) (2026-01-28)
 
 
