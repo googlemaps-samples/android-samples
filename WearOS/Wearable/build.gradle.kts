@@ -29,6 +29,7 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = libs.versions.versionName.get()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -77,6 +78,13 @@ dependencies {
 
     // This dependency is necessary for ambient mode
     implementation(libs.wear)
+
+    // Android Test Dependencies
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.uiautomator)
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.junit)
     
     // If your project does not use a version catalog, you can use the following dependencies instead:
     //
@@ -84,6 +92,11 @@ dependencies {
     //    implementation("com.google.android.support:wearable:2.9.0")
     //    implementation("com.google.android.gms:play-services-maps:20.0.0")
     //    implementation("androidx.wear:wear:1.3.0")
+    //    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    //    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
+    //    androidTestImplementation("com.google.truth:truth:1.4.2")
+    //    androidTestImplementation("junit:junit:4.13.2")
 }
 // [END maps_wear_os_dependencies]
 

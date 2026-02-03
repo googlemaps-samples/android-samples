@@ -32,6 +32,9 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
+        <!-- Required for Maps SDK on Wear OS devices -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
         <!-- Reference the wearable shared library required to support ambient mode. -->
         <uses-library android:name="com.google.android.wearable" android:required="false" />
 

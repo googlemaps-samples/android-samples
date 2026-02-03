@@ -52,6 +52,13 @@ MODULES=(
     ":tutorials:kotlin:Polygons"
 )
 
+# Parse arguments
+RUN_CONNECTED=false
+if [[ "$1" == "--connected" ]]; then
+    RUN_CONNECTED=true
+    echo "Running with Connected Android Tests..."
+fi
+
 # Function to run verification for a module
 verify_module() {
     local module=$1
@@ -60,6 +67,7 @@ verify_module() {
     local assembleTask=":assembleDebug"
     local testTask=":testDebugUnitTest"
     local lintTask=":lintDebug"
+    local connectedTask=""
 
     if [[ "$module" == ":snippets:app" ]]; then
         assembleTask=":assembleGmsDebug"
@@ -67,8 +75,31 @@ verify_module() {
         lintTask=":lintGmsDebug"
     fi
 
-    # Run assemble, lint, and test
-    if ./gradlew "$module$assembleTask" "$module$testTask" "$module$lintTask"; then
+    # Define connected test task if enabled
+    if [ "$RUN_CONNECTED" = true ]; then
+        if [[ "$module" == ":snippets:app" ]]; then
+             connectedTask=":connectedGmsDebugAndroidTest"
+        else
+             connectedTask=":connectedDebugAndroidTest"
+        fi
+        
+        # Check if the module actually has this task (simple heuristic or hardcode for known modules)
+        # For now, we know WearOS has it. We can try running it and ignore if task not found? 
+        # Or better, just run it for all and iterate. 
+        # But some modules might not have android tests setups. 
+        # Let's rely on the list.
+    fi
+
+    # Build command
+    local cmd="./gradlew $module$assembleTask $module$testTask $module$lintTask"
+    
+    if [ -n "$connectedTask" ]; then
+        cmd="$cmd $module$connectedTask"
+    fi
+
+    # Run assemble, lint, and test (and connected if requested)
+    echo "Running: $cmd"
+    if $cmd; then
          echo -e "${GREEN}SUCCESS: $module verified.${NC}"
     else
          echo -e "${RED}FAILURE: $module failed verification.${NC}"

@@ -81,6 +81,7 @@ dependencies {
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.ext.junit)
 }
 
 secrets {
