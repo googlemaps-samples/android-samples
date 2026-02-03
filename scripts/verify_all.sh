@@ -52,6 +52,50 @@ MODULES=(
     ":tutorials:kotlin:Polygons"
 )
 
+# Parse arguments
+RUN_CONNECTED_WEAR=false
+RUN_CONNECTED_MOBILE=false
+
+print_usage() {
+    echo "Usage: $0 [OPTIONS]"
+    echo ""
+    echo "Verifies all Android modules in the project by running assemble, test, and lint."
+    echo ""
+    echo "Options:"
+    echo "  -h, --help           Show this help message and exit"
+    echo "  --connected-wear     Run connected instrumentation tests for Wear OS modules"
+    echo "  --connected-mobile   Run connected instrumentation tests for Mobile (Handheld) modules"
+    echo "  --connected          Run ALL connected tests (Wear OS + Mobile) - Warning: Requires multiple emulators"
+    echo ""
+}
+
+for arg in "$@"; do
+    case $arg in
+        -h|--help)
+            print_usage
+            exit 0
+            ;;
+        --connected-wear)
+            RUN_CONNECTED_WEAR=true
+            echo "Running with Connected Wear OS Tests..."
+            ;;
+        --connected-mobile)
+            RUN_CONNECTED_MOBILE=true
+            echo "Running with Connected Mobile Tests..."
+            ;;
+        --connected)
+            RUN_CONNECTED_WEAR=true
+            RUN_CONNECTED_MOBILE=true
+            echo "Warning: Running ALL connected tests. This requires multiple simultaneous emulators (Wear + Handheld) or may fail."
+            ;;
+        *)
+            echo "Unknown option: $arg"
+            print_usage
+            exit 1
+            ;;
+    esac
+done
+
 # Function to run verification for a module
 verify_module() {
     local module=$1
@@ -60,6 +104,7 @@ verify_module() {
     local assembleTask=":assembleDebug"
     local testTask=":testDebugUnitTest"
     local lintTask=":lintDebug"
+    local connectedTask=""
 
     if [[ "$module" == ":snippets:app" ]]; then
         assembleTask=":assembleGmsDebug"
@@ -67,8 +112,28 @@ verify_module() {
         lintTask=":lintGmsDebug"
     fi
 
-    # Run assemble, lint, and test
-    if ./gradlew "$module$assembleTask" "$module$testTask" "$module$lintTask"; then
+    # Define connected test task if enabled
+    if [ "$RUN_CONNECTED_WEAR" = true ] && [[ "$module" == ":WearOS:Wearable" ]]; then
+         connectedTask=":connectedDebugAndroidTest"
+    elif [ "$RUN_CONNECTED_MOBILE" = true ] && [[ "$module" != ":WearOS:Wearable" ]]; then
+        if [[ "$module" == ":snippets:app" ]]; then
+             connectedTask=":connectedGmsDebugAndroidTest"
+        else
+             connectedTask=":connectedDebugAndroidTest"
+        fi
+    fi
+    # Note: If both flags are set, both types run (for their respective modules).
+
+    # Build command
+    local cmd="./gradlew $module$assembleTask $module$testTask $module$lintTask"
+    
+    if [ -n "$connectedTask" ]; then
+        cmd="$cmd $module$connectedTask"
+    fi
+
+    # Run assemble, lint, and test (and connected if requested)
+    echo "Running: $cmd"
+    if $cmd; then
          echo -e "${GREEN}SUCCESS: $module verified.${NC}"
     else
          echo -e "${RED}FAILURE: $module failed verification.${NC}"

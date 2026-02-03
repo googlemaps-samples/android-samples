@@ -51,6 +51,16 @@ To verify that all samples build and pass tests, run:
 ./scripts/verify_all.sh
 ```
 
+To run instrumentation tests on a connected device or emulator, use:
+
+```bash
+# For Wear OS devices/emulators
+./scripts/verify_all.sh --connected-wear
+
+# For Mobile (Handheld) devices/emulators
+./scripts/verify_all.sh --connected-mobile
+```
+
 Alternatively, use the `gradlew build` command to build the project directly or download an APK
 under [releases](https://github.com/googlemaps/android-samples/releases).
 
