@@ -41,7 +41,7 @@ To run the samples, you will need:
 
 1. Download the samples by cloning this repository
 1. In the welcome screen of Android Studio, select "Open an Existing project"
-1. Select one of the sample directories from this repository
+1. Select the root directory of this repository (android-samples)
 
 ## Verifying the build
 
