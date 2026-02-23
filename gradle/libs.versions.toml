@@ -48,7 +48,7 @@ wearable = "2.9.0"
 
 # Dependency Injection
 dagger = "2.57.2"
-hilt = "2.57.2"
+hilt = "2.59.2"
 
 # Testing
 espresso = "3.7.0"
