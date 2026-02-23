@@ -16,7 +16,7 @@ ksp = "2.2.20-2.0.4"
 
 # AndroidX Core & Jetpack
 activity = "1.12.2"
-activityKtx = "1.12.2"
+activityKtx = "1.12.4"
 androidxJunit = "1.3.0" # Test ext
 appcompat = "1.7.1"
 cardview = "1.0.0"
