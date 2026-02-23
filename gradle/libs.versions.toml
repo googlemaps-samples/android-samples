@@ -24,7 +24,7 @@ constraintlayout = "2.2.1"
 coreKtx = "1.17.0"
 lifecycle = "2.10.0"
 multidex = "2.0.1"
-navigation = "2.9.6"
+navigation = "2.9.7"
 recyclerview = "1.4.0"
 
 # Jetpack Compose
