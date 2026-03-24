@@ -15,9 +15,9 @@ Add the necessary dependencies to the app-level `build.gradle.kts` file based on
 ```kotlin
 dependencies {
     // Google Maps Compose library
-    implementation("com.google.maps.android:maps-compose:6.1.0") // Check for the latest version
+    implementation("com.google.maps.android:maps-compose:8.2.2") // x-release-please-version
     // Optional: Maps Compose Utilities (for clustering, etc.)
-    // implementation("com.google.maps.android:maps-compose-utils:6.1.0")
+    // implementation("com.google.maps.android:maps-compose-utils:8.2.2") // x-release-please-version
 }
 ```
 
