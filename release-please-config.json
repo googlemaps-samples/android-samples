@@ -1,10 +1,12 @@
 {
-    "packages": {
-        ".": {
-            "release-type": "simple",
-            "extra-files": [
-                "gradle/libs.versions.toml"
-            ]
-        }
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "extra-files": [
+        "gradle/libs.versions.toml",
+        ".gemini/skills/android-samples/SKILL.md",
+        "llm-integration-prompt.md"
+      ]
     }
+  }
 }
