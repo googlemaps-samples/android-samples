@@ -1,13 +1,27 @@
-# Google Maps SDK for Android - AI Integration Prompt
+---
+name: maps-sdk-android
+description: Guide for integrating the Google Maps SDK for Android (Views/Fragments) and Maps Compose into an Android application. Use when users ask to add Google Maps to their Android app or implement advanced map features.
+---
 
-You are an expert Android developer specializing in the Google Maps SDK for Android. Your task is to integrate the Maps SDK into the user's application using standard Android Views and Fragments.
+# Google Maps SDK for Android Integration
 
-Please follow these instructions carefully to ensure a secure and idiomatic implementation.
+You are an expert Android developer specializing in the Google Maps SDK for Android. Your task is to integrate the Maps SDK into the user's application. You support both **Jetpack Compose** (`maps-compose`) and **Classic Android Views** (`SupportMapFragment`).
 
 ## 1. Setup Dependencies
 
-Add the necessary dependency to the app-level `build.gradle.kts` file:
+Add the necessary dependencies to the app-level `build.gradle.kts` file based on the UI framework:
 
+### For Jetpack Compose (Recommended for new apps):
+```kotlin
+dependencies {
+    // Google Maps Compose library
+    implementation("com.google.maps.android:maps-compose:6.1.0") // Check for the latest version
+    // Optional: Maps Compose Utilities (for clustering, etc.)
+    // implementation("com.google.maps.android:maps-compose-utils:6.1.0")
+}
+```
+
+### For Classic Android Views (Fragments/XML):
 ```kotlin
 dependencies {
     // Google Maps SDK for Android
@@ -15,12 +29,11 @@ dependencies {
 }
 ```
 
-## 2. Setup the Secrets Gradle Plugin
+## 2. Setup the Secrets Gradle Plugin (Mandatory for both)
 
-Instead of hardcoding the Google Maps API key in `AndroidManifest.xml`, use the Secrets Gradle Plugin for Android to inject the API key securely.
+Never hardcode the API key. Use the Secrets Gradle Plugin for Android to inject the API key securely.
 
-First, add the plugin to the project-level `build.gradle.kts`:
-
+**Project-level `build.gradle.kts`:**
 ```kotlin
 buildscript {
     dependencies {
@@ -29,88 +42,103 @@ buildscript {
 }
 ```
 
-Then, apply the plugin in the app-level `build.gradle.kts`:
-
+**App-level `build.gradle.kts`:**
 ```kotlin
 plugins {
-    // ...
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 ```
 
-Add the API Key to `local.properties`:
-
+**`local.properties`:**
 ```properties
 MAPS_API_KEY=YOUR_API_KEY
 ```
 
-In `AndroidManifest.xml`, reference the injected API key meta-data:
-
+**`AndroidManifest.xml`:**
 ```xml
 <manifest ...>
     <application ...>
-        <!-- Google Maps API Key injected by Secrets Gradle Plugin -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
-        ...
     </application>
 </manifest>
 ```
 
 ## 3. Implement the Map
 
-The standard way to implement a map is by using a `SupportMapFragment`. 
-
-**activity_maps.xml:**
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MapsActivity" />
-```
-
-**MapsActivity.kt:**
+### Option A: Jetpack Compose (Maps Compose)
+Create a Composable and use `GoogleMap` along with `Marker`.
 ```kotlin
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
-    private lateinit var map: GoogleMap
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+@Composable
+fun MapScreen() {
+    val singapore = LatLng(1.35, 103.87)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(singapore, 10f)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-
-        // Add a marker in Singapore and move the camera
-        val singapore = LatLng(1.35, 103.87)
-        map.addMarker(MarkerOptions().position(singapore).title("Marker in Singapore"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(singapore, 10f))
+    GoogleMap(
+        modifier = Modifier.fillMaxSize(),
+        cameraPositionState = cameraPositionState
+    ) {
+        Marker(
+            state = MarkerState(position = singapore),
+            title = "Singapore",
+            snippet = "Marker in Singapore"
+        )
     }
 }
 ```
 
-## 4. Best Practices & Guidelines
-*   **Lifecycle Management:** `SupportMapFragment` is the recommended approach because it manages the map lifecycle automatically. If you must use a `MapView` directly in a layout, you **must** forward all Activity/Fragment lifecycle methods (`onCreate`, `onResume`, `onPause`, `onDestroy`, `onSaveInstanceState`, `onLowMemory`) to the `MapView`.
-*   **Main Thread:** All interactions with the `GoogleMap` object must occur on the main UI thread.
-*   **Permissions:** You do not need to request `ACCESS_FINE_LOCATION` or `ACCESS_COARSE_LOCATION` permissions unless you are explicitly enabling the "My Location" layer via `map.isMyLocationEnabled = true`.
+### Option B: Classic Android Views
+Use `SupportMapFragment` to manage the map lifecycle automatically.
+```xml
+<!-- activity_maps.xml -->
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+```
+```kotlin
+// MapsActivity.kt
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_maps)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        val singapore = LatLng(1.35, 103.87)
+        googleMap.addMarker(MarkerOptions().position(singapore).title("Marker in Singapore"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(singapore, 10f))
+    }
+}
+```
+
+## 4. Advanced Features (Referencing `android-samples`)
+
+When a user asks for advanced features, implement them using these established patterns:
+
+*   **Marker Clustering:** Use the `maps-compose-utils` library and the `Clustering` composable. (Classic Views: Use `android-maps-utils` and `ClusterManager`).
+*   **Drawing on the Map:** Use `Polyline`, `Polygon`, or `Circle` composables.
+*   **Map Styling:** Apply custom JSON styling via `MapProperties(mapStyleOptions = MapStyleOptions(json))` in Compose, or `googleMap.setMapStyle()` in Classic Views.
+*   **Live Synchronization:** For multi-device real-time updates (like taxi tracking), use Firebase Realtime Database to push/pull `LatLng` coordinates and animate marker states locally.
+*   **Location Tracking:** Request `ACCESS_FINE_LOCATION`, then set `isMyLocationEnabled = true` on `MapProperties` (Compose) or `googleMap.isMyLocationEnabled = true` (Classic Views).
+
+## 5. Execution Guidelines
+1. Always prefer Jetpack Compose unless the user explicitly asks for XML/Fragments.
+2. Never log or commit the raw API key.
+3. Hoist state (like camera positions or marker lists) to the ViewModel if the map data is dynamic.
