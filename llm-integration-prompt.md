@@ -25,7 +25,7 @@ dependencies {
 ```kotlin
 dependencies {
     // Google Maps SDK for Android
-    implementation("com.google.android.gms:play-services-maps:19.0.0") // Check for the latest version
+    implementation("com.google.android.gms:play-services-maps:20.0.0") // Check for the latest version
 }
 ```
 
