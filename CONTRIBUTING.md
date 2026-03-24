@@ -18,3 +18,9 @@ Please fill out either the individual or corporate Contributor License Agreement
 Follow either of the two links above to access the appropriate CLA and
 instructions for how to sign and return it. Once we receive it, we'll be able to
 accept your pull requests.
+
+## Using AI to Contribute
+
+This repository provides an official Gemini Skill to help AI agents navigate and contribute to the project effectively. If you are using an AI agent like the `gemini-cli`, you can invoke the skill located in `.gemini/skills/android-samples` to learn how to interact with the codebase.
+
+Additionally, the `.geminiignore` file prevents AI tools from consuming large or irrelevant files to preserve context limits. You can also reference the generic `llm-integration-prompt.md` to feed into web-based LLMs for general assistance.
