@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/googlemaps-samples/android-samples/compare/v2.0.1...v2.0.2) (2026-03-26)
+
+
+### Bug Fixes
+
+* **idx:** remove incorrect default subdir causing build errors ([#2371](https://github.com/googlemaps-samples/android-samples/issues/2371)) ([aa1e320](https://github.com/googlemaps-samples/android-samples/commit/aa1e3208df01e59aabafb7d75ec6534a6520e0d3))
+
 ## [2.0.1](https://github.com/googlemaps-samples/android-samples/compare/v2.0.0...v2.0.1) (2026-02-03)
 
 
