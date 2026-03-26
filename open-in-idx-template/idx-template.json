@@ -19,8 +19,7 @@
       {
         "id": "subdir",
         "name": "Project Subfolder",
-        "type": "text",
-        "default": "tutorials/java/MapWithMarker/"
+        "type": "text"
       },
       {
         "id": "launchactivity",
