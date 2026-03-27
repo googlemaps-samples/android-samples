@@ -60,7 +60,7 @@ turbine = "1.2.1"
 uiautomator = "2.3.0"
 
 # Firebase
-firebaseBom = "34.8.0"
+firebaseBom = "34.9.0"
 firebaseDatabase = "22.0.1"
 
 # Third Party
