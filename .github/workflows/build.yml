@@ -35,7 +35,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'adopt'
         java-version: '21'
@@ -58,7 +58,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'adopt'
         java-version: '21'
@@ -77,7 +77,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'adopt'
         java-version: '21'
@@ -96,7 +96,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'adopt'
         java-version: '21'
@@ -121,7 +121,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: set up Java 21
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'adopt'
         java-version: '21'
@@ -145,7 +145,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: set up Java 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'adopt'
           java-version: '21'
