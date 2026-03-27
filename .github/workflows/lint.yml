@@ -59,67 +59,67 @@ jobs:
           ./gradlew :FireMarkers:app:lintDebug
 
       - name: Upload SARIF for ApiDemos:kotlin-app
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: ApiDemos/project/kotlin-app/build/reports/lint-results-debug.sarif
           category: ApiDemos-kotlin-app
 
       - name: Upload SARIF for ApiDemos:java-app
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: ApiDemos/project/java-app/build/reports/lint-results-debug.sarif
           category: ApiDemos-java-app
 
       - name: Upload SARIF for ApiDemos:common-ui
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: ApiDemos/project/common-ui/build/reports/lint-results-debug.sarif
           category: ApiDemos-common-ui
 
       - name: Upload SARIF for snippets:app
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: snippets/app/build/reports/lint-results-debug.sarif
           category: snippets-app
 
       - name: Upload SARIF for snippets:app-utils
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: snippets/app-utils/build/reports/lint-results-debug.sarif
           category: snippets-app-utils
 
       - name: Upload SARIF for snippets:app-utils-ktx
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: snippets/app-utils-ktx/build/reports/lint-results-debug.sarif
           category: snippets-app-utils-ktx
 
       - name: Upload SARIF for snippets:app-places-ktx
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: snippets/app-places-ktx/build/reports/lint-results-debug.sarif
           category: snippets-app-places-ktx
 
       - name: Upload SARIF for snippets:app-ktx
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: snippets/app-ktx/build/reports/lint-results-debug.sarif
           category: snippets-app-ktx
 
       - name: Upload SARIF for snippets:app-compose
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: snippets/app-compose/build/reports/lint-results-debug.sarif
           category: snippets-app-compose
 
       - name: Upload SARIF for WearOS:Wearable
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: WearOS/Wearable/build/reports/lint-results-debug.sarif
           category: WearOS-Wearable
 
       - name: Upload SARIF for FireMarkers:app
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: FireMarkers/app/build/reports/lint-results-debug.sarif
           category: FireMarkers-app
