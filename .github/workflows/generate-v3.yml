@@ -48,7 +48,7 @@ jobs:
         echo "files-changed=$(git status -s | wc -l)" >> $GITHUB_OUTPUT
 
     - name: PR Changes
-      uses: peter-evans/create-pull-request@v6
+      uses: peter-evans/create-pull-request@v8
       if: steps.gradlew-generate-v3.outputs.files-changed > 0
       with:
         token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
