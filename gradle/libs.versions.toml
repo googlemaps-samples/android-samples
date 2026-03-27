@@ -36,7 +36,7 @@ material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
-mapsCompose = "7.0.0"
+mapsCompose = "8.1.0"
 mapsKtx = "6.0.0"
 places = "5.1.1"
 playServicesMaps = "20.0.0"
