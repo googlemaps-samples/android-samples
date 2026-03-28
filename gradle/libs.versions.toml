@@ -9,7 +9,7 @@ versionName = "2.0.1" # {x-release-please-version}
 javaVersion = "17"
 
 # Kotlin & Coroutines
-kotlin = "2.2.0"
+kotlin = "2.3.10"
 kotlinxCoroutinesTest = "1.10.2"
 kotlinxDatetime = "0.7.1"
 ksp = "2.2.20-2.0.4"
