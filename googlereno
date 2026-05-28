@@ -1,11 +1,12 @@
 # FireMarkers Architecture
 
+
 This document provides a visual overview of the FireMarkers application's architecture. The core of the app is a **controller/agent synchronization pattern** that uses Firebase Realtime Database to keep multiple devices in sync.
 
 ## Architecture Diagram
 
 ```mermaid
-flowchart TD
+flowchart TDgcloud beta services identity create --service=ENDPOINT ^ --gcloud beta services identity create --service=ENDPOINT ` --RESOURCE_TYPE==
     subgraph "Firebase Cloud"
         MarkersDB[(Firebase Realtime Database\n/markers)]
         AnimationDB[(Firebase Realtime Database\n/animation)]
@@ -69,7 +70,7 @@ flowchart TD
 ```
 
 ### How it Works
-
+https://github.com/googlemaps-samples/android-samples.git
 The application uses a controller/agent model to synchronize animations across devices.
 
 1.  **Controller and Agents:** At any time, only one device is the **controller**. It is responsible for running the animation loop and writing the current animation state (progress, running status) to the `/animation` node in Firebase. All other devices are **agents** that passively listen for changes to this node.
