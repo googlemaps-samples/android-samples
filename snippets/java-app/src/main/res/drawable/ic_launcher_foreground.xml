@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportHeight="108"
+    android:viewportWidth="108">
+    <!-- Drop Shadow for Pin -->
+    <path
+        android:fillColor="#22000000"
+        android:pathData="M54,86 C60,86 70,82 70,78 C70,74 60,70 54,70 C48,70 38,74 38,78 C38,82 48,86 54,86 Z"/>
+    <!-- Red Location Pin -->
+    <path
+        android:fillColor="#EA4335"
+        android:pathData="M54,18 C41,18 30,29 30,44 C30,62 54,84 54,84 C54,84 78,62 78,44 C78,29 67,18 54,18 Z"/>
+    <!-- White Pin Cutout -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,26 C61.7,26 68,32.3 68,40 C68,47.7 61.7,54 54,54 C46.3,54 40,47.7 40,40 C40,32.3 46.3,26 54,26 Z"/>
+    <!-- Blue Center Dot -->
+    <path
+        android:fillColor="#4285F4"
+        android:pathData="M54,34 C57.3,34 60,36.7 60,40 C60,43.3 57.3,46 54,46 C50.7,46 48,43.3 48,40 C48,36.7 50.7,34 54,34 Z"/>
+    <!-- Pill Badge for Stack (Java Orange) -->
+    <path
+        android:fillColor="#E76F00"
+        android:pathData="M36,64 L72,64 C77.5,64 82,68.5 82,74 C82,79.5 77.5,84 72,84 L36,84 C30.5,84 26,79.5 26,74 C26,68.5 30.5,64 36,64 Z"/>
+    <!-- Letter J -->
+    <path android:pathData="M38,68 L38,76 C38,79 35,80 34,80 C33,80 32,79 32,77" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <!-- Letter A -->
+    <path android:pathData="M42,80 L45,68" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <path android:pathData="M45,68 L48,80" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <path android:pathData="M43.5,75 L46.5,75" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <!-- Letter V -->
+    <path android:pathData="M52,68 L55,80" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <path android:pathData="M55,80 L58,68" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <!-- Letter A -->
+    <path android:pathData="M62,80 L65,68" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <path android:pathData="M65,68 L68,80" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+    <path android:pathData="M63.5,75 L66.5,75" android:strokeColor="#FFFFFF" android:strokeWidth="2.5" android:strokeLineCap="round"/>
+</vector>
