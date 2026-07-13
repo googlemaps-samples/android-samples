@@ -11,39 +11,39 @@ javaVersion = "17"
 # Kotlin & Coroutines
 kotlin = "2.2.0"
 kotlinxCoroutinesTest = "1.10.2"
-kotlinxDatetime = "0.7.1"
+kotlinxDatetime = "0.8.0"
 ksp = "2.2.20-2.0.4"
 
 # AndroidX Core & Jetpack
-activity = "1.12.2"
-activityKtx = "1.12.2"
+activity = "1.13.0"
+activityKtx = "1.13.0"
 androidxJunit = "1.3.0" # Test ext
 appcompat = "1.7.1"
 cardview = "1.0.0"
 constraintlayout = "2.2.1"
-coreKtx = "1.17.0"
+coreKtx = "1.18.0"
 lifecycle = "2.10.0"
 multidex = "2.0.1"
-navigation = "2.9.6"
+navigation = "2.9.8"
 recyclerview = "1.4.0"
 
 # Jetpack Compose
-compose = "1.10.1"
-composeBom = "2026.01.00"
+compose = "1.11.4"
+composeBom = "2026.06.01"
 hiltNavigationCompose = "1.3.0"
 material = "1.13.0" # View-based Material
 material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
-mapsCompose = "7.0.0"
-mapsKtx = "6.0.0"
-places = "5.1.1"
+mapsCompose = "8.3.0"
+mapsKtx = "6.0.1"
+places = "5.3.0"
 playServicesMaps = "20.0.0"
 secretsGradlePlugin = "2.0.1"
 
 # Wear OS
-wear = "1.3.0"
+wear = "1.4.0"
 wearable = "2.9.0"
 
 # Dependency Injection
@@ -53,11 +53,11 @@ hilt = "2.57.2"
 # Testing
 espresso = "3.7.0"
 junit = "4.13.2"
-mockito = "6.2.2"
+mockito = "6.3.0"
 robolectric = "4.16.1"
 truth = "1.4.5"
 turbine = "1.2.1"
-uiautomator = "2.3.0"
+uiautomator = "2.4.0"
 
 # Firebase
 firebaseBom = "34.8.0"
@@ -82,6 +82,8 @@ cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }

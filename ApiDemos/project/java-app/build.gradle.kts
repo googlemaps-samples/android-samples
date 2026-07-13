@@ -78,6 +78,7 @@ dependencies {
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.idling.resource)
+    androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.truth)

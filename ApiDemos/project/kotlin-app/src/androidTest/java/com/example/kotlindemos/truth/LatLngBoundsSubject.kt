@@ -26,7 +26,7 @@ import com.google.common.truth.Truth
  */
 class LatLngBoundsSubject private constructor(
     failureMetadata: FailureMetadata,
-    private val actual: LatLngBounds
+    private val actual: LatLngBounds?
 ) : Subject(failureMetadata, actual) {
 
     /**
@@ -35,8 +35,8 @@ class LatLngBoundsSubject private constructor(
      */
     fun containsWithTolerance(expected: LatLng) {
         val tolerance = 1e-5
-        val contains = actual.southwest.latitude - tolerance <= expected.latitude &&
-            expected.latitude <= actual.northeast.latitude + tolerance &&
+        val contains = actual!!.southwest.latitude - tolerance <= expected.latitude &&
+            expected.latitude <= actual!!.northeast.latitude + tolerance &&
             isLongitudeWithinBounds(expected.longitude, actual, tolerance)
         if (!contains) {
             failWithActual("expected to contain", expected)

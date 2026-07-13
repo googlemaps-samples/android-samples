@@ -179,6 +179,7 @@ dependencies {
     // AndroidX Test libraries for JUnit and Espresso, as well as Compose-specific testing tools
     // for UI testing.
     // ---------------------------------------------------------------------------------------------
+    androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))

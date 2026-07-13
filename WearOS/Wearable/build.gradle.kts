@@ -84,6 +84,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.uiautomator)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.junit)
     
     // If your project does not use a version catalog, you can use the following dependencies instead:

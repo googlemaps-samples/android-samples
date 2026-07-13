@@ -32,7 +32,7 @@ import kotlin.math.abs
  */
 class LatLngSubject private constructor(
     failureMetadata: FailureMetadata,
-    private val actual: LatLng
+    private val actual: LatLng?
 ) : Subject(failureMetadata, actual) {
 
     /**
@@ -41,8 +41,8 @@ class LatLngSubject private constructor(
      */
     fun isNear(expected: LatLng) {
         val tolerance = 1e-6
-        if (abs(actual.latitude - expected.latitude) > tolerance ||
-            abs(actual.longitude - expected.longitude) > tolerance
+        if (abs(actual!!.latitude - expected.latitude) > tolerance ||
+            abs(actual!!.longitude - expected.longitude) > tolerance
         ) {
             failWithActual("expected to be near", expected)
         }
@@ -63,7 +63,7 @@ class LatLngSubject private constructor(
          * Asserts that the actual [LatLng] is within [tolerance] meters of the [expected] [LatLng].
          */
         fun of(expected: LatLng) {
-            val distance = SphericalUtil.computeDistanceBetween(actual, expected)
+            val distance = SphericalUtil.computeDistanceBetween(actual!!, expected)
             if (distance > tolerance) {
                 failWithActual("expected to be within $tolerance meters of $expected [was $distance meters away]", expected)
             }
