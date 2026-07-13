@@ -43,6 +43,7 @@ places = "5.3.0"
 playServicesLocation = "21.4.0"
 playServicesMaps = "20.0.0"
 secretsGradlePlugin = "2.0.1"
+room = "2.6.1"
 
 # Wear OS
 wear = "1.4.0"
@@ -68,6 +69,8 @@ firebaseDatabase = "22.0.1"
 # Third Party
 easypermissions = "3.0.0"
 volley = "1.2.1"
+ktor = "3.4.2"
+kotlinxSerialization = "1.11.0"
 
 [libraries]
 # Kotlin
@@ -110,6 +113,11 @@ places = { group = "com.google.android.libraries.places", name = "places", versi
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 
+# Room
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+
 # Wear OS
 wear = { group = "androidx.wear", name = "wear", version.ref = "wear" }
 wearable-compile = { group = "com.google.android.wearable", name = "wearable", version.ref = "wearable" }
@@ -142,6 +150,11 @@ firebase-database = { module = "com.google.firebase:firebase-database", version.
 # Third Party
 easypermissions = { group = "pub.devrel", name = "easypermissions", version.ref = "easypermissions" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

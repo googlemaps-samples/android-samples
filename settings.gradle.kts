@@ -53,20 +53,23 @@ include(":WearOS:Wearable")
 project(":WearOS:Wearable").projectDir = file("WearOS/Wearable")
 
 // Snippets
-include(":snippets:app")
-project(":snippets:app").projectDir = file("snippets/app")
-include(":snippets:app-ktx")
-project(":snippets:app-ktx").projectDir = file("snippets/app-ktx")
-include(":snippets:app-utils-ktx")
-project(":snippets:app-utils-ktx").projectDir = file("snippets/app-utils-ktx")
+include(":snippets:common")
+project(":snippets:common").projectDir = file("snippets/common")
+include(":snippets:java-app")
+project(":snippets:java-app").projectDir = file("snippets/java-app")
+include(":snippets:kotlin-app")
+project(":snippets:kotlin-app").projectDir = file("snippets/kotlin-app")
 include(":snippets:app-compose")
 project(":snippets:app-compose").projectDir = file("snippets/app-compose")
 include(":snippets:app-places-ktx")
 project(":snippets:app-places-ktx").projectDir = file("snippets/app-places-ktx")
-include(":snippets:app-utils")
-project(":snippets:app-utils").projectDir = file("snippets/app-utils")
 
 // Tutorials
 include(":tutorials:kotlin:Polygons")
 project(":tutorials:kotlin:Polygons").projectDir = file("tutorials/kotlin/Polygons/app")
 // Add others as needed, starting with these for now
+
+// Visual Testing
+include(":visual-testing")
+project(":visual-testing").projectDir = file("visual-testing")
+
