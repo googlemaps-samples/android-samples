@@ -42,7 +42,7 @@ internal class KML {
             // [START_EXCLUDE silent]
             null
             // [END_EXCLUDE]
-        val layer = KmlLayer(map, inputStream, context)
+        val layer = KmlLayer(map, inputStream!!, context)
         // [END maps_android_utils_kml_add_input_stream]
 
         // [START maps_android_utils_kml_add_layer]
@@ -54,21 +54,21 @@ internal class KML {
         // [END maps_android_utils_kml_remove_layer]
 
         // [START maps_android_utils_kml_access_containers]
-        for (containers in layer.containers) {
+        for (containers in layer.getContainers()) {
             // Do something to container
         }
         // [END maps_android_utils_kml_access_containers]
 
         // [START maps_android_utils_kml_access_placemarks]
-        for (placemark in layer.placemarks) {
+        for (placemark in layer.getPlacemarks()) {
             // Do something to Placemark
         }
         // [END maps_android_utils_kml_access_placemarks]
 
         // [START maps_android_utils_kml_access_properties]
-        for (container in layer.containers) {
+        for (container in layer.getContainers()) {
             if (container.hasProperty("name")) {
-                Log.i("KML", container.getProperty("name"))
+                Log.i("KML", container.getProperty("name") ?: "")
             }
         }
         // [END maps_android_utils_kml_access_properties]
@@ -78,7 +78,7 @@ internal class KML {
         layer.setOnFeatureClickListener { feature ->
             Log.i(
                 "KML",
-                "Feature clicked: " + feature.id
+                "Feature clicked: " + feature.getId()
             )
         }
         // [END maps_android_utils_kml_click_listener]
@@ -88,7 +88,7 @@ internal class KML {
     fun accessContainers(containers: Iterable<KmlContainer>) {
         for (container in containers) {
             if (container.hasContainers()) {
-                accessContainers(container.containers)
+                accessContainers(container.getContainers())
             }
         }
     } // [END maps_android_utils_kml_access_containers_nested]

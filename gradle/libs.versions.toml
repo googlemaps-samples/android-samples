@@ -2,14 +2,14 @@
 # Project Configuration
 androidGradlePlugin = "8.13.2"
 minSdk = "24"
-compileSdk = "36"
-targetSdk = "36"
+compileSdk = "37"
+targetSdk = "37"
 versionCode = "1"
 versionName = "2.0.2" # {x-release-please-version}
 javaVersion = "17"
 
 # Kotlin & Coroutines
-kotlin = "2.2.0"
+kotlin = "2.3.10"
 kotlinxCoroutinesTest = "1.10.2"
 kotlinxDatetime = "0.7.1"
 ksp = "2.2.20-2.0.4"
@@ -36,8 +36,9 @@ material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
-mapsCompose = "7.0.0"
-mapsKtx = "6.0.0"
+androidMapsUtils = "5.0.0-rc03"
+mapsCompose = "8.3.1-rc03"
+mapsKtx = "6.1.0-rc03"
 places = "5.1.1"
 playServicesMaps = "20.0.0"
 secretsGradlePlugin = "2.0.1"
@@ -47,8 +48,8 @@ wear = "1.3.0"
 wearable = "2.9.0"
 
 # Dependency Injection
-dagger = "2.57.2"
-hilt = "2.57.2"
+dagger = "2.57.1"
+hilt = "2.57.1"
 
 # Testing
 espresso = "3.7.0"
