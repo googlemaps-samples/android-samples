@@ -120,6 +120,7 @@ dependencies {
     // providing dependencies to different parts of the application.
     // ---------------------------------------------------------------------------------------------
     implementation(libs.dagger)
+    ksp("org.jetbrains.kotlin:kotlin-metadata-jvm:2.4.0")
     ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.android)
 
