@@ -54,7 +54,7 @@ public class DataDrivenBoundarySnippets {
 
     @SnippetItem(
         title = "1. Boundaries - Localities (Hana, HI)",
-        description = "Loads LOCALITY layer. Styles Hana, Hawaii (Place ID: ChIJ0zQtYiWsVHkRk8lRoB1RNPo) with purple fill and border. Centers camera."
+        description = "What it does: Fetches the LOCALITY FeatureLayer and styles Hana, HI (Place ID: ChIJ0zQtYiWsVHkRk8lRoB1RNPo) with a 50% opacity purple fill.\nHow to see the effect: Hana, Hawaii displays highlighted with a purple boundary polygon."
     )
     public void styleLocalityBoundary() {
         // [START maps_android_dds_locality_boundary_java]
@@ -92,7 +92,7 @@ public class DataDrivenBoundarySnippets {
 
     @SnippetItem(
         title = "2. Boundaries - Admin Area 1 (States)",
-        description = "Loads ADMINISTRATIVE_AREA_LEVEL_1 layer. Styles state/provincial boundaries with random colors based on Place ID hashes. Centers over US."
+        description = "What it does: Fetches the ADMINISTRATIVE_AREA_LEVEL_1 FeatureLayer and styles state boundaries with unique colors derived from Place ID hashes.\nHow to see the effect: US state boundaries display with multi-colored semi-transparent polygon fills."
     )
     public void styleStateBoundaries() {
         // [START maps_android_dds_state_boundaries_java]
@@ -130,7 +130,7 @@ public class DataDrivenBoundarySnippets {
 
     @SnippetItem(
         title = "3. Boundaries - Countries (Interactive)",
-        description = "Loads COUNTRY layer. Renders countries with 10% black fill. Taps toggle country coloring between light black and 33% opaque red."
+        description = "What it does: Fetches the COUNTRY FeatureLayer and toggles country polygon fill colors between 10% black and 33% red on tap.\nHow to see the effect: Tap any country boundary to highlight its area in red; tap again to deselect."
     )
     public void styleCountryInteractive() {
         // [START maps_android_dds_country_interactive_java]

@@ -49,7 +49,7 @@ class KtxSnippets(
 
     @SnippetItem(
         title = "1. Obtain Map via awaitMap()",
-        description = "Obtains the GoogleMap instance asynchronously using a suspending function."
+        description = "What it does: Obtains the GoogleMap object asynchronously inside a coroutine using the suspending extension function awaitMap().\nHow to see the effect: The map fragment initializes asynchronously without block callbacks.",
     )
     fun ktxObtainMap() {
         // [START maps_android_ktx_obtain_map]
@@ -65,7 +65,7 @@ class KtxSnippets(
 
     @SnippetItem(
         title = "2. Add Marker using DSL",
-        description = "Adds a marker using the addMarker Kotlin DSL extension."
+        description = "What it does: Instantiates a marker in Sydney using the concise Kotlin DSL extension addMarker { ... }.\nHow to see the effect: A red marker pin titled 'Marker in Sydney' drops onto Sydney Opera House.",
     )
     fun ktxAddMarker() {
         // [START maps_android_ktx_add_marker]
@@ -79,7 +79,7 @@ class KtxSnippets(
 
     @SnippetItem(
         title = "3. Camera Move Events Flow",
-        description = "Collects camera move events as a cold flow of coroutine events."
+        description = "What it does: Transforms continuous camera movement callbacks into a Kotlin Flow using cameraMoveEvents().\nHow to see the effect: Dragging the map emits continuous stream events to logcat during gesture motion.",
     )
     fun ktxCameraEvents() {
         // [START maps_android_ktx_camera_events]
@@ -93,7 +93,7 @@ class KtxSnippets(
 
     @SnippetItem(
         title = "4. Await Map Click",
-        description = "Demonstrates suspending coroutine execution until the user clicks the map."
+        description = "What it does: Suspends the coroutine execution until the user taps any location on the map view.\nHow to see the effect: Tap anywhere on the map surface; execution resumes and logs the clicked coordinate.",
     )
     fun awaitMapClick() {
         scope.launch {
@@ -104,7 +104,7 @@ class KtxSnippets(
 
     @SnippetItem(
         title = "5. Await Camera Idle",
-        description = "Demonstrates suspending coroutine execution until the camera goes idle."
+        description = "What it does: Suspends the coroutine execution until map camera movement comes to a complete rest.\nHow to see the effect: Drag or fling the map; execution resumes as soon as camera motion ceases.",
     )
     fun awaitCameraIdle() {
         scope.launch {
@@ -115,7 +115,7 @@ class KtxSnippets(
 
     @SnippetItem(
         title = "6. Polyline and Polygon DSLs",
-        description = "Shows how to build polylines and polygons using Kotlin DSL builder functions."
+        description = "What it does: Constructs styled polylines and polygons using concise Kotlin DSL builder blocks.\nHow to see the effect: A blue polyline stroke and red filled polygon overlay the map surface.",
     )
     fun polylinePolygonDsl() {
         // DSL for Polyline
@@ -135,7 +135,7 @@ class KtxSnippets(
 
     @SnippetItem(
         title = "7. Camera Idle Events Flow",
-        description = "Collects camera idle events as a cold flow of coroutine events."
+        description = "What it does: Collects camera idle events as a continuous cold Flow of coroutine stream events.\nHow to see the effect: Panning or zooming the map emits an idle flow event every time camera motion stops.",
     )
     fun cameraIdleEventsFlow() {
         scope.launch {

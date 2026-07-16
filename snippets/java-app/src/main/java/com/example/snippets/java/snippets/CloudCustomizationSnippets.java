@@ -40,7 +40,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "1. Reusable Map Style",
-        description = "Demonstrates loading a reusable, cross-platform map style created in Google Cloud Console."
+        description = "What it does: Loads a reusable map style created in Google Cloud Console using a designated Map ID.\nHow to see the effect: The map view renders with custom color schemes and branding configured in Cloud Console."
     )
     public void loadReusableMapStyle() {
         // [START maps_android_cloud_reusable_style]
@@ -53,7 +53,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "2. Style Roads and Polygons",
-        description = "Loads a Map ID configured with custom road network and geometry polygon styles."
+        description = "What it does: Applies custom fill colors, stroke widths, and geometry styles to road networks and land polygons.\nHow to see the effect: Highways and arterial roads render using custom colors and geometry widths defined in Cloud Console."
     )
     public void loadRoadAndPolygonStyling() {
         // [START maps_android_cloud_style_roads]
@@ -66,7 +66,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "3. Feature Visibility Toggling",
-        description = "Loads a Map ID configured in Cloud Console to display or hide specific base map feature layers."
+        description = "What it does: Toggles the visibility of specific base map feature layers (such as transit lines or water bodies).\nHow to see the effect: Target base map feature elements appear hidden or visible according to cloud style configuration."
     )
     public void loadFeatureVisibilityStyling() {
         // [START maps_android_cloud_feature_visibility]
@@ -79,7 +79,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "4. Style Icons and Text Labels",
-        description = "Loads a Map ID configured with custom typography, label colors, and POI icon styles."
+        description = "What it does: Customizes typography, text label colors, and POI icon artwork across base map elements.\nHow to see the effect: Place names and POI icons display with customized colors and typography styling."
     )
     public void loadIconAndLabelStyling() {
         // [START maps_android_cloud_style_labels]
@@ -92,7 +92,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "5. Zoom-Level Styling",
-        description = "Loads a Map ID configured to apply distinct map styles dynamically across zoom levels."
+        description = "What it does: Configures scale-dependent visual styles that change dynamically across zoom levels.\nHow to see the effect: Zooming in or out dynamically shifts feature colors, label visibility, and geometry detail density."
     )
     public void loadZoomLevelStyling() {
         // [START maps_android_cloud_zoom_styling]
@@ -105,7 +105,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "6. POI Density Filtering",
-        description = "Loads a Map ID configured with adjusted business and point-of-interest display density."
+        description = "What it does: Adjusts point-of-interest display density rules configured in Google Cloud Console.\nHow to see the effect: The map displays a higher or lower concentration of commercial and tourist POI icons."
     )
     public void loadPoiDensityFiltering() {
         // [START maps_android_cloud_poi_density]
@@ -118,7 +118,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "7. Style Buildings",
-        description = "Loads a Map ID configured with customized 2D and 3D building footprint styles."
+        description = "What it does: Enables and styles 2D building footprints and 3D extruded building models.\nHow to see the effect: 3D architectural building shapes extrude visually from the map surface in dense urban areas."
     )
     public void loadBuildingStyling() {
         // [START maps_android_cloud_style_buildings]
@@ -131,7 +131,7 @@ public class CloudCustomizationSnippets {
 
     @SnippetItem(
         title = "8. Style Landmarks",
-        description = "Loads a Map ID configured with specialized styling for prominent natural and urban landmarks."
+        description = "What it does: Applies custom styling and highlight pin colors to major natural and urban landmarks.\nHow to see the effect: Famous landmarks (such as museums or monuments) display custom highlight pin icons."
     )
     public void loadLandmarkStyling() {
         // [START maps_android_cloud_style_landmarks]

@@ -49,7 +49,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "1. Basic Map Activity",
-            description = "Initializes a map and adds a marker in Sydney, Australia."
+            description = "What it does: Initializes an interactive map centered on Sydney, Australia and adds a title marker.\nHow to see the effect: The viewport opens directly on Sydney with a default red marker at LatLng(-34.0, 151.0)."
     )
     public void basicMap() {
         //[START maps_android_mapsactivity]
@@ -64,7 +64,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "2. Map Fragment Transaction",
-            description = "Shows how to add a SupportMapFragment dynamically."
+            description = "What it does: Dynamically adds a SupportMapFragment into the Activity view hierarchy programmatically.\nHow to see the effect: A new map fragment view is instantiated and rendered into the container layout frame."
     )
     public void mapFragment() {
         // [START maps_android_map_fragment]
@@ -80,7 +80,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "3. Set Map Type",
-            description = "Sets the map type to Hybrid."
+            description = "What it does: Sets the map type to Hybrid (satellite imagery overlaid with road and landmark labels).\nHow to see the effect: Map visual tiles switch from vector lines to satellite imagery with label overlays."
     )
     public void mapType() {
         // [START maps_android_map_type]
@@ -93,7 +93,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "4. Google Map Options",
-            description = "Shows how to build and configure GoogleMapOptions."
+            description = "What it does: Configures initial map options programmatically (Satellite map type, disabled compass, tilt, and rotation gestures).\nHow to see the effect: The map opens in satellite view with rotation and tilt touch gestures disabled."
     )
     public void googleMapOptions() {
         // [START maps_android_google_map_options]
@@ -110,7 +110,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "5. Support Map Fragment Map ID",
-            description = "Configures a SupportMapFragment with a Map ID."
+            description = "What it does: Configures a SupportMapFragment with a Cloud Map ID for cloud-based map styling.\nHow to see the effect: The map fragment binds to Google Cloud Console custom styling rules associated with the Map ID."
     )
     public void fragmentMapId() {
         // [START maps_android_support_map_fragment_map_id]
@@ -122,7 +122,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "6. MapView Map ID",
-            description = "Configures a MapView with a Map ID."
+            description = "What it does: Instantiates a programmatic MapView bound to a Cloud Map ID.\nHow to see the effect: The custom MapView renders with cloud styling and feature visibility configured in Cloud Console."
     )
     public void mapViewMapId() {
         // [START maps_android_mapview_map_id]
@@ -134,7 +134,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "7. Lite Mode Options",
-            description = "Configures GoogleMapOptions for Lite Mode."
+            description = "What it does: Enables Lite Mode on GoogleMapOptions to render a lightweight static map image.\nHow to see the effect: The map renders as a low-memory static image optimized for performance-constrained lists."
     )
     public void liteMode() {
         // [START maps_android_lite_mode_options]
@@ -145,7 +145,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "8. Cloud-based Map Styling",
-            description = "Loads a MapFragment configured with a Map ID from resources."
+            description = "What it does: Loads a MapFragment initialized with a Map ID stored in app resources.\nHow to see the effect: Custom styling, feature visibility, and color rules configured in Cloud Console are applied to the map."
     )
     public void cloudBasedMapStyling() {
         // [START maps_android_cloud_based_map_styling]
@@ -157,7 +157,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "9. Renderer Opt-In",
-            description = "Requests the latest Map renderer version."
+            description = "What it does: Requests the latest Maps SDK vector map renderer version via MapsInitializer.\nHow to see the effect: Inspect Android Logcat ('MapsDemo') to confirm whether Renderer.LATEST or Renderer.LEGACY is active."
     )
     public void rendererOptIn() {
         // [START maps_android_renderer_opt_in]
@@ -176,7 +176,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "10. Set Map Color Scheme",
-            description = "Configures the map color scheme (Dark Mode / Light Mode)."
+            description = "What it does: Configures the map color scheme (Dark Mode / Light Mode / Follow System).\nHow to see the effect: Map visual colors shift to dark palette styling matching dark mode application preferences."
     )
     public void setMapColorScheme() {
         // [START maps_android_map_color_scheme]
@@ -187,7 +187,7 @@ public class MapInitSnippets {
 
     @SnippetItem(
             title = "11. Enable Traffic Layer",
-            description = "Toggles the real-time traffic overlay on the map."
+            description = "What it does: Enables the real-time traffic overlay layer on the map surface.\nHow to see the effect: Colored congestion lines (green/yellow/red) overlay major highways displaying live traffic conditions."
     )
     public void enableTrafficLayer() {
         // [START maps_android_traffic_layer]

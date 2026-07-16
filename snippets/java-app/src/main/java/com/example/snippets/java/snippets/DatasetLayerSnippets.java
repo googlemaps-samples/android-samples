@@ -59,7 +59,7 @@ public class DatasetLayerSnippets {
 
     @SnippetItem(
         title = "1. Dataset - Boulder Trails",
-        description = "Loads Boulder Colorado Trails dataset. Styles lines green (Easy), blue (Moderate), or red (Difficult). Line width indicates dog permissions."
+        description = "What it does: Fetches a Cloud OSMP Boulder Trails dataset layer and dynamically styles trail lines by difficulty or dog regulations.\nHow to see the effect: Trail lines render in green (Easy), blue (Moderate), or red (Difficult), with line thickness indicating dog restrictions."
     )
     public void styleBoulderTrails() {
         String datasetId = BuildConfig.BOULDER_DATASET_ID;
@@ -166,7 +166,7 @@ public class DatasetLayerSnippets {
 
     @SnippetItem(
         title = "2. Dataset - NYC Squirrels",
-        description = "Loads NYC Squirrel Sightings dataset. Renders sightings points colored by primary fur color (Black, Cinnamon, Gray)."
+        description = "What it does: Imports a Cloud Central Park Squirrel Sightings dataset layer and styles point features by fur color.\nHow to see the effect: Point markers display across Central Park colored by squirrel fur color (black, cinnamon, gray)."
     )
     public void styleNycSquirrels() {
         String datasetId = BuildConfig.NEW_YORK_DATASET_ID;
@@ -222,7 +222,7 @@ public class DatasetLayerSnippets {
 
     @SnippetItem(
         title = "3. Dataset - Kyoto Temples (Clickable)",
-        description = "Loads Kyoto Temples dataset. Highlights temple boundary polygons in Blue, and updates clicked temple areas to Yellow."
+        description = "What it does: Renders Cloud Kyoto temple boundary polygons and updates clicked polygon styling to highlight yellow.\nHow to see the effect: Temple grounds render in semi-transparent blue; tap any temple polygon to highlight it in yellow."
     )
     public void styleKyotoTemples() {
         String datasetId = BuildConfig.KYOTO_DATASET_ID;

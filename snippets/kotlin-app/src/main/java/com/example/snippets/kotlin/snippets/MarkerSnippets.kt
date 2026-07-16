@@ -39,7 +39,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "1. Add a Marker",
-        description = "Adds a simple marker in Sydney, Australia."
+        description = "What it does: Places a standard pin marker at LatLng(-33.852, 151.211) in Sydney, Australia.\nHow to see the effect: A red marker appears over Sydney; tap the pin to view its title callout.",
     )
     fun addMarker() {
         // [START maps_android_markers_add_a_marker]
@@ -68,7 +68,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "2. Draggable Marker",
-        description = "Creates a draggable marker at Perth."
+        description = "What it does: Creates a marker at Perth with draggability enabled (draggable = true).\nHow to see the effect: Long-press and drag the marker across the map surface to reposition it.",
     )
     fun markerDraggable() {
         // [START maps_android_markers_draggable]
@@ -84,7 +84,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "3. Default Icon Marker",
-        description = "Adds a default marker at Melbourne."
+        description = "What it does: Adds a standard Google Maps red pin marker at Melbourne.\nHow to see the effect: A standard red pin renders over central Melbourne.",
     )
     fun defaultIcon() {
         // [START maps_android_markers_default_icon]
@@ -98,7 +98,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "4. Custom Marker Color",
-        description = "Adds an azure-colored marker at Melbourne."
+        description = "What it does: Sets a custom hue color (HUE_AZURE) on a marker pin.\nHow to see the effect: The marker renders with a cyan/azure colored pin instead of the default red hue.",
     )
     fun customMarkerColor() {
         // [START maps_android_markers_custom_marker_color]
@@ -113,7 +113,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "5. Marker Opacity",
-        description = "Adds a semi-transparent marker at Melbourne."
+        description = "What it does: Sets semi-transparency alpha (0.7f) on the marker pin.\nHow to see the effect: Map visual tiles beneath the marker show partially through the semi-transparent icon pin.",
     )
     fun markerOpacity() {
         // [START maps_android_markers_opacity]
@@ -128,7 +128,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "6. Custom Marker Image",
-        description = "Adds a marker with a custom arrow image resource."
+        description = "What it does: Replaces the default marker pin with a custom drawable image asset (arrow.png).\nHow to see the effect: An arrow icon graphic displays at Melbourne instead of a standard pin.",
     )
     fun markerImage() {
         // [START maps_android_markers_image]
@@ -145,7 +145,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "7. Flat Marker",
-        description = "Creates a flat marker that rotates with the map."
+        description = "What it does: Aligns the marker flat against the map surface plane rather than billboarded toward camera.\nHow to see the effect: When you rotate or tilt the camera, the marker stays glued to the ground plane orientation.",
     )
     fun markerFlatten() {
         // [START maps_android_markers_flatten]
@@ -160,7 +160,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "8. Rotate Marker",
-        description = "Rotates a marker 90 degrees around its anchor."
+        description = "What it does: Applies a 90-degree rotation transform around the marker's center anchor point (0.5, 0.5).\nHow to see the effect: The marker icon appears rotated 90 degrees clockwise facing right.",
     )
     fun markerRotate() {
         // [START maps_android_markers_rotate]
@@ -176,7 +176,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "9. Marker Z-Index",
-        description = "Sets a high z-index on a marker."
+        description = "What it does: Configures a high zIndex (1.0f) on a marker to force top stacking order precedence.\nHow to see the effect: The marker always renders on top of overlapping map polylines, shapes, or lower z-index pins.",
     )
     fun markerZIndex() {
         // [START maps_android_markers_z_index]
@@ -191,7 +191,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "10. Marker Click Listener & Tag",
-        description = "Associates click counts with markers using tag objects."
+        description = "What it does: Associates click count state with markers using tag and listens for tap events.\nHow to see the effect: Tap any marker pin; a Toast message pops up displaying the updated click count.",
     )
     fun markerClickAndTag() {
         // [START maps_android_markers_tag_sample]
@@ -244,7 +244,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "11. Add Info Window",
-        description = "Creates a marker with title and snippet details."
+        description = "What it does: Configures a marker with title details and population snippet text.\nHow to see the effect: Tap the marker to display an info callout window showing the title and population snippet.",
     )
     fun addInfoWindow() {
         // [START maps_android_info_windows_add]
@@ -260,7 +260,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "12. Show/Hide Info Window",
-        description = "Creates a marker and programmatically triggers its info window."
+        description = "What it does: Programmatically calls showInfoWindow() and hideInfoWindow() on the marker instance.\nHow to see the effect: The info window popup programmatically displays and dismisses without user interaction.",
     )
     fun showHideInfoWindow() {
         // [START maps_android_info_windows_show_hide]
@@ -279,7 +279,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "13. Info Window Click Listener",
-        description = "Listens to clicks on info windows."
+        description = "What it does: Listens for user touch click events inside the displayed info window callout.\nHow to see the effect: Open the marker info window and tap directly on the popup box to trigger a Toast notification.",
     )
     fun infoWindowClickListener() {
         // [START maps_android_info_windows_click_listener]
@@ -294,7 +294,7 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "14. Marker Collision Behavior",
-        description = "Configures collision behavior on an AdvancedMarker."
+        description = "What it does: Configures collision behavior on an AdvancedMarker (REQUIRED_AND_HIDES_OPTIONAL).\nHow to see the effect: Zoom or pan in dense marker clusters; optional overlapping markers hide to prevent clutter.",
     )
     fun markerCollision() {
         // [START maps_android_marker_collision]

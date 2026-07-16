@@ -8,9 +8,10 @@
   <style>
     body { background: #f0f3f6; padding: 25px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     .verification-card { background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 25px; margin-bottom: 30px; }
-    .star-rating .star { font-size: 1.3rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
+    .star-rating { display: inline-flex; flex-direction: row-reverse; align-items: center; justify-content: flex-end; }
+    .star-rating .star { font-size: 1.3rem; color: #ccc; cursor: pointer; transition: color 0.2s; padding: 0 1px; }
     .star-rating .star.active { color: #ffc107; }
-    .star-rating .star:hover, .star-rating .star:hover ~ .star { color: #ffdb70; }
+    .star-rating .star:hover, .star-rating .star:hover ~ .star { color: #ffc107; }
   </style>
 </head>
 <body>
@@ -27,6 +28,68 @@
             <button type="button" class="btn btn-outline-secondary btn-sm" id="btnModeAll" onclick="setMode('all')">📜 All 39 Items List</button>
           </div>
           <button class="btn btn-warning btn-sm" onclick="exportReviewReport()">⭐ Export Evaluation Report</button>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE VERIFICATION TASK WIZARD CARD -->
+      <div class="border rounded p-4 mb-4 bg-white shadow-sm border-2 border-success" id="wizardTaskCard">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <div>
+            <span class="badge bg-success text-white fs-6 me-2">✨ Verification Task Wizard</span>
+            <span class="fw-bold fs-5 text-dark" id="wizardTaskHeader">Task 1 of 39</span>
+          </div>
+          <div>
+            <button class="btn btn-outline-dark btn-sm me-1" onclick="navStep(-1)">⬅️ Prev</button>
+            <button class="btn btn-outline-dark btn-sm me-2" onclick="navStep(1)">Next ➡️</button>
+            <button class="btn btn-warning btn-sm fw-bold" onclick="jumpToNextRequiringAttention()">⏭️ Next Pending Task</button>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="fw-bold text-primary mb-2">📋 What to Do:</h6>
+              <div class="small text-dark font-monospace" id="wizardWhatToDo" style="white-space: pre-wrap;">Select a capability task to load guidance...</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="fw-bold text-success mb-2">👁️ What to Look For:</h6>
+              <div class="small text-dark font-monospace" id="wizardWhatToLookFor" style="white-space: pre-wrap;">Select a capability task to load verification criteria...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK LANGUAGE ACTION TOOLBAR -->
+        <div class="d-flex justify-content-between align-items-center p-3 bg-body-tertiary rounded border mb-3">
+          <div class="d-flex gap-2">
+            <span class="badge bg-dark align-self-center">Execution Controls</span>
+            <button class="btn btn-success btn-sm fw-bold" id="wBtnLaunchKt" onclick="wizardAction('launch', 'kotlin')">▶ Launch Kotlin Sample</button>
+            <button class="btn btn-outline-success btn-sm fw-bold" id="wBtnTestKt" onclick="wizardAction('test', 'kotlin')">🧪 Run Kotlin Test</button>
+            <span class="vr mx-1"></span>
+            <button class="btn btn-warning btn-sm text-dark fw-bold" id="wBtnLaunchJava" onclick="wizardAction('launch', 'java')">▶ Launch Java Sample</button>
+            <button class="btn btn-outline-warning btn-sm text-dark fw-bold" id="wBtnTestJava" onclick="wizardAction('test', 'java')">🧪 Run Java Test</button>
+          </div>
+          <div class="small text-muted font-monospace">
+            Shortcuts: <kbd>Space</kbd> = Launch | <kbd>Enter</kbd> = Submit & Advance
+          </div>
+        </div>
+
+        <!-- RATING & AUTO-ADVANCE BAR -->
+        <div class="p-3 bg-warning-subtle rounded border d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-3 flex-fill me-3">
+            <span class="fw-bold text-dark me-1">Rating:</span>
+            <div class="star-rating wizard-stars" id="wizardStarPicker">
+              <span class="star" data-rating="5" onclick="setWizardRating(5)">★</span>
+              <span class="star" data-rating="4" onclick="setWizardRating(4)">★</span>
+              <span class="star" data-rating="3" onclick="setWizardRating(3)">★</span>
+              <span class="star" data-rating="2" onclick="setWizardRating(2)">★</span>
+              <span class="star" data-rating="1" onclick="setWizardRating(1)">★</span>
+              <span class="small text-muted ms-1" id="wizardRatingLabel">(0/5)</span>
+            </div>
+            <input type="text" class="form-control form-control-sm flex-fill" id="wizardCommentInput" placeholder="Feedback or observations for FALSIFIABLE_TASK_LIST.md...">
+          </div>
+          <button class="btn btn-primary btn-sm fw-bold text-nowrap" onclick="submitRatingAndAdvance()">Submit Rating & Next Task ➔</button>
         </div>
       </div>
 
@@ -149,7 +212,8 @@
 
       <div id="cardsHolder">
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="2a3e0c25" data-index="0" data-group="Camera" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="2a3e0c25" data-index="0" data-group="Camera" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CameraControlSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CameraControlSnippetsTest" data-test-method="verifyCameraMovementsAndZoomConstraints_falsifiable" data-snippet-title="1. Zoom Level Constraints" data-what-to-do="1. Launch sample on device.
+2. Pinch to zoom out beyond minZoom level 10, then zoom in past maxZoom level 16." data-what-to-look-for="1. Camera stops zooming smoothly at boundaries without jitter." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#1 of 39</span>
@@ -172,11 +236,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="2a3e0c25">
-                <span class="star" onclick="setRating('2a3e0c25', 1)">★</span>
-                <span class="star" onclick="setRating('2a3e0c25', 2)">★</span>
-                <span class="star" onclick="setRating('2a3e0c25', 3)">★</span>
-                <span class="star" onclick="setRating('2a3e0c25', 4)">★</span>
                 <span class="star" onclick="setRating('2a3e0c25', 5)">★</span>
+                <span class="star" onclick="setRating('2a3e0c25', 4)">★</span>
+                <span class="star" onclick="setRating('2a3e0c25', 3)">★</span>
+                <span class="star" onclick="setRating('2a3e0c25', 2)">★</span>
+                <span class="star" onclick="setRating('2a3e0c25', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_2a3e0c25">(0/5)</span>
               </div>
             </div>
@@ -321,7 +385,9 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="0e6b228f" data-index="1" data-group="Camera" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="0e6b228f" data-index="1" data-group="Camera" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CameraControlSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CameraControlSnippetsTest" data-test-method="verifyCameraClampingToAustralia_falsifiable" data-snippet-title="4. Panning Restrictions" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Customize the gestures for controlling a map.." data-what-to-look-for="1. Verify setLatLngBoundsForCameraTarget blocks moves to London/Antarctica.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#2 of 39</span>
@@ -344,11 +410,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="0e6b228f">
-                <span class="star" onclick="setRating('0e6b228f', 1)">★</span>
-                <span class="star" onclick="setRating('0e6b228f', 2)">★</span>
-                <span class="star" onclick="setRating('0e6b228f', 3)">★</span>
-                <span class="star" onclick="setRating('0e6b228f', 4)">★</span>
                 <span class="star" onclick="setRating('0e6b228f', 5)">★</span>
+                <span class="star" onclick="setRating('0e6b228f', 4)">★</span>
+                <span class="star" onclick="setRating('0e6b228f', 3)">★</span>
+                <span class="star" onclick="setRating('0e6b228f', 2)">★</span>
+                <span class="star" onclick="setRating('0e6b228f', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_0e6b228f">(0/5)</span>
               </div>
             </div>
@@ -502,13 +568,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="589c7e69" data-index="2" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="589c7e69" data-index="2" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyHierarchyZoomStyling_falsifiable" data-snippet-title="2. Hierarchy Zoom Level Styling" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Apply different map styles to different zoom levels.." data-what-to-look-for="1. Verify map hierarchy styling application.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#3 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">589c7e69</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-hier" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -525,11 +593,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="589c7e69">
-                <span class="star" onclick="setRating('589c7e69', 1)">★</span>
-                <span class="star" onclick="setRating('589c7e69', 2)">★</span>
-                <span class="star" onclick="setRating('589c7e69', 3)">★</span>
-                <span class="star" onclick="setRating('589c7e69', 4)">★</span>
                 <span class="star" onclick="setRating('589c7e69', 5)">★</span>
+                <span class="star" onclick="setRating('589c7e69', 4)">★</span>
+                <span class="star" onclick="setRating('589c7e69', 3)">★</span>
+                <span class="star" onclick="setRating('589c7e69', 2)">★</span>
+                <span class="star" onclick="setRating('589c7e69', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_589c7e69">(0/5)</span>
               </div>
             </div>
@@ -618,13 +686,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="468c2301" data-index="3" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="468c2301" data-index="3" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyPoiDensityFiltering_falsifiable" data-snippet-title="4. POI Density Control" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Change the density of places on a map.." data-what-to-look-for="1. Verify POI density and filtering behaviors.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#4 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">468c2301</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/poi" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -641,11 +711,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="468c2301">
-                <span class="star" onclick="setRating('468c2301', 1)">★</span>
-                <span class="star" onclick="setRating('468c2301', 2)">★</span>
-                <span class="star" onclick="setRating('468c2301', 3)">★</span>
-                <span class="star" onclick="setRating('468c2301', 4)">★</span>
                 <span class="star" onclick="setRating('468c2301', 5)">★</span>
+                <span class="star" onclick="setRating('468c2301', 4)">★</span>
+                <span class="star" onclick="setRating('468c2301', 3)">★</span>
+                <span class="star" onclick="setRating('468c2301', 2)">★</span>
+                <span class="star" onclick="setRating('468c2301', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_468c2301">(0/5)</span>
               </div>
             </div>
@@ -734,13 +804,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="89814817" data-index="4" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="89814817" data-index="4" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyBuilding3dAndFootprintStyling_falsifiable" data-snippet-title="5. Style 3D Buildings &amp; Footprints" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Change the style of buildings on a map.." data-what-to-look-for="1. Verify building footprint and 3d extrusion styling.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#5 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">89814817</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-hier" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -757,11 +829,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="89814817">
-                <span class="star" onclick="setRating('89814817', 1)">★</span>
-                <span class="star" onclick="setRating('89814817', 2)">★</span>
-                <span class="star" onclick="setRating('89814817', 3)">★</span>
-                <span class="star" onclick="setRating('89814817', 4)">★</span>
                 <span class="star" onclick="setRating('89814817', 5)">★</span>
+                <span class="star" onclick="setRating('89814817', 4)">★</span>
+                <span class="star" onclick="setRating('89814817', 3)">★</span>
+                <span class="star" onclick="setRating('89814817', 2)">★</span>
+                <span class="star" onclick="setRating('89814817', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_89814817">(0/5)</span>
               </div>
             </div>
@@ -850,13 +922,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="3fc0911b" data-index="5" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="3fc0911b" data-index="5" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyIconAndTextLabelStyling_falsifiable" data-snippet-title="3. Style Icons &amp; Text Labels" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Change the style of icons and text labels on a map.." data-what-to-look-for="1. Verify icon/label hierarchy color adjustments.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#6 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">3fc0911b</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-hier" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -873,11 +947,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="3fc0911b">
-                <span class="star" onclick="setRating('3fc0911b', 1)">★</span>
-                <span class="star" onclick="setRating('3fc0911b', 2)">★</span>
-                <span class="star" onclick="setRating('3fc0911b', 3)">★</span>
-                <span class="star" onclick="setRating('3fc0911b', 4)">★</span>
                 <span class="star" onclick="setRating('3fc0911b', 5)">★</span>
+                <span class="star" onclick="setRating('3fc0911b', 4)">★</span>
+                <span class="star" onclick="setRating('3fc0911b', 3)">★</span>
+                <span class="star" onclick="setRating('3fc0911b', 2)">★</span>
+                <span class="star" onclick="setRating('3fc0911b', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_3fc0911b">(0/5)</span>
               </div>
             </div>
@@ -966,13 +1040,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="4255f56a" data-index="6" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="4255f56a" data-index="6" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyLandmarkHierarchyStyling_falsifiable" data-snippet-title="6. Style Landmarks" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Change the style of landmarks on a map.." data-what-to-look-for="1. Verify prominent landmark feature styling.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#7 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">4255f56a</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-hier" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -989,11 +1065,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="4255f56a">
-                <span class="star" onclick="setRating('4255f56a', 1)">★</span>
-                <span class="star" onclick="setRating('4255f56a', 2)">★</span>
-                <span class="star" onclick="setRating('4255f56a', 3)">★</span>
-                <span class="star" onclick="setRating('4255f56a', 4)">★</span>
                 <span class="star" onclick="setRating('4255f56a', 5)">★</span>
+                <span class="star" onclick="setRating('4255f56a', 4)">★</span>
+                <span class="star" onclick="setRating('4255f56a', 3)">★</span>
+                <span class="star" onclick="setRating('4255f56a', 2)">★</span>
+                <span class="star" onclick="setRating('4255f56a', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_4255f56a">(0/5)</span>
               </div>
             </div>
@@ -1082,13 +1158,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="5d26e9fb" data-index="7" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="5d26e9fb" data-index="7" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyRoadAndGeometryStyling_falsifiable" data-snippet-title="1. Style Roads &amp; Geometries" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Change the style of roads, polylines, and polygons on a map.." data-what-to-look-for="1. Verify road and polygon geometry styling layers.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#8 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">5d26e9fb</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-hier" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1105,11 +1183,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="5d26e9fb">
-                <span class="star" onclick="setRating('5d26e9fb', 1)">★</span>
-                <span class="star" onclick="setRating('5d26e9fb', 2)">★</span>
-                <span class="star" onclick="setRating('5d26e9fb', 3)">★</span>
-                <span class="star" onclick="setRating('5d26e9fb', 4)">★</span>
                 <span class="star" onclick="setRating('5d26e9fb', 5)">★</span>
+                <span class="star" onclick="setRating('5d26e9fb', 4)">★</span>
+                <span class="star" onclick="setRating('5d26e9fb', 3)">★</span>
+                <span class="star" onclick="setRating('5d26e9fb', 2)">★</span>
+                <span class="star" onclick="setRating('5d26e9fb', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_5d26e9fb">(0/5)</span>
               </div>
             </div>
@@ -1198,13 +1276,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="4d87a0ea" data-index="8" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="4d87a0ea" data-index="8" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyReusableMapIdLoading_falsifiable" data-snippet-title="1. Load Reusable Cloud Style" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Create a reusable, cross-platform map style.." data-what-to-look-for="1. Verify GoogleMapOptions.mapId cloud styling binding.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#9 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">4d87a0ea</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/cloud-customization/tut" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1221,11 +1301,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="4d87a0ea">
-                <span class="star" onclick="setRating('4d87a0ea', 1)">★</span>
-                <span class="star" onclick="setRating('4d87a0ea', 2)">★</span>
-                <span class="star" onclick="setRating('4d87a0ea', 3)">★</span>
-                <span class="star" onclick="setRating('4d87a0ea', 4)">★</span>
                 <span class="star" onclick="setRating('4d87a0ea', 5)">★</span>
+                <span class="star" onclick="setRating('4d87a0ea', 4)">★</span>
+                <span class="star" onclick="setRating('4d87a0ea', 3)">★</span>
+                <span class="star" onclick="setRating('4d87a0ea', 2)">★</span>
+                <span class="star" onclick="setRating('4d87a0ea', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_4d87a0ea">(0/5)</span>
               </div>
             </div>
@@ -1314,13 +1394,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="1f5dea73" data-index="9" data-group="Cloud Customization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="1f5dea73" data-index="9" data-group="Cloud Customization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest" data-test-method="verifyFeatureVisibilityToggles_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Display or hide map features.." data-what-to-look-for="1. Verify feature type visibility toggles via cloud console ID.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#10 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">1f5dea73</span>
               <span class="badge bg-primary text-white me-2">Cloud Customization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/cloud-customization/map-hier" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1337,11 +1419,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="1f5dea73">
-                <span class="star" onclick="setRating('1f5dea73', 1)">★</span>
-                <span class="star" onclick="setRating('1f5dea73', 2)">★</span>
-                <span class="star" onclick="setRating('1f5dea73', 3)">★</span>
-                <span class="star" onclick="setRating('1f5dea73', 4)">★</span>
                 <span class="star" onclick="setRating('1f5dea73', 5)">★</span>
+                <span class="star" onclick="setRating('1f5dea73', 4)">★</span>
+                <span class="star" onclick="setRating('1f5dea73', 3)">★</span>
+                <span class="star" onclick="setRating('1f5dea73', 2)">★</span>
+                <span class="star" onclick="setRating('1f5dea73', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_1f5dea73">(0/5)</span>
               </div>
             </div>
@@ -1430,13 +1512,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="3ebaeaa1" data-index="10" data-group="Custom Geospatial Datasets" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="3ebaeaa1" data-index="10" data-group="Custom Geospatial Datasets" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.DatasetLayerSnippetsTest" data-test-method="verifyDatasetLayerInitialization_falsifiable" data-snippet-title="1. Load Geospatial Dataset" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a custom geospatial dataset to a map.." data-what-to-look-for="1. Verify getDatasetFeatureLayer(datasetId) loading.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#11 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">3ebaeaa1</span>
               <span class="badge bg-primary text-white me-2">Custom Geospatial Datasets</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1453,11 +1537,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="3ebaeaa1">
-                <span class="star" onclick="setRating('3ebaeaa1', 1)">★</span>
-                <span class="star" onclick="setRating('3ebaeaa1', 2)">★</span>
-                <span class="star" onclick="setRating('3ebaeaa1', 3)">★</span>
-                <span class="star" onclick="setRating('3ebaeaa1', 4)">★</span>
                 <span class="star" onclick="setRating('3ebaeaa1', 5)">★</span>
+                <span class="star" onclick="setRating('3ebaeaa1', 4)">★</span>
+                <span class="star" onclick="setRating('3ebaeaa1', 3)">★</span>
+                <span class="star" onclick="setRating('3ebaeaa1', 2)">★</span>
+                <span class="star" onclick="setRating('3ebaeaa1', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_3ebaeaa1">(0/5)</span>
               </div>
             </div>
@@ -1534,13 +1618,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="eb3ed819" data-index="11" data-group="Custom Geospatial Datasets" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="eb3ed819" data-index="11" data-group="Custom Geospatial Datasets" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.DatasetLayerSnippetsTest" data-test-method="verifyDatasetFeatureStylingAndPointRadius_falsifiable" data-snippet-title="2. Style Custom Dataset Features" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Change the style of custom dataset features on a map. ." data-what-to-look-for="1. Verify dataset styleFactory stroke, fill, and pointRadius.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#12 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">eb3ed819</span>
               <span class="badge bg-primary text-white me-2">Custom Geospatial Datasets</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1557,11 +1643,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="eb3ed819">
-                <span class="star" onclick="setRating('eb3ed819', 1)">★</span>
-                <span class="star" onclick="setRating('eb3ed819', 2)">★</span>
-                <span class="star" onclick="setRating('eb3ed819', 3)">★</span>
-                <span class="star" onclick="setRating('eb3ed819', 4)">★</span>
                 <span class="star" onclick="setRating('eb3ed819', 5)">★</span>
+                <span class="star" onclick="setRating('eb3ed819', 4)">★</span>
+                <span class="star" onclick="setRating('eb3ed819', 3)">★</span>
+                <span class="star" onclick="setRating('eb3ed819', 2)">★</span>
+                <span class="star" onclick="setRating('eb3ed819', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_eb3ed819">(0/5)</span>
               </div>
             </div>
@@ -1638,117 +1724,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="5b54c6a7" data-index="12" data-group="Custom Geospatial Datasets" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="e72146cb" data-index="12" data-group="Custom Geospatial Datasets" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.DatasetLayerSnippetsTest" data-test-method="verifyDatasetFeatureClickListener_falsifiable" data-snippet-title="3. Handle Dataset Click Events" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Respond to user interactions with custom dataset features on a map.." data-what-to-look-for="1. Verify dataset feature click listener attribute extraction.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#13 of 39</span>
-              <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">5b54c6a7</span>
-              <span class="badge bg-primary text-white me-2">Custom Geospatial Datasets</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
-            </div>
-            <div class="text-end">
-              <a href="https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
-            </div>
-          </div>
-
-          <h3 class="fw-bold text-dark mb-2">Create a reusable, cross-platform geospatial dataset.</h3>
-          <p class="text-muted small mb-3">💡 <strong>Verification Strategy:</strong> Verify dataset ID binding and layer status.</p>
-
-          <div class="bg-light border rounded p-3 mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <div>
-                <span class="fw-bold text-dark me-2">⭐ Reviewer Rating:</span>
-                <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
-              </div>
-              <div class="star-rating" data-id="5b54c6a7">
-                <span class="star" onclick="setRating('5b54c6a7', 1)">★</span>
-                <span class="star" onclick="setRating('5b54c6a7', 2)">★</span>
-                <span class="star" onclick="setRating('5b54c6a7', 3)">★</span>
-                <span class="star" onclick="setRating('5b54c6a7', 4)">★</span>
-                <span class="star" onclick="setRating('5b54c6a7', 5)">★</span>
-                <span class="small text-muted ms-1" id="rating_val_5b54c6a7">(0/5)</span>
-              </div>
-            </div>
-            <textarea class="form-control form-control-sm comment-box" id="comment_5b54c6a7" placeholder="Leave critique or feedback notes... (auto-saved to FALSIFIABLE_TASK_LIST.md on server)" rows="2" oninput="saveComment('5b54c6a7', this.value)"></textarea>
-            <div class="mt-3 pt-3 border-top" id="exec_output_box_5b54c6a7" style="display: none;">
-              <div class="d-flex justify-content-between align-items-center mb-1">
-                <div class="d-flex align-items-center gap-2">
-                  <div class="spinner-border spinner-border-sm text-primary" role="status" id="spinner_5b54c6a7" style="display: none;">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <span class="fw-bold small text-dark" id="exec_title_5b54c6a7">Execution Terminal Output:</span>
-                </div>
-                <div class="d-flex gap-2">
-                  <button class="btn btn-danger btn-sm py-0 px-2 small fw-bold" id="cancel_btn_5b54c6a7" onclick="cancelLiveTask('5b54c6a7')" style="display: none;">🛑 Stop / Cancel</button>
-                  <button class="btn btn-outline-dark btn-sm py-0 px-2 small font-monospace" onclick="copyOutput('5b54c6a7', this)">📋 Copy Output</button>
-                </div>
-              </div>
-              <pre class="bg-dark text-light p-3 rounded small font-monospace m-0 mt-1" id="exec_output_text_5b54c6a7" style="max-height: 260px; overflow-y: auto;"></pre>
-            </div>
-          </div>
-
-          <div class="row g-4">
-            <!-- KOTLIN COLUMN -->
-            <div class="col-md-6 border-end">
-              <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-success-subtle border rounded">
-                <span class="fw-bold text-success-emphasis">🟢 Kotlin Implementation</span>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-success btn-sm py-0 px-2 small fw-bold action-btn" title="Run single method test" onclick="runTestLive('5b54c6a7', 'com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest', 'verifyDatasetLayerInitialization_falsifiable', 'kotlin')">▶️ Run Test</button>
-                  <button class="btn btn-outline-success btn-sm py-0 px-2 small fw-bold action-btn" title="Run full Custom Geospatial Datasets Test Suite" onclick="runTestLive('5b54c6a7', 'com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest', 'SUITE', 'kotlin')">📦 Run Suite</button>
-                  <button class="btn btn-outline-success btn-sm py-0 px-2 small fw-bold action-btn" onclick="launchSampleLive('5b54c6a7', 'Custom Geospatial Datasets', '1. Load Geospatial Dataset', 'kotlin')">📱 Launch Sample</button>
-                </div>
-              </div>
-
-              <details class="code-accordion mb-3 border rounded p-2 bg-white shadow-sm" open>
-                <summary class="text-success-emphasis fw-bold small cursor-pointer" style="cursor: pointer;">🟢 Kotlin Sample: <code>maps_android_dds_load_dataset</code> (Lines -) ▼</summary>
-                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 260px;"><code><span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Region</span> tag not found: maps_android_dds_load_dataset</span></code></pre>
-              </details>
-
-              <div class="border rounded p-2 bg-white shadow-sm">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                  <span class="fw-bold small text-primary">🧪 Kotlin Test: <code>DatasetLayerSnippetsTest</code></span>
-                  <button class="btn btn-outline-secondary btn-sm py-0 px-2 small font-monospace" onclick="copyCmd('5b54c6a7_kt', this)">📋 Copy Cmd</button>
-                </div>
-                <input type="hidden" id="cmd_5b54c6a7_kt" value="./gradlew :snippets:kotlin-app:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest#verifyDatasetLayerInitialization_falsifiable">
-                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 300px;"><code><span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">KOTLIN</span> test file not found yet: com.example.snippets.kotlin.capabilities.<span style="color: #4ec9b0;">DatasetLayerSnippetsTest</span>. <span style="color: #4ec9b0;">Needed</span> for verifyDatasetLayerInitialization_falsifiable</span></code></pre>
-              </div>
-            </div>
-
-            <!-- JAVA COLUMN -->
-            <div class="col-md-6">
-              <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-warning-subtle border rounded">
-                <span class="fw-bold text-warning-emphasis">☕ Java Implementation</span>
-                <div class="d-flex gap-1">
-                  <button class="btn btn-warning btn-sm py-0 px-2 small fw-bold text-dark action-btn" title="Run single method test" onclick="runTestLive('5b54c6a7', 'com.example.snippets.java.capabilities.DatasetLayerSnippetsTest', 'verifyDatasetLayerInitialization_falsifiable', 'java')">▶️ Run Test</button>
-                  <button class="btn btn-outline-warning btn-sm py-0 px-2 small fw-bold text-dark action-btn" title="Run full Custom Geospatial Datasets Test Suite" onclick="runTestLive('5b54c6a7', 'com.example.snippets.java.capabilities.DatasetLayerSnippetsTest', 'SUITE', 'java')">📦 Run Suite</button>
-                  <button class="btn btn-outline-warning btn-sm py-0 px-2 small fw-bold text-dark action-btn" onclick="launchSampleLive('5b54c6a7', 'Custom Geospatial Datasets', '1. Load Geospatial Dataset', 'java')">📱 Launch Sample</button>
-                </div>
-              </div>
-
-              <details class="code-accordion mb-3 border rounded p-2 bg-white shadow-sm" open>
-                <summary class="text-warning-emphasis fw-bold small cursor-pointer" style="cursor: pointer;">☕ Java Sample: <code>maps_android_dds_load_dataset</code> (Lines -) ▼</summary>
-                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 260px;"><code><span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Region</span> tag not found: maps_android_dds_load_dataset</span></code></pre>
-              </details>
-
-              <div class="border rounded p-2 bg-white shadow-sm">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                  <span class="fw-bold small text-primary">🧪 Java Test: <code>DatasetLayerSnippetsTest</code></span>
-                  <button class="btn btn-outline-secondary btn-sm py-0 px-2 small font-monospace" onclick="copyCmd('5b54c6a7_java', this)">📋 Copy Cmd</button>
-                </div>
-                <input type="hidden" id="cmd_5b54c6a7_java" value="./gradlew :snippets:java-app:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.snippets.java.capabilities.DatasetLayerSnippetsTest#verifyDatasetLayerInitialization_falsifiable">
-                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 300px;"><code><span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">JAVA</span> test file not found yet: com.example.snippets.java.capabilities.<span style="color: #4ec9b0;">DatasetLayerSnippetsTest</span>. <span style="color: #4ec9b0;">Needed</span> for verifyDatasetLayerInitialization_falsifiable</span></code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="e72146cb" data-index="13" data-group="Custom Geospatial Datasets" data-status="pending" style="display: none;">
-          <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-            <div>
-              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#14 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">e72146cb</span>
               <span class="badge bg-primary text-white me-2">Custom Geospatial Datasets</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1765,11 +1749,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="e72146cb">
-                <span class="star" onclick="setRating('e72146cb', 1)">★</span>
-                <span class="star" onclick="setRating('e72146cb', 2)">★</span>
-                <span class="star" onclick="setRating('e72146cb', 3)">★</span>
-                <span class="star" onclick="setRating('e72146cb', 4)">★</span>
                 <span class="star" onclick="setRating('e72146cb', 5)">★</span>
+                <span class="star" onclick="setRating('e72146cb', 4)">★</span>
+                <span class="star" onclick="setRating('e72146cb', 3)">★</span>
+                <span class="star" onclick="setRating('e72146cb', 2)">★</span>
+                <span class="star" onclick="setRating('e72146cb', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_e72146cb">(0/5)</span>
               </div>
             </div>
@@ -1846,13 +1830,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="0a767a66" data-index="14" data-group="Data-Driven Boundary Styling" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="0a767a66" data-index="13" data-group="Data-Driven Boundary Styling" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.DataDrivenBoundarySnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.DataDrivenBoundarySnippetsTest" data-test-method="verifyChoroplethFeatureStyleFactory_falsifiable" data-snippet-title="3. Interactive Choropleth Map" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add choropleth styling to a map.." data-what-to-look-for="1. Verify conditional styleFactory logic across boundary place IDs.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
-              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#15 of 39</span>
+              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#14 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">0a767a66</span>
               <span class="badge bg-primary text-white me-2">Data-Driven Boundary Styling</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/choropleth-map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1869,11 +1855,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="0a767a66">
-                <span class="star" onclick="setRating('0a767a66', 1)">★</span>
-                <span class="star" onclick="setRating('0a767a66', 2)">★</span>
-                <span class="star" onclick="setRating('0a767a66', 3)">★</span>
-                <span class="star" onclick="setRating('0a767a66', 4)">★</span>
                 <span class="star" onclick="setRating('0a767a66', 5)">★</span>
+                <span class="star" onclick="setRating('0a767a66', 4)">★</span>
+                <span class="star" onclick="setRating('0a767a66', 3)">★</span>
+                <span class="star" onclick="setRating('0a767a66', 2)">★</span>
+                <span class="star" onclick="setRating('0a767a66', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_0a767a66">(0/5)</span>
               </div>
             </div>
@@ -1950,13 +1936,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="dedc17af" data-index="15" data-group="Data-Driven Boundary Styling" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="dedc17af" data-index="14" data-group="Data-Driven Boundary Styling" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.DataDrivenBoundarySnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.DataDrivenBoundarySnippetsTest" data-test-method="verifyFeatureLayerBoundaryStyling_falsifiable" data-snippet-title="1. Style Locality &amp; Administrative Boundaries" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Change the style of boundaries on a map.." data-what-to-look-for="1. Verify FeatureLayer.styleFactory binding and fill/stroke assignments.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
-              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#16 of 39</span>
+              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#15 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">dedc17af</span>
               <span class="badge bg-primary text-white me-2">Data-Driven Boundary Styling</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/style-polygon" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -1973,11 +1961,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="dedc17af">
-                <span class="star" onclick="setRating('dedc17af', 1)">★</span>
-                <span class="star" onclick="setRating('dedc17af', 2)">★</span>
-                <span class="star" onclick="setRating('dedc17af', 3)">★</span>
-                <span class="star" onclick="setRating('dedc17af', 4)">★</span>
                 <span class="star" onclick="setRating('dedc17af', 5)">★</span>
+                <span class="star" onclick="setRating('dedc17af', 4)">★</span>
+                <span class="star" onclick="setRating('dedc17af', 3)">★</span>
+                <span class="star" onclick="setRating('dedc17af', 2)">★</span>
+                <span class="star" onclick="setRating('dedc17af', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_dedc17af">(0/5)</span>
               </div>
             </div>
@@ -2054,13 +2042,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="fa7cc2f9" data-index="16" data-group="Data-Driven Boundary Styling" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="fa7cc2f9" data-index="15" data-group="Data-Driven Boundary Styling" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.DataDrivenBoundarySnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.DataDrivenBoundarySnippetsTest" data-test-method="verifyFeatureLayerBoundaryClickEvent_falsifiable" data-snippet-title="2. Handle Boundary Click Events" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Respond to user interactions with boundaries on a map.." data-what-to-look-for="1. Verify addOnFeatureClickListener callback payload.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
-              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#17 of 39</span>
+              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#16 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">fa7cc2f9</span>
               <span class="badge bg-primary text-white me-2">Data-Driven Boundary Styling</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -2077,11 +2067,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="fa7cc2f9">
-                <span class="star" onclick="setRating('fa7cc2f9', 1)">★</span>
-                <span class="star" onclick="setRating('fa7cc2f9', 2)">★</span>
-                <span class="star" onclick="setRating('fa7cc2f9', 3)">★</span>
-                <span class="star" onclick="setRating('fa7cc2f9', 4)">★</span>
                 <span class="star" onclick="setRating('fa7cc2f9', 5)">★</span>
+                <span class="star" onclick="setRating('fa7cc2f9', 4)">★</span>
+                <span class="star" onclick="setRating('fa7cc2f9', 3)">★</span>
+                <span class="star" onclick="setRating('fa7cc2f9', 2)">★</span>
+                <span class="star" onclick="setRating('fa7cc2f9', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_fa7cc2f9">(0/5)</span>
               </div>
             </div>
@@ -2158,10 +2148,12 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="b34458f3" data-index="17" data-group="Events" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="b34458f3" data-index="16" data-group="Events" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.EventsSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.EventsSnippetsTest" data-test-method="verifyMapClickListenerAndEvents_falsifiable" data-snippet-title="1. MapView Disable Click Event" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Respond to user interactions and events on a map." data-what-to-look-for="1. Verify MapView click disabling and POI click listener callback registration.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
-              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#18 of 39</span>
+              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#17 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">b34458f3</span>
               <span class="badge bg-primary text-white me-2">Events</span>
               <span class="badge bg-success text-white">✅ Falsification Verified</span>
@@ -2181,11 +2173,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="b34458f3">
-                <span class="star" onclick="setRating('b34458f3', 1)">★</span>
-                <span class="star" onclick="setRating('b34458f3', 2)">★</span>
-                <span class="star" onclick="setRating('b34458f3', 3)">★</span>
-                <span class="star" onclick="setRating('b34458f3', 4)">★</span>
                 <span class="star" onclick="setRating('b34458f3', 5)">★</span>
+                <span class="star" onclick="setRating('b34458f3', 4)">★</span>
+                <span class="star" onclick="setRating('b34458f3', 3)">★</span>
+                <span class="star" onclick="setRating('b34458f3', 2)">★</span>
+                <span class="star" onclick="setRating('b34458f3', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_b34458f3">(0/5)</span>
               </div>
             </div>
@@ -2359,7 +2351,115 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="232ecd00" data-index="18" data-group="Map Initialization" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="5b54c6a7" data-index="17" data-group="General" data-status="pending" data-kt-test-class="TODO" data-java-test-class="TODO" data-test-method="TODO" data-snippet-title="TODO" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Create a reusable, cross-platform geospatial dataset.." data-what-to-look-for="1. Unmapped capability.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
+          <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+            <div>
+              <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#18 of 39</span>
+              <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">5b54c6a7</span>
+              <span class="badge bg-primary text-white me-2">General</span>
+              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+            </div>
+            <div class="text-end">
+              <a href="https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
+            </div>
+          </div>
+
+          <h3 class="fw-bold text-dark mb-2">Create a reusable, cross-platform geospatial dataset.</h3>
+          <p class="text-muted small mb-3">💡 <strong>Verification Strategy:</strong> Unmapped capability.</p>
+
+          <div class="bg-light border rounded p-3 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <span class="fw-bold text-dark me-2">⭐ Reviewer Rating:</span>
+                <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
+              </div>
+              <div class="star-rating" data-id="5b54c6a7">
+                <span class="star" onclick="setRating('5b54c6a7', 5)">★</span>
+                <span class="star" onclick="setRating('5b54c6a7', 4)">★</span>
+                <span class="star" onclick="setRating('5b54c6a7', 3)">★</span>
+                <span class="star" onclick="setRating('5b54c6a7', 2)">★</span>
+                <span class="star" onclick="setRating('5b54c6a7', 1)">★</span>
+                <span class="small text-muted ms-1" id="rating_val_5b54c6a7">(0/5)</span>
+              </div>
+            </div>
+            <textarea class="form-control form-control-sm comment-box" id="comment_5b54c6a7" placeholder="Leave critique or feedback notes... (auto-saved to FALSIFIABLE_TASK_LIST.md on server)" rows="2" oninput="saveComment('5b54c6a7', this.value)"></textarea>
+            <div class="mt-3 pt-3 border-top" id="exec_output_box_5b54c6a7" style="display: none;">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status" id="spinner_5b54c6a7" style="display: none;">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span class="fw-bold small text-dark" id="exec_title_5b54c6a7">Execution Terminal Output:</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-danger btn-sm py-0 px-2 small fw-bold" id="cancel_btn_5b54c6a7" onclick="cancelLiveTask('5b54c6a7')" style="display: none;">🛑 Stop / Cancel</button>
+                  <button class="btn btn-outline-dark btn-sm py-0 px-2 small font-monospace" onclick="copyOutput('5b54c6a7', this)">📋 Copy Output</button>
+                </div>
+              </div>
+              <pre class="bg-dark text-light p-3 rounded small font-monospace m-0 mt-1" id="exec_output_text_5b54c6a7" style="max-height: 260px; overflow-y: auto;"></pre>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <!-- KOTLIN COLUMN -->
+            <div class="col-md-6 border-end">
+              <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-success-subtle border rounded">
+                <span class="fw-bold text-success-emphasis">🟢 Kotlin Implementation</span>
+                <div class="d-flex gap-1">
+                  <button class="btn btn-success btn-sm py-0 px-2 small fw-bold action-btn" title="Run single method test" onclick="runTestLive('5b54c6a7', 'TODO', 'TODO', 'kotlin')">▶️ Run Test</button>
+                  <button class="btn btn-outline-success btn-sm py-0 px-2 small fw-bold action-btn" title="Run full General Test Suite" onclick="runTestLive('5b54c6a7', 'TODO', 'SUITE', 'kotlin')">📦 Run Suite</button>
+                  <button class="btn btn-outline-success btn-sm py-0 px-2 small fw-bold action-btn" onclick="launchSampleLive('5b54c6a7', 'General', 'TODO', 'kotlin')">📱 Launch Sample</button>
+                </div>
+              </div>
+
+              <details class="code-accordion mb-3 border rounded p-2 bg-white shadow-sm" open>
+                <summary class="text-success-emphasis fw-bold small cursor-pointer" style="cursor: pointer;">🟢 Kotlin Sample: <code>TODO</code> (Lines -) ▼</summary>
+                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 260px;"><code>TODO</code></pre>
+              </details>
+
+              <div class="border rounded p-2 bg-white shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold small text-primary">🧪 Kotlin Test: <code>TODO</code></span>
+                  <button class="btn btn-outline-secondary btn-sm py-0 px-2 small font-monospace" onclick="copyCmd('5b54c6a7_kt', this)">📋 Copy Cmd</button>
+                </div>
+                <input type="hidden" id="cmd_5b54c6a7_kt" value="TODO">
+                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 300px;"><code>TODO</code></pre>
+              </div>
+            </div>
+
+            <!-- JAVA COLUMN -->
+            <div class="col-md-6">
+              <div class="d-flex justify-content-between align-items-center mb-2 p-2 bg-warning-subtle border rounded">
+                <span class="fw-bold text-warning-emphasis">☕ Java Implementation</span>
+                <div class="d-flex gap-1">
+                  <button class="btn btn-warning btn-sm py-0 px-2 small fw-bold text-dark action-btn" title="Run single method test" onclick="runTestLive('5b54c6a7', 'TODO', 'TODO', 'java')">▶️ Run Test</button>
+                  <button class="btn btn-outline-warning btn-sm py-0 px-2 small fw-bold text-dark action-btn" title="Run full General Test Suite" onclick="runTestLive('5b54c6a7', 'TODO', 'SUITE', 'java')">📦 Run Suite</button>
+                  <button class="btn btn-outline-warning btn-sm py-0 px-2 small fw-bold text-dark action-btn" onclick="launchSampleLive('5b54c6a7', 'General', 'TODO', 'java')">📱 Launch Sample</button>
+                </div>
+              </div>
+
+              <details class="code-accordion mb-3 border rounded p-2 bg-white shadow-sm" open>
+                <summary class="text-warning-emphasis fw-bold small cursor-pointer" style="cursor: pointer;">☕ Java Sample: <code>TODO</code> (Lines -) ▼</summary>
+                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 260px;"><code>TODO</code></pre>
+              </details>
+
+              <div class="border rounded p-2 bg-white shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                  <span class="fw-bold small text-primary">🧪 Java Test: <code>TODO</code></span>
+                  <button class="btn btn-outline-secondary btn-sm py-0 px-2 small font-monospace" onclick="copyCmd('5b54c6a7_java', this)">📋 Copy Cmd</button>
+                </div>
+                <input type="hidden" id="cmd_5b54c6a7_java" value="TODO">
+                <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 300px;"><code>TODO</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="232ecd00" data-index="18" data-group="Map Initialization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MapInitSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MapInitSnippetsTest" data-test-method="verifyBasicMapActivity_falsifiable" data-snippet-title="1. Basic Map Activity" data-what-to-do="1. Click &#x27;Launch Sample&#x27; for Kotlin or Java on attached device.
+2. Observe initial map render." data-what-to-look-for="1. Map renders smoothly without black tiles or crashes.
+2. Default gestures and controls respond correctly." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#19 of 39</span>
@@ -2382,11 +2482,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="232ecd00">
-                <span class="star" onclick="setRating('232ecd00', 1)">★</span>
-                <span class="star" onclick="setRating('232ecd00', 2)">★</span>
-                <span class="star" onclick="setRating('232ecd00', 3)">★</span>
-                <span class="star" onclick="setRating('232ecd00', 4)">★</span>
                 <span class="star" onclick="setRating('232ecd00', 5)">★</span>
+                <span class="star" onclick="setRating('232ecd00', 4)">★</span>
+                <span class="star" onclick="setRating('232ecd00', 3)">★</span>
+                <span class="star" onclick="setRating('232ecd00', 2)">★</span>
+                <span class="star" onclick="setRating('232ecd00', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_232ecd00">(0/5)</span>
               </div>
             </div>
@@ -2444,11 +2544,11 @@
         <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Capability</span> 232ecd00: <span style="color: #4ec9b0;">Add</span> a customizable, interactive map to a web page or mobile app</span>
         runWithMap(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Initialization</span>&quot;</span>, <span style="color: #ce9178;">&quot;1. <span style="color: #4ec9b0;">Basic</span> <span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Activity</span>&quot;</span>) { map -&gt;
             <span style="color: #569cd6; font-weight: bold;">val</span> sydney = com.google.android.gms.maps.model.<span style="color: #4ec9b0;">LatLng</span>(-34.0, 151.0)
-            
-            <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Falsifiability</span> <span style="color: #4ec9b0;">Check</span> 1: <span style="color: #4ec9b0;">Verify</span> exact initial target centered near <span style="color: #4ec9b0;">Sydney</span></span>
-            <span style="color: #569cd6; font-weight: bold;">val</span> target = map.cameraPosition.target
-            <span style="color: #569cd6; font-weight: bold;">assertTrue</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Camera</span> target latitude must be near <span style="color: #4ec9b0;">Sydney</span> (-34.0)&quot;</span>, <span style="color: #4ec9b0;">Math</span>.abs(target.latitude - sydney.latitude) &lt; 0.1)
-            <span style="color: #569cd6; font-weight: bold;">assertTrue</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Camera</span> target longitude must be near <span style="color: #4ec9b0;">Sydney</span> (151.0)&quot;</span>, <span style="color: #4ec9b0;">Math</span>.abs(target.longitude - sydney.longitude) &lt; 0.1)
+            <span style="color: #569cd6; font-weight: bold;">val</span> marker = <span style="color: #4ec9b0;">TrackedMap</span>.lastInstance?.items?.filterIsInstance&lt;<span style="color: #4ec9b0;">Marker</span>&gt;()?.firstOrNull()
+            <span style="color: #569cd6; font-weight: bold;">assertNotNull</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Basic</span> <span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Activity</span> snippet must add <span style="color: #4ec9b0;">Marker</span> in <span style="color: #4ec9b0;">Sydney</span>&quot;</span>, marker)
+            <span style="color: #569cd6; font-weight: bold;">assertEquals</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> title must be exactly &#x27;<span style="color: #4ec9b0;">Marker</span> in <span style="color: #4ec9b0;">Sydney</span>&#x27;&quot;</span>, <span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> in <span style="color: #4ec9b0;">Sydney</span>&quot;</span>, marker!!.title)
+            <span style="color: #569cd6; font-weight: bold;">assertEquals</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> latitude must exactly match <span style="color: #4ec9b0;">Sydney</span> (-34.0)&quot;</span>, sydney.latitude, marker.position.latitude, 0.001)
+            <span style="color: #569cd6; font-weight: bold;">assertEquals</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> longitude must exactly match <span style="color: #4ec9b0;">Sydney</span> (151.0)&quot;</span>, sydney.longitude, marker.position.longitude, 0.001)
         }
     }
 </code></pre>
@@ -2490,11 +2590,11 @@
         <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Capability</span> 232ecd00: <span style="color: #4ec9b0;">Add</span> a customizable, interactive map to a web page or mobile app</span>
         runWithMap(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Initialization</span>&quot;</span>, <span style="color: #ce9178;">&quot;1. <span style="color: #4ec9b0;">Basic</span> <span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Activity</span>&quot;</span>, map -&gt; {
             <span style="color: #4ec9b0;">LatLng</span> sydney = <span style="color: #569cd6; font-weight: bold;">new</span> <span style="color: #4ec9b0;">LatLng</span>(-34.0, 151.0);
-
-            <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Falsifiability</span> <span style="color: #4ec9b0;">Check</span> 1: <span style="color: #4ec9b0;">Verify</span> exact initial target centered near <span style="color: #4ec9b0;">Sydney</span></span>
-            <span style="color: #4ec9b0;">LatLng</span> target = map.getCameraPosition().target;
-            <span style="color: #4ec9b0;">Assert</span>.<span style="color: #569cd6; font-weight: bold;">assertTrue</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Camera</span> target latitude must be near <span style="color: #4ec9b0;">Sydney</span> (-34.0)&quot;</span>, <span style="color: #4ec9b0;">Math</span>.abs(target.latitude - sydney.latitude) &lt; 0.1);
-            <span style="color: #4ec9b0;">Assert</span>.<span style="color: #569cd6; font-weight: bold;">assertTrue</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Camera</span> target longitude must be near <span style="color: #4ec9b0;">Sydney</span> (151.0)&quot;</span>, <span style="color: #4ec9b0;">Math</span>.abs(target.longitude - sydney.longitude) &lt; 0.1);
+            <span style="color: #4ec9b0;">Marker</span> marker = getFirstMarker();
+            <span style="color: #4ec9b0;">Assert</span>.<span style="color: #569cd6; font-weight: bold;">assertNotNull</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Basic</span> <span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Activity</span> snippet must add <span style="color: #4ec9b0;">Marker</span> in <span style="color: #4ec9b0;">Sydney</span>&quot;</span>, marker);
+            <span style="color: #4ec9b0;">Assert</span>.<span style="color: #569cd6; font-weight: bold;">assertEquals</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> title must be exactly &#x27;<span style="color: #4ec9b0;">Marker</span> in <span style="color: #4ec9b0;">Sydney</span>&#x27;&quot;</span>, <span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> in <span style="color: #4ec9b0;">Sydney</span>&quot;</span>, marker.getTitle());
+            <span style="color: #4ec9b0;">Assert</span>.<span style="color: #569cd6; font-weight: bold;">assertEquals</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> latitude must exactly match <span style="color: #4ec9b0;">Sydney</span> (-34.0)&quot;</span>, sydney.latitude, marker.getPosition().latitude, 0.001);
+            <span style="color: #4ec9b0;">Assert</span>.<span style="color: #569cd6; font-weight: bold;">assertEquals</span>(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Marker</span> longitude must exactly match <span style="color: #4ec9b0;">Sydney</span> (151.0)&quot;</span>, sydney.longitude, marker.getPosition().longitude, 0.001);
         });
     }
 </code></pre>
@@ -2503,7 +2603,8 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="20793ebb" data-index="19" data-group="Map Initialization" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="20793ebb" data-index="19" data-group="Map Initialization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MapInitSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MapInitSnippetsTest" data-test-method="verifyEnableTrafficLayer_falsifiable" data-snippet-title="4. Enable Traffic Layer" data-what-to-do="1. Launch the Kotlin or Java sample.
+2. Pan to a major metropolitan area with live traffic congestion." data-what-to-look-for="1. Colored traffic overlay lines (green, yellow, red) display over major roads." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#20 of 39</span>
@@ -2526,11 +2627,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="20793ebb">
-                <span class="star" onclick="setRating('20793ebb', 1)">★</span>
-                <span class="star" onclick="setRating('20793ebb', 2)">★</span>
-                <span class="star" onclick="setRating('20793ebb', 3)">★</span>
-                <span class="star" onclick="setRating('20793ebb', 4)">★</span>
                 <span class="star" onclick="setRating('20793ebb', 5)">★</span>
+                <span class="star" onclick="setRating('20793ebb', 4)">★</span>
+                <span class="star" onclick="setRating('20793ebb', 3)">★</span>
+                <span class="star" onclick="setRating('20793ebb', 2)">★</span>
+                <span class="star" onclick="setRating('20793ebb', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_20793ebb">(0/5)</span>
               </div>
             </div>
@@ -2580,7 +2681,7 @@
                 <input type="hidden" id="cmd_20793ebb_kt" value="./gradlew :snippets:kotlin-app:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.snippets.kotlin.capabilities.MapInitSnippetsTest#verifyEnableTrafficLayer_falsifiable">
                 <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 300px;"><code>    <span style="color: #569cd6; font-weight: bold;">fun</span> verifyEnableTrafficLayer_falsifiable() {
         <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Capability</span> 20793ebb: <span style="color: #4ec9b0;">Add</span> a traffic layer to a map</span>
-        runWithMap(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Initialization</span>&quot;</span>, <span style="color: #ce9178;">&quot;4. <span style="color: #4ec9b0;">Enable</span> <span style="color: #4ec9b0;">Traffic</span> <span style="color: #4ec9b0;">Layer</span>&quot;</span>) { map -&gt;
+        runWithMap(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Initialization</span>&quot;</span>, <span style="color: #ce9178;">&quot;11. <span style="color: #4ec9b0;">Enable</span> <span style="color: #4ec9b0;">Traffic</span> <span style="color: #4ec9b0;">Layer</span>&quot;</span>) { map -&gt;
             <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Falsifiability</span> <span style="color: #4ec9b0;">Check</span>: <span style="color: #4ec9b0;">If</span> snippet code is removed or changed to isTrafficEnabled = <span style="color: #569cd6; font-weight: bold;">false</span>, this test <span style="color: #4ec9b0;">STRICTLY</span> <span style="color: #4ec9b0;">FAILS</span>!</span>
             <span style="color: #569cd6; font-weight: bold;">assertTrue</span>(<span style="color: #ce9178;">&quot;googleMap.isTrafficEnabled <span style="color: #4ec9b0;">MUST</span> be <span style="color: #569cd6; font-weight: bold;">true</span> after snippet execution&quot;</span>, map.isTrafficEnabled)
         }
@@ -2616,7 +2717,7 @@
                 <input type="hidden" id="cmd_20793ebb_java" value="./gradlew :snippets:java-app:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.snippets.java.capabilities.MapInitSnippetsTest#verifyEnableTrafficLayer_falsifiable">
                 <pre class="m-0 mt-2 p-2 bg-dark text-light rounded small font-monospace" style="white-space: pre; overflow-x: auto; max-height: 300px;"><code>    <span style="color: #569cd6; font-weight: bold;">public</span> <span style="color: #569cd6; font-weight: bold;">void</span> verifyEnableTrafficLayer_falsifiable() throws <span style="color: #4ec9b0;">InterruptedException</span> {
         <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Capability</span> 20793ebb: <span style="color: #4ec9b0;">Add</span> a traffic layer to a map</span>
-        runWithMap(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Initialization</span>&quot;</span>, <span style="color: #ce9178;">&quot;4. <span style="color: #4ec9b0;">Enable</span> <span style="color: #4ec9b0;">Traffic</span> <span style="color: #4ec9b0;">Layer</span>&quot;</span>, map -&gt; {
+        runWithMap(<span style="color: #ce9178;">&quot;<span style="color: #4ec9b0;">Map</span> <span style="color: #4ec9b0;">Initialization</span>&quot;</span>, <span style="color: #ce9178;">&quot;11. <span style="color: #4ec9b0;">Enable</span> <span style="color: #4ec9b0;">Traffic</span> <span style="color: #4ec9b0;">Layer</span>&quot;</span>, map -&gt; {
             <span style="color: #6a9955; font-style: italic;">// <span style="color: #4ec9b0;">Falsifiability</span> <span style="color: #4ec9b0;">Check</span>: <span style="color: #4ec9b0;">If</span> snippet code is removed or changed to isTrafficEnabled = <span style="color: #569cd6; font-weight: bold;">false</span>, this test <span style="color: #4ec9b0;">STRICTLY</span> <span style="color: #4ec9b0;">FAILS</span>!</span>
             <span style="color: #4ec9b0;">Assert</span>.<span style="color: #569cd6; font-weight: bold;">assertTrue</span>(<span style="color: #ce9178;">&quot;googleMap.isTrafficEnabled() <span style="color: #4ec9b0;">MUST</span> be <span style="color: #569cd6; font-weight: bold;">true</span> after <span style="color: #4ec9b0;">Java</span> snippet execution&quot;</span>, map.isTrafficEnabled());
         });
@@ -2627,13 +2728,14 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="25bf9dfd" data-index="20" data-group="Map Initialization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="25bf9dfd" data-index="20" data-group="Map Initialization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MapInitSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MapInitSnippetsTest" data-test-method="verifySetMapColorScheme_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch sample on device.
+2. Observe map theme color palette." data-what-to-look-for="1. Color scheme matches specified light/dark or system preference mode." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#21 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">25bf9dfd</span>
               <span class="badge bg-primary text-white me-2">Map Initialization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -2650,11 +2752,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="25bf9dfd">
-                <span class="star" onclick="setRating('25bf9dfd', 1)">★</span>
-                <span class="star" onclick="setRating('25bf9dfd', 2)">★</span>
-                <span class="star" onclick="setRating('25bf9dfd', 3)">★</span>
-                <span class="star" onclick="setRating('25bf9dfd', 4)">★</span>
                 <span class="star" onclick="setRating('25bf9dfd', 5)">★</span>
+                <span class="star" onclick="setRating('25bf9dfd', 4)">★</span>
+                <span class="star" onclick="setRating('25bf9dfd', 3)">★</span>
+                <span class="star" onclick="setRating('25bf9dfd', 2)">★</span>
+                <span class="star" onclick="setRating('25bf9dfd', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_25bf9dfd">(0/5)</span>
               </div>
             </div>
@@ -2739,7 +2841,8 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="c511ea57" data-index="21" data-group="Map Initialization" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="c511ea57" data-index="21" data-group="Map Initialization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MapInitSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MapInitSnippetsTest" data-test-method="verifySetMapTypeToHybrid_falsifiable" data-snippet-title="3. Set Map Type" data-what-to-do="1. Launch sample.
+2. Inspect tile imagery." data-what-to-look-for="1. Satellite imagery is rendered with vector road and label overlays." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#22 of 39</span>
@@ -2762,11 +2865,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="c511ea57">
-                <span class="star" onclick="setRating('c511ea57', 1)">★</span>
-                <span class="star" onclick="setRating('c511ea57', 2)">★</span>
-                <span class="star" onclick="setRating('c511ea57', 3)">★</span>
-                <span class="star" onclick="setRating('c511ea57', 4)">★</span>
                 <span class="star" onclick="setRating('c511ea57', 5)">★</span>
+                <span class="star" onclick="setRating('c511ea57', 4)">★</span>
+                <span class="star" onclick="setRating('c511ea57', 3)">★</span>
+                <span class="star" onclick="setRating('c511ea57', 2)">★</span>
+                <span class="star" onclick="setRating('c511ea57', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_c511ea57">(0/5)</span>
               </div>
             </div>
@@ -2869,13 +2972,13 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="ca51263d" data-index="22" data-group="Map Initialization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="ca51263d" data-index="22" data-group="Map Initialization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MapInitSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MapInitSnippetsTest" data-test-method="verifyMapIdInitialization_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch sample configured with a custom Map ID." data-what-to-look-for="1. Map initializes with cloud-driven custom style associated with the Map ID." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#23 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">ca51263d</span>
               <span class="badge bg-primary text-white me-2">Map Initialization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map-ids/get-map-id" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -2892,11 +2995,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="ca51263d">
-                <span class="star" onclick="setRating('ca51263d', 1)">★</span>
-                <span class="star" onclick="setRating('ca51263d', 2)">★</span>
-                <span class="star" onclick="setRating('ca51263d', 3)">★</span>
-                <span class="star" onclick="setRating('ca51263d', 4)">★</span>
                 <span class="star" onclick="setRating('ca51263d', 5)">★</span>
+                <span class="star" onclick="setRating('ca51263d', 4)">★</span>
+                <span class="star" onclick="setRating('ca51263d', 3)">★</span>
+                <span class="star" onclick="setRating('ca51263d', 2)">★</span>
+                <span class="star" onclick="setRating('ca51263d', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_ca51263d">(0/5)</span>
               </div>
             </div>
@@ -2983,13 +3086,13 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="9eeb4a1a" data-index="23" data-group="Map Initialization" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="9eeb4a1a" data-index="23" data-group="Map Initialization" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MapInitSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MapInitSnippetsTest" data-test-method="verifyMapControlsCustomization_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch sample and rotate/zoom map." data-what-to-look-for="1. Custom UI controls (compass, zoom buttons) appear and respond properly." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#24 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">9eeb4a1a</span>
               <span class="badge bg-primary text-white me-2">Map Initialization</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -3006,11 +3109,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="9eeb4a1a">
-                <span class="star" onclick="setRating('9eeb4a1a', 1)">★</span>
-                <span class="star" onclick="setRating('9eeb4a1a', 2)">★</span>
-                <span class="star" onclick="setRating('9eeb4a1a', 3)">★</span>
-                <span class="star" onclick="setRating('9eeb4a1a', 4)">★</span>
                 <span class="star" onclick="setRating('9eeb4a1a', 5)">★</span>
+                <span class="star" onclick="setRating('9eeb4a1a', 4)">★</span>
+                <span class="star" onclick="setRating('9eeb4a1a', 3)">★</span>
+                <span class="star" onclick="setRating('9eeb4a1a', 2)">★</span>
+                <span class="star" onclick="setRating('9eeb4a1a', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_9eeb4a1a">(0/5)</span>
               </div>
             </div>
@@ -3099,7 +3202,9 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="7bbfe87e" data-index="24" data-group="Markers" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="7bbfe87e" data-index="24" data-group="Markers" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MarkerSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MarkerSnippetsTest" data-test-method="verifyAddMarkerProperties_falsifiable" data-snippet-title="1. Add a Marker" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a marker to a map.." data-what-to-look-for="1. Assert marker added at exact position/title; assert failure when removed.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#25 of 39</span>
@@ -3122,11 +3227,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="7bbfe87e">
-                <span class="star" onclick="setRating('7bbfe87e', 1)">★</span>
-                <span class="star" onclick="setRating('7bbfe87e', 2)">★</span>
-                <span class="star" onclick="setRating('7bbfe87e', 3)">★</span>
-                <span class="star" onclick="setRating('7bbfe87e', 4)">★</span>
                 <span class="star" onclick="setRating('7bbfe87e', 5)">★</span>
+                <span class="star" onclick="setRating('7bbfe87e', 4)">★</span>
+                <span class="star" onclick="setRating('7bbfe87e', 3)">★</span>
+                <span class="star" onclick="setRating('7bbfe87e', 2)">★</span>
+                <span class="star" onclick="setRating('7bbfe87e', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_7bbfe87e">(0/5)</span>
               </div>
             </div>
@@ -3289,7 +3394,9 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="bdbefba5" data-index="25" data-group="Markers" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="bdbefba5" data-index="25" data-group="Markers" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MarkerSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MarkerSnippetsTest" data-test-method="verifyInfoWindowCustomizationAndDisplay_falsifiable" data-snippet-title="11. Add Info Window" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add an info window to a map.." data-what-to-look-for="1. Verify showInfoWindow() and exact title/snippet properties.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#26 of 39</span>
@@ -3312,11 +3419,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="bdbefba5">
-                <span class="star" onclick="setRating('bdbefba5', 1)">★</span>
-                <span class="star" onclick="setRating('bdbefba5', 2)">★</span>
-                <span class="star" onclick="setRating('bdbefba5', 3)">★</span>
-                <span class="star" onclick="setRating('bdbefba5', 4)">★</span>
                 <span class="star" onclick="setRating('bdbefba5', 5)">★</span>
+                <span class="star" onclick="setRating('bdbefba5', 4)">★</span>
+                <span class="star" onclick="setRating('bdbefba5', 3)">★</span>
+                <span class="star" onclick="setRating('bdbefba5', 2)">★</span>
+                <span class="star" onclick="setRating('bdbefba5', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_bdbefba5">(0/5)</span>
               </div>
             </div>
@@ -3434,7 +3541,9 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="de757d41" data-index="26" data-group="Markers" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="de757d41" data-index="26" data-group="Markers" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MarkerSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MarkerSnippetsTest" data-test-method="verifyMarkerCustomColorAndIcon_falsifiable" data-snippet-title="5. Marker Opacity" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Customize a marker on a map.." data-what-to-look-for="1. Verify Marker opacity, rotation, and flat properties.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#27 of 39</span>
@@ -3457,11 +3566,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="de757d41">
-                <span class="star" onclick="setRating('de757d41', 1)">★</span>
-                <span class="star" onclick="setRating('de757d41', 2)">★</span>
-                <span class="star" onclick="setRating('de757d41', 3)">★</span>
-                <span class="star" onclick="setRating('de757d41', 4)">★</span>
                 <span class="star" onclick="setRating('de757d41', 5)">★</span>
+                <span class="star" onclick="setRating('de757d41', 4)">★</span>
+                <span class="star" onclick="setRating('de757d41', 3)">★</span>
+                <span class="star" onclick="setRating('de757d41', 2)">★</span>
+                <span class="star" onclick="setRating('de757d41', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_de757d41">(0/5)</span>
               </div>
             </div>
@@ -3611,7 +3720,9 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="4c2a9906" data-index="27" data-group="Markers" data-status="verified" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="4c2a9906" data-index="27" data-group="Markers" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.MarkerSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.MarkerSnippetsTest" data-test-method="verifyMarkerDraggableProperty_falsifiable" data-snippet-title="2. Draggable Marker" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Respond to user interactions with markers on a map.." data-what-to-look-for="1. Verify marker.isDraggable == true; test failure when set to false.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#28 of 39</span>
@@ -3634,11 +3745,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="4c2a9906">
-                <span class="star" onclick="setRating('4c2a9906', 1)">★</span>
-                <span class="star" onclick="setRating('4c2a9906', 2)">★</span>
-                <span class="star" onclick="setRating('4c2a9906', 3)">★</span>
-                <span class="star" onclick="setRating('4c2a9906', 4)">★</span>
                 <span class="star" onclick="setRating('4c2a9906', 5)">★</span>
+                <span class="star" onclick="setRating('4c2a9906', 4)">★</span>
+                <span class="star" onclick="setRating('4c2a9906', 3)">★</span>
+                <span class="star" onclick="setRating('4c2a9906', 2)">★</span>
+                <span class="star" onclick="setRating('4c2a9906', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_4c2a9906">(0/5)</span>
               </div>
             </div>
@@ -3768,13 +3879,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="58007bbe" data-index="28" data-group="Overlays" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="58007bbe" data-index="28" data-group="Overlays" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.OverlaySnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.OverlaySnippetsTest" data-test-method="verifyAddTileOverlayAndProvider_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a custom tile overlay to a map.." data-what-to-look-for="1. Verify tile overlay provider registration and transparency.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#29 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">58007bbe</span>
               <span class="badge bg-primary text-white me-2">Overlays</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/customoverlays" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -3791,11 +3904,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="58007bbe">
-                <span class="star" onclick="setRating('58007bbe', 1)">★</span>
-                <span class="star" onclick="setRating('58007bbe', 2)">★</span>
-                <span class="star" onclick="setRating('58007bbe', 3)">★</span>
-                <span class="star" onclick="setRating('58007bbe', 4)">★</span>
                 <span class="star" onclick="setRating('58007bbe', 5)">★</span>
+                <span class="star" onclick="setRating('58007bbe', 4)">★</span>
+                <span class="star" onclick="setRating('58007bbe', 3)">★</span>
+                <span class="star" onclick="setRating('58007bbe', 2)">★</span>
+                <span class="star" onclick="setRating('58007bbe', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_58007bbe">(0/5)</span>
               </div>
             </div>
@@ -3954,13 +4067,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="518c439f" data-index="29" data-group="Overlays" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="518c439f" data-index="29" data-group="Overlays" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.OverlaySnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.OverlaySnippetsTest" data-test-method="verifyAddGroundOverlayProperties_falsifiable" data-snippet-title="1. Ground Overlays" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add an overlay image grounded to the surface of a map.." data-what-to-look-for="1. Verify ground overlay bounds, bearing, and image descriptor.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#30 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">518c439f</span>
               <span class="badge bg-primary text-white me-2">Overlays</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/groundoverlay" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -3977,11 +4092,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="518c439f">
-                <span class="star" onclick="setRating('518c439f', 1)">★</span>
-                <span class="star" onclick="setRating('518c439f', 2)">★</span>
-                <span class="star" onclick="setRating('518c439f', 3)">★</span>
-                <span class="star" onclick="setRating('518c439f', 4)">★</span>
                 <span class="star" onclick="setRating('518c439f', 5)">★</span>
+                <span class="star" onclick="setRating('518c439f', 4)">★</span>
+                <span class="star" onclick="setRating('518c439f', 3)">★</span>
+                <span class="star" onclick="setRating('518c439f', 2)">★</span>
+                <span class="star" onclick="setRating('518c439f', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_518c439f">(0/5)</span>
               </div>
             </div>
@@ -4073,13 +4188,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="246ab3a6" data-index="30" data-group="Shapes" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="246ab3a6" data-index="30" data-group="Shapes" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.ShapesSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.ShapesSnippetsTest" data-test-method="verifyAddPolylineAndPolygonProperties_falsifiable" data-snippet-title="1. Simple Polyline" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a shape or line to a map.." data-what-to-look-for="1. Verify points, width, and color of Polylines/Polygons.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#31 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">246ab3a6</span>
               <span class="badge bg-primary text-white me-2">Shapes</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/shapes" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -4096,11 +4213,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="246ab3a6">
-                <span class="star" onclick="setRating('246ab3a6', 1)">★</span>
-                <span class="star" onclick="setRating('246ab3a6', 2)">★</span>
-                <span class="star" onclick="setRating('246ab3a6', 3)">★</span>
-                <span class="star" onclick="setRating('246ab3a6', 4)">★</span>
                 <span class="star" onclick="setRating('246ab3a6', 5)">★</span>
+                <span class="star" onclick="setRating('246ab3a6', 4)">★</span>
+                <span class="star" onclick="setRating('246ab3a6', 3)">★</span>
+                <span class="star" onclick="setRating('246ab3a6', 2)">★</span>
+                <span class="star" onclick="setRating('246ab3a6', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_246ab3a6">(0/5)</span>
               </div>
             </div>
@@ -4219,13 +4336,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="b8fadfc3" data-index="31" data-group="Street View" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="b8fadfc3" data-index="31" data-group="Street View" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.StreetViewSnippetsTest" data-test-method="verifyStreetViewPanoramaInitialization_falsifiable" data-snippet-title="1. Street View Panorama" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a configurable, interactive Google Street View to a web page or mobile app.." data-what-to-look-for="1. Verify StreetViewPanorama creation and camera location binding.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#32 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">b8fadfc3</span>
               <span class="badge bg-primary text-white me-2">Street View</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -4242,11 +4361,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="b8fadfc3">
-                <span class="star" onclick="setRating('b8fadfc3', 1)">★</span>
-                <span class="star" onclick="setRating('b8fadfc3', 2)">★</span>
-                <span class="star" onclick="setRating('b8fadfc3', 3)">★</span>
-                <span class="star" onclick="setRating('b8fadfc3', 4)">★</span>
                 <span class="star" onclick="setRating('b8fadfc3', 5)">★</span>
+                <span class="star" onclick="setRating('b8fadfc3', 4)">★</span>
+                <span class="star" onclick="setRating('b8fadfc3', 3)">★</span>
+                <span class="star" onclick="setRating('b8fadfc3', 2)">★</span>
+                <span class="star" onclick="setRating('b8fadfc3', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_b8fadfc3">(0/5)</span>
               </div>
             </div>
@@ -4335,13 +4454,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="7b144b66" data-index="32" data-group="Street View" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="7b144b66" data-index="32" data-group="Street View" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.StreetViewSnippetsTest" data-test-method="verifyStreetViewCameraAnimationAndPose_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Animate the camera movements for a Google Street View.." data-what-to-look-for="1. Verify animateTo(StreetViewPanoramaCamera) and bearing change.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#33 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">7b144b66</span>
               <span class="badge bg-primary text-white me-2">Street View</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -4358,11 +4479,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="7b144b66">
-                <span class="star" onclick="setRating('7b144b66', 1)">★</span>
-                <span class="star" onclick="setRating('7b144b66', 2)">★</span>
-                <span class="star" onclick="setRating('7b144b66', 3)">★</span>
-                <span class="star" onclick="setRating('7b144b66', 4)">★</span>
                 <span class="star" onclick="setRating('7b144b66', 5)">★</span>
+                <span class="star" onclick="setRating('7b144b66', 4)">★</span>
+                <span class="star" onclick="setRating('7b144b66', 3)">★</span>
+                <span class="star" onclick="setRating('7b144b66', 2)">★</span>
+                <span class="star" onclick="setRating('7b144b66', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_7b144b66">(0/5)</span>
               </div>
             </div>
@@ -4460,13 +4581,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="75a7efe9" data-index="33" data-group="Street View" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="75a7efe9" data-index="33" data-group="Street View" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.StreetViewSnippetsTest" data-test-method="verifyStreetViewGesturesConfiguration_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Customize the gestures that are available for Google Street View.." data-what-to-look-for="1. Verify isPanningGesturesEnabled / isZoomGesturesEnabled.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#34 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">75a7efe9</span>
               <span class="badge bg-primary text-white me-2">Street View</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -4483,11 +4606,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="75a7efe9">
-                <span class="star" onclick="setRating('75a7efe9', 1)">★</span>
-                <span class="star" onclick="setRating('75a7efe9', 2)">★</span>
-                <span class="star" onclick="setRating('75a7efe9', 3)">★</span>
-                <span class="star" onclick="setRating('75a7efe9', 4)">★</span>
                 <span class="star" onclick="setRating('75a7efe9', 5)">★</span>
+                <span class="star" onclick="setRating('75a7efe9', 4)">★</span>
+                <span class="star" onclick="setRating('75a7efe9', 3)">★</span>
+                <span class="star" onclick="setRating('75a7efe9', 2)">★</span>
+                <span class="star" onclick="setRating('75a7efe9', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_75a7efe9">(0/5)</span>
               </div>
             </div>
@@ -4580,13 +4703,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="6e3999d1" data-index="34" data-group="Street View" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="6e3999d1" data-index="34" data-group="Street View" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.StreetViewSnippetsTest" data-test-method="verifyStreetViewPanoramaReadyAndClickEvents_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Respond to user interactions and events in a Google Street View.." data-what-to-look-for="1. Verify onStreetViewPanoramaReady and click listener execution.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#35 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">6e3999d1</span>
               <span class="badge bg-primary text-white me-2">Street View</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -4603,11 +4728,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="6e3999d1">
-                <span class="star" onclick="setRating('6e3999d1', 1)">★</span>
-                <span class="star" onclick="setRating('6e3999d1', 2)">★</span>
-                <span class="star" onclick="setRating('6e3999d1', 3)">★</span>
-                <span class="star" onclick="setRating('6e3999d1', 4)">★</span>
                 <span class="star" onclick="setRating('6e3999d1', 5)">★</span>
+                <span class="star" onclick="setRating('6e3999d1', 4)">★</span>
+                <span class="star" onclick="setRating('6e3999d1', 3)">★</span>
+                <span class="star" onclick="setRating('6e3999d1', 2)">★</span>
+                <span class="star" onclick="setRating('6e3999d1', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_6e3999d1">(0/5)</span>
               </div>
             </div>
@@ -4898,13 +5023,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="20fb724a" data-index="35" data-group="Utility Library" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="20fb724a" data-index="35" data-group="Utility Library" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.UtilsSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.UtilsSnippetsTest" data-test-method="verifyGeoJsonLayerCreationAndFeatures_falsifiable" data-snippet-title="5. Add GeoJSON Layer from File" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add GeoJSON data to a map.." data-what-to-look-for="1. Assert GeoJsonLayer feature count and style properties.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#36 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">20fb724a</span>
               <span class="badge bg-primary text-white me-2">Utility Library</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -4921,11 +5048,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="20fb724a">
-                <span class="star" onclick="setRating('20fb724a', 1)">★</span>
-                <span class="star" onclick="setRating('20fb724a', 2)">★</span>
-                <span class="star" onclick="setRating('20fb724a', 3)">★</span>
-                <span class="star" onclick="setRating('20fb724a', 4)">★</span>
                 <span class="star" onclick="setRating('20fb724a', 5)">★</span>
+                <span class="star" onclick="setRating('20fb724a', 4)">★</span>
+                <span class="star" onclick="setRating('20fb724a', 3)">★</span>
+                <span class="star" onclick="setRating('20fb724a', 2)">★</span>
+                <span class="star" onclick="setRating('20fb724a', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_20fb724a">(0/5)</span>
               </div>
             </div>
@@ -5008,13 +5135,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="f451d761" data-index="36" data-group="Utility Library" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="f451d761" data-index="36" data-group="Utility Library" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.UtilsSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.UtilsSnippetsTest" data-test-method="verifyKmlLayerCreationAndContainers_falsifiable" data-snippet-title="7. KML Layer from File Resource" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a KML layer to a map.." data-what-to-look-for="1. Assert KmlLayer placemarks/containers and click listener.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#37 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">f451d761</span>
               <span class="badge bg-primary text-white me-2">Utility Library</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -5031,11 +5160,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="f451d761">
-                <span class="star" onclick="setRating('f451d761', 1)">★</span>
-                <span class="star" onclick="setRating('f451d761', 2)">★</span>
-                <span class="star" onclick="setRating('f451d761', 3)">★</span>
-                <span class="star" onclick="setRating('f451d761', 4)">★</span>
                 <span class="star" onclick="setRating('f451d761', 5)">★</span>
+                <span class="star" onclick="setRating('f451d761', 4)">★</span>
+                <span class="star" onclick="setRating('f451d761', 3)">★</span>
+                <span class="star" onclick="setRating('f451d761', 2)">★</span>
+                <span class="star" onclick="setRating('f451d761', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_f451d761">(0/5)</span>
               </div>
             </div>
@@ -5118,13 +5247,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="fbbc9c5a" data-index="37" data-group="Utility Library" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="fbbc9c5a" data-index="37" data-group="Utility Library" data-status="verified" data-kt-test-class="com.example.snippets.kotlin.capabilities.UtilsSnippetsTest" data-java-test-class="com.example.snippets.java.capabilities.UtilsSnippetsTest" data-test-method="verifyHeatmapTileProviderDataAndRadius_falsifiable" data-snippet-title="9. Simple Heatmap" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a heatmap layer to a map.." data-what-to-look-for="1. Assert HeatmapTileProvider data points and opacity configuration.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#38 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">fbbc9c5a</span>
               <span class="badge bg-primary text-white me-2">Utility Library</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -5141,11 +5272,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="fbbc9c5a">
-                <span class="star" onclick="setRating('fbbc9c5a', 1)">★</span>
-                <span class="star" onclick="setRating('fbbc9c5a', 2)">★</span>
-                <span class="star" onclick="setRating('fbbc9c5a', 3)">★</span>
-                <span class="star" onclick="setRating('fbbc9c5a', 4)">★</span>
                 <span class="star" onclick="setRating('fbbc9c5a', 5)">★</span>
+                <span class="star" onclick="setRating('fbbc9c5a', 4)">★</span>
+                <span class="star" onclick="setRating('fbbc9c5a', 3)">★</span>
+                <span class="star" onclick="setRating('fbbc9c5a', 2)">★</span>
+                <span class="star" onclick="setRating('fbbc9c5a', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_fbbc9c5a">(0/5)</span>
               </div>
             </div>
@@ -5260,13 +5391,15 @@
           </div>
         </div>
         
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="2b6457c4" data-index="38" data-group="Wear OS" data-status="pending" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="2b6457c4" data-index="38" data-group="Wear OS" data-status="verified" data-kt-test-class="com.example.wearosmap.AppLaunchTest" data-java-test-class="com.example.wearosmap.AppLaunchTest" data-test-method="verifyWearOsMapInit_falsifiable" data-snippet-title="TODO" data-what-to-do="1. Launch the Kotlin or Java sample on an attached emulator/device.
+2. Interact with the screen to test Add a map to a Wear OS app.." data-what-to-look-for="1. Wear OS map activity initialization.
+2. Verify visual fidelity and proper SDK callbacks." style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#39 of 39</span>
               <span class="badge bg-secondary text-white font-monospace px-2 py-1 me-2">2b6457c4</span>
               <span class="badge bg-primary text-white me-2">Wear OS</span>
-              <span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>
+              <span class="badge bg-success text-white">✅ Falsification Verified</span>
             </div>
             <div class="text-end">
               <a href="https://developers.google.com/maps/documentation/android-sdk/map" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>
@@ -5283,11 +5416,11 @@
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="2b6457c4">
-                <span class="star" onclick="setRating('2b6457c4', 1)">★</span>
-                <span class="star" onclick="setRating('2b6457c4', 2)">★</span>
-                <span class="star" onclick="setRating('2b6457c4', 3)">★</span>
-                <span class="star" onclick="setRating('2b6457c4', 4)">★</span>
                 <span class="star" onclick="setRating('2b6457c4', 5)">★</span>
+                <span class="star" onclick="setRating('2b6457c4', 4)">★</span>
+                <span class="star" onclick="setRating('2b6457c4', 3)">★</span>
+                <span class="star" onclick="setRating('2b6457c4', 2)">★</span>
+                <span class="star" onclick="setRating('2b6457c4', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_2b6457c4">(0/5)</span>
               </div>
             </div>
@@ -5429,11 +5562,74 @@
           card.style.display = 'block';
         }
       });
+    function renderCards() {
+      document.querySelectorAll('.capability-card').forEach(card => {
+        const idx = parseInt(card.getAttribute('data-index'), 10);
+        if (viewMode === 'focused') {
+          card.style.display = (idx === currentIdx) ? 'block' : 'none';
+        } else {
+          card.style.display = 'block';
+        }
+      });
       const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
       if (currentCard) {
         const cid = currentCard.getAttribute('data-id');
         const title = currentCard.querySelector('h3').innerText;
         document.getElementById('stepIndicatorLabel').innerText = 'Capability ' + (currentIdx + 1) + ' of ' + totalCaps + ': ' + title + ' (' + cid + ')';
+
+        // Update Wizard Card Header & Guidance Instruction Boxes
+        const hdr = document.getElementById('wizardTaskHeader');
+        if (hdr) hdr.innerText = 'Task ' + (currentIdx + 1) + ' of ' + totalCaps + ': ' + title + ' (' + cid + ')';
+
+        const whatToDo = currentCard.getAttribute('data-what-to-do') || 'Launch sample on attached device.';
+        const whatToLookFor = currentCard.getAttribute('data-what-to-look-for') || 'Verify visual fidelity and behavior.';
+        const elToDo = document.getElementById('wizardWhatToDo');
+        const elLook = document.getElementById('wizardWhatToLookFor');
+        if (elToDo) elToDo.innerText = whatToDo;
+        if (elLook) elLook.innerText = whatToLookFor;
+
+        // Sync Wizard Star Rating & Comment Box
+        const starBox = currentCard.querySelector('.star-rating');
+        const activeStars = starBox ? starBox.querySelectorAll('.star.active').length : 0;
+        updateWizardStarUI(activeStars);
+
+        const cardCommentBox = document.getElementById('comment_' + cid);
+        const wizardCommentBox = document.getElementById('wizardCommentInput');
+        if (wizardCommentBox) wizardCommentBox.value = cardCommentBox ? cardCommentBox.value : '';
+      }
+    }
+
+    let wizardCurrentRating = 0;
+    function setWizardRating(rating) {
+      wizardCurrentRating = rating;
+      updateWizardStarUI(rating);
+    }
+
+    function updateWizardStarUI(rating) {
+      wizardCurrentRating = rating;
+      const stars = document.querySelectorAll('#wizardStarPicker .star');
+      stars.forEach(star => {
+        const rVal = parseInt(star.getAttribute('data-rating') || '0', 10);
+        if (rVal <= rating) star.classList.add('active');
+        else star.classList.remove('active');
+      });
+      const label = document.getElementById('wizardRatingLabel');
+      if (label) label.innerText = '(' + rating + '/5 ⭐)';
+    }
+
+    function wizardAction(actionType, lang) {
+      const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
+      if (!currentCard) return;
+      const cid = currentCard.getAttribute('data-id');
+      const group = currentCard.getAttribute('data-group');
+      const snippetTitle = currentCard.getAttribute('data-snippet-title') || currentCard.querySelector('h3').innerText;
+      const testClass = currentCard.getAttribute(lang === 'kotlin' ? 'data-kt-test-class' : 'data-java-test-class');
+      const testMethod = currentCard.getAttribute('data-test-method');
+
+      if (actionType === 'launch') {
+        launchSampleLive(cid, group, snippetTitle, lang);
+      } else if (actionType === 'test') {
+        runTestLive(cid, testClass, testMethod, lang);
       }
     }
 
@@ -5447,27 +5643,84 @@
       }).then(r => r.json()).then(res => console.log('Rating saved:', res));
     }
 
+    function submitRatingAndAdvance() {
+      const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
+      if (!currentCard) return;
+      const cid = currentCard.getAttribute('data-id');
+      const wizardComment = document.getElementById('wizardCommentInput')?.value || '';
+      const rating = wizardCurrentRating > 0 ? wizardCurrentRating : null;
+
+      // Update local card DOM UI first without firing separate HTTP requests
+      updateStarUI(cid, rating || 0);
+      const cardCommentBox = document.getElementById('comment_' + cid);
+      if (cardCommentBox) cardCommentBox.value = wizardComment;
+
+      // Single consolidated save rating API call
+      fetch('/api/save_rating', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: cid, rating: rating, comment: wizardComment })
+      }).then(r => r.json()).then(res => {
+        if (res.next_id) {
+          const nextCard = document.querySelector('.capability-card[data-id="' + res.next_id + '"]');
+          if (nextCard) {
+            currentIdx = parseInt(nextCard.getAttribute('data-index'), 10);
+            renderCards();
+            return;
+          }
+        }
+        navStep(1);
+      }).catch(e => {
+        navStep(1);
+      });
+    }
+
     function updateStarUI(id, rating) {
       const container = document.querySelector('.star-rating[data-id="' + id + '"]');
       if (!container) return;
       const stars = container.querySelectorAll('.star');
-      stars.forEach((star, idx) => {
-        if (idx < rating) star.classList.add('active');
+      stars.forEach(star => {
+        const onclickAttr = star.getAttribute('onclick') || '';
+        const m = onclickAttr.match(/setRating\('[^']+',\s*(\d+)\)/);
+        const rVal = m ? parseInt(m[1], 10) : 0;
+        if (rVal <= rating) star.classList.add('active');
         else star.classList.remove('active');
       });
       const valLabel = document.getElementById('rating_val_' + id);
       if (valLabel) valLabel.innerText = '(' + rating + '/5 ⭐)';
+
+      // Keep active wizard task rating UI synchronized
+      const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
+      if (currentCard && currentCard.getAttribute('data-id') === id) {
+        updateWizardStarUI(rating);
+      }
     }
 
     function saveComment(id, val) {
       const container = document.querySelector('.star-rating[data-id="' + id + '"]');
       const activeStars = container ? container.querySelectorAll('.star.active').length : null;
+      const cardBox = document.getElementById('comment_' + id);
+      if (cardBox && cardBox.value !== val) cardBox.value = val;
       fetch('/api/save_rating', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: id, rating: activeStars, comment: val })
       });
     }
+
+    // Keyboard Shortcuts Listener
+    document.addEventListener('keydown', function(evt) {
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (tag === 'textarea' || tag === 'input' || tag === 'button' || tag === 'select') return;
+
+      if (evt.code === 'Space') {
+        evt.preventDefault();
+        wizardAction('launch', 'kotlin');
+      } else if (evt.code === 'Enter') {
+        evt.preventDefault();
+        submitRatingAndAdvance();
+      }
+    });
 
     let activeAbortController = null;
 

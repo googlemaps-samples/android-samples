@@ -98,7 +98,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "1. Marker Clustering Setup",
-        description = "Initializes a ClusterManager with a set of 10 items."
+        description = "What it does: Initializes a ClusterManager with 10 markers in close geographic proximity in London.\nHow to see the effect: Zooming out aggregates markers into numbered cluster circles; zooming in breaks them into pins.",
     )
     fun setUpClusterer() {
         // [START maps_android_utils_clustering_cluster_manager]
@@ -141,7 +141,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "2. Disable Cluster Animation",
-        description = "Disables animation on the ClusterManager."
+        description = "What it does: Disables smooth position transition animations on ClusterManager.\nHow to see the effect: When zooming or panning, cluster pins immediately snap to position without smooth sliding.",
     )
     fun clusterAnimation() {
         clusterManager?.let {
@@ -153,7 +153,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "3. Add Clustering Info Window Item",
-        description = "Adds an item with an explicit title and snippet to the ClusterManager."
+        description = "What it does: Adds a single ClusterItem with a custom title and snippet to the ClusterManager.\nHow to see the effect: Tap the individual cluster item pin to view its custom title and snippet callout.",
     )
     fun infoWindow() {
         clusterManager?.let {
@@ -177,7 +177,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "3b. Clear Cluster Items",
-        description = "Clears all items from the ClusterManager."
+        description = "What it does: Clears all items and clusters from the ClusterManager.\nHow to see the effect: All cluster pin circles and individual cluster markers disappear from the map view.",
     )
     fun clearClusterItems() {
         // [START maps_android_utils_clustering_clear]
@@ -188,7 +188,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "3c. Remove Single Cluster Item",
-        description = "Removes a single item from the ClusterManager."
+        description = "What it does: Removes a specified single item from the active ClusterManager collection.\nHow to see the effect: The target marker pin is removed and surrounding cluster count numbers decrement.",
     )
     fun removeSingleClusterItem() {
         // [START maps_android_utils_clustering_remove]
@@ -200,7 +200,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "3d. Cluster Listeners",
-        description = "Sets click listeners on ClusterManager."
+        description = "What it does: Registers click listeners for clusters, cluster items, and info window popups.\nHow to see the effect: Tapping a cluster circle or item displays a Toast notification with cluster details.",
     )
     fun demonstrateClusterListeners() {
         // [START maps_android_utils_clustering_listeners]
@@ -221,7 +221,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "4. GeoJSON Layer from JSONObject",
-        description = "Imports a GeoJSONLayer using a raw JSONObject."
+        description = "What it does: Constructs a GeoJsonLayer programmatically from an in-memory JSON object schema.\nHow to see the effect: Parsed GeoJSON points, lines, or polygons instantiate onto the map instance.",
     )
     fun addGeoJsonLayerJsonObject() {
         // [START maps_android_util_geojson_add_jsonobject]
@@ -235,7 +235,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "5. Add GeoJSON Layer from File",
-        description = "Imports a GeoJSONLayer using a raw resource file."
+        description = "What it does: Imports and renders a GeoJSON dataset file from raw resources onto the map view.\nHow to see the effect: US geographic boundary lines and features render over the map in red vector lines.",
     )
     fun addGeoJsonLayerFile() {
         // [START maps_android_util_geojson_add_file]
@@ -251,7 +251,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "5b. Remove GeoJSON Layer",
-        description = "Removes the imported GeoJSONLayer from the map."
+        description = "What it does: Removes the imported GeoJSON layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines and points associated with the GeoJSON dataset disappear.",
     )
     fun removeGeoJsonLayerFile() {
         geoJsonLayer?.let {
@@ -263,7 +263,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "6. GeoJSON Features and Styling",
-        description = "Adds a custom PointFeature to a GeoJsonLayer and configures its styles."
+        description = "What it does: Programmatically iterates, styles, and adds custom point and linestring GeoJsonFeatures.\nHow to see the effect: Draggable markers and styled lines render according to default GeoJson feature styles.",
     )
     fun geoJsonFeature() {
         val layer = GeoJsonLayer(map.delegate, null)
@@ -330,7 +330,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "7. KML Layer from File Resource",
-        description = "Displays a map focused on Google Campus in Mountain View with imported KML 3D building polygons."
+        description = "What it does: Imports KML 3D building polygons from raw resource files and renders them over Mountain View.\nHow to see the effect: KML campus polygon outlines and placemarks render over the Google Campus.",
     )
     fun addKmlLayerFile() {
         // [START maps_android_utils_kml_add_file]
@@ -342,7 +342,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "8. KML Layer from Input Stream",
-        description = "Displays a map focused on Google Campus in Mountain View with imported KML polygons via InputStream."
+        description = "What it does: Parses a KML dataset stream, iterates nested placemark containers, and binds click listeners.\nHow to see the effect: Tap any KML feature line or placemark to trigger a log and view container hierarchy.",
     )
     fun addKmlLayerFileInputStream() {
         // [START maps_android_utils_kml_add_input_stream]
@@ -394,7 +394,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "9. Simple Heatmap",
-        description = "Creates a simple Heatmap from raw resource coordinates."
+        description = "What it does: Generates a HeatmapTileProvider visualization from police station coordinate data.\nHow to see the effect: A red/yellow density heatmap overlay displays over Melbourne showing location concentrations.",
     )
     fun addHeatMap() {
         // [START maps_android_utils_heatmap_simple]
@@ -434,7 +434,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "10. Add Custom Heatmap",
-        description = "Creates a heatmap with custom color gradients, opacity, and weighted coordinates."
+        description = "What it does: Configures a custom color gradient (green to red), 0.7 opacity, and weighted data points.\nHow to see the effect: A custom green/red gradient heatmap overlay renders with custom transparency over the map.",
     )
     fun addCustomHeatmap() {
         val latLngs = try {
@@ -480,7 +480,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "10b. Remove Custom Heatmap",
-        description = "Removes the custom heatmap from the map."
+        description = "What it does: Removes the custom heatmap TileOverlay from the active GoogleMap instance.\nHow to see the effect: The heatmap color density overlay disappears completely from the viewport.",
     )
     fun removeCustomHeatmap() {
         heatmapTileOverlay?.let {
@@ -492,7 +492,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "11. Multilayer Collections Init",
-        description = "Initializes Managers and layers for GeoJSON, KML and ClusterManager sharing the map's state."
+        description = "What it does: Demonstrates sharing MarkerManager, PolylineManager, and PolygonManager across GeoJSON, KML, and ClusterManager.\nHow to see the effect: Unclustered markers, GeoJSON features, and KML layers co-exist without event or rendering conflict.",
     )
     fun initMultilayer() {
         // [START maps_android_utils_multilayer_init]
@@ -555,6 +555,5 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
             ).show()
             false
         }
-        // [END maps_android_utils_multilayer_marker_click_events]
     }
 }
