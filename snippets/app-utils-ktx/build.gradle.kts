@@ -22,7 +22,7 @@ plugins {
 
 android {
     namespace = "com.example.app_utils_ktx"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.app_utils_ktx"
