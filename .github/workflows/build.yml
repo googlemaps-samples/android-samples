@@ -117,12 +117,10 @@ jobs:
 
     - name: Build and check
       run: |
-        ./gradlew :snippets:app:assembleDebug
-        ./gradlew :snippets:app-ktx:assembleDebug
-        ./gradlew :snippets:app-utils-ktx:assembleDebug
+        ./gradlew :snippets:kotlin-app:assembleDebug
+        ./gradlew :snippets:java-app:assembleDebug
         ./gradlew :snippets:app-compose:assembleDebug
         ./gradlew :snippets:app-places-ktx:assembleDebug
-        ./gradlew :snippets:app-utils:assembleDebug
 
   build-tutorials:
     runs-on: ubuntu-latest
