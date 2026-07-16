@@ -23,3 +23,12 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.ksp) apply false
 }
+
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force("androidx.core:core:1.18.0")
+            force("androidx.core:core-ktx:1.18.0")
+        }
+    }
+}
