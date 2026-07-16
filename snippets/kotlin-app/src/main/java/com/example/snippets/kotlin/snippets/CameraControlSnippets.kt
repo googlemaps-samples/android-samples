@@ -32,7 +32,7 @@ class CameraControlSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "1. Zoom Level Constraints",
-        description = "Sets minimum and maximum zoom preference bounds on the camera.",
+        description = "What it does: Sets a minimum zoom level of 6.0 and maximum zoom level of 14.0 on the camera.\nHow to see the effect: Pinch to zoom in or out; zooming stops when reaching minimum zoom (level 6) or maximum zoom (level 14).",
     )
     fun zoomLevel() {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-33.88, 151.21), 8.0f))
@@ -44,7 +44,7 @@ class CameraControlSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "2. Fit Camera To Bounds (Australia)",
-        description = "Moves the camera once to fit geographic boundaries (Australia) within the viewport. Note: This frames the map initially, but does not restrict subsequent user panning.",
+        description = "What it does: Moves the camera once to fit the entire geographic bounding box of Australia within the visible viewport.\nHow to see the effect: The map immediately shifts to frame all of Australia. (Does not restrict subsequent user panning.)",
     )
     fun settingBoundaries() {
         // [START maps_android_camera_and_view_setting_boundaries]
@@ -58,7 +58,7 @@ class CameraControlSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "3. Centering Map Within An Area",
-        description = "Centers the camera on the center point of geographic bounds (Australia) at a zoom level of 10.",
+        description = "What it does: Centers the camera at the geographic midpoint of Australia at zoom level 10.\nHow to see the effect: The camera jumps directly to the center of Australia at a fixed zoom scale.",
     )
     fun centeringMapWithinAnArea() {
         // [START maps_android_camera_and_view_centering_within_area]
@@ -72,7 +72,7 @@ class CameraControlSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "4. Panning Restrictions",
-        description = "Restricts the camera target to specified geographic boundaries (Adelaide).",
+        description = "What it does: Constrains the camera target to the geographic bounding box of Adelaide.\nHow to see the effect: Drag or pan the map; scrolling stops when the camera center reaches the boundary of Adelaide.",
     )
     fun panningRestrictions() {
         // [START maps_android_camera_and_view_panning_restrictions]
@@ -89,7 +89,7 @@ class CameraControlSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "5. Common Map Movements",
-        description = "Demonstrates camera movement, animation, zoom, and CameraPosition builder.",
+        description = "What it does: Demonstrates instant camera placement, animated zoom transitions, and 3D orientation (bearing & tilt).\nHow to see the effect: Watch the map smoothly animate from Sydney to Mountain View with orientation and tilt changes.",
     )
     fun commonMapMovements() {
         // [START maps_android_camera_and_view_common_map_movements]
