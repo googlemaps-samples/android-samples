@@ -46,7 +46,7 @@ public class OverlaySnippets {
 
     @SnippetItem(
             title = "1. Ground Overlays",
-            description = "Creates, retains, changes and removes a ground overlay."
+            description = "What it does: Binds an image bitmap (historical map graphic) to fixed geographic coordinates on the map surface.\nHow to see the effect: A historical 1922 map image overlays the ground in Newark, NJ."
     )
     public void groundOverlays() {
         // [START maps_android_ground_overlays_add]
@@ -94,7 +94,7 @@ public class OverlaySnippets {
 
     @SnippetItem(
             title = "2. Ground Overlay Position Image Location",
-            description = "Defines GroundOverlayOptions positioning via anchor and LatLng."
+            description = "What it does: Configures ground overlay placement using anchor offset and center LatLng coordinates.\nHow to see the effect: The image aligns precisely relative to its anchor point and width/height dimensions."
     )
     public void positionImageLocation() {
         // [START maps_android_ground_overlays_position_image_location]
@@ -107,7 +107,7 @@ public class OverlaySnippets {
 
     @SnippetItem(
             title = "3. Ground Overlay Position Image Bounds",
-            description = "Defines GroundOverlayOptions positioning via LatLngBounds."
+            description = "What it does: Stretches and bounds a ground overlay image across a LatLngBounds rectangle.\nHow to see the effect: The image overlay scales to fit exactly within SW and NE geographic boundary corners."
     )
     public void positionImageBounds() {
         // [START maps_android_ground_overlays_position_image_bounds]
@@ -122,7 +122,7 @@ public class OverlaySnippets {
 
     @SnippetItem(
             title = "4. Tile Overlays Add",
-            description = "Adds a TileOverlay with a custom UrlTileProvider."
+            description = "What it does: Adds a custom TileOverlay layer backed by a custom web URL tile server (UrlTileProvider).\nHow to see the effect: Custom raster imagery tiles fetch and overlay the base map as you pan and zoom."
     )
     public void tileOverlaysAdd() {
         // [START maps_android_tile_overlays_add]
@@ -180,7 +180,7 @@ public class OverlaySnippets {
 
     @SnippetItem(
             title = "5. Tile Overlays Transparency",
-            description = "Adds and toggles transparency of a TileOverlay."
+            description = "What it does: Configures and toggles semi-transparency (0.5f) on a custom tile overlay layer.\nHow to see the effect: Base map vector features show through the semi-transparent custom tile layer."
     )
     public void tileOverlaysTransparency() {
         // [START maps_android_tile_overlays_transparency]

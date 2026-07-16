@@ -47,7 +47,7 @@ public class EventsSnippets {
 
     @SnippetItem(
             title = "1. MapView Disable Click Event",
-            description = "Disables click events on a MapView directly."
+            description = "What it does: Sets setClickable(false) on the underlying MapView container.\nHow to see the effect: Direct tap interaction on the map view is disabled."
     )
     public void mapViewDisableClickEvent() {
         // [START maps_android_events_disable_clicks_mapview]
@@ -74,7 +74,7 @@ public class EventsSnippets {
 
     @SnippetItem(
             title = "2. Map Fragment Disable Click Event",
-            description = "Disables click events on a SupportMapFragment view."
+            description = "What it does: Sets setClickable(false) on the SupportMapFragment root view container.\nHow to see the effect: Touch interactions on the map fragment view are ignored."
     )
     public void mapFragmentDisableClickEvent() {
         // [START maps_android_events_disable_clicks_mapfragment]
@@ -93,7 +93,7 @@ public class EventsSnippets {
 
     @SnippetItem(
             title = "3. Active Indoor Building Level",
-            description = "Retrieves the active level of the currently focused indoor building."
+            description = "What it does: Queries map.getFocusedBuilding() to retrieve active indoor level indices.\nHow to see the effect: Active floor level information is extracted when viewing an indoor building plan."
     )
     public void focusedBuilding() {
         // [START maps_android_events_active_level]
@@ -107,7 +107,7 @@ public class EventsSnippets {
 
     @SnippetItem(
             title = "4. POI Click Listener",
-            description = "Registers a listener for clicks on Point of Interests (POIs)."
+            description = "What it does: Registers an OnPoiClickListener to capture tap events on Points of Interest.\nHow to see the effect: Tap any POI icon (such as a park or business); a Toast popup displays its name, Place ID, and location."
     )
     public void poiClickListener() {
         // [START maps_android_on_poi_click_demo]

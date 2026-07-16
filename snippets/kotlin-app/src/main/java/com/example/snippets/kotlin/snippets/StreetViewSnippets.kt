@@ -34,7 +34,7 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
 
     @SnippetItem(
         title = "1. Launch Street View Activity",
-        description = "Displays an interactive Google Street View panorama initialized in San Francisco."
+        description = "What it does: Launches an Activity embedding a StreetViewPanoramaView initialized in San Francisco.\nHow to see the effect: A full-screen interactive 360-degree street view panorama opens.",
     )
     fun launchStreetView() {
         val intent = Intent(context, StreetViewActivity::class.java)
@@ -43,7 +43,7 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
 
     @SnippetItem(
         title = "2. Set Panorama Location",
-        description = "Demonstrates setting Street View panorama locations using coordinates, radius, and source."
+        description = "What it does: Sets the panorama view geographic coordinates, search radius, and outdoor source filter.\nHow to see the effect: The Street View camera jumps directly to target coordinates.",
     )
     fun setLocation() {
         val sanFrancisco = LatLng(37.754130, -122.447129)
@@ -51,7 +51,7 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
 
     @SnippetItem(
         title = "3. Zoom Panorama",
-        description = "Demonstrates adjusting zoom level on Street View panorama camera."
+        description = "What it does: Constructs a StreetViewPanoramaCamera configuration with an increased zoom level.\nHow to see the effect: The Street View perspective zooms closer into the street scene.",
     )
     fun zoomPanorama() {
         val zoomBy = 0.5f
@@ -62,7 +62,7 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
 
     @SnippetItem(
         title = "4. Animate Camera",
-        description = "Demonstrates animating Street View panorama bearing and tilt over duration."
+        description = "What it does: Configures camera bearing rotation (heading adjustment) for smooth panorama panning.\nHow to see the effect: The Street View panorama camera view rotates horizontally.",
     )
     fun animatePanorama() {
         val duration: Long = 1000
