@@ -36,8 +36,9 @@ material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
-mapsCompose = "8.3.0"
-mapsKtx = "6.0.1"
+androidMapsUtils = "5.0.0"
+mapsCompose = "8.3.1"
+mapsKtx = "6.2.0"
 places = "5.3.0"
 playServicesMaps = "20.0.0"
 secretsGradlePlugin = "2.0.1"
