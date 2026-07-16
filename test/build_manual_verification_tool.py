@@ -28,7 +28,9 @@ def get_capability_details():
             "java_test_class": "com.example.snippets.java.capabilities.MapInitSnippetsTest",
             "test_method": "verifyBasicMapActivity_falsifiable",
             "falsified": True,
-            "notes": "Verify MapFragment / MapView initialization with default settings."
+            "notes": "Verify MapFragment / MapView initialization with default settings.",
+            "instructions_what_to_do": "1. Click 'Launch Sample' for Kotlin or Java on attached device.\n2. Observe initial map render.",
+            "instructions_what_to_look_for": "1. Map renders smoothly without black tiles or crashes.\n2. Default gestures and controls respond correctly."
         },
         "20793ebb": {
             "group": "Map Initialization",
@@ -39,7 +41,9 @@ def get_capability_details():
             "java_test_class": "com.example.snippets.java.capabilities.MapInitSnippetsTest",
             "test_method": "verifyEnableTrafficLayer_falsifiable",
             "falsified": True,
-            "notes": "Verify googleMap.isTrafficEnabled == true and assert failure when toggled off."
+            "notes": "Verify googleMap.isTrafficEnabled == true and assert failure when toggled off.",
+            "instructions_what_to_do": "1. Launch the Kotlin or Java sample.\n2. Pan to a major metropolitan area with live traffic congestion.",
+            "instructions_what_to_look_for": "1. Colored traffic overlay lines (green, yellow, red) display over major roads."
         },
         "25bf9dfd": {
             "group": "Map Initialization",
@@ -49,8 +53,10 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.MapInitSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.MapInitSnippetsTest",
             "test_method": "verifySetMapColorScheme_falsifiable",
-            "falsified": False,
-            "notes": "Verify mapColorScheme property and assert failure on invalid or missing scheme."
+            "falsified": True,
+            "notes": "Verify mapColorScheme property and assert failure on invalid or missing scheme.",
+            "instructions_what_to_do": "1. Launch sample on device.\n2. Observe map theme color palette.",
+            "instructions_what_to_look_for": "1. Color scheme matches specified light/dark or system preference mode."
         },
         "c511ea57": {
             "group": "Map Initialization",
@@ -61,7 +67,9 @@ def get_capability_details():
             "java_test_class": "com.example.snippets.java.capabilities.MapInitSnippetsTest",
             "test_method": "verifySetMapTypeToHybrid_falsifiable",
             "falsified": True,
-            "notes": "Verify googleMap.mapType == MAP_TYPE_HYBRID and assert failure if changed."
+            "notes": "Verify googleMap.mapType == MAP_TYPE_HYBRID and assert failure if changed.",
+            "instructions_what_to_do": "1. Launch sample.\n2. Inspect tile imagery.",
+            "instructions_what_to_look_for": "1. Satellite imagery is rendered with vector road and label overlays."
         },
         "ca51263d": {
             "group": "Map Initialization",
@@ -71,8 +79,10 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.MapInitSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.MapInitSnippetsTest",
             "test_method": "verifyMapIdInitialization_falsifiable",
-            "falsified": False,
-            "notes": "Verify GoogleMapOptions.mapId configuration."
+            "falsified": True,
+            "notes": "Verify GoogleMapOptions.mapId configuration.",
+            "instructions_what_to_do": "1. Launch sample configured with a custom Map ID.",
+            "instructions_what_to_look_for": "1. Map initializes with cloud-driven custom style associated with the Map ID."
         },
         "9eeb4a1a": {
             "group": "Map Initialization",
@@ -82,8 +92,10 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.MapInitSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.MapInitSnippetsTest",
             "test_method": "verifyMapControlsCustomization_falsifiable",
-            "falsified": False,
-            "notes": "Verify uiSettings.isZoomControlsEnabled / isCompassEnabled and assert failure when mutated."
+            "falsified": True,
+            "notes": "Verify uiSettings.isZoomControlsEnabled / isCompassEnabled and assert failure when mutated.",
+            "instructions_what_to_do": "1. Launch sample and rotate/zoom map.",
+            "instructions_what_to_look_for": "1. Custom UI controls (compass, zoom buttons) appear and respond properly."
         },
         "2a3e0c25": {
             "group": "Camera",
@@ -94,7 +106,9 @@ def get_capability_details():
             "java_test_class": "com.example.snippets.java.capabilities.CameraControlSnippetsTest",
             "test_method": "verifyCameraMovementsAndZoomConstraints_falsifiable",
             "falsified": True,
-            "notes": "Verify zoom limits (minZoom/maxZoom) and assert failure when boundaries breached."
+            "notes": "Verify zoom limits (minZoom/maxZoom) and assert failure when boundaries breached.",
+            "instructions_what_to_do": "1. Launch sample on device.\n2. Pinch to zoom out beyond minZoom level 10, then zoom in past maxZoom level 16.",
+            "instructions_what_to_look_for": "1. Camera stops zooming smoothly at boundaries without jitter."
         },
         "0e6b228f": {
             "group": "Camera",
@@ -126,7 +140,7 @@ def get_capability_details():
             "kt_test_class": "com.example.wearosmap.AppLaunchTest",
             "java_test_class": "com.example.wearosmap.AppLaunchTest",
             "test_method": "verifyWearOsMapInit_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Wear OS map activity initialization."
         },
 
@@ -183,7 +197,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.ShapesSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.ShapesSnippetsTest",
             "test_method": "verifyAddPolylineAndPolygonProperties_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify points, width, and color of Polylines/Polygons."
         },
         "518c439f": {
@@ -194,7 +208,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.OverlaySnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.OverlaySnippetsTest",
             "test_method": "verifyAddGroundOverlayProperties_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify ground overlay bounds, bearing, and image descriptor."
         },
         "58007bbe": {
@@ -205,7 +219,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.OverlaySnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.OverlaySnippetsTest",
             "test_method": "verifyAddTileOverlayAndProvider_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify tile overlay provider registration and transparency."
         },
 
@@ -218,7 +232,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.UtilsSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.UtilsSnippetsTest",
             "test_method": "verifyGeoJsonLayerCreationAndFeatures_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Assert GeoJsonLayer feature count and style properties."
         },
         "f451d761": {
@@ -229,7 +243,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.UtilsSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.UtilsSnippetsTest",
             "test_method": "verifyKmlLayerCreationAndContainers_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Assert KmlLayer placemarks/containers and click listener."
         },
         "fbbc9c5a": {
@@ -240,7 +254,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.UtilsSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.UtilsSnippetsTest",
             "test_method": "verifyHeatmapTileProviderDataAndRadius_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Assert HeatmapTileProvider data points and opacity configuration."
         },
 
@@ -253,7 +267,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.StreetViewSnippetsTest",
             "test_method": "verifyStreetViewPanoramaInitialization_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify StreetViewPanorama creation and camera location binding."
         },
         "7b144b66": {
@@ -264,7 +278,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.StreetViewSnippetsTest",
             "test_method": "verifyStreetViewCameraAnimationAndPose_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify animateTo(StreetViewPanoramaCamera) and bearing change."
         },
         "75a7efe9": {
@@ -275,7 +289,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.StreetViewSnippetsTest",
             "test_method": "verifyStreetViewGesturesConfiguration_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify isPanningGesturesEnabled / isZoomGesturesEnabled."
         },
         "6e3999d1": {
@@ -286,7 +300,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.StreetViewSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.StreetViewSnippetsTest",
             "test_method": "verifyStreetViewPanoramaReadyAndClickEvents_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify onStreetViewPanoramaReady and click listener execution."
         },
 
@@ -299,7 +313,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.DataDrivenBoundarySnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.DataDrivenBoundarySnippetsTest",
             "test_method": "verifyFeatureLayerBoundaryStyling_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify FeatureLayer.styleFactory binding and fill/stroke assignments."
         },
         "fa7cc2f9": {
@@ -310,7 +324,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.DataDrivenBoundarySnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.DataDrivenBoundarySnippetsTest",
             "test_method": "verifyFeatureLayerBoundaryClickEvent_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify addOnFeatureClickListener callback payload."
         },
         "0a767a66": {
@@ -321,11 +335,10 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.DataDrivenBoundarySnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.DataDrivenBoundarySnippetsTest",
             "test_method": "verifyChoroplethFeatureStyleFactory_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify conditional styleFactory logic across boundary place IDs."
         },
 
-        # 6. Data-driven styling for datasets (GA)
         "3ebaeaa1": {
             "group": "Custom Geospatial Datasets",
             "snippet_title": "1. Load Geospatial Dataset",
@@ -334,19 +347,8 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.DatasetLayerSnippetsTest",
             "test_method": "verifyDatasetLayerInitialization_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify getDatasetFeatureLayer(datasetId) loading."
-        },
-        "5b54c6a7": {
-            "group": "Custom Geospatial Datasets",
-            "snippet_title": "1. Load Geospatial Dataset",
-            "kt_tag": "maps_android_dds_load_dataset",
-            "java_tag": "maps_android_dds_load_dataset",
-            "kt_test_class": "com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest",
-            "java_test_class": "com.example.snippets.java.capabilities.DatasetLayerSnippetsTest",
-            "test_method": "verifyDatasetLayerInitialization_falsifiable",
-            "falsified": False,
-            "notes": "Verify dataset ID binding and layer status."
         },
         "eb3ed819": {
             "group": "Custom Geospatial Datasets",
@@ -356,7 +358,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.DatasetLayerSnippetsTest",
             "test_method": "verifyDatasetFeatureStylingAndPointRadius_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify dataset styleFactory stroke, fill, and pointRadius."
         },
         "e72146cb": {
@@ -367,7 +369,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.DatasetLayerSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.DatasetLayerSnippetsTest",
             "test_method": "verifyDatasetFeatureClickListener_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify dataset feature click listener attribute extraction."
         },
 
@@ -380,7 +382,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyReusableMapIdLoading_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify GoogleMapOptions.mapId cloud styling binding."
         },
         "589c7e69": {
@@ -391,7 +393,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyHierarchyZoomStyling_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify map hierarchy styling application."
         },
         "1f5dea73": {
@@ -402,7 +404,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyFeatureVisibilityToggles_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify feature type visibility toggles via cloud console ID."
         },
         "3fc0911b": {
@@ -413,7 +415,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyIconAndTextLabelStyling_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify icon/label hierarchy color adjustments."
         },
         "5d26e9fb": {
@@ -424,7 +426,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyRoadAndGeometryStyling_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify road and polygon geometry styling layers."
         },
         "468c2301": {
@@ -435,7 +437,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyPoiDensityFiltering_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify POI density and filtering behaviors."
         },
         "89814817": {
@@ -446,7 +448,7 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyBuilding3dAndFootprintStyling_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify building footprint and 3d extrusion styling."
         },
         "4255f56a": {
@@ -457,9 +459,9 @@ def get_capability_details():
             "kt_test_class": "com.example.snippets.kotlin.capabilities.CloudCustomizationSnippetsTest",
             "java_test_class": "com.example.snippets.java.capabilities.CloudCustomizationSnippetsTest",
             "test_method": "verifyLandmarkHierarchyStyling_falsifiable",
-            "falsified": False,
+            "falsified": True,
             "notes": "Verify prominent landmark feature styling."
-        }
+        },
     }
 
 def format_code_syntax(raw_code, lang="kotlin"):
@@ -570,14 +572,17 @@ def main():
         status = data.get("platforms", {}).get("android", {}).get("release_status", "GA")
         docs_urls = data.get("platforms", {}).get("android", {}).get("canonical_documentation_url", [])
         doc_url = docs_urls[0] if docs_urls else ""
-        notes = data.get("notes", "")
+        notes = m.get("notes", data.get("notes", ""))
+
+        what_to_do = m.get("instructions_what_to_do", f"1. Launch the Kotlin or Java sample on an attached emulator/device.\n2. Interact with the screen to test {title}.")
+        what_to_look_for = m.get("instructions_what_to_look_for", f"1. {notes}\n2. Verify visual fidelity and proper SDK callbacks.")
 
         falsified_badge = '<span class="badge bg-success text-white">✅ Falsification Verified</span>' if is_falsified else '<span class="badge bg-warning text-dark">⏳ Pending Falsification Check</span>'
         status_md = "✅ Falsified" if is_falsified else "⏳ Pending"
         docs_html = f'<a href="{doc_url}" target="_blank" class="text-decoration-none fw-semibold">📚 Docs ↗</a>' if doc_url else ""
 
         html_cards.append(f"""
-        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="{cid}" data-index="{idx}" data-group="{sec_str}" data-status="{'verified' if is_falsified else 'pending'}" style="display: none;">
+        <div class="capability-card border rounded p-4 mb-4 bg-white shadow-sm" data-id="{cid}" data-index="{idx}" data-group="{sec_str}" data-status="{'verified' if is_falsified else 'pending'}" data-kt-test-class="{kt_test_class}" data-java-test-class="{java_test_class}" data-test-method="{test_method}" data-snippet-title="{html.escape(snippet_title)}" data-what-to-do="{html.escape(what_to_do)}" data-what-to-look-for="{html.escape(what_to_look_for)}" style="display: none;">
           <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
             <div>
               <span class="badge bg-dark text-white font-monospace px-2 py-1 me-2">#{idx+1} of {len(maps_caps)}</span>
@@ -600,11 +605,11 @@ def main():
                 <span class="small text-muted">Click stars and enter feedback notes below (auto-saved to FALSIFIABLE_TASK_LIST.md)</span>
               </div>
               <div class="star-rating" data-id="{cid}">
-                <span class="star" onclick="setRating('{cid}', 1)">★</span>
-                <span class="star" onclick="setRating('{cid}', 2)">★</span>
-                <span class="star" onclick="setRating('{cid}', 3)">★</span>
-                <span class="star" onclick="setRating('{cid}', 4)">★</span>
                 <span class="star" onclick="setRating('{cid}', 5)">★</span>
+                <span class="star" onclick="setRating('{cid}', 4)">★</span>
+                <span class="star" onclick="setRating('{cid}', 3)">★</span>
+                <span class="star" onclick="setRating('{cid}', 2)">★</span>
+                <span class="star" onclick="setRating('{cid}', 1)">★</span>
                 <span class="small text-muted ms-1" id="rating_val_{cid}">(0/5)</span>
               </div>
             </div>
@@ -694,9 +699,10 @@ def main():
   <style>
     body {{ background: #f0f3f6; padding: 25px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }}
     .verification-card {{ background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 25px; margin-bottom: 30px; }}
-    .star-rating .star {{ font-size: 1.3rem; color: #ccc; cursor: pointer; transition: color 0.2s; }}
+    .star-rating {{ display: inline-flex; flex-direction: row-reverse; align-items: center; justify-content: flex-end; }}
+    .star-rating .star {{ font-size: 1.3rem; color: #ccc; cursor: pointer; transition: color 0.2s; padding: 0 1px; }}
     .star-rating .star.active {{ color: #ffc107; }}
-    .star-rating .star:hover, .star-rating .star:hover ~ .star {{ color: #ffdb70; }}
+    .star-rating .star:hover, .star-rating .star:hover ~ .star {{ color: #ffc107; }}
   </style>
 </head>
 <body>
@@ -713,6 +719,68 @@ def main():
             <button type="button" class="btn btn-outline-secondary btn-sm" id="btnModeAll" onclick="setMode('all')">📜 All 39 Items List</button>
           </div>
           <button class="btn btn-warning btn-sm" onclick="exportReviewReport()">⭐ Export Evaluation Report</button>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE VERIFICATION TASK WIZARD CARD -->
+      <div class="border rounded p-4 mb-4 bg-white shadow-sm border-2 border-success" id="wizardTaskCard">
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+          <div>
+            <span class="badge bg-success text-white fs-6 me-2">✨ Verification Task Wizard</span>
+            <span class="fw-bold fs-5 text-dark" id="wizardTaskHeader">Task 1 of {len(maps_caps)}</span>
+          </div>
+          <div>
+            <button class="btn btn-outline-dark btn-sm me-1" onclick="navStep(-1)">⬅️ Prev</button>
+            <button class="btn btn-outline-dark btn-sm me-2" onclick="navStep(1)">Next ➡️</button>
+            <button class="btn btn-warning btn-sm fw-bold" onclick="jumpToNextRequiringAttention()">⏭️ Next Pending Task</button>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="fw-bold text-primary mb-2">📋 What to Do:</h6>
+              <div class="small text-dark font-monospace" id="wizardWhatToDo" style="white-space: pre-wrap;">Select a capability task to load guidance...</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded border h-100">
+              <h6 class="fw-bold text-success mb-2">👁️ What to Look For:</h6>
+              <div class="small text-dark font-monospace" id="wizardWhatToLookFor" style="white-space: pre-wrap;">Select a capability task to load verification criteria...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK LANGUAGE ACTION TOOLBAR -->
+        <div class="d-flex justify-content-between align-items-center p-3 bg-body-tertiary rounded border mb-3">
+          <div class="d-flex gap-2">
+            <span class="badge bg-dark align-self-center">Execution Controls</span>
+            <button class="btn btn-success btn-sm fw-bold" id="wBtnLaunchKt" onclick="wizardAction('launch', 'kotlin')">▶ Launch Kotlin Sample</button>
+            <button class="btn btn-outline-success btn-sm fw-bold" id="wBtnTestKt" onclick="wizardAction('test', 'kotlin')">🧪 Run Kotlin Test</button>
+            <span class="vr mx-1"></span>
+            <button class="btn btn-warning btn-sm text-dark fw-bold" id="wBtnLaunchJava" onclick="wizardAction('launch', 'java')">▶ Launch Java Sample</button>
+            <button class="btn btn-outline-warning btn-sm text-dark fw-bold" id="wBtnTestJava" onclick="wizardAction('test', 'java')">🧪 Run Java Test</button>
+          </div>
+          <div class="small text-muted font-monospace">
+            Shortcuts: <kbd>Space</kbd> = Launch | <kbd>Enter</kbd> = Submit & Advance
+          </div>
+        </div>
+
+        <!-- RATING & AUTO-ADVANCE BAR -->
+        <div class="p-3 bg-warning-subtle rounded border d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-3 flex-fill me-3">
+            <span class="fw-bold text-dark me-1">Rating:</span>
+            <div class="star-rating wizard-stars" id="wizardStarPicker">
+              <span class="star" data-rating="5" onclick="setWizardRating(5)">★</span>
+              <span class="star" data-rating="4" onclick="setWizardRating(4)">★</span>
+              <span class="star" data-rating="3" onclick="setWizardRating(3)">★</span>
+              <span class="star" data-rating="2" onclick="setWizardRating(2)">★</span>
+              <span class="star" data-rating="1" onclick="setWizardRating(1)">★</span>
+              <span class="small text-muted ms-1" id="wizardRatingLabel">(0/5)</span>
+            </div>
+            <input type="text" class="form-control form-control-sm flex-fill" id="wizardCommentInput" placeholder="Feedback or observations for FALSIFIABLE_TASK_LIST.md...">
+          </div>
+          <button class="btn btn-primary btn-sm fw-bold text-nowrap" onclick="submitRatingAndAdvance()">Submit Rating & Next Task ➔</button>
         </div>
       </div>
 
@@ -900,11 +968,74 @@ def main():
           card.style.display = 'block';
         }}
       }});
+    function renderCards() {{
+      document.querySelectorAll('.capability-card').forEach(card => {{
+        const idx = parseInt(card.getAttribute('data-index'), 10);
+        if (viewMode === 'focused') {{
+          card.style.display = (idx === currentIdx) ? 'block' : 'none';
+        }} else {{
+          card.style.display = 'block';
+        }}
+      }});
       const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
       if (currentCard) {{
         const cid = currentCard.getAttribute('data-id');
         const title = currentCard.querySelector('h3').innerText;
         document.getElementById('stepIndicatorLabel').innerText = 'Capability ' + (currentIdx + 1) + ' of ' + totalCaps + ': ' + title + ' (' + cid + ')';
+
+        // Update Wizard Card Header & Guidance Instruction Boxes
+        const hdr = document.getElementById('wizardTaskHeader');
+        if (hdr) hdr.innerText = 'Task ' + (currentIdx + 1) + ' of ' + totalCaps + ': ' + title + ' (' + cid + ')';
+
+        const whatToDo = currentCard.getAttribute('data-what-to-do') || 'Launch sample on attached device.';
+        const whatToLookFor = currentCard.getAttribute('data-what-to-look-for') || 'Verify visual fidelity and behavior.';
+        const elToDo = document.getElementById('wizardWhatToDo');
+        const elLook = document.getElementById('wizardWhatToLookFor');
+        if (elToDo) elToDo.innerText = whatToDo;
+        if (elLook) elLook.innerText = whatToLookFor;
+
+        // Sync Wizard Star Rating & Comment Box
+        const starBox = currentCard.querySelector('.star-rating');
+        const activeStars = starBox ? starBox.querySelectorAll('.star.active').length : 0;
+        updateWizardStarUI(activeStars);
+
+        const cardCommentBox = document.getElementById('comment_' + cid);
+        const wizardCommentBox = document.getElementById('wizardCommentInput');
+        if (wizardCommentBox) wizardCommentBox.value = cardCommentBox ? cardCommentBox.value : '';
+      }}
+    }}
+
+    let wizardCurrentRating = 0;
+    function setWizardRating(rating) {{
+      wizardCurrentRating = rating;
+      updateWizardStarUI(rating);
+    }}
+
+    function updateWizardStarUI(rating) {{
+      wizardCurrentRating = rating;
+      const stars = document.querySelectorAll('#wizardStarPicker .star');
+      stars.forEach(star => {{
+        const rVal = parseInt(star.getAttribute('data-rating') || '0', 10);
+        if (rVal <= rating) star.classList.add('active');
+        else star.classList.remove('active');
+      }});
+      const label = document.getElementById('wizardRatingLabel');
+      if (label) label.innerText = '(' + rating + '/5 ⭐)';
+    }}
+
+    function wizardAction(actionType, lang) {{
+      const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
+      if (!currentCard) return;
+      const cid = currentCard.getAttribute('data-id');
+      const group = currentCard.getAttribute('data-group');
+      const snippetTitle = currentCard.getAttribute('data-snippet-title') || currentCard.querySelector('h3').innerText;
+      const testClass = currentCard.getAttribute(lang === 'kotlin' ? 'data-kt-test-class' : 'data-java-test-class');
+      const testMethod = currentCard.getAttribute('data-test-method');
+
+      if (actionType === 'launch') {{
+        launchSampleLive(cid, group, snippetTitle, lang);
+      }} else if (actionType === 'test') {{
+        runTestLive(cid, testClass, testMethod, lang);
       }}
     }}
 
@@ -918,27 +1049,84 @@ def main():
       }}).then(r => r.json()).then(res => console.log('Rating saved:', res));
     }}
 
+    function submitRatingAndAdvance() {{
+      const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
+      if (!currentCard) return;
+      const cid = currentCard.getAttribute('data-id');
+      const wizardComment = document.getElementById('wizardCommentInput')?.value || '';
+      const rating = wizardCurrentRating > 0 ? wizardCurrentRating : null;
+
+      // Update local card DOM UI first without firing separate HTTP requests
+      updateStarUI(cid, rating || 0);
+      const cardCommentBox = document.getElementById('comment_' + cid);
+      if (cardCommentBox) cardCommentBox.value = wizardComment;
+
+      // Single consolidated save rating API call
+      fetch('/api/save_rating', {{
+        method: 'POST',
+        headers: {{ 'Content-Type': 'application/json' }},
+        body: JSON.stringify({{ id: cid, rating: rating, comment: wizardComment }})
+      }}).then(r => r.json()).then(res => {{
+        if (res.next_id) {{
+          const nextCard = document.querySelector('.capability-card[data-id="' + res.next_id + '"]');
+          if (nextCard) {{
+            currentIdx = parseInt(nextCard.getAttribute('data-index'), 10);
+            renderCards();
+            return;
+          }}
+        }}
+        navStep(1);
+      }}).catch(e => {{
+        navStep(1);
+      }});
+    }}
+
     function updateStarUI(id, rating) {{
       const container = document.querySelector('.star-rating[data-id="' + id + '"]');
       if (!container) return;
       const stars = container.querySelectorAll('.star');
-      stars.forEach((star, idx) => {{
-        if (idx < rating) star.classList.add('active');
+      stars.forEach(star => {{
+        const onclickAttr = star.getAttribute('onclick') || '';
+        const m = onclickAttr.match(/setRating\('[^']+',\s*(\d+)\)/);
+        const rVal = m ? parseInt(m[1], 10) : 0;
+        if (rVal <= rating) star.classList.add('active');
         else star.classList.remove('active');
       }});
       const valLabel = document.getElementById('rating_val_' + id);
       if (valLabel) valLabel.innerText = '(' + rating + '/5 ⭐)';
+
+      // Keep active wizard task rating UI synchronized
+      const currentCard = document.querySelector('.capability-card[data-index="' + currentIdx + '"]');
+      if (currentCard && currentCard.getAttribute('data-id') === id) {{
+        updateWizardStarUI(rating);
+      }}
     }}
 
     function saveComment(id, val) {{
       const container = document.querySelector('.star-rating[data-id="' + id + '"]');
       const activeStars = container ? container.querySelectorAll('.star.active').length : null;
+      const cardBox = document.getElementById('comment_' + id);
+      if (cardBox && cardBox.value !== val) cardBox.value = val;
       fetch('/api/save_rating', {{
         method: 'POST',
         headers: {{ 'Content-Type': 'application/json' }},
         body: JSON.stringify({{ id: id, rating: activeStars, comment: val }})
       }});
     }}
+
+    // Keyboard Shortcuts Listener
+    document.addEventListener('keydown', function(evt) {{
+      const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+      if (tag === 'textarea' || tag === 'input' || tag === 'button' || tag === 'select') return;
+
+      if (evt.code === 'Space') {{
+        evt.preventDefault();
+        wizardAction('launch', 'kotlin');
+      }} else if (evt.code === 'Enter') {{
+        evt.preventDefault();
+        submitRatingAndAdvance();
+      }}
+    }});
 
     let activeAbortController = null;
 

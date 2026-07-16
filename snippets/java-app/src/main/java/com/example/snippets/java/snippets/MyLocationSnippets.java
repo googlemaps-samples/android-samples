@@ -43,7 +43,7 @@ public class MyLocationSnippets {
     @SuppressLint("MissingPermission")
     @SnippetItem(
             title = "1. Enable My Location Layer",
-            description = "Enables the my location layer and registers click listeners."
+            description = "What it does: Enables the My Location blue dot layer and attaches click handlers for the location button and dot.\nHow to see the effect: A blue location dot renders at your device coordinates, and tapping the location button or blue dot triggers a Toast message."
     )
     public void myLocationLayer() {
         // [START maps_android_my_location]

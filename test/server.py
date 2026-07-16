@@ -25,6 +25,8 @@ CUSTOM_JAVA_HOME = None
 
 active_processes_lock = threading.Lock()
 active_processes = set()
+db_lock = threading.Lock()
+task_list_lock = threading.Lock()
 
 def run_tracked_subprocess(cmd, cwd=PROJECT_ROOT, env=None, timeout=180):
     proc = subprocess.Popen(cmd, cwd=cwd, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -47,7 +49,7 @@ def run_tracked_subprocess(cmd, cwd=PROJECT_ROOT, env=None, timeout=180):
 # Ensure ratings db exists
 if not os.path.exists(RATINGS_FILE):
     with open(RATINGS_FILE, "w", encoding="utf-8") as f:
-        json.dump({"ratings": {}, "comments": {}}, f, indent=2)
+        json.dump({"ratings": {}, "comments": {}, "progress": {"last_visited_id": None, "mode": "wizard"}}, f, indent=2)
 
 class CatalogRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -73,11 +75,14 @@ class CatalogRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def handle_get_ratings(self):
         try:
-            with open(RATINGS_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            with db_lock:
+                with open(RATINGS_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            if "progress" not in data or not isinstance(data.get("progress"), dict):
+                data["progress"] = {"last_visited_id": None, "mode": "wizard"}
             self.send_json_response(data)
         except Exception as e:
-            self.send_json_response({"error": str(e)}, status=500)
+            self.send_json_response({"status": "error", "message": str(e)}, status=500)
 
     def handle_save_rating(self):
         try:
@@ -86,28 +91,58 @@ class CatalogRequestHandler(http.server.SimpleHTTPRequestHandler):
             payload = json.loads(body)
             cid = payload.get("id")
             rating = payload.get("rating")
-            comment = payload.get("comment", "")
+            comment = payload.get("comment")
 
-            with open(RATINGS_FILE, "r", encoding="utf-8") as f:
-                data = json.load(f)
+            if not cid:
+                self.send_json_response({"status": "error", "message": "Missing capability ID 'id'"}, status=400)
+                return
 
-            if rating is not None:
-                data["ratings"][cid] = rating
-            if cid in payload and "comment" in payload:
-                if comment.strip():
-                    data["comments"][cid] = comment.strip()
-                elif cid in data["comments"]:
-                    del data["comments"][cid]
+            with db_lock:
+                with open(RATINGS_FILE, "r", encoding="utf-8") as f:
+                    data = json.load(f)
 
-            with open(RATINGS_FILE, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2)
+                if "progress" not in data or not isinstance(data.get("progress"), dict):
+                    data["progress"] = {"last_visited_id": None, "mode": "wizard"}
+
+                data["progress"]["last_visited_id"] = cid
+
+                if rating is not None:
+                    data["ratings"][cid] = rating
+
+                if "comment" in payload and comment is not None:
+                    if str(comment).strip():
+                        data["comments"][cid] = str(comment).strip()
+                    elif cid in data["comments"]:
+                        del data["comments"][cid]
+
+                with open(RATINGS_FILE, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=2)
+
+            # Discover next pending (unrated) capability ID
+            next_id = None
+            if os.path.exists(TASK_LIST_PATH):
+                with task_list_lock:
+                    with open(TASK_LIST_PATH, "r", encoding="utf-8") as f:
+                        lines = f.readlines()
+                all_cids = []
+                for line in lines:
+                    if line.strip().startswith("| `") and "` |" in line:
+                        m = re.search(r'`([a-zA-Z0-9_]{8})`', line)
+                        if m:
+                            all_cids.append(m.group(1))
+                if cid in all_cids:
+                    idx = all_cids.index(cid)
+                    for next_candidate in all_cids[idx+1:] + all_cids[:idx]:
+                        if next_candidate not in data.get("ratings", {}):
+                            next_id = next_candidate
+                            break
 
             # Update markdown task list file asynchronously
             threading.Thread(target=update_markdown_task_list, args=(data,)).start()
 
-            self.send_json_response({"status": "ok", "message": f"Saved rating for {cid}"})
+            self.send_json_response({"status": "ok", "message": f"Saved rating for {cid}", "next_id": next_id})
         except Exception as e:
-            self.send_json_response({"error": str(e)}, status=500)
+            self.send_json_response({"status": "error", "message": str(e)}, status=500)
 
     def handle_cancel(self):
         with active_processes_lock:
@@ -160,7 +195,9 @@ class CatalogRequestHandler(http.server.SimpleHTTPRequestHandler):
                 })
                 return
 
-            remote_cmd = f"am start -S -n {pkg}/.MapActivity --es group_title '{group}' --es snippet_title '{title}'"
+            group_clean = group.replace("'", "'\\''")
+            title_clean = title.replace("'", "'\\''")
+            remote_cmd = f"am start -S -n {pkg}/.MapActivity --es group_title '{group_clean}' --es snippet_title '{title_clean}'"
             cmd = ["adb", "shell", remote_cmd]
             print(f"Executing ADB launch command ({lang}): adb shell \"{remote_cmd}\"")
             adb_ret, adb_stdout, adb_stderr = run_tracked_subprocess(cmd, cwd=PROJECT_ROOT, env=custom_env, timeout=15)
@@ -256,28 +293,35 @@ def update_markdown_task_list(db_data):
     try:
         if not os.path.exists(TASK_LIST_PATH):
             return
-        with open(TASK_LIST_PATH, "r", encoding="utf-8") as f:
-            lines = f.readlines()
+        with task_list_lock:
+            with open(TASK_LIST_PATH, "r", encoding="utf-8") as f:
+                lines = f.readlines()
 
-        new_lines = []
-        for line in lines:
-            if line.strip().startswith("| `") and "` |" in line:
-                parts = [p.strip() for p in line.split("|")]
-                if len(parts) >= 8:
-                    cid_match = re.search(r'`([a-zA-Z0-9_]{8})`', parts[1])
-                    if cid_match:
-                        cid = cid_match.group(1)
-                        r_val = db_data.get("ratings", {}).get(cid)
-                        c_val = db_data.get("comments", {}).get(cid)
-                        if r_val:
-                            parts[7] = f"[x] {r_val}/5 ⭐" + (f" (*{c_val[:30]}...*)" if c_val else "")
-                        else:
-                            parts[7] = "[ ] ___/5"
-                        line = " | ".join(parts) + "\n"
-            new_lines.append(line)
+            new_lines = []
+            for line in lines:
+                if line.strip().startswith("| `") and "` |" in line:
+                    parts = [p.strip() for p in line.split("|")]
+                    if len(parts) >= 8:
+                        cid_match = re.search(r'`([a-zA-Z0-9_]{8})`', parts[1])
+                        if cid_match:
+                            cid = cid_match.group(1)
+                            r_val = db_data.get("ratings", {}).get(cid)
+                            c_val = db_data.get("comments", {}).get(cid)
+                            if r_val is not None:
+                                stars_str = "⭐" * int(r_val)
+                                comment_suffix = ""
+                                if c_val:
+                                    c_clean = str(c_val).replace("\n", " ").replace("|", "╱").strip()
+                                    c_trunc = (c_clean[:30] + "...") if len(c_clean) > 30 else c_clean
+                                    comment_suffix = f" (*{c_trunc}*)"
+                                parts[7] = f"[x] {stars_str} ({r_val}/5){comment_suffix}"
+                            else:
+                                parts[7] = "[ ] ___/5"
+                            line = " | ".join(parts) + "\n"
+                new_lines.append(line)
 
-        with open(TASK_LIST_PATH, "w", encoding="utf-8") as f:
-            f.writelines(new_lines)
+            with open(TASK_LIST_PATH, "w", encoding="utf-8") as f:
+                f.writelines(new_lines)
     except Exception as e:
         print(f"Error updating markdown task list: {e}")
 
