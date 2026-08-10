@@ -19,8 +19,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.R
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.ktx.addMarker
-import com.google.maps.android.ktx.awaitMap
+import com.google.maps.android.addMarker
+import com.google.maps.android.awaitMap
 
 /**
  * This shows how to retain a map across activity restarts (e.g., from screen rotations), which can

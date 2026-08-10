@@ -30,6 +30,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 // [END maps_android_settings_dependency_resolution_management]

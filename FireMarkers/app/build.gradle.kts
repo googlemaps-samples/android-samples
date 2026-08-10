@@ -45,6 +45,10 @@ plugins {
     alias(libs.plugins.kotlin.serialization)  // Provides Kotlin serialization capabilities.
 }
 
+hilt {
+    enableAggregatingTask = false
+}
+
 if (file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
     println("Applied Google Services plugin.")
@@ -140,7 +144,7 @@ dependencies {
     // icons, and navigation components for Compose.
     // ---------------------------------------------------------------------------------------------
     implementation(libs.maps.compose)
-    implementation(libs.maps.utils.ktx)
+    implementation(libs.android.maps.utils)
 
     // ---------------------------------------------------------------------------------------------
     //                                    Kotlin Libraries

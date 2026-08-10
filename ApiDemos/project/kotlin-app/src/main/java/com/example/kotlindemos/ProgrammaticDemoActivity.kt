@@ -19,8 +19,8 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.ktx.addMarker
-import com.google.maps.android.ktx.awaitMap
+import com.google.maps.android.addMarker
+import com.google.maps.android.awaitMap
 
 /**
  * Demonstrates how to instantiate a SupportMapFragment programmatically and add a marker to it.

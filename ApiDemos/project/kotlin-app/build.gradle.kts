@@ -83,8 +83,7 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.maps.ktx)
-    implementation(libs.maps.utils.ktx)
+    implementation(libs.android.maps.utils)
 
     implementation(libs.activity)
 

@@ -22,7 +22,7 @@ import com.example.kotlindemos.utils.MapDemoActivityTest
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.GroundOverlay
 import com.google.common.truth.Truth.assertThat
-import com.google.maps.android.ktx.utils.withSphericalOffset
+import com.google.maps.android.withSphericalOffset
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

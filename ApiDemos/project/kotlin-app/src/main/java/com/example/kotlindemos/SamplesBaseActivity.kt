@@ -33,7 +33,8 @@ open class SamplesBaseActivity : AppCompatActivity() {
          *
          * @param container the container view to apply insets to
          */
-        fun applyInsets(container: View) {
+        fun applyInsets(container: View?) {
+            if (container == null) return
             ViewCompat.setOnApplyWindowInsetsListener(
                 container,
                 OnApplyWindowInsetsListener { view: View?, insets: WindowInsetsCompat? ->

@@ -73,7 +73,7 @@ dependencies {
     implementation(libs.activity)
     implementation(project(":ApiDemos:common-ui"))
     implementation(libs.uiautomator)
-    implementation(libs.maps.utils.ktx)
+    implementation(libs.android.maps.utils)
 
     // Tests
     testImplementation(libs.junit)

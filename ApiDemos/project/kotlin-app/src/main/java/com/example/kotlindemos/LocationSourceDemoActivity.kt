@@ -32,7 +32,7 @@ import com.google.android.gms.maps.LocationSource
 import com.google.android.gms.maps.LocationSource.OnLocationChangedListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.ktx.awaitMap
+import com.google.maps.android.awaitMap
 
 /**
  * This shows how to use a custom location source.
