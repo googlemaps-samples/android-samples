@@ -79,8 +79,8 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     // [END_EXCLUDE]
 
-    // KTX for the Maps SDK for Android Utility Library
-    implementation(libs.maps.utils.ktx)
+    // Maps SDK for Android Utility Library
+    implementation(libs.android.maps.utils)
 }
 // [END maps_android_utils_ktx_install_snippet]
 

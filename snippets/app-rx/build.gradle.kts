@@ -87,7 +87,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.material)
     implementation(libs.rxlifecycle.android.lifecycle.kotlin)
-    implementation(libs.maps.ktx)
+    implementation(libs.android.maps.utils)
     implementation(libs.kotlin.stdlib.jdk8)
     // [END_EXCLUDE silent]
 }
