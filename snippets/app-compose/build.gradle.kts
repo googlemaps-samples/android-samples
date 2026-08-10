@@ -97,7 +97,6 @@ dependencies {
     //
     // Android Maps Compose composables for the Maps SDK for Android
     implementation(libs.maps.compose)
-
     // If your project does not use a version catalog, you can use the following dependency instead:
     //
     //    implementation("com.google.maps.android:maps-compose:8.4.0")

@@ -24,9 +24,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.ktx.addMarker
-import com.google.maps.android.ktx.awaitMap
-import com.google.maps.android.ktx.cameraMoveEvents
+import com.google.maps.android.addMarker
+import com.google.maps.android.awaitMap
+import com.google.maps.android.cameraMoveEvents
 import com.google.maps.example.ktx.R
 import kotlinx.coroutines.launch
 

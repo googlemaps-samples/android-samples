@@ -38,9 +38,9 @@ internal class KML {
     @Throws(IOException::class, XmlPullParserException::class)
     private fun addKmlLayerFileInputStream(context: Context) {
         // [START maps_android_utils_kml_add_input_stream]
-        val inputStream: InputStream? =  // InputStream containing KML data
+        val inputStream: InputStream =  // InputStream containing KML data
             // [START_EXCLUDE silent]
-            null
+            java.io.ByteArrayInputStream(ByteArray(0))
             // [END_EXCLUDE]
         val layer = KmlLayer(map, inputStream!!, context)
         // [END maps_android_utils_kml_add_input_stream]

@@ -41,8 +41,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PatternItem
-import com.google.maps.android.ktx.utils.sphericalDistance
-import com.google.maps.android.ktx.utils.withSphericalOffset
+import com.google.maps.android.sphericalDistance
+import com.google.maps.android.withSphericalOffset
 
 import java.util.ArrayList
 

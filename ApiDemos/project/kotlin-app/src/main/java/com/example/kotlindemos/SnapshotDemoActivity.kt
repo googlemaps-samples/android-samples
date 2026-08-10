@@ -25,7 +25,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.ktx.awaitMap
+import com.google.maps.android.awaitMap
 import kotlinx.coroutines.launch
 
 /**
