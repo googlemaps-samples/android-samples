@@ -43,6 +43,6 @@ class RetainMapDemoActivity : SamplesBaseActivity() {
                 title("Marker")
             }
         }
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(findViewById<View>(R.id.map_container))
     }
 }

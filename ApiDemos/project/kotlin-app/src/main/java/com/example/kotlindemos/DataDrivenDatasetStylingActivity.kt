@@ -124,7 +124,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         buttonLayout = findViewById<View>(com.example.common_ui.R.id.button_kyoto).parent as LinearLayout
 
         handleCutout()
-        applyInsets(findViewById<View?>(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById<View>(com.example.common_ui.R.id.map_container))
     }
 
     private fun handleCutout() {
