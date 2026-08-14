@@ -35,26 +35,26 @@ import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 
 internal class Multilayer {
-    private val map: GoogleMap? = null
-    private val context: Context? = null
+    private lateinit var map: GoogleMap
+    private lateinit var context: Context
 
     @Suppress("IndexOutOfBoundsException")
     @Throws(IOException::class, JSONException::class, XmlPullParserException::class)
     private fun init() {
         // [START maps_android_utils_multilayer_init]
         val markerManager = MarkerManager(map)
-        val groundOverlayManager = GroundOverlayManager(map!!)
+        val groundOverlayManager = GroundOverlayManager(map)
         val polygonManager = PolygonManager(map)
         val polylineManager = PolylineManager(map)
         // [END maps_android_utils_multilayer_init]
 
         // [START maps_android_utils_multilayer_manager]
         val clusterManager =
-            ClusterManager<MyItem>(context!!, map, markerManager)
+            ClusterManager<MyItem>(context, map, markerManager)
         val geoJsonLineLayer = GeoJsonLayer(
             map,
             R.raw.geojson_file,
-            context!!,
+            context,
             markerManager,
             polygonManager,
             polylineManager,
@@ -63,7 +63,7 @@ internal class Multilayer {
         val kmlPolylineLayer = KmlLayer(
             map,
             R.raw.kml_file,
-            context!!,
+            context,
             markerManager,
             polygonManager,
             polylineManager,
