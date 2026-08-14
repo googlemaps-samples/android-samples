@@ -91,9 +91,9 @@ internal class GeoJSON {
 
         // [START maps_android_util_geojson_style]
         val pointStyle = layer.getDefaultPointStyle()
-        pointStyle.isDraggable = true
-        pointStyle.title = "Hello, World!"
-        pointStyle.snippet = "I am a draggable marker"
+        pointStyle.setDraggable(true)
+        pointStyle.setTitle("Hello, World!")
+        pointStyle.setSnippet("I am a draggable marker")
         // [END maps_android_util_geojson_style]
 
         // [START maps_android_util_geojson_style_specific]
