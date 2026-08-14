@@ -121,7 +121,7 @@ dependencies {
     // ---------------------------------------------------------------------------------------------
     implementation(libs.dagger)
     ksp(libs.hilt.android.compiler)
-    ksp("org.jetbrains.kotlin:kotlin-metadata-jvm:2.3.0")
+    ksp(libs.kotlin.metadata.jvm)
     implementation(libs.hilt.android)
 
     // ---------------------------------------------------------------------------------------------

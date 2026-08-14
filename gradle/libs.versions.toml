@@ -36,9 +36,9 @@ material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
-androidMapsUtils = "5.0.0"
+androidMapsUtils = "5.1.1"
 mapsCompose = "8.4.0"
-mapsKtx = "6.2.0"
+mapsKtx = "6.3.0"
 places = "5.3.0"
 playServicesMaps = "20.0.0"
 secretsGradlePlugin = "2.0.1"
@@ -73,6 +73,7 @@ volley = "1.2.1"
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-metadata-jvm = { group = "org.jetbrains.kotlin", name = "kotlin-metadata-jvm", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
 # AndroidX
@@ -103,6 +104,7 @@ ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
 # Maps & Places
+android-maps-utils = { group = "com.google.maps.android", name = "android-maps-utils", version.ref = "androidMapsUtils" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 maps-ktx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "mapsKtx" }
 maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "mapsKtx" }
