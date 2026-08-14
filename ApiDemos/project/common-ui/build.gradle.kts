@@ -66,11 +66,12 @@ android {
 }
 
 dependencies {
+    api(project(":library"))
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.play.services.maps)
-    
+
     // Jetpack Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)

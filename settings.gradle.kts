@@ -78,6 +78,7 @@ project(":tutorials:java:MapWithMarker").projectDir = file("tutorials/java/MapWi
 include(":tutorials:kotlin:MapWithMarker")
 project(":tutorials:kotlin:MapWithMarker").projectDir = file("tutorials/kotlin/MapWithMarker/app")
 // Add others as needed, starting with these for now
+include(":library")
 
 // Visual Testing
 include(":visual-testing")
