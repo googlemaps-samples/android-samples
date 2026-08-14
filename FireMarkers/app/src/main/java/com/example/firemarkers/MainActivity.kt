@@ -150,7 +150,9 @@ fun MapScreen(modifier: Modifier = Modifier) {
         ) {
             markers.forEach { markerData ->
                 Marker(
-                    state = MarkerState(position = LatLng(markerData.latitude, markerData.longitude)),
+                    state = remember(markerData.id) {
+                        MarkerState(position = LatLng(markerData.latitude, markerData.longitude))
+                    },
                     title = markerData.label,
                     icon = BitmapDescriptorFactory.defaultMarker(markerData.color)
                 )
