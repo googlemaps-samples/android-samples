@@ -2,8 +2,8 @@
 # Project Configuration
 androidGradlePlugin = "9.3.1"
 minSdk = "24"
-compileSdk = "36"
-targetSdk = "36"
+compileSdk = "37"
+targetSdk = "37"
 versionCode = "1"
 versionName = "2.0.2" # {x-release-please-version}
 javaVersion = "17"
