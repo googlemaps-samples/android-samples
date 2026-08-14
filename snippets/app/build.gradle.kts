@@ -75,6 +75,7 @@ android {
 // [START maps_android_play_services_maps_dependency]
 dependencies {
     // [START_EXCLUDE silent]
+    api(project(":library"))
     implementation(libs.kotlin.stdlib)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

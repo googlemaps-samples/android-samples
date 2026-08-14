@@ -71,6 +71,7 @@ android {
 
 // [START maps_android_compose_dependency]
 dependencies {
+    api(project(":library"))
     // [START_EXCLUDE silent]
     implementation(libs.kotlin.stdlib)
     implementation(libs.core.ktx)

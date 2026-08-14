@@ -72,6 +72,7 @@ android {
 
 // [START maps_android_utils_ktx_install_snippet]
 dependencies {
+    api(project(":library"))
     // [START_EXCLUDE silent]
     implementation(libs.kotlin.stdlib)
     implementation(libs.core.ktx)
