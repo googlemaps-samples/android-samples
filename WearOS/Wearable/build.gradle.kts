@@ -17,7 +17,6 @@
 plugins {
     id("com.android.application")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    kotlin("android") // The Kotlin plugin is applied differently in Kotlin DSL
 }
 
 android {
