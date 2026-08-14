@@ -72,7 +72,6 @@ android {
 
 // [START maps_android_compose_dependency]
 dependencies {
-    api(project(":library"))
     // [START_EXCLUDE silent]
     implementation(libs.kotlin.stdlib)
     implementation(libs.core.ktx)
@@ -85,6 +84,7 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     implementation(libs.volley)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(project(":library"))
     // [END_EXCLUDE]
 
     // Modern Android projects use version catalogs to manage dependencies. To include the Maps Compose library,
