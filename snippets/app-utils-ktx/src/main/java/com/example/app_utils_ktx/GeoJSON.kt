@@ -35,7 +35,7 @@ internal class GeoJSON {
             // [START_EXCLUDE silent]
             null
             // [END_EXCLUDE]
-        val layer = GeoJsonLayer(map, geoJsonData)
+        val layer = GeoJsonLayer(map, geoJsonData!!)
         // [END maps_android_util_geojson_add_jsonobject]
     }
 
@@ -90,7 +90,7 @@ internal class GeoJSON {
         // [END maps_android_util_geojson_geometry_click_events]
 
         // [START maps_android_util_geojson_style]
-        val pointStyle = layer.defaultPointStyle
+        val pointStyle = layer.getDefaultPointStyle()
         pointStyle.isDraggable = true
         pointStyle.title = "Hello, World!"
         pointStyle.snippet = "I am a draggable marker"
