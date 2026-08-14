@@ -63,7 +63,7 @@ dependencies {
     //
     // [versions]
     // playServicesMaps = "20.0.0"
-    // wear = "1.3.0"
+    // wear = "1.4.0"
     // wearable = "2.9.0"
     //
     // [libraries]
