@@ -70,6 +70,7 @@ project(":snippets:app-places-ktx").projectDir = file("snippets/app-places-ktx")
 include(":tutorials:kotlin:Polygons")
 project(":tutorials:kotlin:Polygons").projectDir = file("tutorials/kotlin/Polygons/app")
 // Add others as needed, starting with these for now
+include(":library")
 
 // Visual Testing
 include(":visual-testing")

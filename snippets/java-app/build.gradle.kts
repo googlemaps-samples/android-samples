@@ -62,6 +62,7 @@ android {
 // [START maps_android_play_services_maps_dependency]
 dependencies {
     // [START_EXCLUDE silent]
+    api(project(":library"))
     implementation(project(":snippets:common"))
     implementation(libs.volley)
     implementation(libs.constraintlayout)
