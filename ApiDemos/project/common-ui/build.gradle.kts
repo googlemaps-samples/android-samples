@@ -65,7 +65,7 @@ android {
 }
 
 dependencies {
-
+    api(project(":library"))
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)

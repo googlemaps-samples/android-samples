@@ -60,6 +60,7 @@ kotlin {
 }
 
 dependencies {
+    api(project(":library"))
     implementation(libs.appcompat)
     implementation(libs.play.services.maps)
     implementation(libs.core.ktx)

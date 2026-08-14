@@ -53,6 +53,7 @@ android {
 
 // [START maps_wear_os_dependencies]
 dependencies {
+    api(project(":library"))
     // [START_EXCLUDE]
     implementation(libs.core.ktx)
     implementation(platform(libs.kotlin.bom))
