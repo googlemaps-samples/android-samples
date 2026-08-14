@@ -27,14 +27,8 @@ plugins {
 allprojects {
     configurations.all {
         resolutionStrategy {
-            force("androidx.core:core:1.19.0")
-            force("androidx.core:core-ktx:1.19.0")
+            force("androidx.core:core:1.18.0")
+            force("androidx.core:core-ktx:1.18.0")
         }
-    }
-}
-
-subprojects {
-    tasks.matching { it.name.startsWith("check") && it.name.endsWith("AarMetadata") }.configureEach {
-        enabled = false
     }
 }
