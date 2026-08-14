@@ -29,7 +29,6 @@ import com.google.android.gms.maps.MapsApiSettings
 @Keep
 internal class AttributionIdInitializer : Initializer<Unit> {
     override fun create(context: Context) {
-        // See [AttributionIdInitializer]
         MapsApiSettings.addInternalUsageAttributionId(
             // context =
             context,

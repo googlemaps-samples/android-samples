@@ -59,11 +59,11 @@ kotlin {
 }
 
 dependencies {
-    api(project(":library"))
     implementation(libs.appcompat)
     implementation(libs.play.services.maps)
     implementation(libs.core.ktx)
     implementation(libs.kotlin.stdlib)
+    implementation(project(":library"))
 
     // Tests
     testImplementation(libs.junit)

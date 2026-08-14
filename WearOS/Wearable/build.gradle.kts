@@ -52,11 +52,11 @@ android {
 
 // [START maps_wear_os_dependencies]
 dependencies {
-    api(project(":library"))
     // [START_EXCLUDE]
     implementation(libs.core.ktx)
     implementation(platform(libs.kotlin.bom))
     implementation(libs.kotlin.stdlib)
+    implementation(project(":library"))
     // [END_EXCLUDE]
     // Modern Android projects use version catalogs to manage dependencies.  To include the necessary dependencies,
     // first add the following to your libs.versions.toml file:

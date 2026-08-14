@@ -70,7 +70,6 @@ android {
 
 // [START places_android_ktx_install_snippet]
 dependencies {
-    api(project(":library"))
     // [START_EXCLUDE silent]
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -79,6 +78,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(project(":library"))
     // [END_EXCLUDE]
 
     // Modern Android projects use version catalogs to manage dependencies. To include the Places SDK for Android,

@@ -75,7 +75,6 @@ android {
 // [START maps_android_play_services_maps_dependency]
 dependencies {
     // [START_EXCLUDE silent]
-    api(project(":library"))
     implementation(libs.kotlin.stdlib)
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -88,6 +87,7 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.places)
+    implementation(project(":library"))
     // [END_EXCLUDE]
 
     // Maps SDK for Android
