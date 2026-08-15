@@ -31,9 +31,9 @@ internal class GeoJSON {
     private lateinit var map: GoogleMap
     private fun addGeoJsonLayerJsonObject() {
         // [START maps_android_util_geojson_add_jsonobject]
-        val geoJsonData: JSONObject? = // JSONObject containing the GeoJSON data
+        val geoJsonData: JSONObject = // JSONObject containing the GeoJSON data
             // [START_EXCLUDE silent]
-            null
+            JSONObject()
             // [END_EXCLUDE]
         val layer = GeoJsonLayer(map, geoJsonData)
         // [END maps_android_util_geojson_add_jsonobject]
@@ -90,10 +90,10 @@ internal class GeoJSON {
         // [END maps_android_util_geojson_geometry_click_events]
 
         // [START maps_android_util_geojson_style]
-        val pointStyle = layer.defaultPointStyle
-        pointStyle.isDraggable = true
-        pointStyle.title = "Hello, World!"
-        pointStyle.snippet = "I am a draggable marker"
+        val pointStyle = layer.getDefaultPointStyle()
+        pointStyle.setDraggable(true)
+        pointStyle.setTitle("Hello, World!")
+        pointStyle.setSnippet("I am a draggable marker")
         // [END maps_android_util_geojson_style]
 
         // [START maps_android_util_geojson_style_specific]

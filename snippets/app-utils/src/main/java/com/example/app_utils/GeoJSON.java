@@ -41,7 +41,7 @@ import java.util.List;
 class GeoJSON {
     private GoogleMap map;
 
-    private void addGeoJsonLayerJsonObject() {
+    private void addGeoJsonLayerJsonObject() throws JSONException {
         // [START maps_android_util_geojson_add_jsonobject]
         JSONObject geoJsonData = // JSONObject containing the GeoJSON data
         // [START_EXCLUDE silent]

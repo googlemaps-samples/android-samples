@@ -35,8 +35,8 @@ import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 
 internal class Multilayer {
-    private val map: GoogleMap? = null
-    private val context: Context? = null
+    private lateinit var map: GoogleMap
+    private lateinit var context: Context
 
     @Suppress("IndexOutOfBoundsException")
     @Throws(IOException::class, JSONException::class, XmlPullParserException::class)
@@ -110,31 +110,10 @@ internal class Multilayer {
         lng: Double,
         title: String,
         snippet: String
-    ) :
-        ClusterItem {
-        private val position: LatLng
-        private val title: String
-        private val snippet: String
-        override fun getPosition(): LatLng {
-            return position
-        }
-
-        override fun getTitle(): String {
-            return title
-        }
-
-        override fun getSnippet(): String {
-            return snippet
-        }
-
-        override fun getZIndex(): Float {
-            return 0f
-        }
-
-        init {
-            position = LatLng(lat, lng)
-            this.title = title
-            this.snippet = snippet
-        }
+    ) : ClusterItem {
+        override val position: LatLng = LatLng(lat, lng)
+        override val title: String = title
+        override val snippet: String = snippet
+        override val zIndex: Float = 0f
     }
 }
