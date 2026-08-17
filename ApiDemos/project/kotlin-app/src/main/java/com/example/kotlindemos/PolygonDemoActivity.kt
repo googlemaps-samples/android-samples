@@ -131,7 +131,7 @@ class PolygonDemoActivity :
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(findViewById<View>(R.id.map_container))
     }
     // [START_EXCLUDE silent]
 

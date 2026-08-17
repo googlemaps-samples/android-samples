@@ -22,7 +22,6 @@ plugins {
     // Compose. They handle the core compilation, packaging, and resource processing.
     // ---------------------------------------------------------------------------------------------
     alias(libs.plugins.android.application) // Applies the core Android application plugin.
-    alias(libs.plugins.kotlin.android)      // Enables Kotlin language support for Android.
     alias(libs.plugins.kotlin.compose)      // Provides support for the Jetpack Compose compiler.
 
     // ---------------------------------------------------------------------------------------------

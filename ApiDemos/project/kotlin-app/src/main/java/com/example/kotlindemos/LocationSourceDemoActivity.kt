@@ -50,7 +50,7 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
       init(map = map)
     }
     lifecycle.addObserver(locationSource)
-    applyInsets(findViewById<View?>(R.id.map_container))
+    applyInsets(findViewById<View>(R.id.map_container))
   }
 
   @SuppressLint("MissingPermission")

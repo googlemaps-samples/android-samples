@@ -17,7 +17,6 @@
 plugins {
     id("com.android.application")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    kotlin("android") // The Kotlin plugin is applied differently in Kotlin DSL
 }
 
 android {
@@ -63,7 +62,7 @@ dependencies {
     //
     // [versions]
     // playServicesMaps = "20.0.0"
-    // wear = "1.3.0"
+    // wear = "1.4.0"
     // wearable = "2.9.0"
     //
     // [libraries]

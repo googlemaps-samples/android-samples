@@ -60,7 +60,7 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
                     .draggable(true)
             )
         }
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(findViewById<View>(R.id.map_container))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

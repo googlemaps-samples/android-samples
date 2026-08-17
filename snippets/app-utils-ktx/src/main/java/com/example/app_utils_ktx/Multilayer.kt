@@ -50,11 +50,11 @@ internal class Multilayer {
 
         // [START maps_android_utils_multilayer_manager]
         val clusterManager =
-            ClusterManager<MyItem>(context, map, markerManager)
+            ClusterManager<MyItem>(context!!, map, markerManager)
         val geoJsonLineLayer = GeoJsonLayer(
             map,
             R.raw.geojson_file,
-            context,
+            context!!,
             markerManager,
             polygonManager,
             polylineManager,
@@ -63,7 +63,7 @@ internal class Multilayer {
         val kmlPolylineLayer = KmlLayer(
             map,
             R.raw.kml_file,
-            context,
+            context!!,
             markerManager,
             polygonManager,
             polylineManager,
@@ -108,33 +108,10 @@ internal class Multilayer {
     inner class MyItem(
         lat: Double,
         lng: Double,
-        title: String,
-        snippet: String
-    ) :
-        ClusterItem {
-        private val position: LatLng
-        private val title: String
-        private val snippet: String
-        override fun getPosition(): LatLng {
-            return position
-        }
-
-        override fun getTitle(): String {
-            return title
-        }
-
-        override fun getSnippet(): String {
-            return snippet
-        }
-
-        override fun getZIndex(): Float {
-            return 0f
-        }
-
-        init {
-            position = LatLng(lat, lng)
-            this.title = title
-            this.snippet = snippet
-        }
+        override val title: String,
+        override val snippet: String
+    ) : ClusterItem {
+        override val position: LatLng = LatLng(lat, lng)
+        override val zIndex: Float? = 0f
     }
 }

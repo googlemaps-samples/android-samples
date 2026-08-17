@@ -16,7 +16,6 @@
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.secrets.gradle.plugin)
 }
 
@@ -81,8 +80,21 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     // [END_EXCLUDE]
 
-    // KTX for the Places SDK for Android library
-    implementation("com.google.maps.android:places-ktx:3.5.0")
+    // Modern Android projects use version catalogs to manage dependencies. To include the Places SDK for Android,
+    // first add the following to your gradle/libs.versions.toml file:
+    //
+    // [versions]
+    // places = "5.3.0"
+    //
+    // [libraries]
+    // places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+    //
+    // Places SDK for Android (Kotlin extensions and coroutines are built directly into the Places SDK)
+    implementation(libs.places)
+
+    // If your project does not use a version catalog, you can use the following dependency instead:
+    //
+    //    implementation("com.google.android.libraries.places:places:5.3.0")
 }
 // [END places_android_ktx_install_snippet]
 

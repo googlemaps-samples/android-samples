@@ -74,7 +74,7 @@ class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: streetViewPanorama.setPosition(SYDNEY)
         }
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(findViewById<View>(R.id.map_container))
     }
 
     override fun onStreetViewPanoramaChange(location: StreetViewPanoramaLocation) {

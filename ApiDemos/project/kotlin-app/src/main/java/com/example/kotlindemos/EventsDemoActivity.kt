@@ -42,7 +42,7 @@ class EventsDemoActivity : SamplesBaseActivity(), OnMapClickListener,
         cameraTextView = findViewById(R.id.camera_text)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        applyInsets(findViewById<View?>(R.id.map_container))
+        applyInsets(findViewById<View>(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

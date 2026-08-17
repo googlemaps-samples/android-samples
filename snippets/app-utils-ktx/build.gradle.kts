@@ -16,18 +16,17 @@
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
     namespace = "com.example.app_utils_ktx"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.app_utils_ktx"
         minSdk = 23
-        targetSdk = 36
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = libs.versions.versionName.get()
 

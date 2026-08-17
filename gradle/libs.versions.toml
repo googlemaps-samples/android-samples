@@ -1,66 +1,67 @@
 [versions]
 # Project Configuration
-androidGradlePlugin = "8.13.2"
+androidGradlePlugin = "9.3.1"
 minSdk = "24"
-compileSdk = "36"
-targetSdk = "36"
+compileSdk = "37"
+targetSdk = "37"
 versionCode = "1"
 versionName = "2.0.2" # {x-release-please-version}
 javaVersion = "17"
 
 # Kotlin & Coroutines
-kotlin = "2.2.0"
-kotlinxCoroutinesTest = "1.10.2"
-kotlinxDatetime = "0.7.1"
-ksp = "2.2.20-2.0.4"
+kotlin = "2.4.10"
+kotlinxCoroutinesTest = "1.11.0"
+kotlinxDatetime = "0.8.0"
+ksp = "2.3.11"
 
 # AndroidX Core & Jetpack
-activity = "1.12.2"
-activityKtx = "1.12.2"
+activity = "1.13.0"
+activityKtx = "1.13.0"
 androidxJunit = "1.3.0" # Test ext
-appcompat = "1.7.1"
+appcompat = "1.8.0"
 cardview = "1.0.0"
-constraintlayout = "2.2.1"
-coreKtx = "1.17.0"
-lifecycle = "2.10.0"
+constraintlayout = "2.2.2"
+coreKtx = "1.19.0"
+lifecycle = "2.11.0"
 multidex = "2.0.1"
-navigation = "2.9.6"
+navigation = "2.9.8"
 recyclerview = "1.4.0"
 
 # Jetpack Compose
-compose = "1.10.1"
-composeBom = "2026.01.00"
-hiltNavigationCompose = "1.3.0"
-material = "1.13.0" # View-based Material
+compose = "1.12.0"
+composeBom = "2026.08.00"
+hiltNavigationCompose = "1.4.0"
+material = "1.14.0" # View-based Material
 material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
-mapsCompose = "7.0.0"
-mapsKtx = "6.0.0"
-places = "5.1.1"
+mapsCompose = "8.4.0"
+mapsKtx = "6.3.0"
+mapsUtils = "5.1.1"
+places = "5.3.0"
 playServicesMaps = "20.0.0"
 secretsGradlePlugin = "2.0.1"
 
 # Wear OS
-wear = "1.3.0"
+wear = "1.4.0"
 wearable = "2.9.0"
 
 # Dependency Injection
-dagger = "2.57.2"
-hilt = "2.57.2"
+dagger = "2.60.1"
+hilt = "2.60.1"
 
 # Testing
 espresso = "3.7.0"
 junit = "4.13.2"
-mockito = "6.2.2"
+mockito = "6.3.0"
 robolectric = "4.16.1"
 truth = "1.4.5"
 turbine = "1.2.1"
-uiautomator = "2.3.0"
+uiautomator = "2.4.0"
 
 # Firebase
-firebaseBom = "34.8.0"
+firebaseBom = "34.17.0"
 firebaseDatabase = "22.0.1"
 
 # Third Party
@@ -102,6 +103,7 @@ ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", versio
 # Maps & Places
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 maps-ktx = { group = "com.google.maps.android", name = "maps-ktx", version.ref = "mapsKtx" }
+maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "mapsUtils" }
 maps-utils-ktx = { group = "com.google.maps.android", name = "maps-utils-ktx", version.ref = "mapsKtx" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
@@ -143,7 +145,6 @@ volley = { group = "com.android.volley", name = "volley", version.ref = "volley"
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
