@@ -85,8 +85,21 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     // [END_EXCLUDE]
 
+    // Modern Android projects use version catalogs to manage dependencies. To include the Maps Compose library,
+    // first add the following to your gradle/libs.versions.toml file:
+    //
+    // [versions]
+    // mapsCompose = "8.4.0"
+    //
+    // [libraries]
+    // maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+    //
     // Android Maps Compose composables for the Maps SDK for Android
-    implementation("com.google.maps.android:maps-compose:8.4.0")
+    implementation(libs.maps.compose)
+
+    // If your project does not use a version catalog, you can use the following dependency instead:
+    //
+    //    implementation("com.google.maps.android:maps-compose:8.4.0")
 }
 // [END maps_android_compose_dependency]
 

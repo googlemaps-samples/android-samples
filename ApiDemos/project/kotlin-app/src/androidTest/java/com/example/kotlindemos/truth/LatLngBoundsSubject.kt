@@ -26,7 +26,7 @@ import com.google.common.truth.Truth
  */
 class LatLngBoundsSubject private constructor(
     failureMetadata: FailureMetadata,
-    private val actual: LatLngBounds
+    private val actual: LatLngBounds?
 ) : Subject(failureMetadata, actual) {
 
     /**
@@ -34,6 +34,10 @@ class LatLngBoundsSubject private constructor(
      * a small tolerance to account for floating-point inaccuracies.
      */
     fun containsWithTolerance(expected: LatLng) {
+        if (actual == null) {
+            failWithActual("expected to contain", expected)
+            return
+        }
         val tolerance = 1e-5
         val contains = actual.southwest.latitude - tolerance <= expected.latitude &&
             expected.latitude <= actual.northeast.latitude + tolerance &&
@@ -60,11 +64,13 @@ class LatLngBoundsSubject private constructor(
     }
 
     companion object {
+        fun latLngBounds(): Factory<LatLngBoundsSubject, LatLngBounds> = Factory(::LatLngBoundsSubject)
+
         /**
          * Creates a [LatLngBoundsSubject] for asserting on the given [LatLngBounds].
          */
-        fun assertThat(actual: LatLngBounds): LatLngBoundsSubject {
-            return Truth.assertAbout(::LatLngBoundsSubject).that(actual)
+        fun assertThat(actual: LatLngBounds?): LatLngBoundsSubject {
+            return Truth.assertAbout(latLngBounds()).that(actual)
         }
     }
 }
