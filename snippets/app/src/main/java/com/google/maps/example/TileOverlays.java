@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.UrlTileProvider;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 
 class TileOverlays implements OnMapReadyCallback {
     // [START maps_android_tile_overlays_add]
@@ -34,7 +35,7 @@ class TileOverlays implements OnMapReadyCallback {
         public URL getTileUrl(int x, int y, int zoom) {
 
             /* Define the URL pattern for the tile images */
-            String s = String.format("http://my.image.server/images/%d/%d/%d.png", zoom, x, y);
+            String s = String.format(Locale.US, "http://my.image.server/images/%d/%d/%d.png", zoom, x, y);
 
             if (!checkTileExists(x, y, zoom)) {
                 return null;

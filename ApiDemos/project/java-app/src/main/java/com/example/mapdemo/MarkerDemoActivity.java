@@ -36,6 +36,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 
 import com.example.common_ui.R;
@@ -429,7 +430,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
     public boolean onMarkerClick(final Marker marker) {
         if (marker.equals(mPerth)) {
             // This causes the marker at Perth to bounce into position when it is clicked.
-            final Handler handler = new Handler();
+            final Handler handler = new Handler(Looper.getMainLooper());
             final long start = SystemClock.uptimeMillis();
             final long duration = 1500;
 
@@ -485,17 +486,17 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-        binding.topText.setText("onMarkerDragStart");
+        binding.topText.setText(R.string.on_marker_drag_start);
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
-        binding.topText.setText("onMarkerDragEnd");
+        binding.topText.setText(R.string.on_marker_drag_end);
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
-        binding.topText.setText("onMarkerDrag.  Current Position: " + marker.getPosition());
+        binding.topText.setText(getString(R.string.on_marker_drag, marker.getPosition().latitude, marker.getPosition().longitude));
     }
 
 }

@@ -16,6 +16,7 @@ package com.example.mapdemo;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -89,7 +90,8 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         // Add a marker to the Opera House.
         mMap.addMarker(new MarkerOptions().position(SOH).title("Sydney Opera House"));
         // Add a camera idle listener.
-        mMap.setOnCameraIdleListener(() -> binding.messageText.setText("CameraChangeListener: " + mMap.getCameraPosition()));
+        mMap.setOnCameraIdleListener(() -> binding.messageText.setText(
+                getString(com.example.common_ui.R.string.camera_change_message, mMap.getCameraPosition())));
     }
 
     /**
@@ -147,7 +149,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     public void animatePadding(
         final int toLeft, final int toTop, final int toRight, final int toBottom) {
 
-        final Handler handler = new Handler();
+        final Handler handler = new Handler(Looper.getMainLooper());
         final long start = SystemClock.uptimeMillis();
         final long duration = 1000;
 

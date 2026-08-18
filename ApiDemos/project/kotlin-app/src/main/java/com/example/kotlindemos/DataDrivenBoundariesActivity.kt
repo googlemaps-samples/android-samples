@@ -107,7 +107,7 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
         setupBoundarySelectorButton() // Setup the new selector button
 
         // --- Insets ---
-        applyInsets(findViewById<View>(R.id.map_container)) // Apply insets if needed
+        applyInsets(findViewById(R.id.map_container)) // Apply insets if needed
     }
 
     private fun setupBoundarySelectorButton() {

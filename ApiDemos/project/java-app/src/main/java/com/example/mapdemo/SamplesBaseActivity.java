@@ -18,6 +18,8 @@ package com.example.mapdemo;
 import android.os.Bundle;
 import android.view.View;
 
+import android.view.ViewGroup;
+
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,18 +35,67 @@ public class SamplesBaseActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
     }
 
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        setupEdgeToEdgeInsets();
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        setupEdgeToEdgeInsets();
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view, params);
+        setupEdgeToEdgeInsets();
+    }
+
+    @Override
+    public void addContentView(View view, ViewGroup.LayoutParams params) {
+        super.addContentView(view, params);
+        setupEdgeToEdgeInsets();
+    }
+
+    private void setupEdgeToEdgeInsets() {
+        View root = findViewById(android.R.id.content);
+        if (root == null) return;
+        View topBar = root.findViewById(com.example.common_ui.R.id.top_bar);
+        if (topBar != null) {
+            android.util.TypedValue typedValue = new android.util.TypedValue();
+            int baseHeight;
+            if (getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
+                baseHeight = android.util.TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());
+            } else {
+                baseHeight = (int) (56 * getResources().getDisplayMetrics().density);
+            }
+            ViewCompat.setOnApplyWindowInsetsListener(topBar, (view, insets) -> {
+                Insets statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.displayCutout());
+                view.setPadding(statusBar.left, statusBar.top, statusBar.right, 0);
+                view.getLayoutParams().height = baseHeight + statusBar.top;
+                view.requestLayout();
+                return insets;
+            });
+        }
+
+        View mapContainer = root.findViewById(com.example.common_ui.R.id.map_container);
+        View bottomTarget = mapContainer != null ? mapContainer : root;
+        ViewCompat.setOnApplyWindowInsetsListener(bottomTarget, (view, insets) -> {
+            Insets navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars() | WindowInsetsCompat.Type.displayCutout());
+            int topInsets = (topBar == null) ? insets.getInsets(WindowInsetsCompat.Type.statusBars()).top : 0;
+            view.setPadding(navBars.left, topInsets, navBars.right, navBars.bottom);
+            return insets;
+        });
+    }
+
     /**
      * Applies insets to the container view to properly handle window insets.
      *
      * @param container the container view to apply insets to
      */
     protected static void applyInsets(View container) {
-        ViewCompat.setOnApplyWindowInsetsListener(container,
-                (view, insets) -> {
-                    Insets innerPadding = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
-                    view.setPadding(innerPadding.left, innerPadding.top, innerPadding.right, innerPadding.bottom);
-                    return insets;
-                }
-        );
+        // Handled automatically in SamplesBaseActivity
     }
 }

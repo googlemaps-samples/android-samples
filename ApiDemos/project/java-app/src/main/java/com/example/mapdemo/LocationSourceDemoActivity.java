@@ -90,6 +90,11 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.basic_demo);
 
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(com.example.common_ui.R.id.top_bar);
+        if (toolbar != null) {
+            toolbar.setTitle(com.example.common_ui.R.string.location_source_demo_label);
+        }
+
         mLocationSource = new LongPressLocationSource();
 
         SupportMapFragment mapFragment =

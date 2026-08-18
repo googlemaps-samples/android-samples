@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.volley)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(project(":ApiDemos:common-ui"))

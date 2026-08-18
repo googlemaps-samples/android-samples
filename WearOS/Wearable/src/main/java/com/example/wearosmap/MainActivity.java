@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Google Inc. All Rights Reserved.
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,9 +54,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // when the user is no longer actively using the app but the app is still visible on the
         // watch face.
         // [START maps_wear_os_ambient_mode_support]
-        AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
+        try {
+            AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
+            Log.d(MainActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
+        } catch (Exception e) {
+            Log.w(MainActivity.class.getSimpleName(), "Ambient mode unavailable on this device: " + e.getMessage());
+        }
         // [END maps_wear_os_ambient_mode_support]
-        Log.d(MainActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
 
         // Retrieve the containers for the root of the layout and the map. Margins will need to be
         // set on them to account for the system window insets.

@@ -45,7 +45,7 @@ class StreetViewPanoramaViewDemoActivity : SamplesBaseActivity() {
         // StreetViewPanoramaView requires that the Bundle you pass contain _ONLY_
         // StreetViewPanoramaView SDK objects or sub-Bundles.
         streetViewPanoramaView.onCreate(savedInstanceState?.getBundle(STREETVIEW_BUNDLE_KEY))
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onResume() {

@@ -155,7 +155,7 @@ class PolylineDemoActivity :
 
         val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById<View>(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
     }
     // [START_EXCLUDE silent]
 
@@ -165,8 +165,6 @@ class PolylineDemoActivity :
     // [END_EXCLUDE]
 
     override fun onMapReady(googleMap: GoogleMap) {
-        googleMap
-
         with(googleMap) {
             // Override the default content description on the view, for accessibility mode.
             setContentDescription(getString(com.example.common_ui.R.string.polyline_demo_description))

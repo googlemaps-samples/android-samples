@@ -45,8 +45,15 @@ android {
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     kotlin {
-        jvmToolchain(21)
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 }
 
@@ -90,11 +97,11 @@ dependencies {
     //    compileOnly("com.google.android.wearable:wearable:2.9.0")
     //    implementation("com.google.android.support:wearable:2.9.0")
     //    implementation("com.google.android.gms:play-services-maps:20.0.0")
-    //    implementation("androidx.wear:wear:1.3.0")
-    //    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    //    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    //    implementation("androidx.wear:wear:1.4.0")
+    //    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    //    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     //    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0")
-    //    androidTestImplementation("com.google.truth:truth:1.4.2")
+    //    androidTestImplementation("com.google.truth:truth:1.4.5")
     //    androidTestImplementation("junit:junit:4.13.2")
 }
 // [END maps_wear_os_dependencies]

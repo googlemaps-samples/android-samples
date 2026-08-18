@@ -54,20 +54,12 @@ class LiteListDemoActivity : SamplesBaseActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var mapAdapter: RecyclerView.Adapter<MapAdapter.ViewHolder>
 
-    /**
-     * RecycleListener that completely clears the [com.google.android.gms.maps.GoogleMap]
-     * attached to a row in the RecyclerView.
-     * Sets the map type to [com.google.android.gms.maps.GoogleMap.MAP_TYPE_NONE] and clears
-     * the map.
-     */
-    private val recycleListener = RecyclerView.RecyclerListener { holder ->
-        val mapHolder = holder as MapAdapter.ViewHolder
-        mapHolder.clearView()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.common_ui.R.layout.lite_list_demo)
+
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(com.example.common_ui.R.id.top_bar)
+        setSupportActionBar(toolbar)
 
         mapAdapter = MapAdapter()
 
@@ -76,14 +68,13 @@ class LiteListDemoActivity : SamplesBaseActivity() {
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
             adapter = mapAdapter
-            setRecyclerListener(recycleListener)
         }
-        applyInsets(findViewById<View>(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
     }
 
     /** Create options menu to switch between the linear and grid layout managers. */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.lite_list_menu, menu)
+        menuInflater.inflate(com.example.common_ui.R.menu.lite_list_menu, menu)
         return true
     }
 
@@ -91,7 +82,7 @@ class LiteListDemoActivity : SamplesBaseActivity() {
         recyclerView.layoutManager = when (item.itemId) {
             com.example.common_ui.R.id.layout_linear -> linearLayoutManager
             com.example.common_ui.R.id.layout_grid -> gridLayoutManager
-            else -> return false
+            else -> return super.onOptionsItemSelected(item)
         }
         return true
     }
@@ -105,6 +96,11 @@ class LiteListDemoActivity : SamplesBaseActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bindView(position)
+        }
+
+        override fun onViewRecycled(holder: ViewHolder) {
+            super.onViewRecycled(holder)
+            holder.clearView()
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

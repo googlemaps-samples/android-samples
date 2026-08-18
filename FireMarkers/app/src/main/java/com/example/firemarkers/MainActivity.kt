@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
@@ -47,8 +48,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.compose.rememberUpdatedMarkerState
 import dagger.hilt.android.AndroidEntryPoint
 
 import androidx.core.view.WindowCompat
@@ -149,13 +150,16 @@ fun MapScreen(modifier: Modifier = Modifier) {
             cameraPositionState = cameraPositionState
         ) {
             markers.forEach { markerData ->
-                Marker(
-                    state = remember(markerData.id) {
-                        MarkerState(position = LatLng(markerData.latitude, markerData.longitude))
-                    },
-                    title = markerData.label,
-                    icon = BitmapDescriptorFactory.defaultMarker(markerData.color)
-                )
+                key(markerData.id) {
+                    val markerState = rememberUpdatedMarkerState(
+                        position = LatLng(markerData.latitude, markerData.longitude)
+                    )
+                    Marker(
+                        state = markerState,
+                        title = markerData.label,
+                        icon = BitmapDescriptorFactory.defaultMarker(markerData.color)
+                    )
+                }
             }
         }
     }

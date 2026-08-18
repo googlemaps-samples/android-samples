@@ -25,6 +25,6 @@ class MultiMapDemoActivity : SamplesBaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.multimap_demo)
-    applyInsets(findViewById<View>(R.id.map_container))
+    applyInsets(findViewById(R.id.map_container))
   }
 }

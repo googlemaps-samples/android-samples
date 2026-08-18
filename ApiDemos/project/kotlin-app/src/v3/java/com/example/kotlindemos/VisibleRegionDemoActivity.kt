@@ -25,6 +25,7 @@ package com.example.kotlindemos
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.view.View
 import android.view.animation.OvershootInterpolator
@@ -131,7 +132,7 @@ class VisibleRegionDemoActivity :
     // this function smoothly changes the amount of padding over a period of time
     private fun animatePadding(toLeft: Int, toTop: Int, toRight: Int, toBottom: Int) {
 
-        val handler = Handler()
+        val handler = Handler(Looper.getMainLooper())
         val start = SystemClock.uptimeMillis()
         val duration: Long = 1000
 

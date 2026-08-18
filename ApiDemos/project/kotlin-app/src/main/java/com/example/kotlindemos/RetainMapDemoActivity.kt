@@ -21,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
+import kotlinx.coroutines.launch
 
 /**
  * This shows how to retain a map across activity restarts (e.g., from screen rotations), which can
@@ -34,15 +35,16 @@ class RetainMapDemoActivity : SamplesBaseActivity() {
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         if (savedInstanceState == null) {
             // First incarnation of this activity.
+            @Suppress("DEPRECATION")
             mapFragment.retainInstance = true
         }
-        lifecycleScope.launchWhenCreated {
+        lifecycleScope.launch {
             val map = mapFragment.awaitMap()
             map.addMarker {
                 position(LatLng(0.0, 0.0))
                 title("Marker")
             }
         }
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 }

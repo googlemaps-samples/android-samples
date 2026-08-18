@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,7 +35,7 @@ import androidx.appcompat.app.AppCompatActivity;
 // [START maps_android_sample_events]
 public class EventsDemoActivity extends SamplesBaseActivity
         implements OnMapClickListener, OnMapLongClickListener, OnCameraIdleListener,
-        OnMapReadyCallback {
+        GoogleMap.OnCameraMoveListener, OnMapReadyCallback {
 
     private TextView tapTextView;
     private TextView cameraTextView;
@@ -59,22 +60,51 @@ public class EventsDemoActivity extends SamplesBaseActivity
         this.map = map;
         this.map.setOnMapClickListener(this);
         this.map.setOnMapLongClickListener(this);
+        this.map.setOnCameraMoveListener(this);
         this.map.setOnCameraIdleListener(this);
+        updateCameraPosition();
     }
 
     @Override
     public void onMapClick(LatLng point) {
-        tapTextView.setText("tapped, point=" + point);
+        String lat = String.format(Locale.US, "%.6f", point.latitude);
+        String lng = String.format(Locale.US, "%.6f", point.longitude);
+        tapTextView.setText(getString(com.example.common_ui.R.string.events_tapped_format, lat, lng));
     }
 
     @Override
     public void onMapLongClick(LatLng point) {
-        tapTextView.setText("long pressed, point=" + point);
+        String lat = String.format(Locale.US, "%.6f", point.latitude);
+        String lng = String.format(Locale.US, "%.6f", point.longitude);
+        tapTextView.setText(getString(com.example.common_ui.R.string.events_long_pressed_format, lat, lng));
+    }
+
+    @Override
+    public void onCameraMove() {
+        updateCameraPosition();
     }
 
     @Override
     public void onCameraIdle() {
-        cameraTextView.setText(map.getCameraPosition().toString());
+        updateCameraPosition();
+    }
+
+    private void updateCameraPosition() {
+        if (map == null) return;
+        com.google.android.gms.maps.model.CameraPosition pos = map.getCameraPosition();
+        String lat = String.format(Locale.US, "%.6f", pos.target.latitude);
+        String lng = String.format(Locale.US, "%.6f", pos.target.longitude);
+        String zoom = String.format(Locale.US, "%.1f", pos.zoom);
+        String tilt = String.format(Locale.US, "%.1f", pos.tilt);
+        String bearing = String.format(Locale.US, "%.1f", pos.bearing);
+        cameraTextView.setText(getString(
+            com.example.common_ui.R.string.events_camera_position_format,
+            lat,
+            lng,
+            zoom,
+            tilt,
+            bearing
+        ));
     }
 }
 // [END maps_android_sample_events]
