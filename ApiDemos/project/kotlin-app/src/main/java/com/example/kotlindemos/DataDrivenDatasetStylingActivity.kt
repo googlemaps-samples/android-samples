@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.GoogleMap
@@ -39,6 +40,7 @@ import com.google.android.gms.maps.model.FeatureLayerOptions
 import com.google.android.gms.maps.model.FeatureStyle
 import com.google.android.gms.maps.model.FeatureType
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapCapabilities
 import androidx.core.view.WindowCompat
 import com.google.android.gms.maps.GoogleMapOptions
@@ -55,7 +57,6 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
     private lateinit var mapContainer: ViewGroup
 
     private lateinit var map: GoogleMap
-    private val zoomLevel = 13.5f
 
     private var datasetLayer: FeatureLayer? = null
 
@@ -64,7 +65,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
     private data class DataSet(
         val datasetId: String,
-        val location: LatLng,
+        val bounds: LatLngBounds,
         val callback: DataDrivenDatasetStylingActivity.() -> Unit
     )
 
@@ -86,9 +87,27 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         if (dataSets.isEmpty()) {
             with(dataSets) {
-                put(getString(com.example.common_ui.R.string.boulder), DataSet(BuildConfig.BOULDER_DATASET_ID, LatLng(40.0150, -105.2705)) { styleBoulderDataset() })
-                put(getString(com.example.common_ui.R.string.new_york), DataSet(BuildConfig.NEW_YORK_DATASET_ID, LatLng(40.786244, -73.962684)) { styleNYCDataset() })
-                put(getString(com.example.common_ui.R.string.kyoto), DataSet(BuildConfig.KYOTO_DATASET_ID, LatLng(35.005081, 135.764385)) { styleKyotoDataset() })
+                put(
+                    getString(com.example.common_ui.R.string.boulder),
+                    DataSet(
+                        BuildConfig.BOULDER_DATASET_ID,
+                        LatLngBounds(LatLng(39.920, -105.340), LatLng(40.090, -105.210))
+                    ) { styleBoulderDataset() }
+                )
+                put(
+                    getString(com.example.common_ui.R.string.new_york),
+                    DataSet(
+                        BuildConfig.NEW_YORK_DATASET_ID,
+                        LatLngBounds(LatLng(40.7640, -73.9820), LatLng(40.8000, -73.9490))
+                    ) { styleNYCDataset() }
+                )
+                put(
+                    getString(com.example.common_ui.R.string.kyoto),
+                    DataSet(
+                        BuildConfig.KYOTO_DATASET_ID,
+                        LatLngBounds(LatLng(34.9700, 135.7200), LatLng(35.0400, 135.8000))
+                    ) { styleKyotoDataset() }
+                )
             }
         }
 
@@ -124,7 +143,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         buttonLayout = findViewById<View>(com.example.common_ui.R.id.button_kyoto).parent as LinearLayout
 
         handleCutout()
-        applyInsets(findViewById<View>(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
     }
 
     private fun handleCutout() {
@@ -139,6 +158,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
             }
         } else {
             window.decorView.setOnApplyWindowInsetsListener { view, windowInsets ->
+                @Suppress("DEPRECATION")
                 val topInset = windowInsets.systemWindowInsetTop
                 mapContainer.setPadding(0, topInset, 0, 0)
                 windowInsets
@@ -170,7 +190,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
                 }.build()
             )
             dataSet.callback(this)
-            centerMapOnLocation(dataSet.location)
+            centerMapOnBounds(dataSet.bounds)
         } ?: run {
             Toast.makeText(this, "Unknown dataset: $label", Toast.LENGTH_SHORT).show()
         }
@@ -178,6 +198,11 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+
+        googleMap.setOnCameraIdleListener {
+            val cp = googleMap.cameraPosition
+            Log.i(TAG, "CAMERA_PARAMS: target=LatLng(${cp.target.latitude}, ${cp.target.longitude}), zoom=${cp.zoom}f, tilt=${cp.tilt}f, bearing=${cp.bearing}f")
+        }
 
         val capabilities: MapCapabilities = map.mapCapabilities
         println("Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable)
@@ -197,7 +222,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         val largePointRadius = 8F
         val smallPointRadius = 6F
-        val darkRedBrown = resources.getColor(R.color.darkRedBrown)
+        val darkRedBrown = ContextCompat.getColor(this, R.color.darkRedBrown)
 
         val styleFactory = FeatureLayer.StyleFactory { feature: Feature ->
             if (feature is DatasetFeature) {
@@ -337,8 +362,8 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
     }
 
 
-    private fun centerMapOnLocation(location: LatLng) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel))
+    private fun centerMapOnBounds(bounds: LatLngBounds, padding: Int = 80) {
+        map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))
     }
 
     // Define the click event handler to set lastGlobalId to globalid of selected feature.

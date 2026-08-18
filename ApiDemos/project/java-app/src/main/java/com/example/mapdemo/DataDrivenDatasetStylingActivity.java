@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.FeatureLayerOptions;
 import com.google.android.gms.maps.model.FeatureStyle;
 import com.google.android.gms.maps.model.FeatureType;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapCapabilities;
 
 import java.util.List;
@@ -58,8 +59,7 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
     private record DataSet(
             String label,
             String datasetId,
-            LatLng location,
-            float zoomLevel,
+            LatLngBounds bounds,
             DataDrivenDatasetStylingActivity.DataSet.StylingCallback callback) {
             public interface StylingCallback {
                 void styleDatasetLayer();
@@ -71,25 +71,19 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
      * Each DataSet contains:
      *  - A human-readable name (e.g., "Boulder", "New York").
      *  - A unique Dataset ID, which should correspond to a dataset id in the Datasets console tab.
-     *  - The central latitude and longitude coordinates (LatLng) of the location.
+     *  - The LatLngBounds of the dataset area.
      *  - A styling function (method reference) that defines how to style the data from that dataset on a map.
-     * <p>
-     * This array is used to configure which datasets are available for display and how they should be presented.
-     * Each element of the array should be a new DataSet object.
-     * Modify the constructor arguments of each DataSet to define your specific data and styles.
-     * The styling function will receive a `Layer` to which it can add elements.
-     * <p>
-     * Example:
-     *   - `new DataSet("Boulder", "Boulder-DataSet-Id", new LatLng(40.0150, -105.2705), this::styleBoulderDatasetLayer)`
-     *     This creates a DataSet for Boulder, identified by "Boulder-DataSet-Id", centered on the given coordinates,
-     *     and styled using the `styleBoulderDatasetLayer` method.
-     * <p>
-     * Note: We have use the secrets plugin to allow us to configure the Dataset IDs in our secrets.properties file.
      */
     private final DataSet[] dataSets = new DataSet[] {
-            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID, new LatLng(40.0150, -105.2705), 11f, this::styleBoulderDatasetLayer),
-            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID, new LatLng(40.786244, -73.962684), 14f, this::styleNYCDatasetLayer),
-            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID, new LatLng(35.005081, 135.764385), 13.5f, this::styleKyotoDatasetsLayer),
+            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID,
+                    new LatLngBounds(new LatLng(39.920, -105.340), new LatLng(40.090, -105.210)),
+                    this::styleBoulderDatasetLayer),
+            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID,
+                    new LatLngBounds(new LatLng(40.7640, -73.9820), new LatLng(40.8000, -73.9490)),
+                    this::styleNYCDatasetLayer),
+            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID,
+                    new LatLngBounds(new LatLng(34.9700, 135.7200), new LatLng(35.0400, 135.8000)),
+                    this::styleKyotoDatasetsLayer),
     };
 
     private DataSet findDataSetByLabel(String label) {
@@ -176,13 +170,18 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
                             .build()
             );
             dataSet.callback.styleDatasetLayer();
-            centerMapOnLocation(dataSet.location(), dataSet.zoomLevel());
+            centerMapOnBounds(dataSet.bounds());
         }
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
+
+        googleMap.setOnCameraIdleListener(() -> {
+            com.google.android.gms.maps.model.CameraPosition cp = googleMap.getCameraPosition();
+            Log.i(TAG, "CAMERA_PARAMS: target=LatLng(" + cp.target.latitude + ", " + cp.target.longitude + "), zoom=" + cp.zoom + "f, tilt=" + cp.tilt + "f, bearing=" + cp.bearing + "f");
+        });
 
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
@@ -364,8 +363,8 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
     }
 
 
-    private void centerMapOnLocation(LatLng location, float zoomLevel) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
+    private void centerMapOnBounds(LatLngBounds bounds) {
+        map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 80));
     }
 
     @Override

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import android.graphics.Point;
 import android.os.Bundle;
@@ -51,6 +52,10 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
     private static final LatLng NEWARK = new LatLng(40.714086, -74.228697);
     private static final LatLng NEAR_NEWARK =
         new LatLng(NEWARK.latitude - 0.001, NEWARK.longitude - 0.025);
+    static final LatLngBounds OVERLAY_BOUNDS = new LatLngBounds(
+        new LatLng(40.7050, -74.2600),
+        new LatLng(40.7800, -74.1200)
+    );
 
     private final List<BitmapDescriptor> images = new ArrayList<>();
 
@@ -84,7 +89,7 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         setContentView(binding.getRoot());
 
         binding.transparencySeekBar.setMax(TRANSPARENCY_MAX);
-        binding.transparencySeekBar.setProgress(0);
+        binding.transparencySeekBar.setProgress(25);
 
         // Set up programmatic click listeners for the buttons.
         binding.switchImage.setOnClickListener(v -> switchImage());
@@ -106,10 +111,8 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this);
 
-        // Move the camera to the Newark area.
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11));
-
-        map.moveCamera(CameraUpdateFactory.scrollBy(100f, 100f));
+        // Move the camera to frame the Newark overlays with padding.
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(OVERLAY_BOUNDS, 80));
 
         map.setOnMapClickListener(ll -> {
             Point point = mMap.getProjection().toScreenLocation(ll);
@@ -141,7 +144,8 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         // Add a large overlay at Newark on top of the smaller overlay.
         groundOverlay = map.addGroundOverlay(new GroundOverlayOptions()
                 .image(images.get(currentEntry)).anchor(0, 1)
-                .position(NEWARK, 8600f, 6500f));
+                .position(NEWARK, 8600f, 6500f)
+                .transparency((float) binding.transparencySeekBar.getProgress() / (float) TRANSPARENCY_MAX));
         groundOverlay.setTag(images.get(currentEntry));
 
         binding.transparencySeekBar.setOnSeekBarChangeListener(this);
