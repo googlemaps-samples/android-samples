@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import com.google.android.libraries.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -86,7 +87,8 @@ public class VisibleRegionDemoActivity extends AppCompatActivity implements
         mMap.setOnCameraIdleListener(new OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
-                mMessageView.setText("CameraChangeListener: " + mMap.getCameraPosition());
+                mMessageView.setText(getString(
+                        com.example.common_ui.R.string.camera_change_message, mMap.getCameraPosition()));
             }
         });
     }
@@ -146,7 +148,7 @@ public class VisibleRegionDemoActivity extends AppCompatActivity implements
     public void animatePadding(
             final int toLeft, final int toTop, final int toRight, final int toBottom) {
 
-        final Handler handler = new Handler();
+        final Handler handler = new Handler(Looper.getMainLooper());
         final long start = SystemClock.uptimeMillis();
         final long duration = 1000;
 
