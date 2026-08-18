@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +73,7 @@ dependencies {
     testImplementation(libs.junit)
     implementation(libs.coreKtx)
     implementation(libs.lifecycleViewModelKtx)
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${libs.versions.kotlin.get()}")
+    implementation(libs.kotlin.stdlib)
     implementation(libs.material)
 }
 
