@@ -68,6 +68,10 @@ under [releases](https://github.com/googlemaps/android-samples/releases).
 
 Contributions are welcome and encouraged! If you'd like to contribute, send us a [pull request] and refer to our [code of conduct] and [contributing guide].
 
+### Using AI
+This repository provides an official Gemini Skill and an `llm-integration-prompt.md` to help AI agents navigate the codebase and provide assistance. Refer to the [contributing guide] for more details on AI usage.
+
+
 ## Terms of Service
 
 This sample uses Google Maps Platform services. Use of Google Maps Platform services through this sample is subject to the Google Maps Platform [Terms of Service].
