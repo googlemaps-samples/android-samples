@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Google Inc. All Rights Reserved.
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,8 +39,12 @@ class AmbientActivity : AppCompatActivity(), AmbientModeSupport.AmbientCallbackP
         // Enable ambient support, so the map remains visible in simplified, low-color display
         // when the user is no longer actively using the app but the app is still visible on the
         // watch face.
-        val controller = AmbientModeSupport.attach(this)
-        Log.d(AmbientActivity::class.java.simpleName, "Is ambient enabled: " + controller.isAmbient)
+        try {
+            val controller = AmbientModeSupport.attach(this)
+            Log.d(AmbientActivity::class.java.simpleName, "Is ambient enabled: " + controller.isAmbient)
+        } catch (e: Exception) {
+            Log.w(AmbientActivity::class.java.simpleName, "Ambient mode unavailable on this device: ${e.message}")
+        }
 
         // Obtain the MapFragment and set the async listener to be notified when the map is ready.
         mapFragment = supportFragmentManager
