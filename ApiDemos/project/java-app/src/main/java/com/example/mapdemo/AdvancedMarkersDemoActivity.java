@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,10 +17,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.common_ui.R;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -33,6 +36,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.AdvancedMarkerOptions;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapCapabilities;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.PinConfig;
@@ -114,17 +118,33 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
 
     @Override
     public void onMapReady(GoogleMap map) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(SINGAPORE, ZOOM_LEVEL));
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(SINGAPORE)
+                .include(KUALA_LUMPUR)
+                .include(JAKARTA)
+                .include(BANGKOK)
+                .include(MANILA)
+                .include(HO_CHI_MINH_CITY)
+                .build();
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
 
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(TAG, "Are advanced markers enabled? " + capabilities.isAdvancedMarkersAvailable());
 
-        // This sample sets a view as the iconView for the Advanced Marker
-        TextView textView = new TextView(this);
-        textView.setText("Hello!");
-        Marker advancedMarkerView = map.addMarker(new AdvancedMarkerOptions()
+        // 1. Custom View as iconView (Framed circular badge with Android logo)
+        ImageView iconImageView = new ImageView(this);
+        iconImageView.setImageResource(R.drawable.ic_android);
+        iconImageView.setColorFilter(Color.parseColor("#3DDC84")); // Android Green
+        iconImageView.setBackgroundResource(R.drawable.bg_marker_badge);
+        int padding = (int) (8 * getResources().getDisplayMetrics().density);
+        iconImageView.setPadding(padding, padding, padding, padding);
+        int size = (int) (44 * getResources().getDisplayMetrics().density);
+        iconImageView.setLayoutParams(new ViewGroup.LayoutParams(size, size));
+
+        map.addMarker(new AdvancedMarkerOptions()
                 .position(SINGAPORE)
-                .iconView(textView)
+                .iconView(iconImageView)
+                .title("Singapore (Custom Framed Badge)")
                 .zIndex(1f));
 
         // This uses PinConfig.Builder to create an instance of PinConfig.
