@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Google Inc. All Rights Reserved.
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,8 +48,12 @@ public class AmbientActivity extends AppCompatActivity implements
         // Enable ambient support, so the map remains visible in simplified, low-color display
         // when the user is no longer actively using the app but the app is still visible on the
         // watch face.
-        AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
-        Log.d(AmbientActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
+        try {
+            AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
+            Log.d(AmbientActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
+        } catch (Exception e) {
+            Log.w(AmbientActivity.class.getSimpleName(), "Ambient mode unavailable on this device: " + e.getMessage());
+        }
 
         // Obtain the MapFragment and set the async listener to be notified when the map is ready.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
