@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,18 +20,27 @@ import android.widget.ImageView
 
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.R
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.awaitMap
+import kotlinx.coroutines.launch
 
 /**
- * This shows how to take a snapshot of the map.
+ * Demonstrates capturing a bitmap screenshot of a [GoogleMap] view using [GoogleMap.snapshot].
+ *
+ * Key Concepts:
+ * 1. **Live Map Capture**: [GoogleMap.snapshot] takes an asynchronous render of the current
+ *    map viewport and delivers it as an Android [android.graphics.Bitmap] via [SnapshotReadyCallback].
+ * 2. **Tile Readiness Synchronization**: If the "Wait for Map Load" option is selected,
+ *    [GoogleMap.setOnMapLoadedCallback] is invoked first to ensure all vector tiles, labels,
+ *    and overlays are fully rendered before capturing the bitmap.
+ * 3. **Material 3 Split View**: Displays the interactive map in a top card and the captured
+ *    preview in a bottom card with empty-state placeholder handling.
  */
 class SnapshotDemoActivity : SamplesBaseActivity() {
-    /**
-     * Note that this may be null if the Google Play services APK is not available.
-     */
     private lateinit var map: GoogleMap
     private lateinit var binding: com.example.common_ui.databinding.SnapshotDemoBinding
 
@@ -40,32 +49,51 @@ class SnapshotDemoActivity : SamplesBaseActivity() {
         binding = com.example.common_ui.databinding.SnapshotDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.screenshotButton?.setOnClickListener { takeSnapshot() }
-        binding.clearButton?.setOnClickListener { clearSnapshot() }
+        binding.screenshotButton.setOnClickListener { takeSnapshot() }
+        binding.clearButton.setOnClickListener { clearSnapshot() }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        lifecycleScope.launchWhenCreated {
+        lifecycleScope.launch {
             map = mapFragment.awaitMap()
+            // Center on Venice, Italy — a visually rich standard vector map showing the Grand Canal and Rialto
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(VENICE, 14.5f))
         }
         applyInsets(binding.mapContainer)
     }
 
+    /**
+     * Captures a snapshot of the current map viewport.
+     */
     private fun takeSnapshot() {
-        val callback =
-            SnapshotReadyCallback { snapshot -> // Callback is called from the main thread, so we can modify the ImageView safely.
-                binding.snapshotHolder.setImageBitmap(snapshot)
-            }
-        if ((binding.waitForMapLoad as CheckBox).isChecked) {
+        if (!::map.isInitialized) return
+
+        val callback = SnapshotReadyCallback { snapshot ->
+            // Callback runs on the main UI thread, so we can update the ImageView and card state directly.
+            binding.snapshotHolder.setImageBitmap(snapshot)
+            binding.snapshotPlaceholder.visibility = View.GONE
+            binding.snapshotLabel.visibility = View.VISIBLE
+        }
+
+        if (binding.waitForMapLoad.isChecked) {
+            // Wait until all map tiles are rendered before taking the snapshot
             map.setOnMapLoadedCallback { map.snapshot(callback) }
         } else {
+            // Take snapshot immediately with currently loaded tiles
             map.snapshot(callback)
         }
     }
 
     /**
-     * Called when the clear button is clicked.
+     * Clears the captured snapshot image and restores the empty-state placeholder.
      */
     private fun clearSnapshot() {
         binding.snapshotHolder.setImageDrawable(null)
+        binding.snapshotPlaceholder.visibility = View.VISIBLE
+        binding.snapshotLabel.visibility = View.GONE
+    }
+
+    companion object {
+        // Venice, Italy (Grand Canal & Rialto)
+        internal val VENICE = LatLng(45.4380, 12.3350)
     }
 }
