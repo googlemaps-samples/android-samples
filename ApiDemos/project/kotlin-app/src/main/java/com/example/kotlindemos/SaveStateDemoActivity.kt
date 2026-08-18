@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ package com.example.kotlindemos
 import android.os.Bundle
 import android.os.Parcelable
 
+import androidx.core.os.BundleCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
@@ -26,7 +27,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
+import kotlinx.coroutines.launch
 import java.util.Random
 
 /**
@@ -73,13 +75,15 @@ class SaveStateDemoActivity : SamplesBaseActivity() {
       //   the savedInsanceState Bundle.
       // - Custom Parcelable objects were wrapped in another Bundle.
       mMarkerPosition =
-        savedInstanceState?.getParcelable(MARKER_POSITION) ?: DEFAULT_MARKER_POSITION
+        savedInstanceState?.let { BundleCompat.getParcelable(it, MARKER_POSITION, LatLng::class.java) }
+          ?: DEFAULT_MARKER_POSITION
       mMarkerInfo =
-        savedInstanceState?.getBundle(OTHER_OPTIONS)?.getParcelable(MARKER_INFO) ?: MarkerInfo(
-          BitmapDescriptorFactory.HUE_RED)
+        savedInstanceState?.getBundle(OTHER_OPTIONS)?.let {
+          BundleCompat.getParcelable(it, MARKER_INFO, MarkerInfo::class.java)
+        } ?: MarkerInfo(BitmapDescriptorFactory.HUE_RED)
       mMoveCameraToMarker = savedInstanceState == null
 
-      lifecycleScope.launchWhenCreated {
+      lifecycleScope.launch {
         val map = awaitMap()
         map.addMarker {
           icon(BitmapDescriptorFactory.defaultMarker(mMarkerInfo.hue))
