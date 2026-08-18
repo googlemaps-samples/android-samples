@@ -130,6 +130,9 @@
     <string name="snapshot_demo_description">Demonstrates how to take a snapshot of the map.</string>
     <string name="snapshot_holder_description">Area for the map snapshot.</string>
     <string name="snapshot_take_button">Take snapshot</string>
+    <string name="snapshot_live_map_label">Live Map</string>
+    <string name="snapshot_preview_label">Captured Snapshot</string>
+    <string name="snapshot_placeholder_text">Tap \"Take snapshot\" to capture the map</string>
     <string name="stop_animation">\u25A0</string>
     <string name="stroke_alpha">Stroke Alpha</string>
     <string name="stroke_hue">Stroke Hue</string>
@@ -208,10 +211,19 @@
     <string name="request_position">Position</string>
     <string name="split_street_view_panorama_and_map_demo_description">Demonstrates how to show a Street View panorama and map.</string>
     <string name="split_street_view_panorama_and_map_demo_label">Street View Panorama and Map</string>
+    <string name="split_street_view_instructions">Long-press &amp; drag Pegman on the map to jump Street View. Tap arrows in Street View to walk.</string>
+    <string name="moved_pegman_to_location">Moved Pegman to your location</string>
+    <string name="getting_location">Finding your current location\u2026</string>
+    <string name="waiting_for_location">Location unavailable. Please check device location settings.</string>
+    <string name="location_permission_required_toast">Location permission is required to find your location. Please grant it in app settings.</string>
     <string name="street_view_panorama_basic_demo_description">Standard Street View Panorama using a Fragment.</string>
     <string name="street_view_panorama_basic_demo_label">Street View Panorama</string>
     <string name="street_view_panorama_events_demo_description">Standard Street View Panorama with event handling.</string>
     <string name="street_view_panorama_events_demo_label">Street View Panorama events</string>
+    <string name="pano_change_times">Times panorama changed=%1$d</string>
+    <string name="pano_camera_change_times">Times camera changed=%1$d</string>
+    <string name="pano_click_times">Times clicked=%1$d : %2$s</string>
+    <string name="pano_long_click_times">Times long clicked=%1$d : %2$s</string>
     <string name="street_view_panorama_navigation_demo_description">Street View Panorama with programmatic navigation.</string>
     <string name="street_view_panorama_navigation_demo_label">Street View Panorama navigation</string>
     <string name="street_view_panorama_options_demo_description">Street View Panorama with toggles for options.</string>
@@ -226,6 +238,7 @@
     <!-- Advanced Markers Demo -->
     <string name="advanced_markers_demo_label">Advanced Markers</string>
     <string name="advanced_markers_demo_details">Showcases the usage of Advanced Markers.</string>
+    <string name="advanced_marker_hello">Hello!</string>
     <string name="map_id">DEMO_MAP_ID</string>
 
     <!--    Styling    -->
