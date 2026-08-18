@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -89,6 +89,11 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.basic_demo);
+
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(com.example.common_ui.R.id.top_bar);
+        if (toolbar != null) {
+            toolbar.setTitle(com.example.common_ui.R.string.location_source_demo_label);
+        }
 
         mLocationSource = new LongPressLocationSource();
 
