@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="demo_title">Maps SDK for Android Demos (Java)</string>
     <string name="demo_title_java">Maps SDK for Android Demos (Java)</string>
     <string name="demo_title_kotlin">Maps SDK for Android Demos (Kotlin)</string>
@@ -32,12 +32,18 @@
 
     <string name="camera_clamping_demo_description">Demonstrates how to use Camera Clamping.</string>
     <string name="camera_clamping_demo_label">Camera Clamping Demo</string>
-    <string name="clamp_latlng_adelaide">Clamp to Adelaide</string>
-    <string name="clamp_latlng_pacific">Clamp to Pacific</string>
-    <string name="clamp_latlng_reset">Reset LatLng Bounds</string>
+    <string name="clamp_latlng_adelaide">Adelaide</string>
+    <string name="clamp_latlng_pacific">Pacific</string>
+    <string name="clamp_latlng_reset">Reset</string>
+    <string name="latlng_clamp_status_none">Bounds: None</string>
+    <string name="latlng_clamp_status_adelaide">Bounds: Adelaide</string>
+    <string name="latlng_clamp_status_pacific">Bounds: Pacific</string>
+    <string name="camera_position_format">Position: (%1$.6f, %2$.6f)\nzoom=%3$.1f, tilt=%4$.1f\u00b0, bearing=%5$.1f\u00b0</string>
     <string name="clamp_min_zoom">MinZoom++</string>
-    <string name="clamp_max_zoom">MaxZoom--</string>
-    <string name="clamp_zoom_reset">Reset Zoom Bounds</string>
+    <string name="clamp_max_zoom" tools:ignore="TypographyDashes">MaxZoom--</string>
+    <string name="clamp_zoom_reset">Reset Zoom</string>
+    <string name="zoom_bounds_label">Zoom Limits: %1$.1f – %2$.1f</string>
+    <string name="initial_zoom_limits">Zoom Limits: 2.0 – 21.0</string>
 
     <string name="clear_map">Clear</string>
     <string name="clickable">Clickable</string>
