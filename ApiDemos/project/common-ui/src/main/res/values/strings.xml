@@ -57,6 +57,9 @@
     <string name="duration">Custom Duration</string>
     <string name="events_demo_label">Events</string>
     <string name="events_demo_description">Demonstrates event handling.</string>
+    <string name="events_tapped_format">Tapped: (%1$s, %2$s)</string>
+    <string name="events_long_pressed_format">Long pressed: (%1$s, %2$s)</string>
+    <string name="events_camera_position_format">Position: (%1$s, %2$s)\nzoom=%3$s, tilt=%4$s\u00b0, bearing=%5$s\u00b0</string>
     <string name="fade_in">Fade In Tiles</string>
     <string name="fill_alpha">Fill Alpha</string>
     <string name="fill_hue">Fill Hue</string>

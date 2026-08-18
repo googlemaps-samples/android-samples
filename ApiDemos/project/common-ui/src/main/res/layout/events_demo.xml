@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
- Copyright 2025 Google LLC
+ Copyright 2026 Google LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -37,10 +37,12 @@
         app:layout_constraintTop_toBottomOf="@+id/top_bar" />
 
     <LinearLayout
+        android:id="@+id/events_info_panel"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
         android:orientation="vertical"
-
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_bar">
@@ -49,12 +51,15 @@
             android:id="@+id/tap_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
             android:text="@string/tap_instructions" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/camera_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
             android:text="@string/move_the_camera" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
