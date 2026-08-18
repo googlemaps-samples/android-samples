@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class StreetViewPanoramaBasicDemoActivity : SamplesBaseActivity() {
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: panorama.setPosition(SYDNEY)
         }
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     companion object {

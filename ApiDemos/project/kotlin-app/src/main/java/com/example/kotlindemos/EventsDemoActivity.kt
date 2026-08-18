@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.example.common_ui.R
+import java.util.Locale
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
@@ -29,7 +30,7 @@ import com.google.android.gms.maps.model.LatLng
  */
 // [START maps_android_sample_events]
 class EventsDemoActivity : SamplesBaseActivity(), OnMapClickListener,
-    OnMapLongClickListener, OnCameraIdleListener, OnMapReadyCallback {
+    OnMapLongClickListener, OnCameraIdleListener, OnCameraMoveListener, OnMapReadyCallback {
 
     private lateinit var tapTextView: TextView
     private lateinit var cameraTextView: TextView
@@ -42,28 +43,47 @@ class EventsDemoActivity : SamplesBaseActivity(), OnMapClickListener,
         cameraTextView = findViewById(R.id.camera_text)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        // return early if the map was not initialised properly
         map = googleMap
         map.setOnMapClickListener(this)
         map.setOnMapLongClickListener(this)
+        map.setOnCameraMoveListener(this)
         map.setOnCameraIdleListener(this)
+        updateCameraPosition()
     }
 
     override fun onMapClick(point: LatLng) {
-        tapTextView.text = "tapped, point=$point"
+        val lat = String.format(Locale.US, "%.6f", point.latitude)
+        val lng = String.format(Locale.US, "%.6f", point.longitude)
+        tapTextView.text = getString(R.string.events_tapped_format, lat, lng)
     }
 
     override fun onMapLongClick(point: LatLng) {
-        tapTextView.text = "long pressed, point=$point"
+        val lat = String.format(Locale.US, "%.6f", point.latitude)
+        val lng = String.format(Locale.US, "%.6f", point.longitude)
+        tapTextView.text = getString(R.string.events_long_pressed_format, lat, lng)
+    }
+
+    override fun onCameraMove() {
+        updateCameraPosition()
     }
 
     override fun onCameraIdle() {
+        updateCameraPosition()
+    }
+
+    private fun updateCameraPosition() {
         if (!::map.isInitialized) return
-        cameraTextView.text = map.cameraPosition.toString()
+        val pos = map.cameraPosition
+        val lat = String.format(Locale.US, "%.6f", pos.target.latitude)
+        val lng = String.format(Locale.US, "%.6f", pos.target.longitude)
+        val zoom = String.format(Locale.US, "%.1f", pos.zoom)
+        val tilt = String.format(Locale.US, "%.1f", pos.tilt)
+        val bearing = String.format(Locale.US, "%.1f", pos.bearing)
+        cameraTextView.text = getString(R.string.events_camera_position_format, lat, lng, zoom, tilt, bearing)
     }
 }
 // [END maps_android_sample_events]

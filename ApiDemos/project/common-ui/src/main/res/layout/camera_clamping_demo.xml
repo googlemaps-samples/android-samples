@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
- Copyright 2025 Google LLC
+ Copyright 2026 Google LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -50,31 +50,30 @@
         map:latLngBoundsSouthWestLongitude="-122.1" />
 
     <LinearLayout
-        android:background="@color/white"
+        android:background="?attr/colorSurface"
         android:id="@+id/container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="4dp"
             android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/clamp_min_zoom"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/zoom_label"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/clamp_min_zoom" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/clamp_max_zoom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/clamp_max_zoom" />
+                android:layout_weight="1"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:text="@string/initial_zoom_limits" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clamp_zoom_reset"
@@ -83,43 +82,63 @@
                 android:text="@string/clamp_zoom_reset" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/zoom_range_slider"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:valueFrom="2.0"
+            android:valueTo="21.0"
+            android:stepSize="0.5"
+            app:values="@array/initial_zoom_range" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/latlng_clamp_toggle_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:selectionRequired="false">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clamp_latlng_adelaide"
-                android:layout_width="wrap_content"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="@string/clamp_latlng_adelaide" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clamp_latlng_pacific"
-                android:layout_width="wrap_content"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:text="@string/clamp_latlng_pacific" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clamp_latlng_reset"
-                android:layout_width="wrap_content"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/clamp_latlng_reset" />
-        </LinearLayout>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/clamp_status_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:paddingHorizontal="4dp"
+            android:paddingTop="4dp"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:text="@string/latlng_clamp_status_none" />
 
-            <TextView
-                android:id="@+id/camera_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/move_the_camera" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/camera_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="4dp"
+            android:paddingTop="2dp"
+            android:text="@string/move_the_camera" />
     </LinearLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
