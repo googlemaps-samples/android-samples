@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Copyright 2018 Google LLC
+    Copyright 2026 Google LLC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,12 +20,14 @@
 
     <item
         android:id="@+id/layout_linear"
+        android:icon="@drawable/ic_view_list"
         android:title="@string/linear"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/layout_grid"
+        android:icon="@drawable/ic_view_grid"
         android:title="@string/grid"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
 </menu>
