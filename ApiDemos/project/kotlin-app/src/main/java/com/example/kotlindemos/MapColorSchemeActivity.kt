@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ class MapColorSchemeActivity :
         buttonLight = findViewById(R.id.map_color_light_mode)
         buttonDark = findViewById(R.id.map_color_dark_mode)
         buttonFollowSystem = findViewById(R.id.map_color_follow_system_mode)
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
