@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -190,7 +190,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     private fun onMovePosition() {
         val location = streetViewPanorama.location
         val camera = streetViewPanorama.panoramaCamera
-        location.links?.let {
+        if (location.links.isNotEmpty()) {
             val link = location.links.findClosestLinkToBearing(camera.bearing)
             streetViewPanorama.setPosition(link.panoId)
         }

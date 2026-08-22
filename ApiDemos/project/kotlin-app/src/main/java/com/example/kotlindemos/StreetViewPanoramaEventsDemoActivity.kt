@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -74,22 +74,22 @@ class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: streetViewPanorama.setPosition(SYDNEY)
         }
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onStreetViewPanoramaChange(location: StreetViewPanoramaLocation) {
-        panoChangeTimesTextView.text = "Times panorama changed=" + ++panoChangeTimes
+        panoChangeTimesTextView.text = getString(R.string.pano_change_times, ++panoChangeTimes)
     }
 
     override fun onStreetViewPanoramaCameraChange(camera: StreetViewPanoramaCamera) {
-        panoCameraChangeTextView.text = "Times camera changed=" + ++panoCameraChangeTimes
+        panoCameraChangeTextView.text = getString(R.string.pano_camera_change_times, ++panoCameraChangeTimes)
     }
 
     override fun onStreetViewPanoramaClick(orientation: StreetViewPanoramaOrientation) {
         val point = streetViewPanorama.orientationToPoint(orientation)
         point?.let {
             panoClickTimes++
-            panoClickTextView.text = "Times clicked=$panoClickTimes : $point"
+            panoClickTextView.text = getString(R.string.pano_click_times, panoClickTimes, it)
             streetViewPanorama.animateTo(
                 StreetViewPanoramaCamera.Builder()
                     .orientation(orientation)
@@ -103,7 +103,7 @@ class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
         val point = streetViewPanorama.orientationToPoint(orientation)
         if (point != null) {
             panoLongClickTimes++
-            panoLongClickTextView.text = "Times long clicked=$panoLongClickTimes : $point"
+            panoLongClickTextView.text = getString(R.string.pano_long_click_times, panoLongClickTimes, point)
         }
     }
 
