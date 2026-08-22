@@ -68,7 +68,7 @@ internal class KML {
         // [START maps_android_utils_kml_access_properties]
         for (container in layer.getContainers()) {
             if (container.hasProperty("name")) {
-                Log.i("KML", container.getProperty("name")!!)
+                Log.i("KML", container.getProperty("name") ?: "")
             }
         }
         // [END maps_android_utils_kml_access_properties]

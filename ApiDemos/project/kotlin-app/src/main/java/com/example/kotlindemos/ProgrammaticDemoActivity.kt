@@ -13,7 +13,6 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-import android.R
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +20,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
+import kotlinx.coroutines.launch
 
 /**
  * Demonstrates how to instantiate a SupportMapFragment programmatically and add a marker to it.
@@ -36,18 +36,18 @@ class ProgrammaticDemoActivity : SamplesBaseActivity() {
                 ?: SupportMapFragment.newInstance().also {
                     // Then we add it using a FragmentTransaction.
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.add(R.id.content, it, MAP_FRAGMENT_TAG)
+                    fragmentTransaction.add(android.R.id.content, it, MAP_FRAGMENT_TAG)
                     fragmentTransaction.commit()
                 }
 
-        lifecycleScope.launchWhenCreated {
+        lifecycleScope.launch {
             val map = mapFragment.awaitMap()
             map.addMarker {
                 position(LatLng(0.0, 0.0))
                 title("Marker")
             }
         }
-      applyInsets(findViewById<View>(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
     }
 
     companion object {

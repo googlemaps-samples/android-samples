@@ -36,7 +36,7 @@ class StreetViewPanoramaBasicDemoActivity : SamplesBaseActivity() {
             // loaded which is when the savedInstanceState is null).
             savedInstanceState ?: panorama.setPosition(SYDNEY)
         }
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     companion object {

@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="5dp"
             android:paddingEnd="5dp"
-            android:background="@color/white"
+            android:background="?attr/colorSurface"
             android:orientation="vertical">
 
             <CheckBox

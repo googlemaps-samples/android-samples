@@ -42,7 +42,7 @@ class MapInPagerDemoActivity : SamplesBaseActivity() {
     // This is required to avoid a black flash when the map is loaded.  The flash is due
     // to the use of a SurfaceView as the underlying view of the map.
     pager.requestTransparentRegion(pager)
-    applyInsets(findViewById<View>(R.id.map_container))
+    applyInsets(findViewById(R.id.map_container))
   }
 
   /** A simple fragment that displays a TextView.  */
@@ -55,6 +55,7 @@ class MapInPagerDemoActivity : SamplesBaseActivity() {
   }
 
   /** A simple FragmentPagerAdapter that returns two TextFragment and a SupportMapFragment.  */
+  @Suppress("DEPRECATION")
   class MyAdapter(fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 

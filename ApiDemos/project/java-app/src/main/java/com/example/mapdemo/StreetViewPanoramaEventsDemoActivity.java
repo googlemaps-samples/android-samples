@@ -98,13 +98,13 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
     @Override
     public void onStreetViewPanoramaChange(StreetViewPanoramaLocation location) {
         if (location != null) {
-            panoChangeTimesTextView.setText("Times panorama changed=" + ++panoChangeTimes);
+            panoChangeTimesTextView.setText(getString(com.example.common_ui.R.string.pano_change_times, ++panoChangeTimes));
         }
     }
 
     @Override
     public void onStreetViewPanoramaCameraChange(StreetViewPanoramaCamera camera) {
-        panoCameraChangeTextView.setText("Times camera changed=" + ++panoCameraChangeTimes);
+        panoCameraChangeTextView.setText(getString(com.example.common_ui.R.string.pano_camera_change_times, ++panoCameraChangeTimes));
     }
 
     @Override
@@ -113,7 +113,7 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
         if (point != null) {
             panoClickTimes++;
             panoClickTextView.setText(
-                    "Times clicked=" + panoClickTimes + " : " + point);
+                    getString(com.example.common_ui.R.string.pano_click_times, panoClickTimes, point));
             streetViewPanorama.animateTo(
                     new StreetViewPanoramaCamera.Builder()
                             .orientation(orientation)
@@ -128,7 +128,7 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
         if (point != null) {
             panoLongClickTimes++;
             panoLongClickTextView.setText(
-                    "Times long clicked=" + panoLongClickTimes + " : " + point);
+                    getString(com.example.common_ui.R.string.pano_long_click_times, panoLongClickTimes, point));
         }
     }
 }

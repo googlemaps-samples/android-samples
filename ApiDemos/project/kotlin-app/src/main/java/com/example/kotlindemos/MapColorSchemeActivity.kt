@@ -46,7 +46,7 @@ class MapColorSchemeActivity :
         buttonLight = findViewById(R.id.map_color_light_mode)
         buttonDark = findViewById(R.id.map_color_dark_mode)
         buttonFollowSystem = findViewById(R.id.map_color_follow_system_mode)
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

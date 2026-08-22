@@ -190,7 +190,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     private fun onMovePosition() {
         val location = streetViewPanorama.location
         val camera = streetViewPanorama.panoramaCamera
-        location.links?.let {
+        if (location.links.isNotEmpty()) {
             val link = location.links.findClosestLinkToBearing(camera.bearing)
             streetViewPanorama.setPosition(link.panoId)
         }

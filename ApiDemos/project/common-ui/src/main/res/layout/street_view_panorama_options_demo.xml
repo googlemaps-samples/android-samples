@@ -34,7 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/streetviewpanorama"
         android:padding="6dp"
-        android:background="@color/white"
+        android:background="?attr/colorSurface"
         android:orientation="vertical">
 
         <CheckBox

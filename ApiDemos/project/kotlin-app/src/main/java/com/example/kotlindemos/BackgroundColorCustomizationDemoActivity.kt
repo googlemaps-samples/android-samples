@@ -33,7 +33,7 @@ class BackgroundColorCustomizationDemoActivity : SamplesBaseActivity(), OnMapRea
         setContentView(R.layout.background_color_customization_demo)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        applyInsets(findViewById<View>(R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     /**

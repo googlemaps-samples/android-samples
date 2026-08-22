@@ -14,6 +14,7 @@
 package com.example.kotlindemos
 
 import android.graphics.Color
+import androidx.core.graphics.toColorInt
 
 import com.google.android.gms.maps.OnMapReadyCallback
 import android.os.Bundle
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.AdvancedMarkerOptions
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapCapabilities
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.PinConfig
@@ -137,83 +139,93 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
 
-        with(map) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(SINGAPORE, ZOOM_LEVEL))
-        }
+        val bounds = LatLngBounds.builder()
+            .include(SINGAPORE)
+            .include(KUALA_LUMPUR)
+            .include(JAKARTA)
+            .include(BANGKOK)
+            .include(MANILA)
+            .include(HO_CHI_MINH_CITY)
+            .build()
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120))
 
         val capabilities: MapCapabilities = map.mapCapabilities
         Log.d(TAG, "are advanced marker enabled?" + capabilities.isAdvancedMarkersAvailable)
 
-        // This sample sets a view as the iconView for the Advanced Marker
-        val textView = TextView(this)
-        textView.text = "Hello!"
-        val advancedMarkerView: Marker? = map.addMarker(
-            AdvancedMarkerOptions().position(SINGAPORE).iconView(textView).zIndex(1f)
+        // 1. Custom View as iconView (Framed circular badge with Android logo)
+        val iconImageView = android.widget.ImageView(this).apply {
+            setImageResource(R.drawable.ic_android)
+            setColorFilter("#3DDC84".toColorInt()) // Android Green
+            setBackgroundResource(R.drawable.bg_marker_badge)
+            val padding = (8 * resources.displayMetrics.density).toInt()
+            setPadding(padding, padding, padding, padding)
+            layoutParams = android.view.ViewGroup.LayoutParams(
+                (44 * resources.displayMetrics.density).toInt(),
+                (44 * resources.displayMetrics.density).toInt()
+            )
+        }
+        map.addMarker(
+            AdvancedMarkerOptions()
+                .position(SINGAPORE)
+                .iconView(iconImageView)
+                .title("Singapore (Custom Framed Badge)")
+                .zIndex(1f)
         )
 
-        // This uses PinConfig.Builder to create an instance of PinConfig.
-        val pinConfigBuilder: PinConfig.Builder = PinConfig.builder()
-        pinConfigBuilder.setBackgroundColor(Color.MAGENTA)
-        val pinConfig: PinConfig = pinConfigBuilder.build()
-
-
-        // Use the  PinConfig instance to set the icon for AdvancedMarkerOptions.
-        val advancedMarkerOptions: AdvancedMarkerOptions =
-            AdvancedMarkerOptions().icon(BitmapDescriptorFactory.fromPinConfig(pinConfig))
+        // 2. PinConfig with custom background color
+        val pinConfigMagenta = PinConfig.builder()
+            .setBackgroundColor(Color.MAGENTA)
+            .build()
+        map.addMarker(
+            AdvancedMarkerOptions()
+                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigMagenta))
                 .position(KUALA_LUMPUR)
+                .title("Kuala Lumpur (Magenta Pin)")
+        )
 
+        // 3. PinConfig with custom border color
+        val pinConfigBorder = PinConfig.builder()
+            .setBorderColor(Color.BLUE)
+            .build()
+        map.addMarker(
+            AdvancedMarkerOptions()
+                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigBorder))
+                .position(JAKARTA)
+                .title("Jakarta (Blue Border)")
+        )
 
-        // Pass the AdvancedMarkerOptions instance to addMarker().
-        val marker: Marker? = map.addMarker(advancedMarkerOptions)
+        // 4. PinConfig with text glyph ("A")
+        val pinConfigTextGlyph = PinConfig.builder()
+            .setGlyph(PinConfig.Glyph("A"))
+            .build()
+        map.addMarker(
+            AdvancedMarkerOptions()
+                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigTextGlyph))
+                .position(BANGKOK)
+                .title("Bangkok (Text Glyph 'A')")
+        )
 
-        // This sample changes the border color of the advanced marker
-        val pinConfigBuilder2: PinConfig.Builder = PinConfig.builder()
-        pinConfigBuilder2.setBorderColor(Color.BLUE)
-        val pinConfig2: PinConfig = pinConfigBuilder2.build()
+        // 5. PinConfig with transparent glyph (cutout / donut pin)
+        val pinConfigHole = PinConfig.builder()
+            .setBackgroundColor(Color.MAGENTA)
+            .setGlyph(PinConfig.Glyph(Color.TRANSPARENT))
+            .build()
+        map.addMarker(
+            AdvancedMarkerOptions()
+                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigHole))
+                .position(MANILA)
+                .title("Manila (Transparent Cutout Glyph)")
+        )
 
-        val advancedMarkerOptions2: AdvancedMarkerOptions = AdvancedMarkerOptions()
-            .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig2))
-            .position(JAKARTA)
-
-
-        val marker2: Marker? = map.addMarker(advancedMarkerOptions2)
-
-        // Set the glyph text.
-        val pinConfigBuilder3: PinConfig.Builder = PinConfig.builder()
-        val glyphText = PinConfig.Glyph("A")
-
-        // Alternatively, you can set the text color:
-        // Glyph glyphText = new Glyph("A", Color.GREEN);
-        pinConfigBuilder3.setGlyph(glyphText)
-        val pinConfig3: PinConfig = pinConfigBuilder3.build()
-
-        val advancedMarkerOptions3: AdvancedMarkerOptions = AdvancedMarkerOptions()
-            .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig3))
-            .position(BANGKOK)
-
-        val marker3: Marker? = map.addMarker(advancedMarkerOptions3)
-
-        // Create a transparent glyph.
-        val pinConfigBuilder4: PinConfig.Builder = PinConfig.builder()
-        pinConfigBuilder4.setBackgroundColor(Color.MAGENTA)
-        pinConfigBuilder4.setGlyph(PinConfig.Glyph(Color.TRANSPARENT))
-        val pinConfig4: PinConfig = pinConfigBuilder4.build()
-
-        val advancedMarkerOptions4: AdvancedMarkerOptions = AdvancedMarkerOptions()
-            .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig4))
-            .position(MANILA)
-
-        val marker4: Marker? = map.addMarker(advancedMarkerOptions4)
-
-        // Collision behavior can only be changed in the AdvancedMarkerOptions object.
-        // Changes to collision behavior after a marker has been created are not possible
-        val collisionBehavior: Int =
+        // 6. Collision behavior
+        val collisionBehavior =
             AdvancedMarkerOptions.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL
-        val advancedMarkerOptions5: AdvancedMarkerOptions = AdvancedMarkerOptions()
-            .position(HO_CHI_MINH_CITY)
-            .collisionBehavior(collisionBehavior)
-
-        val marker5: Marker? = map.addMarker(advancedMarkerOptions5)
+        map.addMarker(
+            AdvancedMarkerOptions()
+                .position(HO_CHI_MINH_CITY)
+                .collisionBehavior(collisionBehavior)
+                .title("Ho Chi Minh City (Collision Behavior)")
+        )
     }
 }
 // [END maps_android_sample_marker_advanced]

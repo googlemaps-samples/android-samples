@@ -185,7 +185,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
             // The default pattern is a solid stroke.
             polyline.pattern = null
         }
-        Toast.makeText(this, "Route type " + polyline.tag.toString(),
+        Toast.makeText(this, "Route type ${polyline.tag}",
             Toast.LENGTH_SHORT).show()
     }
     // [END maps_poly_activity_on_polyline_click]

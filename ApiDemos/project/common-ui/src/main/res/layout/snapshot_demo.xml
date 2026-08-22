@@ -29,57 +29,147 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/snapshot_demo_label" />
 
-    <LinearLayout
+    <!-- Top Card: Interactive Live Map -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/map_card"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/bottomContainer"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="6dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorOutlineVariant"
+        app:layout_constraintTop_toBottomOf="@id/topAppBar"
+        app:layout_constraintBottom_toTopOf="@id/snapshot_card"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topAppBar">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/snapshot_holder"
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="12dp"
+                android:clickable="false"
+                android:text="@string/snapshot_live_map_label"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                app:chipMinHeight="28dp"
+                app:chipCornerRadius="8dp" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Bottom Card: Snapshot Preview -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/snapshot_card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="?attr/colorOutlineVariant"
+        app:layout_constraintTop_toBottomOf="@id/map_card"
+        app:layout_constraintBottom_toTopOf="@id/wait_for_map_load"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/snapshot_holder_description" />
-    </LinearLayout>
+            android:layout_height="match_parent">
 
+            <!-- Empty State Placeholder -->
+            <TextView
+                android:id="@+id/snapshot_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="24dp"
+                android:text="@string/snapshot_placeholder_text"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?attr/colorOutline"
+                android:drawablePadding="8dp"
+                app:drawableTopCompat="@drawable/ic_camera"
+                app:drawableTint="?attr/colorOutline" />
+
+            <ImageView
+                android:id="@+id/snapshot_holder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/snapshot_holder_description" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/snapshot_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:layout_margin="12dp"
+                android:clickable="false"
+                android:visibility="gone"
+                android:text="@string/snapshot_preview_label"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                app:chipMinHeight="28dp"
+                app:chipCornerRadius="8dp" />
+        </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Wait for Map Load CheckBox -->
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/wait_for_map_load"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="4dp"
         android:checked="true"
         android:text="@string/wait_for_map_load"
-        app:layout_constraintBottom_toTopOf="@id/bottomContainer" />
+        app:layout_constraintTop_toBottomOf="@id/snapshot_card"
+        app:layout_constraintBottom_toTopOf="@id/bottomContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Action Buttons Row -->
     <LinearLayout
         android:id="@+id/bottomContainer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/screenshot_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/snapshot_take_button"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:icon="@drawable/ic_camera"
+            android:text="@string/snapshot_take_button" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/clear_button"
-            android:layout_width="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/snapshot_clear_button"/>
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            app:icon="@drawable/ic_clear"
+            android:text="@string/snapshot_clear_button" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

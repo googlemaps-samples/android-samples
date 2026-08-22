@@ -20,12 +20,14 @@
 
     <item
         android:id="@+id/layout_linear"
+        android:icon="@drawable/ic_view_list"
         android:title="@string/linear"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/layout_grid"
+        android:icon="@drawable/ic_view_grid"
         android:title="@string/grid"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
 </menu>

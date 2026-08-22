@@ -21,9 +21,8 @@ import android.os.Bundle
 import android.view.View
 
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.R
 import com.google.android.gms.maps.GoogleMap
@@ -33,6 +32,8 @@ import com.google.android.gms.maps.LocationSource.OnLocationChangedListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.awaitMap
+
+import kotlinx.coroutines.launch
 
 /**
  * This shows how to use a custom location source.
@@ -44,13 +45,14 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.basic_demo)
+    findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.top_bar)?.setTitle(R.string.location_source_demo_label)
     val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-    lifecycleScope.launchWhenCreated {
+    lifecycleScope.launch {
       val map = mapFragment.awaitMap()
       init(map = map)
     }
     lifecycle.addObserver(locationSource)
-    applyInsets(findViewById<View>(R.id.map_container))
+    applyInsets(findViewById(R.id.map_container))
   }
 
   @SuppressLint("MissingPermission")
@@ -72,7 +74,7 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
  * at
  * the point at which a user long pressed the map.
  */
-private class LongPressLocationSource : LocationSource, OnMapLongClickListener, LifecycleObserver {
+private class LongPressLocationSource : LocationSource, OnMapLongClickListener, DefaultLifecycleObserver {
 
   private var listener: OnLocationChangedListener? = null
 
@@ -104,13 +106,11 @@ private class LongPressLocationSource : LocationSource, OnMapLongClickListener, 
     listener?.onLocationChanged(location)
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-  fun onPause() {
+  override fun onPause(owner: LifecycleOwner) {
     paused = true
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-  fun onResume() {
+  override fun onResume(owner: LifecycleOwner) {
     paused = false
   }
 }

@@ -22,6 +22,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -36,7 +37,9 @@ import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.toColorInt
 import com.example.common_ui.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -290,7 +293,7 @@ class MarkerDemoActivity :
                         position = places.getValue("ALICE_SPRINGS"),
                         title = "Alice Springs",
                         icon = vectorToBitmap(
-                                R.drawable.ic_android, Color.parseColor("#A4C639"))
+                                R.drawable.ic_android, "#A4C639".toColorInt())
                 ),
 
                 // More markers for good measure
@@ -363,8 +366,11 @@ class MarkerDemoActivity :
             Log.e(TAG, "Resource not found")
             return BitmapDescriptorFactory.defaultMarker()
         }
-        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth,
-                vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val bitmap = createBitmap(
+            vectorDrawable.intrinsicWidth,
+            vectorDrawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
         val canvas = Canvas(bitmap)
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
         DrawableCompat.setTint(vectorDrawable, color)
@@ -401,7 +407,7 @@ class MarkerDemoActivity :
 
         if (marker.position == places.getValue("PERTH")) {
             // This causes the marker at Perth to bounce into position when it is clicked.
-            val handler = Handler()
+            val handler = Handler(Looper.getMainLooper())
             val start = SystemClock.uptimeMillis()
             val duration = 1500
 

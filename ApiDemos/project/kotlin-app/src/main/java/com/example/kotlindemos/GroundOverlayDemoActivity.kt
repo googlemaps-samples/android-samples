@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.GroundOverlay
 import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 
 /**
  * This demo shows how to add a ground overlay to a map.
@@ -63,7 +64,7 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
         setContentView(binding.root)
 
         binding.transparencySeekBar.max = TRANSPARENCY_MAX
-        binding.transparencySeekBar.progress = 0
+        binding.transparencySeekBar.progress = 25
 
         // Set up programmatic click listeners for the buttons.
         // This is a better practice than using the android:onClick XML attribute, as it keeps
@@ -90,10 +91,8 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
         // Register a listener to respond to clicks on GroundOverlays.
         map.setOnGroundOverlayClickListener(this)
 
-        // Move the camera to the Newark area.
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK, 11f))
-
-        map.moveCamera(CameraUpdateFactory.scrollBy(100f, 100f))
+        // Move the camera to frame the Newark overlays with padding.
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(OVERLAY_BOUNDS, 80))
 
         // Prepare the BitmapDescriptor objects. Using a BitmapDescriptorFactory is the most
         // memory-efficient way to create the images that will be used for the overlays.
@@ -124,6 +123,7 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
             GroundOverlayOptions()
                 .image(images[currentEntry]).anchor(0f, 1f)
                 .position(NEWARK, 8600f, 6500f)
+                .transparency(binding.transparencySeekBar.progress.toFloat() / TRANSPARENCY_MAX.toFloat())
         ) ?: error("Expected a non null addGroundOverlay")
 
         groundOverlay.tag = images[currentEntry]
@@ -186,6 +186,10 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
         internal val NEAR_NEWARK = LatLng(
             NEWARK.latitude - 0.001,
             NEWARK.longitude - 0.025
+        )
+        internal val OVERLAY_BOUNDS = LatLngBounds(
+            LatLng(40.7050, -74.2600),
+            LatLng(40.7800, -74.1200)
         )
     }
 }

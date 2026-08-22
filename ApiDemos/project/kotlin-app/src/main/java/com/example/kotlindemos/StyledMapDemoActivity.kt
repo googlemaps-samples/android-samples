@@ -62,7 +62,7 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         val mapFragment =
                 supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById<View>(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
