@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2026 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ class OnMapAndViewReadyListener(
 ) : OnGlobalLayoutListener,
         OnMapReadyCallback {
 
-    private val mapView: View? = mapFragment.view
+    private var mapView: View? = null
 
     private var isViewReady = false
     private var isMapReady = false
@@ -52,16 +52,6 @@ class OnMapAndViewReadyListener(
     }
 
     private fun registerListeners() {
-        // View layout.
-        mapView?.let {
-            if (it.width != 0 && it.height != 0) {
-                // View has already completed layout.
-                isViewReady = true
-            } else {
-                // Map has not undergone layout, register a View observer.
-                it.viewTreeObserver.addOnGlobalLayoutListener(this)
-            }
-        }
         // GoogleMap. Note if the GoogleMap is already ready it will still fire the callback later.
         mapFragment.getMapAsync(this)
     }
@@ -70,6 +60,22 @@ class OnMapAndViewReadyListener(
         // NOTE: The GoogleMap API specifies the listener is removed just prior to invocation.
         map = googleMap
         isMapReady = true
+
+        // View layout.
+        mapView = mapFragment.view
+        val view = mapView
+        if (view != null) {
+            if (view.width != 0 && view.height != 0) {
+                // View has already completed layout.
+                isViewReady = true
+            } else {
+                // Map has not undergone layout, register a View observer.
+                view.viewTreeObserver.addOnGlobalLayoutListener(this)
+            }
+        } else {
+            isViewReady = true
+        }
+
         fireCallbackIfReady()
     }
 
