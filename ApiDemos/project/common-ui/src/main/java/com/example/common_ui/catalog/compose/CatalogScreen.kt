@@ -63,7 +63,8 @@ fun CatalogScreen(
     evaluations: Map<String, SampleEvaluationEntity> = emptyMap(),
     onSaveEvaluation: ((targetFqcn: String, status: ReviewStatus, notes: String, sample: SampleItem) -> Unit)? = null,
     onLaunchSample: (SampleItem, Framework) -> Unit,
-    onExportGrievances: (() -> Unit)? = null
+    onExportGrievances: (() -> Unit)? = null,
+    onClearEvaluations: (() -> Unit)? = null
 ) {
     var selectedFramework by remember { mutableStateOf(Framework.KOTLIN_VIEWS) }
     var selectedComplexity by remember { mutableStateOf<Complexity?>(null) }
@@ -72,6 +73,7 @@ fun CatalogScreen(
     var searchQuery by remember { mutableStateOf("") }
     var activeSampleForDetail by remember { mutableStateOf<SampleItem?>(null) }
     var activeQuickGrading by remember { mutableStateOf<Pair<SampleItem, ReviewStatus>?>(null) }
+    var showClearConfirmDialog by remember { mutableStateOf(false) }
 
     // Collapsible header controls state
     var isHeaderControlsVisible by remember { mutableStateOf(true) }
@@ -186,6 +188,17 @@ fun CatalogScreen(
                                         imageVector = if (selectedStatusFilter == ReviewStatus.UNCHECKED) Icons.Default.CheckCircleOutline else Icons.Default.RadioButtonUnchecked,
                                         contentDescription = "Filter Unchecked Only",
                                         tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                                    )
+                                }
+                            }
+
+                            // Clear / Reset All Evaluations Button
+                            if (onClearEvaluations != null && (evaluations.isNotEmpty())) {
+                                IconButton(onClick = { showClearConfirmDialog = true }) {
+                                    Icon(
+                                        imageVector = Icons.Default.DeleteSweep,
+                                        contentDescription = "Clear All Evaluations",
+                                        tint = MaterialTheme.colorScheme.outline
                                     )
                                 }
                             }
@@ -449,6 +462,37 @@ fun CatalogScreen(
                 }
             }
         }
+    }
+
+    // Confirmation Dialog for Clearing All Evaluations
+    if (showClearConfirmDialog) {
+        AlertDialog(
+            onDismissRequest = { showClearConfirmDialog = false },
+            icon = { Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+            title = { Text("Clear All Evaluations?") },
+            text = {
+                Text("This will reset all sample review ratings, status indicators, and feedback notes stored on this device back to Unchecked.")
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onClearEvaluations?.invoke()
+                        showClearConfirmDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    )
+                ) {
+                    Text("Clear All")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showClearConfirmDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 
     // Full-Screen Sample Detail & Code Viewer Dialog
@@ -982,18 +1026,37 @@ fun SampleDetailFullScreenDialog(
                             )
 
                             Spacer(modifier = Modifier.height(14.dp))
-                            Button(
-                                onClick = { onSaveEvaluation(currentStatus, notesText) },
+                            Row(
                                 modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(10.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                Icon(Icons.Default.Save, contentDescription = null, modifier = Modifier.size(18.dp))
-                                Spacer(modifier = Modifier.width(6.dp))
-                                Text("Save Review Evaluation")
+                                if (existingEvaluation != null) {
+                                    OutlinedButton(
+                                        onClick = {
+                                            currentStatus = ReviewStatus.UNCHECKED
+                                            notesText = ""
+                                            onSaveEvaluation(ReviewStatus.UNCHECKED, "")
+                                        },
+                                        modifier = Modifier.weight(1f),
+                                        shape = RoundedCornerShape(10.dp)
+                                    ) {
+                                        Text("Reset", color = MaterialTheme.colorScheme.error)
+                                    }
+                                }
+
+                                Button(
+                                    onClick = { onSaveEvaluation(currentStatus, notesText) },
+                                    modifier = Modifier.weight(2f),
+                                    shape = RoundedCornerShape(10.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                ) {
+                                    Icon(Icons.Default.Save, contentDescription = null, modifier = Modifier.size(18.dp))
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text("Save Review Evaluation")
+                                }
                             }
                         }
                     }

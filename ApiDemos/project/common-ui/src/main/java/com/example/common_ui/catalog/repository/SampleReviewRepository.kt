@@ -74,6 +74,24 @@ class SampleReviewRepository private constructor(
         }
     }
 
+    fun clearAllEvaluations(onComplete: (() -> Unit)? = null) {
+        coroutineScope.launch {
+            dao.clearAll()
+            withContext(Dispatchers.Main) {
+                onComplete?.invoke()
+            }
+        }
+    }
+
+    fun deleteEvaluation(targetFqcn: String, onComplete: (() -> Unit)? = null) {
+        coroutineScope.launch {
+            dao.deleteEvaluation(targetFqcn)
+            withContext(Dispatchers.Main) {
+                onComplete?.invoke()
+            }
+        }
+    }
+
     suspend fun exportAiringOfGrievances(context: Context): File {
         return withContext(Dispatchers.IO) {
             val allEvaluations = dao.getAllEvaluations()
