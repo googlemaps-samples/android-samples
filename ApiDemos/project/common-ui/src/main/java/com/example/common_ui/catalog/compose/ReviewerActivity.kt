@@ -71,16 +71,32 @@ open class ReviewerActivity : ComponentActivity() {
                 )
             }
         }
+        val receiverFlags = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            android.content.Context.RECEIVER_EXPORTED
+        } else {
+            0
+        }
+        registerReceiver(object : android.content.BroadcastReceiver() {
+            override fun onReceive(context: android.content.Context?, intent: Intent?) {
+                exportAiringOfGrievances(silent = true)
+            }
+        }, android.content.IntentFilter("com.google.maps.EXPORT_EVALUATIONS"), receiverFlags)
     }
 
-    private fun exportAiringOfGrievances() {
+    private fun exportAiringOfGrievances(silent: Boolean = false) {
         lifecycleScope.launch {
             try {
                 val file = repository.exportAiringOfGrievances(this@ReviewerActivity)
-                val shareIntent = GrievanceReportExporter.createShareIntent(this@ReviewerActivity, file)
-                startActivity(Intent.createChooser(shareIntent, "Share Evaluation Report"))
+                if (!silent) {
+                    val shareIntent = GrievanceReportExporter.createShareIntent(this@ReviewerActivity, file)
+                    startActivity(Intent.createChooser(shareIntent, "Share Evaluation Report"))
+                } else {
+                    android.util.Log.i("GMPReviewer", "Exported evaluation report to ${file.absolutePath}")
+                }
             } catch (e: Exception) {
-                Toast.makeText(this@ReviewerActivity, "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
+                if (!silent) {
+                    Toast.makeText(this@ReviewerActivity, "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

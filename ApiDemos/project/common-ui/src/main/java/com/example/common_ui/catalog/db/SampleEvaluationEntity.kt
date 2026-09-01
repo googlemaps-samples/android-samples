@@ -21,7 +21,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 /**
- * Room database entity storing manual review status, evaluation, and notes for a sample.
+ * Room database entity storing manual review status, evaluation, notes, and annotated screenshot path.
  */
 @Entity(tableName = "sample_evaluations")
 data class SampleEvaluationEntity(
@@ -33,5 +33,6 @@ data class SampleEvaluationEntity(
     val framework: String,
     val status: String,
     val notes: String,
+    val screenshotPath: String? = null,
     val lastUpdated: Long = System.currentTimeMillis()
 ) : Serializable

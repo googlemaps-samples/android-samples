@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -27,23 +28,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LifecycleOwnerKt;
 
 import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.ReviewStatus;
 import com.example.common_ui.catalog.SampleCatalogRegistry;
 import com.example.common_ui.catalog.SampleItem;
+import com.example.common_ui.catalog.repository.SampleReviewRepository;
+import com.example.common_ui.catalog.ui.ReviewEvaluationDialog;
 import com.example.common_ui.catalog.ui.SampleExpectationsBottomSheet;
 import com.example.common_ui.catalog.ui.UnifiedCatalogActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import kotlinx.coroutines.BuildersKt;
+import kotlinx.coroutines.Dispatchers;
+
 public class SamplesBaseActivity extends AppCompatActivity {
 
     protected SampleItem currentSampleMetadata;
+    protected SampleReviewRepository reviewRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         applyImmersiveStickyMode();
+        reviewRepository = SampleReviewRepository.Companion.getInstance(this);
         resolveSampleMetadata();
         super.setContentView(com.example.common_ui.R.layout.activity_sample_base);
         setupEdgeToEdgeInsets();
@@ -63,7 +73,6 @@ public class SamplesBaseActivity extends AppCompatActivity {
             applyImmersiveStickyMode();
         }
     }
-
 
     private void applyImmersiveStickyMode() {
         androidx.core.view.WindowInsetsControllerCompat insetsController =
@@ -174,12 +183,24 @@ public class SamplesBaseActivity extends AppCompatActivity {
                     .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            menu.add(0, 2001, 2, "Criteria & Purpose")
+            menu.add(0, 2005, 2, "Next Unchecked")
+                    .setIcon(com.example.common_ui.R.drawable.ic_skip_next)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            menu.add(0, 2001, 3, "Criteria & Purpose")
                     .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+
+            menu.add(0, 2006, 4, "Previous Sample")
+                    .setIcon(com.example.common_ui.R.drawable.ic_skip_previous)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+
+            menu.add(0, 2007, 5, "Reset to Unchecked")
+                    .setIcon(com.example.common_ui.R.drawable.ic_undo)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
             if (currentSampleMetadata.getKotlinActivity() != null) {
-                menu.add(0, 2002, 3, "Switch to Kotlin")
+                menu.add(0, 2002, 6, "Switch to Kotlin")
                         .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
                         .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             }
@@ -225,22 +246,54 @@ public class SamplesBaseActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == 2003) {
             if (currentSampleMetadata != null) {
-                com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                ReviewEvaluationDialog.show(
                         this,
                         currentSampleMetadata,
                         Framework.JAVA_VIEWS,
-                        com.example.common_ui.catalog.ReviewStatus.PASSING
+                        ReviewStatus.PASSING
                 );
             }
             return true;
         } else if (item.getItemId() == 2004) {
             if (currentSampleMetadata != null) {
-                com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                ReviewEvaluationDialog.show(
                         this,
                         currentSampleMetadata,
                         Framework.JAVA_VIEWS,
-                        com.example.common_ui.catalog.ReviewStatus.NEEDS_WORK
+                        ReviewStatus.NEEDS_WORK
                 );
+            }
+            return true;
+        } else if (item.getItemId() == 2005) {
+            if (currentSampleMetadata != null) {
+                reviewRepository.getNextUncheckedSampleAsync(currentSampleMetadata.getId(), Framework.JAVA_VIEWS, next -> {
+                    if (next != null) {
+                        SampleReviewRepository.Companion.launchSample(SamplesBaseActivity.this, next, Framework.JAVA_VIEWS);
+                    } else {
+                        Toast.makeText(SamplesBaseActivity.this, "🎉 All Java samples reviewed!", Toast.LENGTH_LONG).show();
+                        navigateBackToCatalog();
+                    }
+                    return kotlin.Unit.INSTANCE;
+                });
+            }
+            return true;
+        } else if (item.getItemId() == 2006) {
+            if (currentSampleMetadata != null) {
+                reviewRepository.getPreviousSampleAsync(currentSampleMetadata.getId(), Framework.JAVA_VIEWS, prev -> {
+                    if (prev != null) {
+                        SampleReviewRepository.Companion.launchSample(SamplesBaseActivity.this, prev, Framework.JAVA_VIEWS);
+                    }
+                    return kotlin.Unit.INSTANCE;
+                });
+            }
+            return true;
+        } else if (item.getItemId() == 2007) {
+            if (currentSampleMetadata != null) {
+                String targetFqcn = currentSampleMetadata.getTargetFqcn(Framework.JAVA_VIEWS);
+                reviewRepository.deleteEvaluation(targetFqcn, () -> {
+                    Toast.makeText(this, "Reverted " + currentSampleMetadata.getTitle() + " to Unchecked", Toast.LENGTH_SHORT).show();
+                    return kotlin.Unit.INSTANCE;
+                });
             }
             return true;
         } else if (item.getItemId() == 2002) {

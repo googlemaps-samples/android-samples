@@ -20,22 +20,29 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
 import com.example.common_ui.catalog.SampleItem
+import com.example.common_ui.catalog.repository.SampleReviewRepository
 import com.example.common_ui.catalog.ui.ReviewEvaluationDialog
 import com.example.common_ui.catalog.ui.SampleExpectationsBottomSheet
 import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
 import com.google.android.material.appbar.MaterialToolbar
+import kotlinx.coroutines.launch
 
 open class SamplesBaseActivity : AppCompatActivity() {
 
     protected var currentSampleMetadata: SampleItem? = null
+    protected val reviewRepository: SampleReviewRepository by lazy {
+        SampleReviewRepository.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,23 +152,40 @@ open class SamplesBaseActivity : AppCompatActivity() {
         super.onCreateOptionsMenu(menu)
         val metadata = currentSampleMetadata
         if (metadata != null) {
-            // Good Job & Needs Work always accessible
+            // 1. Good Job (Pass) - ALWAYS
             menu.add(0, 2003, 0, "Good Job (Pass)")
                 .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
+            // 2. Something's Wrong - ALWAYS
             menu.add(0, 2004, 1, "Something's Wrong")
                 .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
-            // Criteria and Switch in menu / if room
-            menu.add(0, 2001, 2, "Criteria & Purpose")
-                .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            // 3. Next Unchecked - ALWAYS
+            menu.add(0, 2005, 2, "Next Unchecked")
+                .setIcon(com.example.common_ui.R.drawable.ic_skip_next)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
+            // 4. Criteria & Purpose
+            menu.add(0, 2001, 3, "Criteria & Purpose")
+                .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+
+            // 5. Previous Sample
+            menu.add(0, 2006, 4, "Previous Sample")
+                .setIcon(com.example.common_ui.R.drawable.ic_skip_previous)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+
+            // 6. Reset to Unchecked (Undo)
+            menu.add(0, 2007, 5, "Reset to Unchecked")
+                .setIcon(com.example.common_ui.R.drawable.ic_undo)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+
+            // 7. Switch to Java
             val javaActivity = metadata.javaActivity
             if (javaActivity != null) {
-                menu.add(0, 2002, 3, "Switch to Java")
+                menu.add(0, 2002, 6, "Switch to Java")
                     .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
             }
@@ -207,7 +231,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
             }
             2003 -> {
                 if (metadata != null) {
-                    com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                    ReviewEvaluationDialog.show(
                         this,
                         metadata,
                         Framework.KOTLIN_VIEWS,
@@ -218,12 +242,49 @@ open class SamplesBaseActivity : AppCompatActivity() {
             }
             2004 -> {
                 if (metadata != null) {
-                    com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                    ReviewEvaluationDialog.show(
                         this,
                         metadata,
                         Framework.KOTLIN_VIEWS,
                         ReviewStatus.NEEDS_WORK
                     )
+                }
+                true
+            }
+            2005 -> {
+                // Advance to Next Unchecked Sample
+                if (metadata != null) {
+                    lifecycleScope.launch {
+                        val next = reviewRepository.getNextUncheckedSample(metadata.id, Framework.KOTLIN_VIEWS)
+                        if (next != null) {
+                            SampleReviewRepository.launchSample(this@SamplesBaseActivity, next, Framework.KOTLIN_VIEWS)
+                        } else {
+                            Toast.makeText(this@SamplesBaseActivity, "🎉 All Kotlin samples reviewed!", Toast.LENGTH_LONG).show()
+                            navigateBackToCatalog()
+                        }
+                    }
+                }
+                true
+            }
+            2006 -> {
+                // Return to Previous Sample
+                if (metadata != null) {
+                    lifecycleScope.launch {
+                        val prev = reviewRepository.getPreviousSample(metadata.id, Framework.KOTLIN_VIEWS)
+                        if (prev != null) {
+                            SampleReviewRepository.launchSample(this@SamplesBaseActivity, prev, Framework.KOTLIN_VIEWS)
+                        }
+                    }
+                }
+                true
+            }
+            2007 -> {
+                // Reset to Unchecked
+                if (metadata != null) {
+                    val targetFqcn = metadata.getTargetFqcn(Framework.KOTLIN_VIEWS)
+                    reviewRepository.deleteEvaluation(targetFqcn) {
+                        Toast.makeText(this, "Reverted ${metadata.title} to Unchecked", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 true
             }
