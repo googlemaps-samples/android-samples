@@ -73,6 +73,16 @@ limitations under the License.
             android:name="com.example.common_ui.catalog.compose.CatalogActivity"
             android:label="GMP Sample Catalog"
             android:exported="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <activity
             android:name=".AdvancedMarkersDemoActivity"
             android:exported="true"
