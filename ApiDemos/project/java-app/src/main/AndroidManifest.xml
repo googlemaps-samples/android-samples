@@ -58,6 +58,21 @@ limitations under the License.
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.example.common_ui.catalog.compose.ReviewerActivity"
+            android:label="GMP Sample Reviewer"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.common_ui.catalog.compose.CatalogActivity"
+            android:label="GMP Sample Catalog"
+            android:exported="true" />
         <activity
             android:name=".AdvancedMarkersDemoActivity"
             android:exported="true"
