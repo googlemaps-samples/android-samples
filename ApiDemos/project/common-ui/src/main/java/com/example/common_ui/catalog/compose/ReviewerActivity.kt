@@ -62,6 +62,11 @@ open class ReviewerActivity : ComponentActivity() {
                     },
                     onExportGrievances = {
                         exportAiringOfGrievances()
+                    },
+                    onClearEvaluations = {
+                        repository.clearAllEvaluations {
+                            Toast.makeText(this@ReviewerActivity, "All evaluations cleared", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 )
             }
