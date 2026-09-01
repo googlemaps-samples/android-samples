@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
@@ -39,6 +40,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
@@ -59,7 +62,7 @@ fun CatalogScreen(
     var selectedComplexity by remember { mutableStateOf<Complexity?>(null) }
     val selectedTags = remember { mutableStateListOf<String>() }
     var searchQuery by remember { mutableStateOf("") }
-    var activeSampleForExpectations by remember { mutableStateOf<SampleItem?>(null) }
+    var activeSampleForDetail by remember { mutableStateOf<SampleItem?>(null) }
 
     val filteredSamples = remember(selectedFramework, selectedComplexity, selectedTags.toList(), searchQuery) {
         SampleCatalogRegistry.filter(
@@ -131,12 +134,12 @@ fun CatalogScreen(
                     Tab(
                         selected = selectedFramework == Framework.KOTLIN_VIEWS,
                         onClick = { selectedFramework = Framework.KOTLIN_VIEWS },
-                        text = { Text("💜 Kotlin") }
+                        text = { Text("💜 Kotlin", fontWeight = FontWeight.Bold) }
                     )
                     Tab(
                         selected = selectedFramework == Framework.JAVA_VIEWS,
                         onClick = { selectedFramework = Framework.JAVA_VIEWS },
-                        text = { Text("☕ Java") }
+                        text = { Text("☕ Java", fontWeight = FontWeight.Bold) }
                     )
                 }
 
@@ -261,31 +264,31 @@ fun CatalogScreen(
                         evaluation = eval,
                         status = status,
                         onSampleClick = { onLaunchSample(sample, selectedFramework) },
-                        onInfoClick = { activeSampleForExpectations = sample },
-                        onStatusClick = { activeSampleForExpectations = sample }
+                        onInfoClick = { activeSampleForDetail = sample },
+                        onStatusClick = { activeSampleForDetail = sample }
                     )
                 }
             }
         }
     }
 
-    // Modal Expectations & Review BottomSheet
-    activeSampleForExpectations?.let { sample ->
+    // Full-Screen Sample Detail & Code Viewer Dialog
+    activeSampleForDetail?.let { sample ->
         val targetFqcn = sample.getTargetFqcn(selectedFramework)
         val existingEval = evaluations[targetFqcn] ?: evaluations[sample.id]
-        SampleExpectationsModalSheet(
+        SampleDetailFullScreenDialog(
             sample = sample,
             targetFqcn = targetFqcn,
             framework = selectedFramework,
             isReviewerMode = isReviewerMode,
             existingEvaluation = existingEval,
-            onDismiss = { activeSampleForExpectations = null },
+            onDismiss = { activeSampleForDetail = null },
             onSaveEvaluation = { status, notes ->
                 onSaveEvaluation?.invoke(targetFqcn, status, notes, sample)
-                activeSampleForExpectations = null
+                activeSampleForDetail = null
             },
             onLaunch = { fw ->
-                activeSampleForExpectations = null
+                activeSampleForDetail = null
                 onLaunchSample(sample, fw)
             }
         )
@@ -323,7 +326,7 @@ fun SampleComposeCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Header: Category, Complexity, Review Status
+            // Header: Category and Complexity Badge
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -336,40 +339,14 @@ fun SampleComposeCard(
                     fontWeight = FontWeight.Bold
                 )
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    SuggestionChip(
-                        onClick = {},
-                        label = { Text("${sample.complexity.badge} ${sample.complexity.displayName}", fontSize = 11.sp) }
-                    )
-
-                    if (isReviewerMode) {
-                        val (statusText, statusBg, statusFg) = when (status) {
-                            ReviewStatus.PASSING -> Triple("🟢 Pass", Color(0xFFE8F5E9), Color(0xFF2E7D32))
-                            ReviewStatus.NEEDS_WORK -> Triple("🔴 Needs Work", Color(0xFFFFEBEE), Color(0xFFC62828))
-                            ReviewStatus.UNCHECKED -> Triple("⚪ Unchecked", Color(0xFFEEEEEE), Color(0xFF616161))
-                        }
-
-                        Button(
-                            onClick = onStatusClick,
-                            shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = statusBg,
-                                contentColor = statusFg
-                            ),
-                            modifier = Modifier.height(28.dp)
-                        ) {
-                            Text(statusText, fontSize = 11.sp, fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
+                SuggestionChip(
+                    onClick = {},
+                    label = { Text("${sample.complexity.badge} ${sample.complexity.displayName}", fontSize = 11.sp) }
+                )
             }
 
             // Title
-            Spacer(modifier = Modifier.height(6.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = sample.title,
                 style = MaterialTheme.typography.titleMedium,
@@ -391,21 +368,41 @@ fun SampleComposeCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            // Reviewer Notes preview (if reviewer mode and notes present)
-            if (isReviewerMode && !evaluation?.notes.isNullOrBlank()) {
-                Spacer(modifier = Modifier.height(6.dp))
-                Surface(
-                    shape = RoundedCornerShape(8.dp),
-                    color = Color(0xFFFFF3E0),
-                    modifier = Modifier.fillMaxWidth()
+            // Reviewer Status Badge & Notes (Reviewer Mode Only)
+            if (isReviewerMode) {
+                Spacer(modifier = Modifier.height(8.dp))
+                val (statusText, statusBg, statusFg) = when (status) {
+                    ReviewStatus.PASSING -> Triple("🟢 Pass", Color(0xFFE8F5E9), Color(0xFF2E7D32))
+                    ReviewStatus.NEEDS_WORK -> Triple("🔴 Needs Work", Color(0xFFFFEBEE), Color(0xFFC62828))
+                    ReviewStatus.UNCHECKED -> Triple("⚪ Unchecked", Color(0xFFEEEEEE), Color(0xFF616161))
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text(
-                        text = "📝 Note: ${evaluation?.notes}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color(0xFFE65100),
-                        fontStyle = FontStyle.Italic,
-                        modifier = Modifier.padding(8.dp)
-                    )
+                    Button(
+                        onClick = onStatusClick,
+                        shape = RoundedCornerShape(8.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 2.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = statusBg,
+                            contentColor = statusFg
+                        ),
+                        modifier = Modifier.height(28.dp)
+                    ) {
+                        Text(statusText, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    }
+
+                    if (!evaluation?.notes.isNullOrBlank()) {
+                        Text(
+                            text = "📝 ${evaluation.notes}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color(0xFFE65100),
+                            maxLines = 1,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                 }
             }
 
@@ -436,7 +433,7 @@ fun SampleComposeCard(
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Info / Criteria", fontSize = 12.sp)
+                    Text("Info & Code", fontSize = 12.sp)
                 }
 
                 Button(
@@ -454,9 +451,13 @@ fun SampleComposeCard(
     }
 }
 
+/**
+ * Full-screen detailed view of a sample including Purpose, Success Criteria,
+ * syntax-highlighted code editor, and reviewer evaluation controls.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SampleExpectationsModalSheet(
+fun SampleDetailFullScreenDialog(
     sample: SampleItem,
     targetFqcn: String,
     framework: Framework,
@@ -466,167 +467,271 @@ fun SampleExpectationsModalSheet(
     onSaveEvaluation: (ReviewStatus, String) -> Unit,
     onLaunch: (Framework) -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var currentStatus by remember { mutableStateOf(ReviewStatus.fromString(existingEvaluation?.status)) }
     var notesText by remember { mutableStateOf(existingEvaluation?.notes.orEmpty()) }
 
-    ModalBottomSheet(
+    Dialog(
         onDismissRequest = onDismiss,
-        sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surface
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+            decorFitsSystemWindows = false
+        )
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 12.dp)
-                .navigationBarsPadding()
-        ) {
-            // Title & Complexity
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = sample.title,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.weight(1f)
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Column {
+                            Text(
+                                text = sample.title,
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1
+                            )
+                            Text(
+                                text = "${sample.category} • ${sample.complexity.badge} ${sample.complexity.displayName}",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onDismiss) {
+                            Icon(Icons.Default.Close, contentDescription = "Close")
+                        }
+                    },
+                    actions = {
+                        Button(
+                            onClick = { onLaunch(framework) },
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
+                            Icon(Icons.Default.PlayArrow, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Launch", fontSize = 12.sp)
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
                 )
-                SuggestionChip(
-                    onClick = {},
-                    label = { Text("${sample.complexity.badge} ${sample.complexity.displayName}") }
-                )
-            }
+            },
+            bottomBar = {
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    tonalElevation = 6.dp,
+                    shadowElevation = 8.dp
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .navigationBarsPadding()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        val altFramework = when (framework) {
+                            Framework.KOTLIN_VIEWS -> if (sample.javaActivity != null) Framework.JAVA_VIEWS else null
+                            Framework.JAVA_VIEWS -> if (sample.kotlinActivity != null) Framework.KOTLIN_VIEWS else null
+                        }
 
-            Text(
-                text = "${sample.category} • ${sample.tags.joinToString(" ")}",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(top = 2.dp)
-            )
+                        if (altFramework != null) {
+                            OutlinedButton(
+                                onClick = { onLaunch(altFramework) },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Icon(Icons.Default.SwapHoriz, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text("Switch to ${altFramework.displayName}", fontSize = 12.sp, maxLines = 1)
+                            }
+                        }
 
-            // FQCN Target Identifier
-            Text(
-                text = "Target: $targetFqcn",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier.padding(top = 2.dp)
-            )
-
-            HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
-
-            // Formatted HTML Expectations Box
-            AndroidView(
-                factory = { context ->
-                    TextView(context).apply {
-                        textSize = 14f
-                        setLineSpacing(4f, 1.1f)
+                        Button(
+                            onClick = { onLaunch(framework) },
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Icon(Icons.Default.PlayArrow, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Launch ${framework.badge}", fontSize = 12.sp)
+                        }
                     }
-                },
-                update = { textView ->
-                    textView.text = Html.fromHtml(sample.getFormattedHelpHtml(), Html.FROM_HTML_MODE_COMPACT)
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            // Collapsible, Syntax-Highlighted Code Snippet View
-            Spacer(modifier = Modifier.height(10.dp))
-            CodeSnippetView(
-                sample = sample,
-                currentFramework = framework,
-                initiallyExpanded = sample.complexity == Complexity.SNIPPET,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
-
-            // Reviewer Controls (Only in Reviewer Mode!)
-            if (isReviewerMode) {
-                Text(
-                    text = "🔍 Reviewer Status Evaluation",
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    FilterChip(
-                        selected = currentStatus == ReviewStatus.PASSING,
-                        onClick = { currentStatus = ReviewStatus.PASSING },
-                        label = { Text("🟢 Passing") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    FilterChip(
-                        selected = currentStatus == ReviewStatus.NEEDS_WORK,
-                        onClick = { currentStatus = ReviewStatus.NEEDS_WORK },
-                        label = { Text("🔴 Needs Work") },
-                        modifier = Modifier.weight(1f)
-                    )
-                    FilterChip(
-                        selected = currentStatus == ReviewStatus.UNCHECKED,
-                        onClick = { currentStatus = ReviewStatus.UNCHECKED },
-                        label = { Text("⚪ Unchecked") },
-                        modifier = Modifier.weight(1f)
-                    )
                 }
-
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = notesText,
-                    onValueChange = { notesText = it },
-                    label = { Text("Reviewer Notes & Grievances (Bugs / Improvements)") },
-                    modifier = Modifier.fillMaxWidth(),
-                    minLines = 2,
-                    maxLines = 4,
-                    shape = RoundedCornerShape(10.dp)
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-                Button(
-                    onClick = { onSaveEvaluation(currentStatus, notesText) },
-                    modifier = Modifier.fillMaxWidth(),
+            }
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // FQCN Target Info Banner
+                Surface(
                     shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                ) {
-                    Icon(Icons.Default.Save, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text("Save Review Evaluation")
-                }
-            }
-
-            // Cross-Framework Switcher
-            val altFramework = when (framework) {
-                Framework.KOTLIN_VIEWS -> if (sample.javaActivity != null) Framework.JAVA_VIEWS else null
-                Framework.JAVA_VIEWS -> if (sample.kotlinActivity != null) Framework.KOTLIN_VIEWS else null
-            }
-
-            if (altFramework != null) {
-                Spacer(modifier = Modifier.height(8.dp))
-                TextButton(
-                    onClick = { onLaunch(altFramework) },
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(Icons.Default.SwapHoriz, contentDescription = null)
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text("Switch to ${altFramework.displayName}")
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text(
+                            text = "Target Class (FQCN)",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            text = targetFqcn,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
-            }
 
-            // Launch Sample Primary Action
-            Spacer(modifier = Modifier.height(6.dp))
-            Button(
-                onClick = { onLaunch(framework) },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(10.dp)
-            ) {
-                Text("Launch ${framework.displayName}")
+                // Card 1: Purpose & Criteria HTML Card
+                ElevatedCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.elevatedCardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = "🎯 Purpose & Verification Criteria",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        AndroidView(
+                            factory = { context ->
+                                TextView(context).apply {
+                                    textSize = 14f
+                                    setLineSpacing(4f, 1.15f)
+                                }
+                            },
+                            update = { textView ->
+                                textView.text = Html.fromHtml(sample.getFormattedHelpHtml(), Html.FROM_HTML_MODE_COMPACT)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                }
+
+                // Card 2: Full-Width Code Snippet Viewer (No Squishing!)
+                CodeSnippetView(
+                    sample = sample,
+                    currentFramework = framework,
+                    initiallyExpanded = true,
+                    isCollapsible = false,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                // Card 3: Reviewer Evaluation Controls (Reviewer Mode Only)
+                if (isReviewerMode) {
+                    ElevatedCard(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        colors = CardDefaults.elevatedCardColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        )
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            Text(
+                                text = "🔍 Reviewer Evaluation & Grievances",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            // Status Buttons (Clean, Non-wrapping layout)
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Button(
+                                    onClick = { currentStatus = ReviewStatus.PASSING },
+                                    modifier = Modifier.weight(1f),
+                                    shape = RoundedCornerShape(10.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = if (currentStatus == ReviewStatus.PASSING) Color(0xFF2E7D32) else Color(0xFFE8F5E9),
+                                        contentColor = if (currentStatus == ReviewStatus.PASSING) Color.White else Color(0xFF2E7D32)
+                                    ),
+                                    contentPadding = PaddingValues(vertical = 8.dp)
+                                ) {
+                                    Text("🟢 Pass", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                }
+
+                                Button(
+                                    onClick = { currentStatus = ReviewStatus.NEEDS_WORK },
+                                    modifier = Modifier.weight(1.2f),
+                                    shape = RoundedCornerShape(10.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = if (currentStatus == ReviewStatus.NEEDS_WORK) Color(0xFFC62828) else Color(0xFFFFEBEE),
+                                        contentColor = if (currentStatus == ReviewStatus.NEEDS_WORK) Color.White else Color(0xFFC62828)
+                                    ),
+                                    contentPadding = PaddingValues(vertical = 8.dp)
+                                ) {
+                                    Text("🔴 Needs Work", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                }
+
+                                Button(
+                                    onClick = { currentStatus = ReviewStatus.UNCHECKED },
+                                    modifier = Modifier.weight(1.1f),
+                                    shape = RoundedCornerShape(10.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = if (currentStatus == ReviewStatus.UNCHECKED) Color(0xFF616161) else Color(0xFFEEEEEE),
+                                        contentColor = if (currentStatus == ReviewStatus.UNCHECKED) Color.White else Color(0xFF616161)
+                                    ),
+                                    contentPadding = PaddingValues(vertical = 8.dp)
+                                ) {
+                                    Text("⚪ Unchecked", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(12.dp))
+                            OutlinedTextField(
+                                value = notesText,
+                                onValueChange = { notesText = it },
+                                label = { Text("Reviewer Notes & Grievances (Bugs, reproduction steps, UI flaws)") },
+                                modifier = Modifier.fillMaxWidth(),
+                                minLines = 3,
+                                maxLines = 6,
+                                shape = RoundedCornerShape(10.dp)
+                            )
+
+                            Spacer(modifier = Modifier.height(14.dp))
+                            Button(
+                                onClick = { onSaveEvaluation(currentStatus, notesText) },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(10.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            ) {
+                                Icon(Icons.Default.Save, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text("Save Review Evaluation")
+                            }
+                        }
+                    }
+                }
+
+                // Extra bottom spacing
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
