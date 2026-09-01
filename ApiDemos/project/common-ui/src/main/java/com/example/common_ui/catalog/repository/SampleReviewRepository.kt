@@ -16,12 +16,17 @@
 
 package com.example.common_ui.catalog.repository
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
+import com.example.common_ui.catalog.SampleCatalogRegistry
 import com.example.common_ui.catalog.SampleItem
 import com.example.common_ui.catalog.db.SampleCatalogDatabase
 import com.example.common_ui.catalog.db.SampleEvaluationDao
 import com.example.common_ui.catalog.db.SampleEvaluationEntity
+import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -56,7 +61,9 @@ class SampleReviewRepository private constructor(
         targetFqcn: String,
         status: ReviewStatus,
         notes: String,
-        metadata: SampleItem
+        metadata: SampleItem,
+        screenshotPath: String? = null,
+        onComplete: (() -> Unit)? = null
     ) {
         coroutineScope.launch {
             val frameworkName = if (targetFqcn.contains("mapdemo")) "JAVA" else "KOTLIN"
@@ -68,9 +75,13 @@ class SampleReviewRepository private constructor(
                 framework = frameworkName,
                 status = status.name,
                 notes = notes,
+                screenshotPath = screenshotPath,
                 lastUpdated = System.currentTimeMillis()
             )
             dao.upsertEvaluation(entity)
+            withContext(Dispatchers.Main) {
+                onComplete?.invoke()
+            }
         }
     }
 
@@ -88,6 +99,104 @@ class SampleReviewRepository private constructor(
             dao.deleteEvaluation(targetFqcn)
             withContext(Dispatchers.Main) {
                 onComplete?.invoke()
+            }
+        }
+    }
+
+    suspend fun getNextUncheckedSample(
+        currentSampleId: String?,
+        framework: Framework
+    ): SampleItem? = withContext(Dispatchers.IO) {
+        val evaluations = dao.getAllEvaluations().associateBy { it.sampleId }
+        val eligibleSamples = SampleCatalogRegistry.SAMPLES.filter {
+            it.getActivityForFramework(framework) != null
+        }
+        if (eligibleSamples.isEmpty()) return@withContext null
+
+        val uncheckedSamples = eligibleSamples.filter { sample ->
+            val fqcn = sample.getTargetFqcn(framework)
+            val eval = evaluations[fqcn]
+            eval == null || eval.status == ReviewStatus.UNCHECKED.name
+        }
+        if (uncheckedSamples.isEmpty()) return@withContext null
+
+        if (currentSampleId == null) {
+            return@withContext uncheckedSamples.first()
+        }
+
+        val currentIndex = eligibleSamples.indexOfFirst {
+            it.id == currentSampleId || it.getTargetFqcn(framework) == currentSampleId
+        }
+
+        if (currentIndex == -1) {
+            return@withContext uncheckedSamples.first()
+        }
+
+        // Search forward after current sample
+        for (i in (currentIndex + 1) until eligibleSamples.size) {
+            val sample = eligibleSamples[i]
+            val fqcn = sample.getTargetFqcn(framework)
+            val eval = evaluations[fqcn]
+            if (eval == null || eval.status == ReviewStatus.UNCHECKED.name) {
+                return@withContext sample
+            }
+        }
+
+        // Wrap around from beginning up to current sample
+        for (i in 0 until currentIndex) {
+            val sample = eligibleSamples[i]
+            val fqcn = sample.getTargetFqcn(framework)
+            val eval = evaluations[fqcn]
+            if (eval == null || eval.status == ReviewStatus.UNCHECKED.name) {
+                return@withContext sample
+            }
+        }
+
+        return@withContext null
+    }
+
+    suspend fun getPreviousSample(
+        currentSampleId: String?,
+        framework: Framework
+    ): SampleItem? = withContext(Dispatchers.IO) {
+        val eligibleSamples = SampleCatalogRegistry.SAMPLES.filter {
+            it.getActivityForFramework(framework) != null
+        }
+        if (eligibleSamples.isEmpty()) return@withContext null
+
+        val currentIndex = eligibleSamples.indexOfFirst {
+            it.id == currentSampleId || it.getTargetFqcn(framework) == currentSampleId
+        }
+
+        if (currentIndex <= 0) {
+            return@withContext eligibleSamples.last()
+        } else {
+            return@withContext eligibleSamples[currentIndex - 1]
+        }
+    }
+
+    fun getNextUncheckedSampleAsync(
+        currentSampleId: String?,
+        framework: Framework,
+        callback: (SampleItem?) -> Unit
+    ) {
+        coroutineScope.launch {
+            val result = getNextUncheckedSample(currentSampleId, framework)
+            withContext(Dispatchers.Main) {
+                callback(result)
+            }
+        }
+    }
+
+    fun getPreviousSampleAsync(
+        currentSampleId: String?,
+        framework: Framework,
+        callback: (SampleItem?) -> Unit
+    ) {
+        coroutineScope.launch {
+            val result = getPreviousSample(currentSampleId, framework)
+            withContext(Dispatchers.Main) {
+                callback(result)
             }
         }
     }
@@ -110,6 +219,16 @@ class SampleReviewRepository private constructor(
                     SampleReviewRepository(db.sampleEvaluationDao()).also { INSTANCE = it }
                 }
             }
+        }
+
+        fun launchSample(activity: Activity, sample: SampleItem, framework: Framework) {
+            val className = sample.getActivityForFramework(framework) ?: return
+            val intent = Intent().apply {
+                setClassName(activity.packageName, className)
+                putExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID, sample.id)
+            }
+            activity.finish()
+            activity.startActivity(intent)
         }
     }
 }

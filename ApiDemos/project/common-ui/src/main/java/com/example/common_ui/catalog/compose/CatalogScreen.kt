@@ -40,6 +40,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.asImageBitmap
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.border
+import java.io.File
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -74,13 +81,16 @@ fun CatalogScreen(
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
+    val frameworkSamples = remember(selectedFramework) {
+        SampleCatalogRegistry.filter(framework = selectedFramework)
+    }
+
     // Dynamic review status counts for active framework
-    val statusCounts = remember(selectedFramework, evaluations) {
-        val totalSamples = SampleCatalogRegistry.filter(framework = selectedFramework)
+    val statusCounts = remember(selectedFramework, evaluations, frameworkSamples) {
         var unchecked = 0
         var passing = 0
         var needsWork = 0
-        for (s in totalSamples) {
+        for (s in frameworkSamples) {
             val targetFqcn = s.getTargetFqcn(selectedFramework)
             val eval = evaluations[targetFqcn] ?: evaluations[s.id]
             when (ReviewStatus.fromString(eval?.status)) {
@@ -120,6 +130,7 @@ fun CatalogScreen(
     val grievancesCount = remember(evaluations) {
         evaluations.values.count { it.status == "NEEDS_WORK" || it.notes.isNotBlank() }
     }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         topBar = {
@@ -162,6 +173,28 @@ fun CatalogScreen(
                                     imageVector = if (selectedStatusFilter == ReviewStatus.UNCHECKED) Icons.Default.CheckCircleOutline else Icons.Default.RadioButtonUnchecked,
                                     contentDescription = "Filter Unchecked Only",
                                     tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
+
+                        // Next Unchecked Action Button
+                        if (uncheckedCount > 0) {
+                            IconButton(onClick = {
+                                val nextUnchecked = filteredSamples.firstOrNull { sample ->
+                                    val eval = evaluations[sample.getTargetFqcn(selectedFramework)]
+                                    eval == null || eval.status == ReviewStatus.UNCHECKED.name
+                                } ?: frameworkSamples.firstOrNull { sample ->
+                                    val eval = evaluations[sample.getTargetFqcn(selectedFramework)]
+                                    eval == null || eval.status == ReviewStatus.UNCHECKED.name
+                                }
+                                if (nextUnchecked != null) {
+                                    onLaunchSample(nextUnchecked, selectedFramework)
+                                }
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.FastForward,
+                                    contentDescription = "Launch Next Unchecked Sample",
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }
@@ -242,24 +275,53 @@ fun CatalogScreen(
                 )
             )
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
-            if (isReviewerMode && onExportGrievances != null) {
-                FloatingActionButton(
-                    onClick = onExportGrievances,
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            if (isReviewerMode) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    BadgedBox(
-                        badge = {
-                            if (grievancesCount > 0) {
-                                Badge { Text("$grievancesCount") }
+                    if (uncheckedCount > 0) {
+                        ExtendedFloatingActionButton(
+                            onClick = {
+                                val nextUnchecked = filteredSamples.firstOrNull { sample ->
+                                    val eval = evaluations[sample.getTargetFqcn(selectedFramework)]
+                                    eval == null || eval.status == ReviewStatus.UNCHECKED.name
+                                } ?: frameworkSamples.firstOrNull { sample ->
+                                    val eval = evaluations[sample.getTargetFqcn(selectedFramework)]
+                                    eval == null || eval.status == ReviewStatus.UNCHECKED.name
+                                }
+                                if (nextUnchecked != null) {
+                                    onLaunchSample(nextUnchecked, selectedFramework)
+                                }
+                            },
+                            icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
+                            text = { Text("Review Next ($uncheckedCount)") },
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
+
+                    if (onExportGrievances != null) {
+                        FloatingActionButton(
+                            onClick = onExportGrievances,
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        ) {
+                            BadgedBox(
+                                badge = {
+                                    if (grievancesCount > 0) {
+                                        Badge { Text("$grievancesCount") }
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Assessment,
+                                    contentDescription = "Generate Report"
+                                )
                             }
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Assessment,
-                            contentDescription = "Generate Report"
-                        )
                     }
                 }
             }
@@ -1118,6 +1180,35 @@ fun SampleDetailFullScreenDialog(
                                 maxLines = 6,
                                 shape = RoundedCornerShape(10.dp)
                             )
+
+                            if (!existingEvaluation?.screenshotPath.isNullOrBlank()) {
+                                val sFile = File(existingEvaluation!!.screenshotPath!!)
+                                if (sFile.exists()) {
+                                    Spacer(modifier = Modifier.height(12.dp))
+                                    Text(
+                                        text = "📸 Attached Screenshot & Markup:",
+                                        style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                    Spacer(modifier = Modifier.height(6.dp))
+                                    val bitmap = remember(sFile.absolutePath) {
+                                        BitmapFactory.decodeFile(sFile.absolutePath)
+                                    }
+                                    if (bitmap != null) {
+                                        Image(
+                                            bitmap = bitmap.asImageBitmap(),
+                                            contentDescription = "Annotated Issue Screenshot",
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(240.dp)
+                                                .clip(RoundedCornerShape(10.dp))
+                                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(10.dp)),
+                                            contentScale = ContentScale.Fit
+                                        )
+                                    }
+                                }
+                            }
 
                             Spacer(modifier = Modifier.height(14.dp))
                             Row(

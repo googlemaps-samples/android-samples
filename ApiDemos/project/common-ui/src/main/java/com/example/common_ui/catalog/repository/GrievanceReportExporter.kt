@@ -86,6 +86,13 @@ object GrievanceReportExporter {
                 } else {
                     md.append("- **Reviewer Notes**: *Flagged as Needs Work without additional notes.*\n")
                 }
+                if (!item.screenshotPath.isNullOrBlank()) {
+                    val file = File(item.screenshotPath)
+                    md.append("- **📸 Attached Screenshot / Markup**:\n")
+                    md.append("  - File: `${file.name}`\n")
+                    md.append("  - Local Path: `${item.screenshotPath}`\n")
+                    md.append("  ![Issue Screenshot](file://${item.screenshotPath})\n")
+                }
                 md.append("\n")
             }
         } else {
@@ -114,6 +121,10 @@ object GrievanceReportExporter {
 
         val reportFile = File(targetDir, fileName)
         FileWriter(reportFile).use { writer ->
+            writer.write(md.toString())
+        }
+        val latestFile = File(targetDir, "latest_evaluation_report.md")
+        FileWriter(latestFile).use { writer ->
             writer.write(md.toString())
         }
 
