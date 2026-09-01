@@ -32,6 +32,8 @@ import java.io.File
 
 /**
  * Thread-safe singleton repository for managing sample review ratings, notes, and grievance reports.
+ *
+ * Uses Fully Qualified Class Names (FQCN) as primary sample keys to isolate framework implementations.
  */
 class SampleReviewRepository private constructor(
     private val dao: SampleEvaluationDao,
@@ -50,65 +52,20 @@ class SampleReviewRepository private constructor(
         }
     }
 
-    fun updateStatus(sampleId: String, status: ReviewStatus, metadata: SampleItem? = null) {
-        coroutineScope.launch {
-            val existing = dao.getEvaluation(sampleId)
-            val now = System.currentTimeMillis()
-            if (existing != null) {
-                dao.updateStatus(sampleId, status.name, now)
-            } else if (metadata != null) {
-                dao.upsertEvaluation(
-                    SampleEvaluationEntity(
-                        sampleId = sampleId,
-                        sampleTitle = metadata.title,
-                        activityName = metadata.kotlinActivity ?: metadata.javaActivity ?: metadata.composeActivity ?: "",
-                        category = metadata.category,
-                        framework = "KOTLIN",
-                        status = status.name,
-                        notes = "",
-                        lastUpdated = now
-                    )
-                )
-            }
-        }
-    }
-
-    fun updateNotes(sampleId: String, notes: String, metadata: SampleItem? = null) {
-        coroutineScope.launch {
-            val existing = dao.getEvaluation(sampleId)
-            val now = System.currentTimeMillis()
-            if (existing != null) {
-                dao.updateNotes(sampleId, notes, now)
-            } else if (metadata != null) {
-                dao.upsertEvaluation(
-                    SampleEvaluationEntity(
-                        sampleId = sampleId,
-                        sampleTitle = metadata.title,
-                        activityName = metadata.kotlinActivity ?: metadata.javaActivity ?: metadata.composeActivity ?: "",
-                        category = metadata.category,
-                        framework = "KOTLIN",
-                        status = ReviewStatus.UNCHECKED.name,
-                        notes = notes,
-                        lastUpdated = now
-                    )
-                )
-            }
-        }
-    }
-
     fun saveEvaluation(
-        sampleId: String,
+        targetFqcn: String,
         status: ReviewStatus,
         notes: String,
         metadata: SampleItem
     ) {
         coroutineScope.launch {
+            val frameworkName = if (targetFqcn.contains("mapdemo")) "JAVA" else "KOTLIN"
             val entity = SampleEvaluationEntity(
-                sampleId = sampleId,
+                sampleId = targetFqcn,
                 sampleTitle = metadata.title,
-                activityName = metadata.kotlinActivity ?: metadata.javaActivity ?: metadata.composeActivity ?: "",
+                activityName = targetFqcn,
                 category = metadata.category,
-                framework = "KOTLIN",
+                framework = frameworkName,
                 status = status.name,
                 notes = notes,
                 lastUpdated = System.currentTimeMillis()
