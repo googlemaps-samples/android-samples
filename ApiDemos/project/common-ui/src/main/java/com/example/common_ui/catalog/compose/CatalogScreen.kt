@@ -592,177 +592,280 @@ fun SampleComposeCard(
     onQuickGrade: (ReviewStatus) -> Unit
 ) {
     val hasActivity = sample.getActivityForFramework(framework) != null
+    val isReviewed = isReviewerMode && (status == ReviewStatus.PASSING || status == ReviewStatus.NEEDS_WORK)
+    var isExpandedManually by remember(sample.id, status) { mutableStateOf<Boolean?>(null) }
+    val isCardExpanded = isExpandedManually ?: (!isReviewed)
+
+    val (statusText, statusBg, statusFg) = when (status) {
+        ReviewStatus.PASSING -> Triple("🟢 Pass", Color(0xFFE8F5E9), Color(0xFF2E7D32))
+        ReviewStatus.NEEDS_WORK -> Triple("🔴 Needs Work", Color(0xFFFFEBEE), Color(0xFFC62828))
+        ReviewStatus.UNCHECKED -> Triple("⚪ Unchecked", Color(0xFFEEEEEE), Color(0xFF616161))
+    }
 
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                if (hasActivity) onSampleClick() else onInfoClick()
+                if (!isCardExpanded) {
+                    isExpandedManually = true
+                } else if (hasActivity) {
+                    onSampleClick()
+                } else {
+                    onInfoClick()
+                }
             },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = if (isReviewed && !isCardExpanded) MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f) else MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = if (isCardExpanded) 2.dp else 1.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(horizontal = 16.dp, vertical = if (isCardExpanded) 14.dp else 10.dp)
         ) {
-            // Header: Category and Complexity Badge
+            // Header / Summary Bar (Always visible)
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { isExpandedManually = !isCardExpanded },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = sample.category,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold
-                )
-
-                SuggestionChip(
-                    onClick = {},
-                    label = { Text("${sample.complexity.badge} ${sample.complexity.displayName}", fontSize = 11.sp) }
-                )
-            }
-
-            // Title
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = sample.title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            // FQCN Target identifier
-            Text(
-                text = targetFqcn.substringAfterLast('.'),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.outline
-            )
-
-            // Description
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = sample.description,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            // Reviewer Status Badge & Notes (Reviewer Mode Only)
-            if (isReviewerMode) {
-                Spacer(modifier = Modifier.height(8.dp))
-                val (statusText, statusBg, statusFg) = when (status) {
-                    ReviewStatus.PASSING -> Triple("🟢 Pass", Color(0xFFE8F5E9), Color(0xFF2E7D32))
-                    ReviewStatus.NEEDS_WORK -> Triple("🔴 Needs Work", Color(0xFFFFEBEE), Color(0xFFC62828))
-                    ReviewStatus.UNCHECKED -> Triple("⚪ Unchecked", Color(0xFFEEEEEE), Color(0xFF616161))
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = statusBg,
-                        modifier = Modifier.padding(vertical = 2.dp)
+                Column(modifier = Modifier.weight(1f)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = statusText,
-                            fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = statusFg,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                            text = sample.title,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
                         )
+
+                        // If collapsed, show the status badge inline next to title
+                        if (isReviewerMode && (!isCardExpanded || isReviewed)) {
+                            Surface(
+                                shape = RoundedCornerShape(6.dp),
+                                color = statusBg
+                            ) {
+                                Text(
+                                    text = statusText,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = statusFg,
+                                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
                     }
 
-                    if (!evaluation?.notes.isNullOrBlank()) {
-                        Text(
-                            text = "📝 ${evaluation.notes}",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color(0xFFE65100),
-                            maxLines = 1,
-                            modifier = Modifier.weight(1f)
-                        )
+                    if (!isCardExpanded) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            modifier = Modifier.padding(top = 2.dp)
+                        ) {
+                            Text(
+                                text = "${sample.complexity.badge} ${sample.category}",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.outline
+                            )
+                            if (!evaluation?.notes.isNullOrBlank()) {
+                                Text(
+                                    text = "• 📝 ${evaluation.notes}",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color(0xFFE65100),
+                                    maxLines = 1,
+                                    modifier = Modifier.weight(1f, fill = false)
+                                )
+                            }
+                        }
                     }
                 }
 
-                // Reviewer Quick Grading Buttons (In-card)
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    FilledTonalButton(
-                        onClick = { onQuickGrade(ReviewStatus.PASSING) },
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = Color(0xFFE8F5E9),
-                            contentColor = Color(0xFF2E7D32)
-                        ),
-                        contentPadding = PaddingValues(vertical = 4.dp)
-                    ) {
-                        Text("👍 Good Job", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                // Expand / Collapse Chevron & Quick Launch Icon in Collapsed State
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (!isCardExpanded && hasActivity) {
+                        IconButton(
+                            onClick = onSampleClick,
+                            modifier = Modifier.size(32.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.PlayArrow,
+                                contentDescription = "Launch Sample",
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
                     }
 
-                    FilledTonalButton(
-                        onClick = { onQuickGrade(ReviewStatus.NEEDS_WORK) },
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(8.dp),
-                        colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = Color(0xFFFFEBEE),
-                            contentColor = Color(0xFFC62828)
-                        ),
-                        contentPadding = PaddingValues(vertical = 4.dp)
+                    IconButton(
+                        onClick = { isExpandedManually = !isCardExpanded },
+                        modifier = Modifier.size(32.dp)
                     ) {
-                        Text("⚠️ Issue", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                        Icon(
+                            imageVector = if (isCardExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                            contentDescription = if (isCardExpanded) "Collapse" else "Expand",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
             }
 
-            // Hashtags
-            if (sample.tags.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = sample.tags.joinToString(" "),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            // Action Row
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+            // Expandable Content Body
+            AnimatedVisibility(
+                visible = isCardExpanded,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut()
             ) {
-                OutlinedButton(
-                    onClick = onInfoClick,
-                    shape = RoundedCornerShape(10.dp)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
                 ) {
-                    Icon(
-                        Icons.Outlined.Info,
-                        contentDescription = null,
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text("Info & Code", fontSize = 12.sp)
-                }
+                    // Category and Complexity Badge
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = sample.category,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold
+                        )
 
-                Button(
-                    onClick = onSampleClick,
-                    enabled = hasActivity,
-                    shape = RoundedCornerShape(10.dp)
-                ) {
+                        SuggestionChip(
+                            onClick = {},
+                            label = { Text("${sample.complexity.badge} ${sample.complexity.displayName}", fontSize = 11.sp) }
+                        )
+                    }
+
+                    // FQCN Target identifier
                     Text(
-                        if (hasActivity) "Launch Sample" else "No ${framework.badge} Impl",
-                        fontSize = 12.sp
+                        text = targetFqcn.substringAfterLast('.'),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.outline
                     )
+
+                    // Description
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = sample.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    // Reviewer Status Badge & Notes (Reviewer Mode Only)
+                    if (isReviewerMode) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Surface(
+                                shape = RoundedCornerShape(8.dp),
+                                color = statusBg,
+                                modifier = Modifier.padding(vertical = 2.dp)
+                            ) {
+                                Text(
+                                    text = statusText,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = statusFg,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                )
+                            }
+
+                            if (!evaluation?.notes.isNullOrBlank()) {
+                                Text(
+                                    text = "📝 ${evaluation.notes}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Color(0xFFE65100),
+                                    maxLines = 1,
+                                    modifier = Modifier.weight(1f)
+                                )
+                            }
+                        }
+
+                        // Reviewer Quick Grading Buttons (In-card)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            FilledTonalButton(
+                                onClick = { onQuickGrade(ReviewStatus.PASSING) },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(8.dp),
+                                colors = ButtonDefaults.filledTonalButtonColors(
+                                    containerColor = Color(0xFFE8F5E9),
+                                    contentColor = Color(0xFF2E7D32)
+                                ),
+                                contentPadding = PaddingValues(vertical = 4.dp)
+                            ) {
+                                Text("👍 Good Job", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                            }
+
+                            FilledTonalButton(
+                                onClick = { onQuickGrade(ReviewStatus.NEEDS_WORK) },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(8.dp),
+                                colors = ButtonDefaults.filledTonalButtonColors(
+                                    containerColor = Color(0xFFFFEBEE),
+                                    contentColor = Color(0xFFC62828)
+                                ),
+                                contentPadding = PaddingValues(vertical = 4.dp)
+                            ) {
+                                Text("⚠️ Issue", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+
+                    // Hashtags
+                    if (sample.tags.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = sample.tags.joinToString(" "),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    // Action Row
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        OutlinedButton(
+                            onClick = onInfoClick,
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Icon(
+                                Icons.Outlined.Info,
+                                contentDescription = null,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Info & Code", fontSize = 12.sp)
+                        }
+
+                        Button(
+                            onClick = onSampleClick,
+                            enabled = hasActivity,
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Text(
+                                if (hasActivity) "Launch Sample" else "No ${framework.badge} Impl",
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
                 }
             }
         }
