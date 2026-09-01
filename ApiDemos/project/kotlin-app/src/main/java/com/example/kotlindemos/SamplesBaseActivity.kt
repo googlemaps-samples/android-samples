@@ -40,7 +40,27 @@ open class SamplesBaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        applyImmersiveStickyMode()
         resolveSampleMetadata()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        applyImmersiveStickyMode()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            applyImmersiveStickyMode()
+        }
+    }
+
+    private fun applyImmersiveStickyMode() {
+        val insetsController = androidx.core.view.WindowCompat.getInsetsController(window, window.decorView)
+        insetsController.systemBarsBehavior =
+            androidx.core.view.WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        insetsController.hide(WindowInsetsCompat.Type.systemBars())
     }
 
     override fun setContentView(layoutResID: Int) {
@@ -82,7 +102,10 @@ open class SamplesBaseActivity : AppCompatActivity() {
         val topBar = root.findViewById<MaterialToolbar>(com.example.common_ui.R.id.top_bar) ?: return
 
         setSupportActionBar(topBar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(true)
+        }
         topBar.setNavigationOnClickListener {
             navigateBackToCatalog()
         }
@@ -90,7 +113,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
         val metadata = currentSampleMetadata
         if (metadata != null) {
             topBar.title = metadata.title
-            topBar.subtitle = "${metadata.complexity.badge} ${metadata.category}"
+            topBar.subtitle = null // Clean single-line title for maximum space and clean presentation
         }
         invalidateOptionsMenu()
     }
@@ -206,16 +229,14 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 (56 * resources.displayMetrics.density).toInt()
             }
             ViewCompat.setOnApplyWindowInsetsListener(topBar) { view, insets ->
-                val statusBar = insets.getInsets(
-                    WindowInsetsCompat.Type.statusBars() or WindowInsetsCompat.Type.displayCutout()
-                )
+                val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
                 view.setPadding(
-                    statusBar.left,
-                    statusBar.top,
-                    statusBar.right,
+                    cutout.left,
+                    cutout.top,
+                    cutout.right,
                     0
                 )
-                view.layoutParams.height = baseHeight + statusBar.top
+                view.layoutParams.height = baseHeight + cutout.top
                 view.requestLayout()
                 insets
             }
@@ -224,19 +245,12 @@ open class SamplesBaseActivity : AppCompatActivity() {
         val mapContainer = root.findViewById<View>(com.example.common_ui.R.id.map_container)
         val bottomTarget = mapContainer ?: root
         ViewCompat.setOnApplyWindowInsetsListener(bottomTarget) { view, insets ->
-            val navBars = insets.getInsets(
-                WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.displayCutout()
-            )
-            val topInsets = if (topBar == null) {
-                insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-            } else {
-                0
-            }
+            val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
             view.setPadding(
-                navBars.left,
-                topInsets,
-                navBars.right,
-                navBars.bottom
+                cutout.left,
+                0,
+                cutout.right,
+                cutout.bottom
             )
             insets
         }
