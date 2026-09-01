@@ -45,6 +45,9 @@ public class SamplesBaseActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         applyImmersiveStickyMode();
         resolveSampleMetadata();
+        super.setContentView(com.example.common_ui.R.layout.activity_sample_base);
+        setupEdgeToEdgeInsets();
+        setupSampleToolbar();
     }
 
     @Override
@@ -61,6 +64,7 @@ public class SamplesBaseActivity extends AppCompatActivity {
         }
     }
 
+
     private void applyImmersiveStickyMode() {
         androidx.core.view.WindowInsetsControllerCompat insetsController =
                 androidx.core.view.WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
@@ -71,47 +75,69 @@ public class SamplesBaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        setupEdgeToEdgeInsets();
-        setupSampleToolbar();
+        View inflated = getLayoutInflater().inflate(layoutResID, null);
+        wrapAndSetContentView(inflated);
     }
 
     @Override
     public void setContentView(View view) {
-        super.setContentView(view);
-        setupEdgeToEdgeInsets();
-        setupSampleToolbar();
+        if (view == null) return;
+        wrapAndSetContentView(view);
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-        super.setContentView(view, params);
-        setupEdgeToEdgeInsets();
-        setupSampleToolbar();
+        if (view == null) return;
+        if (params != null) {
+            view.setLayoutParams(params);
+        }
+        wrapAndSetContentView(view);
     }
 
     @Override
     public void addContentView(View view, ViewGroup.LayoutParams params) {
-        super.addContentView(view, params);
+        if (view == null) return;
+        ViewGroup container = findViewById(com.example.common_ui.R.id.sample_content_container);
+        if (container != null) {
+            if (params != null) {
+                container.addView(view, params);
+            } else {
+                container.addView(view);
+            }
+        } else {
+            super.addContentView(view, params);
+        }
+    }
+
+    private void wrapAndSetContentView(View childView) {
+        View existingTopBar = childView.findViewById(com.example.common_ui.R.id.top_bar);
+        if (existingTopBar != null) {
+            super.setContentView(childView);
+        } else {
+            View baseView = getLayoutInflater().inflate(com.example.common_ui.R.layout.activity_sample_base, null);
+            ViewGroup container = baseView.findViewById(com.example.common_ui.R.id.sample_content_container);
+            container.addView(childView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            super.setContentView(baseView);
+        }
         setupEdgeToEdgeInsets();
         setupSampleToolbar();
     }
 
     private void resolveSampleMetadata() {
         String sampleId = getIntent().getStringExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID);
-        if (sampleId != null && !sampleId.isEmpty()) {
-            for (SampleItem s : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
-                if (s.getId().equals(sampleId)) {
-                    currentSampleMetadata = s;
-                    break;
+        if (sampleId != null && !sampleId.trim().isEmpty()) {
+            for (SampleItem item : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
+                if (sampleId.equals(item.getId())) {
+                    currentSampleMetadata = item;
+                    return;
                 }
             }
         } else {
             String myClass = getClass().getName();
-            for (SampleItem s : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
-                if (myClass.equals(s.getJavaActivity()) || myClass.equals(s.getKotlinActivity())) {
-                    currentSampleMetadata = s;
-                    break;
+            for (SampleItem item : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
+                if (myClass.equals(item.getJavaActivity()) || myClass.equals(item.getKotlinActivity())) {
+                    currentSampleMetadata = item;
+                    return;
                 }
             }
         }
@@ -121,45 +147,41 @@ public class SamplesBaseActivity extends AppCompatActivity {
         View root = findViewById(android.R.id.content);
         if (root == null) return;
         MaterialToolbar topBar = root.findViewById(com.example.common_ui.R.id.top_bar);
-        if (topBar != null) {
-            setSupportActionBar(topBar);
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setDisplayShowTitleEnabled(true);
-            }
-            topBar.setNavigationOnClickListener(v -> navigateBackToCatalog());
+        if (topBar == null) return;
+
+        setSupportActionBar(topBar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
             if (currentSampleMetadata != null) {
-                topBar.setTitle(currentSampleMetadata.getTitle());
-                topBar.setSubtitle(null); // Clean single-line title for maximum space and clean presentation
+                getSupportActionBar().setTitle(currentSampleMetadata.getTitle());
+                getSupportActionBar().setSubtitle(null);
             }
-            invalidateOptionsMenu();
         }
+        topBar.setNavigationOnClickListener(v -> navigateBackToCatalog());
+        invalidateOptionsMenu();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         if (currentSampleMetadata != null) {
-            // 1. Criteria & Purpose
             menu.add(0, 2001, 0, "Criteria & Purpose")
-                .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                    .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            // 2. Good Job (Pass)
             menu.add(0, 2003, 1, "Good Job (Pass)")
-                .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                    .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            // 3. Something's Wrong (Needs Work)
             menu.add(0, 2004, 2, "Something's Wrong")
-                .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                    .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            // 4. Switch to Kotlin
             if (currentSampleMetadata.getKotlinActivity() != null) {
                 menu.add(0, 2002, 3, "Switch to Kotlin")
-                    .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                        .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
             }
         }
         return true;
@@ -171,8 +193,7 @@ public class SamplesBaseActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), "com.example.common_ui.catalog.compose.ReviewerActivity");
                 startActivity(intent);
-            } catch (Exception e) {
-                // Fallback to finish
+            } catch (Exception ignored) {
             }
         }
         finish();
@@ -183,44 +204,52 @@ public class SamplesBaseActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             navigateBackToCatalog();
             return true;
-        } else if (item.getItemId() == 2001 && currentSampleMetadata != null) {
-            SampleExpectationsBottomSheet sheet = SampleExpectationsBottomSheet.Companion.newInstance(
-                currentSampleMetadata,
-                Framework.JAVA_VIEWS,
-                (sampleItem, framework) -> {
-                    String targetClass = sampleItem.getActivityForFramework(framework);
-                    if (targetClass != null && !targetClass.equals(getClass().getName())) {
-                        finish();
-                        Intent intent = new Intent();
-                        intent.setClassName(getPackageName(), targetClass);
-                        startActivity(intent);
-                    }
-                    return kotlin.Unit.INSTANCE;
-                }
-            );
-            sheet.show(getSupportFragmentManager(), "SampleExpectationsBottomSheet");
+        } else if (item.getItemId() == 2001) {
+            if (currentSampleMetadata != null) {
+                SampleExpectationsBottomSheet sheet = SampleExpectationsBottomSheet.Companion.newInstance(
+                        currentSampleMetadata,
+                        Framework.JAVA_VIEWS,
+                        (sampleItem, framework) -> {
+                            String targetClass = sampleItem.getActivityForFramework(framework);
+                            if (targetClass != null && !targetClass.equals(getClass().getName())) {
+                                finish();
+                                Intent intent = new Intent();
+                                intent.setClassName(getPackageName(), targetClass);
+                                startActivity(intent);
+                            }
+                            return kotlin.Unit.INSTANCE;
+                        }
+                );
+                sheet.show(getSupportFragmentManager(), "SampleExpectationsBottomSheet");
+            }
             return true;
-        } else if (item.getItemId() == 2003 && currentSampleMetadata != null) {
-            com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
-                this,
-                currentSampleMetadata,
-                Framework.JAVA_VIEWS,
-                com.example.common_ui.catalog.ReviewStatus.PASSING
-            );
+        } else if (item.getItemId() == 2003) {
+            if (currentSampleMetadata != null) {
+                com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                        this,
+                        currentSampleMetadata,
+                        Framework.JAVA_VIEWS,
+                        com.example.common_ui.catalog.ReviewStatus.PASSING
+                );
+            }
             return true;
-        } else if (item.getItemId() == 2004 && currentSampleMetadata != null) {
-            com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
-                this,
-                currentSampleMetadata,
-                Framework.JAVA_VIEWS,
-                com.example.common_ui.catalog.ReviewStatus.NEEDS_WORK
-            );
+        } else if (item.getItemId() == 2004) {
+            if (currentSampleMetadata != null) {
+                com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                        this,
+                        currentSampleMetadata,
+                        Framework.JAVA_VIEWS,
+                        com.example.common_ui.catalog.ReviewStatus.NEEDS_WORK
+                );
+            }
             return true;
-        } else if (item.getItemId() == 2002 && currentSampleMetadata != null && currentSampleMetadata.getKotlinActivity() != null) {
-            finish();
-            Intent intent = new Intent();
-            intent.setClassName(getPackageName(), currentSampleMetadata.getKotlinActivity());
-            startActivity(intent);
+        } else if (item.getItemId() == 2002) {
+            if (currentSampleMetadata != null && currentSampleMetadata.getKotlinActivity() != null) {
+                finish();
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), currentSampleMetadata.getKotlinActivity());
+                startActivity(intent);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -248,6 +277,9 @@ public class SamplesBaseActivity extends AppCompatActivity {
         }
 
         View mapContainer = root.findViewById(com.example.common_ui.R.id.map_container);
+        if (mapContainer == null) {
+            mapContainer = root.findViewById(com.example.common_ui.R.id.sample_content_container);
+        }
         View bottomTarget = mapContainer != null ? mapContainer : root;
         ViewCompat.setOnApplyWindowInsetsListener(bottomTarget, (view, insets) -> {
             Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
@@ -257,6 +289,19 @@ public class SamplesBaseActivity extends AppCompatActivity {
     }
 
     protected static void applyInsets(View container) {
-        // Handled automatically in SamplesBaseActivity
+        if (container == null) return;
+        ViewCompat.setOnApplyWindowInsetsListener(container, (v, insets) -> {
+            Insets navBars = insets.getInsets(
+                    WindowInsetsCompat.Type.navigationBars() | WindowInsetsCompat.Type.displayCutout()
+            );
+            Insets statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars());
+            v.setPadding(
+                navBars.left,
+                statusBars.top,
+                navBars.right,
+                navBars.bottom
+            );
+            return insets;
+        });
     }
 }
