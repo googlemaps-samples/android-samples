@@ -166,22 +166,22 @@ public class SamplesBaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         if (currentSampleMetadata != null) {
-            menu.add(0, 2001, 0, "Criteria & Purpose")
-                    .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-            menu.add(0, 2003, 1, "Good Job (Pass)")
+            menu.add(0, 2003, 0, "Good Job (Pass)")
                     .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            menu.add(0, 2004, 2, "Something's Wrong")
+            menu.add(0, 2004, 1, "Something's Wrong")
                     .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            menu.add(0, 2001, 2, "Criteria & Purpose")
+                    .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
             if (currentSampleMetadata.getKotlinActivity() != null) {
                 menu.add(0, 2002, 3, "Switch to Kotlin")
                         .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
-                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             }
         }
         return true;
