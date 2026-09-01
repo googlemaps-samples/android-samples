@@ -19,14 +19,15 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.common_ui.catalog.ui.UnifiedCatalogActivity;
+import com.example.common_ui.catalog.compose.ReviewerActivity;
 
 /**
  * The main activity of the Google Maps Java demo gallery.
  *
- * Implements the unified categorized sample catalog, framework switcher, and reviewer mode.
+ * Implements the unified Compose categorized sample catalog, framework switcher,
+ * quick grading buttons, and reviewer mode with Airing of Grievances export.
  */
-public final class MainActivity extends UnifiedCatalogActivity {
+public final class MainActivity extends ReviewerActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
