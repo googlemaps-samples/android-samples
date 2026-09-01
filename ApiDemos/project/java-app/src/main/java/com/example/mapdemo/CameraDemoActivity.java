@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +48,18 @@ import com.google.android.gms.maps.model.PolylineOptions;
  * This shows how to change the camera position for the map.
  */
 // [START maps_camera_events]
+@Sample(
+    id = "camera_demo",
+    title = "Camera Controls & Animation",
+    description = "Programmatic camera panning, zooming, tilt, bearing, and smooth animations.",
+    category = "Camera Controls",
+    complexity = Complexity.SIMPLE,
+    tags = {"#camera", "#animation", "#bearing", "#tilt", "#zoom", "#pan"},
+    purpose = "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing rotations.",
+    successCriteria = "Buttons animate camera smoothly with custom durations, stops, and rotation angles.",
+    failureIndicators = "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform constraints.",
+    framework = Framework.JAVA_VIEWS
+)
 public class CameraDemoActivity extends SamplesBaseActivity implements
         OnCameraMoveStartedListener,
         OnCameraMoveListener,

@@ -14,10 +14,11 @@
 
 package com.example.mapdemo;
 
-
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-
 import android.view.ViewGroup;
 
 import androidx.activity.EdgeToEdge;
@@ -27,36 +28,128 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.SampleCatalogRegistry;
+import com.example.common_ui.catalog.SampleItem;
+import com.example.common_ui.catalog.ui.SampleExpectationsBottomSheet;
+import com.example.common_ui.catalog.ui.UnifiedCatalogActivity;
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class SamplesBaseActivity extends AppCompatActivity {
+
+    protected SampleItem currentSampleMetadata;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        resolveSampleMetadata();
     }
 
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         setupEdgeToEdgeInsets();
+        setupSampleToolbar();
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
         setupEdgeToEdgeInsets();
+        setupSampleToolbar();
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
         setupEdgeToEdgeInsets();
+        setupSampleToolbar();
     }
 
     @Override
     public void addContentView(View view, ViewGroup.LayoutParams params) {
         super.addContentView(view, params);
         setupEdgeToEdgeInsets();
+        setupSampleToolbar();
+    }
+
+    private void resolveSampleMetadata() {
+        String sampleId = getIntent().getStringExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID);
+        if (sampleId != null && !sampleId.isEmpty()) {
+            for (SampleItem s : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
+                if (s.getId().equals(sampleId)) {
+                    currentSampleMetadata = s;
+                    break;
+                }
+            }
+        } else {
+            String myClass = getClass().getName();
+            for (SampleItem s : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
+                if (myClass.equals(s.getJavaActivity()) || myClass.equals(s.getKotlinActivity())) {
+                    currentSampleMetadata = s;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void setupSampleToolbar() {
+        View root = findViewById(android.R.id.content);
+        if (root == null) return;
+        MaterialToolbar topBar = root.findViewById(com.example.common_ui.R.id.top_bar);
+        if (topBar != null) {
+            topBar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+            if (currentSampleMetadata != null) {
+                topBar.setSubtitle(currentSampleMetadata.getComplexity().getBadge() + " " + currentSampleMetadata.getCategory());
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        if (currentSampleMetadata != null) {
+            menu.add(0, 2001, 0, "Criteria & Review")
+                .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            if (currentSampleMetadata.getKotlinActivity() != null) {
+                menu.add(0, 2002, 1, "Switch to Kotlin")
+                    .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == 2001 && currentSampleMetadata != null) {
+            SampleExpectationsBottomSheet sheet = SampleExpectationsBottomSheet.Companion.newInstance(
+                currentSampleMetadata,
+                Framework.JAVA_VIEWS,
+                (sampleItem, framework) -> {
+                    String targetClass = sampleItem.getActivityForFramework(framework);
+                    if (targetClass != null && !targetClass.equals(getClass().getName())) {
+                        finish();
+                        Intent intent = new Intent();
+                        intent.setClassName(getPackageName(), targetClass);
+                        startActivity(intent);
+                    }
+                    return kotlin.Unit.INSTANCE;
+                }
+            );
+            sheet.show(getSupportFragmentManager(), "SampleExpectationsBottomSheet");
+            return true;
+        } else if (item.getItemId() == 2002 && currentSampleMetadata != null && currentSampleMetadata.getKotlinActivity() != null) {
+            finish();
+            Intent intent = new Intent();
+            intent.setClassName(getPackageName(), currentSampleMetadata.getKotlinActivity());
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupEdgeToEdgeInsets() {
@@ -90,11 +183,6 @@ public class SamplesBaseActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Applies insets to the container view to properly handle window insets.
-     *
-     * @param container the container view to apply insets to
-     */
     protected static void applyInsets(View container) {
         // Handled automatically in SamplesBaseActivity
     }

@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,6 +41,18 @@ import java.util.List;
 /**
  * This shows how to style a map with JSON.
  */
+@Sample(
+    id = "styled_map",
+    title = "JSON Map Styling (Retro / Dark)",
+    description = "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
+    category = "Styling & Cloud",
+    complexity = Complexity.SIMPLE,
+    tags = {"#styling", "#json", "#darkmode", "#night", "#retro"},
+    purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
+    successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
+    failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
+    framework = Framework.JAVA_VIEWS
+)
 public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap = null;

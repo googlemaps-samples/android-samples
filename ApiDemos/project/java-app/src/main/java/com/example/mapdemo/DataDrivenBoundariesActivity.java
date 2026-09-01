@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import static java.lang.Math.round;
 
 import android.graphics.Color;
@@ -58,6 +62,18 @@ import java.util.Set;
  * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
  */
 // [START maps_android_data_driven_styling_boundaries]
+@Sample(
+    id = "data_driven_boundaries",
+    title = "Data-Driven Boundaries",
+    description = "Dynamic styling and click handlers for administrative boundaries (Localities, States, Countries).",
+    category = "Data-Driven Styling",
+    complexity = Complexity.ADVANCED,
+    tags = {"#boundaries", "#datadriven", "#featurelayer", "#locality", "#choropleth"},
+    purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary clicks.",
+    successCriteria = "Boundaries render with custom stroke and fill colors; tapping a region highlights its polygon.",
+    failureIndicators = "Boundary layer is null (requires vector map / Map ID) or click listener not firing.",
+    framework = Framework.JAVA_VIEWS
+)
 public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements OnMapReadyCallback,
         FeatureLayer.OnFeatureClickListener, PopupMenu.OnMenuItemClickListener {
     private static final String TAG = DataDrivenBoundariesActivity.class.getName();

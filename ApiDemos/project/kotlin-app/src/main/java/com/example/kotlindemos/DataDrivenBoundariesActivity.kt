@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -49,6 +53,18 @@ private val TAG = DataDrivenBoundariesActivity::class.java.simpleName
  * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
  */
 // Add PopupMenu.OnMenuItemClickListener interface
+@Sample(
+    id = "data_driven_boundaries",
+    title = "Data-Driven Boundaries",
+    description = "Dynamic styling and click handlers for administrative boundaries (Localities, States, Countries).",
+    category = "Data-Driven Styling",
+    complexity = Complexity.ADVANCED,
+    tags = ["#boundaries", "#datadriven", "#featurelayer", "#locality", "#choropleth"],
+    purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary clicks.",
+    successCriteria = "Boundaries render with custom stroke and fill colors; tapping a region highlights its polygon.",
+    failureIndicators = "Boundary layer is null (requires vector map / Map ID) or click listener not firing.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
     FeatureLayer.OnFeatureClickListener, PopupMenu.OnMenuItemClickListener {
 

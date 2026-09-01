@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -33,6 +37,18 @@ import androidx.appcompat.app.AppCompatActivity;
  * This shows how to listen to some {@link GoogleMap} events.
  */
 // [START maps_android_sample_events]
+@Sample(
+    id = "events_demo",
+    title = "Events & Gestures",
+    description = "Handling map taps, long clicks, camera change events, and POI selections.",
+    category = "Events & Gestures",
+    complexity = Complexity.SNIPPET,
+    tags = {"#events", "#gestures", "#clicks", "#poi", "#listeners"},
+    purpose = "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI selections.",
+    successCriteria = "Event log text updates with coordinates and POI names upon user interaction.",
+    failureIndicators = "Click events swallowed or POI name unresolved.",
+    framework = Framework.JAVA_VIEWS
+)
 public class EventsDemoActivity extends SamplesBaseActivity
         implements OnMapClickListener, OnMapLongClickListener, OnCameraIdleListener,
         GoogleMap.OnCameraMoveListener, OnMapReadyCallback {

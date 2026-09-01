@@ -16,6 +16,10 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -34,6 +38,18 @@ import com.google.android.gms.maps.model.MarkerOptions
  * This shows how to use setPadding to allow overlays that obscure part of the map without
  * obscuring the map UI or copyright notices.
  */
+@Sample(
+    id = "visible_region",
+    title = "Visible Region & Projection",
+    description = "Querying current viewport bounding coordinates via GoogleMap.projection.",
+    category = "Camera Controls",
+    complexity = Complexity.SIMPLE,
+    tags = ["#camera", "#projection", "#visibleregion", "#latlngbounds"],
+    purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
+    successCriteria = "Bounding coordinates update live in the UI as the camera pans and zooms.",
+    failureIndicators = "Projection returns null or stale LatLng bounds after camera idle.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class VisibleRegionDemoActivity :
     SamplesBaseActivity(),
     OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {

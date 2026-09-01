@@ -16,6 +16,10 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +37,18 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import java.util.ArrayList
 
+@Sample(
+    id = "styled_map",
+    title = "JSON Map Styling (Retro / Dark)",
+    description = "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
+    category = "Styling & Cloud",
+    complexity = Complexity.SIMPLE,
+    tags = ["#styling", "#json", "#darkmode", "#night", "#retro"],
+    purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
+    successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
+    failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
