@@ -67,6 +67,7 @@ fun CatalogScreen(
 ) {
     var selectedFramework by remember { mutableStateOf(Framework.KOTLIN_VIEWS) }
     var selectedComplexity by remember { mutableStateOf<Complexity?>(null) }
+    var selectedStatusFilter by remember { mutableStateOf<ReviewStatus?>(null) }
     val selectedTags = remember { mutableStateListOf<String>() }
     var searchQuery by remember { mutableStateOf("") }
     var activeSampleForDetail by remember { mutableStateOf<SampleItem?>(null) }
@@ -90,13 +91,47 @@ fun CatalogScreen(
         }
     }
 
-    val filteredSamples = remember(selectedFramework, selectedComplexity, selectedTags.toList(), searchQuery) {
+    // Dynamic review status counts for active framework
+    val statusCounts = remember(selectedFramework, evaluations) {
+        val totalSamples = SampleCatalogRegistry.filter(framework = selectedFramework)
+        var unchecked = 0
+        var passing = 0
+        var needsWork = 0
+        for (s in totalSamples) {
+            val targetFqcn = s.getTargetFqcn(selectedFramework)
+            val eval = evaluations[targetFqcn] ?: evaluations[s.id]
+            when (ReviewStatus.fromString(eval?.status)) {
+                ReviewStatus.UNCHECKED -> unchecked++
+                ReviewStatus.PASSING -> passing++
+                ReviewStatus.NEEDS_WORK -> needsWork++
+            }
+        }
+        Triple(unchecked, passing, needsWork)
+    }
+    val (uncheckedCount, passingCount, needsWorkCount) = statusCounts
+
+    val filteredSamples = remember(
+        selectedFramework,
+        selectedComplexity,
+        selectedStatusFilter,
+        selectedTags.toList(),
+        searchQuery,
+        evaluations
+    ) {
         SampleCatalogRegistry.filter(
             framework = selectedFramework,
             complexity = selectedComplexity,
             selectedTags = selectedTags.toSet(),
             searchQuery = searchQuery
-        )
+        ).filter { sample ->
+            if (selectedStatusFilter == null) true
+            else {
+                val targetFqcn = sample.getTargetFqcn(selectedFramework)
+                val eval = evaluations[targetFqcn] ?: evaluations[sample.id]
+                val status = ReviewStatus.fromString(eval?.status)
+                status == selectedStatusFilter
+            }
+        }
     }
 
     val grievancesCount = remember(evaluations) {
@@ -122,7 +157,8 @@ fun CatalogScreen(
                             )
                             Text(
                                 text = if (isReviewerMode) {
-                                    "${selectedFramework.badge} ${selectedFramework.displayName} • ${filteredSamples.size} samples"
+                                    val filterSummary = if (selectedStatusFilter == ReviewStatus.UNCHECKED) " • ⚪ Unchecked Only" else ""
+                                    "${selectedFramework.badge} ${selectedFramework.displayName} • ${filteredSamples.size} samples$filterSummary"
                                 } else {
                                     "Unified Multi-Framework Catalog • ${filteredSamples.size} samples"
                                 },
@@ -132,6 +168,29 @@ fun CatalogScreen(
                         }
                     },
                     actions = {
+                        // Quick toggle button for Unchecked Only in Reviewer Mode
+                        if (isReviewerMode) {
+                            IconButton(
+                                onClick = {
+                                    selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
+                                }
+                            ) {
+                                BadgedBox(
+                                    badge = {
+                                        if (uncheckedCount > 0) {
+                                            Badge { Text("$uncheckedCount") }
+                                        }
+                                    }
+                                ) {
+                                    Icon(
+                                        imageVector = if (selectedStatusFilter == ReviewStatus.UNCHECKED) Icons.Default.CheckCircleOutline else Icons.Default.RadioButtonUnchecked,
+                                        contentDescription = "Filter Unchecked Only",
+                                        tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+                                    )
+                                }
+                            }
+                        }
+
                         // Toggle search/filters button
                         IconButton(onClick = { isHeaderControlsVisible = !isHeaderControlsVisible }) {
                             Icon(
@@ -228,6 +287,49 @@ fun CatalogScreen(
                             )
                         )
 
+                        // Review Status Filter Chips (Reviewer Mode Only)
+                        if (isReviewerMode) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .horizontalScroll(rememberScrollState())
+                                    .padding(horizontal = 12.dp, vertical = 2.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                FilterChip(
+                                    selected = selectedStatusFilter == null,
+                                    onClick = { selectedStatusFilter = null },
+                                    label = { Text("All Status") }
+                                )
+                                FilterChip(
+                                    selected = selectedStatusFilter == ReviewStatus.UNCHECKED,
+                                    onClick = {
+                                        selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
+                                    },
+                                    label = {
+                                        Text(
+                                            "⚪ Unchecked ($uncheckedCount)",
+                                            fontWeight = if (selectedStatusFilter == ReviewStatus.UNCHECKED) FontWeight.Bold else FontWeight.Normal
+                                        )
+                                    }
+                                )
+                                FilterChip(
+                                    selected = selectedStatusFilter == ReviewStatus.NEEDS_WORK,
+                                    onClick = {
+                                        selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.NEEDS_WORK) null else ReviewStatus.NEEDS_WORK
+                                    },
+                                    label = { Text("🔴 Needs Work ($needsWorkCount)") }
+                                )
+                                FilterChip(
+                                    selected = selectedStatusFilter == ReviewStatus.PASSING,
+                                    onClick = {
+                                        selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.PASSING) null else ReviewStatus.PASSING
+                                    },
+                                    label = { Text("🟢 Passing ($passingCount)") }
+                                )
+                            }
+                        }
+
                         // Complexity Filter Chips
                         Row(
                             modifier = Modifier
@@ -239,7 +341,7 @@ fun CatalogScreen(
                             FilterChip(
                                 selected = selectedComplexity == null,
                                 onClick = { selectedComplexity = null },
-                                label = { Text("All") }
+                                label = { Text("All Complexity") }
                             )
                             FilterChip(
                                 selected = selectedComplexity == Complexity.SNIPPET,
@@ -301,11 +403,19 @@ fun CatalogScreen(
                     .padding(paddingValues),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "No matching samples found.",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = if (selectedStatusFilter == ReviewStatus.UNCHECKED) "🎉 All samples in this framework have been evaluated!" else "No matching samples found.",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    if (selectedStatusFilter != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        TextButton(onClick = { selectedStatusFilter = null }) {
+                            Text("Clear Status Filter")
+                        }
+                    }
+                }
             }
         } else {
             LazyColumn(
