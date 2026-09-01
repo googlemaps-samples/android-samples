@@ -42,6 +42,9 @@ open class SamplesBaseActivity : AppCompatActivity() {
         enableEdgeToEdge()
         applyImmersiveStickyMode()
         resolveSampleMetadata()
+        super.setContentView(com.example.common_ui.R.layout.activity_sample_base)
+        setupEdgeToEdgeInsets()
+        setupSampleToolbar()
     }
 
     override fun onResume() {
@@ -64,25 +67,46 @@ open class SamplesBaseActivity : AppCompatActivity() {
     }
 
     override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
-        setupEdgeToEdgeInsets()
-        setupSampleToolbar()
+        val inflated = layoutInflater.inflate(layoutResID, null)
+        wrapAndSetContentView(inflated)
     }
 
     override fun setContentView(view: View?) {
-        super.setContentView(view)
-        setupEdgeToEdgeInsets()
-        setupSampleToolbar()
+        if (view == null) return
+        wrapAndSetContentView(view)
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        super.setContentView(view, params)
-        setupEdgeToEdgeInsets()
-        setupSampleToolbar()
+        if (view == null) return
+        if (params != null) {
+            view.layoutParams = params
+        }
+        wrapAndSetContentView(view)
     }
 
     override fun addContentView(view: View?, params: ViewGroup.LayoutParams?) {
-        super.addContentView(view, params)
+        if (view == null) return
+        val container = findViewById<ViewGroup>(com.example.common_ui.R.id.sample_content_container)
+        if (container != null) {
+            if (params != null) container.addView(view, params) else container.addView(view)
+        } else {
+            super.addContentView(view, params)
+        }
+    }
+
+    private fun wrapAndSetContentView(childView: View) {
+        val existingTopBar = childView.findViewById<View>(com.example.common_ui.R.id.top_bar)
+        if (existingTopBar != null) {
+            super.setContentView(childView)
+        } else {
+            val baseView = layoutInflater.inflate(com.example.common_ui.R.layout.activity_sample_base, null)
+            val container = baseView.findViewById<ViewGroup>(com.example.common_ui.R.id.sample_content_container)
+            container.addView(
+                childView,
+                ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            )
+            super.setContentView(baseView)
+        }
         setupEdgeToEdgeInsets()
         setupSampleToolbar()
     }
@@ -102,18 +126,17 @@ open class SamplesBaseActivity : AppCompatActivity() {
         val topBar = root.findViewById<MaterialToolbar>(com.example.common_ui.R.id.top_bar) ?: return
 
         setSupportActionBar(topBar)
+        val metadata = currentSampleMetadata
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowTitleEnabled(true)
+            if (metadata != null) {
+                title = metadata.title
+                subtitle = null
+            }
         }
         topBar.setNavigationOnClickListener {
             navigateBackToCatalog()
-        }
-
-        val metadata = currentSampleMetadata
-        if (metadata != null) {
-            topBar.title = metadata.title
-            topBar.subtitle = null // Clean single-line title for maximum space and clean presentation
         }
         invalidateOptionsMenu()
     }
@@ -122,22 +145,18 @@ open class SamplesBaseActivity : AppCompatActivity() {
         super.onCreateOptionsMenu(menu)
         val metadata = currentSampleMetadata
         if (metadata != null) {
-            // 1. Info & Criteria Button
             menu.add(0, 2001, 0, "Criteria & Purpose")
                 .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
-            // 2. Good Job (Pass) Button
             menu.add(0, 2003, 1, "Good Job (Pass)")
                 .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
-            // 3. Something's Wrong (Needs Work) Button
             menu.add(0, 2004, 2, "Something's Wrong")
                 .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
-            // 4. Switch Framework Button
             val javaActivity = metadata.javaActivity
             if (javaActivity != null) {
                 menu.add(0, 2002, 3, "Switch to Java")
@@ -154,7 +173,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 val intent = Intent().setClassName(packageName, "com.example.common_ui.catalog.compose.ReviewerActivity")
                 startActivity(intent)
             } catch (e: Exception) {
-                // Fallback to finishing
+                // Fallback
             }
         }
         finish()
@@ -243,6 +262,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
         }
 
         val mapContainer = root.findViewById<View>(com.example.common_ui.R.id.map_container)
+            ?: root.findViewById<View>(com.example.common_ui.R.id.sample_content_container)
         val bottomTarget = mapContainer ?: root
         ViewCompat.setOnApplyWindowInsetsListener(bottomTarget) { view, insets ->
             val cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout())
