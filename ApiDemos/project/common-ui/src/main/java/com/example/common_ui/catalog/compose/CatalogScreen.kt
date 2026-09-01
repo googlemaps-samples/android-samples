@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,14 +69,24 @@ fun CatalogScreen(
     onExportGrievances: (() -> Unit)? = null,
     onClearEvaluations: (() -> Unit)? = null
 ) {
-    var selectedFramework by remember { mutableStateOf(Framework.KOTLIN_VIEWS) }
-    var selectedComplexity by remember { mutableStateOf<Complexity?>(null) }
-    var selectedStatusFilter by remember { mutableStateOf<ReviewStatus?>(null) }
-    val selectedTags = remember { mutableStateListOf<String>() }
-    var searchQuery by remember { mutableStateOf("") }
-    var activeSampleForDetail by remember { mutableStateOf<SampleItem?>(null) }
-    var activeQuickGrading by remember { mutableStateOf<Pair<SampleItem, ReviewStatus>?>(null) }
-    var showClearConfirmDialog by remember { mutableStateOf(false) }
+    var selectedFramework by rememberSaveable { mutableStateOf(Framework.KOTLIN_VIEWS) }
+    var selectedComplexity by rememberSaveable { mutableStateOf<Complexity?>(null) }
+    var selectedStatusFilter by rememberSaveable { mutableStateOf<ReviewStatus?>(null) }
+    var selectedTags by rememberSaveable { mutableStateOf(emptySet<String>()) }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+    var activeSampleDetailId by rememberSaveable { mutableStateOf<String?>(null) }
+    val activeSampleForDetail: SampleItem? = remember(activeSampleDetailId) {
+        SampleCatalogRegistry.findById(activeSampleDetailId)
+    }
+    var activeQuickGradingSampleId by rememberSaveable { mutableStateOf<String?>(null) }
+    var activeQuickGradingStatus by rememberSaveable { mutableStateOf<ReviewStatus?>(null) }
+    val activeQuickGrading: Pair<SampleItem, ReviewStatus>? = remember(activeQuickGradingSampleId, activeQuickGradingStatus) {
+        val sId = activeQuickGradingSampleId
+        val st = activeQuickGradingStatus
+        val sample = SampleCatalogRegistry.findById(sId)
+        if (sample != null && st != null) Pair(sample, st) else null
+    }
+    var showClearConfirmDialog by rememberSaveable { mutableStateOf(false) }
     var showMoreMenu by remember { mutableStateOf(false) }
 
     val lazyListState = rememberLazyListState()
@@ -107,14 +118,14 @@ fun CatalogScreen(
         selectedFramework,
         selectedComplexity,
         selectedStatusFilter,
-        selectedTags.toList(),
+        selectedTags,
         searchQuery,
         evaluations
     ) {
         SampleCatalogRegistry.filter(
             framework = selectedFramework,
             complexity = selectedComplexity,
-            selectedTags = selectedTags.toSet(),
+            selectedTags = selectedTags,
             searchQuery = searchQuery
         ).filter { sample ->
             if (selectedStatusFilter == null) true
@@ -472,7 +483,7 @@ fun CatalogScreen(
                             FilterChip(
                                 selected = isSelected,
                                 onClick = {
-                                    if (isSelected) selectedTags.remove(tag) else selectedTags.add(tag)
+                                    selectedTags = if (isSelected) selectedTags - tag else selectedTags + tag
                                 },
                                 label = { Text(tag, fontSize = 12.sp) }
                             )
@@ -520,9 +531,10 @@ fun CatalogScreen(
                             evaluation = eval,
                             status = status,
                             onSampleClick = { onLaunchSample(sample, selectedFramework) },
-                            onInfoClick = { activeSampleForDetail = sample },
+                            onInfoClick = { activeSampleDetailId = sample.id },
                             onQuickGrade = { gradeStatus ->
-                                activeQuickGrading = Pair(sample, gradeStatus)
+                                activeQuickGradingSampleId = sample.id
+                                activeQuickGradingStatus = gradeStatus
                             }
                         )
                     }
@@ -572,13 +584,13 @@ fun CatalogScreen(
             framework = selectedFramework,
             isReviewerMode = isReviewerMode,
             existingEvaluation = existingEval,
-            onDismiss = { activeSampleForDetail = null },
+            onDismiss = { activeSampleDetailId = null },
             onSaveEvaluation = { status, notes ->
                 onSaveEvaluation?.invoke(targetFqcn, status, notes, sample)
-                activeSampleForDetail = null
+                activeSampleDetailId = null
             },
             onLaunch = { fw ->
-                activeSampleForDetail = null
+                activeSampleDetailId = null
                 onLaunchSample(sample, fw)
             }
         )
@@ -588,10 +600,10 @@ fun CatalogScreen(
     activeQuickGrading?.let { (sample, gradeStatus) ->
         val targetFqcn = sample.getTargetFqcn(selectedFramework)
         val existingEval = evaluations[targetFqcn] ?: evaluations[sample.id]
-        var notes by remember { mutableStateOf(existingEval?.notes.orEmpty()) }
+        var notes by rememberSaveable { mutableStateOf(existingEval?.notes.orEmpty()) }
 
         AlertDialog(
-            onDismissRequest = { activeQuickGrading = null },
+            onDismissRequest = { activeQuickGradingSampleId = null; activeQuickGradingStatus = null },
             title = {
                 Text(
                     text = if (gradeStatus == ReviewStatus.PASSING) "👍 Good Job: ${sample.title}" else "⚠️ Something's Wrong: ${sample.title}",
@@ -622,7 +634,8 @@ fun CatalogScreen(
                 Button(
                     onClick = {
                         onSaveEvaluation?.invoke(targetFqcn, gradeStatus, notes, sample)
-                        activeQuickGrading = null
+                        activeQuickGradingSampleId = null
+                        activeQuickGradingStatus = null
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (gradeStatus == ReviewStatus.PASSING) Color(0xFF2E7D32) else Color(0xFFC62828),
@@ -633,7 +646,10 @@ fun CatalogScreen(
                 }
             },
             dismissButton = {
-                TextButton(onClick = { activeQuickGrading = null }) {
+                TextButton(onClick = {
+                    activeQuickGradingSampleId = null
+                    activeQuickGradingStatus = null
+                }) {
                     Text("Cancel")
                 }
             }
@@ -936,8 +952,8 @@ fun SampleDetailFullScreenDialog(
     onSaveEvaluation: (ReviewStatus, String) -> Unit,
     onLaunch: (Framework) -> Unit
 ) {
-    var currentStatus by remember { mutableStateOf(ReviewStatus.fromString(existingEvaluation?.status)) }
-    var notesText by remember { mutableStateOf(existingEvaluation?.notes.orEmpty()) }
+    var currentStatus by rememberSaveable { mutableStateOf(ReviewStatus.fromString(existingEvaluation?.status)) }
+    var notesText by rememberSaveable { mutableStateOf(existingEvaluation?.notes.orEmpty()) }
 
     Dialog(
         onDismissRequest = onDismiss,

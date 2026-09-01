@@ -49,6 +49,8 @@ import androidx.compose.ui.unit.sp
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.SampleItem
 
+import androidx.compose.runtime.saveable.rememberSaveable
+
 /**
  * Collapsible, syntax-highlighted code viewer composable.
  *
@@ -62,8 +64,8 @@ fun CodeSnippetView(
     isCollapsible: Boolean = true,
     modifier: Modifier = Modifier
 ) {
-    var isExpanded by remember { mutableStateOf(initiallyExpanded) }
-    var selectedFramework by remember(currentFramework) { mutableStateOf(currentFramework) }
+    var isExpanded by rememberSaveable { mutableStateOf(initiallyExpanded) }
+    var selectedFramework by rememberSaveable { mutableStateOf(currentFramework) }
     val isDark = isSystemInDarkTheme()
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current

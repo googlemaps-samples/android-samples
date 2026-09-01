@@ -505,4 +505,9 @@ object SampleCatalogRegistry {
             matchesFramework && matchesComplexity && matchesTags && matchesSearch
         }
     }
+
+    fun findById(id: String?): SampleItem? {
+        if (id == null) return null
+        return SAMPLES.find { it.id == id || it.kotlinActivity == id || it.javaActivity == id }
+    }
 }
