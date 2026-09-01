@@ -530,6 +530,15 @@ fun SampleExpectationsModalSheet(
                 modifier = Modifier.fillMaxWidth()
             )
 
+            // Collapsible, Syntax-Highlighted Code Snippet View
+            Spacer(modifier = Modifier.height(10.dp))
+            CodeSnippetView(
+                sample = sample,
+                currentFramework = framework,
+                initiallyExpanded = sample.complexity == Complexity.SNIPPET,
+                modifier = Modifier.fillMaxWidth()
+            )
+
             HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
             // Reviewer Controls (Only in Reviewer Mode!)
