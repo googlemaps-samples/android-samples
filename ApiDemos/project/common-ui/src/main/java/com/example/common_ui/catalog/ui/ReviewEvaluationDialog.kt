@@ -192,57 +192,68 @@ object ReviewEvaluationDialog {
             }
             toolsScroll.addView(toolsLayout)
 
-            val penBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "🔴 Circle"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
-                strokeColor = ColorStateList.valueOf(Color.parseColor("#E53935"))
+            fun createEmojiBtn(emoji: String, tooltip: String, minWidthDp: Int = 46): MaterialButton {
+                return MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+                    text = emoji
+                    textSize = 17f
+                    setPadding(16, 6, 16, 6)
+                    minimumWidth = (minWidthDp * resources.displayMetrics.density).toInt()
+                    strokeWidth = (1.5f * resources.displayMetrics.density).toInt()
+                    strokeColor = ColorStateList.valueOf(Color.parseColor("#CFD8DC"))
+                    setBackgroundColor(Color.TRANSPARENT)
+                    tooltipText = tooltip
+                    contentDescription = tooltip
+                }
             }
-            val highlightBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "🟡 Highlight"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
-            }
-            val panZoomBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "🖐️ Pan/Zoom"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
-            }
-            val resetZoomBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "🔍 1:1 Reset"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
-            }
-            val undoBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "↩️ Undo"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
-            }
-            val clearBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "🔄 Clear"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
-            }
-            val systemEditorBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "✏️ Open in Editor"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
-            }
-            val reloadEditorBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "🔄 Reload Edits"
-                textSize = 11f
-                setPadding(20, 8, 20, 8)
+
+            val penBtn = createEmojiBtn("🔴", "Draw Red Circle").apply { minWidth = 140 }
+            val highlightBtn = createEmojiBtn("🟡", "Yellow Highlighter").apply { minWidth = 140 }
+            val panZoomBtn = createEmojiBtn("🖐️", "Pan & Pinch Zoom").apply { minWidth = 140 }
+            val resetZoomBtn = createEmojiBtn("🔍", "Reset Zoom to 1:1")
+            val undoBtn = createEmojiBtn("↩️", "Undo Stroke")
+            val clearBtn = createEmojiBtn("🗑️", "Clear All Strokes")
+            val systemEditorBtn = createEmojiBtn("✏️", "Open in System Markup Editor")
+            val reloadEditorBtn = createEmojiBtn("📥", "Reload External Edits")
+
+            // Divider views for clear visual groups
+            fun createDivider(): View {
+                return View(activity).apply {
+                    val params = LinearLayout.LayoutParams((1 * resources.displayMetrics.density).toInt(), (28 * resources.displayMetrics.density).toInt()).apply {
+                        marginStart = 12
+                        marginEnd = 12
+                        gravity = Gravity.CENTER_VERTICAL
+                    }
+                    layoutParams = params
+                    setBackgroundColor(Color.parseColor("#CFD8DC"))
+                }
             }
 
             toolsLayout.addView(penBtn)
             toolsLayout.addView(highlightBtn)
             toolsLayout.addView(panZoomBtn)
+            toolsLayout.addView(createDivider())
             toolsLayout.addView(resetZoomBtn)
             toolsLayout.addView(undoBtn)
             toolsLayout.addView(clearBtn)
+            toolsLayout.addView(createDivider())
             toolsLayout.addView(systemEditorBtn)
             toolsLayout.addView(reloadEditorBtn)
             bodyLayout.addView(toolsScroll)
+
+            // Active Tool Status Label (Unmistakable clear indicator)
+            val activeToolStatus = TextView(activity).apply {
+                textSize = 12f
+                setTypeface(null, Typeface.BOLD)
+                setPadding(24, 8, 24, 8)
+                setBackgroundColor(Color.parseColor("#FFEBEE"))
+                setTextColor(Color.parseColor("#C62828"))
+                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = 14
+                }
+                layoutParams = params
+                text = "Active Tool: 🔴 Draw Red Circle"
+            }
+            bodyLayout.addView(activeToolStatus)
 
             // Canvas Container
             val canvasHeight = (displayMetrics.heightPixels * 0.38).toInt()
@@ -261,26 +272,77 @@ object ReviewEvaluationDialog {
 
             fun updateToolSelection(activeTool: AnnotationCanvasView.ToolMode) {
                 canvas.currentTool = activeTool
-                val activeStroke = ColorStateList.valueOf(Color.parseColor("#1976D2"))
-                val defaultStroke = ColorStateList.valueOf(Color.parseColor("#BDBDBD"))
-                val redStroke = ColorStateList.valueOf(Color.parseColor("#E53935"))
+                val density = activity.resources.displayMetrics.density
+                val normalBorderWidth = (1.5f * density).toInt()
+                val activeBorderWidth = (2.5f * density).toInt()
+                val inactiveStroke = ColorStateList.valueOf(Color.parseColor("#CFD8DC"))
 
-                penBtn.strokeColor = if (activeTool == AnnotationCanvasView.ToolMode.PEN_CIRCLE) redStroke else defaultStroke
-                highlightBtn.strokeColor = if (activeTool == AnnotationCanvasView.ToolMode.HIGHLIGHTER) activeStroke else defaultStroke
-                panZoomBtn.strokeColor = if (activeTool == AnnotationCanvasView.ToolMode.PAN_ZOOM) activeStroke else defaultStroke
+                when (activeTool) {
+                    AnnotationCanvasView.ToolMode.PEN_CIRCLE -> {
+                        penBtn.setBackgroundColor(Color.parseColor("#FFCDD2")) // Light red fill
+                        penBtn.strokeColor = ColorStateList.valueOf(Color.parseColor("#D32F2F"))
+                        penBtn.strokeWidth = activeBorderWidth
+
+                        highlightBtn.setBackgroundColor(Color.TRANSPARENT)
+                        highlightBtn.strokeColor = inactiveStroke
+                        highlightBtn.strokeWidth = normalBorderWidth
+
+                        panZoomBtn.setBackgroundColor(Color.TRANSPARENT)
+                        panZoomBtn.strokeColor = inactiveStroke
+                        panZoomBtn.strokeWidth = normalBorderWidth
+
+                        activeToolStatus.text = "Active Tool: 🔴 Draw Red Circle (Touch and drag on image)"
+                        activeToolStatus.setBackgroundColor(Color.parseColor("#FFEBEE"))
+                        activeToolStatus.setTextColor(Color.parseColor("#C62828"))
+                    }
+                    AnnotationCanvasView.ToolMode.HIGHLIGHTER -> {
+                        penBtn.setBackgroundColor(Color.TRANSPARENT)
+                        penBtn.strokeColor = inactiveStroke
+                        penBtn.strokeWidth = normalBorderWidth
+
+                        highlightBtn.setBackgroundColor(Color.parseColor("#FFF9C4")) // Light yellow fill
+                        highlightBtn.strokeColor = ColorStateList.valueOf(Color.parseColor("#F57F17"))
+                        highlightBtn.strokeWidth = activeBorderWidth
+
+                        panZoomBtn.setBackgroundColor(Color.TRANSPARENT)
+                        panZoomBtn.strokeColor = inactiveStroke
+                        panZoomBtn.strokeWidth = normalBorderWidth
+
+                        activeToolStatus.text = "Active Tool: 🟡 Yellow Highlighter (Swipe across text/map)"
+                        activeToolStatus.setBackgroundColor(Color.parseColor("#FFFDE7"))
+                        activeToolStatus.setTextColor(Color.parseColor("#F57F17"))
+                    }
+                    AnnotationCanvasView.ToolMode.PAN_ZOOM -> {
+                        penBtn.setBackgroundColor(Color.TRANSPARENT)
+                        penBtn.strokeColor = inactiveStroke
+                        penBtn.strokeWidth = normalBorderWidth
+
+                        highlightBtn.setBackgroundColor(Color.TRANSPARENT)
+                        highlightBtn.strokeColor = inactiveStroke
+                        highlightBtn.strokeWidth = normalBorderWidth
+
+                        panZoomBtn.setBackgroundColor(Color.parseColor("#BBDEFB")) // Light blue fill
+                        panZoomBtn.strokeColor = ColorStateList.valueOf(Color.parseColor("#1565C0"))
+                        panZoomBtn.strokeWidth = activeBorderWidth
+
+                        activeToolStatus.text = "Active Tool: 🖐️ Pan & Zoom (Drag 1 finger to pan, pinch to zoom)"
+                        activeToolStatus.setBackgroundColor(Color.parseColor("#E3F2FD"))
+                        activeToolStatus.setTextColor(Color.parseColor("#1565C0"))
+                    }
+                }
             }
+
+            // Set initial selection
+            updateToolSelection(AnnotationCanvasView.ToolMode.PEN_CIRCLE)
 
             penBtn.setOnClickListener {
                 updateToolSelection(AnnotationCanvasView.ToolMode.PEN_CIRCLE)
-                Toast.makeText(activity, "🔴 Pen / Circle: Draw red annotations", Toast.LENGTH_SHORT).show()
             }
             highlightBtn.setOnClickListener {
                 updateToolSelection(AnnotationCanvasView.ToolMode.HIGHLIGHTER)
-                Toast.makeText(activity, "🟡 Highlight: Yellow translucent marker", Toast.LENGTH_SHORT).show()
             }
             panZoomBtn.setOnClickListener {
                 updateToolSelection(AnnotationCanvasView.ToolMode.PAN_ZOOM)
-                Toast.makeText(activity, "🖐️ Pan/Zoom: Drag 1 finger to pan, pinch to zoom", Toast.LENGTH_SHORT).show()
             }
             resetZoomBtn.setOnClickListener {
                 canvas.resetZoomAndPan()
@@ -288,9 +350,11 @@ object ReviewEvaluationDialog {
             }
             undoBtn.setOnClickListener {
                 canvas.undoStroke()
+                Toast.makeText(activity, "↩️ Undid last stroke", Toast.LENGTH_SHORT).show()
             }
             clearBtn.setOnClickListener {
                 canvas.clearAllStrokes()
+                Toast.makeText(activity, "🗑️ Cleared all strokes", Toast.LENGTH_SHORT).show()
             }
             systemEditorBtn.setOnClickListener {
                 try {
@@ -307,7 +371,7 @@ object ReviewEvaluationDialog {
                         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                     }
                     activity.startActivity(Intent.createChooser(editIntent, "Edit Screenshot with Markup"))
-                    Toast.makeText(activity, "Save in editor, then tap '🔄 Reload Edits'", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "Save in editor, then tap '📥 Reload'", Toast.LENGTH_LONG).show()
                 } catch (e: Exception) {
                     Toast.makeText(activity, "System editor unavailable: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
@@ -318,7 +382,7 @@ object ReviewEvaluationDialog {
                     val reloadedBitmap = BitmapFactory.decodeFile(file.absolutePath)
                     if (reloadedBitmap != null) {
                         canvas.setBaseBitmap(reloadedBitmap)
-                        Toast.makeText(activity, "Loaded edits from system editor!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "📥 Loaded edits from system editor!", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(activity, "No external edit file found yet", Toast.LENGTH_SHORT).show()
