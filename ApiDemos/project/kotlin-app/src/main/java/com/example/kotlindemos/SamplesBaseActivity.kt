@@ -81,14 +81,18 @@ open class SamplesBaseActivity : AppCompatActivity() {
         val root = findViewById<View>(android.R.id.content) ?: return
         val topBar = root.findViewById<MaterialToolbar>(com.example.common_ui.R.id.top_bar) ?: return
 
+        setSupportActionBar(topBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         topBar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
         val metadata = currentSampleMetadata
         if (metadata != null) {
+            topBar.title = metadata.title
             topBar.subtitle = "${metadata.complexity.badge} ${metadata.category}"
         }
+        invalidateOptionsMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
