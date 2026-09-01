@@ -55,7 +55,7 @@ enum class Complexity(val displayName: String, val badge: String, val order: Int
 }
 
 /**
- * Supported development frameworks.
+ * Supported development frameworks in this repository.
  */
 enum class Framework(
     val id: String,
@@ -77,13 +77,6 @@ enum class Framework(
         badge = "Java",
         iconEmoji = "☕",
         accentColorHex = 0xFFE76F51
-    ),
-    COMPOSE(
-        id = "compose",
-        displayName = "Jetpack Compose",
-        badge = "Compose",
-        iconEmoji = "⚛️",
-        accentColorHex = 0xFF4285F4
     );
 
     companion object {
@@ -114,7 +107,7 @@ enum class ReviewStatus(
 }
 
 /**
- * Immutable domain model representing a sample entry across all frameworks.
+ * Immutable domain model representing a sample entry across Kotlin and Java frameworks.
  */
 data class SampleItem(
     val id: String,
@@ -128,8 +121,7 @@ data class SampleItem(
     val failureIndicators: String = "",
     val helpHtml: String = "",
     val kotlinActivity: String? = null,
-    val javaActivity: String? = null,
-    val composeActivity: String? = null
+    val javaActivity: String? = null
 ) : Serializable {
 
     /**
@@ -167,9 +159,15 @@ data class SampleItem(
      */
     fun getActivityForFramework(framework: Framework): String? {
         return when (framework) {
-            Framework.KOTLIN_VIEWS -> kotlinActivity ?: javaActivity ?: composeActivity
-            Framework.JAVA_VIEWS -> javaActivity ?: kotlinActivity ?: composeActivity
-            Framework.COMPOSE -> composeActivity ?: kotlinActivity ?: javaActivity
+            Framework.KOTLIN_VIEWS -> kotlinActivity ?: javaActivity
+            Framework.JAVA_VIEWS -> javaActivity ?: kotlinActivity
         }
+    }
+
+    /**
+     * Returns the Fully Qualified Class Name (FQCN) identifier for the given framework.
+     */
+    fun getTargetFqcn(framework: Framework): String {
+        return getActivityForFramework(framework) ?: id
     }
 }

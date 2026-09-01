@@ -33,7 +33,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -52,7 +51,7 @@ import com.example.common_ui.catalog.db.SampleEvaluationEntity
 fun CatalogScreen(
     isReviewerMode: Boolean = false,
     evaluations: Map<String, SampleEvaluationEntity> = emptyMap(),
-    onSaveEvaluation: ((sampleId: String, status: ReviewStatus, notes: String, sample: SampleItem) -> Unit)? = null,
+    onSaveEvaluation: ((targetFqcn: String, status: ReviewStatus, notes: String, sample: SampleItem) -> Unit)? = null,
     onLaunchSample: (SampleItem, Framework) -> Unit,
     onExportGrievances: (() -> Unit)? = null
 ) {
@@ -122,12 +121,11 @@ fun CatalogScreen(
                     )
                 )
 
-                // Framework Tabs
+                // Framework Tabs (Kotlin Views & Java Views)
                 PrimaryTabRow(
                     selectedTabIndex = when (selectedFramework) {
                         Framework.KOTLIN_VIEWS -> 0
                         Framework.JAVA_VIEWS -> 1
-                        Framework.COMPOSE -> 2
                     }
                 ) {
                     Tab(
@@ -139,11 +137,6 @@ fun CatalogScreen(
                         selected = selectedFramework == Framework.JAVA_VIEWS,
                         onClick = { selectedFramework = Framework.JAVA_VIEWS },
                         text = { Text("☕ Java") }
-                    )
-                    Tab(
-                        selected = selectedFramework == Framework.COMPOSE,
-                        onClick = { selectedFramework = Framework.COMPOSE },
-                        text = { Text("⚛️ Compose") }
                     )
                 }
 
@@ -257,10 +250,12 @@ fun CatalogScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(filteredSamples, key = { it.id }) { sample ->
-                    val eval = evaluations[sample.id]
+                    val targetFqcn = sample.getTargetFqcn(selectedFramework)
+                    val eval = evaluations[targetFqcn] ?: evaluations[sample.id]
                     val status = ReviewStatus.fromString(eval?.status)
                     SampleComposeCard(
                         sample = sample,
+                        targetFqcn = targetFqcn,
                         framework = selectedFramework,
                         isReviewerMode = isReviewerMode,
                         evaluation = eval,
@@ -276,15 +271,17 @@ fun CatalogScreen(
 
     // Modal Expectations & Review BottomSheet
     activeSampleForExpectations?.let { sample ->
-        val existingEval = evaluations[sample.id]
+        val targetFqcn = sample.getTargetFqcn(selectedFramework)
+        val existingEval = evaluations[targetFqcn] ?: evaluations[sample.id]
         SampleExpectationsModalSheet(
             sample = sample,
+            targetFqcn = targetFqcn,
             framework = selectedFramework,
             isReviewerMode = isReviewerMode,
             existingEvaluation = existingEval,
             onDismiss = { activeSampleForExpectations = null },
             onSaveEvaluation = { status, notes ->
-                onSaveEvaluation?.invoke(sample.id, status, notes, sample)
+                onSaveEvaluation?.invoke(targetFqcn, status, notes, sample)
                 activeSampleForExpectations = null
             },
             onLaunch = { fw ->
@@ -298,6 +295,7 @@ fun CatalogScreen(
 @Composable
 fun SampleComposeCard(
     sample: SampleItem,
+    targetFqcn: String,
     framework: Framework,
     isReviewerMode: Boolean,
     evaluation: SampleEvaluationEntity?,
@@ -378,6 +376,13 @@ fun SampleComposeCard(
                 fontWeight = FontWeight.Bold
             )
 
+            // FQCN Target identifier
+            Text(
+                text = targetFqcn.substringAfterLast('.'),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.outline
+            )
+
             // Description
             Spacer(modifier = Modifier.height(4.dp))
             Text(
@@ -453,6 +458,7 @@ fun SampleComposeCard(
 @Composable
 fun SampleExpectationsModalSheet(
     sample: SampleItem,
+    targetFqcn: String,
     framework: Framework,
     isReviewerMode: Boolean,
     existingEvaluation: SampleEvaluationEntity?,
@@ -497,6 +503,14 @@ fun SampleExpectationsModalSheet(
                 text = "${sample.category} • ${sample.tags.joinToString(" ")}",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(top = 2.dp)
+            )
+
+            // FQCN Target Identifier
+            Text(
+                text = "Target: $targetFqcn",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.outline,
                 modifier = Modifier.padding(top = 2.dp)
             )
 
@@ -580,9 +594,8 @@ fun SampleExpectationsModalSheet(
 
             // Cross-Framework Switcher
             val altFramework = when (framework) {
-                Framework.KOTLIN_VIEWS -> if (sample.javaActivity != null) Framework.JAVA_VIEWS else if (sample.composeActivity != null) Framework.COMPOSE else null
-                Framework.JAVA_VIEWS -> if (sample.kotlinActivity != null) Framework.KOTLIN_VIEWS else if (sample.composeActivity != null) Framework.COMPOSE else null
-                Framework.COMPOSE -> if (sample.kotlinActivity != null) Framework.KOTLIN_VIEWS else if (sample.javaActivity != null) Framework.JAVA_VIEWS else null
+                Framework.KOTLIN_VIEWS -> if (sample.javaActivity != null) Framework.JAVA_VIEWS else null
+                Framework.JAVA_VIEWS -> if (sample.kotlinActivity != null) Framework.KOTLIN_VIEWS else null
             }
 
             if (altFramework != null) {
