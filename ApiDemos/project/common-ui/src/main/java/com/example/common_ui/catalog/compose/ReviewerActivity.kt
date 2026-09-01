@@ -73,7 +73,7 @@ open class ReviewerActivity : ComponentActivity() {
             try {
                 val file = repository.exportAiringOfGrievances(this@ReviewerActivity)
                 val shareIntent = GrievanceReportExporter.createShareIntent(this@ReviewerActivity, file)
-                startActivity(Intent.createChooser(shareIntent, "Share Airing of Grievances Report"))
+                startActivity(Intent.createChooser(shareIntent, "Share Evaluation Report"))
             } catch (e: Exception) {
                 Toast.makeText(this@ReviewerActivity, "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
             }
