@@ -15,6 +15,10 @@
  */
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
@@ -36,6 +40,18 @@ import java.util.*
 /**
  * This demonstrates how to add a tile overlay to a map.
  */
+@Sample(
+    id = "tile_overlay",
+    title = "Tile Overlays & TileProvider",
+    description = "Custom TileProvider rendering coordinate grid tiles and custom imagery.",
+    category = "Overlays & Tiles",
+    complexity = Complexity.SIMPLE,
+    tags = ["#overlays", "#tiles", "#tileprovider", "#customtiles"],
+    purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate overlays).",
+    successCriteria = "Tile grid numbers (x, y, zoom) render cleanly over the base map.",
+    failureIndicators = "Tile rendering blocks UI thread or tiles fail to fetch on pan.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class TileOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener, OnMapReadyCallback {
 
     private lateinit var mMoonTiles: TileOverlay

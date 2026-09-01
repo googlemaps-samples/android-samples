@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -61,6 +65,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * 3. **High-Accuracy Location**: Uses {@link FusedLocationProviderClient} with {@link Priority#PRIORITY_HIGH_ACCURACY}
  *    to teleport Pegman and Street View to the user's real-time physical location on demand.
  */
+@Sample(
+    id = "split_street_view",
+    title = "Split Street View & Map Sync",
+    description = "Dual synchronized view: draggable 2D Pegman marker synchronized with 3D Street View panorama.",
+    category = "Street View",
+    complexity = Complexity.ADVANCED,
+    tags = {"#streetview", "#panorama", "#pegman", "#sync", "#bidirectional"},
+    purpose = "Demonstrates bidirectional synchronization: dragging map Pegman updates panorama; walking Street View moves map marker.",
+    successCriteria = "Moving Pegman on map instantly loads new 360 panorama; street navigation rotates Pegman bearing.",
+    failureIndicators = "Infinite update feedback loops, Pegman desyncing from panorama, or FAB jump failing.",
+    framework = Framework.JAVA_VIEWS
+)
 public class SplitStreetViewPanoramaAndMapDemoActivity extends SamplesBaseActivity
         implements OnMarkerDragListener, OnStreetViewPanoramaChangeListener,
         ActivityCompat.OnRequestPermissionsResultCallback {

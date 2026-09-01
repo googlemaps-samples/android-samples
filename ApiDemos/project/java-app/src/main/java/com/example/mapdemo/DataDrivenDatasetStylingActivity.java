@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +59,18 @@ import java.util.Map;
  * This is meant to work with the datasets in the res/raw directory.
  */
 // [START maps_android_data_driven_styling_datasets]
+@Sample(
+    id = "data_driven_datasets",
+    title = "Data-Driven Dataset Styling",
+    description = "Styling custom geospatial datasets uploaded to Google Cloud Platform based on attributes.",
+    category = "Data-Driven Styling",
+    complexity = Complexity.ADVANCED,
+    tags = {"#datasets", "#datadriven", "#clouddata", "#attributes", "#filtering"},
+    purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
+    successCriteria = "Dataset points and polygons display distinct styling according to attribute values.",
+    failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
+    framework = Framework.JAVA_VIEWS
+)
 public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
     private record DataSet(
             String label,

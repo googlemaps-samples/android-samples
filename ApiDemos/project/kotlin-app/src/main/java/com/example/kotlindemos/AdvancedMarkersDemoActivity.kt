@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Color
 import androidx.core.graphics.toColorInt
 
@@ -51,6 +55,18 @@ private val TAG = AdvancedMarkersDemoActivity::class.java.name
  * possibilities.
  */
 // [START maps_android_sample_marker_advanced]
+@Sample(
+    id = "advanced_markers",
+    title = "Advanced Markers & Pins",
+    description = "Modern PinConfig pins, custom glyphs, badge icon views, and collision behavior.",
+    category = "Markers & Overlays",
+    complexity = Complexity.ADVANCED,
+    tags = ["#markers", "#advancedmarkers", "#pinconfig", "#collision", "#badges", "#mapid"],
+    purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and custom View icons.",
+    successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with collision handling.",
+    failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge text blurry.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     /**

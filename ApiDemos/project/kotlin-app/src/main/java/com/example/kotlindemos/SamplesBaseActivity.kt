@@ -13,38 +13,130 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.SampleCatalogRegistry
+import com.example.common_ui.catalog.SampleItem
+import com.example.common_ui.catalog.ui.SampleExpectationsBottomSheet
+import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
+import com.google.android.material.appbar.MaterialToolbar
 
 open class SamplesBaseActivity : AppCompatActivity() {
+
+    protected var currentSampleMetadata: SampleItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        resolveSampleMetadata()
     }
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         setupEdgeToEdgeInsets()
+        setupSampleToolbar()
     }
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
         setupEdgeToEdgeInsets()
+        setupSampleToolbar()
     }
 
     override fun setContentView(view: View?, params: ViewGroup.LayoutParams?) {
         super.setContentView(view, params)
         setupEdgeToEdgeInsets()
+        setupSampleToolbar()
     }
 
     override fun addContentView(view: View?, params: ViewGroup.LayoutParams?) {
         super.addContentView(view, params)
         setupEdgeToEdgeInsets()
+        setupSampleToolbar()
+    }
+
+    private fun resolveSampleMetadata() {
+        val sampleId = intent.getStringExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID)
+        currentSampleMetadata = if (!sampleId.isNullOrBlank()) {
+            SampleCatalogRegistry.SAMPLES.find { it.id == sampleId }
+        } else {
+            val myClass = this::class.java.name
+            SampleCatalogRegistry.SAMPLES.find { it.kotlinActivity == myClass || it.javaActivity == myClass }
+        }
+    }
+
+    private fun setupSampleToolbar() {
+        val root = findViewById<View>(android.R.id.content) ?: return
+        val topBar = root.findViewById<MaterialToolbar>(com.example.common_ui.R.id.top_bar) ?: return
+
+        topBar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        val metadata = currentSampleMetadata
+        if (metadata != null) {
+            topBar.subtitle = "${metadata.complexity.badge} ${metadata.category}"
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        val metadata = currentSampleMetadata
+        if (metadata != null) {
+            menu.add(0, 2001, 0, "Criteria & Review")
+                .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+
+            val javaActivity = metadata.javaActivity
+            if (javaActivity != null) {
+                menu.add(0, 2002, 1, "Switch to Java")
+                    .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            }
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val metadata = currentSampleMetadata
+        return when (item.itemId) {
+            2001 -> {
+                if (metadata != null) {
+                    val sheet = SampleExpectationsBottomSheet.newInstance(
+                        sample = metadata,
+                        framework = Framework.KOTLIN_VIEWS,
+                        onLaunch = { s, fw ->
+                            val targetClass = s.getActivityForFramework(fw)
+                            if (targetClass != null && targetClass != this::class.java.name) {
+                                finish()
+                                startActivity(Intent().setClassName(packageName, targetClass))
+                            }
+                        }
+                    )
+                    sheet.show(supportFragmentManager, "SampleExpectationsBottomSheet")
+                }
+                true
+            }
+            2002 -> {
+                val javaActivity = metadata?.javaActivity
+                if (javaActivity != null) {
+                    finish()
+                    startActivity(Intent().setClassName(packageName, javaActivity))
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupEdgeToEdgeInsets() {
@@ -95,13 +187,20 @@ open class SamplesBaseActivity : AppCompatActivity() {
     }
 
     companion object {
-        /**
-         * Applies insets to the container view to properly handle window insets.
-         *
-         * @param container the container view to apply insets to
-         */
-        fun applyInsets(container: View? = null) {
-            // Handled automatically in SamplesBaseActivity
+        fun applyInsets(view: View) {
+            ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+                val navBars = insets.getInsets(
+                    WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.displayCutout()
+                )
+                val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+                v.setPadding(
+                    navBars.left,
+                    statusBars.top,
+                    navBars.right,
+                    navBars.bottom
+                )
+                insets
+            }
         }
     }
 }
