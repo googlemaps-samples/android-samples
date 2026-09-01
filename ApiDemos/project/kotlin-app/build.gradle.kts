@@ -18,11 +18,13 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
+    namespace = "com.example.kotlindemos"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -38,6 +40,7 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+        compose = true
     }
 
     buildTypes {
@@ -51,43 +54,42 @@ android {
         }
     }
 
-    flavorDimensions.add("version")
-
     lint {
         disable += setOf("MissingInflatedId")
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
 
-    namespace = "com.example.kotlindemos"
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-}
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-        freeCompilerArgs.add("-Xopt-in=kotlin.RequiresOptIn")
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            javaParameters.set(true)
+        }
     }
 }
 
 dependencies {
     implementation(libs.appcompat)
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.cardview)
-    implementation(libs.recyclerview)
-    implementation(libs.multidex)
-    implementation(libs.volley)
     implementation(libs.material)
-
+    implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.maps.ktx)
     implementation(libs.maps.utils.ktx)
     implementation(libs.play.services.location)
 
     implementation(libs.activity)
+    implementation(libs.activity.compose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.material3)
+    implementation(libs.material.icons.extended)
+    debugImplementation(libs.ui.tooling)
 
     // Below is used to run the easypermissions library to manage location permissions
     // EasyPermissions is needed to help us request for permission to access location
