@@ -26,6 +26,9 @@
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:titleTextAppearance="@style/TextAppearance.Material3.TitleMedium"
         app:titleTextColor="?attr/colorOnPrimary" />
 
     <FrameLayout
