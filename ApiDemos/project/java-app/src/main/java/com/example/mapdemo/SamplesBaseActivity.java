@@ -43,7 +43,30 @@ public class SamplesBaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        applyImmersiveStickyMode();
         resolveSampleMetadata();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        applyImmersiveStickyMode();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            applyImmersiveStickyMode();
+        }
+    }
+
+    private void applyImmersiveStickyMode() {
+        androidx.core.view.WindowInsetsControllerCompat insetsController =
+                androidx.core.view.WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        insetsController.setSystemBarsBehavior(
+                androidx.core.view.WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        insetsController.hide(WindowInsetsCompat.Type.systemBars());
     }
 
     @Override
@@ -102,11 +125,12 @@ public class SamplesBaseActivity extends AppCompatActivity {
             setSupportActionBar(topBar);
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
             }
             topBar.setNavigationOnClickListener(v -> navigateBackToCatalog());
             if (currentSampleMetadata != null) {
                 topBar.setTitle(currentSampleMetadata.getTitle());
-                topBar.setSubtitle(currentSampleMetadata.getComplexity().getBadge() + " " + currentSampleMetadata.getCategory());
+                topBar.setSubtitle(null); // Clean single-line title for maximum space and clean presentation
             }
             invalidateOptionsMenu();
         }
@@ -215,9 +239,9 @@ public class SamplesBaseActivity extends AppCompatActivity {
                 baseHeight = (int) (56 * getResources().getDisplayMetrics().density);
             }
             ViewCompat.setOnApplyWindowInsetsListener(topBar, (view, insets) -> {
-                Insets statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.displayCutout());
-                view.setPadding(statusBar.left, statusBar.top, statusBar.right, 0);
-                view.getLayoutParams().height = baseHeight + statusBar.top;
+                Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
+                view.setPadding(cutout.left, cutout.top, cutout.right, 0);
+                view.getLayoutParams().height = baseHeight + cutout.top;
                 view.requestLayout();
                 return insets;
             });
@@ -226,9 +250,8 @@ public class SamplesBaseActivity extends AppCompatActivity {
         View mapContainer = root.findViewById(com.example.common_ui.R.id.map_container);
         View bottomTarget = mapContainer != null ? mapContainer : root;
         ViewCompat.setOnApplyWindowInsetsListener(bottomTarget, (view, insets) -> {
-            Insets navBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars() | WindowInsetsCompat.Type.displayCutout());
-            int topInsets = (topBar == null) ? insets.getInsets(WindowInsetsCompat.Type.statusBars()).top : 0;
-            view.setPadding(navBars.left, topInsets, navBars.right, navBars.bottom);
+            Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
+            view.setPadding(cutout.left, 0, cutout.right, cutout.bottom);
             return insets;
         });
     }
