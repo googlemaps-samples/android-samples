@@ -25,8 +25,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
 import com.example.common_ui.catalog.SampleItem
+import com.example.common_ui.catalog.ui.ReviewEvaluationDialog
 import com.example.common_ui.catalog.ui.SampleExpectationsBottomSheet
 import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
 import com.google.android.material.appbar.MaterialToolbar
@@ -93,15 +95,27 @@ open class SamplesBaseActivity : AppCompatActivity() {
         super.onCreateOptionsMenu(menu)
         val metadata = currentSampleMetadata
         if (metadata != null) {
-            menu.add(0, 2001, 0, "Criteria & Review")
+            // 1. Info & Criteria Button
+            menu.add(0, 2001, 0, "Criteria & Purpose")
                 .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
+            // 2. Good Job (Pass) Button
+            menu.add(0, 2003, 1, "Good Job (Pass)")
+                .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+
+            // 3. Something's Wrong (Needs Work) Button
+            menu.add(0, 2004, 2, "Something's Wrong")
+                .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+
+            // 4. Switch Framework Button
             val javaActivity = metadata.javaActivity
             if (javaActivity != null) {
-                menu.add(0, 2002, 1, "Switch to Java")
+                menu.add(0, 2002, 3, "Switch to Java")
                     .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
             }
         }
         return true
@@ -124,6 +138,28 @@ open class SamplesBaseActivity : AppCompatActivity() {
                         }
                     )
                     sheet.show(supportFragmentManager, "SampleExpectationsBottomSheet")
+                }
+                true
+            }
+            2003 -> {
+                if (metadata != null) {
+                    com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                        this,
+                        metadata,
+                        Framework.KOTLIN_VIEWS,
+                        ReviewStatus.PASSING
+                    )
+                }
+                true
+            }
+            2004 -> {
+                if (metadata != null) {
+                    com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                        this,
+                        metadata,
+                        Framework.KOTLIN_VIEWS,
+                        ReviewStatus.NEEDS_WORK
+                    )
                 }
                 true
             }

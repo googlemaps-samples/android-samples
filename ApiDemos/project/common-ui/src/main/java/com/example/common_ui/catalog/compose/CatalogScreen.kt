@@ -63,6 +63,7 @@ fun CatalogScreen(
     val selectedTags = remember { mutableStateListOf<String>() }
     var searchQuery by remember { mutableStateOf("") }
     var activeSampleForDetail by remember { mutableStateOf<SampleItem?>(null) }
+    var activeQuickGrading by remember { mutableStateOf<Pair<SampleItem, ReviewStatus>?>(null) }
 
     val filteredSamples = remember(selectedFramework, selectedComplexity, selectedTags.toList(), searchQuery) {
         SampleCatalogRegistry.filter(
@@ -265,7 +266,9 @@ fun CatalogScreen(
                         status = status,
                         onSampleClick = { onLaunchSample(sample, selectedFramework) },
                         onInfoClick = { activeSampleForDetail = sample },
-                        onStatusClick = { activeSampleForDetail = sample }
+                        onQuickGrade = { gradeStatus ->
+                            activeQuickGrading = Pair(sample, gradeStatus)
+                        }
                     )
                 }
             }
@@ -293,6 +296,62 @@ fun CatalogScreen(
             }
         )
     }
+
+    // Quick Grading Dialog from List Card (Allows adding notes before saving)
+    activeQuickGrading?.let { (sample, gradeStatus) ->
+        val targetFqcn = sample.getTargetFqcn(selectedFramework)
+        val existingEval = evaluations[targetFqcn] ?: evaluations[sample.id]
+        var notes by remember { mutableStateOf(existingEval?.notes.orEmpty()) }
+
+        AlertDialog(
+            onDismissRequest = { activeQuickGrading = null },
+            title = {
+                Text(
+                    text = if (gradeStatus == ReviewStatus.PASSING) "👍 Good Job: ${sample.title}" else "⚠️ Something's Wrong: ${sample.title}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 17.sp
+                )
+            },
+            text = {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = "Target: ${targetFqcn.substringAfterLast('.')}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    OutlinedTextField(
+                        value = notes,
+                        onValueChange = { notes = it },
+                        label = { Text("Notes (optional for pass, describe issues if broken)") },
+                        modifier = Modifier.fillMaxWidth(),
+                        minLines = 3,
+                        maxLines = 5,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onSaveEvaluation?.invoke(targetFqcn, gradeStatus, notes, sample)
+                        activeQuickGrading = null
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (gradeStatus == ReviewStatus.PASSING) Color(0xFF2E7D32) else Color(0xFFC62828),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(if (gradeStatus == ReviewStatus.PASSING) "Record Pass 👍" else "Record Issue ⚠️")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { activeQuickGrading = null }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -305,7 +364,7 @@ fun SampleComposeCard(
     status: ReviewStatus,
     onSampleClick: () -> Unit,
     onInfoClick: () -> Unit,
-    onStatusClick: () -> Unit
+    onQuickGrade: (ReviewStatus) -> Unit
 ) {
     val hasActivity = sample.getActivityForFramework(framework) != null
 
@@ -381,17 +440,18 @@ fun SampleComposeCard(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Button(
-                        onClick = onStatusClick,
+                    Surface(
                         shape = RoundedCornerShape(8.dp),
-                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 2.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = statusBg,
-                            contentColor = statusFg
-                        ),
-                        modifier = Modifier.height(28.dp)
+                        color = statusBg,
+                        modifier = Modifier.padding(vertical = 2.dp)
                     ) {
-                        Text(statusText, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                        Text(
+                            text = statusText,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = statusFg,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
                     }
 
                     if (!evaluation?.notes.isNullOrBlank()) {
@@ -402,6 +462,39 @@ fun SampleComposeCard(
                             maxLines = 1,
                             modifier = Modifier.weight(1f)
                         )
+                    }
+                }
+
+                // Reviewer Quick Grading Buttons (In-card)
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    FilledTonalButton(
+                        onClick = { onQuickGrade(ReviewStatus.PASSING) },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = Color(0xFFE8F5E9),
+                            contentColor = Color(0xFF2E7D32)
+                        ),
+                        contentPadding = PaddingValues(vertical = 4.dp)
+                    ) {
+                        Text("👍 Good Job", fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    }
+
+                    FilledTonalButton(
+                        onClick = { onQuickGrade(ReviewStatus.NEEDS_WORK) },
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = Color(0xFFFFEBEE),
+                            contentColor = Color(0xFFC62828)
+                        ),
+                        contentPadding = PaddingValues(vertical = 4.dp)
+                    ) {
+                        Text("⚠️ Issue", fontSize = 11.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }
