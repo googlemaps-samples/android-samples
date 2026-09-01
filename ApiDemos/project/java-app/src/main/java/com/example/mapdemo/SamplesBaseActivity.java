@@ -110,14 +110,26 @@ public class SamplesBaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         if (currentSampleMetadata != null) {
-            menu.add(0, 2001, 0, "Criteria & Review")
+            // 1. Criteria & Purpose
+            menu.add(0, 2001, 0, "Criteria & Purpose")
                 .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
+            // 2. Good Job (Pass)
+            menu.add(0, 2003, 1, "Good Job (Pass)")
+                .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            // 3. Something's Wrong (Needs Work)
+            menu.add(0, 2004, 2, "Something's Wrong")
+                .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+            // 4. Switch to Kotlin
             if (currentSampleMetadata.getKotlinActivity() != null) {
-                menu.add(0, 2002, 1, "Switch to Kotlin")
+                menu.add(0, 2002, 3, "Switch to Kotlin")
                     .setIcon(com.example.common_ui.R.drawable.ic_swap_framework)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
             }
         }
         return true;
@@ -141,6 +153,22 @@ public class SamplesBaseActivity extends AppCompatActivity {
                 }
             );
             sheet.show(getSupportFragmentManager(), "SampleExpectationsBottomSheet");
+            return true;
+        } else if (item.getItemId() == 2003 && currentSampleMetadata != null) {
+            com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                this,
+                currentSampleMetadata,
+                Framework.JAVA_VIEWS,
+                com.example.common_ui.catalog.ReviewStatus.PASSING
+            );
+            return true;
+        } else if (item.getItemId() == 2004 && currentSampleMetadata != null) {
+            com.example.common_ui.catalog.ui.ReviewEvaluationDialog.show(
+                this,
+                currentSampleMetadata,
+                Framework.JAVA_VIEWS,
+                com.example.common_ui.catalog.ReviewStatus.NEEDS_WORK
+            );
             return true;
         } else if (item.getItemId() == 2002 && currentSampleMetadata != null && currentSampleMetadata.getKotlinActivity() != null) {
             finish();
