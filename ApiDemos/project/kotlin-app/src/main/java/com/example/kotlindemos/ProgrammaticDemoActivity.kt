@@ -47,7 +47,7 @@ class ProgrammaticDemoActivity : SamplesBaseActivity() {
                 title("Marker")
             }
         }
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(android.R.id.content))
     }
 
     companion object {

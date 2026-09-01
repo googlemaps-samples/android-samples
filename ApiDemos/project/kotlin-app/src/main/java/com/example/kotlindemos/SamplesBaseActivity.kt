@@ -257,7 +257,8 @@ open class SamplesBaseActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun applyInsets(view: View) {
+        fun applyInsets(view: View?) {
+            if (view == null) return
             ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                 val navBars = insets.getInsets(
                     WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.displayCutout()
