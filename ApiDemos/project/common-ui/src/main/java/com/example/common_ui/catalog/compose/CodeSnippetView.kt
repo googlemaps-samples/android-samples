@@ -22,7 +22,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -59,7 +58,8 @@ import com.example.common_ui.catalog.SampleItem
 fun CodeSnippetView(
     sample: SampleItem,
     currentFramework: Framework = Framework.KOTLIN_VIEWS,
-    initiallyExpanded: Boolean = false,
+    initiallyExpanded: Boolean = true,
+    isCollapsible: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     var isExpanded by remember { mutableStateOf(initiallyExpanded) }
@@ -82,19 +82,19 @@ fun CodeSnippetView(
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isDark) Color(0xFF1E1E2E) else Color(0xFFF1F3F4)
+            containerColor = if (isDark) Color(0xFF181825) else Color(0xFFF1F3F4)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            // Header Bar (Tap to toggle collapse)
+            // Header Bar
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { isExpanded = !isExpanded }
-                    .padding(horizontal = 14.dp, vertical = 10.dp),
+                    .then(if (isCollapsible) Modifier.clickable { isExpanded = !isExpanded } else Modifier)
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -106,11 +106,11 @@ fun CodeSnippetView(
                         imageVector = Icons.Default.Code,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(22.dp)
                     )
                     Text(
                         text = "Source Code Snippet",
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -118,67 +118,75 @@ fun CodeSnippetView(
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     SuggestionChip(
-                        onClick = { isExpanded = !isExpanded },
-                        label = { Text(if (selectedFramework == Framework.KOTLIN_VIEWS) "Kotlin" else "Java", fontSize = 11.sp) }
+                        onClick = { if (isCollapsible) isExpanded = !isExpanded },
+                        label = { Text(if (selectedFramework == Framework.KOTLIN_VIEWS) "💜 Kotlin" else "☕ Java", fontSize = 12.sp) }
                     )
-                    Icon(
-                        imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                        contentDescription = if (isExpanded) "Collapse" else "Expand",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    if (isCollapsible) {
+                        IconButton(onClick = { isExpanded = !isExpanded }, modifier = Modifier.size(28.dp)) {
+                            Icon(
+                                imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                contentDescription = if (isExpanded) "Collapse" else "Expand",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
                 }
             }
 
             // Expandable Content Body
             AnimatedVisibility(
-                visible = isExpanded,
+                visible = isExpanded || !isCollapsible,
                 enter = expandVertically() + fadeIn(),
                 exit = shrinkVertically() + fadeOut()
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 12.dp)
-                        .padding(bottom = 12.dp)
+                        .padding(horizontal = 14.dp)
+                        .padding(bottom = 14.dp)
                 ) {
                     // Toolbar: Language Switcher and Copy Button
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 8.dp),
+                            .padding(bottom = 10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         // Language Tab Selector
-                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             FilterChip(
                                 selected = selectedFramework == Framework.KOTLIN_VIEWS,
                                 onClick = { selectedFramework = Framework.KOTLIN_VIEWS },
-                                label = { Text("💜 Kotlin", fontSize = 12.sp) }
+                                label = { Text("💜 Kotlin", fontSize = 12.sp, fontWeight = FontWeight.SemiBold) }
                             )
                             FilterChip(
                                 selected = selectedFramework == Framework.JAVA_VIEWS,
                                 onClick = { selectedFramework = Framework.JAVA_VIEWS },
-                                label = { Text("☕ Java", fontSize = 12.sp) }
+                                label = { Text("☕ Java", fontSize = 12.sp, fontWeight = FontWeight.SemiBold) }
                             )
                         }
 
                         // Copy Button
-                        IconButton(
+                        FilledTonalButton(
                             onClick = {
                                 clipboardManager.setText(AnnotatedString(rawCode))
                                 Toast.makeText(context, "Code copied to clipboard!", Toast.LENGTH_SHORT).show()
-                            }
+                            },
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier.height(32.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.ContentCopy,
                                 contentDescription = "Copy code",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(15.dp)
                             )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("Copy", fontSize = 12.sp)
                         }
                     }
 
@@ -186,27 +194,27 @@ fun CodeSnippetView(
                     Surface(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(RoundedCornerShape(8.dp)),
-                        color = if (isDark) Color(0xFF14141E) else Color(0xFFE8EAED)
+                            .clip(RoundedCornerShape(12.dp)),
+                        color = if (isDark) Color(0xFF11111B) else Color(0xFFE8EAED)
                     ) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 10.dp)
+                                .padding(vertical = 12.dp)
                                 .horizontalScroll(rememberScrollState())
                         ) {
                             // Line numbers gutter
                             Column(
-                                modifier = Modifier.padding(start = 10.dp, end = 12.dp),
+                                modifier = Modifier.padding(start = 12.dp, end = 14.dp),
                                 horizontalAlignment = Alignment.End
                             ) {
                                 codeLines.indices.forEach { index ->
                                     Text(
                                         text = (index + 1).toString().padStart(2, '0'),
                                         fontFamily = FontFamily.Monospace,
-                                        fontSize = 12.sp,
-                                        color = if (isDark) Color(0xFF6272A4) else Color(0xFF9AA0A6),
-                                        lineHeight = 18.sp
+                                        fontSize = 12.5.sp,
+                                        color = if (isDark) Color(0xFF6C7086) else Color(0xFF9AA0A6),
+                                        lineHeight = 19.sp
                                     )
                                 }
                             }
@@ -215,9 +223,9 @@ fun CodeSnippetView(
                             Text(
                                 text = highlightedCode,
                                 fontFamily = FontFamily.Monospace,
-                                fontSize = 12.sp,
-                                lineHeight = 18.sp,
-                                modifier = Modifier.padding(end = 16.dp)
+                                fontSize = 12.5.sp,
+                                lineHeight = 19.sp,
+                                modifier = Modifier.padding(end = 20.dp)
                             )
                         }
                     }
