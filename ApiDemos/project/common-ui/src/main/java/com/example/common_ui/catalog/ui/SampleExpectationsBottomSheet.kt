@@ -131,9 +131,8 @@ class SampleExpectationsBottomSheet : BottomSheetDialogFragment() {
 
         // Framework switcher button
         val altFramework = when (currentFramework) {
-            Framework.KOTLIN_VIEWS -> if (s.javaActivity != null) Framework.JAVA_VIEWS else if (s.composeActivity != null) Framework.COMPOSE else null
-            Framework.JAVA_VIEWS -> if (s.kotlinActivity != null) Framework.KOTLIN_VIEWS else if (s.composeActivity != null) Framework.COMPOSE else null
-            Framework.COMPOSE -> if (s.kotlinActivity != null) Framework.KOTLIN_VIEWS else if (s.javaActivity != null) Framework.JAVA_VIEWS else null
+            Framework.KOTLIN_VIEWS -> if (s.javaActivity != null) Framework.JAVA_VIEWS else null
+            Framework.JAVA_VIEWS -> if (s.kotlinActivity != null) Framework.KOTLIN_VIEWS else null
         }
 
         if (altFramework != null) {
