@@ -51,7 +51,7 @@ object GrievanceReportExporter {
         val totalWithNotes = evaluations.count { it.notes.isNotBlank() }
 
         val md = StringBuilder()
-        md.append("# 📢 Google Maps Platform Samples - Airing of Grievances Report\n\n")
+        md.append("# 📊 Google Maps Platform Samples - Evaluation Report\n\n")
         md.append("> Generated on **$formattedDate**\n\n")
 
         md.append("## 📱 Device & Environment Metadata\n")
@@ -65,13 +65,13 @@ object GrievanceReportExporter {
         md.append("|---|---|\n")
         md.append("| **Total Targets Evaluated** | ${evaluations.size} |\n")
         md.append("| 🟢 **Passing** | $passingCount |\n")
-        md.append("| 🔴 **Needs Work / Broken** | $needsWorkCount |\n")
+        md.append("| 🔴 **Needs Work / Issues** | $needsWorkCount |\n")
         md.append("| ⚪ **Unchecked** | $uncheckedCount |\n")
         md.append("| 📝 **Targets with Reviewer Notes** | $totalWithNotes |\n\n")
 
         val grievances = evaluations.filter { it.status == "NEEDS_WORK" || it.notes.isNotBlank() }
         if (grievances.isNotEmpty()) {
-            md.append("## ⚠️ Airing of Grievances (Issues & Requested Improvements)\n\n")
+            md.append("## ⚠️ Reviewer Findings (Issues & Notes)\n\n")
             grievances.forEachIndexed { index, item ->
                 val statusEmoji = if (item.status == "NEEDS_WORK") "🔴" else if (item.status == "PASSING") "🟢" else "⚪"
                 md.append("### ${index + 1}. $statusEmoji ${item.sampleTitle}\n")
@@ -81,7 +81,7 @@ object GrievanceReportExporter {
                 md.append("- **Status**: `${item.status}`\n")
                 md.append("- **Last Reviewed**: ${dateFormat.format(Date(item.lastUpdated))}\n")
                 if (item.notes.isNotBlank()) {
-                    md.append("- **Reviewer Notes & Grievances**:\n")
+                    md.append("- **Reviewer Notes**:\n")
                     md.append("  > ${item.notes.replace("\n", "\n  > ")}\n")
                 } else {
                     md.append("- **Reviewer Notes**: *Flagged as Needs Work without additional notes.*\n")
@@ -89,8 +89,8 @@ object GrievanceReportExporter {
                 md.append("\n")
             }
         } else {
-            md.append("## ⚠️ Airing of Grievances\n")
-            md.append("*No issues or grievances recorded. All checked samples are passing! 🎉*\n\n")
+            md.append("## ⚠️ Reviewer Findings\n")
+            md.append("*No issues recorded. All checked samples are passing! 🎉*\n\n")
         }
 
         md.append("## 📋 Complete Evaluation Log\n\n")

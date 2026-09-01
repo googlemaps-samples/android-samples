@@ -211,7 +211,7 @@ fun CatalogScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Assessment,
-                                        contentDescription = "Export Airing of Grievances",
+                                        contentDescription = "Generate Report",
                                         tint = MaterialTheme.colorScheme.primary
                                     )
                                 }
@@ -386,13 +386,16 @@ fun CatalogScreen(
         },
         floatingActionButton = {
             if (isReviewerMode && onExportGrievances != null) {
-                ExtendedFloatingActionButton(
+                FloatingActionButton(
                     onClick = onExportGrievances,
-                    icon = { Icon(Icons.Default.Assessment, contentDescription = null) },
-                    text = { Text("Airing of Grievances") },
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Assessment,
+                        contentDescription = "Generate Report"
+                    )
+                }
             }
         }
     ) { paddingValues ->
