@@ -22,11 +22,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 /**
- * Room database instance storing all local sample evaluations and reviewer notes.
+ * Room database instance storing all local sample evaluations, reviewer notes, and annotated screenshots.
  */
 @Database(
     entities = [SampleEvaluationEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class SampleCatalogDatabase : RoomDatabase() {
@@ -43,7 +43,9 @@ abstract class SampleCatalogDatabase : RoomDatabase() {
                     context.applicationContext,
                     SampleCatalogDatabase::class.java,
                     "gmp_samples_catalog.db"
-                ).build().also { INSTANCE = it }
+                )
+                .fallbackToDestructiveMigration()
+                .build().also { INSTANCE = it }
             }
         }
     }

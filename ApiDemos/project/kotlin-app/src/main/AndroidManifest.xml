@@ -207,6 +207,13 @@
         <activity
             android:name=".PolylineDemoActivity"
             android:exported="true" />
+        <receiver
+            android:name="com.example.common_ui.catalog.repository.EvaluationExportReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.maps.EXPORT_EVALUATIONS" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
