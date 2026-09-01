@@ -84,7 +84,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
         setSupportActionBar(topBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         topBar.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            navigateBackToCatalog()
         }
 
         val metadata = currentSampleMetadata
@@ -125,9 +125,25 @@ open class SamplesBaseActivity : AppCompatActivity() {
         return true
     }
 
+    private fun navigateBackToCatalog() {
+        if (isTaskRoot) {
+            try {
+                val intent = Intent().setClassName(packageName, "com.example.common_ui.catalog.compose.ReviewerActivity")
+                startActivity(intent)
+            } catch (e: Exception) {
+                // Fallback to finishing
+            }
+        }
+        finish()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val metadata = currentSampleMetadata
         return when (item.itemId) {
+            android.R.id.home -> {
+                navigateBackToCatalog()
+                true
+            }
             2001 -> {
                 if (metadata != null) {
                     val sheet = SampleExpectationsBottomSheet.newInstance(

@@ -18,12 +18,15 @@ package com.example.common_ui.catalog.compose
 
 import android.text.Html
 import android.widget.TextView
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -34,7 +37,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,6 +72,24 @@ fun CatalogScreen(
     var activeSampleForDetail by remember { mutableStateOf<SampleItem?>(null) }
     var activeQuickGrading by remember { mutableStateOf<Pair<SampleItem, ReviewStatus>?>(null) }
 
+    // Collapsible header controls state
+    var isHeaderControlsVisible by remember { mutableStateOf(true) }
+    val lazyListState = rememberLazyListState()
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                // When user scrolls content up (dragging upwards, available.y is negative), collapse tabs and search bar
+                if (available.y < -10f && isHeaderControlsVisible) {
+                    isHeaderControlsVisible = false
+                } else if (available.y > 10f && !isHeaderControlsVisible) {
+                    isHeaderControlsVisible = true
+                }
+                return Offset.Zero
+            }
+        }
+    }
+
     val filteredSamples = remember(selectedFramework, selectedComplexity, selectedTags.toList(), searchQuery) {
         SampleCatalogRegistry.filter(
             framework = selectedFramework,
@@ -79,6 +104,7 @@ fun CatalogScreen(
     }
 
     Scaffold(
+        modifier = Modifier.nestedScroll(nestedScrollConnection),
         topBar = {
             Column(
                 modifier = Modifier
@@ -95,13 +121,26 @@ fun CatalogScreen(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = if (isReviewerMode) "Reviewer Mode Active • Room DB Backed" else "Unified Multi-Framework Catalog",
+                                text = if (isReviewerMode) {
+                                    "${selectedFramework.badge} ${selectedFramework.displayName} • ${filteredSamples.size} samples"
+                                } else {
+                                    "Unified Multi-Framework Catalog • ${filteredSamples.size} samples"
+                                },
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (isReviewerMode) Color(0xFFD93025) else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     },
                     actions = {
+                        // Toggle search/filters button
+                        IconButton(onClick = { isHeaderControlsVisible = !isHeaderControlsVisible }) {
+                            Icon(
+                                imageVector = if (isHeaderControlsVisible) Icons.Default.FilterListOff else Icons.Default.FilterList,
+                                contentDescription = "Toggle Filters & Search",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+
                         if (isReviewerMode && onExportGrievances != null) {
                             IconButton(onClick = onExportGrievances) {
                                 BadgedBox(
@@ -125,97 +164,120 @@ fun CatalogScreen(
                     )
                 )
 
-                // Framework Tabs (Kotlin Views & Java Views)
-                PrimaryTabRow(
-                    selectedTabIndex = when (selectedFramework) {
-                        Framework.KOTLIN_VIEWS -> 0
-                        Framework.JAVA_VIEWS -> 1
-                    }
+                // Built-in Compose Animated Collapsible Controls (Tabs, Search Bar, Filter Chips)
+                AnimatedVisibility(
+                    visible = isHeaderControlsVisible,
+                    enter = expandVertically(
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioLowBouncy,
+                            stiffness = Spring.StiffnessMediumLow
+                        )
+                    ) + fadeIn(animationSpec = tween(200)),
+                    exit = shrinkVertically(
+                        animationSpec = spring(
+                            dampingRatio = Spring.DampingRatioNoBouncy,
+                            stiffness = Spring.StiffnessMedium
+                        )
+                    ) + fadeOut(animationSpec = tween(150))
                 ) {
-                    Tab(
-                        selected = selectedFramework == Framework.KOTLIN_VIEWS,
-                        onClick = { selectedFramework = Framework.KOTLIN_VIEWS },
-                        text = { Text("💜 Kotlin", fontWeight = FontWeight.Bold) }
-                    )
-                    Tab(
-                        selected = selectedFramework == Framework.JAVA_VIEWS,
-                        onClick = { selectedFramework = Framework.JAVA_VIEWS },
-                        text = { Text("☕ Java", fontWeight = FontWeight.Bold) }
-                    )
-                }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 6.dp)
+                    ) {
+                        // Framework Tabs (Kotlin Views & Java Views)
+                        PrimaryTabRow(
+                            selectedTabIndex = when (selectedFramework) {
+                                Framework.KOTLIN_VIEWS -> 0
+                                Framework.JAVA_VIEWS -> 1
+                            }
+                        ) {
+                            Tab(
+                                selected = selectedFramework == Framework.KOTLIN_VIEWS,
+                                onClick = { selectedFramework = Framework.KOTLIN_VIEWS },
+                                text = { Text("💜 Kotlin", fontWeight = FontWeight.Bold) }
+                            )
+                            Tab(
+                                selected = selectedFramework == Framework.JAVA_VIEWS,
+                                onClick = { selectedFramework = Framework.JAVA_VIEWS },
+                                text = { Text("☕ Java", fontWeight = FontWeight.Bold) }
+                            )
+                        }
 
-                // Search Bar
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { searchQuery = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 6.dp),
-                    placeholder = { Text("Search samples, tags, or categories...") },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                    trailingIcon = {
-                        if (searchQuery.isNotEmpty()) {
-                            IconButton(onClick = { searchQuery = "" }) {
-                                Icon(Icons.Default.Clear, contentDescription = "Clear")
+                        // Search Bar
+                        OutlinedTextField(
+                            value = searchQuery,
+                            onValueChange = { searchQuery = it },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp, vertical = 6.dp),
+                            placeholder = { Text("Search samples, tags, or categories...") },
+                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                            trailingIcon = {
+                                if (searchQuery.isNotEmpty()) {
+                                    IconButton(onClick = { searchQuery = "" }) {
+                                        Icon(Icons.Default.Clear, contentDescription = "Clear")
+                                    }
+                                }
+                            },
+                            singleLine = true,
+                            shape = RoundedCornerShape(12.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                            )
+                        )
+
+                        // Complexity Filter Chips
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState())
+                                .padding(horizontal = 12.dp, vertical = 2.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            FilterChip(
+                                selected = selectedComplexity == null,
+                                onClick = { selectedComplexity = null },
+                                label = { Text("All") }
+                            )
+                            FilterChip(
+                                selected = selectedComplexity == Complexity.SNIPPET,
+                                onClick = { selectedComplexity = if (selectedComplexity == Complexity.SNIPPET) null else Complexity.SNIPPET },
+                                label = { Text("🔹 Snippet") }
+                            )
+                            FilterChip(
+                                selected = selectedComplexity == Complexity.SIMPLE,
+                                onClick = { selectedComplexity = if (selectedComplexity == Complexity.SIMPLE) null else Complexity.SIMPLE },
+                                label = { Text("🟢 Simple") }
+                            )
+                            FilterChip(
+                                selected = selectedComplexity == Complexity.ADVANCED,
+                                onClick = { selectedComplexity = if (selectedComplexity == Complexity.ADVANCED) null else Complexity.ADVANCED },
+                                label = { Text("🔴 Advanced") }
+                            )
+                        }
+
+                        // Dynamic Hashtags Row
+                        val allTags = remember { SampleCatalogRegistry.getAllTags() }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState())
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            allTags.forEach { tag ->
+                                val isSelected = selectedTags.contains(tag)
+                                FilterChip(
+                                    selected = isSelected,
+                                    onClick = {
+                                        if (isSelected) selectedTags.remove(tag) else selectedTags.add(tag)
+                                    },
+                                    label = { Text(tag, fontSize = 12.sp) }
+                                )
                             }
                         }
-                    },
-                    singleLine = true,
-                    shape = RoundedCornerShape(12.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                    )
-                )
-
-                // Complexity Filter Chips
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 12.dp, vertical = 2.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    FilterChip(
-                        selected = selectedComplexity == null,
-                        onClick = { selectedComplexity = null },
-                        label = { Text("All") }
-                    )
-                    FilterChip(
-                        selected = selectedComplexity == Complexity.SNIPPET,
-                        onClick = { selectedComplexity = if (selectedComplexity == Complexity.SNIPPET) null else Complexity.SNIPPET },
-                        label = { Text("🔹 Snippet") }
-                    )
-                    FilterChip(
-                        selected = selectedComplexity == Complexity.SIMPLE,
-                        onClick = { selectedComplexity = if (selectedComplexity == Complexity.SIMPLE) null else Complexity.SIMPLE },
-                        label = { Text("🟢 Simple") }
-                    )
-                    FilterChip(
-                        selected = selectedComplexity == Complexity.ADVANCED,
-                        onClick = { selectedComplexity = if (selectedComplexity == Complexity.ADVANCED) null else Complexity.ADVANCED },
-                        label = { Text("🔴 Advanced") }
-                    )
-                }
-
-                // Dynamic Hashtags Row
-                val allTags = remember { SampleCatalogRegistry.getAllTags() }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    allTags.forEach { tag ->
-                        val isSelected = selectedTags.contains(tag)
-                        FilterChip(
-                            selected = isSelected,
-                            onClick = {
-                                if (isSelected) selectedTags.remove(tag) else selectedTags.add(tag)
-                            },
-                            label = { Text(tag, fontSize = 12.sp) }
-                        )
                     }
                 }
             }
@@ -247,6 +309,7 @@ fun CatalogScreen(
             }
         } else {
             LazyColumn(
+                state = lazyListState,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
