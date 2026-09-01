@@ -631,18 +631,40 @@ fun CatalogScreen(
                 }
             },
             confirmButton = {
-                Button(
-                    onClick = {
-                        onSaveEvaluation?.invoke(targetFqcn, gradeStatus, notes, sample)
-                        activeQuickGradingSampleId = null
-                        activeQuickGradingStatus = null
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (gradeStatus == ReviewStatus.PASSING) Color(0xFF2E7D32) else Color(0xFFC62828),
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(if (gradeStatus == ReviewStatus.PASSING) "Record Pass 👍" else "Record Issue ⚠️")
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedButton(
+                        onClick = {
+                            onSaveEvaluation?.invoke(targetFqcn, gradeStatus, notes, sample)
+                            activeQuickGradingSampleId = null
+                            activeQuickGradingStatus = null
+                        }
+                    ) {
+                        Text(if (gradeStatus == ReviewStatus.PASSING) "Save Pass 👍" else "Save Issue ⚠️")
+                    }
+                    Button(
+                        onClick = {
+                            onSaveEvaluation?.invoke(targetFqcn, gradeStatus, notes, sample)
+                            activeQuickGradingSampleId = null
+                            activeQuickGradingStatus = null
+                            val allFw = SampleCatalogRegistry.filter(framework = selectedFramework)
+                            val currIdx = allFw.indexOfFirst { it.id == sample.id }
+                            val nextUnchecked = if (currIdx >= 0) {
+                                (allFw.drop(currIdx + 1) + allFw.take(currIdx)).firstOrNull { s ->
+                                    val fqcn = s.getTargetFqcn(selectedFramework)
+                                    val ev = evaluations[fqcn] ?: evaluations[s.id]
+                                    ReviewStatus.fromString(ev?.status) == ReviewStatus.UNCHECKED
+                                }
+                            } else null
+                            if (nextUnchecked != null) {
+                                onLaunchSample(nextUnchecked, selectedFramework)
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        )
+                    ) {
+                        Text("Save & Next ⏭️", fontWeight = FontWeight.Bold)
+                    }
                 }
             },
             dismissButton = {
@@ -1245,18 +1267,24 @@ fun SampleDetailFullScreenDialog(
                                     }
                                 }
 
-                                Button(
+                                OutlinedButton(
                                     onClick = { onSaveEvaluation(currentStatus, notesText) },
-                                    modifier = Modifier.weight(2f),
+                                    modifier = Modifier.weight(1f),
+                                    shape = RoundedCornerShape(10.dp)
+                                ) {
+                                    Text("Save", maxLines = 1)
+                                }
+                                Button(
+                                    onClick = {
+                                        onSaveEvaluation(currentStatus, notesText)
+                                    },
+                                    modifier = Modifier.weight(1.5f),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
-                                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                        containerColor = MaterialTheme.colorScheme.primary
                                     )
                                 ) {
-                                    Icon(Icons.Default.Save, contentDescription = null, modifier = Modifier.size(18.dp))
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text("Save Review Evaluation")
+                                    Text("Save & Next ⏭️", fontWeight = FontWeight.Bold, maxLines = 1)
                                 }
                             }
                         }
