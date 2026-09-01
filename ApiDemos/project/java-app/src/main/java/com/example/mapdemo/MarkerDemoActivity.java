@@ -14,6 +14,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -67,6 +71,18 @@ import java.util.Random;
  * This shows how to place markers on a map.
  */
 // [START maps_android_sample_marker]
+@Sample(
+    id = "marker_demo",
+    title = "Standard Markers & Info Windows",
+    description = "Placing markers, custom icons, draggable pins, and custom info window layouts.",
+    category = "Markers & Overlays",
+    complexity = Complexity.SIMPLE,
+    tags = {"#markers", "#infowindow", "#draggable", "#icons", "#anchor"},
+    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins, and custom InfoWindowAdapter views.",
+    successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
+    failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
+    framework = Framework.JAVA_VIEWS
+)
 public class MarkerDemoActivity extends SamplesBaseActivity implements
         OnMarkerClickListener,
         OnInfoWindowClickListener,

@@ -16,6 +16,10 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,6 +52,18 @@ import java.util.Arrays
 /**
  * This shows how to draw polylines on a map.
  */
+@Sample(
+    id = "polylines",
+    title = "Polylines & Patterns",
+    description = "Drawing polylines with joint types, dash/dot stroke patterns, joint styles, and spans.",
+    category = "Shapes & Geometry",
+    complexity = Complexity.SIMPLE,
+    tags = ["#shapes", "#polylines", "#patterns", "#dashes", "#stroke", "#routes"],
+    purpose = "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel joints.",
+    successCriteria = "Polylines render crisp dashed and dotted stroke lines along coordinate vertices.",
+    failureIndicators = "Line caps distorted or custom pattern ignored on high-DPI screens.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class PolylineDemoActivity :
         SamplesBaseActivity(),
         OnMapReadyCallback,

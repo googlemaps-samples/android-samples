@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.Manifest.permission
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -38,6 +42,18 @@ import kotlinx.coroutines.launch
 /**
  * This shows how to use a custom location source.
  */
+@Sample(
+    id = "location_source",
+    title = "Custom LocationSource",
+    description = "Providing a custom mock LocationSource for simulated GPS navigation playback.",
+    category = "Location & Sensors",
+    complexity = Complexity.ADVANCED,
+    tags = ["#location", "#locationsource", "#mock", "#simulation", "#navigation"],
+    purpose = "Shows how to feed programmatic coordinates into the GoogleMap location layer using a custom LocationSource.",
+    successCriteria = "The blue dot animates smoothly along a simulated route when navigation starts.",
+    failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class LocationSourceDemoActivity : SamplesBaseActivity() {
 
   private val locationSource = LongPressLocationSource()
