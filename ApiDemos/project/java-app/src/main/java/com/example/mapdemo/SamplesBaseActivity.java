@@ -103,7 +103,7 @@ public class SamplesBaseActivity extends AppCompatActivity {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
-            topBar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+            topBar.setNavigationOnClickListener(v -> navigateBackToCatalog());
             if (currentSampleMetadata != null) {
                 topBar.setTitle(currentSampleMetadata.getTitle());
                 topBar.setSubtitle(currentSampleMetadata.getComplexity().getBadge() + " " + currentSampleMetadata.getCategory());
@@ -141,9 +141,25 @@ public class SamplesBaseActivity extends AppCompatActivity {
         return true;
     }
 
+    private void navigateBackToCatalog() {
+        if (isTaskRoot()) {
+            try {
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), "com.example.common_ui.catalog.compose.ReviewerActivity");
+                startActivity(intent);
+            } catch (Exception e) {
+                // Fallback to finish
+            }
+        }
+        finish();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == 2001 && currentSampleMetadata != null) {
+        if (item.getItemId() == android.R.id.home) {
+            navigateBackToCatalog();
+            return true;
+        } else if (item.getItemId() == 2001 && currentSampleMetadata != null) {
             SampleExpectationsBottomSheet sheet = SampleExpectationsBottomSheet.Companion.newInstance(
                 currentSampleMetadata,
                 Framework.JAVA_VIEWS,
