@@ -18,15 +18,16 @@ package com.example.kotlindemos
 
 import android.os.Bundle
 import android.widget.Toast
-import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
+import com.example.common_ui.catalog.compose.ReviewerActivity
 
 /**
  * The main entry activity of the Google Maps API demo gallery.
  *
- * Provides the unified multi-framework sample catalog with real-time tag search,
- * pedagogical complexity filtering, and on-device manual Reviewer Mode with Room persistence.
+ * Provides the unified Compose sample catalog with real-time tag search,
+ * collapsible filters, quick grading buttons, and on-device manual Reviewer Mode
+ * with Room persistence and Airing of Grievances export.
  */
-class MainActivity : UnifiedCatalogActivity() {
+class MainActivity : ReviewerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
