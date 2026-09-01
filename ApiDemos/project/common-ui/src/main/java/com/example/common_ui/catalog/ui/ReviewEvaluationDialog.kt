@@ -106,7 +106,7 @@ object ReviewEvaluationDialog {
         if (status == ReviewStatus.NEEDS_WORK && capturedBitmap != null) {
             // Header for Annotation
             val markupLabel = TextView(activity).apply {
-                text = "📸 Highlight / Circle Problem Areas (Pinch to zoom & pan):"
+                text = "📸 Highlight / Circle Problem Areas (Auto-saved on Save/Next):"
                 textSize = 13f
                 setTypeface(null, android.graphics.Typeface.BOLD)
                 setPadding(0, 20, 0, 10)
@@ -156,7 +156,12 @@ object ReviewEvaluationDialog {
                 setPadding(20, 8, 20, 8)
             }
             val systemEditorBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "✏️ System Editor"
+                text = "✏️ Open in System Editor"
+                textSize = 11f
+                setPadding(20, 8, 20, 8)
+            }
+            val reloadEditorBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+                text = "🔄 Reload External Edits"
                 textSize = 11f
                 setPadding(20, 8, 20, 8)
             }
@@ -168,6 +173,7 @@ object ReviewEvaluationDialog {
             toolsLayout.addView(undoBtn)
             toolsLayout.addView(clearBtn)
             toolsLayout.addView(systemEditorBtn)
+            toolsLayout.addView(reloadEditorBtn)
             contentLayout.addView(toolsScroll)
 
             // Drawing canvas container with generous height preserving natural aspect ratio
@@ -219,10 +225,13 @@ object ReviewEvaluationDialog {
             clearBtn.setOnClickListener {
                 canvas.clearAllStrokes()
             }
+            var externalEditedFile: File? = null
+
             systemEditorBtn.setOnClickListener {
                 try {
                     val merged = canvas.createAnnotatedBitmap() ?: capturedBitmap
                     val tempFile = ScreenCaptureHelper.saveBitmap(activity, merged, sample.id)
+                    externalEditedFile = tempFile
                     val uri: Uri = FileProvider.getUriForFile(
                         activity,
                         "${activity.packageName}.fileprovider",
@@ -233,8 +242,22 @@ object ReviewEvaluationDialog {
                         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                     }
                     activity.startActivity(Intent.createChooser(editIntent, "Edit Screenshot with Markup"))
+                    Toast.makeText(activity, "Save in editor, then tap '🔄 Reload External Edits'", Toast.LENGTH_LONG).show()
                 } catch (e: Exception) {
                     Toast.makeText(activity, "System editor unavailable: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            reloadEditorBtn.setOnClickListener {
+                val file = externalEditedFile
+                if (file != null && file.exists()) {
+                    val reloadedBitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                    if (reloadedBitmap != null) {
+                        canvas.setBaseBitmap(reloadedBitmap)
+                        Toast.makeText(activity, "Loaded edits from system editor!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(activity, "No external edit file found yet", Toast.LENGTH_SHORT).show()
                 }
             }
         }

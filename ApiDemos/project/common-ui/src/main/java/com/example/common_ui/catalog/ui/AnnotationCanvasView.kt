@@ -28,13 +28,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
-import kotlin.math.max
-import kotlin.math.min
 
 /**
  * Interactive touch-drawing overlay that preserves exact screenshot aspect ratio
- * and supports smooth multi-touch pinch-to-zoom, panning, and precise drawing
- * in native bitmap coordinate space.
+ * and provides rock-solid multi-touch pinch-to-zoom and panning without jitter or release jumps.
  */
 class AnnotationCanvasView @JvmOverloads constructor(
     context: Context,
@@ -64,35 +61,52 @@ class AnnotationCanvasView @JvmOverloads constructor(
     private val penColor = Color.parseColor("#E53935") // Bright Red
     private val highlightColor = Color.parseColor("#FFD600") // Vivid Yellow
 
-    // Transformation Matrix & Zoom/Pan state
-    private val viewMatrix = Matrix()
+    // Transformation Matrices
+    private val baseFitMatrix = Matrix()
+    private val userTransformMatrix = Matrix()
+    private val totalMatrix = Matrix()
     private val inverseMatrix = Matrix()
+
     private val matrixValues = FloatArray(9)
+    private var currentScale = 1.0f
 
-    private var userScale = 1.0f
-    private var translationX = 0.0f
-    private var translationY = 0.0f
-
-    private var lastTouchX = 0.0f
-    private var lastTouchY = 0.0f
-    private var isMultiTouch = false
+    // Smooth Touch & Pointer Tracking
+    private var activePointerId = MotionEvent.INVALID_POINTER_ID
+    private var lastTouchX = 0f
+    private var lastTouchY = 0f
+    private var isPinching = false
 
     private val scaleDetector = ScaleGestureDetector(context, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+            isPinching = true
+            // Discard active drawing stroke if user starts pinching
+            if (currentStroke != null) {
+                strokes.remove(currentStroke)
+                currentStroke = null
+                invalidate()
+            }
+            return true
+        }
+
         override fun onScale(detector: ScaleGestureDetector): Boolean {
             val scaleFactor = detector.scaleFactor
-            val prevScale = userScale
-            userScale = (userScale * scaleFactor).coerceIn(1.0f, 6.0f)
+            val targetScale = currentScale * scaleFactor
 
-            // Adjust translation to zoom toward gesture focus point
-            val focusX = detector.focusX
-            val focusY = detector.focusY
-            translationX += (focusX - translationX) * (1 - userScale / prevScale)
-            translationY += (focusY - translationY) * (1 - userScale / prevScale)
-
-            clampTranslation()
-            updateMatrix()
-            invalidate()
+            if (targetScale in 0.95f..6.0f) {
+                currentScale = targetScale.coerceIn(1.0f, 6.0f)
+                userTransformMatrix.postScale(scaleFactor, scaleFactor, detector.focusX, detector.focusY)
+                clampTransform()
+                recalculateMatrices()
+                invalidate()
+            }
             return true
+        }
+
+        override fun onScaleEnd(detector: ScaleGestureDetector) {
+            isPinching = false
+            clampTransform()
+            recalculateMatrices()
+            invalidate()
         }
     })
 
@@ -104,10 +118,10 @@ class AnnotationCanvasView @JvmOverloads constructor(
     }
 
     fun resetZoomAndPan() {
-        userScale = 1.0f
-        translationX = 0.0f
-        translationY = 0.0f
-        updateMatrix()
+        currentScale = 1.0f
+        userTransformMatrix.reset()
+        updateBaseFitMatrix()
+        recalculateMatrices()
         invalidate()
     }
 
@@ -126,17 +140,17 @@ class AnnotationCanvasView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        updateMatrix()
+        updateBaseFitMatrix()
+        recalculateMatrices()
     }
 
-    private fun updateMatrix() {
+    private fun updateBaseFitMatrix() {
         val bmp = baseBitmap ?: return
         if (width <= 0 || height <= 0) return
 
-        // Compute fit-center scale keeping exact aspect ratio
         val scaleX = width.toFloat() / bmp.width.toFloat()
         val scaleY = height.toFloat() / bmp.height.toFloat()
-        val fitScale = min(scaleX, scaleY)
+        val fitScale = kotlin.math.min(scaleX, scaleY)
 
         val fitWidth = bmp.width * fitScale
         val fitHeight = bmp.height * fitScale
@@ -144,62 +158,57 @@ class AnnotationCanvasView @JvmOverloads constructor(
         val baseOffsetX = (width - fitWidth) / 2f
         val baseOffsetY = (height - fitHeight) / 2f
 
-        viewMatrix.reset()
-        // 1. Center fitted bitmap in view
-        viewMatrix.postTranslate(baseOffsetX, baseOffsetY)
-        viewMatrix.postScale(fitScale, fitScale, baseOffsetX, baseOffsetY)
-        // 2. Apply user zoom and pan
-        val centerX = width / 2f
-        val centerY = height / 2f
-        viewMatrix.postScale(userScale, userScale, centerX, centerY)
-        viewMatrix.postTranslate(translationX, translationY)
-
-        viewMatrix.invert(inverseMatrix)
+        baseFitMatrix.reset()
+        baseFitMatrix.postScale(fitScale, fitScale)
+        baseFitMatrix.postTranslate(baseOffsetX, baseOffsetY)
     }
 
-    private fun clampTranslation() {
+    private fun recalculateMatrices() {
+        totalMatrix.set(baseFitMatrix)
+        totalMatrix.postConcat(userTransformMatrix)
+        totalMatrix.invert(inverseMatrix)
+    }
+
+    private fun clampTransform() {
         val bmp = baseBitmap ?: return
-        val maxPanX = width.toFloat() * (userScale - 0.8f).coerceAtLeast(0f)
-        val maxPanY = height.toFloat() * (userScale - 0.8f).coerceAtLeast(0f)
-        translationX = translationX.coerceIn(-maxPanX, maxPanX)
-        translationY = translationY.coerceIn(-maxPanY, maxPanY)
+        if (width <= 0 || height <= 0) return
+
+        // Compute current scale from matrix
+        userTransformMatrix.getValues(matrixValues)
+        val scaleX = matrixValues[Matrix.MSCALE_X]
+        currentScale = scaleX.coerceIn(1.0f, 6.0f)
+
+        // Prevent dragging image completely offscreen
+        val maxPanX = width.toFloat() * (currentScale - 0.5f).coerceAtLeast(0f)
+        val maxPanY = height.toFloat() * (currentScale - 0.5f).coerceAtLeast(0f)
+
+        val transX = matrixValues[Matrix.MTRANS_X].coerceIn(-maxPanX, maxPanX)
+        val transY = matrixValues[Matrix.MTRANS_Y].coerceIn(-maxPanY, maxPanY)
+
+        matrixValues[Matrix.MTRANS_X] = transX
+        matrixValues[Matrix.MTRANS_Y] = transY
+        userTransformMatrix.setValues(matrixValues)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        // Disallow parent ScrollView from stealing touch gestures
+        // Prevent parent ScrollView from stealing touch gestures while interacting with canvas
         parent?.requestDisallowInterceptTouchEvent(true)
 
         scaleDetector.onTouchEvent(event)
 
-        if (event.pointerCount > 1) {
-            isMultiTouch = true
-            // Discard active stroke if user started multi-touch zoom
-            if (currentStroke != null) {
-                strokes.remove(currentStroke)
-                currentStroke = null
-            }
-            return true
-        }
-
-        if (isMultiTouch && event.actionMasked == MotionEvent.ACTION_UP) {
-            isMultiTouch = false
-            return true
-        }
-
-        val screenX = event.x
-        val screenY = event.y
-
-        when (event.actionMasked) {
+        val action = event.actionMasked
+        when (action) {
             MotionEvent.ACTION_DOWN -> {
-                lastTouchX = screenX
-                lastTouchY = screenY
+                activePointerId = event.getPointerId(0)
+                lastTouchX = event.getX(0)
+                lastTouchY = event.getY(0)
 
                 if (currentTool == ToolMode.PAN_ZOOM) {
                     return true
                 }
 
-                // Map touch coordinate into native bitmap coordinate space
-                val pts = floatArrayOf(screenX, screenY)
+                // Map touch to native bitmap coordinates
+                val pts = floatArrayOf(lastTouchX, lastTouchY)
                 inverseMatrix.mapPoints(pts)
                 val bmpX = pts[0]
                 val bmpY = pts[1]
@@ -217,22 +226,45 @@ class AnnotationCanvasView @JvmOverloads constructor(
                 }
                 return true
             }
-            MotionEvent.ACTION_MOVE -> {
-                val dx = screenX - lastTouchX
-                val dy = screenY - lastTouchY
-                lastTouchX = screenX
-                lastTouchY = screenY
 
-                if (currentTool == ToolMode.PAN_ZOOM || isMultiTouch) {
-                    translationX += dx
-                    translationY += dy
-                    clampTranslation()
-                    updateMatrix()
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                // Secondary finger touched down -> start multi-touch panning
+                isPinching = true
+                if (currentStroke != null) {
+                    strokes.remove(currentStroke)
+                    currentStroke = null
+                    invalidate()
+                }
+                val index = event.actionIndex
+                lastTouchX = event.getX(index)
+                lastTouchY = event.getY(index)
+                activePointerId = event.getPointerId(index)
+                return true
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                val pointerIndex = event.findPointerIndex(activePointerId)
+                if (pointerIndex == -1) return true
+
+                val x = event.getX(pointerIndex)
+                val y = event.getY(pointerIndex)
+
+                val dx = x - lastTouchX
+                val dy = y - lastTouchY
+                lastTouchX = x
+                lastTouchY = y
+
+                // If currently zooming, multi-touching, or in pan/zoom mode: pan the viewport
+                if (isPinching || event.pointerCount > 1 || currentTool == ToolMode.PAN_ZOOM) {
+                    userTransformMatrix.postTranslate(dx, dy)
+                    clampTransform()
+                    recalculateMatrices()
                     invalidate()
                     return true
                 }
 
-                val pts = floatArrayOf(screenX, screenY)
+                // Drawing in bitmap space
+                val pts = floatArrayOf(x, y)
                 inverseMatrix.mapPoints(pts)
                 val bmpX = pts[0]
                 val bmpY = pts[1]
@@ -241,9 +273,25 @@ class AnnotationCanvasView @JvmOverloads constructor(
                 invalidate()
                 return true
             }
+
+            MotionEvent.ACTION_POINTER_UP -> {
+                // One finger lifted up: smoothly switch active pointer to prevent jumps!
+                val pointerIndex = event.actionIndex
+                val pointerId = event.getPointerId(pointerIndex)
+                if (pointerId == activePointerId) {
+                    val newPointerIndex = if (pointerIndex == 0) 1 else 0
+                    lastTouchX = event.getX(newPointerIndex)
+                    lastTouchY = event.getY(newPointerIndex)
+                    activePointerId = event.getPointerId(newPointerIndex)
+                }
+                isPinching = false
+                return true
+            }
+
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                activePointerId = MotionEvent.INVALID_POINTER_ID
                 currentStroke = null
-                isMultiTouch = false
+                isPinching = false
                 invalidate()
                 return true
             }
@@ -256,12 +304,12 @@ class AnnotationCanvasView @JvmOverloads constructor(
 
         val bmp = baseBitmap ?: return
         canvas.save()
-        canvas.concat(viewMatrix)
+        canvas.concat(totalMatrix)
 
-        // Draw original screenshot with native dimensions
+        // 1. Draw base screenshot maintaining natural aspect ratio
         canvas.drawBitmap(bmp, 0f, 0f, null)
 
-        // Draw reviewer strokes in native bitmap coordinates
+        // 2. Draw reviewer strokes in native bitmap coordinates
         for (stroke in strokes) {
             val paint = Paint().apply {
                 color = stroke.color
@@ -280,7 +328,7 @@ class AnnotationCanvasView @JvmOverloads constructor(
 
     /**
      * Merges the original screenshot bitmap with the reviewer's drawn annotations
-     * directly at original resolution without any distortion, cropping, or aspect ratio loss.
+     * directly at original resolution without any distortion or crop.
      */
     fun createAnnotatedBitmap(): Bitmap? {
         val bmp = baseBitmap ?: return null
