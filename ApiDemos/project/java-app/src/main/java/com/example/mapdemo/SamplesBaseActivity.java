@@ -99,10 +99,16 @@ public class SamplesBaseActivity extends AppCompatActivity {
         if (root == null) return;
         MaterialToolbar topBar = root.findViewById(com.example.common_ui.R.id.top_bar);
         if (topBar != null) {
+            setSupportActionBar(topBar);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
             topBar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
             if (currentSampleMetadata != null) {
+                topBar.setTitle(currentSampleMetadata.getTitle());
                 topBar.setSubtitle(currentSampleMetadata.getComplexity().getBadge() + " " + currentSampleMetadata.getCategory());
             }
+            invalidateOptionsMenu();
         }
     }
 
