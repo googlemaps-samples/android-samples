@@ -19,7 +19,6 @@ package com.example.common_ui.catalog.compose
 import android.text.Html
 import android.widget.TextView
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -37,12 +36,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,6 +49,7 @@ import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
 import com.example.common_ui.catalog.SampleItem
 import com.example.common_ui.catalog.db.SampleEvaluationEntity
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,24 +69,10 @@ fun CatalogScreen(
     var activeSampleForDetail by remember { mutableStateOf<SampleItem?>(null) }
     var activeQuickGrading by remember { mutableStateOf<Pair<SampleItem, ReviewStatus>?>(null) }
     var showClearConfirmDialog by remember { mutableStateOf(false) }
+    var showMoreMenu by remember { mutableStateOf(false) }
 
-    // Collapsible header controls state
-    var isHeaderControlsVisible by remember { mutableStateOf(true) }
     val lazyListState = rememberLazyListState()
-
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                // When user scrolls content up (dragging upwards, available.y is negative), collapse tabs and search bar
-                if (available.y < -10f && isHeaderControlsVisible) {
-                    isHeaderControlsVisible = false
-                } else if (available.y > 10f && !isHeaderControlsVisible) {
-                    isHeaderControlsVisible = true
-                }
-                return Offset.Zero
-            }
-        }
-    }
+    val coroutineScope = rememberCoroutineScope()
 
     // Dynamic review status counts for active framework
     val statusCounts = remember(selectedFramework, evaluations) {
@@ -141,261 +122,125 @@ fun CatalogScreen(
     }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(nestedScrollConnection),
         topBar = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surface)
-            ) {
-                // Top App Bar
-                TopAppBar(
-                    title = {
-                        Column {
-                            Text(
-                                text = if (isReviewerMode) "GMP Sample Reviewer" else "Google Maps Platform Samples",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text(
-                                text = if (isReviewerMode) {
-                                    val filterSummary = if (selectedStatusFilter == ReviewStatus.UNCHECKED) " • ⚪ Unchecked Only" else ""
-                                    "${selectedFramework.badge} ${selectedFramework.displayName} • ${filteredSamples.size} samples$filterSummary"
-                                } else {
-                                    "Unified Multi-Framework Catalog • ${filteredSamples.size} samples"
-                                },
-                                style = MaterialTheme.typography.labelSmall,
-                                color = if (isReviewerMode) Color(0xFFD93025) else MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    },
-                    actions = {
-                        // Quick toggle button for Unchecked Only in Reviewer Mode
-                        if (isReviewerMode) {
-                            IconButton(
-                                onClick = {
-                                    selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
-                                }
-                            ) {
-                                BadgedBox(
-                                    badge = {
-                                        if (uncheckedCount > 0) {
-                                            Badge { Text("$uncheckedCount") }
-                                        }
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = if (selectedStatusFilter == ReviewStatus.UNCHECKED) Icons.Default.CheckCircleOutline else Icons.Default.RadioButtonUnchecked,
-                                        contentDescription = "Filter Unchecked Only",
-                                        tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-                                    )
-                                }
-                            }
-
-                            // Clear / Reset All Evaluations Button
-                            if (onClearEvaluations != null && (evaluations.isNotEmpty())) {
-                                IconButton(onClick = { showClearConfirmDialog = true }) {
-                                    Icon(
-                                        imageVector = Icons.Default.DeleteSweep,
-                                        contentDescription = "Clear All Evaluations",
-                                        tint = MaterialTheme.colorScheme.outline
-                                    )
-                                }
-                            }
-                        }
-
-                        // Toggle search/filters button
-                        IconButton(onClick = { isHeaderControlsVisible = !isHeaderControlsVisible }) {
-                            Icon(
-                                imageVector = if (isHeaderControlsVisible) Icons.Default.FilterListOff else Icons.Default.FilterList,
-                                contentDescription = "Toggle Filters & Search",
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        }
-
-                        if (isReviewerMode && onExportGrievances != null) {
-                            IconButton(onClick = onExportGrievances) {
-                                BadgedBox(
-                                    badge = {
-                                        if (grievancesCount > 0) {
-                                            Badge { Text("$grievancesCount") }
-                                        }
-                                    }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Assessment,
-                                        contentDescription = "Generate Report",
-                                        tint = MaterialTheme.colorScheme.primary
-                                    )
-                                }
-                            }
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    )
-                )
-
-                // Built-in Compose Animated Collapsible Controls (Tabs, Search Bar, Filter Chips)
-                AnimatedVisibility(
-                    visible = isHeaderControlsVisible,
-                    enter = expandVertically(
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioLowBouncy,
-                            stiffness = Spring.StiffnessMediumLow
+            TopAppBar(
+                title = {
+                    Column {
+                        Text(
+                            text = if (isReviewerMode) "GMP Sample Reviewer" else "Google Maps Platform Samples",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
                         )
-                    ) + fadeIn(animationSpec = tween(200)),
-                    exit = shrinkVertically(
-                        animationSpec = spring(
-                            dampingRatio = Spring.DampingRatioNoBouncy,
-                            stiffness = Spring.StiffnessMedium
-                        )
-                    ) + fadeOut(animationSpec = tween(150))
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 6.dp)
-                    ) {
-                        // Framework Tabs (Kotlin Views & Java Views)
-                        PrimaryTabRow(
-                            selectedTabIndex = when (selectedFramework) {
-                                Framework.KOTLIN_VIEWS -> 0
-                                Framework.JAVA_VIEWS -> 1
-                            }
-                        ) {
-                            Tab(
-                                selected = selectedFramework == Framework.KOTLIN_VIEWS,
-                                onClick = { selectedFramework = Framework.KOTLIN_VIEWS },
-                                text = { Text("💜 Kotlin", fontWeight = FontWeight.Bold) }
-                            )
-                            Tab(
-                                selected = selectedFramework == Framework.JAVA_VIEWS,
-                                onClick = { selectedFramework = Framework.JAVA_VIEWS },
-                                text = { Text("☕ Java", fontWeight = FontWeight.Bold) }
-                            )
-                        }
-
-                        // Search Bar
-                        OutlinedTextField(
-                            value = searchQuery,
-                            onValueChange = { searchQuery = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp, vertical = 6.dp),
-                            placeholder = { Text("Search samples, tags, or categories...") },
-                            leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                            trailingIcon = {
-                                if (searchQuery.isNotEmpty()) {
-                                    IconButton(onClick = { searchQuery = "" }) {
-                                        Icon(Icons.Default.Clear, contentDescription = "Clear")
-                                    }
-                                }
+                        Text(
+                            text = if (isReviewerMode) {
+                                val filterSummary = if (selectedStatusFilter == ReviewStatus.UNCHECKED) " • ⚪ Unchecked Only" else ""
+                                "${selectedFramework.badge} ${selectedFramework.displayName} • ${filteredSamples.size} samples$filterSummary"
+                            } else {
+                                "Unified Multi-Framework Catalog • ${filteredSamples.size} samples"
                             },
-                            singleLine = true,
-                            shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-                            )
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (isReviewerMode) Color(0xFFD93025) else MaterialTheme.colorScheme.onSurfaceVariant
                         )
-
-                        // Review Status Filter Chips (Reviewer Mode Only)
-                        if (isReviewerMode) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .horizontalScroll(rememberScrollState())
-                                    .padding(horizontal = 12.dp, vertical = 2.dp),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
-                            ) {
-                                FilterChip(
-                                    selected = selectedStatusFilter == null,
-                                    onClick = { selectedStatusFilter = null },
-                                    label = { Text("All Status") }
-                                )
-                                FilterChip(
-                                    selected = selectedStatusFilter == ReviewStatus.UNCHECKED,
-                                    onClick = {
-                                        selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
-                                    },
-                                    label = {
-                                        Text(
-                                            "⚪ Unchecked ($uncheckedCount)",
-                                            fontWeight = if (selectedStatusFilter == ReviewStatus.UNCHECKED) FontWeight.Bold else FontWeight.Normal
-                                        )
+                    }
+                },
+                actions = {
+                    // Quick toggle button for Unchecked Only in Reviewer Mode
+                    if (isReviewerMode) {
+                        IconButton(
+                            onClick = {
+                                selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
+                            }
+                        ) {
+                            BadgedBox(
+                                badge = {
+                                    if (uncheckedCount > 0) {
+                                        Badge { Text("$uncheckedCount") }
                                     }
-                                )
-                                FilterChip(
-                                    selected = selectedStatusFilter == ReviewStatus.NEEDS_WORK,
-                                    onClick = {
-                                        selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.NEEDS_WORK) null else ReviewStatus.NEEDS_WORK
-                                    },
-                                    label = { Text("🔴 Needs Work ($needsWorkCount)") }
-                                )
-                                FilterChip(
-                                    selected = selectedStatusFilter == ReviewStatus.PASSING,
-                                    onClick = {
-                                        selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.PASSING) null else ReviewStatus.PASSING
-                                    },
-                                    label = { Text("🟢 Passing ($passingCount)") }
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = if (selectedStatusFilter == ReviewStatus.UNCHECKED) Icons.Default.CheckCircleOutline else Icons.Default.RadioButtonUnchecked,
+                                    contentDescription = "Filter Unchecked Only",
+                                    tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         }
 
-                        // Complexity Filter Chips
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .horizontalScroll(rememberScrollState())
-                                .padding(horizontal = 12.dp, vertical = 2.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            FilterChip(
-                                selected = selectedComplexity == null,
-                                onClick = { selectedComplexity = null },
-                                label = { Text("All Complexity") }
-                            )
-                            FilterChip(
-                                selected = selectedComplexity == Complexity.SNIPPET,
-                                onClick = { selectedComplexity = if (selectedComplexity == Complexity.SNIPPET) null else Complexity.SNIPPET },
-                                label = { Text("🔹 Snippet") }
-                            )
-                            FilterChip(
-                                selected = selectedComplexity == Complexity.SIMPLE,
-                                onClick = { selectedComplexity = if (selectedComplexity == Complexity.SIMPLE) null else Complexity.SIMPLE },
-                                label = { Text("🟢 Simple") }
-                            )
-                            FilterChip(
-                                selected = selectedComplexity == Complexity.ADVANCED,
-                                onClick = { selectedComplexity = if (selectedComplexity == Complexity.ADVANCED) null else Complexity.ADVANCED },
-                                label = { Text("🔴 Advanced") }
-                            )
-                        }
-
-                        // Dynamic Hashtags Row
-                        val allTags = remember { SampleCatalogRegistry.getAllTags() }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .horizontalScroll(rememberScrollState())
-                                .padding(horizontal = 12.dp, vertical = 4.dp),
-                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                        ) {
-                            allTags.forEach { tag ->
-                                val isSelected = selectedTags.contains(tag)
-                                FilterChip(
-                                    selected = isSelected,
-                                    onClick = {
-                                        if (isSelected) selectedTags.remove(tag) else selectedTags.add(tag)
-                                    },
-                                    label = { Text(tag, fontSize = 12.sp) }
+                        // Direct Reset / Clear Reviews Button (Always Available)
+                        if (onClearEvaluations != null) {
+                            IconButton(onClick = { showClearConfirmDialog = true }) {
+                                Icon(
+                                    imageVector = Icons.Default.RestartAlt,
+                                    contentDescription = "Reset All Evaluations",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         }
                     }
-                }
-            }
+
+                    // Jump to Search & Filters Button
+                    IconButton(onClick = {
+                        coroutineScope.launch {
+                            lazyListState.animateScrollToItem(0)
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Jump to Search & Filters",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    // More Options Overflow Menu
+                    Box {
+                        IconButton(onClick = { showMoreMenu = true }) {
+                            Icon(Icons.Default.MoreVert, contentDescription = "More Options")
+                        }
+
+                        DropdownMenu(
+                            expanded = showMoreMenu,
+                            onDismissRequest = { showMoreMenu = false }
+                        ) {
+                            if (isReviewerMode) {
+                                DropdownMenuItem(
+                                    text = { Text("🔄 Reset All Evaluations", color = MaterialTheme.colorScheme.error) },
+                                    onClick = {
+                                        showMoreMenu = false
+                                        showClearConfirmDialog = true
+                                    }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("📊 Generate Evaluation Report") },
+                                    onClick = {
+                                        showMoreMenu = false
+                                        onExportGrievances?.invoke()
+                                    }
+                                )
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(if (selectedStatusFilter == ReviewStatus.UNCHECKED) "Show All Samples" else "⚪ Show Unchecked Only")
+                                    },
+                                    onClick = {
+                                        showMoreMenu = false
+                                        selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
+                                    }
+                                )
+                                HorizontalDivider()
+                            }
+                            DropdownMenuItem(
+                                text = { Text("Scroll to Top") },
+                                onClick = {
+                                    showMoreMenu = false
+                                    coroutineScope.launch { lazyListState.animateScrollToItem(0) }
+                                }
+                            )
+                        }
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
+            )
         },
         floatingActionButton = {
             if (isReviewerMode && onExportGrievances != null) {
@@ -404,74 +249,234 @@ fun CatalogScreen(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Assessment,
-                        contentDescription = "Generate Report"
-                    )
+                    BadgedBox(
+                        badge = {
+                            if (grievancesCount > 0) {
+                                Badge { Text("$grievancesCount") }
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Assessment,
+                            contentDescription = "Generate Report"
+                        )
+                    }
                 }
             }
         }
     ) { paddingValues ->
-        if (filteredSamples.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = if (selectedStatusFilter == ReviewStatus.UNCHECKED) "🎉 All samples in this framework have been evaluated!" else "No matching samples found.",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+        LazyColumn(
+            state = lazyListState,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentPadding = PaddingValues(bottom = 80.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            // Header Item 1: Framework Tabs
+            item(key = "header_framework_tabs") {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(bottom = 6.dp)
+                ) {
+                    PrimaryTabRow(
+                        selectedTabIndex = when (selectedFramework) {
+                            Framework.KOTLIN_VIEWS -> 0
+                            Framework.JAVA_VIEWS -> 1
+                        }
+                    ) {
+                        Tab(
+                            selected = selectedFramework == Framework.KOTLIN_VIEWS,
+                            onClick = { selectedFramework = Framework.KOTLIN_VIEWS },
+                            text = { Text("💜 Kotlin Views", fontWeight = FontWeight.Bold) }
+                        )
+                        Tab(
+                            selected = selectedFramework == Framework.JAVA_VIEWS,
+                            onClick = { selectedFramework = Framework.JAVA_VIEWS },
+                            text = { Text("☕ Java Views", fontWeight = FontWeight.Bold) }
+                        )
+                    }
+
+                    // Search Bar
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp, vertical = 6.dp),
+                        placeholder = { Text("Search samples, tags, or categories...") },
+                        leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                        trailingIcon = {
+                            if (searchQuery.isNotEmpty()) {
+                                IconButton(onClick = { searchQuery = "" }) {
+                                    Icon(Icons.Default.Clear, contentDescription = "Clear")
+                                }
+                            }
+                        },
+                        singleLine = true,
+                        shape = RoundedCornerShape(12.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                        )
                     )
-                    if (selectedStatusFilter != null) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        TextButton(onClick = { selectedStatusFilter = null }) {
-                            Text("Clear Status Filter")
+
+                    // Review Status Filter Chips (Reviewer Mode Only)
+                    if (isReviewerMode) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState())
+                                .padding(horizontal = 12.dp, vertical = 2.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            FilterChip(
+                                selected = selectedStatusFilter == null,
+                                onClick = { selectedStatusFilter = null },
+                                label = { Text("All Status") }
+                            )
+                            FilterChip(
+                                selected = selectedStatusFilter == ReviewStatus.UNCHECKED,
+                                onClick = {
+                                    selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
+                                },
+                                label = {
+                                    Text(
+                                        "⚪ Unchecked ($uncheckedCount)",
+                                        fontWeight = if (selectedStatusFilter == ReviewStatus.UNCHECKED) FontWeight.Bold else FontWeight.Normal
+                                    )
+                                }
+                            )
+                            FilterChip(
+                                selected = selectedStatusFilter == ReviewStatus.NEEDS_WORK,
+                                onClick = {
+                                    selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.NEEDS_WORK) null else ReviewStatus.NEEDS_WORK
+                                },
+                                label = { Text("🔴 Needs Work ($needsWorkCount)") }
+                            )
+                            FilterChip(
+                                selected = selectedStatusFilter == ReviewStatus.PASSING,
+                                onClick = {
+                                    selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.PASSING) null else ReviewStatus.PASSING
+                                },
+                                label = { Text("🟢 Passing ($passingCount)") }
+                            )
+                        }
+                    }
+
+                    // Complexity Filter Chips
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = 12.dp, vertical = 2.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        FilterChip(
+                            selected = selectedComplexity == null,
+                            onClick = { selectedComplexity = null },
+                            label = { Text("All Complexity") }
+                        )
+                        FilterChip(
+                            selected = selectedComplexity == Complexity.SNIPPET,
+                            onClick = { selectedComplexity = if (selectedComplexity == Complexity.SNIPPET) null else Complexity.SNIPPET },
+                            label = { Text("🔹 Snippet") }
+                        )
+                        FilterChip(
+                            selected = selectedComplexity == Complexity.SIMPLE,
+                            onClick = { selectedComplexity = if (selectedComplexity == Complexity.SIMPLE) null else Complexity.SIMPLE },
+                            label = { Text("🟢 Simple") }
+                        )
+                        FilterChip(
+                            selected = selectedComplexity == Complexity.ADVANCED,
+                            onClick = { selectedComplexity = if (selectedComplexity == Complexity.ADVANCED) null else Complexity.ADVANCED },
+                            label = { Text("🔴 Advanced") }
+                        )
+                    }
+
+                    // Dynamic Hashtags Row
+                    val allTags = remember { SampleCatalogRegistry.getAllTags() }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = 12.dp, vertical = 4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        allTags.forEach { tag ->
+                            val isSelected = selectedTags.contains(tag)
+                            FilterChip(
+                                selected = isSelected,
+                                onClick = {
+                                    if (isSelected) selectedTags.remove(tag) else selectedTags.add(tag)
+                                },
+                                label = { Text(tag, fontSize = 12.sp) }
+                            )
                         }
                     }
                 }
             }
-        } else {
-            LazyColumn(
-                state = lazyListState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-                contentPadding = PaddingValues(12.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
+
+            // Empty State Handling
+            if (filteredSamples.isEmpty()) {
+                item(key = "empty_samples_state") {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 48.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                text = if (selectedStatusFilter == ReviewStatus.UNCHECKED) "🎉 All samples in this framework have been evaluated!" else "No matching samples found.",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            if (selectedStatusFilter != null) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                TextButton(onClick = { selectedStatusFilter = null }) {
+                                    Text("Clear Status Filter")
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                // Sample Cards
                 items(filteredSamples, key = { it.id }) { sample ->
                     val targetFqcn = sample.getTargetFqcn(selectedFramework)
                     val eval = evaluations[targetFqcn] ?: evaluations[sample.id]
                     val status = ReviewStatus.fromString(eval?.status)
-                    SampleComposeCard(
-                        sample = sample,
-                        targetFqcn = targetFqcn,
-                        framework = selectedFramework,
-                        isReviewerMode = isReviewerMode,
-                        evaluation = eval,
-                        status = status,
-                        onSampleClick = { onLaunchSample(sample, selectedFramework) },
-                        onInfoClick = { activeSampleForDetail = sample },
-                        onQuickGrade = { gradeStatus ->
-                            activeQuickGrading = Pair(sample, gradeStatus)
-                        }
-                    )
+                    Box(modifier = Modifier.padding(horizontal = 12.dp)) {
+                        SampleComposeCard(
+                            sample = sample,
+                            targetFqcn = targetFqcn,
+                            framework = selectedFramework,
+                            isReviewerMode = isReviewerMode,
+                            evaluation = eval,
+                            status = status,
+                            onSampleClick = { onLaunchSample(sample, selectedFramework) },
+                            onInfoClick = { activeSampleForDetail = sample },
+                            onQuickGrade = { gradeStatus ->
+                                activeQuickGrading = Pair(sample, gradeStatus)
+                            }
+                        )
+                    }
                 }
             }
         }
     }
 
-    // Confirmation Dialog for Clearing All Evaluations
+    // Confirmation Dialog for Clearing / Resetting All Evaluations
     if (showClearConfirmDialog) {
         AlertDialog(
             onDismissRequest = { showClearConfirmDialog = false },
-            icon = { Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-            title = { Text("Clear All Evaluations?") },
+            icon = { Icon(Icons.Default.RestartAlt, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+            title = { Text("Reset All Review Evaluations?") },
             text = {
-                Text("This will reset all sample review ratings, status indicators, and feedback notes stored on this device back to Unchecked.")
+                Text("This will reset all ratings, status marks, and reviewer notes across all Kotlin and Java samples back to Unchecked.")
             },
             confirmButton = {
                 Button(
@@ -484,7 +489,7 @@ fun CatalogScreen(
                         contentColor = MaterialTheme.colorScheme.onError
                     )
                 ) {
-                    Text("Clear All")
+                    Text("Reset All")
                 }
             },
             dismissButton = {
