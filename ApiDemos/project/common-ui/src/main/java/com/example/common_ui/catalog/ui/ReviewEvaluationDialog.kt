@@ -17,15 +17,22 @@
 package com.example.common_ui.catalog.ui
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -38,15 +45,16 @@ import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleItem
 import com.example.common_ui.catalog.repository.SampleReviewRepository
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.io.File
 
 /**
- * On-device reviewer grading dialog with automated screen capture, interactive in-app markup
- * with pinch-to-zoom, panning, aspect-ratio preservation, external system editor integration,
- * and persistent issue recording.
+ * On-device reviewer grading dialog with pinned bottom action bar containing
+ * "Save & Next ⏭️", "Save Issue ⚠️", and "Cancel".
+ *
+ * Preserves exact aspect ratio, supports multi-touch pinch-to-zoom, pan, drawing,
+ * and external editor integration.
  */
 object ReviewEvaluationDialog {
 
@@ -58,7 +66,7 @@ object ReviewEvaluationDialog {
         initialStatus: ReviewStatus = ReviewStatus.PASSING
     ) {
         if (initialStatus == ReviewStatus.NEEDS_WORK) {
-            // Capture the current screen before rendering the dialog
+            // Freeze and capture the current screen before rendering the dialog
             ScreenCaptureHelper.captureActivity(activity) { capturedBitmap ->
                 showEvaluationDialogInternal(activity, sample, framework, initialStatus, capturedBitmap)
             }
@@ -77,16 +85,74 @@ object ReviewEvaluationDialog {
         val targetFqcn = sample.getTargetFqcn(framework)
         val repository = SampleReviewRepository.getInstance(activity)
 
-        val scrollContainer = ScrollView(activity).apply {
-            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val dialog = Dialog(activity, com.google.android.material.R.style.Theme_Material3_DayNight_Dialog)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        val displayMetrics = activity.resources.displayMetrics
+        val dialogMaxHeight = (displayMetrics.heightPixels * 0.88).toInt()
+
+        // Main Dialog Root Layout (Vertical)
+        val rootLayout = LinearLayout(activity).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = ViewGroup.LayoutParams(
+                (displayMetrics.widthPixels * 0.94).toInt(),
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            setBackgroundColor(Color.WHITE)
+        }
+
+        // 1. Header Bar (Pinned Top)
+        val headerLayout = LinearLayout(activity).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(40, 32, 24, 20)
+            setBackgroundColor(Color.parseColor("#F5F5F7"))
+        }
+
+        val titleCol = LinearLayout(activity).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        }
+
+        val headerTitle = TextView(activity).apply {
+            text = if (status == ReviewStatus.PASSING) "👍 Good Job: ${sample.title}" else "⚠️ Something's Wrong: ${sample.title}"
+            textSize = 17f
+            setTypeface(null, Typeface.BOLD)
+            setTextColor(if (status == ReviewStatus.PASSING) Color.parseColor("#2E7D32") else Color.parseColor("#C62828"))
+        }
+        val headerSub = TextView(activity).apply {
+            text = "Evaluation for ${framework.displayName}"
+            textSize = 12f
+            setTextColor(Color.parseColor("#757575"))
+        }
+        titleCol.addView(headerTitle)
+        titleCol.addView(headerSub)
+
+        val closeBtn = ImageButton(activity).apply {
+            setImageResource(android.R.drawable.ic_menu_close_clear_cancel)
+            setBackgroundColor(Color.TRANSPARENT)
+            setOnClickListener { dialog.dismiss() }
+        }
+
+        headerLayout.addView(titleCol)
+        headerLayout.addView(closeBtn)
+        rootLayout.addView(headerLayout)
+
+        // 2. Scrollable Body Content (Fills remaining height)
+        val scrollBody = ScrollView(activity).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                0,
+                1f
+            )
             isFillViewport = true
         }
 
-        val contentLayout = LinearLayout(activity).apply {
+        val bodyLayout = LinearLayout(activity).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(40, 20, 40, 16)
+            setPadding(40, 24, 40, 24)
         }
-        scrollContainer.addView(contentLayout)
+        scrollBody.addView(bodyLayout)
 
         // Notes Input
         val input = EditText(activity).apply {
@@ -98,22 +164,24 @@ object ReviewEvaluationDialog {
             minLines = if (status == ReviewStatus.PASSING) 3 else 2
             maxLines = 4
             setPadding(28, 20, 28, 20)
+            setBackgroundResource(android.R.drawable.edit_text)
         }
-        contentLayout.addView(input)
+        bodyLayout.addView(input)
 
         var canvasView: AnnotationCanvasView? = null
+        var externalEditedFile: File? = null
 
         if (status == ReviewStatus.NEEDS_WORK && capturedBitmap != null) {
-            // Header for Annotation
             val markupLabel = TextView(activity).apply {
                 text = "📸 Highlight / Circle Problem Areas (Auto-saved on Save/Next):"
                 textSize = 13f
-                setTypeface(null, android.graphics.Typeface.BOLD)
-                setPadding(0, 20, 0, 10)
+                setTypeface(null, Typeface.BOLD)
+                setPadding(0, 24, 0, 10)
+                setTextColor(Color.parseColor("#37474F"))
             }
-            contentLayout.addView(markupLabel)
+            bodyLayout.addView(markupLabel)
 
-            // Toolbar for drawing tools
+            // Drawing Toolbar
             val toolsScroll = HorizontalScrollView(activity).apply {
                 layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 isHorizontalScrollBarEnabled = false
@@ -128,7 +196,7 @@ object ReviewEvaluationDialog {
                 text = "🔴 Circle"
                 textSize = 11f
                 setPadding(20, 8, 20, 8)
-                strokeColor = android.content.res.ColorStateList.valueOf(Color.parseColor("#E53935"))
+                strokeColor = ColorStateList.valueOf(Color.parseColor("#E53935"))
             }
             val highlightBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
                 text = "🟡 Highlight"
@@ -156,12 +224,12 @@ object ReviewEvaluationDialog {
                 setPadding(20, 8, 20, 8)
             }
             val systemEditorBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "✏️ Open in System Editor"
+                text = "✏️ Open in Editor"
                 textSize = 11f
                 setPadding(20, 8, 20, 8)
             }
             val reloadEditorBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                text = "🔄 Reload External Edits"
+                text = "🔄 Reload Edits"
                 textSize = 11f
                 setPadding(20, 8, 20, 8)
             }
@@ -174,13 +242,12 @@ object ReviewEvaluationDialog {
             toolsLayout.addView(clearBtn)
             toolsLayout.addView(systemEditorBtn)
             toolsLayout.addView(reloadEditorBtn)
-            contentLayout.addView(toolsScroll)
+            bodyLayout.addView(toolsScroll)
 
-            // Drawing canvas container with generous height preserving natural aspect ratio
+            // Canvas Container
+            val canvasHeight = (displayMetrics.heightPixels * 0.38).toInt()
             val canvasContainer = FrameLayout(activity).apply {
-                val displayMetrics = activity.resources.displayMetrics
-                val targetHeight = (displayMetrics.heightPixels * 0.42).toInt()
-                layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, targetHeight)
+                layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, canvasHeight)
                 setBackgroundColor(Color.parseColor("#1E1E2C"))
             }
 
@@ -190,13 +257,13 @@ object ReviewEvaluationDialog {
             }
             canvasView = canvas
             canvasContainer.addView(canvas)
-            contentLayout.addView(canvasContainer)
+            bodyLayout.addView(canvasContainer)
 
             fun updateToolSelection(activeTool: AnnotationCanvasView.ToolMode) {
                 canvas.currentTool = activeTool
-                val activeStroke = android.content.res.ColorStateList.valueOf(Color.parseColor("#1976D2"))
-                val defaultStroke = android.content.res.ColorStateList.valueOf(Color.parseColor("#BDBDBD"))
-                val redStroke = android.content.res.ColorStateList.valueOf(Color.parseColor("#E53935"))
+                val activeStroke = ColorStateList.valueOf(Color.parseColor("#1976D2"))
+                val defaultStroke = ColorStateList.valueOf(Color.parseColor("#BDBDBD"))
+                val redStroke = ColorStateList.valueOf(Color.parseColor("#E53935"))
 
                 penBtn.strokeColor = if (activeTool == AnnotationCanvasView.ToolMode.PEN_CIRCLE) redStroke else defaultStroke
                 highlightBtn.strokeColor = if (activeTool == AnnotationCanvasView.ToolMode.HIGHLIGHTER) activeStroke else defaultStroke
@@ -225,8 +292,6 @@ object ReviewEvaluationDialog {
             clearBtn.setOnClickListener {
                 canvas.clearAllStrokes()
             }
-            var externalEditedFile: File? = null
-
             systemEditorBtn.setOnClickListener {
                 try {
                     val merged = canvas.createAnnotatedBitmap() ?: capturedBitmap
@@ -242,16 +307,15 @@ object ReviewEvaluationDialog {
                         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
                     }
                     activity.startActivity(Intent.createChooser(editIntent, "Edit Screenshot with Markup"))
-                    Toast.makeText(activity, "Save in editor, then tap '🔄 Reload External Edits'", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "Save in editor, then tap '🔄 Reload Edits'", Toast.LENGTH_LONG).show()
                 } catch (e: Exception) {
                     Toast.makeText(activity, "System editor unavailable: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-
             reloadEditorBtn.setOnClickListener {
                 val file = externalEditedFile
                 if (file != null && file.exists()) {
-                    val reloadedBitmap = android.graphics.BitmapFactory.decodeFile(file.absolutePath)
+                    val reloadedBitmap = BitmapFactory.decodeFile(file.absolutePath)
                     if (reloadedBitmap != null) {
                         canvas.setBaseBitmap(reloadedBitmap)
                         Toast.makeText(activity, "Loaded edits from system editor!", Toast.LENGTH_SHORT).show()
@@ -262,33 +326,32 @@ object ReviewEvaluationDialog {
             }
         }
 
-        val dialogTitle = if (status == ReviewStatus.PASSING) {
-            "👍 Good Job: ${sample.title}"
-        } else {
-            "⚠️ Something's Wrong: ${sample.title}"
+        rootLayout.addView(scrollBody)
+
+        // 3. Pinned Bottom Action Bar (ALWAYS VISIBLE!)
+        val bottomBar = LinearLayout(activity).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(24, 16, 24, 20)
+            setBackgroundColor(Color.parseColor("#F5F5F7"))
         }
 
-        val positiveBtnText = if (status == ReviewStatus.PASSING) "Save Pass 👍" else "Save Issue ⚠️"
+        val cancelBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+            text = "Cancel"
+            textSize = 12f
+            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.8f)
+            setOnClickListener { dialog.dismiss() }
+        }
 
-        MaterialAlertDialogBuilder(activity)
-            .setTitle(dialogTitle)
-            .setMessage("Evaluation for ${framework.displayName}")
-            .setView(scrollContainer)
-            .setPositiveButton("Save & Next ⏭️") { _, _ ->
-                val notes = input.text.toString().trim()
-                var screenshotPath: String? = null
-                if (canvasView != null) {
-                    val finalBitmap = canvasView.createAnnotatedBitmap() ?: capturedBitmap
-                    if (finalBitmap != null) {
-                        val savedFile = ScreenCaptureHelper.saveBitmap(activity, finalBitmap, sample.id)
-                        screenshotPath = savedFile.absolutePath
-                    }
-                }
-                repository.saveEvaluation(targetFqcn, status, notes, sample, screenshotPath) {
-                    advanceToNextUnchecked(activity, sample, framework, repository)
-                }
+        val saveCurrentBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+            text = if (status == ReviewStatus.PASSING) "Save Pass 👍" else "Save Issue ⚠️"
+            textSize = 12f
+            val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.1f).apply {
+                marginStart = 12
+                marginEnd = 12
             }
-            .setNeutralButton(positiveBtnText) { _, _ ->
+            layoutParams = params
+            setOnClickListener {
                 val notes = input.text.toString().trim()
                 var screenshotPath: String? = null
                 if (canvasView != null) {
@@ -299,11 +362,44 @@ object ReviewEvaluationDialog {
                     }
                 }
                 repository.saveEvaluation(targetFqcn, status, notes, sample, screenshotPath) {
+                    dialog.dismiss()
                     showUndoSnackbar(activity, targetFqcn, sample, framework, status, repository)
                 }
             }
-            .setNegativeButton("Cancel", null)
-            .show()
+        }
+
+        val saveAndNextBtn = MaterialButton(activity).apply {
+            text = "Save & Next ⏭️"
+            textSize = 12f
+            setTypeface(null, Typeface.BOLD)
+            setBackgroundColor(Color.parseColor("#1976D2"))
+            setTextColor(Color.WHITE)
+            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.3f)
+            setOnClickListener {
+                val notes = input.text.toString().trim()
+                var screenshotPath: String? = null
+                if (canvasView != null) {
+                    val finalBitmap = canvasView.createAnnotatedBitmap() ?: capturedBitmap
+                    if (finalBitmap != null) {
+                        val savedFile = ScreenCaptureHelper.saveBitmap(activity, finalBitmap, sample.id)
+                        screenshotPath = savedFile.absolutePath
+                    }
+                }
+                repository.saveEvaluation(targetFqcn, status, notes, sample, screenshotPath) {
+                    dialog.dismiss()
+                    advanceToNextUnchecked(activity, sample, framework, repository)
+                }
+            }
+        }
+
+        bottomBar.addView(cancelBtn)
+        bottomBar.addView(saveCurrentBtn)
+        bottomBar.addView(saveAndNextBtn)
+        rootLayout.addView(bottomBar)
+
+        dialog.setContentView(rootLayout)
+        dialog.window?.setLayout((displayMetrics.widthPixels * 0.94).toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.show()
     }
 
     private fun advanceToNextUnchecked(
