@@ -57,6 +57,7 @@ private val TAG = DataDrivenDatasetStylingActivity::class.java.name
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
  */
+// [START maps_android_data_driven_styling_datasets]
 @Sample(
     id = "data_driven_datasets",
     title = "Data-Driven Dataset Styling",
@@ -424,3 +425,4 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         datasetLayer?.featureStyle = styleFactory
     }
 }
+// [END maps_android_data_driven_styling_datasets]
