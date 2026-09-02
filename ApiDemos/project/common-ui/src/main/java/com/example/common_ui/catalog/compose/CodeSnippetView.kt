@@ -74,6 +74,14 @@ fun CodeSnippetView(
         SampleCodeProvider.getCode(sample.id, selectedFramework)
     }
 
+    if (rawCode.isBlank()) {
+        return
+    }
+
+    val regionTag = remember(sample.id) {
+        SampleCodeProvider.getRegionTag(sample.id)
+    }
+
     val highlightedCode = remember(rawCode, isDark) {
         CodeHighlighter.highlight(rawCode, isDark = isDark)
     }
@@ -110,12 +118,22 @@ fun CodeSnippetView(
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(22.dp)
                     )
-                    Text(
-                        text = "Source Code Snippet",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+                    Column {
+                        Text(
+                            text = "Source Code Snippet",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        if (regionTag != null) {
+                            Text(
+                                text = "[$regionTag]",
+                                style = MaterialTheme.typography.labelSmall,
+                                fontFamily = FontFamily.Monospace,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
                 }
 
                 Row(
