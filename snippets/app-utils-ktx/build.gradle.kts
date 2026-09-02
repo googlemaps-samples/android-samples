@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.app_utils_ktx"
-        minSdk = 23
+        minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = libs.versions.versionName.get()
@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(project(":library"))
     // [END_EXCLUDE]
 
     // KTX for the Maps SDK for Android Utility Library
