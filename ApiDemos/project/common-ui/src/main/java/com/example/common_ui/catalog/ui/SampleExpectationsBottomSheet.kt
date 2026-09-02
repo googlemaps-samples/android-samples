@@ -16,28 +16,37 @@
 
 package com.example.common_ui.catalog.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
-import com.example.common_ui.R
 import com.example.common_ui.catalog.Framework
-import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleItem
+import com.example.common_ui.catalog.compose.SampleDetailContent
+import com.example.common_ui.catalog.db.SampleEvaluationEntity
 import com.example.common_ui.catalog.repository.SampleReviewRepository
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.chip.Chip
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
-class SampleExpectationsBottomSheet : BottomSheetDialogFragment() {
+/**
+ * On-device "Criteria & Purpose" dialog that displays the full "Info & Code" section,
+ * including:
+ * - Full Purpose & Acceptance Criteria
+ * - Syntax-highlighted Source Code Snippet with Kotlin & Java tabs (CodeSnippetView)
+ * - Reviewer evaluation controls, notes, and attached annotated screenshots
+ * - Pinned bottom bar with framework switching, Save, and Save & Next
+ */
+class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
 
     private var sample: SampleItem? = null
     private var currentFramework: Framework = Framework.KOTLIN_VIEWS
@@ -47,6 +56,7 @@ class SampleExpectationsBottomSheet : BottomSheetDialogFragment() {
         private const val ARG_SAMPLE = "arg_sample"
         private const val ARG_FRAMEWORK = "arg_framework"
 
+        @JvmStatic
         fun newInstance(
             sample: SampleItem,
             framework: Framework,
@@ -64,91 +74,75 @@ class SampleExpectationsBottomSheet : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, com.google.android.material.R.style.Theme_Material3_DayNight_NoActionBar)
         sample = arguments?.getSerializable(ARG_SAMPLE) as? SampleItem
         currentFramework = (arguments?.getSerializable(ARG_FRAMEWORK) as? Framework) ?: Framework.KOTLIN_VIEWS
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.apply {
+            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_sample_expectations, container, false)
-    }
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                MaterialTheme {
+                    val s = sample
+                    if (s != null) {
+                        val repository = remember { SampleReviewRepository.getInstance(context) }
+                        var evaluation by remember { mutableStateOf<SampleEvaluationEntity?>(null) }
+                        val targetFqcn = s.getTargetFqcn(currentFramework)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val s = sample ?: return
+                        LaunchedEffect(s.id) {
+                            evaluation = repository.getEvaluation(targetFqcn) ?: repository.getEvaluation(s.id)
+                        }
 
-        val sheetTitle: TextView = view.findViewById(R.id.sheet_title)
-        val sheetComplexityChip: Chip = view.findViewById(R.id.sheet_complexity_chip)
-        val sheetCategoryTags: TextView = view.findViewById(R.id.sheet_category_tags)
-        val sheetHtmlContent: TextView = view.findViewById(R.id.sheet_html_content)
-        val statusToggleGroup: MaterialButtonToggleGroup = view.findViewById(R.id.status_toggle_group)
-        val btnPassing: MaterialButton = view.findViewById(R.id.btn_status_passing)
-        val btnNeedsWork: MaterialButton = view.findViewById(R.id.btn_status_needs_work)
-        val btnUnchecked: MaterialButton = view.findViewById(R.id.btn_status_unchecked)
-        val editTextNotes: TextInputEditText = view.findViewById(R.id.edit_text_notes)
-        val btnSaveEvaluation: MaterialButton = view.findViewById(R.id.btn_save_evaluation)
-        val btnLaunch: MaterialButton = view.findViewById(R.id.btn_launch_from_sheet)
-        val btnSwitchFramework: MaterialButton = view.findViewById(R.id.btn_switch_framework)
-
-        sheetTitle.text = s.title
-        sheetComplexityChip.text = "${s.complexity.badge} ${s.complexity.displayName}"
-        sheetCategoryTags.text = "${s.category} • ${s.tags.joinToString(" ")}"
-
-        // Render HTML formatted expectations
-        sheetHtmlContent.text = Html.fromHtml(s.getFormattedHelpHtml(), Html.FROM_HTML_MODE_COMPACT)
-
-        val repository = SampleReviewRepository.getInstance(requireContext())
-
-        // Load existing review from Room DB
-        lifecycleScope.launch {
-            val eval = repository.getEvaluation(s.id)
-            val status = ReviewStatus.fromString(eval?.status)
-            when (status) {
-                ReviewStatus.PASSING -> statusToggleGroup.check(R.id.btn_status_passing)
-                ReviewStatus.NEEDS_WORK -> statusToggleGroup.check(R.id.btn_status_needs_work)
-                ReviewStatus.UNCHECKED -> statusToggleGroup.check(R.id.btn_status_unchecked)
+                        SampleDetailContent(
+                            sample = s,
+                            targetFqcn = targetFqcn,
+                            framework = currentFramework,
+                            isReviewerMode = true,
+                            existingEvaluation = evaluation,
+                            onDismiss = { dismiss() },
+                            onSaveEvaluation = { status, notes ->
+                                repository.saveEvaluation(targetFqcn, status, notes, s) {
+                                    Toast.makeText(context, "Saved review for ${s.title}", Toast.LENGTH_SHORT).show()
+                                    dismiss()
+                                }
+                            },
+                            onSaveAndNext = { status, notes ->
+                                repository.saveEvaluation(targetFqcn, status, notes, s) {
+                                    dismiss()
+                                    lifecycleScope.launch {
+                                        val nextSample = repository.getNextUncheckedSample(s.id, currentFramework)
+                                        val act = activity
+                                        if (act != null) {
+                                            if (nextSample != null) {
+                                                SampleReviewRepository.launchSample(act, nextSample, currentFramework)
+                                            } else {
+                                                Toast.makeText(act, "🎉 All ${currentFramework.displayName} samples reviewed!", Toast.LENGTH_LONG).show()
+                                                act.finish()
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            onLaunch = { fw ->
+                                dismiss()
+                                onLaunchRequested?.invoke(s, fw)
+                            }
+                        )
+                    }
+                }
             }
-            if (!eval?.notes.isNullOrBlank()) {
-                editTextNotes.setText(eval?.notes)
-            }
-        }
-
-        btnSaveEvaluation.setOnClickListener {
-            val selectedStatus = when (statusToggleGroup.checkedButtonId) {
-                R.id.btn_status_passing -> ReviewStatus.PASSING
-                R.id.btn_status_needs_work -> ReviewStatus.NEEDS_WORK
-                else -> ReviewStatus.UNCHECKED
-            }
-            val notes = editTextNotes.text?.toString()?.trim().orEmpty()
-
-            repository.saveEvaluation(s.id, selectedStatus, notes, s)
-            Toast.makeText(requireContext(), "Saved review for ${s.title}", Toast.LENGTH_SHORT).show()
-            dismiss()
-        }
-
-        // Framework switcher button
-        val altFramework = when (currentFramework) {
-            Framework.KOTLIN_VIEWS -> if (s.javaActivity != null) Framework.JAVA_VIEWS else null
-            Framework.JAVA_VIEWS -> if (s.kotlinActivity != null) Framework.KOTLIN_VIEWS else null
-        }
-
-        if (altFramework != null) {
-            btnSwitchFramework.visibility = View.VISIBLE
-            btnSwitchFramework.text = "⇄ Switch to ${altFramework.displayName}"
-            btnSwitchFramework.setOnClickListener {
-                dismiss()
-                onLaunchRequested?.invoke(s, altFramework)
-            }
-        } else {
-            btnSwitchFramework.visibility = View.GONE
-        }
-
-        btnLaunch.setOnClickListener {
-            dismiss()
-            onLaunchRequested?.invoke(s, currentFramework)
         }
     }
 }
