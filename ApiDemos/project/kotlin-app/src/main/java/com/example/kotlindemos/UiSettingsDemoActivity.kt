@@ -61,6 +61,7 @@ class UiSettingsDemoActivity :
         binding.rotateToggle.setOnClickListener { setRotateGesturesEnabled() }
     }
 
+    // [START maps_android_sample_ui_settings]
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         uiSettings = map.uiSettings
@@ -85,6 +86,7 @@ class UiSettingsDemoActivity :
         uiSettings.isTiltGesturesEnabled = binding.tiltToggle.isChecked
         uiSettings.isRotateGesturesEnabled = binding.rotateToggle.isChecked
     }
+    // [END maps_android_sample_ui_settings]
 
     private fun checkReady(): Boolean {
         if (!::map.isInitialized) {

@@ -52,6 +52,7 @@ private val TAG = DataDrivenBoundariesActivity::class.java.simpleName
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
  */
+// [START maps_android_data_driven_styling_boundaries]
 // Add PopupMenu.OnMenuItemClickListener interface
 @Sample(
     id = "data_driven_boundaries",
@@ -318,3 +319,4 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
         return true
     }
 }
+// [END maps_android_data_driven_styling_boundaries]
