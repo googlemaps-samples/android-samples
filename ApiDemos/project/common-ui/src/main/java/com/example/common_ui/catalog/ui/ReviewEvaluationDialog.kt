@@ -402,17 +402,23 @@ object ReviewEvaluationDialog {
 
         val cancelBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
             text = "Cancel"
-            textSize = 12f
-            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.8f)
+            textSize = 11f
+            setPadding(8, 0, 8, 0)
+            insetTop = 0
+            insetBottom = 0
+            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.75f)
             setOnClickListener { dialog.dismiss() }
         }
 
         val saveCurrentBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
             text = if (status == ReviewStatus.PASSING) "Save Pass 👍" else "Save Issue ⚠️"
-            textSize = 12f
-            val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.1f).apply {
-                marginStart = 12
-                marginEnd = 12
+            textSize = 11f
+            setPadding(8, 0, 8, 0)
+            insetTop = 0
+            insetBottom = 0
+            val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.15f).apply {
+                marginStart = 8
+                marginEnd = 8
             }
             layoutParams = params
             setOnClickListener {
@@ -434,11 +440,14 @@ object ReviewEvaluationDialog {
 
         val saveAndNextBtn = MaterialButton(activity).apply {
             text = "Save & Next ⏭️"
-            textSize = 12f
+            textSize = 11f
+            setPadding(8, 0, 8, 0)
+            insetTop = 0
+            insetBottom = 0
             setTypeface(null, Typeface.BOLD)
             setBackgroundColor(Color.parseColor("#1976D2"))
             setTextColor(Color.WHITE)
-            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.3f)
+            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.35f)
             setOnClickListener {
                 val notes = input.text.toString().trim()
                 var screenshotPath: String? = null
