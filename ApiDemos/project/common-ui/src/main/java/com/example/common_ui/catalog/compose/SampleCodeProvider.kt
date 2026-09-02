@@ -1039,29 +1039,39 @@ googleMap.setOnCameraIdleListener(() -> {
             """.trimIndent()
         ),
 
-        // 31. UI Settings & Map Controls
+        // 31. UI Settings & Map Controls (Verbatim from UiSettingsDemoActivity.kt / .java)
         "com.example.kotlindemos.UiSettingsDemoActivity" to SnippetPair(
             kotlinCode = """
-// Configure map gestures and UI controls
-val uiSettings = googleMap.uiSettings
-uiSettings.isZoomControlsEnabled = true
-uiSettings.isCompassEnabled = true
-uiSettings.isMyLocationButtonEnabled = true
-uiSettings.isScrollGesturesEnabled = true
-uiSettings.isZoomGesturesEnabled = true
-uiSettings.isTiltGesturesEnabled = true
-uiSettings.isRotateGesturesEnabled = true
+override fun onMapReady(googleMap: GoogleMap) {
+    map = googleMap
+    uiSettings = map.uiSettings
+
+    // Keep the UI Settings state in sync with the checkboxes.
+    uiSettings.isZoomControlsEnabled = binding.zoomButtonsToggle.isChecked
+    uiSettings.isCompassEnabled = binding.compassToggle.isChecked
+    uiSettings.isMyLocationButtonEnabled = binding.mylocationbuttonToggle.isChecked
+    map.isMyLocationEnabled = binding.mylocationlayerToggle.isChecked
+    uiSettings.isScrollGesturesEnabled = binding.scrollToggle.isChecked
+    uiSettings.isZoomGesturesEnabled = binding.zoomGesturesToggle.isChecked
+    uiSettings.isTiltGesturesEnabled = binding.tiltToggle.isChecked
+    uiSettings.isRotateGesturesEnabled = binding.rotateToggle.isChecked
+}
             """.trimIndent(),
             javaCode = """
-// Configure map gestures and UI controls
-UiSettings uiSettings = googleMap.getUiSettings();
-uiSettings.setZoomControlsEnabled(true);
-uiSettings.setCompassEnabled(true);
-uiSettings.setMyLocationButtonEnabled(true);
-uiSettings.setScrollGesturesEnabled(true);
-uiSettings.setZoomGesturesEnabled(true);
-uiSettings.setTiltGesturesEnabled(true);
-uiSettings.setRotateGesturesEnabled(true);
+@Override
+public void onMapReady(GoogleMap map) {
+    mMap = map;
+    mUiSettings = mMap.getUiSettings();
+
+    // Keep the UI Settings state in sync with the checkboxes.
+    mUiSettings.setZoomControlsEnabled(binding.zoomButtonsToggle.isChecked());
+    mUiSettings.setCompassEnabled(binding.compassToggle.isChecked());
+    mUiSettings.setMyLocationButtonEnabled(binding.mylocationbuttonToggle.isChecked());
+    mUiSettings.setScrollGesturesEnabled(binding.scrollToggle.isChecked());
+    mUiSettings.setZoomGesturesEnabled(binding.zoomGesturesToggle.isChecked());
+    mUiSettings.setTiltGesturesEnabled(binding.tiltToggle.isChecked());
+    mUiSettings.setRotateGesturesEnabled(binding.rotateToggle.isChecked());
+}
             """.trimIndent()
         )
     )
