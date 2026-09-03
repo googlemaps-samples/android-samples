@@ -28,6 +28,10 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
+        if (providers.gradleProperty("useMavenLocal").orNull == "true" ||
+            providers.environmentVariable("USE_MAVEN_LOCAL").orNull == "true") {
+            mavenLocal()
+        }
         google()
         mavenCentral()
     }
