@@ -67,6 +67,10 @@ open class ReviewerActivity : ComponentActivity() {
                         repository.clearAllEvaluations {
                             Toast.makeText(this@ReviewerActivity, "All evaluations cleared", Toast.LENGTH_SHORT).show()
                         }
+                    },
+                    onSwitchMode = {
+                        val intent = Intent().setClassName(packageName, "com.example.common_ui.catalog.compose.CatalogActivity")
+                        startActivity(intent)
                     }
                 )
             }
@@ -111,6 +115,7 @@ open class ReviewerActivity : ComponentActivity() {
         try {
             val intent = Intent().setClassName(packageName, className).apply {
                 putExtra("extra_sample_id", sample.id)
+                putExtra("extra_is_reviewer_mode", true)
             }
             startActivity(intent)
         } catch (e: Exception) {

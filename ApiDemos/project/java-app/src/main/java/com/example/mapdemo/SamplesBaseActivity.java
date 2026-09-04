@@ -168,36 +168,47 @@ public class SamplesBaseActivity extends AppCompatActivity {
             }
         }
         topBar.setNavigationOnClickListener(v -> navigateBackToCatalog());
+        topBar.setOnMenuItemClickListener(this::onOptionsItemSelected);
         invalidateOptionsMenu();
+    }
+
+    protected boolean isReviewerMode() {
+        return getIntent().getBooleanExtra("extra_is_reviewer_mode", false);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         if (currentSampleMetadata != null) {
-            menu.add(0, 2003, 0, "Good Job (Pass)")
-                    .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            if (isReviewerMode()) {
+                menu.add(0, 2003, 0, "Good Job (Pass)")
+                        .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            menu.add(0, 2004, 1, "Something's Wrong")
-                    .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                menu.add(0, 2004, 1, "Something's Wrong")
+                        .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            menu.add(0, 2005, 2, "Next Unchecked")
-                    .setIcon(com.example.common_ui.R.drawable.ic_skip_next)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                menu.add(0, 2005, 2, "Next Unchecked")
+                        .setIcon(com.example.common_ui.R.drawable.ic_skip_next)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
-            menu.add(0, 2001, 3, "Criteria & Purpose")
-                    .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+                menu.add(0, 2001, 3, "Criteria & Purpose")
+                        .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-            menu.add(0, 2006, 4, "Previous Sample")
-                    .setIcon(com.example.common_ui.R.drawable.ic_skip_previous)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+                menu.add(0, 2006, 4, "Previous Sample")
+                        .setIcon(com.example.common_ui.R.drawable.ic_skip_previous)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 
-            menu.add(0, 2007, 5, "Reset to Unchecked")
-                    .setIcon(com.example.common_ui.R.drawable.ic_undo)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+                menu.add(0, 2007, 5, "Reset to Unchecked")
+                        .setIcon(com.example.common_ui.R.drawable.ic_undo)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+            } else {
+                menu.add(0, 2001, 0, "About & APIs")
+                        .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            }
 
             if (currentSampleMetadata.getKotlinActivity() != null) {
                 menu.add(0, 2002, 6, "Switch to Kotlin")
@@ -211,8 +222,11 @@ public class SamplesBaseActivity extends AppCompatActivity {
     private void navigateBackToCatalog() {
         if (isTaskRoot()) {
             try {
+                String targetActivity = isReviewerMode()
+                        ? "com.example.common_ui.catalog.compose.ReviewerActivity"
+                        : "com.example.common_ui.catalog.compose.CatalogActivity";
                 Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.example.common_ui.catalog.compose.ReviewerActivity");
+                intent.setClassName(getPackageName(), targetActivity);
                 startActivity(intent);
             } catch (Exception ignored) {
             }
@@ -230,12 +244,15 @@ public class SamplesBaseActivity extends AppCompatActivity {
                 SampleExpectationsBottomSheet sheet = SampleExpectationsBottomSheet.Companion.newInstance(
                         currentSampleMetadata,
                         Framework.JAVA_VIEWS,
+                        isReviewerMode(),
                         (sampleItem, framework) -> {
                             String targetClass = sampleItem.getActivityForFramework(framework);
                             if (targetClass != null && !targetClass.equals(getClass().getName())) {
                                 finish();
                                 Intent intent = new Intent();
                                 intent.setClassName(getPackageName(), targetClass);
+                                intent.putExtra("extra_sample_id", sampleItem.getId());
+                                intent.putExtra("extra_is_reviewer_mode", isReviewerMode());
                                 startActivity(intent);
                             }
                             return kotlin.Unit.INSTANCE;
@@ -301,6 +318,8 @@ public class SamplesBaseActivity extends AppCompatActivity {
                 finish();
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), currentSampleMetadata.getKotlinActivity());
+                intent.putExtra("extra_sample_id", currentSampleMetadata.getId());
+                intent.putExtra("extra_is_reviewer_mode", isReviewerMode());
                 startActivity(intent);
             }
             return true;

@@ -42,6 +42,10 @@ open class CatalogActivity : ComponentActivity() {
                     isReviewerMode = false,
                     onLaunchSample = { sample, framework ->
                         launchSample(sample, framework)
+                    },
+                    onSwitchMode = {
+                        val intent = Intent().setClassName(packageName, "com.example.common_ui.catalog.compose.ReviewerActivity")
+                        startActivity(intent)
                     }
                 )
             }
@@ -58,6 +62,7 @@ open class CatalogActivity : ComponentActivity() {
         try {
             val intent = Intent().setClassName(packageName, className).apply {
                 putExtra("extra_sample_id", sample.id)
+                putExtra("extra_is_reviewer_mode", false)
             }
             startActivity(intent)
         } catch (e: Exception) {

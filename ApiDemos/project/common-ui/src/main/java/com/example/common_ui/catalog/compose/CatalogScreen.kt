@@ -67,7 +67,8 @@ fun CatalogScreen(
     onSaveEvaluation: ((targetFqcn: String, status: ReviewStatus, notes: String, sample: SampleItem) -> Unit)? = null,
     onLaunchSample: (SampleItem, Framework) -> Unit,
     onExportGrievances: (() -> Unit)? = null,
-    onClearEvaluations: (() -> Unit)? = null
+    onClearEvaluations: (() -> Unit)? = null,
+    onSwitchMode: (() -> Unit)? = null
 ) {
     var selectedFramework by rememberSaveable { mutableStateOf(Framework.KOTLIN_VIEWS) }
     var selectedComplexity by rememberSaveable { mutableStateOf<Complexity?>(null) }
@@ -267,6 +268,18 @@ fun CatalogScreen(
                                     onClick = {
                                         showMoreMenu = false
                                         selectedStatusFilter = if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
+                                    }
+                                )
+                                HorizontalDivider()
+                            }
+                            if (onSwitchMode != null) {
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(if (isReviewerMode) "📱 Switch to Developer Mode" else "🛠️ Switch to Reviewer Mode")
+                                    },
+                                    onClick = {
+                                        showMoreMenu = false
+                                        onSwitchMode()
                                     }
                                 )
                                 HorizontalDivider()
@@ -938,7 +951,7 @@ fun SampleComposeCard(
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Info & Code", fontSize = 12.sp)
+                        Text("About & APIs", fontSize = 12.sp)
                     }
 
                     Button(

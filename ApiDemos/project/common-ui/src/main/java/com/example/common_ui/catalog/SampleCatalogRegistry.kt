@@ -35,6 +35,11 @@ object SampleCatalogRegistry {
             category = "Map Initialization",
             complexity = Complexity.SNIPPET,
             tags = listOf("#map", "#init", "#lifecycle", "#quickstart"),
+            apiCalls = listOf(
+                "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
+                "GoogleMap.addMarker(MarkerOptions)",
+                "GoogleMap.moveCamera(CameraUpdate)"
+            ),
             purpose = "Demonstrates clean, minimal map instantiation using SupportMapFragment.",
             successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with working gestures.",
             failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map failing to unpause.",
@@ -48,6 +53,11 @@ object SampleCatalogRegistry {
             category = "Map Initialization",
             complexity = Complexity.SNIPPET,
             tags = listOf("#programmatic", "#fragment", "#dynamic", "#init"),
+            apiCalls = listOf(
+                "SupportMapFragment.newInstance()",
+                "FragmentManager.beginTransaction().add(...)",
+                "SupportMapFragment.getMapAsync(OnMapReadyCallback)"
+            ),
             purpose = "Shows how to dynamically instantiate and attach SupportMapFragment using FragmentManager transactions.",
             successCriteria = "Map attaches dynamically to the container layout and renders correctly on launch.",
             failureIndicators = "Blank screen, fragment transaction exception, or duplicate map fragments on orientation change.",
@@ -61,6 +71,11 @@ object SampleCatalogRegistry {
             category = "Map Initialization",
             complexity = Complexity.SIMPLE,
             tags = listOf("#mapview", "#lifecycle", "#embedding"),
+            apiCalls = listOf(
+                "MapView.onCreate(Bundle)",
+                "MapView.getMapAsync(OnMapReadyCallback)",
+                "MapView.onStart() / onResume() / onPause()"
+            ),
             purpose = "Shows how to embed MapView directly in a layout and forward all Activity lifecycle callbacks.",
             successCriteria = "MapView loads tiles and pauses/resumes correctly when backgrounded and foregrounded.",
             failureIndicators = "Black rendering surface, memory leaks on orientation change, or crash when onLowMemory is triggered.",
@@ -74,6 +89,10 @@ object SampleCatalogRegistry {
             category = "Map Initialization",
             complexity = Complexity.SIMPLE,
             tags = listOf("#retain", "#configuration", "#rotation", "#lifecycle"),
+            apiCalls = listOf(
+                "SupportMapFragment.retainInstance = true",
+                "SupportMapFragment.getMapAsync(OnMapReadyCallback)"
+            ),
             purpose = "Demonstrates retaining map instance state across orientation changes without reloading tiles.",
             successCriteria = "Rotating device does not flash or re-initialize map state; markers and camera remain intact.",
             failureIndicators = "Map resets to initial position or flashes white/black on rotation.",
@@ -87,6 +106,10 @@ object SampleCatalogRegistry {
             category = "Map Initialization",
             complexity = Complexity.ADVANCED,
             tags = listOf("#multimap", "#multiple", "#layout", "#rendering"),
+            apiCalls = listOf(
+                "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
+                "GoogleMap.moveCamera(CameraUpdate)"
+            ),
             purpose = "Shows how to render and control multiple independent GoogleMap instances concurrently in one screen.",
             successCriteria = "All 4 map fragments render distinct geographic locations simultaneously with smooth scrolling.",
             failureIndicators = "GL context collision, thread locking, or tile stuttering when dragging multiple maps.",
@@ -100,6 +123,11 @@ object SampleCatalogRegistry {
             category = "Map Initialization",
             complexity = Complexity.ADVANCED,
             tags = listOf("#viewpager", "#swiping", "#touchinterception", "#fragments"),
+            apiCalls = listOf(
+                "ViewPager2.adapter",
+                "MapView.getMapAsync(OnMapReadyCallback)",
+                "ViewParent.requestDisallowInterceptTouchEvent(true)"
+            ),
             purpose = "Demonstrates embedding maps inside ViewPager tabs with proper touch disallow interception.",
             successCriteria = "Panning map does not accidentally trigger ViewPager page swipe.",
             failureIndicators = "Swiping horizontally pans the ViewPager instead of the map camera.",
@@ -117,6 +145,11 @@ object SampleCatalogRegistry {
             category = "Camera Controls",
             complexity = Complexity.SIMPLE,
             tags = listOf("#camera", "#animation", "#bearing", "#tilt", "#zoom", "#pan"),
+            apiCalls = listOf(
+                "GoogleMap.animateCamera(CameraUpdate, Int, CancelableCallback)",
+                "CameraPosition.Builder().target(...).zoom(...).bearing(...).tilt(...).build()",
+                "CameraUpdateFactory.newCameraPosition(CameraPosition)"
+            ),
             purpose = "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing rotations.",
             successCriteria = "Buttons animate camera smoothly with custom durations, stops, and rotation angles.",
             failureIndicators = "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform constraints.",
@@ -130,6 +163,11 @@ object SampleCatalogRegistry {
             category = "Camera Controls",
             complexity = Complexity.SIMPLE,
             tags = listOf("#camera", "#clamping", "#bounds", "#zoomlimits", "#latlngbounds"),
+            apiCalls = listOf(
+                "GoogleMap.setLatLngBoundsForCameraTarget(LatLngBounds)",
+                "GoogleMap.setMinZoomPreference(Float)",
+                "GoogleMap.setMaxZoomPreference(Float)"
+            ),
             purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider limits.",
             successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds immediately.",
             failureIndicators = "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset Bounds'.",
@@ -143,6 +181,11 @@ object SampleCatalogRegistry {
             category = "Camera Controls",
             complexity = Complexity.SIMPLE,
             tags = listOf("#camera", "#projection", "#visibleregion", "#latlngbounds"),
+            apiCalls = listOf(
+                "GoogleMap.projection.visibleRegion",
+                "VisibleRegion.latLngBounds",
+                "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)"
+            ),
             purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
             successCriteria = "Bounding coordinates update live in the UI as the camera pans and zooms.",
             failureIndicators = "Projection returns null or stale LatLng bounds after camera idle.",
@@ -160,6 +203,13 @@ object SampleCatalogRegistry {
             category = "Markers & Overlays",
             complexity = Complexity.ADVANCED,
             tags = listOf("#markers", "#advancedmarkers", "#pinconfig", "#collision", "#badges", "#mapid"),
+            apiCalls = listOf(
+                "AdvancedMarkerOptions.position(LatLng)",
+                "PinConfig.builder().setBackgroundColor(...).setGlyph(...).build()",
+                "AdvancedMarkerOptions.icon(BitmapDescriptorFactory.fromPinConfig(...))",
+                "AdvancedMarkerOptions.collisionBehavior(Int)",
+                "GoogleMap.addMarker(AdvancedMarkerOptions)"
+            ),
             purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and custom View icons.",
             successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with collision handling.",
             failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge text blurry.",
@@ -173,6 +223,13 @@ object SampleCatalogRegistry {
             category = "Markers & Overlays",
             complexity = Complexity.SIMPLE,
             tags = listOf("#markers", "#infowindow", "#draggable", "#icons", "#anchor"),
+            apiCalls = listOf(
+                "GoogleMap.addMarker(MarkerOptions)",
+                "MarkerOptions.position(LatLng).title(String).draggable(Boolean)",
+                "GoogleMap.setInfoWindowAdapter(InfoWindowAdapter)",
+                "GoogleMap.setOnMarkerClickListener(OnMarkerClickListener)",
+                "GoogleMap.setOnMarkerDragListener(OnMarkerDragListener)"
+            ),
             purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins, and custom InfoWindowAdapter views.",
             successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
             failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
@@ -186,6 +243,12 @@ object SampleCatalogRegistry {
             category = "Markers & Overlays",
             complexity = Complexity.SNIPPET,
             tags = listOf("#markers", "#infowindow", "#toggle", "#gestures"),
+            apiCalls = listOf(
+                "GoogleMap.setOnMarkerClickListener(OnMarkerClickListener)",
+                "Marker.showInfoWindow()",
+                "Marker.hideInfoWindow()",
+                "Marker.isInfoWindowShown"
+            ),
             purpose = "Shows how to implement re-tap to dismiss toggle behavior for active marker info windows.",
             successCriteria = "First tap opens info window; second tap on the same marker closes it cleanly.",
             failureIndicators = "Info window stays stuck open or re-tap triggers unnecessary camera repositioning.",
@@ -203,6 +266,13 @@ object SampleCatalogRegistry {
             category = "Shapes & Geometry",
             complexity = Complexity.SIMPLE,
             tags = listOf("#shapes", "#polygons", "#holes", "#geometry", "#stroke", "#fill"),
+            apiCalls = listOf(
+                "GoogleMap.addPolygon(PolygonOptions)",
+                "PolygonOptions.addAll(Iterable<LatLng>)",
+                "PolygonOptions.addHole(Iterable<LatLng>)",
+                "PolygonOptions.fillColor(Int).strokeColor(Int).strokeWidth(Float)",
+                "Polygon.isClickable = true"
+            ),
             purpose = "Demonstrates drawing styled polygons with interior holes (donut polygons), click listeners, and stroke caps.",
             successCriteria = "Polygons render with specified fill opacity and interior cutout holes properly subtracted.",
             failureIndicators = "Holes not rendering as transparent cutouts or stroke color incorrect.",
@@ -216,6 +286,13 @@ object SampleCatalogRegistry {
             category = "Shapes & Geometry",
             complexity = Complexity.SIMPLE,
             tags = listOf("#shapes", "#polylines", "#patterns", "#dashes", "#stroke", "#routes"),
+            apiCalls = listOf(
+                "GoogleMap.addPolyline(PolylineOptions)",
+                "PolylineOptions.addAll(Iterable<LatLng>)",
+                "PolylineOptions.pattern(List<PatternItem>)",
+                "PolylineOptions.jointType(JointType).startCap(Cap).endCap(Cap)",
+                "Polyline.isClickable = true"
+            ),
             purpose = "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel joints.",
             successCriteria = "Polylines render crisp dashed and dotted stroke lines along coordinate vertices.",
             failureIndicators = "Line caps distorted or custom pattern ignored on high-DPI screens.",
@@ -229,6 +306,12 @@ object SampleCatalogRegistry {
             category = "Shapes & Geometry",
             complexity = Complexity.SIMPLE,
             tags = listOf("#shapes", "#circles", "#radius", "#geodesic"),
+            apiCalls = listOf(
+                "GoogleMap.addCircle(CircleOptions)",
+                "CircleOptions.center(LatLng).radius(Double)",
+                "CircleOptions.fillColor(Int).strokeColor(Int).strokeWidth(Float)",
+                "Circle.center = LatLng / Circle.radius = Double"
+            ),
             purpose = "Demonstrates drawing circles with radius defined in meters and dynamic updates via seekbars.",
             successCriteria = "Adjusting radius slider dynamically updates circle boundary in real-time.",
             failureIndicators = "Circle distorted or radius math inaccurate across high latitudes.",
@@ -246,6 +329,12 @@ object SampleCatalogRegistry {
             category = "Data-Driven Styling",
             complexity = Complexity.ADVANCED,
             tags = listOf("#boundaries", "#datadriven", "#featurelayer", "#locality", "#choropleth"),
+            apiCalls = listOf(
+                "GoogleMap.getFeatureLayer(FeatureLayerOptions)",
+                "FeatureLayer.setFeatureStyle(FeatureStyleFunction)",
+                "FeatureStyle.Builder().fillColor(Int).strokeColor(Int).build()",
+                "FeatureLayer.addOnFeatureClickListener(OnFeatureClickListener)"
+            ),
             purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary clicks.",
             successCriteria = "Boundaries render with custom stroke and fill colors; tapping a region highlights its polygon.",
             failureIndicators = "Boundary layer is null (requires vector map / Map ID) or click listener not firing.",
@@ -259,6 +348,11 @@ object SampleCatalogRegistry {
             category = "Data-Driven Styling",
             complexity = Complexity.ADVANCED,
             tags = listOf("#datasets", "#datadriven", "#clouddata", "#attributes", "#filtering"),
+            apiCalls = listOf(
+                "GoogleMap.getDatasetFeatureLayer(datasetId)",
+                "FeatureLayer.setFeatureStyle(FeatureStyleFunction)",
+                "DatasetFeature.datasetAttributes[attributeKey]"
+            ),
             purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
             successCriteria = "Dataset points and polygons display distinct styling according to attribute values.",
             failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
@@ -276,6 +370,10 @@ object SampleCatalogRegistry {
             category = "Styling & Cloud",
             complexity = Complexity.SIMPLE,
             tags = listOf("#cloudstyling", "#mapid", "#vector", "#theming"),
+            apiCalls = listOf(
+                "SupportMapFragment.newInstance(GoogleMapOptions().mapId(String))",
+                "GoogleMap.mapType = GoogleMap.MAP_TYPE_NORMAL"
+            ),
             purpose = "Demonstrates linking a map to a Cloud-managed Map ID for instant over-the-air style updates.",
             successCriteria = "Map renders with the customized cloud style colors without local JSON parsing.",
             failureIndicators = "Default styling rendered (Map ID unlinked or network error during initial style fetch).",
@@ -289,6 +387,10 @@ object SampleCatalogRegistry {
             category = "Styling & Cloud",
             complexity = Complexity.SIMPLE,
             tags = listOf("#styling", "#json", "#darkmode", "#night", "#retro"),
+            apiCalls = listOf(
+                "GoogleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(Context, Int))",
+                "MapStyleOptions(jsonStyleString)"
+            ),
             purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
             successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
             failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
@@ -302,6 +404,11 @@ object SampleCatalogRegistry {
             category = "Styling & Cloud",
             complexity = Complexity.SNIPPET,
             tags = listOf("#colorscheme", "#darkmode", "#systemtheme", "#followsystem"),
+            apiCalls = listOf(
+                "GoogleMapOptions.mapColorScheme(MapColorScheme.FOLLOW_SYSTEM)",
+                "GoogleMapOptions.mapColorScheme(MapColorScheme.DARK)",
+                "GoogleMapOptions.mapColorScheme(MapColorScheme.LIGHT)"
+            ),
             purpose = "Shows how to set GoogleMapOptions.mapColorScheme to follow system night mode automatically.",
             successCriteria = "Toggling device dark mode flips map styling between light and dark palettes seamlessly.",
             failureIndicators = "Map remains stuck in light theme when system dark mode is enabled.",
@@ -319,6 +426,13 @@ object SampleCatalogRegistry {
             category = "Street View",
             complexity = Complexity.ADVANCED,
             tags = listOf("#streetview", "#panorama", "#pegman", "#sync", "#bidirectional"),
+            apiCalls = listOf(
+                "StreetViewPanoramaView.getStreetViewPanoramaAsync(OnStreetViewPanoramaReadyCallback)",
+                "StreetViewPanorama.setPosition(LatLng)",
+                "StreetViewPanorama.setOnStreetViewPanoramaChangeListener(...)",
+                "StreetViewPanorama.animateTo(StreetViewPanoramaCamera, Long)",
+                "GoogleMap.addMarker(MarkerOptions)"
+            ),
             purpose = "Demonstrates bidirectional synchronization: dragging map Pegman updates panorama; walking Street View moves map marker.",
             successCriteria = "Moving Pegman on map instantly loads new 360 panorama; street navigation rotates Pegman bearing.",
             failureIndicators = "Infinite update feedback loops, Pegman desyncing from panorama, or FAB jump failing.",
@@ -332,6 +446,10 @@ object SampleCatalogRegistry {
             category = "Street View",
             complexity = Complexity.SNIPPET,
             tags = listOf("#streetview", "#panorama", "#init", "#sydney"),
+            apiCalls = listOf(
+                "StreetViewPanoramaFragment.getStreetViewPanoramaAsync(OnStreetViewPanoramaReadyCallback)",
+                "StreetViewPanorama.setPosition(LatLng)"
+            ),
             purpose = "Demonstrates embedding StreetViewPanoramaFragment and setting initial position by LatLng.",
             successCriteria = "360-degree panorama loads smoothly with working touch gestures.",
             failureIndicators = "Black panorama canvas, missing imagery at coordinates, or gesture freeze.",
@@ -349,6 +467,12 @@ object SampleCatalogRegistry {
             category = "Lists & Performance",
             complexity = Complexity.ADVANCED,
             tags = listOf("#litemode", "#recyclerview", "#lists", "#viewholder", "#lifecycle"),
+            apiCalls = listOf(
+                "GoogleMapOptions.liteMode(true)",
+                "MapView.onCreate(null)",
+                "MapView.getMapAsync(OnMapReadyCallback)",
+                "RecyclerView.Adapter.onBindViewHolder(...)"
+            ),
             purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper lifecycle management.",
             successCriteria = "List scrolls at 60/120fps without stutter; map snapshots display accurate markers per row.",
             failureIndicators = "RecyclerView scrolling stutters or recycled MapViews display stale map markers.",
@@ -362,6 +486,11 @@ object SampleCatalogRegistry {
             category = "Lists & Performance",
             complexity = Complexity.SIMPLE,
             tags = listOf("#litemode", "#grid", "#performance", "#snapshots"),
+            apiCalls = listOf(
+                "GoogleMapOptions.liteMode(true)",
+                "MapView.onCreate(null)",
+                "MapView.getMapAsync(OnMapReadyCallback)"
+            ),
             purpose = "Demonstrates rendering multiple Lite Mode maps in a GridView with low memory consumption.",
             successCriteria = "Grid tiles render crisp static maps with markers without launching full GL renderer.",
             failureIndicators = "High memory spike or missing markers on grid cells.",
@@ -379,6 +508,10 @@ object SampleCatalogRegistry {
             category = "Snapshots & Sharing",
             complexity = Complexity.SIMPLE,
             tags = listOf("#snapshot", "#bitmap", "#export", "#material3", "#capture"),
+            apiCalls = listOf(
+                "GoogleMap.snapshot(SnapshotReadyCallback)",
+                "GoogleMap.snapshot(SnapshotReadyCallback, Bitmap)"
+            ),
             purpose = "Demonstrates taking asynchronous high-resolution bitmap snapshots of the map with snapshot ready callbacks.",
             successCriteria = "Tapping 'Take Snapshot' captures the current map frame and displays it in the Material 3 preview card.",
             failureIndicators = "Snapshot returns blank bitmap or blocks UI thread during GL readback.",
@@ -396,6 +529,11 @@ object SampleCatalogRegistry {
             category = "Location & Sensors",
             complexity = Complexity.SIMPLE,
             tags = listOf("#location", "#mylocation", "#permissions", "#bluedot"),
+            apiCalls = listOf(
+                "GoogleMap.isMyLocationEnabled = true",
+                "GoogleMap.uiSettings.isMyLocationButtonEnabled = true",
+                "ActivityCompat.requestPermissions(..., ACCESS_FINE_LOCATION)"
+            ),
             purpose = "Demonstrates requesting ACCESS_FINE_LOCATION permissions and enabling the blue dot location layer.",
             successCriteria = "Tapping My Location button centers camera on user's current GPS position.",
             failureIndicators = "Permission denial causes unhandled crash or location button missing.",
@@ -409,6 +547,11 @@ object SampleCatalogRegistry {
             category = "Location & Sensors",
             complexity = Complexity.ADVANCED,
             tags = listOf("#location", "#locationsource", "#mock", "#simulation", "#navigation"),
+            apiCalls = listOf(
+                "GoogleMap.setLocationSource(LocationSource)",
+                "LocationSource.activate(OnLocationChangedListener)",
+                "LocationSource.OnLocationChangedListener.onLocationChanged(Location)"
+            ),
             purpose = "Shows how to feed programmatic coordinates into the GoogleMap location layer using a custom LocationSource.",
             successCriteria = "The blue dot animates smoothly along a simulated route when navigation starts.",
             failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
@@ -426,6 +569,11 @@ object SampleCatalogRegistry {
             category = "Overlays & Tiles",
             complexity = Complexity.SIMPLE,
             tags = listOf("#overlays", "#groundoverlay", "#images", "#bounds", "#transparency"),
+            apiCalls = listOf(
+                "GoogleMap.addGroundOverlay(GroundOverlayOptions)",
+                "GroundOverlayOptions.image(BitmapDescriptor).position(LatLng, Float, Float)",
+                "GroundOverlayOptions.positionFromBounds(LatLngBounds).transparency(Float)"
+            ),
             purpose = "Demonstrates overlaying historical or custom aerial images onto the map with transparency sliders.",
             successCriteria = "Historical Newark map image appears pinned to geographic coordinates with adjustable transparency.",
             failureIndicators = "Overlay image stretched/misaligned or opacity slider unresponsive.",
@@ -439,6 +587,11 @@ object SampleCatalogRegistry {
             category = "Overlays & Tiles",
             complexity = Complexity.SIMPLE,
             tags = listOf("#overlays", "#tiles", "#tileprovider", "#customtiles"),
+            apiCalls = listOf(
+                "GoogleMap.addTileOverlay(TileOverlayOptions)",
+                "TileOverlayOptions.tileProvider(TileProvider)",
+                "TileProvider.getTile(x, y, zoom)"
+            ),
             purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate overlays).",
             successCriteria = "Tile grid numbers (x, y, zoom) render cleanly over the base map.",
             failureIndicators = "Tile rendering blocks UI thread or tiles fail to fetch on pan.",
@@ -456,6 +609,12 @@ object SampleCatalogRegistry {
             category = "Events & Gestures",
             complexity = Complexity.SNIPPET,
             tags = listOf("#events", "#gestures", "#clicks", "#poi", "#listeners"),
+            apiCalls = listOf(
+                "GoogleMap.setOnMapClickListener(OnMapClickListener)",
+                "GoogleMap.setOnMapLongClickListener(OnMapLongClickListener)",
+                "GoogleMap.setOnCameraMoveListener(OnCameraMoveListener)",
+                "GoogleMap.setOnPoiClickListener(OnPoiClickListener)"
+            ),
             purpose = "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI selections.",
             successCriteria = "Event log text updates with coordinates and POI names upon user interaction.",
             failureIndicators = "Click events swallowed or POI name unresolved.",
@@ -469,6 +628,14 @@ object SampleCatalogRegistry {
             category = "Events & Gestures",
             complexity = Complexity.SIMPLE,
             tags = listOf("#uisettings", "#controls", "#gestures", "#compass", "#zoombuttons"),
+            apiCalls = listOf(
+                "GoogleMap.uiSettings.isZoomControlsEnabled = Boolean",
+                "GoogleMap.uiSettings.isCompassEnabled = Boolean",
+                "GoogleMap.uiSettings.isMyLocationButtonEnabled = Boolean",
+                "GoogleMap.uiSettings.isScrollGesturesEnabled = Boolean",
+                "GoogleMap.uiSettings.isTiltGesturesEnabled = Boolean",
+                "GoogleMap.uiSettings.isRotateGesturesEnabled = Boolean"
+            ),
             purpose = "Shows how to toggle GoogleMap.uiSettings controls (compass, zoom buttons, scroll/tilt gestures).",
             successCriteria = "Toggling checkboxes in the drawer instantly enables/disables corresponding map gestures and UI controls.",
             failureIndicators = "Gesture toggles ignored or UI control icons clipped by safe area.",

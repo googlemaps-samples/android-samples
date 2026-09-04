@@ -50,22 +50,27 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
 
     private var sample: SampleItem? = null
     private var currentFramework: Framework = Framework.KOTLIN_VIEWS
+    private var isReviewerMode: Boolean = true
     private var onLaunchRequested: ((SampleItem, Framework) -> Unit)? = null
 
     companion object {
         private const val ARG_SAMPLE = "arg_sample"
         private const val ARG_FRAMEWORK = "arg_framework"
+        private const val ARG_IS_REVIEWER_MODE = "arg_is_reviewer_mode"
 
         @JvmStatic
+        @JvmOverloads
         fun newInstance(
             sample: SampleItem,
             framework: Framework,
+            isReviewerMode: Boolean = true,
             onLaunch: ((SampleItem, Framework) -> Unit)? = null
         ): SampleExpectationsBottomSheet {
             return SampleExpectationsBottomSheet().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_SAMPLE, sample)
                     putSerializable(ARG_FRAMEWORK, framework)
+                    putBoolean(ARG_IS_REVIEWER_MODE, isReviewerMode)
                 }
                 this.onLaunchRequested = onLaunch
             }
@@ -77,6 +82,7 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
         setStyle(STYLE_NORMAL, com.google.android.material.R.style.Theme_Material3_DayNight_NoActionBar)
         sample = arguments?.getSerializable(ARG_SAMPLE) as? SampleItem
         currentFramework = (arguments?.getSerializable(ARG_FRAMEWORK) as? Framework) ?: Framework.KOTLIN_VIEWS
+        isReviewerMode = arguments?.getBoolean(ARG_IS_REVIEWER_MODE, true) ?: true
     }
 
     override fun onStart() {
@@ -109,7 +115,7 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
                             sample = s,
                             targetFqcn = targetFqcn,
                             framework = currentFramework,
-                            isReviewerMode = true,
+                            isReviewerMode = isReviewerMode,
                             existingEvaluation = evaluation,
                             onDismiss = { dismiss() },
                             onSaveEvaluation = { status, notes ->
