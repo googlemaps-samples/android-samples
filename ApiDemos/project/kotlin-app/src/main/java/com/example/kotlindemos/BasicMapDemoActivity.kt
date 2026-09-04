@@ -40,6 +40,11 @@ import com.google.android.gms.maps.model.MarkerOptions
     category = "Map Initialization",
     complexity = Complexity.SNIPPET,
     tags = ["#map", "#init", "#lifecycle", "#quickstart"],
+    apiCalls = [
+        "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
+        "GoogleMap.addMarker(MarkerOptions)",
+        "GoogleMap.moveCamera(CameraUpdate)"
+    ],
     purpose = "Demonstrates clean, minimal map instantiation using SupportMapFragment.",
     successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with working gestures.",
     failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map failing to unpause.",

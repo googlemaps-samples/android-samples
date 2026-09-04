@@ -32,6 +32,7 @@ annotation class Sample(
     val category: String,
     val complexity: Complexity = Complexity.SIMPLE,
     val tags: Array<String> = [],
+    val apiCalls: Array<String> = [],
     val purpose: String = "",
     val successCriteria: String = "",
     val failureIndicators: String = "",
@@ -116,6 +117,7 @@ data class SampleItem(
     val category: String,
     val complexity: Complexity = Complexity.SIMPLE,
     val tags: List<String> = emptyList(),
+    val apiCalls: List<String> = emptyList(),
     val purpose: String = "",
     val successCriteria: String = "",
     val failureIndicators: String = "",
@@ -125,9 +127,11 @@ data class SampleItem(
 ) : Serializable {
 
     /**
-     * Builds a comprehensive HTML formatted help box for reviewer and developer guidance.
+     * Builds an HTML formatted help box for reviewer and developer guidance.
+     * When [isReviewerMode] is false (Developer/Learner mode), evaluation criteria
+     * (Success Criteria and Failure Indicators) are omitted to keep the UI clean.
      */
-    fun getFormattedHelpHtml(): String {
+    fun getFormattedHelpHtml(isReviewerMode: Boolean = true): String {
         if (helpHtml.isNotBlank()) {
             return helpHtml
         }
@@ -139,11 +143,13 @@ data class SampleItem(
         if (purpose.isNotBlank()) {
             builder.append("<p><b>🎯 Purpose:</b><br/>${purpose}</p>")
         }
-        if (successCriteria.isNotBlank()) {
-            builder.append("<p><b>✅ Success Criteria:</b><br/>${successCriteria}</p>")
-        }
-        if (failureIndicators.isNotBlank()) {
-            builder.append("<p><b>⚠️ Failure / Broken Indicators:</b><br/>${failureIndicators}</p>")
+        if (isReviewerMode) {
+            if (successCriteria.isNotBlank()) {
+                builder.append("<p><b>✅ Success Criteria:</b><br/>${successCriteria}</p>")
+            }
+            if (failureIndicators.isNotBlank()) {
+                builder.append("<p><b>⚠️ Failure / Broken Indicators:</b><br/>${failureIndicators}</p>")
+            }
         }
 
         if (tags.isNotEmpty()) {

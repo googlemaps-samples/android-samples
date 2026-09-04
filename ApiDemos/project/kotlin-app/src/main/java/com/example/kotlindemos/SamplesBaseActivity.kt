@@ -145,44 +145,52 @@ open class SamplesBaseActivity : AppCompatActivity() {
         topBar.setNavigationOnClickListener {
             navigateBackToCatalog()
         }
+        topBar.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
+        }
         invalidateOptionsMenu()
     }
+
+    protected val isReviewerMode: Boolean
+        get() = intent.getBooleanExtra("extra_is_reviewer_mode", false)
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         val metadata = currentSampleMetadata
         if (metadata != null) {
-            // 1. Good Job (Pass) - ALWAYS
-            menu.add(0, 2003, 0, "Good Job (Pass)")
-                .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+            if (isReviewerMode) {
+                // Reviewer / Grader Mode Controls
+                menu.add(0, 2003, 0, "Good Job (Pass)")
+                    .setIcon(com.example.common_ui.R.drawable.ic_thumb_up)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
-            // 2. Something's Wrong - ALWAYS
-            menu.add(0, 2004, 1, "Something's Wrong")
-                .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+                menu.add(0, 2004, 1, "Something's Wrong")
+                    .setIcon(com.example.common_ui.R.drawable.ic_warning_bug)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
-            // 3. Next Unchecked - ALWAYS
-            menu.add(0, 2005, 2, "Next Unchecked")
-                .setIcon(com.example.common_ui.R.drawable.ic_skip_next)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+                menu.add(0, 2005, 2, "Next Unchecked")
+                    .setIcon(com.example.common_ui.R.drawable.ic_skip_next)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
 
-            // 4. Criteria & Purpose
-            menu.add(0, 2001, 3, "Criteria & Purpose")
-                .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+                menu.add(0, 2001, 3, "Criteria & Purpose")
+                    .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
 
-            // 5. Previous Sample
-            menu.add(0, 2006, 4, "Previous Sample")
-                .setIcon(com.example.common_ui.R.drawable.ic_skip_previous)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+                menu.add(0, 2006, 4, "Previous Sample")
+                    .setIcon(com.example.common_ui.R.drawable.ic_skip_previous)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
 
-            // 6. Reset to Unchecked (Undo)
-            menu.add(0, 2007, 5, "Reset to Unchecked")
-                .setIcon(com.example.common_ui.R.drawable.ic_undo)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+                menu.add(0, 2007, 5, "Reset to Unchecked")
+                    .setIcon(com.example.common_ui.R.drawable.ic_undo)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+            } else {
+                // Developer / Learner Mode: Clean UI with About & APIs
+                menu.add(0, 2001, 0, "About & APIs")
+                    .setIcon(com.example.common_ui.R.drawable.ic_info_outline)
+                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            }
 
-            // 7. Switch to Java
+            // Switch to Java
             val javaActivity = metadata.javaActivity
             if (javaActivity != null) {
                 menu.add(0, 2002, 6, "Switch to Java")
@@ -196,7 +204,12 @@ open class SamplesBaseActivity : AppCompatActivity() {
     private fun navigateBackToCatalog() {
         if (isTaskRoot) {
             try {
-                val intent = Intent().setClassName(packageName, "com.example.common_ui.catalog.compose.ReviewerActivity")
+                val targetActivity = if (isReviewerMode) {
+                    "com.example.common_ui.catalog.compose.ReviewerActivity"
+                } else {
+                    "com.example.common_ui.catalog.compose.CatalogActivity"
+                }
+                val intent = Intent().setClassName(packageName, targetActivity)
                 startActivity(intent)
             } catch (e: Exception) {
                 // Fallback
@@ -217,11 +230,16 @@ open class SamplesBaseActivity : AppCompatActivity() {
                     val sheet = SampleExpectationsBottomSheet.newInstance(
                         sample = metadata,
                         framework = Framework.KOTLIN_VIEWS,
+                        isReviewerMode = isReviewerMode,
                         onLaunch = { s, fw ->
                             val targetClass = s.getActivityForFramework(fw)
                             if (targetClass != null && targetClass != this::class.java.name) {
                                 finish()
-                                startActivity(Intent().setClassName(packageName, targetClass))
+                                val intent = Intent().setClassName(packageName, targetClass).apply {
+                                    putExtra("extra_sample_id", s.id)
+                                    putExtra("extra_is_reviewer_mode", isReviewerMode)
+                                }
+                                startActivity(intent)
                             }
                         }
                     )
@@ -292,7 +310,11 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 val javaActivity = metadata?.javaActivity
                 if (javaActivity != null) {
                     finish()
-                    startActivity(Intent().setClassName(packageName, javaActivity))
+                    val intent = Intent().setClassName(packageName, javaActivity).apply {
+                        putExtra("extra_sample_id", metadata.id)
+                        putExtra("extra_is_reviewer_mode", isReviewerMode)
+                    }
+                    startActivity(intent)
                 }
                 true
             }

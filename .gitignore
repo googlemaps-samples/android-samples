@@ -17,3 +17,4 @@ sydney_final.png
 *_verified.png
 !**/assets/screenshots/*.png
 .kotlin/
+.gradle-test/
