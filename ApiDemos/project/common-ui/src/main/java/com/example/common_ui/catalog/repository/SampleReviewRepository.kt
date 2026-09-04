@@ -221,11 +221,15 @@ class SampleReviewRepository private constructor(
             }
         }
 
-        fun launchSample(activity: Activity, sample: SampleItem, framework: Framework) {
+        @JvmStatic
+        @JvmOverloads
+        fun launchSample(activity: Activity, sample: SampleItem, framework: Framework, isReviewerMode: Boolean = true) {
             val className = sample.getActivityForFramework(framework) ?: return
             val intent = Intent().apply {
                 setClassName(activity.packageName, className)
                 putExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID, sample.id)
+                putExtra("extra_sample_id", sample.id)
+                putExtra("extra_is_reviewer_mode", isReviewerMode)
             }
             activity.finish()
             activity.startActivity(intent)
