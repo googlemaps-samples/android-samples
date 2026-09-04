@@ -16,6 +16,10 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -64,6 +68,18 @@ import kotlin.math.sin
  * This shows how to place markers on a map.
  */
 // [START maps_android_sample_marker]
+@Sample(
+    id = "marker_demo",
+    title = "Standard Markers & Info Windows",
+    description = "Placing markers, custom icons, draggable pins, and custom info window layouts.",
+    category = "Markers & Overlays",
+    complexity = Complexity.SIMPLE,
+    tags = ["#markers", "#infowindow", "#draggable", "#icons", "#anchor"],
+    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins, and custom InfoWindowAdapter views.",
+    successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
+    failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class MarkerDemoActivity :
         SamplesBaseActivity(),
         OnMarkerClickListener,

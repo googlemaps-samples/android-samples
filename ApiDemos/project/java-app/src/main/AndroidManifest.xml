@@ -58,6 +58,31 @@ limitations under the License.
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.example.common_ui.catalog.compose.ReviewerActivity"
+            android:label="GMP Sample Reviewer"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.common_ui.catalog.compose.CatalogActivity"
+            android:label="GMP Sample Catalog"
+            android:exported="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <activity
             android:name=".AdvancedMarkersDemoActivity"
             android:exported="true"
@@ -233,6 +258,13 @@ limitations under the License.
             android:exported="true"
             android:label="@string/visible_region_demo_label" />
 
+        <receiver
+            android:name="com.example.common_ui.catalog.repository.EvaluationExportReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.maps.EXPORT_EVALUATIONS" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

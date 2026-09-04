@@ -14,6 +14,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -28,6 +32,18 @@ import androidx.appcompat.app.AppCompatActivity;
  * This shows how to create a simple activity with a map and a marker on the map.
  */
 // [START maps_android_sample_basic_map]
+@Sample(
+    id = "basic_map",
+    title = "Basic Map",
+    description = "Fundamental map instantiation, lifecycle binding, and default camera centering.",
+    category = "Map Initialization",
+    complexity = Complexity.SNIPPET,
+    tags = {"#map", "#init", "#lifecycle", "#quickstart"},
+    purpose = "Demonstrates clean, minimal map instantiation using SupportMapFragment.",
+    successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with working gestures.",
+    failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map failing to unpause.",
+    framework = Framework.JAVA_VIEWS
+)
 public class BasicMapDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     @Override
