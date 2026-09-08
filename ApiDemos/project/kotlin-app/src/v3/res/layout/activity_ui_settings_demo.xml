@@ -16,6 +16,7 @@
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,21 +28,29 @@
         android:layout_height="match_parent"
         />
 
-    <ScrollView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/controls_card"
+        style="?attr/materialCardViewElevatedStyle"
         android:layout_width="wrap_content"
-        android:layout_height="175dp"
+        android:layout_height="220dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="25dp"
-        android:clipToPadding="false">
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp">
 
-        <LinearLayout
-            android:id="@+id/checkbox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white">
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false">
+
+            <LinearLayout
+                android:id="@+id/checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/zoom_button"
@@ -108,5 +117,7 @@
         </LinearLayout>
 
     </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>
