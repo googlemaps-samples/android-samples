@@ -168,13 +168,17 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         pinConfigBuilder.setBackgroundColor(Color.MAGENTA);
         PinConfig pinConfig = pinConfigBuilder.build();
 
-        // Use the  PinConfig instance to set the icon for AdvancedMarkerOptions.
+        // Use the PinConfig instance to set the icon for AdvancedMarkerOptions.
         AdvancedMarkerOptions advancedMarkerOptions = new AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig))
-                .position(KUALA_LUMPUR);
+                .position(KUALA_LUMPUR)
+                .title("Kuala Lumpur (Magenta Pin)");
 
         // Pass the AdvancedMarkerOptions instance to addMarker().
         Marker marker = map.addMarker(advancedMarkerOptions);
+        if (marker != null) {
+            marker.showInfoWindow();
+        }
 
         // This sample changes the border color of the advanced marker
         PinConfig.Builder pinConfigBuilder2 = PinConfig.builder();
@@ -183,7 +187,8 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
 
         AdvancedMarkerOptions advancedMarkerOptions2 = new AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig2))
-                .position(JAKARTA);
+                .position(JAKARTA)
+                .title("Jakarta (Blue Border)");
 
         Marker marker2 = map.addMarker(advancedMarkerOptions2);
 
@@ -198,7 +203,8 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
 
         AdvancedMarkerOptions advancedMarkerOptions3 = new AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig3))
-                .position(BANGKOK);
+                .position(BANGKOK)
+                .title("Bangkok (Text Glyph 'A')");
 
         Marker marker3 = map.addMarker(advancedMarkerOptions3);
 
@@ -210,7 +216,8 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
 
         AdvancedMarkerOptions advancedMarkerOptions4 = new AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig4))
-                .position(MANILA);
+                .position(MANILA)
+                .title("Manila (Transparent Cutout Glyph)");
 
         Marker marker4 = map.addMarker(advancedMarkerOptions4);
 
@@ -219,7 +226,8 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         int collisionBehavior = AdvancedMarkerOptions.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
         AdvancedMarkerOptions advancedMarkerOptions5 = new AdvancedMarkerOptions()
                 .position(HO_CHI_MINH_CITY)
-                .collisionBehavior(collisionBehavior);
+                .collisionBehavior(collisionBehavior)
+                .title("Ho Chi Minh City (Collision Behavior)");
 
         Marker marker5 = map.addMarker(advancedMarkerOptions5);
     }

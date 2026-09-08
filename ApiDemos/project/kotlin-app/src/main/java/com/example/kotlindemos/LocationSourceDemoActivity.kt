@@ -37,18 +37,26 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.awaitMap
 
+import com.google.android.gms.maps.CameraUpdateFactory
 import kotlinx.coroutines.launch
 
 /**
  * This shows how to use a custom location source.
  */
+// [START maps_android_sample_location_source]
 @Sample(
-    id = "location_source",
+    id = "com.example.kotlindemos.LocationSourceDemoActivity",
     title = "Custom LocationSource",
     description = "Providing a custom mock LocationSource for simulated GPS navigation playback.",
     category = "Location & Sensors",
     complexity = Complexity.ADVANCED,
     tags = ["#location", "#locationsource", "#mock", "#simulation", "#navigation"],
+    apiCalls = [
+        "GoogleMap.setLocationSource(LocationSource)",
+        "LocationSource.activate(OnLocationChangedListener)",
+        "LocationSource.deactivate()",
+        "GoogleMap.setMyLocationEnabled(Boolean)"
+    ],
     purpose = "Shows how to feed programmatic coordinates into the GoogleMap location layer using a custom LocationSource.",
     successCriteria = "The blue dot animates smoothly along a simulated route when navigation starts.",
     failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
@@ -75,6 +83,7 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
   private fun init(map: GoogleMap) {
     map.setLocationSource(locationSource)
     map.setOnMapLongClickListener(locationSource)
+    map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 14f))
     if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
@@ -82,6 +91,10 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
       return
     }
     map.isMyLocationEnabled = true
+  }
+
+  companion object {
+    val SYDNEY = LatLng(-33.8688, 151.2093)
   }
 }
 
@@ -104,6 +117,12 @@ private class LongPressLocationSource : LocationSource, OnMapLongClickListener, 
 
   override fun activate(listener: OnLocationChangedListener) {
     this.listener = listener
+    val initialLocation = Location("InitialLocationProvider").apply {
+      latitude = LocationSourceDemoActivity.SYDNEY.latitude
+      longitude = LocationSourceDemoActivity.SYDNEY.longitude
+      accuracy = 100f
+    }
+    listener.onLocationChanged(initialLocation)
   }
 
   override fun deactivate() {
@@ -130,3 +149,4 @@ private class LongPressLocationSource : LocationSource, OnMapLongClickListener, 
     paused = false
   }
 }
+// [END maps_android_sample_location_source]

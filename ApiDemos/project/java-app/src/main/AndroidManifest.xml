@@ -263,6 +263,8 @@ limitations under the License.
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.maps.EXPORT_EVALUATIONS" />
+                <action android:name="com.google.maps.RECORD_EVALUATION" />
+                <action android:name="com.google.maps.CLEAR_EVALUATIONS" />
             </intent-filter>
         </receiver>
     </application>

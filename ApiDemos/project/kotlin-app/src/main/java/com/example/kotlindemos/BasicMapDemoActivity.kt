@@ -70,7 +70,7 @@ class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         with(googleMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, ZOOM_LEVEL))
-            addMarker(MarkerOptions().position(SYDNEY))
+            addMarker(MarkerOptions().position(SYDNEY).title("Sydney"))
         }
     }
 }

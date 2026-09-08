@@ -134,21 +134,9 @@ public class SamplesBaseActivity extends AppCompatActivity {
 
     private void resolveSampleMetadata() {
         String sampleId = getIntent().getStringExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID);
-        if (sampleId != null && !sampleId.trim().isEmpty()) {
-            for (SampleItem item : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
-                if (sampleId.equals(item.getId())) {
-                    currentSampleMetadata = item;
-                    return;
-                }
-            }
-        } else {
-            String myClass = getClass().getName();
-            for (SampleItem item : SampleCatalogRegistry.INSTANCE.getSAMPLES()) {
-                if (myClass.equals(item.getJavaActivity()) || myClass.equals(item.getKotlinActivity())) {
-                    currentSampleMetadata = item;
-                    return;
-                }
-            }
+        currentSampleMetadata = SampleCatalogRegistry.INSTANCE.findById(sampleId);
+        if (currentSampleMetadata == null) {
+            currentSampleMetadata = SampleCatalogRegistry.INSTANCE.findById(getClass().getName());
         }
     }
 

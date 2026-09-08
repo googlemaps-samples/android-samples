@@ -135,8 +135,16 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
 
         mapFragment.getMapAsync(this);
 
-        findViewById(R.id.button_hawaii).setOnClickListener(view -> centerMapOnLocation(HANA_HAWAII, 11f));
-        findViewById(R.id.button_us).setOnClickListener(view -> centerMapOnLocation(CENTER_US, 1f));
+        findViewById(R.id.button_hawaii).setOnClickListener(view -> {
+            localityEnabled = true;
+            updateStyles();
+            centerMapOnLocation(HANA_HAWAII, 11f);
+        });
+        findViewById(R.id.button_us).setOnClickListener(view -> {
+            adminAreaEnabled = true;
+            updateStyles();
+            centerMapOnLocation(CENTER_US, 3.8f);
+        });
 
         applyInsets(findViewById(R.id.map_container));
 

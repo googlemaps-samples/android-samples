@@ -192,12 +192,13 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         val pinConfigMagenta = PinConfig.builder()
             .setBackgroundColor(Color.MAGENTA)
             .build()
-        map.addMarker(
+        val klMarker = map.addMarker(
             AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigMagenta))
                 .position(KUALA_LUMPUR)
                 .title("Kuala Lumpur (Magenta Pin)")
         )
+        klMarker?.showInfoWindow()
 
         // 3. PinConfig with custom border color
         val pinConfigBorder = PinConfig.builder()
