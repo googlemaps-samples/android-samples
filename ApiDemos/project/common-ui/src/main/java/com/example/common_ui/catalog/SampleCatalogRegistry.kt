@@ -108,7 +108,8 @@ object SampleCatalogRegistry {
             tags = listOf("#multimap", "#multiple", "#layout", "#rendering"),
             apiCalls = listOf(
                 "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
-                "GoogleMap.moveCamera(CameraUpdate)"
+                "GoogleMap.animateCamera(CameraUpdate, int, CancelableCallback)",
+                "GoogleMap.addMarker(MarkerOptions)"
             ),
             purpose = "Shows how to render and control multiple independent GoogleMap instances concurrently in one screen.",
             successCriteria = "All 4 map fragments render distinct geographic locations simultaneously with smooth scrolling.",
@@ -182,8 +183,9 @@ object SampleCatalogRegistry {
             complexity = Complexity.SIMPLE,
             tags = listOf("#camera", "#projection", "#visibleregion", "#latlngbounds"),
             apiCalls = listOf(
-                "GoogleMap.projection.visibleRegion",
-                "VisibleRegion.latLngBounds",
+                "GoogleMap.setPadding(int, int, int, int)",
+                "GoogleMap.moveCamera(CameraUpdate)",
+                "GoogleMap.cameraPosition",
                 "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)"
             ),
             purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
@@ -481,19 +483,20 @@ object SampleCatalogRegistry {
         ),
         SampleItem(
             id = "com.example.kotlindemos.LiteDemoActivity",
-            title = "Lite Mode Grid",
-            description = "Lightweight non-interactive raster map cards arranged in a multi-column grid layout.",
+            title = "Lite Mode Basics",
+            description = "Non-interactive raster map with programmatic camera jumps, markers, and polygons.",
             category = "Lists & Performance",
             complexity = Complexity.SIMPLE,
-            tags = listOf("#litemode", "#grid", "#performance", "#snapshots"),
+            tags = listOf("#litemode", "#static", "#raster", "#markers", "#polygons"),
             apiCalls = listOf(
                 "GoogleMapOptions.liteMode(true)",
-                "MapView.onCreate(null)",
-                "MapView.getMapAsync(OnMapReadyCallback)"
+                "GoogleMap.moveCamera(CameraUpdate)",
+                "GoogleMap.addMarker(MarkerOptions)",
+                "GoogleMap.addPolygon(PolygonOptions)"
             ),
-            purpose = "Demonstrates rendering multiple Lite Mode maps in a GridView with low memory consumption.",
-            successCriteria = "Grid tiles render crisp static maps with markers without launching full GL renderer.",
-            failureIndicators = "High memory spike or missing markers on grid cells.",
+            purpose = "Demonstrates Lite Mode features: static raster rendering, markers launching Google Maps intent, and programmatic camera jumps.",
+            successCriteria = "Map renders lightweight static raster view; Darwin/Adelaide buttons immediately reposition camera.",
+            failureIndicators = "Full vector GL map loaded instead of lite mode, or buttons fail to move camera.",
             kotlinActivity = "com.example.kotlindemos.LiteDemoActivity",
             javaActivity = "com.example.mapdemo.LiteDemoActivity"
         ),
