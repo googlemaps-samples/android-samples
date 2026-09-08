@@ -41,13 +41,19 @@ import java.util.List;
 /**
  * This shows how to style a map with JSON.
  */
+// [START maps_android_sample_styled_map]
 @Sample(
-    id = "styled_map",
+    id = "com.example.kotlindemos.StyledMapDemoActivity",
     title = "JSON Map Styling (Retro / Dark)",
     description = "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
     category = "Styling & Cloud",
     complexity = Complexity.SIMPLE,
     tags = {"#styling", "#json", "#darkmode", "#night", "#retro"},
+    apiCalls = {
+        "GoogleMap.setMapStyle(MapStyleOptions)",
+        "MapStyleOptions.loadRawResourceStyle(Context, int)",
+        "MapStyleOptions(String)"
+    },
     purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
     successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
     failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
@@ -63,7 +69,7 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
 
     // Stores the ID of the currently selected style, so that we can re-apply it when
     // the activity restores state, for example when the device changes orientation.
-    private int mSelectedStyleId = com.example.common_ui.R.string.style_label_default;
+    private int mSelectedStyleId = com.example.common_ui.R.string.style_label_night;
 
     // These are simply the string resource IDs for each of the style names. We use them
     // as identifiers when choosing which style to apply.
@@ -196,3 +202,4 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
     }
 
 }
+// [END maps_android_sample_styled_map]

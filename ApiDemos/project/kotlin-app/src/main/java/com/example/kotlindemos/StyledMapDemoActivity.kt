@@ -37,13 +37,19 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import java.util.ArrayList
 
+// [START maps_android_sample_styled_map]
 @Sample(
-    id = "styled_map",
+    id = "com.example.kotlindemos.StyledMapDemoActivity",
     title = "JSON Map Styling (Retro / Dark)",
     description = "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
     category = "Styling & Cloud",
     complexity = Complexity.SIMPLE,
     tags = ["#styling", "#json", "#darkmode", "#night", "#retro"],
+    apiCalls = [
+        "GoogleMap.setMapStyle(MapStyleOptions)",
+        "MapStyleOptions.loadRawResourceStyle(Context, int)",
+        "MapStyleOptions(String)"
+    ],
     purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
     successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
     failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
@@ -52,7 +58,7 @@ import java.util.ArrayList
 class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
-    private var mSelectedStyleId = com.example.common_ui.R.string.style_label_default
+    private var mSelectedStyleId = com.example.common_ui.R.string.style_label_night
 
     companion object {
         private const val TAG = "StyledMapDemoActivity"
@@ -162,3 +168,4 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         mMap?.setMapStyle(style)
     }
 }
+// [END maps_android_sample_styled_map]

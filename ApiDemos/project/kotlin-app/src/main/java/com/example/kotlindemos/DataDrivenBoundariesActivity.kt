@@ -119,7 +119,9 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
             centerMapOnLocation(HANA_HAWAII, 11f) // Adjusted zoom from Java
         }
         findViewById<MaterialButton>(R.id.button_us).setOnClickListener {
-            centerMapOnLocation(CENTER_US, 1f) // Adjusted zoom from Java
+            adminAreaEnabled = true
+            updateStyles()
+            centerMapOnLocation(CENTER_US, 3.8f)
         }
         setupBoundarySelectorButton() // Setup the new selector button
 

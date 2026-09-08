@@ -120,12 +120,8 @@ open class SamplesBaseActivity : AppCompatActivity() {
 
     private fun resolveSampleMetadata() {
         val sampleId = intent.getStringExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID)
-        currentSampleMetadata = if (!sampleId.isNullOrBlank()) {
-            SampleCatalogRegistry.SAMPLES.find { it.id == sampleId }
-        } else {
-            val myClass = this::class.java.name
-            SampleCatalogRegistry.SAMPLES.find { it.kotlinActivity == myClass || it.javaActivity == myClass }
-        }
+        currentSampleMetadata = SampleCatalogRegistry.findById(sampleId)
+            ?: SampleCatalogRegistry.findById(this::class.java.name)
     }
 
     private fun setupSampleToolbar() {

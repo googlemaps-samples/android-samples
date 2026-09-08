@@ -23,6 +23,7 @@ import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.LocationSource;
@@ -38,19 +39,28 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * This shows how to use a custom location source.
  */
+// [START maps_android_sample_location_source]
 @Sample(
-    id = "location_source",
+    id = "com.example.kotlindemos.LocationSourceDemoActivity",
     title = "Custom LocationSource",
     description = "Providing a custom mock LocationSource for simulated GPS navigation playback.",
     category = "Location & Sensors",
     complexity = Complexity.ADVANCED,
     tags = {"#location", "#locationsource", "#mock", "#simulation", "#navigation"},
+    apiCalls = {
+        "GoogleMap.setLocationSource(LocationSource)",
+        "LocationSource.activate(OnLocationChangedListener)",
+        "LocationSource.deactivate()",
+        "GoogleMap.setMyLocationEnabled(Boolean)"
+    },
     purpose = "Shows how to feed programmatic coordinates into the GoogleMap location layer using a custom LocationSource.",
     successCriteria = "The blue dot animates smoothly along a simulated route when navigation starts.",
     failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
     framework = Framework.JAVA_VIEWS
 )
 public class LocationSourceDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
+
+    private static final LatLng SYDNEY = new LatLng(-33.8688, 151.2093);
 
     /**
      * A {@link LocationSource} which reports a new location whenever a user long presses the map
@@ -72,6 +82,11 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
         @Override
         public void activate(OnLocationChangedListener listener) {
             mListener = listener;
+            Location initialLocation = new Location("InitialLocationProvider");
+            initialLocation.setLatitude(SYDNEY.latitude);
+            initialLocation.setLongitude(SYDNEY.longitude);
+            initialLocation.setAccuracy(100);
+            mListener.onLocationChanged(initialLocation);
         }
 
         @Override
@@ -136,6 +151,7 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
     public void onMapReady(GoogleMap map) {
         map.setLocationSource(mLocationSource);
         map.setOnMapLongClickListener(mLocationSource);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 14f));
 
         if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
@@ -146,3 +162,4 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
         map.setMyLocationEnabled(true);
     }
 }
+// [END maps_android_sample_location_source]
