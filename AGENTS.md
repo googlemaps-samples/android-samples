@@ -18,7 +18,7 @@ Sample code for the Maps SDK for Android. This is a multi-app repository:
 ## The snippets modules feed the documentation site
 
 Code in `snippets/` is extracted into developers.google.com pages via
-`// [START region_tag]` / `// [END region_tag]` markers.
+region tag comment markers (paired START and END lines wrapping each excerpt).
 
 - Never rename, remove, or reorder region tags, and keep every START/END pair
   balanced.
