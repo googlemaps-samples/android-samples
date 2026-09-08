@@ -15,9 +15,10 @@ Sample code for the Maps SDK for Android. This is a multi-app repository:
 | `FireMarkers` | Firebase + Maps sample app |
 | `WearOS` | Wear OS sample app |
 
-## The snippets modules feed the documentation site
+## Region tags feed official documentation
 
-Code in `snippets/` is extracted into developers.google.com pages via
+Code excerpts in `snippets/`, as well as key sample activities in `ApiDemos` and
+root build files, are extracted into developers.google.com pages via
 region tag comment markers (paired START and END lines wrapping each excerpt).
 
 - Never rename, remove, or reorder region tags, and keep every START/END pair
@@ -30,13 +31,31 @@ region tag comment markers (paired START and END lines wrapping each excerpt).
 The same parity rule applies to `ApiDemos`: `java-app` and `kotlin-app`
 demonstrate the same features and must stay in sync.
 
+## Code style and hygiene
+
+- Adhere to formatting rules defined in `.editorconfig`.
+- Do not use wildcard imports (`import foo.*`); use explicit imports.
+- Avoid fully qualified class names in source code; declare explicit imports at the file level instead (except to resolve naming collisions or in XML layouts).
+
 ## Building and testing
 
-```bash
-./gradlew assembleDebug                 # build the root-wired modules
-./scripts/verify_all.sh                 # build everything, including standalone tutorial projects
-./gradlew :snippets:app:assembleDebug   # one module
-```
+- **Full project verification:**
+  ```bash
+  ./scripts/verify_all.sh                 # run assemble, unit tests, lint, and doc version checks across all root modules
+  ```
+
+- **Targeted module builds:**
+  ```bash
+  ./gradlew :ApiDemos:kotlin-app:assembleDebug   # build a specific demo app
+  ./gradlew :snippets:app-ktx:assembleDebug      # compile a specific snippet module
+  ```
+
+- **Documentation version check:**
+  ```bash
+  python3 scripts/update_docs_versions.py --check # verify doc snippet versions match version catalog
+  ```
+
+Snippet modules do not contain unit tests; they are verified through successful compilation (`assembleDebug`), Android lint (`lintDebug`), and doc version synchronization.
 
 Running the apps requires a Maps API key: copy the keys named in
 `local.defaults.properties` (e.g. `MAPS_API_KEY`) into `local.properties`.
@@ -53,7 +72,7 @@ into the root `settings.gradle.kts`; build them from their own directory.
   prefix causes a wrong release bump. Never edit CHANGELOG.md by hand.
 - Keep changes scoped to one sample or one feature across its language
   variants; do not mix unrelated samples in one PR.
-- Build the affected modules before declaring work done, and report actual
+- Build and test the affected modules before declaring work done, and report actual
   results.
 - AI tools must not be listed as authors or co-authors on commits or PRs, and
   unsolicited bot-generated PRs are prohibited (see CONTRIBUTING.md).
