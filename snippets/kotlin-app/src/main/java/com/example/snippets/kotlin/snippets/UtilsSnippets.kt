@@ -72,27 +72,13 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     class MyItem(
         lat: Double,
         lng: Double,
-        private val title: String,
-        private val snippet: String
+        override val title: String,
+        override val snippet: String
     ) : ClusterItem {
 
-        private val position: LatLng = LatLng(lat, lng)
+        override val position: LatLng = LatLng(lat, lng)
 
-        override fun getPosition(): LatLng {
-            return position
-        }
-
-        override fun getTitle(): String {
-            return title
-        }
-
-        override fun getSnippet(): String {
-            return snippet
-        }
-
-        override fun getZIndex(): Float {
-            return 0f
-        }
+        override val zIndex: Float = 0f
     }
     // [END maps_android_utils_clustering_cluster_item]
 
@@ -225,9 +211,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     )
     fun addGeoJsonLayerJsonObject() {
         // [START maps_android_util_geojson_add_jsonobject]
-        val geoJsonData: JSONObject? = // JSONObject containing the GeoJSON data
+        val geoJsonData: JSONObject = // JSONObject containing the GeoJSON data
             // [START_EXCLUDE silent]
-            null
+            JSONObject("""{"type": "FeatureCollection", "features": []}""")
             // [END_EXCLUDE]
         val layer = GeoJsonLayer(map.delegate, geoJsonData)
         // [END maps_android_util_geojson_add_jsonobject]
@@ -266,7 +252,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Programmatically iterates, styles, and adds custom point and linestring GeoJsonFeatures.\nHow to see the effect: Draggable markers and styled lines render according to default GeoJson feature styles.",
     )
     fun geoJsonFeature() {
-        val layer = GeoJsonLayer(map.delegate, null)
+        val layer = GeoJsonLayer(map.delegate, JSONObject("""{"type": "FeatureCollection", "features": []}"""))
 
         // [START maps_android_util_geojson_point_feature]
         val point = GeoJsonPoint(LatLng(0.0, 0.0))
@@ -303,12 +289,12 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         // [END maps_android_util_geojson_geometry_click_events]
 
         // [START maps_android_util_geojson_style]
-        val pointStyle = layer.defaultPointStyle
-        pointStyle.isDraggable = true
-        pointStyle.title = "Hello, World!"
-        pointStyle.snippet = "I am a draggable marker"
-        val lineStyle = layer.defaultLineStringStyle
-        val polygonStyle = layer.defaultPolygonStyle
+        val pointStyle = layer.getDefaultPointStyle()
+        pointStyle.setDraggable(true)
+        pointStyle.setTitle("Hello, World!")
+        pointStyle.setSnippet("I am a draggable marker")
+        val lineStyle = layer.getDefaultLineStringStyle()
+        val polygonStyle = layer.getDefaultPolygonStyle()
         // [END maps_android_util_geojson_style]
 
         // [START maps_android_util_geojson_style_specific]
@@ -346,7 +332,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     )
     fun addKmlLayerFileInputStream() {
         // [START maps_android_utils_kml_add_input_stream]
-        val inputStream: InputStream? = context.resources.openRawResource(R.raw.kml_file)
+        val inputStream: InputStream = context.resources.openRawResource(R.raw.kml_file)
         val layer = KmlLayer(map.delegate, inputStream, context)
         // [END maps_android_utils_kml_add_input_stream]
 
@@ -356,21 +342,21 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         map.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(com.google.android.gms.maps.model.LatLng(37.422, -122.084), 16f))
 
         // [START maps_android_utils_kml_access_containers]
-        for (containers in layer.containers) {
+        for (container in layer.getContainers()) {
             // Do something to container
         }
         // [END maps_android_utils_kml_access_containers]
 
         // [START maps_android_utils_kml_access_placemarks]
-        for (placemark in layer.placemarks) {
+        for (placemark in layer.getPlacemarks()) {
             // Do something to Placemark
         }
         // [END maps_android_utils_kml_access_placemarks]
 
         // [START maps_android_utils_kml_access_properties]
-        for (container in layer.containers) {
+        for (container in layer.getContainers()) {
             if (container.hasProperty("name")) {
-                Log.i("KML", container.getProperty("name"))
+                Log.i("KML", container.getProperty("name") ?: "")
             }
         }
         // [END maps_android_utils_kml_access_properties]
@@ -378,7 +364,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         // [START maps_android_utils_kml_click_listener]
         // Set a listener for geometry clicked events.
         layer.setOnFeatureClickListener { feature ->
-            Log.i("KML", "Feature clicked: ${feature.id}")
+            Log.i("KML", "Feature clicked: ${feature.getId()}")
         }
         // [END maps_android_utils_kml_click_listener]
     }
@@ -387,7 +373,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     fun accessContainers(containers: Iterable<KmlContainer>) {
         for (container in containers) {
             if (container.hasContainers()) {
-                accessContainers(container.containers)
+                accessContainers(container.getContainers())
             }
         }
     } // [END maps_android_utils_kml_access_containers_nested]
