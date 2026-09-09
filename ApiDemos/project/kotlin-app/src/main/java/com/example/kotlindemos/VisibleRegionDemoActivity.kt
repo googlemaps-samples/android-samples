@@ -19,6 +19,7 @@ package com.example.kotlindemos
 import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
+import com.example.common_ui.R
 
 import android.os.Bundle
 import android.os.Handler
@@ -85,14 +86,14 @@ class VisibleRegionDemoActivity :
 
         binding.cameraActionsButton.setOnClickListener { view ->
             val popup = PopupMenu(this, view)
-            popup.menuInflater.inflate(com.example.common_ui.R.menu.visible_region_menu, popup.menu)
+            popup.menuInflater.inflate(R.menu.visible_region_menu, popup.menu)
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    com.example.common_ui.R.id.menu_action_no_padding -> { setNoPadding(); true }
-                    com.example.common_ui.R.id.menu_action_more_padding -> { setMorePadding(); true }
-                    com.example.common_ui.R.id.menu_action_opera_house -> { moveToOperaHouse(); true }
-                    com.example.common_ui.R.id.menu_action_sfo -> { moveToSFO(); true }
-                    com.example.common_ui.R.id.menu_action_australia -> { moveToAUS(); true }
+                    R.id.menu_action_no_padding -> { setNoPadding(); true }
+                    R.id.menu_action_more_padding -> { setMorePadding(); true }
+                    R.id.menu_action_opera_house -> { moveToOperaHouse(); true }
+                    R.id.menu_action_sfo -> { moveToSFO(); true }
+                    R.id.menu_action_australia -> { moveToAUS(); true }
                     else -> false
                 }
             }
@@ -105,7 +106,7 @@ class VisibleRegionDemoActivity :
         binding.vrSfoButton.setOnClickListener { moveToSFO() }
         binding.vrAusButton.setOnClickListener { moveToAUS() }
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
         
         applyInsets(binding.mapContainer)
@@ -151,7 +152,7 @@ class VisibleRegionDemoActivity :
 
     private fun setMorePadding() {
         if (!::map.isInitialized) return
-        val mapView: View? = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map)?.view
+        val mapView: View? = supportFragmentManager.findFragmentById(R.id.map)?.view
         animatePadding(0, 0, (mapView?.width ?: 0) / 3,
             (mapView?.height ?: 0)/ 4)
     }
