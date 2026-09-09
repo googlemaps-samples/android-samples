@@ -17,6 +17,7 @@ package com.example.mapdemo;
 import com.example.common_ui.catalog.Sample;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.R;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -96,22 +97,22 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
 
         binding.cameraActionsButton.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(this, v);
-            popup.getMenuInflater().inflate(com.example.common_ui.R.menu.visible_region_menu, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.visible_region_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(item -> {
                 int itemId = item.getItemId();
-                if (itemId == com.example.common_ui.R.id.menu_action_no_padding) {
+                if (itemId == R.id.menu_action_no_padding) {
                     setNoPadding();
                     return true;
-                } else if (itemId == com.example.common_ui.R.id.menu_action_more_padding) {
+                } else if (itemId == R.id.menu_action_more_padding) {
                     setMorePadding(v);
                     return true;
-                } else if (itemId == com.example.common_ui.R.id.menu_action_opera_house) {
+                } else if (itemId == R.id.menu_action_opera_house) {
                     moveToOperaHouse(v);
                     return true;
-                } else if (itemId == com.example.common_ui.R.id.menu_action_sfo) {
+                } else if (itemId == R.id.menu_action_sfo) {
                     moveToSFO(v);
                     return true;
-                } else if (itemId == com.example.common_ui.R.id.menu_action_australia) {
+                } else if (itemId == R.id.menu_action_australia) {
                     moveToAUS(v);
                     return true;
                 }
@@ -127,7 +128,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         binding.vrAusButton.setOnClickListener(this::moveToAUS);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
         applyInsets(binding.mapContainer);
@@ -209,7 +210,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         if (!checkReady()) {
             return;
         }
-        View mapView = (getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map)).getView();
+        View mapView = (getSupportFragmentManager().findFragmentById(R.id.map)).getView();
         int left = 0;
         int top = 0;
         int right = mapView.getWidth() / 3;

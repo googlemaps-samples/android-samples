@@ -17,6 +17,7 @@ package com.example.mapdemo;
 
 import android.os.Bundle;
 
+import com.example.common_ui.R;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
 import com.example.common_ui.catalog.Sample;
@@ -62,13 +63,13 @@ public class MultiMapDemoActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.multimap_demo);
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        setContentView(R.layout.multimap_demo);
+        applyInsets(findViewById(R.id.map_container));
 
-        setupMap(com.example.common_ui.R.id.map1, GIZA, "Pyramids of Giza");
-        setupMap(com.example.common_ui.R.id.map2, MACHU_PICCHU, "Machu Picchu");
-        setupMap(com.example.common_ui.R.id.map3, TAJ_MAHAL, "Taj Mahal");
-        setupMap(com.example.common_ui.R.id.map4, COLOSSEUM, "Colosseum");
+        setupMap(R.id.map1, GIZA, "Pyramids of Giza");
+        setupMap(R.id.map2, MACHU_PICCHU, "Machu Picchu");
+        setupMap(R.id.map3, TAJ_MAHAL, "Taj Mahal");
+        setupMap(R.id.map4, COLOSSEUM, "Colosseum");
     }
 
     private void setupMap(int fragmentId, LatLng location, String title) {
