@@ -9,5 +9,15 @@ secrets.properties
 
 # This covers new IDEs, like Antigravity
 .vscode/
-**/bin/
+
+# Temporary verification screenshot files
+*_screen*.png
+sydney_final.png
+*_sydney.png
+*_verified.png
+!**/assets/screenshots/*.png
 .kotlin/
+.gradle-test/
+eval_runs/
+__pycache__/
+*.pyc

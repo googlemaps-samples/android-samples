@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -29,6 +33,18 @@ import com.google.android.gms.maps.model.LatLng
  * This shows how to listen to some [GoogleMap] events.
  */
 // [START maps_android_sample_events]
+@Sample(
+    id = "events_demo",
+    title = "Events & Gestures",
+    description = "Handling map taps, long clicks, camera change events, and POI selections.",
+    category = "Events & Gestures",
+    complexity = Complexity.SNIPPET,
+    tags = ["#events", "#gestures", "#clicks", "#poi", "#listeners"],
+    purpose = "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI selections.",
+    successCriteria = "Event log text updates with coordinates and POI names upon user interaction.",
+    failureIndicators = "Click events swallowed or POI name unresolved.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class EventsDemoActivity : SamplesBaseActivity(), OnMapClickListener,
     OnMapLongClickListener, OnCameraIdleListener, OnCameraMoveListener, OnMapReadyCallback {
 

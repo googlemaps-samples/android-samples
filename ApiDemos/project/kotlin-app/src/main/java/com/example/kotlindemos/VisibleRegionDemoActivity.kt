@@ -16,6 +16,11 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.R
+
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -30,10 +35,32 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 
+import androidx.appcompat.widget.PopupMenu
+import java.util.Locale
+
 /**
  * This shows how to use setPadding to allow overlays that obscure part of the map without
  * obscuring the map UI or copyright notices.
  */
+// [START maps_android_sample_visible_region]
+@Sample(
+    id = "com.example.kotlindemos.VisibleRegionDemoActivity",
+    title = "Visible Region & Projection",
+    description = "Querying current viewport bounding coordinates via GoogleMap.projection.",
+    category = "Camera Controls",
+    complexity = Complexity.SIMPLE,
+    tags = ["#camera", "#projection", "#visibleregion", "#latlngbounds"],
+    apiCalls = [
+        "GoogleMap.setPadding(int, int, int, int)",
+        "GoogleMap.moveCamera(CameraUpdate)",
+        "GoogleMap.cameraPosition",
+        "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)"
+    ],
+    purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
+    successCriteria = "Bounding coordinates update live in the UI as the camera pans and zooms.",
+    failureIndicators = "Projection returns null or stale LatLng bounds after camera idle.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class VisibleRegionDemoActivity :
     SamplesBaseActivity(),
     OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
@@ -47,7 +74,7 @@ class VisibleRegionDemoActivity :
     private lateinit var binding: VisibleRegionDemoBinding
 
     /** Keep track of current values for padding, so we can animate from them.  */
-    private var currentLeft = 150
+    private var currentLeft = 0
     private var currentTop = 0
     private var currentRight = 0
     private var currentBottom = 0
@@ -57,50 +84,76 @@ class VisibleRegionDemoActivity :
         binding = VisibleRegionDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.cameraActionsButton.setOnClickListener { view ->
+            val popup = PopupMenu(this, view)
+            popup.menuInflater.inflate(R.menu.visible_region_menu, popup.menu)
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.menu_action_no_padding -> { setNoPadding(); true }
+                    R.id.menu_action_more_padding -> { setMorePadding(); true }
+                    R.id.menu_action_opera_house -> { moveToOperaHouse(); true }
+                    R.id.menu_action_sfo -> { moveToSFO(); true }
+                    R.id.menu_action_australia -> { moveToAUS(); true }
+                    else -> false
+                }
+            }
+            popup.show()
+        }
+
         binding.vrNormalButton.setOnClickListener { setNoPadding() }
         binding.vrMorePaddedButton.setOnClickListener { setMorePadding() }
         binding.vrSohButton.setOnClickListener { moveToOperaHouse() }
         binding.vrSfoButton.setOnClickListener { moveToSFO() }
         binding.vrAusButton.setOnClickListener { moveToAUS() }
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
         
         applyInsets(binding.mapContainer)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-
         // exit early if the map was not initialised properly
         map = googleMap ?: return
 
-        map.apply{
-            // Set padding for the current camera view
+        map.apply {
             setPadding(currentLeft, currentTop, currentRight, currentBottom)
-            // Move to a place with indoor (sfoLatLng airport).
             moveCamera(CameraUpdateFactory.newLatLngZoom(sfoLatLng, 18f))
-            // Add a marker to the Opera House.
             addMarker(MarkerOptions().position(operaHouseLatLng).title("Sydney Opera House"))
-            // Add a camera idle listener that displays the current camera position in a TextView
             setOnCameraIdleListener {
-                binding.messageText.text = getString(
-                    com.example.common_ui.R.string.camera_change_message,
-                    this@VisibleRegionDemoActivity.map.cameraPosition)
+                updateCameraDisplay()
             }
         }
+        updateCameraDisplay()
+    }
 
-
+    private fun updateCameraDisplay() {
+        if (!::map.isInitialized) return
+        val pos = map.cameraPosition
+        binding.cameraTargetText.text = String.format(
+            Locale.US,
+            "Lat: %.4f°, Lng: %.4f°",
+            pos.target.latitude,
+            pos.target.longitude
+        )
+        binding.cameraDetailsText.text = String.format(
+            Locale.US,
+            "Zoom: %.1fx  •  Tilt: %.1f°  •  Bearing: %.1f°",
+            pos.zoom,
+            pos.tilt,
+            pos.bearing
+        )
     }
 
     private fun setNoPadding() {
         if (!::map.isInitialized) return
-        animatePadding(150, 0, 0, 0)
+        animatePadding(0, 0, 0, 0)
     }
 
     private fun setMorePadding() {
         if (!::map.isInitialized) return
-        val mapView: View? = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map)?.view
-        animatePadding(150, 0, (mapView?.width ?: 0) / 3,
+        val mapView: View? = supportFragmentManager.findFragmentById(R.id.map)?.view
+        animatePadding(0, 0, (mapView?.width ?: 0) / 3,
             (mapView?.height ?: 0)/ 4)
     }
 
@@ -161,3 +214,4 @@ class VisibleRegionDemoActivity :
         })
     }
 }
+// [END maps_android_sample_visible_region]

@@ -88,7 +88,8 @@ class LiteListDemoActivity : AppCompatActivity() {
     }
 
     /** Create options menu to switch between the linear and grid layout managers. */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.lite_list_menu, menu)
         return true
     }

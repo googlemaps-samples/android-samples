@@ -28,11 +28,34 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.common_ui.R
 import com.example.common_ui.databinding.UiSettingsDemoBinding
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.UiSettings
 
+@Sample(
+    id = "ui_settings",
+    title = "UI Settings & Map Controls",
+    description = "Configuring zoom buttons, compass, my location button, and gesture toggles.",
+    category = "Events & Gestures",
+    complexity = Complexity.SIMPLE,
+    tags = ["#uisettings", "#controls", "#gestures", "#compass", "#zoombuttons"],
+    apiCalls = [
+        "GoogleMap.uiSettings.isZoomControlsEnabled = Boolean",
+        "GoogleMap.uiSettings.isCompassEnabled = Boolean",
+        "GoogleMap.uiSettings.isMyLocationButtonEnabled = Boolean",
+        "GoogleMap.uiSettings.isScrollGesturesEnabled = Boolean",
+        "GoogleMap.uiSettings.isTiltGesturesEnabled = Boolean",
+        "GoogleMap.uiSettings.isRotateGesturesEnabled = Boolean"
+    ],
+    purpose = "Shows how to toggle GoogleMap.uiSettings controls (compass, zoom buttons, scroll/tilt gestures).",
+    successCriteria = "Toggling checkboxes in the drawer instantly enables/disables corresponding map gestures and UI controls.",
+    failureIndicators = "Gesture toggles ignored or UI control icons clipped by safe area.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class UiSettingsDemoActivity :
     SamplesBaseActivity(),
     OnMapReadyCallback {
@@ -61,6 +84,7 @@ class UiSettingsDemoActivity :
         binding.rotateToggle.setOnClickListener { setRotateGesturesEnabled() }
     }
 
+    // [START maps_android_sample_ui_settings]
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         uiSettings = map.uiSettings
@@ -85,6 +109,7 @@ class UiSettingsDemoActivity :
         uiSettings.isTiltGesturesEnabled = binding.tiltToggle.isChecked
         uiSettings.isRotateGesturesEnabled = binding.rotateToggle.isChecked
     }
+    // [END maps_android_sample_ui_settings]
 
     private fun checkReady(): Boolean {
         if (!::map.isInitialized) {

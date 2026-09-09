@@ -15,6 +15,7 @@
  limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -25,20 +26,27 @@
         android:layout_height="match_parent"
         class="com.google.android.libraries.maps.SupportMapFragment" />
 
-    <ScrollView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/controls_card"
+        style="?attr/materialCardViewElevatedStyle"
         android:layout_width="wrap_content"
-        android:layout_height="175dp"
+        android:layout_height="220dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="5dp"
-            android:paddingEnd="5dp"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/zoom_buttons_toggle"
@@ -113,4 +121,5 @@
                 android:text="@string/rotate" />
         </LinearLayout>
     </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

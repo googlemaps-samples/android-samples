@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,75 +14,30 @@
 
 package com.example.mapdemo;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.common_ui.catalog.compose.CatalogActivity;
 
 /**
- * The main activity of the API library demo gallery.
+ * The main activity of the Google Maps Java demo gallery.
  *
- * <p>The main layout lists the demonstrated features, with buttons to launch them.
+ * Provides the developer/learner catalog with multi-framework browsing,
+ * instant search, sample details, and syntax-highlighted source code snippets.
  */
-public final class MainActivity extends SamplesBaseActivity {
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    /** A custom array adapter that shows a {@link FeatureView} containing details about the demo. */
-    private static class CustomArrayAdapter extends ArrayAdapter<DemoDetails> {
-
-        /** @param demos An array containing the details of the demos to be displayed. */
-        public CustomArrayAdapter(Context context, DemoDetails[] demos) {
-            super(context, com.example.common_ui.R.layout.feature, com.example.common_ui.R.id.title, demos);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            FeatureView featureView;
-            if (convertView instanceof FeatureView) {
-                featureView = (FeatureView) convertView;
-            } else {
-                featureView = new FeatureView(getContext());
-            }
-
-            DemoDetails demo = getItem(position);
-
-            featureView.setTitleId(demo.titleId);
-            featureView.setDescriptionId(demo.descriptionId);
-
-            Resources resources = getContext().getResources();
-            String title = resources.getString(demo.titleId);
-            String description = resources.getString(demo.descriptionId);
-            featureView.setContentDescription(title + ". " + description);
-
-            return featureView;
-        }
-    }
+public final class MainActivity extends CatalogActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.main);
-
-        ListAdapter adapter = new CustomArrayAdapter(this, DemoDetailsList.DEMOS);
-
-        ListView demoListView = findViewById(com.example.common_ui.R.id.list);
-        if (demoListView != null) {
-            demoListView.setAdapter(adapter);
-            demoListView.setOnItemClickListener(
-                (parent, view, position, id) -> {
-                    DemoDetails demo = (DemoDetails) parent.getItemAtPosition(position);
-                    startActivity(new Intent(view.getContext(), demo.activityClass));
-                });
+        if (BuildConfig.MAPS_API_KEY.isEmpty()) {
+            Toast.makeText(
+                this,
+                "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY",
+                Toast.LENGTH_LONG
+            ).show();
         }
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 }

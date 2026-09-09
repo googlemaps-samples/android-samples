@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
@@ -30,6 +34,18 @@ import android.widget.Toast;
 /**
  * This shows how to constrain the camera to specific boundaries and zoom levels.
  */
+@Sample(
+    id = "camera_clamping",
+    title = "Camera Clamping & Bounds",
+    description = "Constraining camera viewport to LatLngBounds and dynamic min/max zoom limits.",
+    category = "Camera Controls",
+    complexity = Complexity.SIMPLE,
+    tags = {"#camera", "#clamping", "#bounds", "#zoomlimits", "#latlngbounds"},
+    purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider limits.",
+    successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds immediately.",
+    failureIndicators = "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset Bounds'.",
+    framework = Framework.JAVA_VIEWS
+)
 public class CameraClampingDemoActivity extends SamplesBaseActivity
         implements OnMapReadyCallback, OnCameraIdleListener, GoogleMap.OnCameraMoveListener {
 

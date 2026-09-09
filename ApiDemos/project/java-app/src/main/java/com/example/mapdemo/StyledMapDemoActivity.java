@@ -15,6 +15,11 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.R;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,6 +42,24 @@ import java.util.List;
 /**
  * This shows how to style a map with JSON.
  */
+// [START maps_android_sample_styled_map]
+@Sample(
+    id = "com.example.kotlindemos.StyledMapDemoActivity",
+    title = "JSON Map Styling (Retro / Dark)",
+    description = "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
+    category = "Styling & Cloud",
+    complexity = Complexity.SIMPLE,
+    tags = {"#styling", "#json", "#darkmode", "#night", "#retro"},
+    apiCalls = {
+        "GoogleMap.setMapStyle(MapStyleOptions)",
+        "MapStyleOptions.loadRawResourceStyle(Context, int)",
+        "MapStyleOptions(String)"
+    },
+    purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
+    successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
+    failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
+    framework = Framework.JAVA_VIEWS
+)
 public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap = null;
@@ -47,16 +70,16 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
 
     // Stores the ID of the currently selected style, so that we can re-apply it when
     // the activity restores state, for example when the device changes orientation.
-    private int mSelectedStyleId = com.example.common_ui.R.string.style_label_default;
+    private int mSelectedStyleId = R.string.style_label_night;
 
     // These are simply the string resource IDs for each of the style names. We use them
     // as identifiers when choosing which style to apply.
     private final int[] mStyleIds = {
-            com.example.common_ui.R.string.style_label_retro,
-            com.example.common_ui.R.string.style_label_night,
-            com.example.common_ui.R.string.style_label_grayscale,
-            com.example.common_ui.R.string.style_label_no_pois_no_transit,
-            com.example.common_ui.R.string.style_label_default,
+            R.string.style_label_retro,
+            R.string.style_label_night,
+            R.string.style_label_grayscale,
+            R.string.style_label_no_pois_no_transit,
+            R.string.style_label_default,
     };
 
     private static final LatLng SYDNEY = new LatLng(-33.8688, 151.2093);
@@ -67,13 +90,13 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
         if (savedInstanceState != null) {
             mSelectedStyleId = savedInstanceState.getInt(SELECTED_STYLE);
         }
-        setContentView(com.example.common_ui.R.layout.styled_map_demo);
+        setContentView(R.layout.styled_map_demo);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override
@@ -92,13 +115,13 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.example.common_ui.R.menu.styled_map, menu);
+        getMenuInflater().inflate(R.menu.styled_map, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == com.example.common_ui.R.id.menu_style_choose) {
+        if (item.getItemId() == R.id.menu_style_choose) {
             showStylesDialog();
         }
         return true;
@@ -119,11 +142,11 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(com.example.common_ui.R.string.style_choose));
+        builder.setTitle(getString(R.string.style_choose));
         builder.setItems(styleNames.toArray(new CharSequence[styleNames.size()]),
                 (dialog, which) -> {
                     mSelectedStyleId = mStyleIds[which];
-                    String msg = getString(com.example.common_ui.R.string.style_set_to, getString(mSelectedStyleId));
+                    String msg = getString(R.string.style_set_to, getString(mSelectedStyleId));
                     Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
                     Log.d(TAG, msg);
                     setSelectedStyle();
@@ -139,16 +162,16 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
     private void setSelectedStyle() {
         MapStyleOptions style;
         int id = mSelectedStyleId;
-        if (id == com.example.common_ui.R.string.style_label_retro) {
+        if (id == R.string.style_label_retro) {
             // Sets the retro style via raw resource JSON.
-            style = MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_retro);
-        } else if (id == com.example.common_ui.R.string.style_label_night) {
+            style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro);
+        } else if (id == R.string.style_label_night) {
             // Sets the night style via raw resource JSON.
-            style = MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_night);
-        } else if (id == com.example.common_ui.R.string.style_label_grayscale) {
+            style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night);
+        } else if (id == R.string.style_label_grayscale) {
             // Sets the grayscale style via raw resource JSON.
-            style = MapStyleOptions.loadRawResourceStyle(this, com.example.common_ui.R.raw.mapstyle_grayscale);
-        } else if (id == com.example.common_ui.R.string.style_label_no_pois_no_transit) {
+            style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale);
+        } else if (id == R.string.style_label_no_pois_no_transit) {
             // Sets the no POIs or transit style via JSON string.
             style = new MapStyleOptions("[" +
                                                 "  {" +
@@ -170,7 +193,7 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
                                                 "    ]" +
                                                 "  }" +
                                                 "]");
-        } else if (id == com.example.common_ui.R.string.style_label_default) {
+        } else if (id == R.string.style_label_default) {
             // Removes previously set style, by setting it to null.
             style = null;
         } else {
@@ -180,3 +203,4 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
     }
 
 }
+// [END maps_android_sample_styled_map]
