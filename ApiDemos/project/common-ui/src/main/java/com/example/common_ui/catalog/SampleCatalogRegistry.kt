@@ -546,17 +546,20 @@ object SampleCatalogRegistry {
         SampleItem(
             id = "com.example.kotlindemos.LocationSourceDemoActivity",
             title = "Custom LocationSource",
-            description = "Providing a custom mock LocationSource for simulated GPS navigation playback.",
+            description = "Providing a custom mock LocationSource for simulated GPS navigation playback along a trail.",
             category = "Location & Sensors",
             complexity = Complexity.ADVANCED,
-            tags = listOf("#location", "#locationsource", "#mock", "#simulation", "#navigation"),
+            tags = listOf("#location", "#locationsource", "#mock", "#simulation", "#gpx", "#navigation"),
             apiCalls = listOf(
                 "GoogleMap.setLocationSource(LocationSource)",
                 "LocationSource.activate(OnLocationChangedListener)",
-                "LocationSource.OnLocationChangedListener.onLocationChanged(Location)"
+                "LocationSource.deactivate()",
+                "GoogleMap.setMyLocationEnabled(Boolean)",
+                "GoogleMap.addPolyline(PolylineOptions)",
+                "CameraUpdateFactory.newLatLngBounds(LatLngBounds, Int)"
             ),
-            purpose = "Shows how to feed programmatic coordinates into the GoogleMap location layer using a custom LocationSource.",
-            successCriteria = "The blue dot animates smoothly along a simulated route when navigation starts.",
+            purpose = "Shows how to feed programmatic coordinates from a GPX track into the GoogleMap location layer using a custom LocationSource.",
+            successCriteria = "The map bounds to the trail, draws a polyline, and the blue dot animates smoothly along the route.",
             failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
             kotlinActivity = "com.example.kotlindemos.LocationSourceDemoActivity",
             javaActivity = "com.example.mapdemo.LocationSourceDemoActivity"
