@@ -38,6 +38,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
@@ -201,7 +202,7 @@ object ReviewEvaluationDialog {
                     strokeWidth = (1.5f * resources.displayMetrics.density).toInt()
                     strokeColor = ColorStateList.valueOf(Color.parseColor("#CFD8DC"))
                     setBackgroundColor(Color.TRANSPARENT)
-                    tooltipText = tooltip
+                    TooltipCompat.setTooltipText(this, tooltip)
                     contentDescription = tooltip
                 }
             }
