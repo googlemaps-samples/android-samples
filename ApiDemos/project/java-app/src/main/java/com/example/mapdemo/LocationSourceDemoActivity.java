@@ -15,7 +15,6 @@
 package com.example.mapdemo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -25,6 +24,8 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Xml;
 import android.view.View;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import com.example.common_ui.R;
@@ -74,8 +75,17 @@ import org.xmlpull.v1.XmlPullParser;
 )
 public class LocationSourceDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
+    private GoogleMap mMap;
     private GpxLocationSource mLocationSource;
     private LatLngBounds mTrackBounds;
+
+    private final ActivityResultLauncher<String[]> mPermissionLauncher =
+        registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
+            if (Boolean.TRUE.equals(isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION))
+                || Boolean.TRUE.equals(isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION))) {
+                enableMyLocation();
+            }
+        });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,9 +136,9 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
         }
     }
 
-    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap map) {
+        mMap = map;
         List<LatLng> trackPoints = mLocationSource.getTrackPoints();
         if (trackPoints.isEmpty()) {
             return;
@@ -184,11 +194,23 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
 
         // 3. Connect custom location source
         map.setLocationSource(mLocationSource);
+        enableMyLocation();
+    }
+
+    private void enableMyLocation() {
+        if (mMap == null) {
+            return;
+        }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
             || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
-            map.setMyLocationEnabled(true);
+            mMap.setMyLocationEnabled(true);
+        } else {
+            mPermissionLauncher.launch(new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            });
         }
     }
 
