@@ -163,18 +163,30 @@ const RUN_ID = "__RUN_ID__";
       if (videoTab) videoTab.classList.remove("active");
       if (compareTab) compareTab.classList.remove("active");
 
-      if (mode === "video" && videoGrid) {
-        videoGrid.style.display = "grid";
-        if (videoTab) videoTab.classList.add("active");
-        videoGrid.querySelectorAll("video").forEach(v => {
-          v.play().catch(() => {});
-        });
-      } else if (mode === "compare" && compareGrid) {
-        compareGrid.style.display = "grid";
-        if (compareTab) compareTab.classList.add("active");
-      } else if (stillGrid) {
-        stillGrid.style.display = "grid";
-        if (stillTab) stillTab.classList.add("active");
+      if (mode === "video") {
+        if (videoGrid) {
+          videoGrid.style.display = "grid";
+          if (videoTab) videoTab.classList.add("active");
+          videoGrid.querySelectorAll("video").forEach(v => {
+            v.play().catch(() => {});
+          });
+        } else if (stillGrid) {
+          stillGrid.style.display = "grid";
+          if (stillTab) stillTab.classList.add("active");
+        }
+      } else if (mode === "compare") {
+        if (compareGrid) {
+          compareGrid.style.display = "grid";
+          if (compareTab) compareTab.classList.add("active");
+        } else if (stillGrid) {
+          stillGrid.style.display = "grid";
+          if (stillTab) stillTab.classList.add("active");
+        }
+      } else {
+        if (stillGrid) {
+          stillGrid.style.display = "grid";
+          if (stillTab) stillTab.classList.add("active");
+        }
       }
     }
 
@@ -183,9 +195,7 @@ const RUN_ID = "__RUN_ID__";
       allComparisonsVisible = false;
       const mode = allVideosVisible ? "video" : "still";
       RAW_RESULTS.forEach(r => {
-        if (r.java_video || r.kotlin_video) {
-          switchMediaTab(r.index, mode);
-        }
+        switchMediaTab(r.index, mode);
       });
       const btn = document.getElementById("btn-toggle-all-media");
       if (btn) {

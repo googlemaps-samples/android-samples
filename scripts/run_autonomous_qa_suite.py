@@ -102,12 +102,19 @@ SAMPLE_ACTIONS = {
         ("swipe", 100, 1200, 950, 1200, 0.8),  # Swipe back to Page 1
         ("swipe", 950, 1200, 100, 1200, 1.5),  # Swipe to Map page and settle
     ],
-    # 07 Camera Controls: Tap "Go to Bondi" -> "Go to Sydney" -> Zoom in -> Tilt
+    # 07 Camera Controls: Multi-step panning, smooth zoom in/out, 45° tilt, bearing rotation (spin), camera stop/cancel callback
     "CameraDemoActivity": [
-        ("tap", 750, 650, 1.8),                  # Tap Go To Bondi button
-        ("tap", 250, 650, 1.5),                  # Tap Go To Sydney button
-        ("tap", 820, 380, 0.8),                  # Tap Zoom In
-        ("tap", 980, 380, 0.8),                  # Tap Tilt More
+        ("tap", 810, 520, 2.0),                  # Tap "Go to Bondi" -> animated camera
+        ("tap", 270, 520, 1.8),                  # Tap "Go to Sydney" -> animated camera
+        ("tap", 720, 200, 0.8),                  # Tap Zoom In
+        ("tap", 720, 200, 0.8),                  # Tap Zoom In again
+        ("tap", 920, 200, 0.8),                  # Tap Tilt More (towards 45 deg)
+        ("tap", 920, 200, 0.8),                  # Tap Tilt More
+        ("swipe", 540, 1400, 540, 900, 0.8),     # Pan map northward
+        ("swipe", 800, 1200, 200, 1200, 0.8),    # Pan map eastward
+        ("swipe", 200, 1100, 900, 1300, 1.0),    # Diagonal sweep to spin/rotate bearing
+        ("tap", 810, 520, 0.3),                  # Start animating to Bondi
+        ("tap", 120, 200, 1.5),                  # Tap Stop Animation button to trigger cancel callback!
     ],
     # 08 Camera Clamping: Exercise zoom limits slider, zoom map, and test bounds clamps
     "CameraClampingDemoActivity": [
@@ -120,40 +127,55 @@ SAMPLE_ACTIONS = {
         ("tap", 540, 580, 1.0),                  # Tap "Pacific" clamp toggle button
         ("swipe", 540, 1600, 540, 1000, 0.8),    # Drag map against pacific bounds
     ],
-    # 09 Visible Region & Projection: Tap Actions button on telemetry card to open PopupMenu and select item
+    # 09 Visible Region & Projection: Tap centered Actions button on telemetry card to open PopupMenu and select item
     "VisibleRegionDemoActivity": [
-        ("tap", 800, 450, 1.0),                  # Tap "Actions ▾" button on telemetry card
-        ("tap", 600, 850, 1.8),                  # Tap "Move to Sydney Opera House" in popup
+        ("tap", 540, 250, 1.0),                  # Tap centered "Actions ▾" button on telemetry card
+        ("tap", 540, 650, 1.8),                  # Tap "Move to Sydney Opera House" in popup
     ],
-    # 10 Advanced Markers: Tap marker pin to verify interaction
+    # 10 Advanced Markers: Tap pins to open info windows, exercise collision behavior with zoom
     "AdvancedMarkersDemoActivity": [
-        ("tap", 260, 1100, 0.8),                 # Tap green Android icon badge marker near Singapore
+        ("tap", 260, 1100, 1.2),                 # Tap pin near Singapore to open info window
+        ("tap", 350, 950, 1.2),                  # Tap pin near Kuala Lumpur
+        ("tap", 450, 1350, 1.2),                 # Tap pin near Jakarta
+        ("tap", 540, 1200, 0.1),                 # Double tap to zoom in
+        ("tap", 540, 1200, 1.8),                 # Zoom in animation settles and collision adapts
+        ("swipe", 540, 1000, 540, 1500, 1.0),    # Pan south to inspect clustering collision
     ],
-    # 11 Standard Markers: Tap Melbourne marker -> rotation slider -> drag Melbourne marker -> flat checkbox -> Sydney marker
+    # 11 Standard Markers: Rotation slider, flat toggle, Melbourne drag, marker info windows
     "MarkerDemoActivity": [
-        ("tap", 700, 1520, 1.0),                 # Tap Melbourne marker to open custom info window
-        ("swipe", 500, 380, 900, 380, 1.0),      # Drag rotation seekbar to rotate marker
-        ("swipe", 700, 1520, 550, 1350, 1.5),    # Long press and drag Melbourne marker northwest
-        ("tap", 100, 380, 0.8),                  # Toggle flat checkbox
-        ("tap", 780, 1370, 1.2),                 # Tap Sydney marker
+        ("wait", 1.0),                           # Starts with Melbourne info window open proclaiming draggability
+        ("swipe", 500, 310, 950, 310, 1.0),      # Drag rotation seekbar to rotate markers
+        ("tap", 100, 230, 0.8),                  # Toggle "Flat to map surface" checkbox
+        ("swipe", 700, 1520, 500, 1350, 1.5),    # Long press & drag Melbourne marker northwest
+        ("tap", 750, 1150, 1.2),                 # Tap Brisbane marker (azure hue icon)
+        ("tap", 120, 2150, 0.8),                 # Select "Custom info contents" radio button
+        ("tap", 780, 1370, 1.2),                 # Tap Sydney marker (arrow icon & custom contents)
+        ("tap", 120, 2250, 0.8),                 # Select "Custom info window" radio button
+        ("tap", 450, 1420, 1.2),                 # Tap Adelaide marker (custom info window)
     ],
     # 12 Marker Retap Toggle: First tap opens InfoWindow, second tap dismisses
     "MarkerCloseInfoWindowOnRetapDemoActivity": [
         ("tap", 750, 1470, 1.5),                 # Tap Sydney marker to open info window
         ("tap", 750, 1470, 1.5),                 # Re-tap Sydney marker to dismiss info window
     ],
-    # 13 Polygon Styling: Adjust Fill Hue, Fill Alpha, and Stroke Width seekbars
+    # 13 Polygon Styling: Adjust Fill Hue, Fill Alpha, and Stroke Width seekbars, test click
     "PolygonDemoActivity": [
-        ("swipe", 300, 330, 800, 330, 1.0),      # Swipe fill hue seekbar
-        ("swipe", 300, 410, 800, 410, 1.0),      # Swipe fill alpha seekbar
-        ("swipe", 300, 490, 800, 490, 1.0),      # Swipe stroke width seekbar
-        ("swipe", 300, 570, 800, 570, 1.0),      # Swipe stroke hue seekbar
+        ("swipe", 300, 330, 850, 330, 1.0),      # Swipe fill hue seekbar
+        ("swipe", 300, 410, 850, 410, 1.0),      # Swipe fill alpha seekbar
+        ("swipe", 300, 490, 850, 490, 1.0),      # Swipe stroke width seekbar
+        ("swipe", 300, 570, 850, 570, 1.0),      # Swipe stroke hue seekbar
+        ("tap", 100, 650, 0.8),                  # Toggle clickable checkbox
+        ("tap", 540, 1300, 1.0),                 # Tap polygon on map to verify click toast
     ],
-    # 14 Polyline Styling: Adjust Hue slider, Alpha slider, Width slider, and toggle clickability
+    # 14 Polyline Styling: Adjust Hue slider (y=270), Alpha slider, Width slider, and joint/cap controls
     "PolylineDemoActivity": [
-        ("swipe", 300, 270, 800, 270, 1.0),      # Swipe hue seekbar
-        ("swipe", 300, 350, 800, 350, 1.0),      # Swipe alpha seekbar
-        ("swipe", 300, 430, 800, 430, 1.0),      # Swipe width seekbar
+        ("swipe", 300, 270, 850, 270, 1.0),      # Swipe Hue slider (y=270)
+        ("swipe", 300, 350, 850, 350, 1.0),      # Swipe Alpha slider
+        ("swipe", 300, 430, 850, 430, 1.0),      # Swipe Width slider
+        ("tap", 300, 530, 0.8),                  # Tap Joint type spinner
+        ("tap", 300, 680, 1.0),                  # Select Round joint
+        ("tap", 750, 530, 0.8),                  # Tap Cap type spinner
+        ("tap", 750, 680, 1.0),                  # Select Round cap
         ("tap", 100, 750, 0.8),                  # Toggle clickable checkbox
     ],
     # 15 Circle Styling: Adjust fill alpha and stroke width sliders
@@ -161,31 +183,44 @@ SAMPLE_ACTIONS = {
         ("swipe", 300, 420, 800, 420, 1.0),      # Swipe fill alpha seekbar
         ("swipe", 300, 490, 800, 490, 1.0),      # Swipe stroke width seekbar
     ],
-    # 16 Data-Driven Boundaries: Tap "US" button to animate to United States and render Admin Area Level 1 (states)
+    # 16 Data-Driven Boundaries: Multi-state capture (Locality vs US State boundaries)
     "DataDrivenBoundariesActivity": [
-        ("wait", 1.0),
-        ("tap", 540, 290, 2.5),                  # Tap "US" button to center on USA and render state boundaries
+        ("wait", 4.0),
+        ("screenshot", "Locality Boundaries", 0.5),
+        ("tap", 540, 290, 3.5),                  # Tap "US" button to center on USA and render state boundaries
+        ("screenshot", "US State Boundaries", 0.5),
     ],
-    # 17 Data-Driven Dataset Styling: Switch datasets from Boulder to New York to Kyoto
+    # 17 Data-Driven Dataset Styling: Multi-state capture (Boulder, New York, Kyoto)
     "DataDrivenDatasetStylingActivity": [
-        ("wait", 1.0),
-        ("tap", 540, 290, 2.5),                  # Tap "New York" button to style Central Park dataset
-        ("tap", 850, 290, 2.5),                  # Tap "Kyoto" button to style Kyoto dataset
+        ("wait", 4.0),
+        ("screenshot", "Boulder Dataset", 0.5),
+        ("tap", 540, 290, 4.0),                  # Tap "New York" button to style Central Park dataset
+        ("screenshot", "New York Dataset", 0.5),
+        ("tap", 850, 290, 4.0),                  # Tap "Kyoto" button to style Kyoto dataset
+        ("screenshot", "Kyoto Dataset", 0.5),
     ],
-    # 18 Cloud-Based Map Styling: Switch from Normal -> Terrain -> Satellite -> Hybrid
+    # 18 Cloud-Based Map Styling: Mont Blanc center + Multi-state capture (Normal, Satellite, Hybrid, Terrain)
     "CloudBasedMapStylingDemoActivity": [
-        ("wait", 1.0),
-        ("tap", 900, 2250, 1.8),                 # Tap "Terrain" button (scroll/tap on horizontal bar)
+        ("wait", 2.0),
+        ("screenshot", "Normal Style", 0.5),
+        ("tap", 450, 2250, 2.5),                 # Tap "Satellite" button
+        ("screenshot", "Satellite Style", 0.5),
+        ("tap", 680, 2250, 2.5),                 # Tap "Hybrid" button
+        ("screenshot", "Hybrid Style", 0.5),
+        ("tap", 900, 2250, 2.5),                 # Tap "Terrain" button
         ("swipe", 540, 1400, 540, 1000, 1.0),    # Pan map to view terrain topography
-        ("tap", 450, 2250, 1.5),                 # Tap "Satellite" button
-        ("tap", 150, 2250, 1.5),                 # Tap "Normal" button
+        ("screenshot", "Terrain Style", 0.5),
     ],
-    # 20 Map Color Scheme: Starts in Dark -> Tap Light Mode -> Tap Dark Mode -> Tap Follow System
+    # 20 Map Color Scheme: Multi-state capture (System/Dark -> Light -> Dark -> System)
     "MapColorSchemeActivity": [
-        ("wait", 1.0),
-        ("tap", 180, 260, 1.8),                  # Tap Light mode button
-        ("tap", 500, 260, 1.8),                  # Tap Dark mode button
-        ("tap", 850, 260, 1.8),                  # Tap Follow System button
+        ("wait", 2.0),
+        ("screenshot", "System Mode", 0.5),
+        ("tap", 180, 260, 2.0),                  # Tap Light mode button
+        ("screenshot", "Light Mode", 0.5),
+        ("tap", 500, 260, 2.0),                  # Tap Dark mode button
+        ("screenshot", "Dark Mode", 0.5),
+        ("tap", 850, 260, 2.0),                  # Tap Follow System button
+        ("screenshot", "Follow System Mode", 0.5),
     ],
     # 22 Lite Mode Basics: Exercise Darwin, Adelaide, and Australia buttons
     "LiteDemoActivity": [
@@ -197,37 +232,48 @@ SAMPLE_ACTIONS = {
     "SnapshotDemoActivity": [
         ("tap", 270, 2300, 2.0),                 # Tap "Take Snapshot" button and wait for bitmap
     ],
-    # 25 Tile Overlay: Swipe transparency slider and toggle fade-in
+    # 25 Tile Overlay: Swipe transparency slider, toggle fade-in, and pan tile coordinates
     "TileOverlayDemoActivity": [
         ("swipe", 650, 300, 1000, 300, 1.2),     # Drag transparency seekbar
         ("tap", 900, 200, 0.8),                  # Toggle fade in checkbox
+        ("swipe", 800, 1200, 200, 1200, 1.2),    # Pan map eastward to load new coordinates
+        ("swipe", 540, 1500, 540, 900, 1.2),     # Pan map northward to load new coordinates
     ],
-    # 26 UI Settings: Toggle map controls and scroll through gesture options
+    # 26 UI Settings: Toggle map controls, test disabled scroll vs re-enabled, and zoom buttons
     "UiSettingsDemoActivity": [
         ("tap", 120, 1760, 0.8),                 # Toggle zoom buttons
         ("tap", 120, 1850, 0.8),                 # Toggle compass
-        ("tap", 120, 1940, 0.8),                 # Toggle my location button
-        ("tap", 120, 2030, 0.8),                 # Toggle my location layer
         ("swipe", 200, 2100, 200, 1750, 0.8),    # Scroll down controls card
-        ("tap", 120, 1800, 0.8),                 # Toggle scroll gestures
-        ("tap", 120, 1890, 0.8),                 # Toggle zoom gestures
-        ("swipe", 200, 1750, 200, 2100, 0.8),    # Scroll back up
+        ("tap", 120, 1800, 0.8),                 # Toggle scroll gestures OFF
+        ("swipe", 540, 1200, 540, 800, 0.8),     # Attempt pan (blocked!)
+        ("tap", 120, 1800, 0.8),                 # Toggle scroll gestures ON
+        ("swipe", 540, 1200, 540, 800, 1.0),     # Pan map (smoothly moves!)
+        ("swipe", 200, 1750, 200, 2100, 0.8),    # Scroll back up controls card
+        ("tap", 1000, 1500, 1.0),                # Tap Zoom In (+) button on map
     ],
-    # 27 LocationSource: Long-press map at 3 distinct locations across Sydney to move custom blue dot
+    # 27 LocationSource: GPX Track Simulation (Fowler / Rattlesnake trail)
     "LocationSourceDemoActivity": [
-        ("wait", 1.5),
-        ("swipe", 540, 1000, 540, 1000, 1.2),    # Long press north of Sydney harbor
-        ("wait", 1.5),
-        ("swipe", 350, 1400, 350, 1400, 1.2),    # Long press Darling Harbour
-        ("wait", 1.5),
-        ("swipe", 700, 1300, 700, 1300, 1.2),    # Long press east near botanical gardens
-        ("wait", 2.0),
+        ("wait", 3.0),                           # Observe initial animation along Fowler / Rattlesnake trail
+        ("tap", 280, 2250, 1.2),                 # Tap "Pause" button on trail telemetry card
+        ("tap", 280, 2250, 1.5),                 # Tap "Play" button to resume GPS simulation
+        ("tap", 800, 2250, 2.0),                 # Tap "Fit Trail" to re-center camera bounds
+        ("wait", 2.0),                           # Capture continued blue dot motion along polyline
     ],
-    # 30 Events & Gestures: Tap map, drag map, and long-press map
+    # 28 Ground Overlays: Move transparency slider, switch image to 1922 map, click overlay
+    "GroundOverlayDemoActivity": [
+        ("swipe", 500, 200, 950, 200, 1.2),      # Drag transparency seekbar
+        ("tap", 250, 280, 1.5),                  # Tap "Switch Image" button
+        ("tap", 540, 1200, 1.2),                 # Tap on ground overlay image to verify click listener
+        ("swipe", 950, 200, 300, 200, 1.2),      # Drag transparency seekbar back
+    ],
+    # 30 Events & Gestures: Multi-touch tap, drag, double-tap zoom, and bearing rotation
     "EventsDemoActivity": [
-        ("tap", 540, 1300, 0.8),                 # Tap map for click marker
-        ("swipe", 540, 1500, 540, 1100, 0.8),    # Pan map
-        ("swipe", 540, 1300, 540, 1300, 1.2),    # Long press for long-click event
+        ("tap", 540, 1300, 1.0),                 # Tap map for single click event
+        ("swipe", 540, 1500, 540, 1500, 1.2),    # Long press map for long click event
+        ("swipe", 540, 1600, 540, 1000, 1.0),    # Pan map northward -> updates camera HUD
+        ("tap", 540, 1200, 0.1),                 # Double tap to zoom
+        ("tap", 540, 1200, 1.2),                 # Zoom updates HUD
+        ("swipe", 200, 1200, 850, 1350, 1.2),    # Diagonal swipe to rotate bearing angle in HUD
     ],
     # 31 My Location: Tap My Location GPS button
     "MyLocationDemoActivity": [
@@ -433,6 +479,7 @@ class AutonomousQaRunner:
                 time.sleep(1.0)
 
         # Replay pre-programmed actions if specified
+        substeps = []
         if short_name in SAMPLE_ACTIONS and short_name != "MultiMapDemoActivity":
             for act in SAMPLE_ACTIONS[short_name]:
                 if act[0] == "tap":
@@ -451,6 +498,22 @@ class AutonomousQaRunner:
                 elif act[0] == "wait":
                     _, wait_s = act
                     time.sleep(wait_s)
+                elif act[0] == "screenshot":
+                    _, label, wait_s = act
+                    time.sleep(wait_s)
+                    slug = re.sub(r'[^a-zA-Z0-9_-]', '_', label.lower()).strip('_')
+                    sub_device_png = f"/sdcard/eval_{short_name}_{framework}_{slug}.png"
+                    self.adb_run(["shell", "screencap", "-p", sub_device_png], check=False)
+                    sub_local_png = (self.java_screenshots_dir if framework == "java" else self.kotlin_screenshots_dir) / f"{short_name}_{slug}.png"
+                    self.adb_run(["pull", sub_device_png, str(sub_local_png)], check=False)
+                    if hasattr(self.args, "scale") and self.args.scale and 0 < self.args.scale < 1.0:
+                        pct = int(self.args.scale * 100)
+                        subprocess.run(["convert", str(sub_local_png), "-resize", f"{pct}%", str(sub_local_png)], check=False)
+                    self.adb_run(["shell", "rm", "-f", sub_device_png], check=False)
+                    substeps.append({
+                        "label": label,
+                        "rel_path": f"screenshots/{framework}/{short_name}_{slug}.png"
+                    })
             if short_name == "RetainMapDemoActivity":
                 self.adb_run(["shell", "settings", "put", "system", "user_rotation", "0"], check=False)
                 time.sleep(0.5)
@@ -529,6 +592,7 @@ class AutonomousQaRunner:
             "activity_fqcn": activity_fqcn,
             "screenshot_path": local_png,
             "file_size_kb": file_size_kb,
+            "substeps": substeps,
             "video_path": clean_mp4 if video_rel_path else None,
             "video_rel_path": video_rel_path,
             "video_size_kb": video_size_kb,
@@ -753,6 +817,21 @@ class AutonomousQaRunner:
             self.adb_run(broadcast_cmd, check=False)
             time.sleep(0.08)
 
+            substep_screenshots = []
+            if kotlin_run.get("substeps") or java_run.get("substeps"):
+                k_subs = kotlin_run.get("substeps", [])
+                j_subs = java_run.get("substeps", [])
+                max_subs = max(len(k_subs), len(j_subs))
+                for s_idx in range(max_subs):
+                    k_item = k_subs[s_idx] if s_idx < len(k_subs) else None
+                    j_item = j_subs[s_idx] if s_idx < len(j_subs) else None
+                    substep_label = (k_item or j_item)["label"]
+                    substep_screenshots.append({
+                        "label": substep_label,
+                        "java": j_item["rel_path"] if j_item else None,
+                        "kotlin": k_item["rel_path"] if k_item else None,
+                    })
+
             self.results.append({
                 "index": idx,
                 "id": sample["id"],
@@ -771,6 +850,7 @@ class AutonomousQaRunner:
                 "javaActivity": sample.get("javaActivity", ""),
                 "java_screenshot": f"screenshots/java/{short_name}.png",
                 "kotlin_screenshot": f"screenshots/kotlin/{short_name}.png",
+                "substep_screenshots": substep_screenshots,
                 "java_video": java_run.get("video_rel_path"),
                 "kotlin_video": kotlin_run.get("video_rel_path"),
                 "defect_screenshot": annotated_screenshot_rel,
