@@ -24,6 +24,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.SampleItem
@@ -75,16 +76,16 @@ open class ReviewerActivity : ComponentActivity() {
                 )
             }
         }
-        val receiverFlags = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            android.content.Context.RECEIVER_EXPORTED
-        } else {
-            0
-        }
-        registerReceiver(object : android.content.BroadcastReceiver() {
-            override fun onReceive(context: android.content.Context?, intent: Intent?) {
-                exportAiringOfGrievances(silent = true)
-            }
-        }, android.content.IntentFilter("com.google.maps.EXPORT_EVALUATIONS"), receiverFlags)
+        ContextCompat.registerReceiver(
+            this,
+            object : android.content.BroadcastReceiver() {
+                override fun onReceive(context: android.content.Context?, intent: Intent?) {
+                    exportAiringOfGrievances(silent = true)
+                }
+            },
+            android.content.IntentFilter("com.google.maps.EXPORT_EVALUATIONS"),
+            ContextCompat.RECEIVER_EXPORTED
+        )
     }
 
     private fun exportAiringOfGrievances(silent: Boolean = false) {

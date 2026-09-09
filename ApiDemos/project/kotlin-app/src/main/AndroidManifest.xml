@@ -207,9 +207,11 @@
         <activity
             android:name=".PolylineDemoActivity"
             android:exported="true" />
+        <!-- Guarded by DUMP so only adb/CI (shell) can trigger it, not other apps. -->
         <receiver
             android:name="com.example.common_ui.catalog.repository.EvaluationExportReceiver"
-            android:exported="true">
+            android:exported="true"
+            android:permission="android.permission.DUMP">
             <intent-filter>
                 <action android:name="com.google.maps.EXPORT_EVALUATIONS" />
                 <action android:name="com.google.maps.RECORD_EVALUATION" />
