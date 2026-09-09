@@ -1005,31 +1005,38 @@ def build_html(run_dir, summary_data, metadata_by_short, root_dir=None):
             """
 
         prev_card = prev_results_by_idx.get(idx)
-        has_comparison = False
+        has_comparison = bool(prev_card and prev_run_id)
         compare_grid_html = ""
-        if prev_card and prev_run_id:
-            prev_java_img = f"/runs/{prev_run_id}/{prev_card.get('java_screenshot', '')}" if prev_card.get('java_screenshot') else ""
-            prev_kotlin_img = f"/runs/{prev_run_id}/{prev_card.get('kotlin_screenshot', '')}" if prev_card.get('kotlin_screenshot') else ""
-            if prev_java_img or prev_kotlin_img:
-                has_comparison = True
-                compare_grid_html = f"""
-                <div class="screenshots-grid" id="compare-grid-{idx}" style="display: none;">
-                  <div class="screenshot-card">
-                    <div class="screenshot-header compare-before">⏪ Before: {prev_run_id[-6:]} ({prev_card.get('status', '')})</div>
-                    <img src="{prev_kotlin_img or prev_java_img}" alt="Previous Run Screenshot" onclick="openLightbox('{prev_kotlin_img or prev_java_img}', false)" loading="lazy">
-                  </div>
-                  <div class="screenshot-card">
-                    <div class="screenshot-header compare-after">⏩ After: {run_id[-6:]} ({status})</div>
-                    <img src="{kotlin_img or java_img}" alt="Current Run Screenshot" onclick="openLightbox('{kotlin_img or java_img}', false)" loading="lazy">
-                  </div>
-                </div>
-                """
+        if has_comparison:
+            prev_java_img = f"../{prev_run_id}/{prev_card.get('java_screenshot', '')}" if prev_card.get('java_screenshot') else ""
+            prev_kotlin_img = f"../{prev_run_id}/{prev_card.get('kotlin_screenshot', '')}" if prev_card.get('kotlin_screenshot') else ""
+            compare_grid_html = f"""
+            <div class="screenshots-grid" id="compare-grid-{idx}" style="display: none;">
+              <div class="screenshot-card">
+                <div class="screenshot-header compare-before">⏪ Before: {prev_run_id[-6:]} ({prev_card.get('status', '')})</div>
+                <img src="{prev_kotlin_img or prev_java_img}" alt="Previous Run Screenshot" onclick="openLightbox('{prev_kotlin_img or prev_java_img}', false)" loading="lazy">
+              </div>
+              <div class="screenshot-card">
+                <div class="screenshot-header compare-after">⏩ After: {run_id[-6:]} ({status})</div>
+                <img src="{kotlin_img or java_img}" alt="Current Run Screenshot" onclick="openLightbox('{kotlin_img or java_img}', false)" loading="lazy">
+              </div>
+            </div>
+            """
+        else:
+            compare_grid_html = f"""
+            <div class="screenshots-grid" id="compare-grid-{idx}" style="display: none;">
+              <div class="empty-media-card" style="grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-secondary); background: #f8f9fa; border: 1px dashed var(--border); border-radius: 8px;">
+                🔄 No prior evaluation run found to compare against.
+              </div>
+            </div>
+            """
 
         media_tabs_buttons = [f"""<button class="tab-btn active" id="tab-still-{idx}" onclick="switchMediaTab({idx}, 'still')">🖼️ Stills (50%)</button>"""]
         if has_video:
             media_tabs_buttons.append(f"""<button class="tab-btn" id="tab-video-{idx}" onclick="switchMediaTab({idx}, 'video')">🎬 Video (25%)</button>""")
-        if has_comparison:
-            media_tabs_buttons.append(f"""<button class="tab-btn" id="tab-compare-{idx}" onclick="switchMediaTab({idx}, 'compare')">🔄 Compare</button>""")
+        else:
+            media_tabs_buttons.append(f"""<button class="tab-btn" id="tab-video-{idx}" onclick="switchMediaTab({idx}, 'video')" title="Static sample — click to view info">🎬 Video (None)</button>""")
+        media_tabs_buttons.append(f"""<button class="tab-btn" id="tab-compare-{idx}" onclick="switchMediaTab({idx}, 'compare')">🔄 Compare</button>""")
 
         media_tabs_html = f"""
         <div class="media-tabs" id="media-tabs-{idx}">
@@ -1066,6 +1073,14 @@ def build_html(run_dir, summary_data, metadata_by_short, root_dir=None):
               {defect_card_html}
             </div>
             """
+        else:
+            video_grid_html = f"""
+            <div class="screenshots-grid" id="videos-grid-{idx}" style="display: none;">
+              <div class="empty-media-card" style="grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-secondary); background: #f8f9fa; border: 1px dashed var(--border); border-radius: 8px;">
+                ℹ️ Static Sample — No motion video needed for this sample.
+              </div>
+            </div>
+            """
 
         search_corpus = f"{title} {category} {' '.join(tags)} {' '.join(api_calls)} {desc}".lower()
         if prior_info:
@@ -1075,6 +1090,60 @@ def build_html(run_dir, summary_data, metadata_by_short, root_dir=None):
         is_op_flagged = bool(r.get("operator_flagged")) or bool(r.get("operator_notes", "").strip())
         existing_checked = 'checked="checked"' if is_op_flagged else ""
         saved_status_text = "🚩 Flagged • Saved" if is_op_flagged else "Auto-saved locally"
+
+        substeps = r.get("substep_screenshots", [])
+        if substeps:
+            stills_items = []
+            for s_item in substeps:
+                s_label = html.escape(s_item.get("label", ""))
+                s_j = s_item.get("java")
+                s_k = s_item.get("kotlin")
+                stills_items.append(f"""
+                <div style="grid-column: 1 / -1; font-weight: 700; font-size: 13px; color: var(--primary); padding-top: 6px; border-top: 1px dashed var(--border);">
+                  📸 Multi-State Capture: {s_label}
+                </div>
+                """)
+                if s_j:
+                    stills_items.append(f"""
+                    <div class="screenshot-card">
+                      <div class="screenshot-header">☕ Java — {s_label}</div>
+                      <img src="{s_j}" alt="Java - {s_label}" onclick="openLightbox('{s_j}', false)" loading="lazy">
+                    </div>
+                    """)
+                if s_k:
+                    stills_items.append(f"""
+                    <div class="screenshot-card">
+                      <div class="screenshot-header">💜 Kotlin — {s_label}</div>
+                      <img src="{s_k}" alt="Kotlin - {s_label}" onclick="openLightbox('{s_k}', false)" loading="lazy">
+                    </div>
+                    """)
+            stills_items.append(f"""
+            <div style="grid-column: 1 / -1; font-weight: 700; font-size: 13px; color: var(--text-secondary); padding-top: 6px; border-top: 1px dashed var(--border);">
+              🏁 Final State
+            </div>
+            <div class="screenshot-card">
+              <div class="screenshot-header">☕ Java Implementation (50%)</div>
+              <img src="{java_img}" alt="Java Screenshot" onclick="openLightbox('{java_img}', false)" loading="lazy">
+            </div>
+            <div class="screenshot-card">
+              <div class="screenshot-header">💜 Kotlin Implementation (50%)</div>
+              <img src="{kotlin_img}" alt="Kotlin Screenshot" onclick="openLightbox('{kotlin_img}', false)" loading="lazy">
+            </div>
+            {defect_card_html}
+            """)
+            stills_content_html = "".join(stills_items)
+        else:
+            stills_content_html = f"""
+            <div class="screenshot-card">
+              <div class="screenshot-header">☕ Java Implementation (50%)</div>
+              <img src="{java_img}" alt="Java Screenshot" onclick="openLightbox('{java_img}', false)" loading="lazy">
+            </div>
+            <div class="screenshot-card">
+              <div class="screenshot-header">💜 Kotlin Implementation (50%)</div>
+              <img src="{kotlin_img}" alt="Kotlin Screenshot" onclick="openLightbox('{kotlin_img}', false)" loading="lazy">
+            </div>
+            {defect_card_html}
+            """
 
         cards_html += f"""
     <article class="sample-card" id="card-{idx}" data-index="{idx}" data-status="{status.lower()}" data-has-video="{str(has_video).lower()}" data-has-prior="{str(has_prior).lower()}" data-search="{html.escape(search_corpus)}">
@@ -1156,15 +1225,7 @@ def build_html(run_dir, summary_data, metadata_by_short, root_dir=None):
             {media_tabs_html}
           </div>
           <div class="screenshots-grid" id="stills-grid-{idx}">
-            <div class="screenshot-card">
-              <div class="screenshot-header">☕ Java Implementation (50%)</div>
-              <img src="{java_img}" alt="Java Screenshot" onclick="openLightbox('{java_img}', false)" loading="lazy">
-            </div>
-            <div class="screenshot-card">
-              <div class="screenshot-header">💜 Kotlin Implementation (50%)</div>
-              <img src="{kotlin_img}" alt="Kotlin Screenshot" onclick="openLightbox('{kotlin_img}', false)" loading="lazy">
-            </div>
-            {defect_card_html}
+            {stills_content_html}
           </div>
           {video_grid_html}
           {compare_grid_html}
@@ -1230,6 +1291,12 @@ class ReviewHandler(SimpleHTTPRequestHandler):
                 target_run = rel_parts[1]
                 sub_path = rel_parts[2]
                 return str(root_dir / "eval_runs" / target_run / sub_path)
+
+        if clean_path.startswith("run_"):
+            return str(root_dir / "eval_runs" / clean_path)
+
+        if clean_path.startswith("eval_runs/"):
+            return str(root_dir / clean_path)
 
         candidate = run_dir / clean_path
         if candidate.exists():
