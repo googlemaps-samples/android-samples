@@ -74,11 +74,11 @@ import java.util.Random;
 @Sample(
     id = "marker_demo",
     title = "Standard Markers & Info Windows",
-    description = "Placing markers, custom icons, draggable pins, and custom info window layouts.",
+    description = "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info window layouts.",
     category = "Markers & Overlays",
     complexity = Complexity.SIMPLE,
     tags = {"#markers", "#infowindow", "#draggable", "#icons", "#anchor"},
-    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins, and custom InfoWindowAdapter views.",
+    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins (long press Melbourne to drag), and custom InfoWindowAdapter views.",
     successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
     failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
     framework = Framework.JAVA_VIEWS
@@ -307,7 +307,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         mMelbourne = mMap.addMarker(new MarkerOptions()
                 .position(MELBOURNE)
                 .title("Melbourne")
-                .snippet("Population: 4,137,400")
+                .snippet(getString(R.string.melbourne_drag_snippet))
+                .icon(vectorToBitmap(R.drawable.ic_drag_pan, Color.parseColor("#E65100")))
                 .draggable(true));
 
         // Place four markers on top of each other with differing z-indexes.
@@ -348,6 +349,9 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
                 .position(ALICE_SPRINGS)
                 .icon(vectorToBitmap(R.drawable.ic_android, Color.parseColor("#A4C639")))
                 .title("Alice Springs"));
+
+        mMelbourne.showInfoWindow();
+        mLastSelectedMarker = mMelbourne;
 
         // Creates a marker rainbow demonstrating how to create default marker icons of different
         // hues (colors).
@@ -502,16 +506,19 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     @Override
     public void onMarkerDragStart(Marker marker) {
+        binding.topText.setVisibility(View.VISIBLE);
         binding.topText.setText(R.string.on_marker_drag_start);
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
+        binding.topText.setVisibility(View.VISIBLE);
         binding.topText.setText(R.string.on_marker_drag_end);
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
+        binding.topText.setVisibility(View.VISIBLE);
         binding.topText.setText(getString(R.string.on_marker_drag, marker.getPosition().latitude, marker.getPosition().longitude));
     }
 

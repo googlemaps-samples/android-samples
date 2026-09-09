@@ -36,44 +36,69 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/container" />
 
-    <RelativeLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/container"
-        android:layout_width="match_parent"
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
-        android:padding="5dp"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/transparency_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/transparency" />
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp">
 
-        <SeekBar
-            android:id="@+id/transparencySeekBar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/transparency_text"
-            android:layout_toRightOf="@+id/transparency_text" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/switchImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/transparencySeekBar"
-            android:text="@string/switch_image" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/transparency_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:text="@string/transparency" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/toggleClickability"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/switchImage"
-            android:layout_toEndOf="@+id/switchImage"
-            android:checked="true"
-            android:text="@string/clickable" />
-    </RelativeLayout>
+                <SeekBar
+                    android:id="@+id/transparencySeekBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/switchImage"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/switch_image"
+                    app:cornerRadius="8dp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/toggleClickability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:checked="true"
+                    android:text="@string/clickable" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
