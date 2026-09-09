@@ -71,11 +71,11 @@ import kotlin.math.sin
 @Sample(
     id = "marker_demo",
     title = "Standard Markers & Info Windows",
-    description = "Placing markers, custom icons, draggable pins, and custom info window layouts.",
+    description = "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info window layouts.",
     category = "Markers & Overlays",
     complexity = Complexity.SIMPLE,
     tags = ["#markers", "#infowindow", "#draggable", "#icons", "#anchor"],
-    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins, and custom InfoWindowAdapter views.",
+    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins (long press Melbourne to drag), and custom InfoWindowAdapter views.",
     successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
     failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
     framework = Framework.KOTLIN_VIEWS
@@ -300,7 +300,9 @@ class MarkerDemoActivity :
                 "MELBOURNE" to PlaceDetails(
                         position = places.getValue("MELBOURNE"),
                         title = "Melbourne",
-                        snippet = "Population: 4,137,400",
+                        snippet = getString(R.string.melbourne_drag_snippet),
+                        icon = vectorToBitmap(
+                                R.drawable.ic_drag_pan, "#E65100".toColorInt()),
                         draggable = true
                 ),
 
@@ -340,9 +342,10 @@ class MarkerDemoActivity :
         }
 
         // place markers for each of the defined locations
+        var melbourneMarker: Marker? = null
         placeDetailsMap.keys.map {
             with(placeDetailsMap.getValue(it)) {
-                map.addMarker(MarkerOptions()
+                val marker = map.addMarker(MarkerOptions()
                         .position(position)
                         .title(title)
                         .snippet(snippet)
@@ -350,8 +353,14 @@ class MarkerDemoActivity :
                         .infoWindowAnchor(infoWindowAnchorX, infoWindowAnchorY)
                         .draggable(draggable)
                         .zIndex(zIndex))
-
+                if (it == "MELBOURNE") {
+                    melbourneMarker = marker
+                }
             }
+        }
+        melbourneMarker?.let {
+            lastSelectedMarker = it
+            it.showInfoWindow()
         }
 
         // Creates a marker rainbow demonstrating how to create default marker icons of different
@@ -471,14 +480,17 @@ class MarkerDemoActivity :
     }
 
     override fun onMarkerDragStart(marker : Marker) {
+        binding.topText.visibility = View.VISIBLE
         binding.topText.text = getString(R.string.on_marker_drag_start)
     }
 
     override fun onMarkerDragEnd(marker : Marker) {
+        binding.topText.visibility = View.VISIBLE
         binding.topText.text = getString(R.string.on_marker_drag_end)
     }
 
     override fun onMarkerDrag(marker : Marker) {
+        binding.topText.visibility = View.VISIBLE
         binding.topText.text = getString(R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
     }
 

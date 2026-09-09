@@ -37,9 +37,9 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraTargetLat="47.6089945"
-        map:cameraTargetLng="-122.3410462"
-        map:cameraZoom="14"
+        map:cameraTargetLat="45.8326"
+        map:cameraTargetLng="6.8652"
+        map:cameraZoom="11.5"
         map:mapId="@string/cloud_styling_basic_map_id" />
 
     <HorizontalScrollView
