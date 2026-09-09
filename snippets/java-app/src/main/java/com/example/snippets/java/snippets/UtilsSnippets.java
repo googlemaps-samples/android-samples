@@ -257,11 +257,11 @@ public class UtilsSnippets {
             title = "4. GeoJSON Layer from JSONObject",
             description = "What it does: Constructs a GeoJsonLayer programmatically from an in-memory JSON object schema.\nHow to see the effect: Parsed GeoJSON points, lines, or polygons instantiate onto the map instance."
     )
-    public void addGeoJsonLayerJsonObject() {
+    public void addGeoJsonLayerJsonObject() throws JSONException {
         // [START maps_android_util_geojson_add_jsonobject]
         JSONObject geoJsonData = // JSONObject containing the GeoJSON data
         // [START_EXCLUDE silent]
-            null;
+            new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}");
         // [END_EXCLUDE]
         GeoJsonLayer layer = new GeoJsonLayer(map.getDelegate(), geoJsonData);
         // [END maps_android_util_geojson_add_jsonobject]
@@ -299,8 +299,9 @@ public class UtilsSnippets {
             title = "6. GeoJSON Features and Styling",
             description = "What it does: Programmatically iterates, styles, and adds custom point and linestring GeoJsonFeatures.\nHow to see the effect: Draggable markers and styled lines render according to default GeoJson feature styles."
     )
-    public void geoJsonFeature() {
-        GeoJsonLayer layer = new GeoJsonLayer(map.getDelegate(), null);
+    public void geoJsonFeature() throws JSONException {
+        GeoJsonLayer layer = new GeoJsonLayer(map.getDelegate(),
+                new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}"));
 
         // [START maps_android_util_geojson_point_feature]
         GeoJsonPoint point = new GeoJsonPoint(new LatLng(0, 0));
