@@ -14,7 +14,6 @@
 package com.example.kotlindemos
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -23,6 +22,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Xml
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -77,8 +77,19 @@ import org.xmlpull.v1.XmlPullParser
 )
 class LocationSourceDemoActivity : SamplesBaseActivity() {
 
+    private var googleMap: GoogleMap? = null
     private var locationSource: GpxLocationSource? = null
     private var trackBounds: LatLngBounds? = null
+
+    private val permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+        ) {
+            enableMyLocation()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,8 +127,8 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
         applyInsets(findViewById(R.id.map_container))
     }
 
-    @SuppressLint("MissingPermission")
     private fun initMap(map: GoogleMap, trackPoints: List<LatLng>, source: GpxLocationSource) {
+        googleMap = map
         if (trackPoints.isEmpty()) return
 
         val boundsBuilder = LatLngBounds.builder()
@@ -156,11 +167,24 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
 
         // 3. Connect custom location source
         map.setLocationSource(source)
+        enableMyLocation()
+    }
+
+    private fun enableMyLocation() {
+        val map = googleMap ?: return
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
             || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             map.isMyLocationEnabled = true
+        } else {
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
         }
     }
 
