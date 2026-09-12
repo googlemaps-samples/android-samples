@@ -33,7 +33,10 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenLocal()
+        if (providers.gradleProperty("useMavenLocal").orNull == "true" ||
+            providers.environmentVariable("USE_MAVEN_LOCAL").orNull == "true") {
+            mavenLocal()
+        }
         google()
         mavenCentral()
     }
