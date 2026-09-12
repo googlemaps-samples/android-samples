@@ -60,6 +60,7 @@ robolectric = "4.16.1"
 truth = "1.4.5"
 turbine = "1.2.1"
 uiautomator = "2.4.0"
+mockk = "1.14.11"
 
 # Firebase
 firebaseBom = "34.17.0"
@@ -69,12 +70,16 @@ firebaseDatabase = "22.0.1"
 easypermissions = "3.0.0"
 volley = "1.2.1"
 
+#Tracker lib
+startup-runtime = "1.2.0"
+
 [libraries]
 # Kotlin
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
 
 # AndroidX
 activity = { module = "androidx.activity:activity", version.ref = "activity" }
@@ -134,6 +139,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }

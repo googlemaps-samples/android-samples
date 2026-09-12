@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.places)
+    implementation(project(":library"))
     // [END_EXCLUDE]
 
     // Maps SDK for Android
