@@ -37,16 +37,16 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraTargetLat="47.6089945"
-        map:cameraTargetLng="-122.3410462"
-        map:cameraZoom="14"
+        map:cameraTargetLat="45.8326"
+        map:cameraTargetLng="6.8652"
+        map:cameraZoom="11.5"
         map:mapId="@string/cloud_styling_basic_map_id" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#D000"
-        android:orientation="vertical"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,18 +62,21 @@
                 android:id="@+id/styling_normal_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:text="@string/lite_styling_normal_mode" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/styling_satellite_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:text="@string/lite_styling_satellite_mode" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/styling_hybrid_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
                 android:text="@string/lite_styling_hybrid_mode" />
 
             <com.google.android.material.button.MaterialButton
@@ -82,5 +85,5 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lite_styling_terrain_mode" />
         </LinearLayout>
-    </LinearLayout>
+    </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
