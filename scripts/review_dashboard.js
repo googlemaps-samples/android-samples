@@ -275,11 +275,13 @@ const RUN_ID = "__RUN_ID__";
         const searchData = card.dataset.search;
         const hasNotes = operatorData[idx] && operatorData[idx].notes && operatorData[idx].notes.trim().length > 0;
         const hasPrior = card.dataset.hasPrior === "true";
+        const aiVerdict = (card.dataset.aiVerdict || "").toLowerCase();
 
         let matchesFilter = false;
         if (currentFilter === "all") matchesFilter = true;
         else if (currentFilter === "needs_work" && status === "needs_work") matchesFilter = true;
         else if (currentFilter === "passing" && status === "passing") matchesFilter = true;
+        else if (currentFilter === "ai_flagged" && aiVerdict === "flag_for_human") matchesFilter = true;
         else if (currentFilter === "with_video" && card.dataset.hasVideo === "true") matchesFilter = true;
         else if (currentFilter === "with_prior" && hasPrior) matchesFilter = true;
         else if (currentFilter === "with_notes" && hasNotes) matchesFilter = true;
@@ -402,6 +404,37 @@ const RUN_ID = "__RUN_ID__";
       }).catch(() => {
         showToast("Standalone mode: using localStorage. Use Export buttons.");
       });
+    }
+
+    function promoteToGolden() {
+      if (!confirm("Are you sure you want to promote descent '" + RUN_ID + "' to be the permanent Bedrock Baseline?")) return;
+      fetch("/api/set_golden", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ run_id: RUN_ID })
+      }).then(res => res.json()).then(data => {
+        if (data.status === "ok") {
+          showToast("🪨 Descent certified as Bedrock Baseline!");
+          setTimeout(() => location.reload(), 1000);
+        } else {
+          showToast("Error promoting descent: " + (data.error || "Unknown"));
+        }
+      }).catch(err => {
+        showToast("Failed to promote descent: " + err);
+      });
+    }
+
+    function toggleDirectivesSummary() {
+      const el = document.getElementById("directivesSummaryBody");
+      const arrow = document.getElementById("directivesArrow");
+      if (!el || !arrow) return;
+      if (el.style.display === "none") {
+        el.style.display = "block";
+        arrow.textContent = "▲";
+      } else {
+        el.style.display = "none";
+        arrow.textContent = "▼";
+      }
     }
 
     window.addEventListener("DOMContentLoaded", init);

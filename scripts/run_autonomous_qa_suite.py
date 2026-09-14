@@ -102,19 +102,17 @@ SAMPLE_ACTIONS = {
         ("swipe", 100, 1200, 950, 1200, 0.8),  # Swipe back to Page 1
         ("swipe", 950, 1200, 100, 1200, 1.5),  # Swipe to Map page and settle
     ],
-    # 07 Camera Controls: Multi-step panning, smooth zoom in/out, 45° tilt, bearing rotation (spin), camera stop/cancel callback
+    # 07 Camera Controls: Animated camera to Bondi, Sydney, zoom in, tilt more, map pan/sweep, stop animation callback
     "CameraDemoActivity": [
-        ("tap", 810, 520, 2.0),                  # Tap "Go to Bondi" -> animated camera
-        ("tap", 270, 520, 1.8),                  # Tap "Go to Sydney" -> animated camera
-        ("tap", 720, 200, 0.8),                  # Tap Zoom In
-        ("tap", 720, 200, 0.8),                  # Tap Zoom In again
-        ("tap", 920, 200, 0.8),                  # Tap Tilt More (towards 45 deg)
-        ("tap", 920, 200, 0.8),                  # Tap Tilt More
+        ("tap", 810, 716, 2.0),                  # Tap "Go to Bondi" -> animated camera
+        ("screenshot", "Bondi Beach", 0.5),
+        ("tap", 857, 338, 0.8),                  # Tap Zoom In (+)
+        ("tap", 1006, 338, 0.8),                 # Tap Tilt More (towards 45 deg)
         ("swipe", 540, 1400, 540, 900, 0.8),     # Pan map northward
-        ("swipe", 800, 1200, 200, 1200, 0.8),    # Pan map eastward
         ("swipe", 200, 1100, 900, 1300, 1.0),    # Diagonal sweep to spin/rotate bearing
-        ("tap", 810, 520, 0.3),                  # Start animating to Bondi
-        ("tap", 120, 200, 1.5),                  # Tap Stop Animation button to trigger cancel callback!
+        ("screenshot", "Zoomed and Tilted", 0.5),
+        ("tap", 270, 716, 0.3),                  # Start animating to Sydney
+        ("tap", 115, 338, 1.5),                  # Tap Stop Animation button (■) to trigger cancel callback!
     ],
     # 08 Camera Clamping: Exercise zoom limits slider, zoom map, and test bounds clamps
     "CameraClampingDemoActivity": [
@@ -127,10 +125,17 @@ SAMPLE_ACTIONS = {
         ("tap", 540, 580, 1.0),                  # Tap "Pacific" clamp toggle button
         ("swipe", 540, 1600, 540, 1000, 0.8),    # Drag map against pacific bounds
     ],
-    # 09 Visible Region & Projection: Tap centered Actions button on telemetry card to open PopupMenu and select item
+    # 09 Visible Region & Projection: Tap Actions button on telemetry card to open PopupMenu and animate camera
     "VisibleRegionDemoActivity": [
-        ("tap", 540, 250, 1.0),                  # Tap centered "Actions ▾" button on telemetry card
-        ("tap", 540, 650, 1.8),                  # Tap "Move to Sydney Opera House" in popup
+        ("wait", 1.0),
+        ("screenshot", "SFO Airport Initial", 0.5),
+        ("tap", 539, 529, 1.0),                  # Tap "Actions ▾" button on telemetry card
+        ("tap", 660, 929, 2.5),                  # Tap "Move to Sydney Opera House" in popup
+        ("screenshot", "Sydney Opera House", 0.5),
+        ("tap", 539, 529, 1.0),                  # Tap "Actions ▾" button again
+        ("tap", 660, 1181, 2.5),                 # Tap "Fit Australia Bounds" in popup
+        ("screenshot", "Australia Bounds", 0.5),
+        ("swipe", 540, 1400, 540, 900, 1.2),     # Pan map northward -> dynamic telemetry update
     ],
     # 10 Advanced Markers: Tap pins to open info windows, exercise collision behavior with zoom
     "AdvancedMarkersDemoActivity": [
@@ -141,17 +146,19 @@ SAMPLE_ACTIONS = {
         ("tap", 540, 1200, 1.8),                 # Zoom in animation settles and collision adapts
         ("swipe", 540, 1000, 540, 1500, 1.0),    # Pan south to inspect clustering collision
     ],
-    # 11 Standard Markers: Rotation slider, flat toggle, Melbourne drag, marker info windows
+    # 11 Standard Markers: Rotation slider, flat toggle, marker info windows
     "MarkerDemoActivity": [
-        ("wait", 1.0),                           # Starts with Melbourne info window open proclaiming draggability
-        ("swipe", 500, 310, 950, 310, 1.0),      # Drag rotation seekbar to rotate markers
-        ("tap", 100, 230, 0.8),                  # Toggle "Flat to map surface" checkbox
-        ("swipe", 700, 1520, 500, 1350, 1.5),    # Long press & drag Melbourne marker northwest
-        ("tap", 750, 1150, 1.2),                 # Tap Brisbane marker (azure hue icon)
-        ("tap", 120, 2150, 0.8),                 # Select "Custom info contents" radio button
-        ("tap", 780, 1370, 1.2),                 # Tap Sydney marker (arrow icon & custom contents)
-        ("tap", 120, 2250, 0.8),                 # Select "Custom info window" radio button
+        ("wait", 1.0),
+        ("screenshot", "Default Info Window", 0.5),
+        ("swipe", 350, 498, 900, 498, 1.0),      # Drag rotation seekbar to rotate markers
+        ("tap", 304, 396, 0.8),                  # Toggle "Flat to map surface" checkbox
+        ("screenshot", "Rotated Flat Markers", 0.5),
+        ("tap", 278, 2190, 0.8),                 # Select "Custom info contents" radio button
+        ("tap", 780, 1370, 1.2),                 # Tap Sydney marker (custom contents)
+        ("screenshot", "Custom Info Contents", 0.5),
+        ("tap", 266, 2316, 0.8),                 # Select "Custom info window" radio button
         ("tap", 450, 1420, 1.2),                 # Tap Adelaide marker (custom info window)
+        ("screenshot", "Custom Info Window", 0.5),
     ],
     # 12 Marker Retap Toggle: First tap opens InfoWindow, second tap dismisses
     "MarkerCloseInfoWindowOnRetapDemoActivity": [
@@ -183,44 +190,52 @@ SAMPLE_ACTIONS = {
         ("swipe", 300, 420, 800, 420, 1.0),      # Swipe fill alpha seekbar
         ("swipe", 300, 490, 800, 490, 1.0),      # Swipe stroke width seekbar
     ],
-    # 16 Data-Driven Boundaries: Multi-state capture (Locality vs US State boundaries)
+    # 16 Data-Driven Boundaries: Multi-state capture (Hawaii Locality -> US State -> Selected Boundary)
     "DataDrivenBoundariesActivity": [
-        ("wait", 4.0),
-        ("screenshot", "Locality Boundaries", 0.5),
-        ("tap", 540, 290, 3.5),                  # Tap "US" button to center on USA and render state boundaries
+        ("wait", 3.0),
+        ("screenshot", "Hawaii Locality Boundaries", 0.5),
+        ("tap", 472, 391, 3.5),                  # Tap "US" button to center on USA and render state boundaries
         ("screenshot", "US State Boundaries", 0.5),
+        ("tap", 480, 1450, 2.0),                 # Tap on US state to trigger boundary click styling
+        ("screenshot", "Selected State Boundary", 0.5),
+        ("tap", 205, 391, 2.5),                  # Tap "Hawaii" button to return to Hawaii
+        ("swipe", 540, 1400, 540, 1000, 1.0),    # Pan map
     ],
-    # 17 Data-Driven Dataset Styling: Multi-state capture (Boulder, New York, Kyoto)
+    # 17 Data-Driven Dataset Styling: Multi-state capture (Boulder -> New York -> Kyoto)
     "DataDrivenDatasetStylingActivity": [
-        ("wait", 4.0),
+        ("wait", 3.0),
         ("screenshot", "Boulder Dataset", 0.5),
-        ("tap", 540, 290, 4.0),                  # Tap "New York" button to style Central Park dataset
+        ("tap", 560, 391, 3.5),                  # Tap "New York" button to center and style Central Park dataset
         ("screenshot", "New York Dataset", 0.5),
-        ("tap", 850, 290, 4.0),                  # Tap "Kyoto" button to style Kyoto dataset
+        ("tap", 856, 391, 3.5),                  # Tap "Kyoto" button to center and style Kyoto dataset
         ("screenshot", "Kyoto Dataset", 0.5),
+        ("tap", 244, 391, 3.0),                  # Tap "Boulder" button to return to Boulder dataset
+        ("swipe", 540, 1400, 540, 1000, 1.0),    # Pan map
     ],
     # 18 Cloud-Based Map Styling: Mont Blanc center + Multi-state capture (Normal, Satellite, Hybrid, Terrain)
     "CloudBasedMapStylingDemoActivity": [
         ("wait", 2.0),
         ("screenshot", "Normal Style", 0.5),
-        ("tap", 450, 2250, 2.5),                 # Tap "Satellite" button
+        ("tap", 435, 2324, 2.5),                 # Tap "Satellite" button
         ("screenshot", "Satellite Style", 0.5),
-        ("tap", 680, 2250, 2.5),                 # Tap "Hybrid" button
+        ("tap", 716, 2324, 2.5),                 # Tap "Hybrid" button
         ("screenshot", "Hybrid Style", 0.5),
-        ("tap", 900, 2250, 2.5),                 # Tap "Terrain" button
+        ("tap", 967, 2324, 2.5),                 # Tap "Terrain" button
         ("swipe", 540, 1400, 540, 1000, 1.0),    # Pan map to view terrain topography
         ("screenshot", "Terrain Style", 0.5),
+        ("tap", 147, 2324, 2.0),                 # Tap "Normal" button to reset
     ],
-    # 20 Map Color Scheme: Multi-state capture (System/Dark -> Light -> Dark -> System)
+    # 20 Map Color Scheme: Multi-state capture (Initial -> Light -> Dark -> System)
     "MapColorSchemeActivity": [
         ("wait", 2.0),
-        ("screenshot", "System Mode", 0.5),
-        ("tap", 180, 260, 2.0),                  # Tap Light mode button
+        ("screenshot", "Initial Scheme", 0.5),
+        ("tap", 105, 338, 2.0),                  # Tap Light mode button
         ("screenshot", "Light Mode", 0.5),
-        ("tap", 500, 260, 2.0),                  # Tap Dark mode button
+        ("tap", 294, 338, 2.0),                  # Tap Dark mode button
         ("screenshot", "Dark Mode", 0.5),
-        ("tap", 850, 260, 2.0),                  # Tap Follow System button
+        ("tap", 578, 338, 2.0),                  # Tap Follow System button
         ("screenshot", "Follow System Mode", 0.5),
+        ("swipe", 540, 1400, 540, 1000, 1.0),    # Pan map to show rendered tiles
     ],
     # 22 Lite Mode Basics: Exercise Darwin, Adelaide, and Australia buttons
     "LiteDemoActivity": [
@@ -232,10 +247,14 @@ SAMPLE_ACTIONS = {
     "SnapshotDemoActivity": [
         ("tap", 270, 2300, 2.0),                 # Tap "Take Snapshot" button and wait for bitmap
     ],
-    # 25 Tile Overlay: Swipe transparency slider, toggle fade-in, and pan tile coordinates
+    # 25 Tile Overlay: Toggle fade-in, swipe transparency slider, and pan tile coordinates
     "TileOverlayDemoActivity": [
-        ("swipe", 650, 300, 1000, 300, 1.2),     # Drag transparency seekbar
-        ("tap", 900, 200, 0.8),                  # Toggle fade in checkbox
+        ("wait", 1.0),
+        ("screenshot", "Initial Moon Tiles", 0.5),
+        ("tap", 912, 338, 0.8),                  # Toggle "Fade In Tiles" checkbox
+        ("swipe", 780, 482, 920, 482, 1.2),     # Drag transparency seekbar to ~50%
+        ("screenshot", "Semi-Transparent Tiles", 0.5),
+        ("swipe", 920, 482, 780, 482, 1.0),     # Drag transparency back to 0%
         ("swipe", 800, 1200, 200, 1200, 1.2),    # Pan map eastward to load new coordinates
         ("swipe", 540, 1500, 540, 900, 1.2),     # Pan map northward to load new coordinates
     ],
@@ -261,10 +280,15 @@ SAMPLE_ACTIONS = {
     ],
     # 28 Ground Overlays: Move transparency slider, switch image to 1922 map, click overlay
     "GroundOverlayDemoActivity": [
-        ("swipe", 500, 200, 950, 200, 1.2),      # Drag transparency seekbar
-        ("tap", 250, 280, 1.5),                  # Tap "Switch Image" button
+        ("wait", 1.0),
+        ("screenshot", "Initial Overlay (Modern Newark)", 0.5),
+        ("swipe", 450, 367, 950, 367, 1.2),      # Drag transparency seekbar (y=367)
+        ("screenshot", "Transparent Overlay", 0.5),
+        ("tap", 268, 481, 1.5),                  # Tap "Switch Image" button (1922 historical map)
+        ("screenshot", "Historical 1922 Overlay", 0.5),
+        ("swipe", 540, 1400, 540, 1000, 1.0),    # Pan map across historical Newark overlay
         ("tap", 540, 1200, 1.2),                 # Tap on ground overlay image to verify click listener
-        ("swipe", 950, 200, 300, 200, 1.2),      # Drag transparency seekbar back
+        ("swipe", 950, 367, 400, 367, 1.2),      # Drag transparency seekbar back
     ],
     # 30 Events & Gestures: Multi-touch tap, drag, double-tap zoom, and bearing rotation
     "EventsDemoActivity": [
@@ -288,12 +312,13 @@ class AutonomousQaRunner:
         self.args = args
         self.root_dir = Path(__file__).resolve().parent.parent
         self.device_serial = args.device or self.detect_device()
-        self.timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.tag = f"spelunk_{datetime.datetime.now().strftime('%Yy%mm%dd_%Hh%Mm%Ss')}"
+        self.timestamp = self.tag.replace("spelunk_", "").replace("run_", "")
 
         if args.output_dir:
             self.run_dir = Path(args.output_dir).resolve()
         else:
-            self.run_dir = self.root_dir / "eval_runs" / f"run_{self.timestamp}"
+            self.run_dir = self.root_dir / "eval_runs" / self.tag
 
         self.screenshots_dir = self.run_dir / "screenshots"
         self.java_screenshots_dir = self.screenshots_dir / "java"
@@ -308,7 +333,13 @@ class AutonomousQaRunner:
         self.java_logs_dir = self.logs_dir / "java"
         self.kotlin_logs_dir = self.logs_dir / "kotlin"
 
-        self.device_screenshot_dir = "/sdcard/gmp_eval_screenshots"
+        # Unified single directory on device for entire spelunking descent
+        self.device_root_dir = "/sdcard/gmp_spelunk_run"
+        self.device_run_dir = f"{self.device_root_dir}/{self.tag}"
+        self.device_screenshots_dir = f"{self.device_run_dir}/screenshots"
+        self.device_videos_dir = f"{self.device_run_dir}/videos"
+        self.device_screenshot_dir = self.device_screenshots_dir  # backward compat alias
+
         self.kotlin_pkg = "com.example.kotlindemos"
         self.java_pkg = "com.example.mapdemo"
 
@@ -327,7 +358,8 @@ class AutonomousQaRunner:
         ]:
             p.mkdir(parents=True, exist_ok=True)
 
-        self.adb_run(["shell", "mkdir", "-p", self.device_screenshot_dir])
+        self.adb_run(["shell", "mkdir", "-p", self.device_screenshots_dir])
+        self.adb_run(["shell", "mkdir", "-p", self.device_videos_dir])
 
         # Pre-grant location permissions for both apps so GPS and LocationSource samples work seamlessly
         for pkg in [self.kotlin_pkg, self.java_pkg]:
@@ -473,7 +505,7 @@ class AutonomousQaRunner:
                     "adb", "-s", self.device_serial, "shell",
                     "screenrecord", "--size", getattr(self.args, "video_size", "270x600"),
                     "--bit-rate", str(getattr(self.args, "video_bitrate", 1500000)),
-                    "--time-limit", "25", device_mp4
+                    "--time-limit", "45", device_mp4
                 ]
                 rec_proc = subprocess.Popen(rec_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 time.sleep(1.0)
@@ -861,6 +893,53 @@ class AutonomousQaRunner:
             })
 
     # --------------------------------------------------------------------------
+    # PHASE 2.5: Automated Multimodal Evaluation with Gemini (Optional)
+    # --------------------------------------------------------------------------
+    def phase_ai_evaluation(self):
+        log_step("PHASE 2.5: Automated Multimodal LLM Evaluation with Gemini...")
+        try:
+            sys.path.append(str(self.root_dir / "scripts"))
+            import gemini_eval_engine
+            api_key = gemini_eval_engine.get_api_key(self.root_dir)
+            if not api_key:
+                log_warn("GEMINI_API_KEY not found in secrets.properties or environment. Skipping AI evaluation.")
+                return
+
+            baseline_dir = None
+            if getattr(self.args, "baseline", None):
+                b_path = Path(self.args.baseline)
+                baseline_dir = b_path if b_path.exists() else (self.root_dir / "eval_runs" / self.args.baseline)
+            else:
+                golden_path = self.root_dir / "eval_runs" / "golden"
+                if golden_path.exists():
+                    baseline_dir = golden_path
+
+            engine = gemini_eval_engine.GeminiEvalEngine(
+                api_key=api_key,
+                model_name=getattr(self.args, "ai_model", "gemini-flash-latest"),
+                root_dir=self.root_dir
+            )
+
+            # Write temporary run_summary.json so evaluate_run can load it
+            temp_summary = {
+                "timestamp": self.timestamp,
+                "device": self.device_serial,
+                "total_samples": len(self.results),
+                "passing": sum(1 for r in self.results if r["status"] == "PASSING"),
+                "needs_work": sum(1 for r in self.results if r["status"] == "NEEDS_WORK"),
+                "results": self.results
+            }
+            with open(self.run_dir / "run_summary.json", "w", encoding="utf-8") as f:
+                json.dump(temp_summary, f, indent=2)
+
+            updated_data = engine.evaluate_run(self.run_dir, baseline_dir=baseline_dir)
+            if updated_data and "results" in updated_data:
+                self.results = updated_data["results"]
+                log_success("Gemini Multimodal Evaluation complete and merged into test results.")
+        except Exception as e:
+            log_warn(f"AI evaluation encountered an issue: {e}")
+
+    # --------------------------------------------------------------------------
     # PHASE 3: Reporting & Artifact Compilation
     # --------------------------------------------------------------------------
     def phase_reporting(self):
@@ -873,6 +952,7 @@ class AutonomousQaRunner:
         local_device_report = self.run_dir / "device_exported_report.md"
         self.adb_run(["pull", device_report_path, str(local_device_report)], check=False)
 
+        golden_path = (self.root_dir / "eval_runs" / "golden").resolve() if (self.root_dir / "eval_runs" / "golden").exists() else None
         total_samples = len(self.results)
         passing_count = sum(1 for r in self.results if r["status"] == "PASSING")
         needs_work_count = sum(1 for r in self.results if r["status"] == "NEEDS_WORK")
@@ -885,6 +965,9 @@ class AutonomousQaRunner:
             "passing": passing_count,
             "needs_work": needs_work_count,
             "pass_rate_pct": round(pass_rate, 1),
+            "ai_evaluated": getattr(self.args, "ai_eval", False),
+            "ai_model": getattr(self.args, "ai_model", "gemini-flash-latest") if getattr(self.args, "ai_eval", False) else None,
+            "baseline_run": golden_path.name if golden_path else None,
             "results": self.results
         }
         with open(self.run_dir / "run_summary.json", "w", encoding="utf-8") as f:
@@ -900,7 +983,12 @@ class AutonomousQaRunner:
         md.append(f"| Metric | Result |\n|---|---|\n")
         md.append(f"| **Total Samples Evaluated** | `{total_samples}` |\n")
         md.append(f"| 🟢 **Passing Samples** | `{passing_count}` ({pass_rate:.1f}%) |\n")
-        md.append(f"| 🔴 **Needs Work / Issues** | `{needs_work_count}` ({100 - pass_rate:.1f}%) |\n\n")
+        md.append(f"| 🔴 **Needs Work / Issues** | `{needs_work_count}` ({100 - pass_rate:.1f}%) |\n")
+        if getattr(self.args, "ai_eval", False):
+            md.append(f"| 🤖 **AI Evaluation Engine** | `Gemini ({getattr(self.args, 'ai_model', 'gemini-flash-latest')})` |\n")
+            if golden_path:
+                md.append(f"| ⭐ **Golden Baseline Reference** | `{golden_path.name}` |\n")
+        md.append("\n")
 
         grievances = [r for r in self.results if r["status"] == "NEEDS_WORK"]
         if grievances:
@@ -931,9 +1019,12 @@ class AutonomousQaRunner:
         # Generate rich interactive HTML review dashboard
         try:
             sys.path.append(str(self.root_dir / "scripts"))
-            import generate_html_report
-            _, metadata_by_short = generate_html_report.load_catalog_metadata(self.root_dir)
-            html_file = generate_html_report.build_html(self.run_dir, summary_json, metadata_by_short, self.root_dir)
+            try:
+                import generate_report as report_gen
+            except ImportError:
+                import generate_html_report as report_gen
+            _, metadata_by_short = report_gen.load_catalog_metadata(self.root_dir)
+            html_file = report_gen.build_html(self.run_dir, summary_json, metadata_by_short, self.root_dir)
             latest_html = self.root_dir / "eval_runs" / "index.html"
             try:
                 if latest_html.exists() or latest_html.is_symlink():
@@ -964,26 +1055,57 @@ class AutonomousQaRunner:
         print(f"Audit Scorecard: {summary_md_path}")
         print("=" * 75 + "\n")
 
+    def cleanup_device(self):
+        log_step("Cleaning up test artifacts from connected device...")
+        # Remove unified test run root directory
+        self.adb_run(["shell", "rm", "-rf", self.device_root_dir], check=False)
+        self.adb_run(["shell", "rm", "-rf", "/sdcard/gmp_qa_run"], check=False)
+        # Also wipe legacy screenshot directory if present
+        self.adb_run(["shell", "rm", "-rf", "/sdcard/gmp_eval_screenshots"], check=False)
+        # Clean any stray screencaps or recordings on /sdcard
+        self.adb_run(["shell", "rm", "-f", "/sdcard/eval_*.mp4"], check=False)
+        self.adb_run(["shell", "rm", "-f", "/sdcard/eval_*.png"], check=False)
+        self.adb_run(["shell", "rm", "-f", "/sdcard/verify_screenshot.png"], check=False)
+        # Clean on-device exported reports
+        self.adb_run(["shell", "rm", "-rf", f"/sdcard/Android/data/{self.kotlin_pkg}/files/reports"], check=False)
+        log_success("Device completely cleaned (zero residual test files).")
+
     def run(self):
+        if getattr(self.args, "clean_device", False):
+            self.cleanup_device()
+            return
+
         self.init_filesystem()
         if not self.args.skip_reset:
             self.reset_eval_state()
 
         all_samples = self.load_catalog_samples()
         if self.args.sample:
-            all_samples = [s for s in all_samples if self.args.sample.lower() in s["id"].lower() or self.args.sample.lower() in s["title"].lower()]
+            targets = [t.strip().lower() for t in self.args.sample.split(",") if t.strip()]
+            all_samples = [
+                s for s in all_samples
+                if any(t in s["id"].lower() or t in s["title"].lower() or t in s["kotlinActivity"].lower() for t in targets)
+            ]
 
         if self.args.limit and self.args.limit > 0:
             all_samples = all_samples[:self.args.limit]
 
-        # Phase 1: Rapid Batch Capture (zero analysis, pure speed)
-        self.phase_batch_capture(all_samples)
+        try:
+            # Phase 1: Rapid Batch Capture (zero analysis, pure speed)
+            self.phase_batch_capture(all_samples)
 
-        # Phase 2: Offline Post-Analysis (evaluate, defect markup, DB update)
-        self.phase_post_analysis()
+            # Phase 2: Offline Post-Analysis (evaluate, defect markup, DB update)
+            self.phase_post_analysis()
 
-        # Phase 3: Reporting & Artifact Compilation
-        self.phase_reporting()
+            # Phase 2.5: Automated Multimodal Evaluation with Gemini (Optional)
+            if getattr(self.args, "ai_eval", False):
+                self.phase_ai_evaluation()
+
+            # Phase 3: Reporting & Artifact Compilation
+            self.phase_reporting()
+        finally:
+            if not getattr(self.args, "keep_device_files", False):
+                self.cleanup_device()
 
 
 def main():
@@ -998,6 +1120,11 @@ def main():
     parser.add_argument("--video-size", default="270x600", help="Screenrecord resolution (default: 270x600 = 25%% scale)")
     parser.add_argument("--video-bitrate", type=int, default=1500000, help="Screenrecord bitrate (default: 1500000 = 1.5 Mbps)")
     parser.add_argument("--skip-reset", action="store_true", help="Skip clearing existing evaluations before starting")
+    parser.add_argument("--ai-eval", action="store_true", help="Run automated Gemini multimodal evaluation on test artifacts")
+    parser.add_argument("--ai-model", default="gemini-flash-latest", help="Gemini model for automated evaluation (default: gemini-flash-latest)")
+    parser.add_argument("--baseline", help="Golden baseline run directory or ID (defaults to eval_runs/golden)")
+    parser.add_argument("--clean-device", action="store_true", help="Clean up all QA evaluation files from the connected device and exit")
+    parser.add_argument("--keep-device-files", action="store_true", help="Do not delete temporary test artifacts from device after run completes")
 
     args = parser.parse_args()
     runner = AutonomousQaRunner(args)

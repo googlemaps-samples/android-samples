@@ -262,6 +262,7 @@ capture_screenshot() {
     log_info "Capturing screenshot -> ${local_file}"
     adb_cmd shell screencap -p /sdcard/verify_screenshot.png
     adb_cmd pull /sdcard/verify_screenshot.png "${local_file}" >/dev/null
+    adb_cmd shell rm -f /sdcard/verify_screenshot.png
     log_success "Screenshot saved: ${local_file}"
 }
 
