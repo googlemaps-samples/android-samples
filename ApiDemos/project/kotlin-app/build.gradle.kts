@@ -106,6 +106,7 @@ dependencies {
     androidTestImplementation(libs.uiautomator)
 
     implementation(project(":ApiDemos:common-ui"))
+    implementation(project(":ApiDemos:reviewer"))
 }
 
 secrets {

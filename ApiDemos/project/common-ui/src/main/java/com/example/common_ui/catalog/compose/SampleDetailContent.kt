@@ -78,7 +78,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleItem
-import com.example.common_ui.catalog.db.SampleEvaluationEntity
+import com.example.common_ui.catalog.SampleEvaluation
 import java.io.File
 
 /**
@@ -90,7 +90,7 @@ fun SampleDetailFullScreenDialog(
     targetFqcn: String,
     framework: Framework,
     isReviewerMode: Boolean,
-    existingEvaluation: SampleEvaluationEntity?,
+    existingEvaluation: SampleEvaluation?,
     onDismiss: () -> Unit,
     onSaveEvaluation: (ReviewStatus, String) -> Unit,
     onLaunch: (Framework) -> Unit,
@@ -133,7 +133,7 @@ fun SampleDetailContent(
     targetFqcn: String,
     framework: Framework,
     isReviewerMode: Boolean,
-    existingEvaluation: SampleEvaluationEntity?,
+    existingEvaluation: SampleEvaluation?,
     onDismiss: () -> Unit,
     onSaveEvaluation: (ReviewStatus, String) -> Unit,
     onLaunch: (Framework) -> Unit,

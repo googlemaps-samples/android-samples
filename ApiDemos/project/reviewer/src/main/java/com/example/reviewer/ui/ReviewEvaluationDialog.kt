@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.ui
+package com.example.reviewer.ui
 
 import android.app.Activity
 import android.app.Dialog
@@ -44,7 +44,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleItem
-import com.example.common_ui.catalog.repository.SampleReviewRepository
+import com.example.reviewer.repository.SampleReviewRepository
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch

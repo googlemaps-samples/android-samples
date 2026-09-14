@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.ui
+package com.example.reviewer.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,10 +32,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.SampleEvaluation
 import com.example.common_ui.catalog.SampleItem
 import com.example.common_ui.catalog.compose.SampleDetailContent
-import com.example.common_ui.catalog.db.SampleEvaluationEntity
-import com.example.common_ui.catalog.repository.SampleReviewRepository
+import com.example.reviewer.repository.SampleReviewRepository
 import kotlinx.coroutines.launch
 
 /**
@@ -104,11 +104,11 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
                     val s = sample
                     if (s != null) {
                         val repository = remember { SampleReviewRepository.getInstance(context) }
-                        var evaluation by remember { mutableStateOf<SampleEvaluationEntity?>(null) }
+                        var evaluation by remember { mutableStateOf<SampleEvaluation?>(null) }
                         val targetFqcn = s.getTargetFqcn(currentFramework)
 
                         LaunchedEffect(s.id) {
-                            evaluation = repository.getEvaluation(targetFqcn) ?: repository.getEvaluation(s.id)
+                            evaluation = (repository.getEvaluation(targetFqcn) ?: repository.getEvaluation(s.id))?.toModel()
                         }
 
                         SampleDetailContent(

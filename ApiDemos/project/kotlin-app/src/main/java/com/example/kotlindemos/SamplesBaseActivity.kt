@@ -30,10 +30,10 @@ import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
 import com.example.common_ui.catalog.SampleItem
-import com.example.common_ui.catalog.repository.SampleReviewRepository
-import com.example.common_ui.catalog.ui.ReviewEvaluationDialog
-import com.example.common_ui.catalog.ui.SampleExpectationsBottomSheet
 import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
+import com.example.reviewer.repository.SampleReviewRepository
+import com.example.reviewer.ui.ReviewEvaluationDialog
+import com.example.reviewer.ui.SampleExpectationsBottomSheet
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.launch
 
@@ -201,7 +201,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
         if (isTaskRoot) {
             try {
                 val targetActivity = if (isReviewerMode) {
-                    "com.example.common_ui.catalog.compose.ReviewerActivity"
+                    "com.example.reviewer.compose.ReviewerActivity"
                 } else {
                     "com.example.common_ui.catalog.compose.CatalogActivity"
                 }

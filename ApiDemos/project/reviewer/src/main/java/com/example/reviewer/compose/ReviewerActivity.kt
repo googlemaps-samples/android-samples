@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.compose
+package com.example.reviewer.compose
 
 import android.content.Intent
 import android.os.Bundle
@@ -27,9 +27,12 @@ import androidx.compose.runtime.getValue
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.SampleEvaluation
 import com.example.common_ui.catalog.SampleItem
-import com.example.common_ui.catalog.repository.GrievanceReportExporter
-import com.example.common_ui.catalog.repository.SampleReviewRepository
+import com.example.common_ui.catalog.compose.CatalogScreen
+import com.example.common_ui.catalog.compose.CatalogTheme
+import com.example.reviewer.repository.GrievanceReportExporter
+import com.example.reviewer.repository.SampleReviewRepository
 import kotlinx.coroutines.launch
 
 /**
@@ -49,7 +52,7 @@ open class ReviewerActivity : ComponentActivity() {
         setContent {
             CatalogTheme {
                 val evaluationsList by repository.allEvaluationsFlow.collectAsState(initial = emptyList())
-                val evaluationsMap = evaluationsList.associateBy { it.sampleId }
+                val evaluationsMap: Map<String, SampleEvaluation> = evaluationsList.associate { it.sampleId to it.toModel() }
 
                 CatalogScreen(
                     isReviewerMode = true,

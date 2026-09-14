@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.repository
+package com.example.reviewer.repository
 
 import android.app.Activity
 import android.content.Context
@@ -23,9 +23,9 @@ import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
 import com.example.common_ui.catalog.SampleItem
-import com.example.common_ui.catalog.db.SampleCatalogDatabase
-import com.example.common_ui.catalog.db.SampleEvaluationDao
-import com.example.common_ui.catalog.db.SampleEvaluationEntity
+import com.example.reviewer.db.SampleCatalogDatabase
+import com.example.reviewer.db.SampleEvaluationDao
+import com.example.reviewer.db.SampleEvaluationEntity
 import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

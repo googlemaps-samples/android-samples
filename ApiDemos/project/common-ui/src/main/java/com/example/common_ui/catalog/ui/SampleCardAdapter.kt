@@ -29,8 +29,8 @@ import com.example.common_ui.R
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
+import com.example.common_ui.catalog.SampleEvaluation
 import com.example.common_ui.catalog.SampleItem
-import com.example.common_ui.catalog.db.SampleEvaluationEntity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
@@ -38,7 +38,7 @@ import com.google.android.material.chip.Chip
 class SampleCardAdapter(
     private val onSampleClick: (SampleItem) -> Unit,
     private val onInfoClick: (SampleItem) -> Unit,
-    private val onStatusClick: (SampleItem, SampleEvaluationEntity?) -> Unit
+    private val onStatusClick: (SampleItem, SampleEvaluation?) -> Unit
 ) : ListAdapter<SampleItem, SampleCardAdapter.SampleViewHolder>(SampleDiffCallback()) {
 
     var currentFramework: Framework = Framework.KOTLIN_VIEWS
@@ -53,9 +53,9 @@ class SampleCardAdapter(
             notifyDataSetChanged()
         }
 
-    private var evaluationsMap: Map<String, SampleEvaluationEntity> = emptyMap()
+    private var evaluationsMap: Map<String, SampleEvaluation> = emptyMap()
 
-    fun updateEvaluations(evaluations: List<SampleEvaluationEntity>) {
+    fun updateEvaluations(evaluations: List<SampleEvaluation>) {
         evaluationsMap = evaluations.associateBy { it.sampleId }
         notifyDataSetChanged()
     }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.db
+package com.example.reviewer.db
 
 import androidx.room.Dao
 import androidx.room.Insert

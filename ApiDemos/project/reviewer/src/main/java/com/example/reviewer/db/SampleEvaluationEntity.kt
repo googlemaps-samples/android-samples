@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.db
+package com.example.reviewer.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.common_ui.catalog.SampleEvaluation
 import java.io.Serializable
 
 /**
@@ -35,4 +36,30 @@ data class SampleEvaluationEntity(
     val notes: String,
     val screenshotPath: String? = null,
     val lastUpdated: Long = System.currentTimeMillis()
-) : Serializable
+) : Serializable {
+    fun toModel(): SampleEvaluation = SampleEvaluation(
+        sampleId = sampleId,
+        sampleTitle = sampleTitle,
+        activityName = activityName,
+        category = category,
+        framework = framework,
+        status = status,
+        notes = notes,
+        screenshotPath = screenshotPath,
+        lastUpdated = lastUpdated
+    )
+
+    companion object {
+        fun fromModel(model: SampleEvaluation): SampleEvaluationEntity = SampleEvaluationEntity(
+            sampleId = model.sampleId,
+            sampleTitle = model.sampleTitle,
+            activityName = model.activityName,
+            category = model.category,
+            framework = model.framework,
+            status = model.status,
+            notes = model.notes,
+            screenshotPath = model.screenshotPath,
+            lastUpdated = model.lastUpdated
+        )
+    }
+}

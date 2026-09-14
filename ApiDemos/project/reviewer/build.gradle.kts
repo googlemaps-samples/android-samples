@@ -19,15 +19,15 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.common_ui"
+    namespace = "com.example.reviewer"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -41,13 +41,12 @@ android {
             )
         }
     }
-    lint {
-        abortOnError = false
-    }
+
     buildFeatures {
         viewBinding = true
         compose = true
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -57,6 +56,7 @@ android {
         disable += setOf("MissingInflatedId", "OnClick")
         sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
     }
+
     kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
@@ -66,11 +66,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":ApiDemos:common-ui"))
+
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.play.services.maps)
-    
+
     // Jetpack Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -80,6 +82,11 @@ dependencies {
     implementation(libs.material.icons.extended)
     implementation(libs.activity.compose)
     debugImplementation(libs.ui.tooling)
+
+    // Room Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Lifecycle & Coroutines
     implementation(libs.lifecycle.runtime.ktx)

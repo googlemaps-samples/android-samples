@@ -120,15 +120,15 @@ import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
+import com.example.common_ui.catalog.SampleEvaluation
 import com.example.common_ui.catalog.SampleItem
-import com.example.common_ui.catalog.db.SampleEvaluationEntity
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogScreen(
     isReviewerMode: Boolean = false,
-    evaluations: Map<String, SampleEvaluationEntity> = emptyMap(),
+    evaluations: Map<String, SampleEvaluation> = emptyMap(),
     onSaveEvaluation: ((targetFqcn: String, status: ReviewStatus, notes: String, sample: SampleItem) -> Unit)? = null,
     onLaunchSample: (SampleItem, Framework) -> Unit,
     onExportGrievances: (() -> Unit)? = null,
@@ -763,7 +763,7 @@ fun SampleComposeCard(
     targetFqcn: String,
     framework: Framework,
     isReviewerMode: Boolean,
-    evaluation: SampleEvaluationEntity?,
+    evaluation: SampleEvaluation?,
     status: ReviewStatus,
     onSampleClick: () -> Unit,
     onInfoClick: () -> Unit,

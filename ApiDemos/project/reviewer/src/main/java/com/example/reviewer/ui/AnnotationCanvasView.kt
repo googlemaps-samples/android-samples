@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.ui
+package com.example.reviewer.ui
 
 import android.content.Context
 import android.graphics.Bitmap

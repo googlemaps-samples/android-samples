@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.common_ui.catalog.repository
+package com.example.reviewer.repository
 
 import android.content.Context
 import android.content.Intent
@@ -22,7 +22,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import androidx.core.content.FileProvider
-import com.example.common_ui.catalog.db.SampleEvaluationEntity
+import com.example.reviewer.db.SampleEvaluationEntity
 import java.io.File
 import java.io.FileWriter
 import java.text.SimpleDateFormat
