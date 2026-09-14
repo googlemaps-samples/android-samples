@@ -78,7 +78,7 @@ python3 test/server.py --port 8888 --java-home /path/to/your/jdk
 Run the following command from the `comprehensive-catalog` directory in your terminal:
 
 ```bash
-cd /usr/local/google/home/dkhawk/git/gmp-github/android-samples/comprehensive-catalog
+cd /path/to/android-samples/comprehensive-catalog
 python3 test/server.py --port 8888
 ```
 
@@ -86,7 +86,7 @@ Then open your web browser to:
 ```text
 http://localhost:8888/MANUAL_VERIFY_CATALOG.html
 ```
-*(Or if accessing remotely across machines, use your full hostname: `http://dirtdog.c.googlers.com:8888/MANUAL_VERIFY_CATALOG.html`)*
+*(Or if accessing remotely across machines, use your workstation's hostname: `http://<hostname>:8888/MANUAL_VERIFY_CATALOG.html`)*
 
 ### For AI Agents & Automated Sidecars
 When autonomous agents need to launch and interact with the dashboard:

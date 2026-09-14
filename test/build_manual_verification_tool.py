@@ -1184,7 +1184,7 @@ def main():
       const outText = document.getElementById('exec_output_text_' + cid);
       if (outBox) outBox.style.display = 'block';
       const targetDisplay = (testMethod && testMethod !== 'SUITE' && testMethod !== 'ALL' && testMethod !== '') ? (testClass + '#' + testMethod) : (testClass + ' (Full Suite)');
-      if (outText) outText.innerText = '⏳ Running ' + lang.toUpperCase() + ' instrumented test/suite via Gradle on dirtdog.c.googlers.com...\\nTarget: ' + targetDisplay + '\\n\\nPlease wait up to 60s for device response...';
+      if (outText) outText.innerText = '⏳ Running ' + lang.toUpperCase() + ' instrumented test/suite via Gradle on ' + (window.location.hostname || 'host') + '...\\nTarget: ' + targetDisplay + '\\n\\nPlease wait up to 60s for device response...';
 
       if (activeAbortController) activeAbortController.abort();
       activeAbortController = new AbortController();
