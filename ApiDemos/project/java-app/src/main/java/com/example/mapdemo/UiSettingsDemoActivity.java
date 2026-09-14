@@ -77,6 +77,7 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         binding.rotateToggle.setOnClickListener(v -> setRotateGesturesEnabled());
     }
 
+    // [START maps_android_sample_ui_settings]
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap map) {
@@ -101,6 +102,7 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         }
         mMap.setMyLocationEnabled(binding.mylocationlayerToggle.isChecked());
     }
+    // [END maps_android_sample_ui_settings]
 
     /**
      * Checks if the map is ready (which depends on whether the Google Play services APK is

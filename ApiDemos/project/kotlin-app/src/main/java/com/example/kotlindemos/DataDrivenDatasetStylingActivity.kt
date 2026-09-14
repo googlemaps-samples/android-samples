@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Color
 import android.os.Build
 
@@ -53,6 +57,19 @@ private val TAG = DataDrivenDatasetStylingActivity::class.java.name
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
  */
+// [START maps_android_data_driven_styling_datasets]
+@Sample(
+    id = "data_driven_datasets",
+    title = "Data-Driven Dataset Styling",
+    description = "Styling custom geospatial datasets uploaded to Google Cloud Platform based on attributes.",
+    category = "Data-Driven Styling",
+    complexity = Complexity.ADVANCED,
+    tags = ["#datasets", "#datadriven", "#clouddata", "#attributes", "#filtering"],
+    purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
+    successCriteria = "Dataset points and polygons display distinct styling according to attribute values.",
+    failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
     private lateinit var mapContainer: ViewGroup
 
@@ -408,3 +425,4 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         datasetLayer?.featureStyle = styleFactory
     }
 }
+// [END maps_android_data_driven_styling_datasets]
