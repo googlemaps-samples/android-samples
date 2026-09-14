@@ -36,6 +36,7 @@ demonstrate the same features and must stay in sync.
 - Adhere to formatting rules defined in `.editorconfig`.
 - Do not use wildcard imports (`import foo.*`); use explicit imports.
 - Avoid fully qualified class names in source code; declare explicit imports at the file level instead (except to resolve naming collisions or in XML layouts).
+- Target **Java 17** (`JavaLanguageVersion.of(17)`) for all project modules. Do not downgrade bytecode to Java 8 or Java 11.
 
 ## Building and testing
 
@@ -69,7 +70,10 @@ into the root `settings.gradle.kts`; build them from their own directory.
 
 - Use Conventional Commit messages (`feat:`, `fix:`, `docs:`, ...).
   release-please parses them to generate versions and CHANGELOG.md; a wrong
-  prefix causes a wrong release bump. Never edit CHANGELOG.md by hand.
+  prefix causes a wrong release bump.
+- **PR Title Validation**: Ensure PR titles strictly conform to Conventional Commits (e.g., `fix: stale QuadItem removal` instead of `Fix stale QuadItem removal`). When PRs are squash-merged into `main`, GitHub uses the PR title as the default commit header; a non-conforming title prevents release-please from accurately categorizing changes in CHANGELOG.md or calculating semantic version increments.
+- Never edit CHANGELOG.md or `.release-please-manifest.json` by hand.
+- All pull requests are to be created as drafts (`gh pr create --draft`) until authorization is explicitly given to mark them ready for review. Always inform the user that the PR was created as a draft.
 - Keep changes scoped to one sample or one feature across its language
   variants; do not mix unrelated samples in one PR.
 - Build and test the affected modules before declaring work done, and report actual
