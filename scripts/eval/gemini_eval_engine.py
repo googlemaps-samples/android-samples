@@ -41,6 +41,15 @@ FALLBACK_MODELS = [
 ]
 
 
+def find_repo_root(start_path: Optional[Path] = None) -> Path:
+    """Finds repository root by searching upwards for settings.gradle.kts or .git."""
+    curr = (start_path or Path(__file__)).resolve()
+    for p in [curr] + list(curr.parents):
+        if (p / "settings.gradle.kts").exists() or (p / ".git").exists():
+            return p
+    return curr.parent.parent.parent
+
+
 def get_api_key(root_dir: Path) -> Optional[str]:
     """Retrieves GEMINI_API_KEY from environment or secrets.properties."""
     env_key = os.getenv("GEMINI_API_KEY")
@@ -67,7 +76,7 @@ class GeminiEvalEngine:
     ):
         self.api_key = api_key
         self.model_name = model_name
-        self.root_dir = root_dir or Path(__file__).resolve().parent.parent
+        self.root_dir = root_dir or find_repo_root()
 
     @staticmethod
     def encode_image(image_path: Path) -> Optional[str]:
@@ -315,9 +324,9 @@ Return ONLY a valid JSON object matching this schema:
         print(f"===========================================================================\n")
 
         # Regenerate report
-        report_generator = self.root_dir / "scripts" / "generate_report.py"
+        report_generator = self.root_dir / "scripts" / "eval" / "generate_report.py"
         if not report_generator.exists():
-            report_generator = self.root_dir / "scripts" / "generate_html_report.py"
+            report_generator = self.root_dir / "scripts" / "generate_report.py"
         if report_generator.exists():
             os.system(f"python3 {report_generator} -r {run_dir}")
 
@@ -348,7 +357,7 @@ def main():
     parser.add_argument("--set-golden", help="Set the specified run ID or directory as the permanent golden baseline")
 
     args = parser.parse_args()
-    root_dir = Path(__file__).resolve().parent.parent
+    root_dir = find_repo_root()
 
     if args.set_golden:
         target_dir = (root_dir / "eval_runs" / args.set_golden) if not Path(args.set_golden).exists() else Path(args.set_golden)

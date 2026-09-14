@@ -13,26 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-Backward compatibility wrapper for generate_html_report.py.
+"""Forwarding wrapper for scripts/eval/generate_html_report.py."""
 
-Delegates directly to generate_report.py while preserving all module exports
-and function signatures used across the QA suite.
-"""
+import sys
+from pathlib import Path
 
-from generate_report import (
-    PRIOR_DIRECTIVES_MAP,
-    ReviewHandler,
-    ReviewServer,
-    build_html,
-    generate_all_reports,
-    generate_html_report,
-    generate_markdown_summary,
-    get_available_runs,
-    load_catalog_metadata,
-    load_previous_run_data,
-    main,
-)
+EVAL_DIR = Path(__file__).resolve().parent / "eval"
+sys.path.insert(0, str(EVAL_DIR))
+
+import generate_html_report
 
 if __name__ == "__main__":
-    main()
+    generate_html_report.main()

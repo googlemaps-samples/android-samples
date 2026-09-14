@@ -79,10 +79,7 @@ ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 KOTLIN_APK="${ROOT_DIR}/ApiDemos/project/kotlin-app/build/outputs/apk/debug/kotlin-app-debug.apk"
 JAVA_APK="${ROOT_DIR}/ApiDemos/project/java-app/build/outputs/apk/debug/java-app-debug.apk"
 
-DEFAULT_OUTPUT_DIR="/usr/local/google/home/dkhawk/.gemini/jetski/brain/7f6d68d6-c603-43cd-93c6-c922c844c15a"
-if [[ ! -d "${DEFAULT_OUTPUT_DIR}" ]]; then
-    DEFAULT_OUTPUT_DIR="${ROOT_DIR}/build/reports/verification"
-fi
+DEFAULT_OUTPUT_DIR="${EVAL_OUTPUT_DIR:-${ROOT_DIR}/build/reports/verification}"
 
 OUTPUT_DIR="${DEFAULT_OUTPUT_DIR}"
 SCENARIO="dev-catalog"

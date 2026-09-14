@@ -343,7 +343,8 @@ const RUN_ID = "__RUN_ID__";
           md += "- **🎬 Video Replay (25%)**: " + vids.join(" | ") + "\n";
         }
         if (r.operator_notes) {
-          md += "- **✍️ Operator Notes (dkhawk)**: " + r.operator_notes + "\n";
+          const opLabel = (typeof window !== "undefined" && window.DEFAULT_OPERATOR) ? (" (" + window.DEFAULT_OPERATOR + ")") : "";
+          md += "- **✍️ Operator Notes" + opLabel + "**: " + r.operator_notes + "\n";
         }
         md += "\n---\n\n";
       });

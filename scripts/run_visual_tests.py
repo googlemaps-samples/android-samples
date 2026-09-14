@@ -39,6 +39,8 @@ import xml.etree.ElementTree as ET
 # Import existing evaluation components
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPT_DIR.parent
+EVAL_DIR = SCRIPT_DIR / "eval"
+sys.path.insert(0, str(EVAL_DIR))
 sys.path.append(str(SCRIPT_DIR))
 
 import gemini_eval_engine
