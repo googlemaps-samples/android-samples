@@ -100,8 +100,7 @@ if (!isCI) {
             secretsFile.inputStream().use { secrets.load(it) }
 
             // Check for relevant key names (e.g., MAPS_API_KEY or MAPS3D_API_KEY)
-            val apiKey = secrets.getProperty("MAPS_API_KEY") ?: secrets.getProperty("MAPS3D_API_KEY") ?: ""
-            println("Checking API Key in secrets.properties: '$apiKey'")
+            val apiKey = (secrets.getProperty("MAPS_API_KEY") ?: secrets.getProperty("MAPS3D_API_KEY") ?: "").trim()
 
             if (apiKey.isBlank() || !apiKey.matches(Regex("^AIza[a-zA-Z0-9_-]{35}$"))) {
                 throw GradleException(
