@@ -117,9 +117,8 @@ jobs:
 
     - name: Build and check
       run: |
+        ./gradlew :snippets:kotlin-app:assembleDebug
         ./gradlew :snippets:java-app:assembleDebug
-        ./gradlew :snippets:app-ktx:assembleDebug
-        ./gradlew :snippets:app-utils-ktx:assembleDebug
         ./gradlew :snippets:app-compose:assembleDebug
         ./gradlew :snippets:app-places-ktx:assembleDebug
 
