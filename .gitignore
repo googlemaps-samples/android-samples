@@ -11,8 +11,16 @@ secrets.properties
 .vscode/
 **/bin/
 .kotlin/
+.gradle-test/
 eval_runs/
 scripts/eval/
 scripts/run_artemis_suite.py
+
+# Temporary verification screenshot files
+*_screen*.png
+sydney_final.png
+*_sydney.png
+*_verified.png
+!**/assets/screenshots/*.png
 __pycache__/
 *.pyc
