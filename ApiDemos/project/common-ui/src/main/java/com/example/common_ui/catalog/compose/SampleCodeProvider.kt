@@ -21,8 +21,7 @@ import com.example.common_ui.catalog.Framework
 /**
  * Single Source of Truth Code Provider.
  *
- * STRICT RULE: Only quotes code surrounded with official region tags
- * (// [START <tag>] ... // [END <tag>]).
+ * STRICT RULE: Only quotes code surrounded with official region tags.
  *
  * This guarantees complete consistency between the source code, samples,
  * in-app catalog reviewer, and Google Maps Platform documentation.
@@ -2422,8 +2421,6 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
      */
     @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
-
-        // [START maps_check_location_permission]
         // 1. Check if permissions are granted, if so, enable the my location layer
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -2461,7 +2458,6 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
             ),
             LOCATION_PERMISSION_REQUEST_CODE
         )
-        // [END maps_check_location_permission]
     }
 
     override fun onMyLocationButtonClick(): Boolean {
@@ -2477,7 +2473,6 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
             .show()
     }
 
-    // [START maps_check_location_permission_result]
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -2509,8 +2504,6 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
             
         }
     }
-
-    // [END maps_check_location_permission_result]
     override fun onResumeFragments() {
         super.onResumeFragments()
         if (permissionDenied) {
@@ -2596,7 +2589,6 @@ public class MyLocationDemoActivity extends SamplesBaseActivity
      */
     @SuppressLint("MissingPermission")
     private void enableMyLocation() {
-        // [START maps_check_location_permission]
         // 1. Check if permissions are granted, if so, enable the my location layer
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
@@ -2608,7 +2600,6 @@ public class MyLocationDemoActivity extends SamplesBaseActivity
 
         // 2. Otherwise, request location permissions from the user.
         PermissionUtils.requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE, true);
-        // [END maps_check_location_permission]
     }
 
     @Override
@@ -2624,7 +2615,6 @@ public class MyLocationDemoActivity extends SamplesBaseActivity
         Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
     }
 
-    // [START maps_check_location_permission_result]
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
         @NonNull int[] grantResults) {
@@ -2644,7 +2634,6 @@ public class MyLocationDemoActivity extends SamplesBaseActivity
             
         }
     }
-    // [END maps_check_location_permission_result]
 
     @Override
     protected void onResumeFragments() {
@@ -3026,7 +3015,6 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
                 popupMenu.show();
         });
     }
-    // [END_EXCLUDE]
 
     private void centerMapOnLocation(LatLng location, float zoomLevel) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
