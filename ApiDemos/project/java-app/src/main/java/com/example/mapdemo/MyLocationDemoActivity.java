@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,6 +45,18 @@ import android.widget.Toast;
  * android.Manifest.permission#ACCESS_COARSE_LOCATION} are requested at run time. If either
  * permission is not granted, the Activity is finished with an error message.
  */
+@Sample(
+    id = "my_location",
+    title = "My Location Layer",
+    description = "Enabling blue dot location indicator and My Location button with runtime permissions.",
+    category = "Location & Sensors",
+    complexity = Complexity.SIMPLE,
+    tags = {"#location", "#mylocation", "#permissions", "#bluedot"},
+    purpose = "Demonstrates requesting ACCESS_FINE_LOCATION permissions and enabling the blue dot location layer.",
+    successCriteria = "Tapping My Location button centers camera on user's current GPS position.",
+    failureIndicators = "Permission denial causes unhandled crash or location button missing.",
+    framework = Framework.JAVA_VIEWS
+)
 // [START maps_android_sample_my_location]
 public class MyLocationDemoActivity extends SamplesBaseActivity
     implements
