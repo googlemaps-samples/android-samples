@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.widget.Toast
 
@@ -32,6 +36,18 @@ import kotlinx.coroutines.launch
 /**
  * This shows how to constrain the camera to specific boundaries and zoom levels.
  */
+@Sample(
+    id = "camera_clamping",
+    title = "Camera Clamping & Bounds",
+    description = "Constraining camera viewport to LatLngBounds and dynamic min/max zoom limits.",
+    category = "Camera Controls",
+    complexity = Complexity.SIMPLE,
+    tags = ["#camera", "#clamping", "#bounds", "#zoomlimits", "#latlngbounds"],
+    purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider limits.",
+    successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds immediately.",
+    failureIndicators = "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset Bounds'.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class CameraClampingDemoActivity : SamplesBaseActivity() {
 
   internal lateinit var map: GoogleMap

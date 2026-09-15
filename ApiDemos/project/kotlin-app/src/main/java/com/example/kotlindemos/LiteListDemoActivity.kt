@@ -16,6 +16,10 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -41,6 +45,18 @@ import com.google.android.gms.maps.model.MarkerOptions
  * Note the use of the view holder pattern with the
  * [com.google.android.gms.maps.OnMapReadyCallback].
  */
+@Sample(
+    id = "lite_list",
+    title = "Lite Mode in RecyclerView",
+    description = "High-performance Lite Mode map instances inside smooth scrolling RecyclerView list rows.",
+    category = "Lists & Performance",
+    complexity = Complexity.ADVANCED,
+    tags = ["#litemode", "#recyclerview", "#lists", "#viewholder", "#lifecycle"],
+    purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper lifecycle management.",
+    successCriteria = "List scrolls at 60/120fps without stutter; map snapshots display accurate markers per row.",
+    failureIndicators = "RecyclerView scrolling stutters or recycled MapViews display stale map markers.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class LiteListDemoActivity : SamplesBaseActivity() {
 
     private val linearLayoutManager: LinearLayoutManager by lazy {
@@ -73,7 +89,8 @@ class LiteListDemoActivity : SamplesBaseActivity() {
     }
 
     /** Create options menu to switch between the linear and grid layout managers. */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(com.example.common_ui.R.menu.lite_list_menu, menu)
         return true
     }
