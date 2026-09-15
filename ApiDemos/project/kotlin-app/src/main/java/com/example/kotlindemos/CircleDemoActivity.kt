@@ -16,6 +16,10 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
@@ -49,6 +53,18 @@ import java.util.ArrayList
 /**
  * This shows how to draw circles on a map.
  */
+@Sample(
+    id = "circles",
+    title = "Circles & Geodesic Radii",
+    description = "Drawing geographic circles with dynamic center drag, radius sliders, and stroke styling.",
+    category = "Shapes & Geometry",
+    complexity = Complexity.SIMPLE,
+    tags = ["#shapes", "#circles", "#radius", "#geodesic"],
+    purpose = "Demonstrates drawing circles with radius defined in meters and dynamic updates via seekbars.",
+    successCriteria = "Adjusting radius slider dynamically updates circle boundary in real-time.",
+    failureIndicators = "Circle distorted or radius math inaccurate across high latitudes.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class CircleDemoActivity : SamplesBaseActivity(),
     SeekBar.OnSeekBarChangeListener,
     AdapterView.OnItemSelectedListener,

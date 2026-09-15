@@ -98,6 +98,8 @@ dependencies {
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(project(":visual-testing"))
+    androidTestImplementation(libs.uiautomator)
 
     implementation(project(":ApiDemos:common-ui"))
 }
