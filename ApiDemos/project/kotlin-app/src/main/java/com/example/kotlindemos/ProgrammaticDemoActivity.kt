@@ -14,7 +14,6 @@
 package com.example.kotlindemos
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -34,9 +33,9 @@ class ProgrammaticDemoActivity : SamplesBaseActivity() {
         val mapFragment =
             supportFragmentManager.findFragmentByTag(MAP_FRAGMENT_TAG) as SupportMapFragment?
                 ?: SupportMapFragment.newInstance().also {
-                    // Then we add it using a FragmentTransaction.
+                    // Then we add it using a FragmentTransaction into the standard sample content container.
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.add(android.R.id.content, it, MAP_FRAGMENT_TAG)
+                    fragmentTransaction.add(com.example.common_ui.R.id.sample_content_container, it, MAP_FRAGMENT_TAG)
                     fragmentTransaction.commit()
                 }
 
@@ -47,7 +46,6 @@ class ProgrammaticDemoActivity : SamplesBaseActivity() {
                 title("Marker")
             }
         }
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
     }
 
     companion object {
