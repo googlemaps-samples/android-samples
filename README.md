@@ -45,7 +45,13 @@ To run the samples, you will need:
 
 ## Verifying the build
 
-To verify that all samples build and pass tests, run:
+### Interactive Falsifiable Verification Dashboard
+We provide an interactive web dashboard (`MANUAL_VERIFY_CATALOG.html`) and live execution API server (`test/server.py`) that allows stepping through and evaluating all 39 SDK capabilities across both Kotlin and Java live on attached devices.
+
+👉 **See the [Verification Tool Guide](VERIFICATION_TOOL_GUIDE.md) for full instructions on how to start the server, use the UI controls, and automate evaluations via AI agents.**
+
+### Command Line Verification
+To verify that all samples build and pass tests via CLI, run:
 
 ```bash
 ./scripts/verify_all.sh
