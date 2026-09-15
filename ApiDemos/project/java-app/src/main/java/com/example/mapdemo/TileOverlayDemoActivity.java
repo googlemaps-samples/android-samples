@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -38,6 +42,18 @@ import java.util.Locale;
 /**
  * This demonstrates how to add a tile overlay to a map.
  */
+@Sample(
+    id = "tile_overlay",
+    title = "Tile Overlays & TileProvider",
+    description = "Custom TileProvider rendering coordinate grid tiles and custom imagery.",
+    category = "Overlays & Tiles",
+    complexity = Complexity.SIMPLE,
+    tags = {"#overlays", "#tiles", "#tileprovider", "#customtiles"},
+    purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate overlays).",
+    successCriteria = "Tile grid numbers (x, y, zoom) render cleanly over the base map.",
+    failureIndicators = "Tile rendering blocks UI thread or tiles fail to fetch on pan.",
+    framework = Framework.JAVA_VIEWS
+)
 public class TileOverlayDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnMapReadyCallback {
 
