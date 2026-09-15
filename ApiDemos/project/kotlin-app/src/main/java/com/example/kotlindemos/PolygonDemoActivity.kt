@@ -17,6 +17,10 @@
 
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -45,6 +49,18 @@ import java.util.Arrays
 /**
  * This shows how to draw polygons on a map.
  */
+@Sample(
+    id = "polygons",
+    title = "Polygons & Holes",
+    description = "Drawing geodesic polygons with fill colors, stroke patterns, click events, and interior holes.",
+    category = "Shapes & Geometry",
+    complexity = Complexity.SIMPLE,
+    tags = ["#shapes", "#polygons", "#holes", "#geometry", "#stroke", "#fill"],
+    purpose = "Demonstrates drawing styled polygons with interior holes (donut polygons), click listeners, and stroke caps.",
+    successCriteria = "Polygons render with specified fill opacity and interior cutout holes properly subtracted.",
+    failureIndicators = "Holes not rendering as transparent cutouts or stroke color incorrect.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class PolygonDemoActivity :
         SamplesBaseActivity(),
         OnMapReadyCallback,
