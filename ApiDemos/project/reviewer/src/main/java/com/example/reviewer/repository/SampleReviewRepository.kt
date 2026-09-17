@@ -17,16 +17,20 @@
 package com.example.reviewer.repository
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
 import com.example.common_ui.catalog.SampleItem
+import com.example.common_ui.catalog.compose.CatalogActivity
+import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
+import com.example.reviewer.compose.ReviewerActivity
 import com.example.reviewer.db.SampleCatalogDatabase
 import com.example.reviewer.db.SampleEvaluationDao
 import com.example.reviewer.db.SampleEvaluationEntity
-import com.example.common_ui.catalog.ui.UnifiedCatalogActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -212,6 +216,7 @@ class SampleReviewRepository private constructor(
         @Volatile
         private var INSTANCE: SampleReviewRepository? = null
 
+        @JvmStatic
         fun getInstance(context: Context): SampleReviewRepository {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: run {
@@ -223,16 +228,61 @@ class SampleReviewRepository private constructor(
 
         @JvmStatic
         @JvmOverloads
-        fun launchSample(activity: Activity, sample: SampleItem, framework: Framework, isReviewerMode: Boolean = true) {
-            val className = sample.getActivityForFramework(framework) ?: return
+        fun launchSample(
+            activity: Activity,
+            sample: SampleItem,
+            framework: Framework,
+            isReviewerMode: Boolean = true
+        ) {
+            val className = sample.getActivityForFramework(framework)
+            if (className.isNullOrBlank()) {
+                Toast.makeText(
+                    activity,
+                    "No ${framework.displayName} implementation available for ${sample.title}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+
+            val targetPackage = when {
+                className.startsWith("com.example.mapdemo.") -> "com.example.mapdemo"
+                className.startsWith("com.example.kotlindemos.") -> "com.example.kotlindemos"
+                else -> activity.packageName
+            }
+
             val intent = Intent().apply {
-                setClassName(activity.packageName, className)
+                setClassName(targetPackage, className)
                 putExtra(UnifiedCatalogActivity.EXTRA_SAMPLE_ID, sample.id)
                 putExtra("extra_sample_id", sample.id)
                 putExtra("extra_is_reviewer_mode", isReviewerMode)
             }
-            activity.finish()
-            activity.startActivity(intent)
+
+            try {
+                if (intent.resolveActivity(activity.packageManager) != null) {
+                    activity.startActivity(intent)
+                    if (activity !is ReviewerActivity && activity !is CatalogActivity) {
+                        activity.finish()
+                    }
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "${framework.displayName} app ($targetPackage) is not installed",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(
+                    activity,
+                    "${framework.displayName} app ($targetPackage) is not installed",
+                    Toast.LENGTH_LONG
+                ).show()
+            } catch (e: Exception) {
+                Toast.makeText(
+                    activity,
+                    "Could not launch ${sample.title}: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 }

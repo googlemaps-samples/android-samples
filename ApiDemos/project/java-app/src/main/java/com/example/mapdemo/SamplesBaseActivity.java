@@ -17,17 +17,21 @@ package com.example.mapdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.lifecycle.LifecycleOwnerKt;
 
 import com.example.common_ui.catalog.Framework;
@@ -40,6 +44,7 @@ import com.example.reviewer.ui.ReviewEvaluationDialog;
 import com.example.reviewer.ui.SampleExpectationsBottomSheet;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import kotlin.Unit;
 import kotlinx.coroutines.BuildersKt;
 import kotlinx.coroutines.Dispatchers;
 
@@ -53,11 +58,17 @@ public class SamplesBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         applyImmersiveStickyMode();
-        reviewRepository = SampleReviewRepository.Companion.getInstance(this);
+        reviewRepository = SampleReviewRepository.getInstance(this);
         resolveSampleMetadata();
         super.setContentView(com.example.common_ui.R.layout.activity_sample_base);
         setupEdgeToEdgeInsets();
         setupSampleToolbar();
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                navigateBackToCatalog();
+            }
+        });
     }
 
     @Override
@@ -75,10 +86,10 @@ public class SamplesBaseActivity extends AppCompatActivity {
     }
 
     private void applyImmersiveStickyMode() {
-        androidx.core.view.WindowInsetsControllerCompat insetsController =
-                androidx.core.view.WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        WindowInsetsControllerCompat insetsController =
+                WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         insetsController.setSystemBarsBehavior(
-                androidx.core.view.WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
         insetsController.hide(WindowInsetsCompat.Type.systemBars());
     }
 
@@ -234,16 +245,8 @@ public class SamplesBaseActivity extends AppCompatActivity {
                         Framework.JAVA_VIEWS,
                         isReviewerMode(),
                         (sampleItem, framework) -> {
-                            String targetClass = sampleItem.getActivityForFramework(framework);
-                            if (targetClass != null && !targetClass.equals(getClass().getName())) {
-                                finish();
-                                Intent intent = new Intent();
-                                intent.setClassName(getPackageName(), targetClass);
-                                intent.putExtra("extra_sample_id", sampleItem.getId());
-                                intent.putExtra("extra_is_reviewer_mode", isReviewerMode());
-                                startActivity(intent);
-                            }
-                            return kotlin.Unit.INSTANCE;
+                            SampleReviewRepository.launchSample(SamplesBaseActivity.this, sampleItem, framework, isReviewerMode());
+                            return Unit.INSTANCE;
                         }
                 );
                 sheet.show(getSupportFragmentManager(), "SampleExpectationsBottomSheet");
@@ -273,12 +276,12 @@ public class SamplesBaseActivity extends AppCompatActivity {
             if (currentSampleMetadata != null) {
                 reviewRepository.getNextUncheckedSampleAsync(currentSampleMetadata.getId(), Framework.JAVA_VIEWS, next -> {
                     if (next != null) {
-                        SampleReviewRepository.Companion.launchSample(SamplesBaseActivity.this, next, Framework.JAVA_VIEWS);
+                        SampleReviewRepository.launchSample(SamplesBaseActivity.this, next, Framework.JAVA_VIEWS);
                     } else {
                         Toast.makeText(SamplesBaseActivity.this, "🎉 All Java samples reviewed!", Toast.LENGTH_LONG).show();
                         navigateBackToCatalog();
                     }
-                    return kotlin.Unit.INSTANCE;
+                    return Unit.INSTANCE;
                 });
             }
             return true;
@@ -286,9 +289,9 @@ public class SamplesBaseActivity extends AppCompatActivity {
             if (currentSampleMetadata != null) {
                 reviewRepository.getPreviousSampleAsync(currentSampleMetadata.getId(), Framework.JAVA_VIEWS, prev -> {
                     if (prev != null) {
-                        SampleReviewRepository.Companion.launchSample(SamplesBaseActivity.this, prev, Framework.JAVA_VIEWS);
+                        SampleReviewRepository.launchSample(SamplesBaseActivity.this, prev, Framework.JAVA_VIEWS);
                     }
-                    return kotlin.Unit.INSTANCE;
+                    return Unit.INSTANCE;
                 });
             }
             return true;
@@ -297,18 +300,13 @@ public class SamplesBaseActivity extends AppCompatActivity {
                 String targetFqcn = currentSampleMetadata.getTargetFqcn(Framework.JAVA_VIEWS);
                 reviewRepository.deleteEvaluation(targetFqcn, () -> {
                     Toast.makeText(this, "Reverted " + currentSampleMetadata.getTitle() + " to Unchecked", Toast.LENGTH_SHORT).show();
-                    return kotlin.Unit.INSTANCE;
+                    return Unit.INSTANCE;
                 });
             }
             return true;
         } else if (item.getItemId() == 2002) {
             if (currentSampleMetadata != null && currentSampleMetadata.getKotlinActivity() != null) {
-                finish();
-                Intent intent = new Intent();
-                intent.setClassName(getPackageName(), currentSampleMetadata.getKotlinActivity());
-                intent.putExtra("extra_sample_id", currentSampleMetadata.getId());
-                intent.putExtra("extra_is_reviewer_mode", isReviewerMode());
-                startActivity(intent);
+                SampleReviewRepository.launchSample(this, currentSampleMetadata, Framework.KOTLIN_VIEWS, isReviewerMode());
             }
             return true;
         }
@@ -320,10 +318,10 @@ public class SamplesBaseActivity extends AppCompatActivity {
         if (root == null) return;
         View topBar = root.findViewById(com.example.common_ui.R.id.top_bar);
         if (topBar != null) {
-            android.util.TypedValue typedValue = new android.util.TypedValue();
+            TypedValue typedValue = new TypedValue();
             int baseHeight;
             if (getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
-                baseHeight = android.util.TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());
+                baseHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());
             } else {
                 baseHeight = (int) (56 * getResources().getDisplayMetrics().density);
             }

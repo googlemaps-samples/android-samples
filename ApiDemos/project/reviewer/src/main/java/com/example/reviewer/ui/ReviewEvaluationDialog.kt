@@ -29,6 +29,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
@@ -40,11 +41,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleItem
+import com.example.reviewer.compose.ReviewerActivity
 import com.example.reviewer.repository.SampleReviewRepository
+import com.google.android.material.R as MaterialR
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -66,10 +72,13 @@ object ReviewEvaluationDialog {
         framework: Framework,
         initialStatus: ReviewStatus = ReviewStatus.PASSING
     ) {
+        if (activity.isFinishing || activity.isDestroyed) return
         if (initialStatus == ReviewStatus.NEEDS_WORK) {
             // Freeze and capture the current screen before rendering the dialog
             ScreenCaptureHelper.captureActivity(activity) { capturedBitmap ->
-                showEvaluationDialogInternal(activity, sample, framework, initialStatus, capturedBitmap)
+                if (!activity.isFinishing && !activity.isDestroyed) {
+                    showEvaluationDialogInternal(activity, sample, framework, initialStatus, capturedBitmap)
+                }
             }
         } else {
             showEvaluationDialogInternal(activity, sample, framework, initialStatus, null)
@@ -86,8 +95,22 @@ object ReviewEvaluationDialog {
         val targetFqcn = sample.getTargetFqcn(framework)
         val repository = SampleReviewRepository.getInstance(activity)
 
-        val dialog = Dialog(activity, com.google.android.material.R.style.Theme_Material3_DayNight_Dialog)
+        val dialog = Dialog(activity, MaterialR.style.Theme_Material3_DayNight_Dialog)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        // Prevent window leak when activity is destroyed (e.g. on orientation change)
+        val lifecycleOwner = activity as? LifecycleOwner
+        val lifecycleObserver = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                if (dialog.isShowing) {
+                    dialog.dismiss()
+                }
+            }
+        }
+        lifecycleOwner?.lifecycle?.addObserver(lifecycleObserver)
+        dialog.setOnDismissListener {
+            lifecycleOwner?.lifecycle?.removeObserver(lifecycleObserver)
+        }
 
         val displayMetrics = activity.resources.displayMetrics
         val dialogMaxHeight = (displayMetrics.heightPixels * 0.88).toInt()
@@ -471,8 +494,16 @@ object ReviewEvaluationDialog {
         bottomBar.addView(saveAndNextBtn)
         rootLayout.addView(bottomBar)
 
+        val targetHeight = if (status == ReviewStatus.NEEDS_WORK && capturedBitmap != null) {
+            dialogMaxHeight
+        } else {
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        }
         dialog.setContentView(rootLayout)
-        dialog.window?.setLayout((displayMetrics.widthPixels * 0.94).toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.apply {
+            setLayout((displayMetrics.widthPixels * 0.94).toInt(), targetHeight)
+            setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        }
         dialog.show()
     }
 
@@ -489,6 +520,14 @@ object ReviewEvaluationDialog {
                     SampleReviewRepository.launchSample(activity, nextSample, framework)
                 } else {
                     Toast.makeText(activity, "🎉 All ${framework.displayName} samples reviewed!", Toast.LENGTH_LONG).show()
+                    if (activity.isTaskRoot) {
+                        try {
+                            val intent = Intent(activity, ReviewerActivity::class.java)
+                            activity.startActivity(intent)
+                        } catch (e: Exception) {
+                            // Fallback
+                        }
+                    }
                     activity.finish()
                 }
             }
