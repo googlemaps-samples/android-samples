@@ -17,15 +17,19 @@ import android.content.Context
 import android.content.Intent
 import com.example.common_ui.R
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
@@ -53,6 +57,9 @@ open class SamplesBaseActivity : AppCompatActivity() {
         super.setContentView(com.example.common_ui.R.layout.activity_sample_base)
         setupEdgeToEdgeInsets()
         setupSampleToolbar()
+        onBackPressedDispatcher.addCallback(this) {
+            navigateBackToCatalog()
+        }
     }
 
     override fun onResume() {
@@ -68,9 +75,9 @@ open class SamplesBaseActivity : AppCompatActivity() {
     }
 
     private fun applyImmersiveStickyMode() {
-        val insetsController = androidx.core.view.WindowCompat.getInsetsController(window, window.decorView)
+        val insetsController = WindowCompat.getInsetsController(window, window.decorView)
         insetsController.systemBarsBehavior =
-            androidx.core.view.WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         insetsController.hide(WindowInsetsCompat.Type.systemBars())
     }
 
@@ -229,15 +236,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
                         framework = Framework.KOTLIN_VIEWS,
                         isReviewerMode = isReviewerMode,
                         onLaunch = { s, fw ->
-                            val targetClass = s.getActivityForFramework(fw)
-                            if (targetClass != null && targetClass != this::class.java.name) {
-                                finish()
-                                val intent = Intent().setClassName(packageName, targetClass).apply {
-                                    putExtra("extra_sample_id", s.id)
-                                    putExtra("extra_is_reviewer_mode", isReviewerMode)
-                                }
-                                startActivity(intent)
-                            }
+                            SampleReviewRepository.launchSample(this@SamplesBaseActivity, s, fw, isReviewerMode)
                         }
                     )
                     sheet.show(supportFragmentManager, "SampleExpectationsBottomSheet")
@@ -304,14 +303,8 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 true
             }
             2002 -> {
-                val javaActivity = metadata?.javaActivity
-                if (javaActivity != null) {
-                    finish()
-                    val intent = Intent().setClassName(packageName, javaActivity).apply {
-                        putExtra("extra_sample_id", metadata.id)
-                        putExtra("extra_is_reviewer_mode", isReviewerMode)
-                    }
-                    startActivity(intent)
+                if (metadata != null && metadata.javaActivity != null) {
+                    SampleReviewRepository.launchSample(this, metadata, Framework.JAVA_VIEWS, isReviewerMode)
                 }
                 true
             }
@@ -323,9 +316,9 @@ open class SamplesBaseActivity : AppCompatActivity() {
         val root = findViewById<View>(android.R.id.content) ?: return
         val topBar = root.findViewById<View>(R.id.top_bar)
         if (topBar != null) {
-            val typedValue = android.util.TypedValue()
+            val typedValue = TypedValue()
             val baseHeight = if (theme.resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
-                android.util.TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
+                TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
             } else {
                 (56 * resources.displayMetrics.density).toInt()
             }

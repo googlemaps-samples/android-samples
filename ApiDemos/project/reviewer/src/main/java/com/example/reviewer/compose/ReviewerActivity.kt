@@ -18,17 +18,18 @@ package com.example.reviewer.compose
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.SampleEvaluation
 import com.example.common_ui.catalog.SampleItem
+import com.example.common_ui.catalog.compose.CatalogActivity
 import com.example.common_ui.catalog.compose.CatalogScreen
 import com.example.common_ui.catalog.compose.CatalogTheme
 import com.example.reviewer.repository.GrievanceReportExporter
@@ -73,22 +74,17 @@ open class ReviewerActivity : ComponentActivity() {
                         }
                     },
                     onSwitchMode = {
-                        val intent = Intent().setClassName(packageName, "com.example.common_ui.catalog.compose.CatalogActivity")
-                        startActivity(intent)
+                        try {
+                            val intent = Intent(this@ReviewerActivity, CatalogActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } catch (e: Exception) {
+                            Toast.makeText(this@ReviewerActivity, "Catalog mode not available: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 )
             }
         }
-        ContextCompat.registerReceiver(
-            this,
-            object : android.content.BroadcastReceiver() {
-                override fun onReceive(context: android.content.Context?, intent: Intent?) {
-                    exportAiringOfGrievances(silent = true)
-                }
-            },
-            android.content.IntentFilter("com.google.maps.EXPORT_EVALUATIONS"),
-            ContextCompat.RECEIVER_EXPORTED
-        )
     }
 
     private fun exportAiringOfGrievances(silent: Boolean = false) {
@@ -99,7 +95,7 @@ open class ReviewerActivity : ComponentActivity() {
                     val shareIntent = GrievanceReportExporter.createShareIntent(this@ReviewerActivity, file)
                     startActivity(Intent.createChooser(shareIntent, "Share Evaluation Report"))
                 } else {
-                    android.util.Log.i("GMPReviewer", "Exported evaluation report to ${file.absolutePath}")
+                    Log.i("GMPReviewer", "Exported evaluation report to ${file.absolutePath}")
                 }
             } catch (e: Exception) {
                 if (!silent) {
@@ -110,20 +106,6 @@ open class ReviewerActivity : ComponentActivity() {
     }
 
     private fun launchSample(sample: SampleItem, framework: Framework) {
-        val className = sample.getActivityForFramework(framework)
-        if (className.isNullOrBlank()) {
-            Toast.makeText(this, "No ${framework.displayName} implementation available for ${sample.title}", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        try {
-            val intent = Intent().setClassName(packageName, className).apply {
-                putExtra("extra_sample_id", sample.id)
-                putExtra("extra_is_reviewer_mode", true)
-            }
-            startActivity(intent)
-        } catch (e: Exception) {
-            Toast.makeText(this, "Could not launch ${sample.title}: ${e.message}", Toast.LENGTH_LONG).show()
-        }
+        SampleReviewRepository.launchSample(this, sample, framework, isReviewerMode = true)
     }
 }

@@ -16,6 +16,7 @@
 
 package com.example.reviewer.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,12 +31,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.SampleEvaluation
 import com.example.common_ui.catalog.SampleItem
 import com.example.common_ui.catalog.compose.SampleDetailContent
+import com.example.reviewer.compose.ReviewerActivity
 import com.example.reviewer.repository.SampleReviewRepository
+import com.google.android.material.R as MaterialR
 import kotlinx.coroutines.launch
 
 /**
@@ -79,7 +83,7 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, com.google.android.material.R.style.Theme_Material3_DayNight_NoActionBar)
+        setStyle(STYLE_NORMAL, MaterialR.style.Theme_Material3_DayNight_NoActionBar)
         sample = arguments?.getSerializable(ARG_SAMPLE) as? SampleItem
         currentFramework = (arguments?.getSerializable(ARG_FRAMEWORK) as? Framework) ?: Framework.KOTLIN_VIEWS
         isReviewerMode = arguments?.getBoolean(ARG_IS_REVIEWER_MODE, true) ?: true
@@ -125,16 +129,26 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
                                 }
                             },
                             onSaveAndNext = { status, notes ->
+                                val hostActivity = activity
+                                val scope = (hostActivity as? LifecycleOwner)?.lifecycleScope ?: lifecycleScope
                                 repository.saveEvaluation(targetFqcn, status, notes, s) {
                                     dismiss()
-                                    lifecycleScope.launch {
+                                    scope.launch {
                                         val nextSample = repository.getNextUncheckedSample(s.id, currentFramework)
-                                        val act = activity
+                                        val act = hostActivity ?: activity
                                         if (act != null) {
                                             if (nextSample != null) {
                                                 SampleReviewRepository.launchSample(act, nextSample, currentFramework)
                                             } else {
                                                 Toast.makeText(act, "🎉 All ${currentFramework.displayName} samples reviewed!", Toast.LENGTH_LONG).show()
+                                                if (act.isTaskRoot) {
+                                                    try {
+                                                        val intent = Intent(act, ReviewerActivity::class.java)
+                                                        act.startActivity(intent)
+                                                    } catch (e: Exception) {
+                                                        // Fallback
+                                                    }
+                                                }
                                                 act.finish()
                                             }
                                         }
@@ -143,7 +157,12 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
                             },
                             onLaunch = { fw ->
                                 dismiss()
-                                onLaunchRequested?.invoke(s, fw)
+                                val act = activity
+                                if (act != null) {
+                                    SampleReviewRepository.launchSample(act, s, fw, isReviewerMode)
+                                } else {
+                                    onLaunchRequested?.invoke(s, fw)
+                                }
                             }
                         )
                     }

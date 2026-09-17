@@ -98,7 +98,8 @@ class SampleCardAdapter(
             }
 
             // Reviewer evaluation
-            val evaluation = evaluationsMap[sample.id]
+            val targetFqcn = sample.getTargetFqcn(currentFramework)
+            val evaluation = evaluationsMap[targetFqcn] ?: evaluationsMap[sample.id]
             val status = ReviewStatus.fromString(evaluation?.status)
 
             if (isReviewerMode) {
