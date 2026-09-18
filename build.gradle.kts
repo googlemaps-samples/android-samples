@@ -23,3 +23,13 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.ksp) apply false
 }
+
+// Share the isCI flag with all subprojects (optional, the script handles it if omitted)
+val isCI = System.getenv("CI")?.toBoolean() ?: false
+extra["isCI"] = isCI
+
+// Enforce that required API keys are present in secrets.properties
+extra["requiredSecrets"] = listOf("MAPS_API_KEY")
+
+// Apply the enforcement script
+apply(from = "gradle/secrets-enforcement.gradle.kts")
