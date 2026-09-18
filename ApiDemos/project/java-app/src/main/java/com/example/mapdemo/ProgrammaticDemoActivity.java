@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +35,7 @@ public class ProgrammaticDemoActivity extends SamplesBaseActivity implements OnM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(com.example.common_ui.R.layout.activity_sample_base);
 
         // It isn't possible to set a fragment's id programmatically so we set a tag instead and
         // search for it using that.
@@ -47,15 +47,13 @@ public class ProgrammaticDemoActivity extends SamplesBaseActivity implements OnM
             // To programmatically add the map, we first create a SupportMapFragment.
             mapFragment = SupportMapFragment.newInstance();
 
-            // Then we add it using a FragmentTransaction.
+            // Then we add it using a FragmentTransaction into the standard sample content container.
             FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(android.R.id.content, mapFragment, MAP_FRAGMENT_TAG);
+            fragmentTransaction.add(com.example.common_ui.R.id.sample_content_container, mapFragment, MAP_FRAGMENT_TAG);
             fragmentTransaction.commit();
         }
         mapFragment.getMapAsync(this);
-
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
     @Override
