@@ -40,7 +40,7 @@ jobs:
         persist-credentials: false
 
     - name: set up Java 21
-      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
       with:
         distribution: 'temurin'
         java-version: '21'
@@ -65,7 +65,7 @@ jobs:
         persist-credentials: false
 
     - name: set up Java 21
-      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
       with:
         distribution: 'temurin'
         java-version: '21'
@@ -86,7 +86,7 @@ jobs:
         persist-credentials: false
 
     - name: set up Java 21
-      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
       with:
         distribution: 'temurin'
         java-version: '21'
@@ -107,7 +107,7 @@ jobs:
         persist-credentials: false
 
     - name: set up Java 21
-      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
       with:
         distribution: 'temurin'
         java-version: '21'
@@ -134,7 +134,7 @@ jobs:
         persist-credentials: false
 
     - name: set up Java 21
-      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+      uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
       with:
         distribution: 'temurin'
         java-version: '21'
@@ -160,7 +160,7 @@ jobs:
         with:
           persist-credentials: false
       - name: set up Java 21
-        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: 'temurin'
           java-version: '21'
