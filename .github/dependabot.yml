@@ -18,6 +18,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Let a release sit before adopting it, narrowing the window in which a
+    # compromised or immediately-yanked version can be pulled in.
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
     open-pull-requests-limit: 10
     commit-message:
       prefix: "chore(deps)"
@@ -32,6 +39,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Let a release sit before adopting it, narrowing the window in which a
+    # compromised or immediately-yanked version can be pulled in.
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
     commit-message:
       prefix: "chore(deps)"
     groups:
