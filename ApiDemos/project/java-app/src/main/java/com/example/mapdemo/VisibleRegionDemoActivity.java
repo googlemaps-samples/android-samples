@@ -45,7 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * obscuring the map UI or copyright notices.
  */
 @Sample(
-    id = "com.example.kotlindemos.VisibleRegionDemoActivity",
+    id = "com.example.mapdemo.VisibleRegionDemoActivity",
     title = "Visible Region & Projection",
     description = "Querying current viewport bounding coordinates via GoogleMap.projection.",
     category = "Camera Controls",
@@ -151,15 +151,13 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     private void updateCameraDisplay() {
         if (mMap == null) return;
         CameraPosition pos = mMap.getCameraPosition();
-        binding.cameraTargetText.setText(String.format(
-            Locale.US,
-            "Lat: %.4f°, Lng: %.4f°",
+        binding.cameraTargetText.setText(getString(
+            R.string.camera_target_format,
             pos.target.latitude,
             pos.target.longitude
         ));
-        binding.cameraDetailsText.setText(String.format(
-            Locale.US,
-            "Zoom: %.1fx  •  Tilt: %.1f°  •  Bearing: %.1f°",
+        binding.cameraDetailsText.setText(getString(
+            R.string.camera_details_format,
             pos.zoom,
             pos.tilt,
             pos.bearing
@@ -172,7 +170,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
      */
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

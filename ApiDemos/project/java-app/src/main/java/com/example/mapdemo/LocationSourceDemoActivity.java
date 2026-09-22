@@ -46,6 +46,7 @@ import com.google.android.material.button.MaterialButton;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 import org.xmlpull.v1.XmlPullParser;
 
 /**
@@ -53,7 +54,7 @@ import org.xmlpull.v1.XmlPullParser;
  * using a custom {@link LocationSource}.
  */
 @Sample(
-    id = "com.example.kotlindemos.LocationSourceDemoActivity",
+    id = "com.example.mapdemo.LocationSourceDemoActivity",
     title = "Custom LocationSource",
     description = "Providing a custom mock LocationSource for simulated GPS navigation playback along a trail.",
     category = "Location & Sensors",
@@ -97,8 +98,16 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
             toolbar.setTitle(R.string.location_source_demo_label);
         }
 
-        List<LatLng> trackPoints = parseGpxTrack(getResources().openRawResource(R.raw.fowler_rattlesnake));
-        mLocationSource = new GpxLocationSource(trackPoints, 60L);
+        mLocationSource = new GpxLocationSource(new ArrayList<>(), 60L);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            List<LatLng> trackPoints = parseGpxTrack(getResources().openRawResource(R.raw.fowler_rattlesnake));
+            runOnUiThread(() -> {
+                mLocationSource.setTrackPoints(trackPoints);
+                if (mMap != null) {
+                    setupTrackOnMap(mMap);
+                }
+            });
+        });
 
         MaterialButton toggleButton = findViewById(R.id.btn_toggle_playback);
         if (toggleButton != null) {
@@ -139,6 +148,17 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
+        map.setLocationSource(mLocationSource);
+        enableMyLocation();
+        if (!mLocationSource.getTrackPoints().isEmpty()) {
+            setupTrackOnMap(map);
+        }
+    }
+
+    private void setupTrackOnMap(GoogleMap map) {
+        if (mTrackBounds != null) {
+            return;
+        }
         List<LatLng> trackPoints = mLocationSource.getTrackPoints();
         if (trackPoints.isEmpty()) {
             return;
@@ -191,10 +211,6 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
                 }
             });
         }
-
-        // 3. Connect custom location source
-        map.setLocationSource(mLocationSource);
-        enableMyLocation();
     }
 
     private void enableMyLocation() {
@@ -241,7 +257,7 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
     }
 
     private static class GpxLocationSource implements LocationSource {
-        private final List<LatLng> trackPoints;
+        private List<LatLng> trackPoints;
         private final long intervalMs;
         private OnLocationChangedListener listener;
         private boolean isRunning = true;
@@ -256,6 +272,7 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
                 }
                 emitCurrentPoint();
                 currentIndex = (currentIndex + 1) % trackPoints.size();
+                handler.removeCallbacks(this);
                 handler.postDelayed(this, intervalMs);
             }
         };
@@ -263,6 +280,15 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
         public GpxLocationSource(List<LatLng> trackPoints, long intervalMs) {
             this.trackPoints = trackPoints;
             this.intervalMs = intervalMs;
+        }
+
+        public void setTrackPoints(List<LatLng> trackPoints) {
+            this.trackPoints = trackPoints;
+            this.currentIndex = 0;
+            if (isRunning && listener != null && !trackPoints.isEmpty()) {
+                handler.removeCallbacks(stepRunnable);
+                handler.post(stepRunnable);
+            }
         }
 
         public List<LatLng> getTrackPoints() {
@@ -318,9 +344,7 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
             location.setBearing(bearing);
             location.setSpeed(4.5f);
             location.setTime(System.currentTimeMillis());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                location.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
-            }
+            location.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
 
             listener.onLocationChanged(location);
         }
