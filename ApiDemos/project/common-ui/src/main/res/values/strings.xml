@@ -39,6 +39,8 @@
     <string name="latlng_clamp_status_adelaide">Bounds: Adelaide</string>
     <string name="latlng_clamp_status_pacific">Bounds: Pacific</string>
     <string name="camera_position_format">Position: (%1$.6f, %2$.6f)\nzoom=%3$.1f, tilt=%4$.1f\u00b0, bearing=%5$.1f\u00b0</string>
+    <string name="camera_target_format">Lat: %1$.4f\u00b0, Lng: %2$.4f\u00b0</string>
+    <string name="camera_details_format">Zoom: %1$.1fx  \u2022  Tilt: %2$.1f\u00b0  \u2022  Bearing: %3$.1f\u00b0</string>
     <string name="clamp_min_zoom">MinZoom++</string>
     <string name="clamp_max_zoom" tools:ignore="TypographyDashes">MaxZoom--</string>
     <string name="clamp_zoom_reset">Reset Zoom</string>

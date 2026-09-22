@@ -43,7 +43,7 @@ import java.util.List;
  * This shows how to style a map with JSON.
  */
 @Sample(
-    id = "com.example.kotlindemos.StyledMapDemoActivity",
+    id = "com.example.mapdemo.StyledMapDemoActivity",
     title = "JSON Map Styling (Retro / Dark)",
     description = "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
     category = "Styling & Cloud",
