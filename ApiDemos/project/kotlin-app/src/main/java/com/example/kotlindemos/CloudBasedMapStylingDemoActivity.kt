@@ -26,9 +26,11 @@ import android.os.Bundle
 import android.view.View
 import com.example.common_ui.R
 
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * This shows how to use Cloud-based Map Styling in a simple Activity. For more information on how
@@ -56,6 +58,8 @@ class CloudBasedMapStylingDemoActivity : SamplesBaseActivity(), OnMapReadyCallba
     override fun onMapReady(map: GoogleMap) {
         this.map = map
         map.mapType = currentMapType
+        val montBlanc = LatLng(45.8326, 6.8652)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(montBlanc, 11.5f))
     }
 
     private fun setUpButtonListeners() {
