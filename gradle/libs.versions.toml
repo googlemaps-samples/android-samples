@@ -1,6 +1,6 @@
 [versions]
 # Project Configuration
-androidGradlePlugin = "9.3.1"
+androidGradlePlugin = "9.4.1"
 minSdk = "24"
 compileSdk = "37"
 targetSdk = "37"
@@ -12,7 +12,7 @@ javaVersion = "17"
 kotlin = "2.4.20"
 kotlinxCoroutinesTest = "1.11.0"
 kotlinxDatetime = "0.8.0"
-ksp = "2.3.11"
+ksp = "2.3.12"
 
 # AndroidX Core & Jetpack
 activity = "1.13.0"
@@ -64,7 +64,7 @@ uiautomator = "2.4.0"
 
 # Firebase
 firebaseBom = "34.19.0"
-firebaseDatabase = "22.0.1"
+firebaseDatabase = "22.0.2"
 
 # Third Party
 easypermissions = "3.0.0"
