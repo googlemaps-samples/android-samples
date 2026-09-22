@@ -1,0 +1,111 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Runs the instrumented (androidTest) suites on an emulator.
+#
+# build.yml already covers assembleDebug, testDebugUnitTest and lintDebug, so
+# JVM unit tests are not duplicated here. The androidTest sources under
+# ApiDemos were never executed by any workflow before this one.
+#
+# These tests drive a real map and therefore need a Maps API key. The key is
+# read from the ACTIONS_API_KEY secret; when it is absent the emulator job is
+# skipped rather than failed, so the workflow is a no-op until the secret is
+# provisioned for this repository.
+name: Run instrumentation tests
+
+on:
+  pull_request:
+    branches-ignore: ['gh-pages']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # secrets cannot be referenced from a job-level `if`, so the presence of the
+  # key is resolved here and published as an output the emulator job gates on.
+  check-api-key:
+    runs-on: ubuntu-latest
+    outputs:
+      has-key: ${{ steps.check.outputs.has-key }}
+    steps:
+      - name: Check for Maps API key
+        id: check
+        env:
+          MAPS_API_KEY: ${{ secrets.ACTIONS_API_KEY }}
+        run: |
+          if [ -n "$MAPS_API_KEY" ]; then
+            echo "has-key=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-key=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::ACTIONS_API_KEY is not set; skipping instrumentation tests."
+          fi
+
+  instrumentation-test:
+    needs: check-api-key
+    if: needs.check-api-key.outputs.has-key == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        module:
+          - ':ApiDemos:java-app'
+          - ':ApiDemos:kotlin-app'
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
+
+      # Hardware acceleration for the emulator. Without KVM the run is slow
+      # enough that the map never settles inside the IdlingResource timeouts.
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Inject Maps API key
+        env:
+          MAPS_API_KEY: ${{ secrets.ACTIONS_API_KEY }}
+        run: echo "MAPS_API_KEY=$MAPS_API_KEY" >> ./secrets.properties
+
+      - name: Run instrumentation tests
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
+        with:
+          api-level: 29
+          target: google_apis
+          arch: x86
+          disable-animations: true
+          script: ./gradlew ${{ matrix.module }}:connectedDebugAndroidTest --stacktrace
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: instrumentation-reports-${{ strategy.job-index }}
+          path: ApiDemos/project/*/build/reports
+          if-no-files-found: warn
