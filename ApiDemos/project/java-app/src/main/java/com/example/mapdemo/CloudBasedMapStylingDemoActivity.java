@@ -16,9 +16,12 @@ package com.example.mapdemo;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.common_ui.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * This shows how to use Cloud-based Map Styling in a simple Activity. For more information on how
@@ -40,29 +43,31 @@ public class CloudBasedMapStylingDemoActivity extends SamplesBaseActivity implem
 
         // The underlying style the map will use has been set in the layout
         // `cloud_styling_basic_demo` under the SupportMapFragment's `map:mapId` attribute.
-        setContentView(com.example.common_ui.R.layout.cloud_styling_basic_demo);
+        setContentView(R.layout.cloud_styling_basic_demo);
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         setUpButtonListeners();
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container));
+        applyInsets(findViewById(R.id.map_container));
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
         map.setMapType(currentMapType);
+        LatLng montBlanc = new LatLng(45.8326, 6.8652);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(montBlanc, 11.5f));
     }
 
     private void setUpButtonListeners() {
-        findViewById(com.example.common_ui.R.id.styling_normal_mode).setOnClickListener(
+        findViewById(R.id.styling_normal_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_NORMAL));
-        findViewById(com.example.common_ui.R.id.styling_satellite_mode).setOnClickListener(
+        findViewById(R.id.styling_satellite_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_SATELLITE));
-        findViewById(com.example.common_ui.R.id.styling_hybrid_mode).setOnClickListener(
+        findViewById(R.id.styling_hybrid_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_HYBRID));
-        findViewById(com.example.common_ui.R.id.styling_terrain_mode).setOnClickListener(
+        findViewById(R.id.styling_terrain_mode).setOnClickListener(
             v -> setMapType(GoogleMap.MAP_TYPE_TERRAIN));
     }
 

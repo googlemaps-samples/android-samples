@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,12 +41,31 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.common_ui.databinding.CameraDemoBinding;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * This shows how to change the camera position for the map.
  */
+@Sample(
+    id = "camera_demo",
+    title = "Camera Controls & Animation",
+    description = "Programmatic camera panning, zooming, tilt, bearing, and smooth animations.",
+    category = "Camera Controls",
+    complexity = Complexity.SIMPLE,
+    tags = {"#camera", "#animation", "#bearing", "#tilt", "#zoom", "#pan"},
+    apiCalls = {
+        "GoogleMap.animateCamera(CameraUpdate)",
+        "GoogleMap.moveCamera(CameraUpdate)",
+        "GoogleMap.addMarker(MarkerOptions)",
+        "CameraUpdateFactory.newCameraPosition(CameraPosition)"
+    },
+    purpose = "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing rotations.",
+    successCriteria = "Buttons animate camera smoothly with custom durations, stops, and rotation angles.",
+    failureIndicators = "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform constraints.",
+    framework = Framework.JAVA_VIEWS
+)
 // [START maps_camera_events]
 public class CameraDemoActivity extends SamplesBaseActivity implements
         OnCameraMoveStartedListener,
@@ -140,7 +163,11 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         // [END_EXCLUDE]
 
         // Show Sydney
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-33.87365, 151.20689), 10));
+        LatLng sydneyLatLng = new LatLng(-33.87365, 151.20689);
+        LatLng bondiLatLng = new LatLng(-33.891614, 151.276417);
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydneyLatLng, 10));
+        map.addMarker(new MarkerOptions().position(sydneyLatLng).title("Sydney"));
+        map.addMarker(new MarkerOptions().position(bondiLatLng).title("Bondi Beach"));
     }
 
     public GoogleMap getMap() {

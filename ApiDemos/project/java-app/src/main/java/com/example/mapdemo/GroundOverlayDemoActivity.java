@@ -14,6 +14,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,6 +46,18 @@ import java.util.List;
  * oriented against the Earth's surface rather than the screen. Rotating, tilting, or zooming the
  * map changes the orientation of the camera, but not the overlay.
  */
+@Sample(
+    id = "ground_overlay",
+    title = "Ground Overlays",
+    description = "Anchoring raster bitmap images to geographic LatLngBounds on the map surface.",
+    category = "Overlays & Tiles",
+    complexity = Complexity.SIMPLE,
+    tags = {"#overlays", "#groundoverlay", "#images", "#bounds", "#transparency"},
+    purpose = "Demonstrates overlaying historical or custom aerial images onto the map with transparency sliders.",
+    successCriteria = "Historical Newark map image appears pinned to geographic coordinates with adjustable transparency.",
+    failureIndicators = "Overlay image stretched/misaligned or opacity slider unresponsive.",
+    framework = Framework.JAVA_VIEWS
+)
 public class GroundOverlayDemoActivity extends SamplesBaseActivity
     implements OnSeekBarChangeListener, OnMapReadyCallback,
     GoogleMap.OnGroundOverlayClickListener, MapProvider {
