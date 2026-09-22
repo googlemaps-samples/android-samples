@@ -44,6 +44,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 
 import com.example.common_ui.R;
+import com.example.common_ui.databinding.MarkerDemoBinding;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -106,7 +107,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     private static final LatLng ALICE_SPRINGS = new LatLng(-24.6980, 133.8807);
 
-    private com.example.common_ui.databinding.MarkerDemoBinding binding;
+    private MarkerDemoBinding binding;
 
     /** Demonstrates customizing the info window and/or its contents. */
     class CustomInfoWindowAdapter implements InfoWindowAdapter {
@@ -224,7 +225,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.common_ui.databinding.MarkerDemoBinding.inflate(getLayoutInflater());
+        binding = MarkerDemoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.rotationSeekBar.setMax(360);
@@ -350,8 +351,10 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
                 .icon(vectorToBitmap(R.drawable.ic_android, Color.parseColor("#A4C639")))
                 .title("Alice Springs"));
 
-        mMelbourne.showInfoWindow();
-        mLastSelectedMarker = mMelbourne;
+        if (mMelbourne != null) {
+            mMelbourne.showInfoWindow();
+            mLastSelectedMarker = mMelbourne;
+        }
 
         // Creates a marker rainbow demonstrating how to create default marker icons of different
         // hues (colors).

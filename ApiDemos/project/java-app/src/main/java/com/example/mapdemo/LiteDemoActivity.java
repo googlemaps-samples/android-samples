@@ -18,6 +18,7 @@ package com.example.mapdemo;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
 import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -42,7 +43,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * and {@link com.google.android.gms.maps.model.Polygon}s.
  */
 @Sample(
-    id = "com.example.kotlindemos.LiteDemoActivity",
+    id = "com.example.mapdemo.LiteDemoActivity",
     title = "Lite Mode Basics",
     description = "Non-interactive raster map with programmatic camera jumps, markers, and polygons.",
     category = "Lists & Performance",
@@ -95,7 +96,7 @@ public class LiteDemoActivity extends SamplesBaseActivity implements
 
         // Get the map and register for the ready callback
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
         applyInsets(binding.mapContainer);
 

@@ -32,7 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
  * Each quadrant showcases a UNESCO World Heritage Site with simultaneous smooth zoom animations.
  */
 @Sample(
-    id = "com.example.kotlindemos.MultiMapDemoActivity",
+    id = "com.example.mapdemo.MultiMapDemoActivity",
     title = "Multi-Map View",
     description = "Rendering multiple independent GoogleMap instances in a single activity layout.",
     category = "Map Initialization",
