@@ -15,6 +15,7 @@ package com.example.kotlindemos
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import com.example.common_ui.R
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.ktx.addMarker
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 class ProgrammaticDemoActivity : SamplesBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_sample_base)
 
         // It isn't possible to set a fragment's id programmatically so we set a tag instead and
         // search for it using that.
@@ -35,7 +37,7 @@ class ProgrammaticDemoActivity : SamplesBaseActivity() {
                 ?: SupportMapFragment.newInstance().also {
                     // Then we add it using a FragmentTransaction into the standard sample content container.
                     val fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.add(com.example.common_ui.R.id.sample_content_container, it, MAP_FRAGMENT_TAG)
+                    fragmentTransaction.add(R.id.sample_content_container, it, MAP_FRAGMENT_TAG)
                     fragmentTransaction.commit()
                 }
 

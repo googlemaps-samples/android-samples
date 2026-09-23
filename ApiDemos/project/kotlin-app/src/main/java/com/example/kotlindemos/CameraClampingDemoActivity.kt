@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.CameraClampingDemoBinding
 import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
@@ -37,7 +39,7 @@ import kotlinx.coroutines.launch
  * This shows how to constrain the camera to specific boundaries and zoom levels.
  */
 @Sample(
-    id = "camera_clamping",
+    id = "com.example.kotlindemos.CameraClampingDemoActivity",
     title = "Camera Clamping & Bounds",
     description = "Constraining camera viewport to LatLngBounds and dynamic min/max zoom limits.",
     category = "Camera Controls",
@@ -51,7 +53,7 @@ import kotlinx.coroutines.launch
 class CameraClampingDemoActivity : SamplesBaseActivity() {
 
   internal lateinit var map: GoogleMap
-  private lateinit var binding: com.example.common_ui.databinding.CameraClampingDemoBinding
+  private lateinit var binding: CameraClampingDemoBinding
 
 
   /**
@@ -63,7 +65,7 @@ class CameraClampingDemoActivity : SamplesBaseActivity() {
   @OptIn(ExperimentalCoroutinesApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = com.example.common_ui.databinding.CameraClampingDemoBinding.inflate(layoutInflater)
+    binding = CameraClampingDemoBinding.inflate(layoutInflater)
     setContentView(binding.root)
     updateZoomLabel(minZoom, maxZoom)
     val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment

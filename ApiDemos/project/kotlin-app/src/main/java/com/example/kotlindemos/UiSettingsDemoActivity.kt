@@ -37,7 +37,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.UiSettings
 
 @Sample(
-    id = "ui_settings",
+    id = "com.example.kotlindemos.UiSettingsDemoActivity",
     title = "UI Settings & Map Controls",
     description = "Configuring zoom buttons, compass, my location button, and gesture toggles.",
     category = "Events & Gestures",

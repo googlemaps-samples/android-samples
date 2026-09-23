@@ -50,7 +50,7 @@ import java.util.Arrays
  * This shows how to draw polygons on a map.
  */
 @Sample(
-    id = "polygons",
+    id = "com.example.kotlindemos.PolygonDemoActivity",
     title = "Polygons & Holes",
     description = "Drawing geodesic polygons with fill colors, stroke patterns, click events, and interior holes.",
     category = "Shapes & Geometry",

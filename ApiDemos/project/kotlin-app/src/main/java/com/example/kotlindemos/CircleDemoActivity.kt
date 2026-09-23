@@ -16,6 +16,8 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.CircleDemoBinding
 import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
@@ -54,7 +56,7 @@ import java.util.ArrayList
  * This shows how to draw circles on a map.
  */
 @Sample(
-    id = "circles",
+    id = "com.example.kotlindemos.CircleDemoActivity",
     title = "Circles & Geodesic Radii",
     description = "Drawing geographic circles with dynamic center drag, radius sliders, and stroke styling.",
     category = "Shapes & Geometry",
@@ -94,7 +96,7 @@ class CircleDemoActivity : SamplesBaseActivity(),
     private var fillColorArgb : Int = 0
     private var strokeColorArgb: Int = 0
 
-    internal lateinit var binding: com.example.common_ui.databinding.CircleDemoBinding
+    internal lateinit var binding: CircleDemoBinding
 
     /**
      * This class contains information about a circle, including its markers
@@ -159,7 +161,7 @@ class CircleDemoActivity : SamplesBaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.CircleDemoBinding.inflate(layoutInflater)
+        binding = CircleDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Set all the SeekBars

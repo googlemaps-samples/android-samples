@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.SnapshotDemoBinding
 import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
@@ -45,7 +47,7 @@ import kotlinx.coroutines.launch
  *    preview in a bottom card with empty-state placeholder handling.
  */
 @Sample(
-    id = "snapshot_demo",
+    id = "com.example.kotlindemos.SnapshotDemoActivity",
     title = "Map Snapshot & Image Capture",
     description = "Asynchronous bitmap frame capture using GoogleMap.snapshot() rendered in Material 3 preview cards.",
     category = "Snapshots & Sharing",
@@ -58,11 +60,11 @@ import kotlinx.coroutines.launch
 )
 class SnapshotDemoActivity : SamplesBaseActivity() {
     private lateinit var map: GoogleMap
-    private lateinit var binding: com.example.common_ui.databinding.SnapshotDemoBinding
+    private lateinit var binding: SnapshotDemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.SnapshotDemoBinding.inflate(layoutInflater)
+        binding = SnapshotDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.screenshotButton.setOnClickListener { takeSnapshot() }

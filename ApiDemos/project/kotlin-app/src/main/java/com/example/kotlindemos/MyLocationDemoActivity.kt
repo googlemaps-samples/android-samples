@@ -44,7 +44,7 @@ import com.google.android.gms.maps.SupportMapFragment
  * are requested at run time. If either permission is not granted, the Activity is finished with an error message.
  */
 @Sample(
-    id = "my_location",
+    id = "com.example.kotlindemos.MyLocationDemoActivity",
     title = "My Location Layer",
     description = "Enabling blue dot location indicator and My Location button with runtime permissions.",
     category = "Location & Sensors",
