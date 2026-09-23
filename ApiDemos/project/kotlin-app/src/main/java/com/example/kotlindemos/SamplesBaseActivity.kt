@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +51,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
 
     private fun setupEdgeToEdgeInsets() {
         val root = findViewById<View>(android.R.id.content) ?: return
-        val topBar = root.findViewById<View>(com.example.common_ui.R.id.top_bar)
+        val topBar = root.findViewById<View>(R.id.top_bar)
         if (topBar != null) {
             val typedValue = android.util.TypedValue()
             val baseHeight = if (theme.resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
@@ -73,7 +75,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
             }
         }
 
-        val mapContainer = root.findViewById<View>(com.example.common_ui.R.id.map_container)
+        val mapContainer = root.findViewById<View>(R.id.map_container)
         val bottomTarget = mapContainer ?: root
         ViewCompat.setOnApplyWindowInsetsListener(bottomTarget) { view, insets ->
             val navBars = insets.getInsets(

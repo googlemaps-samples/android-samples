@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
 import android.os.Bundle
 
 import com.google.android.gms.maps.GoogleMap
@@ -30,13 +32,13 @@ class RawMapViewDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.raw_mapview_demo)
+    setContentView(R.layout.raw_mapview_demo)
 
     // *** IMPORTANT ***
     // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
     // objects or sub-Bundles.
     val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
-    mapView = findViewById(com.example.common_ui.R.id.map)
+    mapView = findViewById(R.id.map)
     mapView.onCreate(mapViewBundle)
     mapView.getMapAsync(this)
   }

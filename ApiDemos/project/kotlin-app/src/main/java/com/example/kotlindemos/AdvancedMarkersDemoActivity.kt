@@ -55,7 +55,7 @@ private val TAG = AdvancedMarkersDemoActivity::class.java.name
  * possibilities.
  */
 @Sample(
-    id = "advanced_markers",
+    id = "com.example.kotlindemos.AdvancedMarkersDemoActivity",
     title = "Advanced Markers & Pins",
     description = "Modern PinConfig pins, custom glyphs, badge icon views, and collision behavior.",
     category = "Markers & Overlays",
@@ -125,10 +125,10 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.advanced_markers_demo)
+        setContentView(R.layout.advanced_markers_demo)
 
-        if (getString(com.example.common_ui.R.string.map_id) != "DEMO_MAP_ID") {
-            val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+        if (getString(R.string.map_id) != "DEMO_MAP_ID") {
+            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
             mapFragment?.getMapAsync(this)
         } else {
             val mapId = (application as ApiDemoApplication).mapId
@@ -150,7 +150,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             mapFragment.getMapAsync(this)
         }
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {

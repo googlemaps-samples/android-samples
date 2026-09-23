@@ -33,7 +33,7 @@ import com.google.android.gms.maps.model.LatLng
  * This shows how to listen to some [GoogleMap] events.
  */
 @Sample(
-    id = "events_demo",
+    id = "com.example.kotlindemos.EventsDemoActivity",
     title = "Events & Gestures",
     description = "Handling map taps, long clicks, camera change events, and POI selections.",
     category = "Events & Gestures",

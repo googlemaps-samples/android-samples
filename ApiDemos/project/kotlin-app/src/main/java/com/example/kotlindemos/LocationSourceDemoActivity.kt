@@ -16,7 +16,6 @@ package com.example.kotlindemos
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -227,6 +226,7 @@ class GpxLocationSource(
             if (!isRunning || listener == null || trackPoints.isEmpty()) return
             emitCurrentPoint()
             currentIndex = (currentIndex + 1) % trackPoints.size
+            handler.removeCallbacks(this)
             handler.postDelayed(this, intervalMs)
         }
     }
@@ -235,6 +235,7 @@ class GpxLocationSource(
         this.listener = listener
         if (isRunning) {
             emitCurrentPoint()
+            handler.removeCallbacks(stepRunnable)
             handler.postDelayed(stepRunnable, intervalMs)
         }
     }
@@ -246,10 +247,9 @@ class GpxLocationSource(
 
     fun togglePlayback(): Boolean {
         isRunning = !isRunning
+        handler.removeCallbacks(stepRunnable)
         if (isRunning) {
             handler.post(stepRunnable)
-        } else {
-            handler.removeCallbacks(stepRunnable)
         }
         return isRunning
     }
@@ -278,9 +278,7 @@ class GpxLocationSource(
             this.bearing = bearing
             speed = 4.5f
             time = System.currentTimeMillis()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                elapsedRealtimeNanos = SystemClock.elapsedRealtimeNanos()
-            }
+            elapsedRealtimeNanos = SystemClock.elapsedRealtimeNanos()
         }
         currentListener.onLocationChanged(location)
     }
@@ -291,6 +289,7 @@ class GpxLocationSource(
 
     override fun onResume(owner: LifecycleOwner) {
         if (isRunning && listener != null) {
+            handler.removeCallbacks(stepRunnable)
             handler.post(stepRunnable)
         }
     }

@@ -41,6 +41,7 @@ MODULES=(
     ":ApiDemos:java-app"
     ":ApiDemos:kotlin-app"
     ":ApiDemos:common-ui"
+    ":visual-testing"
     ":FireMarkers:app"
     ":WearOS:Wearable"
     ":snippets:app"

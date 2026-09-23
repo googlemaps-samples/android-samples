@@ -21,7 +21,6 @@ from pathlib import Path
 EVAL_DIR = Path(__file__).resolve().parent / "eval"
 sys.path.insert(0, str(EVAL_DIR))
 
-from run_autonomous_qa_suite import *
 import run_autonomous_qa_suite
 
 if __name__ == "__main__":

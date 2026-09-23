@@ -49,7 +49,7 @@ import com.google.android.gms.maps.model.PolylineOptions
  * This shows how to change the camera position for the map.
  */
 @Sample(
-    id = "camera_demo",
+    id = "com.example.kotlindemos.CameraDemoActivity",
     title = "Camera Controls & Animation",
     description = "Programmatic camera panning, zooming, tilt, bearing, and smooth animations.",
     category = "Camera Controls",
