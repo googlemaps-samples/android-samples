@@ -30,7 +30,9 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import com.example.kotlindemos.BuildConfig
 import com.google.maps.android.visualtesting.GeminiVisualTestHelper
+import org.junit.After
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import java.io.File
 
 /**
@@ -43,7 +45,12 @@ abstract class BaseVisualVerificationTest {
     protected val context: Context = instrumentation.targetContext
     protected val helper = GeminiVisualTestHelper()
 
-    protected val geminiApiKey: String by lazy {
+    @After
+    fun tearDown() {
+        helper.close()
+    }
+
+    protected val geminiApiKey: String? by lazy {
         try {
             val geminiKeyField = try {
                 BuildConfig::class.java.getField("GEMINI_API_KEY")
@@ -54,10 +61,10 @@ abstract class BaseVisualVerificationTest {
             if (!key.isNullOrBlank() && key != "DEFAULT_API_KEY") {
                 key
             } else {
-                BuildConfig.MAPS_API_KEY
+                null
             }
         } catch (e: Exception) {
-            ""
+            null
         }
     }
 
@@ -82,18 +89,15 @@ abstract class BaseVisualVerificationTest {
      * Verifies the visual contents of a screenshot using Gemini Multimodal AI.
      */
     protected suspend fun verifyScreenshotWithGemini(bitmap: Bitmap, prompt: String) {
-        if (geminiApiKey.isNotBlank() && geminiApiKey != "DEFAULT_API_KEY") {
-            val response = helper.analyzeImage(bitmap, prompt, geminiApiKey)
-            Log.i(TAG, "Gemini Visual Evaluation Response:\n$response")
-            assertTrue(
-                "Gemini visual verification failed. Response: $response",
-                response?.contains("PASSED", ignoreCase = true) == true
-            )
-        } else {
-            // Offline/CI assertion fallback: verify screenshot has valid dimensions and non-empty buffer
-            assertTrue("Screenshot width must be > 0", bitmap.width > 0)
-            assertTrue("Screenshot height must be > 0", bitmap.height > 0)
-        }
+        val key = geminiApiKey
+        assumeTrue("GEMINI_API_KEY is not configured; skipping AI visual evaluation", !key.isNullOrBlank())
+
+        val response = helper.analyzeImage(bitmap, prompt, key!!)
+        Log.i(TAG, "Gemini Visual Evaluation Response:\n$response")
+        assertTrue(
+            "Gemini visual verification failed. Response: $response",
+            response?.contains("PASSED", ignoreCase = true) == true
+        )
     }
 
     /**

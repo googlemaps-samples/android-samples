@@ -16,6 +16,8 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
 import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
@@ -33,7 +35,7 @@ import com.google.android.gms.maps.model.MarkerOptions
  * This shows how to create a simple activity with a map and a marker on the map.
  */
 @Sample(
-    id = "basic_map",
+    id = "com.example.kotlindemos.BasicMapDemoActivity",
     title = "Basic Map",
     description = "Fundamental map instantiation, lifecycle binding, and default camera centering.",
     category = "Map Initialization",
@@ -57,9 +59,9 @@ class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.basic_demo)
+        setContentView(R.layout.basic_demo)
         val mapFragment : SupportMapFragment? =
-                supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as? SupportMapFragment
+                supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
     }
 

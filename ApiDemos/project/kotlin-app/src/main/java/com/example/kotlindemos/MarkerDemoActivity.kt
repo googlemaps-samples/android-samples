@@ -16,6 +16,8 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.MarkerDemoBinding
 import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
@@ -68,7 +70,7 @@ import kotlin.math.sin
  * This shows how to place markers on a map.
  */
 @Sample(
-    id = "marker_demo",
+    id = "com.example.kotlindemos.MarkerDemoActivity",
     title = "Standard Markers & Info Windows",
     description = "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info window layouts.",
     category = "Markers & Overlays",
@@ -115,7 +117,7 @@ class MarkerDemoActivity :
             "ALICE_SPRINGS" to LatLng(-24.6980, 133.8807)
     )
 
-    private lateinit var binding: com.example.common_ui.databinding.MarkerDemoBinding
+    private lateinit var binding: MarkerDemoBinding
 
     private val random = Random()
 
@@ -186,7 +188,7 @@ class MarkerDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.MarkerDemoBinding.inflate(layoutInflater)
+        binding = MarkerDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.rotationSeekBar.apply {

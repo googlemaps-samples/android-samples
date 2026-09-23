@@ -16,6 +16,8 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
@@ -49,14 +51,14 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     private val ZOOM_BY = 0.5f
 
     private lateinit var streetViewPanorama: StreetViewPanorama
-    private lateinit var binding: com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding
+    private lateinit var binding: StreetViewPanoramaNavigationDemoBinding
 
     private val duration: Long
         get() = binding.durationBar.progress.toLong()
 
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding.inflate(layoutInflater)
+        binding = StreetViewPanoramaNavigationDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.sanfran.setOnClickListener { onGoToSanFran() }

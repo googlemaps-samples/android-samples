@@ -14,6 +14,8 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.GroundOverlayDemoBinding
 import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
@@ -43,7 +45,7 @@ import com.google.android.gms.maps.model.LatLngBounds
  * map changes the orientation of the camera, but not the overlay.
  */
 @Sample(
-    id = "ground_overlay",
+    id = "com.example.kotlindemos.GroundOverlayDemoActivity",
     title = "Ground Overlays",
     description = "Anchoring raster bitmap images to geographic LatLngBounds on the map surface.",
     category = "Overlays & Tiles",
@@ -71,12 +73,12 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
     override lateinit var map: GoogleMap
     override var mapReady = false
 
-    private lateinit var binding: com.example.common_ui.databinding.GroundOverlayDemoBinding
+    private lateinit var binding: GroundOverlayDemoBinding
     private var currentEntry = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.GroundOverlayDemoBinding.inflate(layoutInflater)
+        binding = GroundOverlayDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.transparencySeekBar.max = TRANSPARENCY_MAX

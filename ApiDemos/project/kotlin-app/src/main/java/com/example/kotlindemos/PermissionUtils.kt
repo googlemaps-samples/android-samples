@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
 import android.Manifest.permission
 import android.app.AlertDialog
 import android.app.Dialog
@@ -92,8 +94,8 @@ object PermissionUtils {
             finishActivity =
                 arguments?.getBoolean(ARGUMENT_FINISH_ACTIVITY) ?: false
             return AlertDialog.Builder(activity)
-                .setMessage(com.example.common_ui.R.string.location_permission_denied)
-                .setPositiveButton(com.example.common_ui.R.string.ok, null)
+                .setMessage(R.string.location_permission_denied)
+                .setPositiveButton(R.string.ok, null)
                 .create()
         }
 
@@ -101,7 +103,7 @@ object PermissionUtils {
             super.onDismiss(dialog)
             if (finishActivity) {
                 Toast.makeText(
-                    activity, com.example.common_ui.R.string.permission_required_toast,
+                    activity, R.string.permission_required_toast,
                     Toast.LENGTH_SHORT
                 ).show()
                 activity?.finish()
@@ -144,8 +146,8 @@ object PermissionUtils {
             finishActivity =
                 arguments?.getBoolean(ARGUMENT_FINISH_ACTIVITY) ?: false
             return AlertDialog.Builder(activity)
-                .setMessage(com.example.common_ui.R.string.permission_rationale_location)
-                .setPositiveButton(com.example.common_ui.R.string.ok) { dialog, which -> // After click on Ok, request the permission.
+                .setMessage(R.string.permission_rationale_location)
+                .setPositiveButton(R.string.ok) { dialog, which -> // After click on Ok, request the permission.
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(
@@ -166,7 +168,7 @@ object PermissionUtils {
             if (finishActivity) {
                 Toast.makeText(
                     activity,
-                    com.example.common_ui.R.string.permission_required_toast,
+                    R.string.permission_required_toast,
                     Toast.LENGTH_SHORT
                 ).show()
                 activity?.finish()

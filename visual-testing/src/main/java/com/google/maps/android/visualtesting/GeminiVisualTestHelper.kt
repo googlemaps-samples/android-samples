@@ -26,6 +26,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
@@ -36,13 +37,14 @@ import io.ktor.http.contentType
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
+import java.io.Closeable
 
 /**
  * Helper class to interact with the Gemini API for visual verification and action.
  *
  * This version uses org.json for parsing to avoid binary compatibility issues with kotlinx.serialization.
  */
-class GeminiVisualTestHelper {
+class GeminiVisualTestHelper : Closeable {
 
     private val client = HttpClient(CIO) {
         install(HttpTimeout) {
@@ -50,6 +52,10 @@ class GeminiVisualTestHelper {
             connectTimeoutMillis = 60_000
             socketTimeoutMillis = 60_000
         }
+    }
+
+    override fun close() {
+        client.close()
     }
 
     /**
@@ -81,8 +87,6 @@ class GeminiVisualTestHelper {
 
         val fullPrompt = "$systemPrompt\n\nCommand: \"$prompt\"\n\nUI Hierarchy:\n$hierarchyXml"
 
-        val modelName = "gemini-2.5-flash"
-        
         val requestJson = JSONObject().apply {
             put("contents", JSONArray().apply {
                 put(JSONObject().apply {
@@ -93,14 +97,15 @@ class GeminiVisualTestHelper {
             })
         }
 
-        val response: HttpResponse = client.post("https://generativelanguage.googleapis.com/v1/models/$modelName:generateContent?key=$apiKey") {
+        val response: HttpResponse = client.post("$BASE_URL/$API_VERSION/models/$DEFAULT_MODEL:generateContent") {
             contentType(ContentType.Application.Json)
+            headers.append(HEADER_API_KEY, apiKey)
             setBody(requestJson.toString())
         }
 
         if (response.status != HttpStatusCode.OK) {
             val errorBody = response.bodyAsText()
-            Log.e("GeminiVisualTestHelper", "Action API Error: ${response.status} $errorBody")
+            Log.e(TAG, "Action API Error: ${response.status} $errorBody")
             throw Exception("Gemini Action API returned an error: ${response.status}\n$errorBody")
         }
 
@@ -116,7 +121,7 @@ class GeminiVisualTestHelper {
         // Remove markdown code block delimiters if present
         val cleanedActionJson = actionJson.removePrefix("```json\n").removeSuffix("\n```")
 
-        Log.d("GeminiVisualTestHelper", "Received Action JSON: $cleanedActionJson")
+        Log.d(TAG, "Received Action JSON: $cleanedActionJson")
 
         try {
             val aiAction = JSONObject(cleanedActionJson)
@@ -143,7 +148,7 @@ class GeminiVisualTestHelper {
                 else -> throw UnsupportedOperationException("Action '$action' is not supported.")
             }
         } catch (e: Exception) {
-            Log.e("GeminiVisualTestHelper", "Failed to parse or execute AI action", e)
+            Log.e(TAG, "Failed to parse or execute AI action", e)
             throw e
         }
     }
@@ -153,7 +158,9 @@ class GeminiVisualTestHelper {
      */
     suspend fun listAvailableModels(apiKey: String) {
         try {
-            val response: HttpResponse = client.get("https://generativelanguage.googleapis.com/v1/models?key=$apiKey")
+            val response: HttpResponse = client.get("$BASE_URL/$API_VERSION/models") {
+                headers.append(HEADER_API_KEY, apiKey)
+            }
             val rawBody = response.bodyAsText()
             val jsonResponse = JSONObject(rawBody)
             val models = jsonResponse.getJSONArray("models")
@@ -162,9 +169,9 @@ class GeminiVisualTestHelper {
                 val model = models.getJSONObject(i)
                 modelNames.append(" - ${model.getString("name")} (Display Name: ${model.getString("displayName")})\n")
             }
-            Log.i("GeminiVisualTestHelper", "Available Gemini Models:\n$modelNames")
+            Log.i(TAG, "Available Gemini Models:\n$modelNames")
         } catch (e: Exception) {
-            Log.e("GeminiVisualTestHelper", "Failed to list available models", e)
+            Log.e(TAG, "Failed to list available models", e)
         }
     }
 
@@ -174,11 +181,9 @@ class GeminiVisualTestHelper {
     suspend fun analyzeImage(
         bitmap: Bitmap,
         prompt: String,
-        apiKey: String
+        apiKey: String,
+        model: String = DEFAULT_MODEL
     ): String? {
-        // Log available models first for easier debugging.
-        listAvailableModels(apiKey)
-
         val base64Image = bitmap.toBase64EncodedJpeg()
         
         val requestJson = JSONObject().apply {
@@ -197,14 +202,15 @@ class GeminiVisualTestHelper {
             })
         }
 
-        val response: HttpResponse = client.post("https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=$apiKey") {
+        val response: HttpResponse = client.post("$BASE_URL/$API_VERSION/models/$model:generateContent") {
             contentType(ContentType.Application.Json)
+            headers.append(HEADER_API_KEY, apiKey)
             setBody(requestJson.toString())
         }
 
         if (response.status != HttpStatusCode.OK) {
             val errorBody = response.bodyAsText()
-            Log.e("GeminiVisualTestHelper", "API Error: ${response.status} $errorBody")
+            Log.e(TAG, "API Error: ${response.status} $errorBody")
             throw Exception("Gemini API returned an error: ${response.status}\n$errorBody")
         }
 
@@ -213,7 +219,7 @@ class GeminiVisualTestHelper {
         
         val candidates = jsonResponse.optJSONArray("candidates")
         if (candidates == null || candidates.length() == 0) {
-            Log.w("GeminiVisualTestHelper", "Gemini API returned empty candidates. Full response: $rawBody")
+            Log.w(TAG, "Gemini API returned empty candidates. Full response: $rawBody")
             throw Exception("Gemini API returned no candidates.")
         }
 
@@ -222,6 +228,14 @@ class GeminiVisualTestHelper {
             .getJSONArray("parts")
             .getJSONObject(0)
             .optString("text")
+    }
+
+    companion object {
+        private const val TAG = "GeminiVisualTestHelper"
+        private const val BASE_URL = "https://generativelanguage.googleapis.com"
+        private const val API_VERSION = "v1beta"
+        private const val DEFAULT_MODEL = "gemini-2.5-flash"
+        private const val HEADER_API_KEY = "x-goog-api-key"
     }
 
     private fun Bitmap.toBase64EncodedJpeg(): String {

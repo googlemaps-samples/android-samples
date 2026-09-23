@@ -53,7 +53,7 @@ private val TAG = DataDrivenBoundariesActivity::class.java.simpleName
  * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
  */
 @Sample(
-    id = "data_driven_boundaries",
+    id = "com.example.kotlindemos.DataDrivenBoundariesActivity",
     title = "Data-Driven Boundaries",
     description = "Dynamic styling and click handlers for administrative boundaries (Localities, States, Countries).",
     category = "Data-Driven Styling",

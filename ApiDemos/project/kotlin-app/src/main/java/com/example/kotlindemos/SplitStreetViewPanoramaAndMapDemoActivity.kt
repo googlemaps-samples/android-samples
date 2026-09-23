@@ -58,7 +58,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  *    to teleport Pegman and Street View to the user's real-time physical location on demand.
  */
 @Sample(
-    id = "split_street_view",
+    id = "com.example.kotlindemos.SplitStreetViewPanoramaAndMapDemoActivity",
     title = "Split Street View & Map Sync",
     description = "Dual synchronized view: draggable 2D Pegman marker synchronized with 3D Street View panorama.",
     category = "Street View",

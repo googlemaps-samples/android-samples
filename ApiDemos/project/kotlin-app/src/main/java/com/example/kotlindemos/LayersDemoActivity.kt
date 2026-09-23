@@ -16,6 +16,8 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.LayersDemoBinding
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -57,7 +59,7 @@ class LayersDemoActivity :
 
     private lateinit var map: GoogleMap
 
-    private lateinit var binding: com.example.common_ui.databinding.LayersDemoBinding
+    private lateinit var binding: LayersDemoBinding
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -67,7 +69,7 @@ class LayersDemoActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.LayersDemoBinding.inflate(layoutInflater)
+        binding = LayersDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.layersSpinner.apply {
