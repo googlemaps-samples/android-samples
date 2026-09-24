@@ -69,7 +69,7 @@ firebaseDatabase = "22.0.2"
 # Third Party
 easypermissions = "3.0.0"
 volley = "1.2.1"
-ktor = "3.5.2"
+ktor = "3.6.0"
 kotlinxSerialization = "1.11.0"
 
 [libraries]
