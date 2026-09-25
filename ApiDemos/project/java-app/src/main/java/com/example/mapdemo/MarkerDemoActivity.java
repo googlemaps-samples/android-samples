@@ -14,6 +14,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -40,6 +44,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 
 import com.example.common_ui.R;
+import com.example.common_ui.databinding.MarkerDemoBinding;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -66,6 +71,18 @@ import java.util.Random;
 /**
  * This shows how to place markers on a map.
  */
+@Sample(
+    id = "marker_demo",
+    title = "Standard Markers & Info Windows",
+    description = "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info window layouts.",
+    category = "Markers & Overlays",
+    complexity = Complexity.SIMPLE,
+    tags = {"#markers", "#infowindow", "#draggable", "#icons", "#anchor"},
+    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins (long press Melbourne to drag), and custom InfoWindowAdapter views.",
+    successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
+    failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
+    framework = Framework.JAVA_VIEWS
+)
 // [START maps_android_sample_marker]
 public class MarkerDemoActivity extends SamplesBaseActivity implements
         OnMarkerClickListener,
@@ -90,7 +107,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     private static final LatLng ALICE_SPRINGS = new LatLng(-24.6980, 133.8807);
 
-    private com.example.common_ui.databinding.MarkerDemoBinding binding;
+    private MarkerDemoBinding binding;
 
     /** Demonstrates customizing the info window and/or its contents. */
     class CustomInfoWindowAdapter implements InfoWindowAdapter {
@@ -208,7 +225,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.common_ui.databinding.MarkerDemoBinding.inflate(getLayoutInflater());
+        binding = MarkerDemoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.rotationSeekBar.setMax(360);
@@ -291,7 +308,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         mMelbourne = mMap.addMarker(new MarkerOptions()
                 .position(MELBOURNE)
                 .title("Melbourne")
-                .snippet("Population: 4,137,400")
+                .snippet(getString(R.string.melbourne_drag_snippet))
+                .icon(vectorToBitmap(R.drawable.ic_drag_pan, Color.parseColor("#E65100")))
                 .draggable(true));
 
         // Place four markers on top of each other with differing z-indexes.
@@ -332,6 +350,11 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
                 .position(ALICE_SPRINGS)
                 .icon(vectorToBitmap(R.drawable.ic_android, Color.parseColor("#A4C639")))
                 .title("Alice Springs"));
+
+        if (mMelbourne != null) {
+            mMelbourne.showInfoWindow();
+            mLastSelectedMarker = mMelbourne;
+        }
 
         // Creates a marker rainbow demonstrating how to create default marker icons of different
         // hues (colors).
@@ -486,16 +509,19 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     @Override
     public void onMarkerDragStart(Marker marker) {
+        binding.topText.setVisibility(View.VISIBLE);
         binding.topText.setText(R.string.on_marker_drag_start);
     }
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
+        binding.topText.setVisibility(View.VISIBLE);
         binding.topText.setText(R.string.on_marker_drag_end);
     }
 
     @Override
     public void onMarkerDrag(Marker marker) {
+        binding.topText.setVisibility(View.VISIBLE);
         binding.topText.setText(getString(R.string.on_marker_drag, marker.getPosition().latitude, marker.getPosition().longitude));
     }
 
