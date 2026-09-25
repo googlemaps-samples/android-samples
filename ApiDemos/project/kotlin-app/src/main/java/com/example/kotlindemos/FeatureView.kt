@@ -16,6 +16,8 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.FrameLayout
@@ -31,7 +33,7 @@ class FeatureView(context: Context) : FrameLayout(context) {
     init {
         val layoutInflater =
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        layoutInflater.inflate(com.example.common_ui.R.layout.feature, this)
+        layoutInflater.inflate(R.layout.feature, this)
     }
 
     /**
@@ -40,7 +42,7 @@ class FeatureView(context: Context) : FrameLayout(context) {
      * @property titleId the resource id of the title of the demo
      */
     fun setTitleId(titleId: Int) {
-        findViewById<TextView>(com.example.common_ui.R.id.title).setText(titleId)
+        findViewById<TextView>(R.id.title).setText(titleId)
     }
 
     /**
@@ -49,6 +51,6 @@ class FeatureView(context: Context) : FrameLayout(context) {
      * @property descriptionId the resource id of the description of the demo
      */
     fun setDescriptionId(descriptionId: Int) {
-        (findViewById<TextView>(com.example.common_ui.R.id.description)).setText(descriptionId)
+        (findViewById<TextView>(R.id.description)).setText(descriptionId)
     }
 }

@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Color
 import androidx.core.graphics.toColorInt
 
@@ -50,6 +54,18 @@ private val TAG = AdvancedMarkersDemoActivity::class.java.name
  * The following sample showcases how to create Advanced Markers, and use all their customization
  * possibilities.
  */
+@Sample(
+    id = "com.example.kotlindemos.AdvancedMarkersDemoActivity",
+    title = "Advanced Markers & Pins",
+    description = "Modern PinConfig pins, custom glyphs, badge icon views, and collision behavior.",
+    category = "Markers & Overlays",
+    complexity = Complexity.ADVANCED,
+    tags = ["#markers", "#advancedmarkers", "#pinconfig", "#collision", "#badges", "#mapid"],
+    purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and custom View icons.",
+    successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with collision handling.",
+    failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge text blurry.",
+    framework = Framework.KOTLIN_VIEWS
+)
 // [START maps_android_sample_marker_advanced]
 class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
@@ -109,10 +125,10 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.advanced_markers_demo)
+        setContentView(R.layout.advanced_markers_demo)
 
-        if (getString(com.example.common_ui.R.string.map_id) != "DEMO_MAP_ID") {
-            val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment?
+        if (getString(R.string.map_id) != "DEMO_MAP_ID") {
+            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
             mapFragment?.getMapAsync(this)
         } else {
             val mapId = (application as ApiDemoApplication).mapId
@@ -134,7 +150,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             mapFragment.getMapAsync(this)
         }
 
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {
@@ -176,12 +192,13 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         val pinConfigMagenta = PinConfig.builder()
             .setBackgroundColor(Color.MAGENTA)
             .build()
-        map.addMarker(
+        val klMarker = map.addMarker(
             AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigMagenta))
                 .position(KUALA_LUMPUR)
                 .title("Kuala Lumpur (Magenta Pin)")
         )
+        klMarker?.showInfoWindow()
 
         // 3. PinConfig with custom border color
         val pinConfigBorder = PinConfig.builder()

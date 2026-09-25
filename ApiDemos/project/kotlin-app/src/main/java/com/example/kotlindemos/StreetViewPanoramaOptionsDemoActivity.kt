@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
@@ -30,11 +32,11 @@ import com.google.android.gms.maps.model.StreetViewSource
  */
 class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
     private var streetViewPanorama: StreetViewPanorama? = null
-    private lateinit var binding: com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding
+    private lateinit var binding: StreetViewPanoramaOptionsDemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding.inflate(layoutInflater)
+        binding = StreetViewPanoramaOptionsDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.streetnames.setOnClickListener { onStreetNamesToggled() }

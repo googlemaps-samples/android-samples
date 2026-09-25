@@ -13,6 +13,12 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.SnapshotDemoBinding
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
@@ -40,13 +46,25 @@ import kotlinx.coroutines.launch
  * 3. **Material 3 Split View**: Displays the interactive map in a top card and the captured
  *    preview in a bottom card with empty-state placeholder handling.
  */
+@Sample(
+    id = "com.example.kotlindemos.SnapshotDemoActivity",
+    title = "Map Snapshot & Image Capture",
+    description = "Asynchronous bitmap frame capture using GoogleMap.snapshot() rendered in Material 3 preview cards.",
+    category = "Snapshots & Sharing",
+    complexity = Complexity.SIMPLE,
+    tags = ["#snapshot", "#bitmap", "#export", "#material3", "#capture"],
+    purpose = "Demonstrates taking asynchronous high-resolution bitmap snapshots of the map with snapshot ready callbacks.",
+    successCriteria = "Tapping 'Take Snapshot' captures the current map frame and displays it in the Material 3 preview card.",
+    failureIndicators = "Snapshot returns blank bitmap or blocks UI thread during GL readback.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class SnapshotDemoActivity : SamplesBaseActivity() {
     private lateinit var map: GoogleMap
-    private lateinit var binding: com.example.common_ui.databinding.SnapshotDemoBinding
+    private lateinit var binding: SnapshotDemoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.SnapshotDemoBinding.inflate(layoutInflater)
+        binding = SnapshotDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.screenshotButton.setOnClickListener { takeSnapshot() }

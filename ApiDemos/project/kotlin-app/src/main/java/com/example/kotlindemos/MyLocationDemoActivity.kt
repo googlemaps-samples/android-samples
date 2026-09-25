@@ -13,6 +13,10 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -39,6 +43,18 @@ import com.google.android.gms.maps.SupportMapFragment
  * Permission for [Manifest.permission.ACCESS_FINE_LOCATION] and [Manifest.permission.ACCESS_COARSE_LOCATION]
  * are requested at run time. If either permission is not granted, the Activity is finished with an error message.
  */
+@Sample(
+    id = "com.example.kotlindemos.MyLocationDemoActivity",
+    title = "My Location Layer",
+    description = "Enabling blue dot location indicator and My Location button with runtime permissions.",
+    category = "Location & Sensors",
+    complexity = Complexity.SIMPLE,
+    tags = ["#location", "#mylocation", "#permissions", "#bluedot"],
+    purpose = "Demonstrates requesting ACCESS_FINE_LOCATION permissions and enabling the blue dot location layer.",
+    successCriteria = "Tapping My Location button centers camera on user's current GPS position.",
+    failureIndicators = "Permission denial causes unhandled crash or location button missing.",
+    framework = Framework.KOTLIN_VIEWS
+)
 // [START maps_android_sample_my_location]
 class MyLocationDemoActivity : SamplesBaseActivity(),
     OnMyLocationButtonClickListener,
