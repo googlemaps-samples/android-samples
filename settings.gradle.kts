@@ -70,3 +70,4 @@ project(":snippets:app-utils").projectDir = file("snippets/app-utils")
 include(":tutorials:kotlin:Polygons")
 project(":tutorials:kotlin:Polygons").projectDir = file("tutorials/kotlin/Polygons/app")
 // Add others as needed, starting with these for now
+include(":library")

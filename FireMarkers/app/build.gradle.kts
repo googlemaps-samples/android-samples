@@ -94,6 +94,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":library"))
     // ---------------------------------------------------------------------------------------------
     //                                  AndroidX & Jetpack
     //
