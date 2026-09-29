@@ -182,7 +182,7 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
     )
     fun enableTrafficLayer() {
         // [START maps_android_traffic_layer]
-        map.delegate.isTrafficEnabled = true
+        map.isTrafficEnabled = true
         // [END maps_android_traffic_layer]
     }
 }

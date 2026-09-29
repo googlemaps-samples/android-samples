@@ -70,14 +70,14 @@ class MapActivity : AppCompatActivity() {
                 packageName,
                 android.content.pm.PackageManager.GET_META_DATA,
             )
-            val apiKey = appInfo.metaData?.getString("com.google.android.geo.API_KEY")
+            val apiKey = appInfo.metaData?.getString("com.google.android.geo.API_KEY")?.trim()
             if (apiKey.isNullOrEmpty() || apiKey == "DEFAULT_API_KEY" || apiKey == "YOUR_API_KEY" || !apiKey.startsWith("AIza")) {
                 Toast.makeText(
                     this,
                     "ERROR: Invalid Google Maps API Key configured in secrets.properties",
                     Toast.LENGTH_LONG,
                 ).show()
-                Log.e("MapActivity", "Invalid MAPS_API_KEY: '$apiKey'")
+                Log.e("MapActivity", "Invalid MAPS_API_KEY configured in manifest")
                 finish()
                 return
             }

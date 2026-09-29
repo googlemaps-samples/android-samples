@@ -203,7 +203,7 @@ class ShapesSnippets(private val map: TrackedMap) {
                 .fillColor(Color.argb(128, 255, 0, 0))
                 .clickable(true)
         )
-        map.delegate.setOnCircleClickListener {
+        map.setOnCircleClickListener {
             // Flip the r, g and b components of the circle's stroke color.
             val strokeColor = it.strokeColor xor 0x00ffffff
             it.strokeColor = strokeColor

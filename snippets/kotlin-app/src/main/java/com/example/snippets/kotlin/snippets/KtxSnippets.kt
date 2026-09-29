@@ -68,9 +68,10 @@ class KtxSnippets(
         description = "What it does: Instantiates a marker in Sydney using the concise Kotlin DSL extension addMarker { ... }.\nHow to see the effect: A red marker pin titled 'Marker in Sydney' drops onto Sydney Opera House.",
     )
     fun ktxAddMarker() {
+        val googleMap: GoogleMap = map.delegate
         // [START maps_android_ktx_add_marker]
         val sydney = LatLng(-33.852, 151.211)
-        val marker = map.delegate.addMarker {
+        val marker = googleMap.addMarker {
             position(sydney)
             title("Marker in Sydney")
         }
@@ -82,9 +83,10 @@ class KtxSnippets(
         description = "What it does: Transforms continuous camera movement callbacks into a Kotlin Flow using cameraMoveEvents().\nHow to see the effect: Dragging the map emits continuous stream events to logcat during gesture motion.",
     )
     fun ktxCameraEvents() {
+        val googleMap: GoogleMap = map.delegate
         // [START maps_android_ktx_camera_events]
         scope.launch {
-            map.delegate.cameraMoveEvents().collect {
+            googleMap.cameraMoveEvents().collect {
                 Log.d("KTX", "Received camera move event")
             }
         }
@@ -118,14 +120,15 @@ class KtxSnippets(
         description = "What it does: Constructs styled polylines and polygons using concise Kotlin DSL builder blocks.\nHow to see the effect: A blue polyline stroke and red filled polygon overlay the map surface.",
     )
     fun polylinePolygonDsl() {
+        val googleMap: GoogleMap = map.delegate
         // DSL for Polyline
-        val polyline = map.delegate.addPolyline {
+        val polyline = googleMap.addPolyline {
             add(LatLng(37.35, -122.0))
             add(LatLng(37.45, -122.0))
             color(android.graphics.Color.BLUE)
         }
         // DSL for Polygon
-        val polygon = map.delegate.addPolygon {
+        val polygon = googleMap.addPolygon {
             add(LatLng(37.35, -122.0))
             add(LatLng(37.45, -122.0))
             add(LatLng(37.45, -122.2))
@@ -138,8 +141,9 @@ class KtxSnippets(
         description = "What it does: Collects camera idle events as a continuous cold Flow of coroutine stream events.\nHow to see the effect: Panning or zooming the map emits an idle flow event every time camera motion stops.",
     )
     fun cameraIdleEventsFlow() {
+        val googleMap: GoogleMap = map.delegate
         scope.launch {
-            map.delegate.cameraIdleEvents().collect {
+            googleMap.cameraIdleEvents().collect {
                 Log.d("KTX", "Camera idle flow event received")
             }
         }

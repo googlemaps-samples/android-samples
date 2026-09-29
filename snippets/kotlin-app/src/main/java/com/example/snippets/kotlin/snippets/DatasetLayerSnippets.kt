@@ -56,12 +56,12 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
         }
 
         Log.d(TAG, "styleBoulderTrails started. Dataset ID: $datasetId")
-        val capabilities = map.delegate.mapCapabilities
+        val capabilities = map.mapCapabilities
         Log.d(TAG, "isDataDrivenStylingAvailable: ${capabilities.isDataDrivenStylingAvailable}")
 
         // [START maps_android_dds_boulder_trails]
         // 1. Get the dataset feature layer from the map
-        val layer = map.delegate.getFeatureLayer(
+        val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
@@ -70,7 +70,7 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
         Log.d(TAG, "Dataset layer retrieved: $layer")
 
         // 2. Center the camera over Boulder OSMP Trails
-        map.delegate.moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(40.0150, -105.2705), 13.0f)
         )
 
@@ -164,7 +164,7 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
         Log.d(TAG, "styleNycSquirrels started. Dataset ID: $datasetId")
         // [START maps_android_dds_nyc_squirrels]
         // 1. Get the dataset feature layer
-        val layer = map.delegate.getFeatureLayer(
+        val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
@@ -173,7 +173,7 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
         Log.d(TAG, "NYC Squirrels layer retrieved: $layer")
 
         // 2. Center the camera over Central Park, New York
-        map.delegate.moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(40.786244, -73.962684), 14.0f)
         )
 
@@ -216,7 +216,7 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
         Log.d(TAG, "styleKyotoTemples started. Dataset ID: $datasetId")
         // [START maps_android_dds_kyoto_temples]
         // 1. Get the dataset feature layer
-        val layer = map.delegate.getFeatureLayer(
+        val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
@@ -225,7 +225,7 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
         Log.d(TAG, "Kyoto Temples layer retrieved: $layer")
 
         // 2. Center the camera over Kyoto, Japan
-        map.delegate.moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(35.005081, 135.764385), 13.5f)
         )
 

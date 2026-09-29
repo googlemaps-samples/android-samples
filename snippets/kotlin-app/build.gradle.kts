@@ -61,10 +61,10 @@ android {
     }
 }
 
+// [START maps_android_ktx_install_snippet]
 dependencies {
+    // [START_EXCLUDE silent]
     implementation(project(":snippets:common"))
-    implementation(libs.maps.ktx)
-    implementation(libs.maps.utils.ktx)
     implementation(libs.kotlin.stdlib)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.volley)
@@ -76,7 +76,19 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(project(":visual-testing"))
     androidTestImplementation(libs.uiautomator)
+    // [END_EXCLUDE]
+
+    // KTX for the Maps SDK for Android library
+    implementation(libs.maps.ktx)
 }
+// [END maps_android_ktx_install_snippet]
+
+// [START maps_android_utils_ktx_install_snippet]
+dependencies {
+    // KTX for the Maps SDK for Android Utility Library
+    implementation(libs.maps.utils.ktx)
+}
+// [END maps_android_utils_ktx_install_snippet]
 
 secrets {
     propertiesFileName = "secrets.properties"

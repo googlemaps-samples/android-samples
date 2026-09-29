@@ -49,14 +49,14 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
     fun styleLocalityBoundary() {
         // [START maps_android_dds_locality_boundary]
         // 1. Get the LOCALITY feature layer
-        val layer = map.delegate.getFeatureLayer(
+        val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.LOCALITY)
                 .build()
         )
 
         // 2. Center the camera over Hana, Hawaii
-        map.delegate.moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(20.7522, -155.9877), 11.0f)
         )
 
@@ -86,14 +86,14 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
     fun styleStateBoundaries() {
         // [START maps_android_dds_state_boundaries]
         // 1. Get the administrative area level 1 feature layer
-        val layer = map.delegate.getFeatureLayer(
+        val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.ADMINISTRATIVE_AREA_LEVEL_1)
                 .build()
         )
 
         // 2. Center the camera over the USA
-        map.delegate.moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(39.8283, -98.5795), 4.0f)
         )
 
@@ -122,14 +122,14 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
     fun styleCountryInteractive() {
         // [START maps_android_dds_country_interactive]
         // 1. Get the COUNTRY feature layer
-        val layer = map.delegate.getFeatureLayer(
+        val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.COUNTRY)
                 .build()
         )
 
         // 2. Center the camera globally
-        map.delegate.moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(0.0, 0.0), 2.0f)
         )
 

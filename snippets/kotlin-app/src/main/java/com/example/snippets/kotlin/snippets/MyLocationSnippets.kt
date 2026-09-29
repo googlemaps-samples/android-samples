@@ -40,13 +40,13 @@ class MyLocationSnippets(private val context: Context, private val map: TrackedM
         // location permission from the user. This sample does not include
         // a request for location permission.
         map.setMyLocationEnabled(true)
-        map.delegate.setOnMyLocationButtonClickListener {
+        map.setOnMyLocationButtonClickListener {
             Toast.makeText(context, "MyLocation button clicked", Toast.LENGTH_SHORT).show()
             // Return false so that we don't consume the event and the default behavior still occurs
             // (the camera animates to the user's current position).
             false
         }
-        map.delegate.setOnMyLocationClickListener { location ->
+        map.setOnMyLocationClickListener { location ->
             Toast.makeText(context, "Current location:\n$location", Toast.LENGTH_LONG).show()
         }
         // [END maps_android_my_location]
