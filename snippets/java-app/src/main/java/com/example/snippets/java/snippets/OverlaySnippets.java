@@ -132,7 +132,7 @@ public class OverlaySnippets {
             public URL getTileUrl(int x, int y, int zoom) {
 
                 /* Define the URL pattern for the tile images */
-                String s = String.format("http://my.image.server/images/%d/%d/%d.png", zoom, x, y);
+                String s = String.format(java.util.Locale.US, "http://my.image.server/images/%d/%d/%d.png", zoom, x, y);
 
                 if (!checkTileExists(x, y, zoom)) {
                     return null;

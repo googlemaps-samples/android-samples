@@ -59,14 +59,14 @@ public class DataDrivenBoundarySnippets {
     public void styleLocalityBoundary() {
         // [START maps_android_dds_locality_boundary_java]
         // 1. Get the LOCALITY feature layer
-        FeatureLayer layer = map.getDelegate().getFeatureLayer(
+        FeatureLayer layer = map.getFeatureLayer(
             new FeatureLayerOptions.Builder()
                 .featureType(FeatureType.LOCALITY)
                 .build()
         );
 
         // 2. Center the camera over Hana, Hawaii
-        map.getDelegate().moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(new LatLng(20.7522, -155.9877), 11.0f)
         );
 
@@ -97,14 +97,14 @@ public class DataDrivenBoundarySnippets {
     public void styleStateBoundaries() {
         // [START maps_android_dds_state_boundaries_java]
         // 1. Get the administrative area level 1 feature layer
-        FeatureLayer layer = map.getDelegate().getFeatureLayer(
+        FeatureLayer layer = map.getFeatureLayer(
             new FeatureLayerOptions.Builder()
                 .featureType(FeatureType.ADMINISTRATIVE_AREA_LEVEL_1)
                 .build()
         );
 
         // 2. Center the camera over the USA
-        map.getDelegate().moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(new LatLng(39.8283, -98.5795), 4.0f)
         );
 
@@ -135,14 +135,14 @@ public class DataDrivenBoundarySnippets {
     public void styleCountryInteractive() {
         // [START maps_android_dds_country_interactive_java]
         // 1. Get the COUNTRY feature layer
-        FeatureLayer layer = map.getDelegate().getFeatureLayer(
+        FeatureLayer layer = map.getFeatureLayer(
             new FeatureLayerOptions.Builder()
                 .featureType(FeatureType.COUNTRY)
                 .build()
         );
 
         // 2. Center the camera globally
-        map.getDelegate().moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(new LatLng(0.0, 0.0), 2.0f)
         );
 

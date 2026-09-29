@@ -198,7 +198,7 @@ public class ShapesSnippets {
             .fillColor(Color.argb(128, 255, 0, 0))
             .clickable(true));
 
-        map.getDelegate().setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
+        map.setOnCircleClickListener(new GoogleMap.OnCircleClickListener() {
             @Override
             public void onCircleClick(Circle circle) {
                 // Flip the r, g and b components of the circle's stroke color.
