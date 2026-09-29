@@ -20,6 +20,8 @@ import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.Projection
+import com.google.maps.android.ktx.cameraIdleEvents
+import com.google.maps.android.ktx.cameraMoveEvents
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
@@ -32,6 +34,11 @@ import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.FeatureLayer
+import com.google.android.gms.maps.model.FeatureLayerOptions
+import com.google.android.gms.maps.model.IndoorBuilding
+import com.google.android.gms.maps.model.MapCapabilities
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.TileOverlay
 import com.google.android.gms.maps.model.TileOverlayOptions
 
@@ -123,8 +130,9 @@ class TrackedMap(
     fun setMapType(type: Int) { delegate.mapType = type }
     fun getMapType(): Int = delegate.mapType
 
-    fun setTrafficEnabled(enabled: Boolean) { delegate.isTrafficEnabled = enabled }
-    fun isTrafficEnabled(): Boolean = delegate.isTrafficEnabled
+    var isTrafficEnabled: Boolean
+        get() = delegate.isTrafficEnabled
+        set(value) { delegate.isTrafficEnabled = value }
 
     fun setIndoorEnabled(enabled: Boolean): Boolean = delegate.setIndoorEnabled(enabled)
     fun isIndoorEnabled(): Boolean = delegate.isIndoorEnabled
@@ -140,6 +148,53 @@ class TrackedMap(
     fun getCameraPosition(): CameraPosition = delegate.cameraPosition
     fun getMaxZoomLevel(): Float = delegate.maxZoomLevel
     fun getMinZoomLevel(): Float = delegate.minZoomLevel
+
+    val focusedBuilding: IndoorBuilding?
+        get() = delegate.focusedBuilding
+
+    val mapCapabilities: MapCapabilities
+        get() = delegate.mapCapabilities
+
+    fun getFeatureLayer(options: FeatureLayerOptions): FeatureLayer = delegate.getFeatureLayer(options)
+
+    fun setOnMyLocationButtonClickListener(listener: GoogleMap.OnMyLocationButtonClickListener?) {
+        delegate.setOnMyLocationButtonClickListener(listener)
+    }
+
+    fun setOnMyLocationClickListener(listener: GoogleMap.OnMyLocationClickListener?) {
+        delegate.setOnMyLocationClickListener(listener)
+    }
+
+    fun setOnCircleClickListener(listener: GoogleMap.OnCircleClickListener?) {
+        delegate.setOnCircleClickListener(listener)
+    }
+
+    fun setOnPolygonClickListener(listener: GoogleMap.OnPolygonClickListener?) {
+        delegate.setOnPolygonClickListener(listener)
+    }
+
+    fun setOnPolylineClickListener(listener: GoogleMap.OnPolylineClickListener?) {
+        delegate.setOnPolylineClickListener(listener)
+    }
+
+    fun setOnGroundOverlayClickListener(listener: GoogleMap.OnGroundOverlayClickListener?) {
+        delegate.setOnGroundOverlayClickListener(listener)
+    }
+
+    fun setMapStyle(style: MapStyleOptions?): Boolean = delegate.setMapStyle(style)
+
+    fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
+        delegate.setPadding(left, top, right, bottom)
+    }
+
+    fun setContentDescription(description: String?) {
+        delegate.setContentDescription(description)
+    }
+
+    fun clear() {
+        delegate.clear()
+        items.clear()
+    }
 
     companion object {
         var lastInstance: TrackedMap? = null

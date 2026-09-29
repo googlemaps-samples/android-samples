@@ -69,7 +69,7 @@ class EventsSnippets(private val context: Context, private val map: TrackedMap) 
     )
     fun focusedBuilding() {
         // [START maps_android_events_active_level]
-        map.delegate.focusedBuilding?.let { building: IndoorBuilding ->
+        map.focusedBuilding?.let { building: IndoorBuilding ->
             val activeLevelIndex = building.activeLevelIndex
             val activeLevel = building.levels[activeLevelIndex]
         }

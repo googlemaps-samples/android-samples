@@ -232,7 +232,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         // [START maps_android_util_geojson_add_layer_to_map]
         layer.addLayerToMap()
         // [END maps_android_util_geojson_add_layer_to_map]
-        map.delegate.animateCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(com.google.android.gms.maps.model.LatLng(38.0, -97.0), 3f))
+        map.animateCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(com.google.android.gms.maps.model.LatLng(38.0, -97.0), 3f))
     }
 
     @SnippetItem(
@@ -377,6 +377,12 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
             }
         }
     } // [END maps_android_utils_kml_access_containers_nested]
+
+    fun removeKmlLayer(layer: KmlLayer) {
+        // [START maps_android_utils_kml_remove_layer]
+        layer.removeLayerFromMap()
+        // [END maps_android_utils_kml_remove_layer]
+    }
 
     @SnippetItem(
         title = "9. Simple Heatmap",
