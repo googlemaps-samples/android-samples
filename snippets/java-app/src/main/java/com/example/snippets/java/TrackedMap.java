@@ -32,6 +32,10 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.FeatureLayer;
+import com.google.android.gms.maps.model.FeatureLayerOptions;
+import com.google.android.gms.maps.model.IndoorBuilding;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import java.util.List;
@@ -215,6 +219,67 @@ public class TrackedMap {
 
     public float getMinZoomLevel() {
         return delegate.getMinZoomLevel();
+    }
+
+    public FeatureLayer getFeatureLayer(FeatureLayerOptions options) {
+        return delegate.getFeatureLayer(options);
+    }
+
+    public IndoorBuilding getFocusedBuilding() {
+        return delegate.getFocusedBuilding();
+    }
+
+    public void setOnMyLocationButtonClickListener(GoogleMap.OnMyLocationButtonClickListener listener) {
+        delegate.setOnMyLocationButtonClickListener(listener);
+    }
+
+    public void setOnMyLocationClickListener(GoogleMap.OnMyLocationClickListener listener) {
+        delegate.setOnMyLocationClickListener(listener);
+    }
+
+    public void setOnCircleClickListener(GoogleMap.OnCircleClickListener listener) {
+        delegate.setOnCircleClickListener(listener);
+    }
+
+    public void setOnPolygonClickListener(GoogleMap.OnPolygonClickListener listener) {
+        delegate.setOnPolygonClickListener(listener);
+    }
+
+    public void setOnPolylineClickListener(GoogleMap.OnPolylineClickListener listener) {
+        delegate.setOnPolylineClickListener(listener);
+    }
+
+    public void setOnGroundOverlayClickListener(GoogleMap.OnGroundOverlayClickListener listener) {
+        delegate.setOnGroundOverlayClickListener(listener);
+    }
+
+    public boolean setMapStyle(MapStyleOptions mapStyleOptions) {
+        return delegate.setMapStyle(mapStyleOptions);
+    }
+
+    public void setPadding(int left, int top, int right, int bottom) {
+        delegate.setPadding(left, top, right, bottom);
+    }
+
+    public void setContentDescription(String description) {
+        delegate.setContentDescription(description);
+    }
+
+    public void setInfoWindowAdapter(GoogleMap.InfoWindowAdapter adapter) {
+        delegate.setInfoWindowAdapter(adapter);
+    }
+
+    public void setOnMarkerDragListener(GoogleMap.OnMarkerDragListener listener) {
+        delegate.setOnMarkerDragListener(listener);
+    }
+
+    public void snapshot(GoogleMap.SnapshotReadyCallback callback) {
+        delegate.snapshot(callback);
+    }
+
+    public void clear() {
+        delegate.clear();
+        items.clear();
     }
 
     /** Aggressively resets all GoogleMap camera locks, styles, padding, UI settings, and event listeners. */

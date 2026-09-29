@@ -69,9 +69,12 @@ public class MapActivity extends AppCompatActivity {
                     getPackageName(), android.content.pm.PackageManager.GET_META_DATA);
             if (appInfo.metaData != null) {
                 String apiKey = appInfo.metaData.getString("com.google.android.geo.API_KEY");
+                if (apiKey != null) {
+                    apiKey = apiKey.trim();
+                }
                 if (apiKey == null || apiKey.isEmpty() || apiKey.equals("DEFAULT_API_KEY") || apiKey.equals("YOUR_API_KEY") || !apiKey.startsWith("AIza")) {
                     Toast.makeText(this, "ERROR: Invalid Google Maps API Key configured in secrets.properties", Toast.LENGTH_LONG).show();
-                    Log.e("MapActivity", "Invalid MAPS_API_KEY: '" + apiKey + "'");
+                    Log.e("MapActivity", "Invalid MAPS_API_KEY configured in manifest");
                     finish();
                     return;
                 }
@@ -94,6 +97,7 @@ public class MapActivity extends AppCompatActivity {
                                 double bearing = (rawBearing % 360.0 + 360.0) % 360.0;
 
                                 String codeSnippet = String.format(
+                                        java.util.Locale.US,
                                         "CameraPosition.builder()\n    .target(new LatLng(%.6f, %.6f))\n    .zoom(%.1ff)\n    .tilt(%.1ff)\n    .bearing(%.1ff)\n    .build()",
                                         target.latitude,
                                         target.longitude,

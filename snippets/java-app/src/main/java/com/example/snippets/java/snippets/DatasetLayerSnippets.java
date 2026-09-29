@@ -70,7 +70,7 @@ public class DatasetLayerSnippets {
 
         // [START maps_android_dds_boulder_trails_java]
         // 1. Get the dataset feature layer
-        FeatureLayer layer = map.getDelegate().getFeatureLayer(
+        FeatureLayer layer = map.getFeatureLayer(
             new FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
@@ -78,7 +78,7 @@ public class DatasetLayerSnippets {
         );
 
         // 2. Center the camera over Boulder OSMP Trails
-        map.getDelegate().moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(new LatLng(40.0150, -105.2705), 13.0f)
         );
 
@@ -177,7 +177,7 @@ public class DatasetLayerSnippets {
 
         // [START maps_android_dds_nyc_squirrels_java]
         // 1. Get the dataset feature layer
-        FeatureLayer layer = map.getDelegate().getFeatureLayer(
+        FeatureLayer layer = map.getFeatureLayer(
             new FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
@@ -185,7 +185,7 @@ public class DatasetLayerSnippets {
         );
 
         // 2. Center the camera over Central Park, New York
-        map.getDelegate().moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(new LatLng(40.786244, -73.962684), 14.0f)
         );
 
@@ -236,7 +236,7 @@ public class DatasetLayerSnippets {
 
         // [START maps_android_dds_kyoto_temples_java]
         // 1. Get the dataset feature layer
-        FeatureLayer layer = map.getDelegate().getFeatureLayer(
+        FeatureLayer layer = map.getFeatureLayer(
             new FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
@@ -244,7 +244,7 @@ public class DatasetLayerSnippets {
         );
 
         // 2. Center the camera over Kyoto, Japan
-        map.getDelegate().moveCamera(
+        map.moveCamera(
             CameraUpdateFactory.newLatLngZoom(new LatLng(35.005081, 135.764385), 13.5f)
         );
 

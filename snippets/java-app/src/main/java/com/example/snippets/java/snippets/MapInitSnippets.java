@@ -191,7 +191,7 @@ public class MapInitSnippets {
     )
     public void enableTrafficLayer() {
         // [START maps_android_traffic_layer]
-        map.getDelegate().setTrafficEnabled(true);
+        map.setTrafficEnabled(true);
         // [END maps_android_traffic_layer]
     }
 }

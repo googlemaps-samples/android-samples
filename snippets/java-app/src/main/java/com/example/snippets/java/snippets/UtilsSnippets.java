@@ -280,7 +280,7 @@ public class UtilsSnippets {
         // [START maps_android_util_geojson_add_layer_to_map]
         layer.addLayerToMap();
         // [END maps_android_util_geojson_add_layer_to_map]
-        map.getDelegate().animateCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(new com.google.android.gms.maps.model.LatLng(38.0, -97.0), 3f));
+        map.animateCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(new com.google.android.gms.maps.model.LatLng(38.0, -97.0), 3f));
     }
 
     @SnippetItem(
@@ -376,7 +376,7 @@ public class UtilsSnippets {
         KmlLayer layer = new KmlLayer(map.getDelegate(), R.raw.kml_file, context);
         // [END maps_android_utils_kml_add_file]
         layer.addLayerToMap();
-        map.getDelegate().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.422, -122.084), 16f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.422, -122.084), 16f));
     }
 
     @SnippetItem(
@@ -392,7 +392,7 @@ public class UtilsSnippets {
         // [START maps_android_utils_kml_add_layer]
         layer.addLayerToMap();
         // [END maps_android_utils_kml_add_layer]
-        map.getDelegate().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.422, -122.084), 16f));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.422, -122.084), 16f));
 
         // [START maps_android_utils_kml_access_containers]
         for (KmlContainer containers : layer.getContainers()) {

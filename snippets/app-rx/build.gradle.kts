@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,17 @@
  * limitations under the License.
  */
 
-// [START maps_android_secrets_gradle_plugin]
 plugins {
-    // [START_EXCLUDE]
     alias(libs.plugins.android.application)
-    // [END_EXCLUDE]
+    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.secrets.gradle.plugin)
 }
-// [END maps_android_secrets_gradle_plugin]
-
-apply(from = rootProject.file("check_api_key.gradle.kts"))
 
 android {
-    namespace = "com.example.snippets.java"
+    namespace = "com.google.maps.example.rx"
     compileSdk = libs.versions.compileSdk.get().toInt()
-
     defaultConfig {
-        applicationId = "com.example.snippets.java"
+        applicationId = "com.google.maps.example.rx"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
@@ -45,48 +39,60 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    lint {
+        disable += setOf("MissingInflatedId")
+        sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
+    }
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
+        }
+    }
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
     }
 }
 
-// [START maps_android_play_services_maps_dependency]
+// [START maps_android_maps_rx_install]
 dependencies {
+    // RxJava bindings for the Maps SDK
+    implementation(libs.maps.rx)
+
+    // RxJava bindings for the Places SDK
+    implementation(libs.places.rx)
+
+    // It is recommended to also include the latest Maps SDK, Places SDK and RxJava so you
+    // have the latest features and bug fixes.
+    implementation("com.google.android.gms:play-services-maps:20.0.0")
+    implementation("com.google.android.libraries.places:places:5.3.0")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.12")
+
     // [START_EXCLUDE silent]
-    implementation(project(":snippets:common"))
-    implementation(libs.volley)
-    implementation(libs.constraintlayout)
     implementation(libs.appcompat)
-    implementation(libs.activity)
+    implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.material)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    // [END_EXCLUDE]
-
-    // Maps SDK for Android
-    implementation(libs.play.services.maps)
+    implementation(libs.rxlifecycle.android.lifecycle.kotlin)
+    implementation(libs.maps.ktx)
+    implementation(libs.kotlin.stdlib.jdk8)
+    // [END_EXCLUDE silent]
 }
-// [END maps_android_play_services_maps_dependency]
+// [END maps_android_maps_rx_install]
 
-// [START maps_android_utils_install_snippet]
-dependencies {
-    // Utility Library for Maps SDK for Android
-    // You do not need to add a separate dependency for the Maps SDK for Android
-    // since this library builds in the compatible version of the Maps SDK.
-    implementation(libs.maps.utils)
-}
-// [END maps_android_utils_install_snippet]
-
-// [START maps_android_secrets_gradle_plugin_config]
 secrets {
     // To add your Maps API key to this project:
     // 1. If the secrets.properties file does not exist, create it in the root directory (the same folder as the root local.properties file).
@@ -98,4 +104,3 @@ secrets {
     // checked in version control.
     defaultPropertiesFileName = "local.defaults.properties"
 }
-// [END maps_android_secrets_gradle_plugin_config]

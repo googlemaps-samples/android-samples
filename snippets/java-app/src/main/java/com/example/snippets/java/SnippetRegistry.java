@@ -113,8 +113,14 @@ public class SnippetRegistry {
                                                 && method.getParameterTypes()[0] == Context.class) {
                                             method.invoke(instance, context);
                                         }
+                                    } catch (java.lang.reflect.InvocationTargetException e) {
+                                        Throwable cause = e.getCause();
+                                        if (cause instanceof RuntimeException) {
+                                            throw (RuntimeException) cause;
+                                        }
+                                        throw new RuntimeException("Snippet execution failed: " + method.getName(), cause);
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        throw new RuntimeException("Snippet reflection invocation failed: " + method.getName(), e);
                                     }
                                 }));
             }

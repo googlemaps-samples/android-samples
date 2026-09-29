@@ -97,7 +97,7 @@ public class EventsSnippets {
     )
     public void focusedBuilding() {
         // [START maps_android_events_active_level]
-        IndoorBuilding building = map.getDelegate().getFocusedBuilding();
+        IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
             int activeLevelIndex = building.getActiveLevelIndex();
             IndoorLevel activeLevel = building.getLevels().get(activeLevelIndex);

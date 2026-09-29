@@ -51,7 +51,7 @@ public class MyLocationSnippets {
         // location permission from the user. This sample does not include
         // a request for location permission.
         map.setMyLocationEnabled(true);
-        map.getDelegate().setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
                 Toast.makeText(context, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
@@ -60,7 +60,7 @@ public class MyLocationSnippets {
                 return false;
             }
         });
-        map.getDelegate().setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
+        map.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
             @Override
             public void onMyLocationClick(@NonNull Location location) {
                 Toast.makeText(context, "Current location:\n" + location, Toast.LENGTH_LONG).show();
