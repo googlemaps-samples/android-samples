@@ -37,7 +37,12 @@ class BasicMapReviewerUiTest {
 
     @Test
     fun testBasicMapHasReviewerToolbarActions() {
-        val scenario = ActivityScenario.launch(BasicMapDemoActivity::class.java)
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val intent = Intent(context, BasicMapDemoActivity::class.java).apply {
+            putExtra("extra_sample_id", "com.example.kotlindemos.BasicMapDemoActivity")
+            putExtra("extra_is_reviewer_mode", true)
+        }
+        val scenario = ActivityScenario.launch<BasicMapDemoActivity>(intent)
 
         scenario.onActivity { activity ->
             val toolbar = activity.findViewById<MaterialToolbar>(R.id.top_bar)
