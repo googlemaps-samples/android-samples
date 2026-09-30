@@ -16,6 +16,12 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,6 +34,23 @@ import com.google.android.gms.maps.model.MarkerOptions
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
  */
+@Sample(
+    id = "com.example.kotlindemos.BasicMapDemoActivity",
+    title = "Basic Map",
+    description = "Fundamental map instantiation, lifecycle binding, and default camera centering.",
+    category = "Map Initialization",
+    complexity = Complexity.SNIPPET,
+    tags = ["#map", "#init", "#lifecycle", "#quickstart"],
+    apiCalls = [
+        "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
+        "GoogleMap.addMarker(MarkerOptions)",
+        "GoogleMap.moveCamera(CameraUpdate)"
+    ],
+    purpose = "Demonstrates clean, minimal map instantiation using SupportMapFragment.",
+    successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with working gestures.",
+    failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map failing to unpause.",
+    framework = Framework.KOTLIN_VIEWS
+)
 // [START maps_android_sample_basic_map]
 class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
@@ -36,9 +59,9 @@ class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.basic_demo)
+        setContentView(R.layout.basic_demo)
         val mapFragment : SupportMapFragment? =
-                supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as? SupportMapFragment
+                supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
     }
 
@@ -49,7 +72,7 @@ class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         with(googleMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, ZOOM_LEVEL))
-            addMarker(MarkerOptions().position(SYDNEY))
+            addMarker(MarkerOptions().position(SYDNEY).title("Sydney"))
         }
     }
 }

@@ -15,6 +15,8 @@
  */
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -37,8 +39,8 @@ class TileCoordinateDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.tile_coordinate_demo)
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        setContentView(R.layout.tile_coordinate_demo)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 

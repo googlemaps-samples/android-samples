@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
 import android.os.Bundle
 import android.os.Parcelable
 
@@ -133,7 +135,7 @@ class SaveStateDemoActivity : SamplesBaseActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.save_state_demo)
+    setContentView(R.layout.save_state_demo)
   }
 
   companion object {

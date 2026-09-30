@@ -13,6 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.IndoorDemoBinding
 import android.os.Bundle
 import com.example.common_ui.R
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,7 +31,7 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     internal lateinit var map: GoogleMap
     private var showLevelPicker = true
-    private lateinit var binding: com.example.common_ui.databinding.IndoorDemoBinding
+    private lateinit var binding: IndoorDemoBinding
 
     internal var activeLevelIndex: Int? = null
 
@@ -37,7 +39,7 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.IndoorDemoBinding.inflate(layoutInflater)
+        binding = IndoorDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.toggleLevelPickerButton.setOnClickListener { onToggleLevelPicker() }
