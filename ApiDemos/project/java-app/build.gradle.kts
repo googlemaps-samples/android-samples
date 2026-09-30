@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(project(":ApiDemos:common-ui"))
+    implementation(project(":ApiDemos:reviewer"))
     implementation(libs.uiautomator)
     implementation(libs.maps.utils.ktx)
 

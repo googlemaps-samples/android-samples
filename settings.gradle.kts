@@ -43,6 +43,8 @@ include(":ApiDemos:java-app")
 project(":ApiDemos:java-app").projectDir = file("ApiDemos/project/java-app")
 include(":ApiDemos:kotlin-app")
 project(":ApiDemos:kotlin-app").projectDir = file("ApiDemos/project/kotlin-app")
+include(":ApiDemos:reviewer")
+project(":ApiDemos:reviewer").projectDir = file("ApiDemos/project/reviewer")
 
 // FireMarkers
 include(":FireMarkers:app")
