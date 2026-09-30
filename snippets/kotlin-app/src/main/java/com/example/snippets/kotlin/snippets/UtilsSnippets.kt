@@ -130,6 +130,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Disables smooth position transition animations on ClusterManager.\nHow to see the effect: When zooming or panning, cluster pins immediately snap to position without smooth sliding.",
     )
     fun clusterAnimation() {
+        if (clusterManager == null) {
+            setUpClusterer()
+        }
         clusterManager?.let {
             // [START maps_android_utils_clustering_animation_off]
             it.setAnimation(false)
@@ -142,6 +145,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Adds a single ClusterItem with a custom title and snippet to the ClusterManager.\nHow to see the effect: Tap the individual cluster item pin to view its custom title and snippet callout.",
     )
     fun infoWindow() {
+        if (clusterManager == null) {
+            setUpClusterer()
+        }
         clusterManager?.let {
             // [START maps_android_utils_clustering_info_window]
             // Set the lat/long coordinates for the marker.
@@ -166,6 +172,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Clears all items and clusters from the ClusterManager.\nHow to see the effect: All cluster pin circles and individual cluster markers disappear from the map view.",
     )
     fun clearClusterItems() {
+        if (clusterManager == null) {
+            setUpClusterer()
+        }
         // [START maps_android_utils_clustering_clear]
         clusterManager?.clearItems()
         clusterManager?.cluster()
@@ -177,6 +186,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Removes a specified single item from the active ClusterManager collection.\nHow to see the effect: The target marker pin is removed and surrounding cluster count numbers decrement.",
     )
     fun removeSingleClusterItem() {
+        if (clusterManager == null) {
+            setUpClusterer()
+        }
         // [START maps_android_utils_clustering_remove]
         val item = MyItem(51.5145160, -0.1270060, "Title to remove", "Snippet")
         clusterManager?.removeItem(item)
@@ -189,6 +201,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Registers click listeners for clusters, cluster items, and info window popups.\nHow to see the effect: Tapping a cluster circle or item displays a Toast notification with cluster details.",
     )
     fun demonstrateClusterListeners() {
+        if (clusterManager == null) {
+            setUpClusterer()
+        }
         // [START maps_android_utils_clustering_listeners]
         val manager = clusterManager ?: return
         manager.setOnClusterClickListener { cluster ->
@@ -240,6 +255,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Removes the imported GeoJSON layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines and points associated with the GeoJSON dataset disappear.",
     )
     fun removeGeoJsonLayerFile() {
+        if (geoJsonLayer == null) {
+            addGeoJsonLayerFile()
+        }
         geoJsonLayer?.let {
             // [START maps_android_util_geojson_remove_layer]
             it.removeLayerFromMap()
@@ -475,6 +493,9 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Removes the custom heatmap TileOverlay from the active GoogleMap instance.\nHow to see the effect: The heatmap color density overlay disappears completely from the viewport.",
     )
     fun removeCustomHeatmap() {
+        if (heatmapTileOverlay == null) {
+            addCustomHeatmap()
+        }
         heatmapTileOverlay?.let {
             // [START maps_android_utils_heatmap_remove]
             it.remove()
