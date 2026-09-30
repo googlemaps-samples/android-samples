@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
 
     testImplementation(libs.junit)
+    testImplementation(libs.truth)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
 }
