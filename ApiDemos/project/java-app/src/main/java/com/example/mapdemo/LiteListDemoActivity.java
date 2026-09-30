@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -41,6 +45,18 @@ import androidx.recyclerview.widget.RecyclerView;
  * Note the use of the view holder pattern with the
  * {@link com.google.android.gms.maps.OnMapReadyCallback}.
  */
+@Sample(
+    id = "lite_list",
+    title = "Lite Mode in RecyclerView",
+    description = "High-performance Lite Mode map instances inside smooth scrolling RecyclerView list rows.",
+    category = "Lists & Performance",
+    complexity = Complexity.ADVANCED,
+    tags = {"#litemode", "#recyclerview", "#lists", "#viewholder", "#lifecycle"},
+    purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper lifecycle management.",
+    successCriteria = "List scrolls at 60/120fps without stutter; map snapshots display accurate markers per row.",
+    failureIndicators = "RecyclerView scrolling stutters or recycled MapViews display stale map markers.",
+    framework = Framework.JAVA_VIEWS
+)
 public class LiteListDemoActivity extends SamplesBaseActivity {
 
     private RecyclerView mRecyclerView;
