@@ -261,6 +261,14 @@ public class TrackedMap {
         delegate.setPadding(left, top, right, bottom);
     }
 
+    public void setMapColorScheme(int colorScheme) {
+        delegate.setMapColorScheme(colorScheme);
+    }
+
+    public int getMapColorScheme() {
+        return delegate.getMapColorScheme();
+    }
+
     public void setContentDescription(String description) {
         delegate.setContentDescription(description);
     }
