@@ -100,6 +100,11 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
             .rotateGesturesEnabled(false)
             .tiltGesturesEnabled(false)
         // [END maps_android_google_map_options_configure]
+
+        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
+        map.getUiSettings().isCompassEnabled = false
+        map.getUiSettings().isRotateGesturesEnabled = false
+        map.getUiSettings().isTiltGesturesEnabled = false
     }
 
     @SnippetItem(
@@ -174,6 +179,8 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
         val options = GoogleMapOptions()
             .mapColorScheme(com.google.android.gms.maps.model.MapColorScheme.DARK)
         // [END maps_android_map_color_scheme]
+
+        map.mapColorScheme = com.google.android.gms.maps.model.MapColorScheme.DARK
     }
 
     @SnippetItem(

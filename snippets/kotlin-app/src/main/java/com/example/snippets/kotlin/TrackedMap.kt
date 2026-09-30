@@ -155,6 +155,12 @@ class TrackedMap(
     val mapCapabilities: MapCapabilities
         get() = delegate.mapCapabilities
 
+    var mapColorScheme: Int
+        get() = delegate.mapColorScheme
+        set(value) {
+            delegate.mapColorScheme = value
+        }
+
     fun getFeatureLayer(options: FeatureLayerOptions): FeatureLayer = delegate.getFeatureLayer(options)
 
     fun setOnMyLocationButtonClickListener(listener: GoogleMap.OnMyLocationButtonClickListener?) {

@@ -47,6 +47,8 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
     )
     fun setLocation() {
         val sanFrancisco = LatLng(37.754130, -122.447129)
+        val intent = Intent(context, StreetViewActivity::class.java)
+        context.startActivity(intent)
     }
 
     @SnippetItem(
@@ -58,6 +60,8 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
         val camera = StreetViewPanoramaCamera.Builder()
             .zoom(1f + zoomBy)
             .build()
+        val intent = Intent(context, StreetViewActivity::class.java)
+        context.startActivity(intent)
     }
 
     @SnippetItem(
@@ -69,5 +73,7 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
         val camera = StreetViewPanoramaCamera.Builder()
             .bearing(180f - 60f)
             .build()
+        val intent = Intent(context, StreetViewActivity::class.java)
+        context.startActivity(intent)
     }
 }
