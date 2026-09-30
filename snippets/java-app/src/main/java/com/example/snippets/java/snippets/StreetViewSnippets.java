@@ -55,6 +55,8 @@ public class StreetViewSnippets {
     )
     public void setLocation() {
         LatLng sanFrancisco = new LatLng(37.754130, -122.447129);
+        Intent intent = new Intent(context, StreetViewActivity.class);
+        context.startActivity(intent);
     }
 
     @SnippetItem(
@@ -66,6 +68,8 @@ public class StreetViewSnippets {
         StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder()
             .zoom(1f + zoomBy)
             .build();
+        Intent intent = new Intent(context, StreetViewActivity.class);
+        context.startActivity(intent);
     }
 
     @SnippetItem(
@@ -77,5 +81,7 @@ public class StreetViewSnippets {
         StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder()
             .bearing(180f - 60f)
             .build();
+        Intent intent = new Intent(context, StreetViewActivity.class);
+        context.startActivity(intent);
     }
 }

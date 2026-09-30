@@ -163,11 +163,12 @@ public class UtilsSnippets {
             description = "What it does: Disables smooth position transition animations on ClusterManager.\nHow to see the effect: When zooming or panning, cluster pins immediately snap to position without smooth sliding."
     )
     public void clusterAnimation() {
-        if (clusterManager != null) {
-            // [START maps_android_utils_clustering_animation_off]
-            clusterManager.setAnimation(false);
-            // [END maps_android_utils_clustering_animation_off]
+        if (clusterManager == null) {
+            setUpClusterer();
         }
+        // [START maps_android_utils_clustering_animation_off]
+        clusterManager.setAnimation(false);
+        // [END maps_android_utils_clustering_animation_off]
     }
 
     @SnippetItem(
@@ -175,23 +176,24 @@ public class UtilsSnippets {
             description = "What it does: Adds a single ClusterItem with a custom title and snippet to the ClusterManager.\nHow to see the effect: Tap the individual cluster item pin to view its custom title and snippet callout."
     )
     public void infoWindow() {
-        if (clusterManager != null) {
-            // [START maps_android_utils_clustering_info_window]
-            // Set the lat/long coordinates for the marker.
-            double lat = 51.5009;
-            double lng = -0.122;
-
-            // Set the title and snippet strings.
-            String title = "This is the title";
-            String snippet = "and this is the snippet.";
-
-            // Create a cluster item for the marker and set the title and snippet using the constructor.
-            MyItem infoWindowItem = new MyItem(lat, lng, title, snippet);
-
-            // Add the cluster item (marker) to the cluster manager.
-            clusterManager.addItem(infoWindowItem);
-            // [END maps_android_utils_clustering_info_window]
+        if (clusterManager == null) {
+            setUpClusterer();
         }
+        // [START maps_android_utils_clustering_info_window]
+        // Set the lat/long coordinates for the marker.
+        double lat = 51.5009;
+        double lng = -0.122;
+
+        // Set the title and snippet strings.
+        String title = "This is the title";
+        String snippet = "and this is the snippet.";
+
+        // Create a cluster item for the marker and set the title and snippet using the constructor.
+        MyItem infoWindowItem = new MyItem(lat, lng, title, snippet);
+
+        // Add the cluster item (marker) to the cluster manager.
+        clusterManager.addItem(infoWindowItem);
+        // [END maps_android_utils_clustering_info_window]
     }
 
     @SnippetItem(
@@ -199,6 +201,9 @@ public class UtilsSnippets {
             description = "What it does: Clears all items and clusters from the ClusterManager.\nHow to see the effect: All cluster pin circles and individual cluster markers disappear from the map view."
     )
     public void clearClusterItems() {
+        if (clusterManager == null) {
+            setUpClusterer();
+        }
         // [START maps_android_utils_clustering_clear]
         if (clusterManager != null) {
             clusterManager.clearItems();
@@ -212,6 +217,9 @@ public class UtilsSnippets {
             description = "What it does: Removes a specified single item from the active ClusterManager collection.\nHow to see the effect: The target marker pin is removed and surrounding cluster count numbers decrement."
     )
     public void removeSingleClusterItem() {
+        if (clusterManager == null) {
+            setUpClusterer();
+        }
         // [START maps_android_utils_clustering_remove]
         if (clusterManager != null) {
             MyItem item = new MyItem(51.5145160, -0.1270060, "Title to remove", "Snippet");
@@ -226,6 +234,9 @@ public class UtilsSnippets {
             description = "What it does: Registers click listeners for clusters, cluster items, and info window popups.\nHow to see the effect: Tapping a cluster circle or item displays a Toast notification with cluster details."
     )
     public void demonstrateClusterListeners() {
+        if (clusterManager == null) {
+            setUpClusterer();
+        }
         // [START maps_android_utils_clustering_listeners]
         if (clusterManager == null) {
             return;
@@ -287,7 +298,10 @@ public class UtilsSnippets {
             title = "5b. Remove GeoJSON Layer",
             description = "What it does: Removes the imported GeoJSON layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines and points associated with the GeoJSON dataset disappear."
     )
-    public void removeGeoJsonLayerFile() {
+    public void removeGeoJsonLayerFile() throws IOException, JSONException {
+        if (geoJsonLayer == null) {
+            addGeoJsonLayerFile();
+        }
         if (geoJsonLayer != null) {
             // [START maps_android_util_geojson_remove_layer]
             geoJsonLayer.removeLayerFromMap();
@@ -532,7 +546,10 @@ public class UtilsSnippets {
             title = "10b. Remove Custom Heatmap",
             description = "What it does: Removes the custom heatmap TileOverlay from the active GoogleMap instance.\nHow to see the effect: The heatmap color density overlay disappears completely from the viewport."
     )
-    public void removeCustomHeatmap() {
+    public void removeCustomHeatmap() throws JSONException {
+        if (heatmapTileOverlay == null) {
+            addCustomHeatmap();
+        }
         if (heatmapTileOverlay != null) {
             // [START maps_android_utils_heatmap_remove]
             heatmapTileOverlay.remove();

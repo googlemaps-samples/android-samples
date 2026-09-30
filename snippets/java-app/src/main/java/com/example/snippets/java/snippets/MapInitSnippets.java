@@ -106,6 +106,11 @@ public class MapInitSnippets {
             .rotateGesturesEnabled(false)
             .tiltGesturesEnabled(false);
         // [END maps_android_google_map_options_configure]
+
+        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        map.getUiSettings().setCompassEnabled(false);
+        map.getUiSettings().setRotateGesturesEnabled(false);
+        map.getUiSettings().setTiltGesturesEnabled(false);
     }
 
     @SnippetItem(
@@ -183,6 +188,8 @@ public class MapInitSnippets {
         GoogleMapOptions options = new GoogleMapOptions()
             .mapColorScheme(com.google.android.gms.maps.model.MapColorScheme.DARK);
         // [END maps_android_map_color_scheme]
+
+        map.setMapColorScheme(com.google.android.gms.maps.model.MapColorScheme.DARK);
     }
 
     @SnippetItem(
