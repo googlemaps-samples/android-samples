@@ -53,6 +53,8 @@ include(":WearOS:Wearable")
 project(":WearOS:Wearable").projectDir = file("WearOS/Wearable")
 
 // Snippets
+include(":snippets:common")
+project(":snippets:common").projectDir = file("snippets/common")
 include(":snippets:app")
 project(":snippets:app").projectDir = file("snippets/app")
 include(":snippets:app-ktx")
