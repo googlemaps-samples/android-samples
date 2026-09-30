@@ -16,6 +16,7 @@
 
 package com.example.common_ui.catalog.compose
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -44,8 +45,15 @@ open class CatalogActivity : ComponentActivity() {
                         launchSample(sample, framework)
                     },
                     onSwitchMode = {
-                        val intent = Intent().setClassName(packageName, "com.example.common_ui.catalog.compose.ReviewerActivity")
-                        startActivity(intent)
+                        try {
+                            val intent = Intent().setClassName(packageName, "com.example.reviewer.compose.ReviewerActivity")
+                            startActivity(intent)
+                            finish()
+                        } catch (e: ActivityNotFoundException) {
+                            Toast.makeText(this@CatalogActivity, "Reviewer mode is not available", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(this@CatalogActivity, "Could not switch to Reviewer mode: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 )
             }
@@ -59,12 +67,25 @@ open class CatalogActivity : ComponentActivity() {
             return
         }
 
+        val targetPackage = when {
+            className.startsWith("com.example.mapdemo.") -> "com.example.mapdemo"
+            className.startsWith("com.example.kotlindemos.") -> "com.example.kotlindemos"
+            else -> packageName
+        }
+
         try {
-            val intent = Intent().setClassName(packageName, className).apply {
+            val intent = Intent().apply {
+                setClassName(targetPackage, className)
                 putExtra("extra_sample_id", sample.id)
                 putExtra("extra_is_reviewer_mode", false)
             }
             startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                this,
+                "${framework.displayName} app ($targetPackage) is not installed",
+                Toast.LENGTH_LONG
+            ).show()
         } catch (e: Exception) {
             Toast.makeText(this, "Could not launch ${sample.title}: ${e.message}", Toast.LENGTH_LONG).show()
         }
