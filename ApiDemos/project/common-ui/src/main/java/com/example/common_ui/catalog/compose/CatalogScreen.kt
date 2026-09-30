@@ -42,18 +42,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Assessment
-import androidx.compose.material.icons.filled.CheckCircleOutline
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.FastForward
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
-import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Info
+import androidx.compose.ui.res.painterResource
+import com.example.common_ui.R
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -247,9 +244,10 @@ fun CatalogScreen(
                                 }
                             ) {
                                 Icon(
-                                    imageVector = if (selectedStatusFilter == ReviewStatus.UNCHECKED) Icons.Default.CheckCircleOutline else Icons.Default.RadioButtonUnchecked,
+                                    painter = painterResource(if (selectedStatusFilter == ReviewStatus.UNCHECKED) R.drawable.ic_status_passing else R.drawable.ic_status_unchecked),
                                     contentDescription = "Filter Unchecked Only",
-                                    tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                                    tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(24.dp)
                                 )
                             }
                         }
@@ -269,9 +267,10 @@ fun CatalogScreen(
                                 }
                             }) {
                                 Icon(
-                                    imageVector = Icons.Default.FastForward,
+                                    painter = painterResource(R.drawable.ic_skip_next),
                                     contentDescription = "Launch Next Unchecked Sample",
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(24.dp)
                                 )
                             }
                         }
@@ -280,9 +279,10 @@ fun CatalogScreen(
                         if (onClearEvaluations != null) {
                             IconButton(onClick = { showClearConfirmDialog = true }) {
                                 Icon(
-                                    imageVector = Icons.Default.RestartAlt,
+                                    painter = painterResource(R.drawable.ic_undo),
                                     contentDescription = "Reset All Evaluations",
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(24.dp)
                                 )
                             }
                         }
@@ -406,7 +406,7 @@ fun CatalogScreen(
                                 }
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.Assessment,
+                                    painter = painterResource(R.drawable.ic_grievances),
                                     contentDescription = "Generate Report"
                                 )
                             }
@@ -625,7 +625,7 @@ fun CatalogScreen(
     if (showClearConfirmDialog) {
         AlertDialog(
             onDismissRequest = { showClearConfirmDialog = false },
-            icon = { Icon(Icons.Default.RestartAlt, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+            icon = { Icon(painterResource(R.drawable.ic_undo), contentDescription = null, tint = MaterialTheme.colorScheme.error) },
             title = { Text("Reset All Review Evaluations?") },
             text = {
                 Text("This will reset all ratings, status marks, and reviewer notes across all Kotlin and Java samples back to Unchecked.")
@@ -851,7 +851,7 @@ fun SampleComposeCard(
                     }
 
                     Icon(
-                        imageVector = Icons.Default.ExpandMore,
+                        imageVector = Icons.Default.KeyboardArrowDown,
                         contentDescription = "Expand",
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(24.dp)
@@ -892,7 +892,7 @@ fun SampleComposeCard(
                             modifier = Modifier.size(28.dp)
                         ) {
                             Icon(
-                                Icons.Default.ExpandLess,
+                                Icons.Default.KeyboardArrowUp,
                                 contentDescription = "Collapse",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -1011,7 +1011,7 @@ fun SampleComposeCard(
                         modifier = Modifier.weight(1f)
                     ) {
                         Icon(
-                            Icons.Outlined.Info,
+                            Icons.Default.Info,
                             contentDescription = null,
                             modifier = Modifier.size(16.dp)
                         )

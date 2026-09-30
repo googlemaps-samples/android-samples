@@ -77,7 +77,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation(libs.material.icons.extended)
+    implementation(libs.material.icons.core)
     implementation(libs.activity.compose)
     debugImplementation(libs.ui.tooling)
 
