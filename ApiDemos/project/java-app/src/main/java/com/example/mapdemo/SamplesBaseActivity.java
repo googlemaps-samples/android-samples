@@ -86,6 +86,9 @@ public class SamplesBaseActivity extends AppCompatActivity {
     }
 
     private void applyImmersiveStickyMode() {
+        if (!isReviewerMode()) {
+            return;
+        }
         WindowInsetsControllerCompat insetsController =
                 WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         insetsController.setSystemBarsBehavior(

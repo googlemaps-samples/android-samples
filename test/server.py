@@ -341,6 +341,7 @@ def update_markdown_task_list(db_data):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Interactive API Server for Maps SDK Review Dashboard.")
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="Host interface to bind to (default: 127.0.0.1)")
     parser.add_argument("--port", type=int, default=8888, help="Port to bind the HTTP server to (default: 8888)")
     parser.add_argument("--java-home", "--jdk-home", dest="java_home", type=str, default="/usr/lib/jvm/java-21-openjdk-amd64", help="Path to JDK to use when executing Gradle build/test tasks")
     args = parser.parse_args()
@@ -348,9 +349,9 @@ if __name__ == "__main__":
     PORT = args.port
     CUSTOM_JAVA_HOME = args.java_home
 
-    server_address = ("0.0.0.0", PORT)
+    server_address = (args.host, PORT)
     httpd = http.server.ThreadingHTTPServer(server_address, CatalogRequestHandler)
-    print(f"🚀 Interactive Catalog API Server running on port {PORT} (JDK Home: {CUSTOM_JAVA_HOME})...")
+    print(f"🚀 Interactive Catalog API Server running on http://{args.host}:{PORT} (JDK Home: {CUSTOM_JAVA_HOME})...")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

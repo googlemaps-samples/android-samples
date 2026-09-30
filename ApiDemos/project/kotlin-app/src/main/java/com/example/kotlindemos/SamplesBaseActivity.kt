@@ -75,6 +75,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
     }
 
     private fun applyImmersiveStickyMode() {
+        if (!isReviewerMode) return
         val insetsController = WindowCompat.getInsetsController(window, window.decorView)
         insetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
