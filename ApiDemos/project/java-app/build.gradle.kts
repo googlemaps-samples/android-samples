@@ -31,6 +31,8 @@ android {
         versionName = libs.versions.versionName.get()
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Start every instrumented test from a clean app state.
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
 
     buildFeatures {
@@ -54,6 +56,11 @@ android {
     }
 
     namespace = "com.example.mapdemo"
+
+    testOptions {
+        // Each test runs in its own process, so a crashing demo does not abort the rest of the run.
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    }
 
     lint {
         disable += setOf("MissingInflatedId")
@@ -79,6 +86,8 @@ dependencies {
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestUtil(libs.androidx.test.orchestrator)
     androidTestImplementation(libs.ext.junit)
 }
 

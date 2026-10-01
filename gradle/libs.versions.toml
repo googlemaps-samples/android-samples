@@ -58,6 +58,8 @@ espresso = "3.7.0"
 junit = "4.13.2"
 mockito = "6.3.0"
 robolectric = "4.17"
+androidxTestOrchestrator = "1.6.1"
+androidxTestRules = "1.7.0"
 truth = "1.4.5"
 turbine = "1.2.1"
 uiautomator = "2.4.0"
@@ -132,6 +134,8 @@ hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", ve
 # Testing
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 espresso-idling-resource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espresso" }
+androidx-test-orchestrator = { module = "androidx.test:orchestrator", version.ref = "androidxTestOrchestrator" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidxTestRules" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }

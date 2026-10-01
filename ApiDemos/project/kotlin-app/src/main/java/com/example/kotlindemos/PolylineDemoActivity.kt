@@ -279,7 +279,7 @@ class PolylineDemoActivity :
      * Listener for changes in a spinner's position.
      * Can change the polyline's start and end caps, pattern and joint type.
      */
-    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         when (parent.id) {
             com.example.common_ui.R.id.startCapSpinner -> mutablePolyline.startCap = getSelectedCap(pos) ?: ButtCap()
             com.example.common_ui.R.id.endCapSpinner -> mutablePolyline.endCap = getSelectedCap(pos) ?: ButtCap()
