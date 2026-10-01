@@ -21,10 +21,10 @@ import android.view.View
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.GoogleMap
-import android.widget.CheckBox
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import com.example.common_ui.R
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 /**
  * This shows how to to instantiate a SupportMapFragment programmatically with a custom background
@@ -55,15 +55,14 @@ class BackgroundColorCustomizationProgrammaticDemoActivity : SamplesBaseActivity
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.map, mapFragment, MAP_FRAGMENT_TAG)
             fragmentTransaction.commit()
-        } else {
-            mapFragment.getMapAsync(this)
         }
+        mapFragment.getMapAsync(this)
         applyInsets(findViewById(R.id.map_container))
     }
 
     override fun onMapReady(map: GoogleMap) {
         map.mapType = GoogleMap.MAP_TYPE_NONE
-        val mapTypeToggleCheckbox = findViewById<CheckBox>(R.id.map_type_toggle)
+        val mapTypeToggleCheckbox = findViewById<SwitchMaterial>(R.id.map_type_toggle)
         mapTypeToggleCheckbox.setOnCheckedChangeListener { _, isChecked ->
             map.mapType = if (isChecked) GoogleMap.MAP_TYPE_NORMAL else GoogleMap.MAP_TYPE_NONE
         }
