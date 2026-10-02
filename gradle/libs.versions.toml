@@ -107,7 +107,6 @@ ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", versio
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "mapsUtils" }
 android-maps-utils-core = { module = "com.google.maps.android:android-maps-utils-core", version.ref = "mapsUtils" }
-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "mapsUtils" }
 places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
