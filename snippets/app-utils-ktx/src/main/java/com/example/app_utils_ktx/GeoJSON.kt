@@ -31,9 +31,9 @@ internal class GeoJSON {
     private lateinit var map: GoogleMap
     private fun addGeoJsonLayerJsonObject() {
         // [START maps_android_util_geojson_add_jsonobject]
-        val geoJsonData: JSONObject? = // JSONObject containing the GeoJSON data
+        val geoJsonData: JSONObject = // JSONObject containing the GeoJSON data
             // [START_EXCLUDE silent]
-            null
+            JSONObject()
             // [END_EXCLUDE]
         val layer = GeoJsonLayer(map, geoJsonData!!)
         // [END maps_android_util_geojson_add_jsonobject]

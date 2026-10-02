@@ -83,19 +83,19 @@ dependencies {
     // first add the following to your gradle/libs.versions.toml file:
     //
     // [versions]
-    // mapsUtils = "5.1.1"
+    // mapsUtils = "6.0.0"
     //
     // [libraries]
-    // maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "mapsUtils" }
+    // android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "mapsUtils" }
     //
     // Utility Library for Maps SDK for Android
     // You do not need to add a separate dependency for the Maps SDK for Android
     // since this library builds in the compatible version of the Maps SDK.
-    implementation(libs.maps.utils)
+    implementation(libs.android.maps.utils)
 
     // If your project does not use a version catalog, you can use the following dependency instead:
     //
-    //    implementation("com.google.maps.android:android-maps-utils:5.1.1")
+    //    implementation("com.google.maps.android:android-maps-utils:6.0.0")
 }
 // [END maps_android_utils_install_snippet]
 

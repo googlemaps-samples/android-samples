@@ -24,8 +24,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.maps.android.ktx.awaitMap
-import com.google.maps.android.ktx.cameraIdleEvents
+import com.google.maps.android.awaitMap
+import com.google.maps.android.cameraIdleEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
