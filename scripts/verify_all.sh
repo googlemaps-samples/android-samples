@@ -44,11 +44,7 @@ MODULES=(
     ":visual-testing"
     ":FireMarkers:app"
     ":WearOS:Wearable"
-    ":snippets:app"
-    ":snippets:app-ktx"
-    ":snippets:app-utils-ktx"
-    ":snippets:app-compose"
-    ":snippets:app-places-ktx"
+    ":snippets:java-app"
     ":snippets:app-utils"
     ":tutorials:kotlin:Polygons"
 )
@@ -107,21 +103,11 @@ verify_module() {
     local lintTask=":lintDebug"
     local connectedTask=""
 
-    if [[ "$module" == ":snippets:app" ]]; then
-        assembleTask=":assembleGmsDebug"
-        testTask=":testGmsDebugUnitTest"
-        lintTask=":lintGmsDebug"
-    fi
-
     # Define connected test task if enabled
     if [ "$RUN_CONNECTED_WEAR" = true ] && [[ "$module" == ":WearOS:Wearable" ]]; then
          connectedTask=":connectedDebugAndroidTest"
     elif [ "$RUN_CONNECTED_MOBILE" = true ] && [[ "$module" != ":WearOS:Wearable" ]]; then
-        if [[ "$module" == ":snippets:app" ]]; then
-             connectedTask=":connectedGmsDebugAndroidTest"
-        else
-             connectedTask=":connectedDebugAndroidTest"
-        fi
+         connectedTask=":connectedDebugAndroidTest"
     fi
     # Note: If both flags are set, both types run (for their respective modules).
 

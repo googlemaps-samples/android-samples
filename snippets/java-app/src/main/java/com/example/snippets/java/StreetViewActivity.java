@@ -51,6 +51,20 @@ public class StreetViewActivity extends AppCompatActivity implements OnStreetVie
     public void onStreetViewPanoramaReady(StreetViewPanorama streetViewPanorama) {
         LatLng sanFrancisco = new LatLng(37.754130, -122.447129);
         streetViewPanorama.setPosition(sanFrancisco);
+        // [START_EXCLUDE silent]
+        String action = getIntent().getStringExtra("extra_action");
+        if ("LOCATION".equals(action)) {
+            setLocationOfThePanorama(streetViewPanorama);
+        } else if ("ZOOM".equals(action)) {
+            zoom(streetViewPanorama);
+        } else if ("PAN".equals(action)) {
+            pan(streetViewPanorama);
+        } else if ("TILT".equals(action)) {
+            tilt(streetViewPanorama);
+        } else if ("ANIMATE".equals(action)) {
+            animate(streetViewPanorama);
+        }
+        // [END_EXCLUDE]
     }
     // [END maps_street_view_on_street_view_panorama_ready_callback]
 

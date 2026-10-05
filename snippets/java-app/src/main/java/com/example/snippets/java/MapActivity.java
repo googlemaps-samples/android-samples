@@ -225,6 +225,13 @@ public class MapActivity extends AppCompatActivity {
             this.googleMap = null;
         }
 
+        // Remove any SupportMapFragment dynamically attached to map_container
+        androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+        androidx.fragment.app.Fragment fragment = fm.findFragmentById(com.example.snippets.common.R.id.map_container);
+        if (fragment != null) {
+            fm.beginTransaction().remove(fragment).commitNowAllowingStateLoss();
+        }
+
         GoogleMapOptions options = new GoogleMapOptions();
         if (mapId != null && !mapId.isEmpty() && !mapId.equals("YOUR_MAP_ID")) {
             options.mapId(mapId);

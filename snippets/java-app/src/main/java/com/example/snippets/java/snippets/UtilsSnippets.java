@@ -72,14 +72,17 @@ import org.xmlpull.v1.XmlPullParserException;
 public class UtilsSnippets {
 
     private final Context context;
-    private final TrackedMap map;
+    private final TrackedMap trackedMap;
+    private final GoogleMap map;
     private ClusterManager<MyItem> clusterManager;
     private GeoJsonLayer geoJsonLayer;
+    private KmlLayer kmlLayer;
     private TileOverlay heatmapTileOverlay;
 
-    public UtilsSnippets(Context context, TrackedMap map) {
+    public UtilsSnippets(Context context, TrackedMap trackedMap) {
         this.context = context;
-        this.map = map;
+        this.trackedMap = trackedMap;
+        this.map = trackedMap.getDelegate();
     }
 
     // [START maps_android_utils_clustering_cluster_item]
@@ -128,7 +131,7 @@ public class UtilsSnippets {
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
-        clusterManager = new ClusterManager<MyItem>(context, map.getDelegate());
+        clusterManager = new ClusterManager<MyItem>(context, map);
 
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
@@ -274,7 +277,7 @@ public class UtilsSnippets {
         // [START_EXCLUDE silent]
             new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}");
         // [END_EXCLUDE]
-        GeoJsonLayer layer = new GeoJsonLayer(map.getDelegate(), geoJsonData);
+        GeoJsonLayer layer = new GeoJsonLayer(map, geoJsonData);
         // [END maps_android_util_geojson_add_jsonobject]
     }
 
@@ -284,7 +287,7 @@ public class UtilsSnippets {
     )
     public void addGeoJsonLayerFile() throws IOException, JSONException {
         // [START maps_android_util_geojson_add_file]
-        GeoJsonLayer layer = new GeoJsonLayer(map.getDelegate(), R.raw.geojson_file, context);
+        GeoJsonLayer layer = new GeoJsonLayer(map, R.raw.geojson_file, context);
         // [END maps_android_util_geojson_add_file]
         geoJsonLayer = layer;
 
@@ -314,7 +317,7 @@ public class UtilsSnippets {
             description = "What it does: Programmatically iterates, styles, and adds custom point and linestring GeoJsonFeatures.\nHow to see the effect: Draggable markers and styled lines render according to default GeoJson feature styles."
     )
     public void geoJsonFeature() throws JSONException {
-        GeoJsonLayer layer = new GeoJsonLayer(map.getDelegate(),
+        GeoJsonLayer layer = new GeoJsonLayer(map,
                 new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}"));
 
         // [START maps_android_util_geojson_point_feature]
@@ -387,10 +390,27 @@ public class UtilsSnippets {
     )
     public void addKmlLayerFile() throws IOException, XmlPullParserException {
         // [START maps_android_utils_kml_add_file]
-        KmlLayer layer = new KmlLayer(map.getDelegate(), R.raw.kml_file, context);
+        KmlLayer layer = new KmlLayer(map, R.raw.kml_file, context);
         // [END maps_android_utils_kml_add_file]
         layer.addLayerToMap();
+        kmlLayer = layer;
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.422, -122.084), 16f));
+    }
+
+    @SnippetItem(
+            title = "7b. Remove KML Layer",
+            description = "What it does: Removes the imported KML layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines, polygons, and placemarks associated with the KML dataset disappear."
+    )
+    public void removeKmlLayer() throws IOException, XmlPullParserException {
+        if (kmlLayer == null) {
+            addKmlLayerFile();
+        }
+        if (kmlLayer != null) {
+            // [START maps_android_utils_kml_remove_layer]
+            kmlLayer.removeLayerFromMap();
+            // [END maps_android_utils_kml_remove_layer]
+            kmlLayer = null;
+        }
     }
 
     @SnippetItem(
@@ -400,7 +420,7 @@ public class UtilsSnippets {
     public void addKmlLayerFileInputStream() throws IOException, XmlPullParserException {
         // [START maps_android_utils_kml_add_input_stream]
         InputStream inputStream = context.getResources().openRawResource(R.raw.kml_file);
-        KmlLayer layer = new KmlLayer(map.getDelegate(), inputStream, context);
+        KmlLayer layer = new KmlLayer(map, inputStream, context);
         // [END maps_android_utils_kml_add_input_stream]
 
         // [START maps_android_utils_kml_add_layer]
@@ -563,16 +583,16 @@ public class UtilsSnippets {
     )
     public void initMultilayer() throws IOException, JSONException, XmlPullParserException {
         // [START maps_android_utils_multilayer_init]
-        MarkerManager markerManager = new MarkerManager(map.getDelegate());
-        GroundOverlayManager groundOverlayManager = new GroundOverlayManager(map.getDelegate());
-        PolygonManager polygonManager = new PolygonManager(map.getDelegate());
-        PolylineManager polylineManager = new PolylineManager(map.getDelegate());
+        MarkerManager markerManager = new MarkerManager(map);
+        GroundOverlayManager groundOverlayManager = new GroundOverlayManager(map);
+        PolygonManager polygonManager = new PolygonManager(map);
+        PolylineManager polylineManager = new PolylineManager(map);
         // [END maps_android_utils_multilayer_init]
 
         // [START maps_android_utils_multilayer_manager]
-        ClusterManager<MyItem> localClusterManager = new ClusterManager<>(context, map.getDelegate(), markerManager);
-        GeoJsonLayer geoJsonLineLayer = new GeoJsonLayer(map.getDelegate(), R.raw.geojson_file, context, markerManager, polygonManager, polylineManager, groundOverlayManager);
-        KmlLayer kmlPolylineLayer = new KmlLayer(map.getDelegate(), R.raw.kml_file, context, markerManager, polygonManager, polylineManager, groundOverlayManager, null);
+        ClusterManager<MyItem> localClusterManager = new ClusterManager<>(context, map, markerManager);
+        GeoJsonLayer geoJsonLineLayer = new GeoJsonLayer(map, R.raw.geojson_file, context, markerManager, polygonManager, polylineManager, groundOverlayManager);
+        KmlLayer kmlPolylineLayer = new KmlLayer(map, R.raw.kml_file, context, markerManager, polygonManager, polylineManager, groundOverlayManager, null);
         // [END maps_android_utils_multilayer_manager]
 
         // [START maps_android_utils_multilayer_unclustered_marker]

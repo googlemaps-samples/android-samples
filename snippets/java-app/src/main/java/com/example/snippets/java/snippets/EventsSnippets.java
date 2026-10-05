@@ -50,24 +50,22 @@ public class EventsSnippets {
             description = "What it does: Sets setClickable(false) on the underlying MapView container.\nHow to see the effect: Direct tap interaction on the map view is disabled."
     )
     public void mapViewDisableClickEvent() {
+        MapView mapView = null;
+        if (context instanceof com.example.snippets.java.MapActivity) {
+            mapView = ((com.example.snippets.java.MapActivity) context).mapView;
+        }
+        if (mapView == null && context instanceof android.app.Activity) {
+            mapView = ((android.app.Activity) context).findViewById(R.id.mapView);
+        }
+        if (mapView == null && context instanceof android.app.Activity) {
+            android.widget.FrameLayout holder = ((android.app.Activity) context).findViewById(com.example.snippets.common.R.id.map_view_holder);
+            if (holder != null && holder.getChildCount() > 0 && holder.getChildAt(0) instanceof MapView) {
+                mapView = (MapView) holder.getChildAt(0);
+            }
+        }
         // [START maps_android_events_disable_clicks_mapview]
-        if (context instanceof android.app.Activity) {
-            MapView mapView = null;
-            if (context instanceof com.example.snippets.java.MapActivity) {
-                mapView = ((com.example.snippets.java.MapActivity) context).mapView;
-            }
-            if (mapView == null) {
-                mapView = ((android.app.Activity) context).findViewById(R.id.mapView);
-            }
-            if (mapView == null) {
-                android.widget.FrameLayout holder = ((android.app.Activity) context).findViewById(com.example.snippets.common.R.id.map_view_holder);
-                if (holder != null && holder.getChildCount() > 0 && holder.getChildAt(0) instanceof MapView) {
-                    mapView = (MapView) holder.getChildAt(0);
-                }
-            }
-            if (mapView != null) {
-                mapView.setClickable(false);
-            }
+        if (mapView != null) {
+            mapView.setClickable(false);
         }
         // [END maps_android_events_disable_clicks_mapview]
     }

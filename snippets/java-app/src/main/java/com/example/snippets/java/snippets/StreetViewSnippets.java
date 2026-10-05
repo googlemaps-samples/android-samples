@@ -56,6 +56,7 @@ public class StreetViewSnippets {
     public void setLocation() {
         LatLng sanFrancisco = new LatLng(37.754130, -122.447129);
         Intent intent = new Intent(context, StreetViewActivity.class);
+        intent.putExtra("extra_action", "LOCATION");
         context.startActivity(intent);
     }
 
@@ -69,6 +70,7 @@ public class StreetViewSnippets {
             .zoom(1f + zoomBy)
             .build();
         Intent intent = new Intent(context, StreetViewActivity.class);
+        intent.putExtra("extra_action", "ZOOM");
         context.startActivity(intent);
     }
 
@@ -82,6 +84,7 @@ public class StreetViewSnippets {
             .bearing(180f - 60f)
             .build();
         Intent intent = new Intent(context, StreetViewActivity.class);
+        intent.putExtra("extra_action", "ANIMATE");
         context.startActivity(intent);
     }
 }

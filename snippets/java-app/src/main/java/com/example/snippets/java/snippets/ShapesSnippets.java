@@ -72,6 +72,7 @@ public class ShapesSnippets {
 
         // Get back the mutable Polyline
         Polyline polyline = map.addPolyline(polylineOptions);
+        // [START_EXCLUDE silent]
         if (polyline != null) {
             boolean isClickable = polyline.isClickable();
             boolean isGeodesic = polyline.isGeodesic();
@@ -81,6 +82,7 @@ public class ShapesSnippets {
             float zIndex = polyline.getZIndex();
             List<LatLng> points = polyline.getPoints();
         }
+        // [END_EXCLUDE]
         // [END maps_android_shapes_polylines_polylineoptions]
     }
 
@@ -145,6 +147,7 @@ public class ShapesSnippets {
                 new LatLng(0, 0))
             .addHole(hole)
             .fillColor(Color.BLUE));
+        // [START_EXCLUDE silent]
         if (hollowPolygon != null) {
             boolean isClickable = hollowPolygon.isClickable();
             boolean isGeodesic = hollowPolygon.isGeodesic();
@@ -156,6 +159,7 @@ public class ShapesSnippets {
             List<LatLng> points = hollowPolygon.getPoints();
             List<List<LatLng>> holes = hollowPolygon.getHoles();
         }
+        // [END_EXCLUDE]
         // [END maps_android_shapes_polygons_hollow]
     }
 
@@ -172,6 +176,7 @@ public class ShapesSnippets {
 
         // Get back the mutable Circle
         Circle circle = map.addCircle(circleOptions);
+        // [START_EXCLUDE silent]
         if (circle != null) {
             boolean isClickable = circle.isClickable();
             boolean isVisible = circle.isVisible();
@@ -181,6 +186,7 @@ public class ShapesSnippets {
             float strokeWidth = circle.getStrokeWidth();
             float zIndex = circle.getZIndex();
         }
+        // [END_EXCLUDE]
         // [END maps_android_shapes_circles_circleoptions]
     }
 

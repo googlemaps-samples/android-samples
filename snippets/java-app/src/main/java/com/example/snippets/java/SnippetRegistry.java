@@ -126,13 +126,27 @@ public class SnippetRegistry {
             }
 
             if (!items.isEmpty()) {
-                items.sort(Comparator.comparing(SnippetItemInfo::getTitle));
+                items.sort(Comparator.comparingInt((SnippetItemInfo i) -> parseLeadingNumber(i.getTitle()))
+                        .thenComparing(SnippetItemInfo::getTitle));
                 groups.add(
                         new SnippetGroupInfo(
                                 groupAnnotation.title(), groupAnnotation.description(), items));
             }
         }
         return groups;
+    }
+
+    private static final java.util.regex.Pattern LEADING_NUM = java.util.regex.Pattern.compile("^(\\d+)");
+
+    private static int parseLeadingNumber(String title) {
+        if (title == null) return Integer.MAX_VALUE;
+        java.util.regex.Matcher m = LEADING_NUM.matcher(title.trim());
+        if (m.find()) {
+            try {
+                return Integer.parseInt(m.group(1));
+            } catch (NumberFormatException ignored) {}
+        }
+        return Integer.MAX_VALUE;
     }
 
     private static Object createInstance(Class<?> clazz, Context context, TrackedMap map)

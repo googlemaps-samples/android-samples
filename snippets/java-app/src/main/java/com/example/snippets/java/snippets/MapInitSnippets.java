@@ -68,6 +68,7 @@ public class MapInitSnippets {
     )
     public void mapFragment() {
         // [START maps_android_map_fragment]
+        // [START_EXCLUDE silent]
         if (context instanceof FragmentActivity) {
             SupportMapFragment mapFragment = SupportMapFragment.newInstance();
             ((FragmentActivity) context).getSupportFragmentManager()
@@ -75,6 +76,16 @@ public class MapInitSnippets {
                 .add(com.example.snippets.common.R.id.map_container, mapFragment)
                 .commit();
         }
+        /*
+        // [END_EXCLUDE]
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
+        FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.map_container, mapFragment);
+        fragmentTransaction.commit();
+        // [START_EXCLUDE silent]
+        */
+        // [END_EXCLUDE]
         // [END maps_android_map_fragment]
     }
 
@@ -86,8 +97,10 @@ public class MapInitSnippets {
         // [START maps_android_map_type]
         // Sets the map type to be "hybrid"
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        // [START_EXCLUDE silent]
         map.setIndoorEnabled(true);
         boolean isIndoor = map.isIndoorEnabled();
+        // [END_EXCLUDE]
         // [END maps_android_map_type]
     }
 

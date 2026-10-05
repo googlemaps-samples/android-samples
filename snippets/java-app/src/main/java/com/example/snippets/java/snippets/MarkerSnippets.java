@@ -56,6 +56,7 @@ public class MarkerSnippets {
         Marker marker = map.addMarker(new MarkerOptions()
             .position(sydney)
             .title("Marker in Sydney"));
+        // [START_EXCLUDE silent]
         if (marker != null) {
             LatLng position = marker.getPosition();
             String title = marker.getTitle();
@@ -67,6 +68,7 @@ public class MarkerSnippets {
             float rotation = marker.getRotation();
             float zIndex = marker.getZIndex();
         }
+        // [END_EXCLUDE]
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         // [END maps_android_markers_add_a_marker]
     }
