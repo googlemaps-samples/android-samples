@@ -37,10 +37,17 @@ open class CatalogActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val initialFramework = if (packageName == "com.example.mapdemo") {
+            Framework.JAVA_VIEWS
+        } else {
+            Framework.KOTLIN_VIEWS
+        }
+
         setContent {
             CatalogTheme {
                 CatalogScreen(
                     isReviewerMode = false,
+                    initialFramework = initialFramework,
                     onLaunchSample = { sample, framework ->
                         launchSample(sample, framework)
                     },

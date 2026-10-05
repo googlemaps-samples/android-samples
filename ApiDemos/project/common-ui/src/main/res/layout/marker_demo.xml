@@ -30,63 +30,47 @@
         app:title="@string/marker_demo_label"
         app:titleTextColor="?attr/colorOnPrimary" />
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:id="@+id/top_controls"
-        style="?attr/materialCardViewElevatedStyle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
+        android:background="?attr/colorSurface"
+        android:orientation="vertical"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_bar">
 
+        <TextView
+            android:id="@+id/top_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:text="@string/drag_melbourne" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="14dp"
-            android:paddingVertical="10dp">
+            android:orientation="horizontal">
 
-            <com.google.android.material.checkbox.MaterialCheckBox
+            <CheckBox
                 android:id="@+id/flat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/flat_to_map" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/rotation_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:text="@string/rotation" />
-
-                <SeekBar
-                    android:id="@+id/rotationSeekBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp" />
-            </LinearLayout>
+                android:text="@string/flat" />
 
             <TextView
-                android:id="@+id/top_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?android:attr/textColorSecondary"
-                android:visibility="gone" />
+                android:layout_marginLeft="8dp"
+                android:text="@string/rotation" />
+
+            <SeekBar
+                android:id="@+id/rotationSeekBar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/map_frame"

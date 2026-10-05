@@ -58,6 +58,16 @@ class CatalogStateTest {
     }
 
     @Test
+    fun initialState_respectsCustomInitialFramework() {
+        val state = createTestCatalogState(initialFramework = Framework.JAVA_VIEWS)
+        assertThat(state.selectedFramework).isEqualTo(Framework.JAVA_VIEWS)
+        assertThat(state.frameworkSamples).isNotEmpty()
+        for (sample in state.frameworkSamples) {
+            assertThat(sample.getActivityForFramework(Framework.JAVA_VIEWS)).isNotEmpty()
+        }
+    }
+
+    @Test
     fun statusCounts_calculatesCorrectly() {
         val sample1 = SampleCatalogRegistry.SAMPLES[0]
         val sample2 = SampleCatalogRegistry.SAMPLES[1]

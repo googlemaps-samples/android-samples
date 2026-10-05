@@ -31,6 +31,7 @@ import com.example.common_ui.catalog.SampleItem
 fun CatalogScreen(
     isReviewerMode: Boolean = false,
     evaluations: Map<String, SampleEvaluation> = emptyMap(),
+    initialFramework: Framework = Framework.KOTLIN_VIEWS,
     onSaveEvaluation: ((targetFqcn: String, status: ReviewStatus, notes: String, sample: SampleItem) -> Unit)? = null,
     onLaunchSample: (SampleItem, Framework) -> Unit,
     onExportGrievances: (() -> Unit)? = null,
@@ -39,7 +40,8 @@ fun CatalogScreen(
 ) {
     val state = rememberCatalogState(
         isReviewerMode = isReviewerMode,
-        evaluations = evaluations
+        evaluations = evaluations,
+        initialFramework = initialFramework
     )
 
     Scaffold(

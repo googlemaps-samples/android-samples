@@ -151,17 +151,19 @@ class CatalogState(
 fun rememberCatalogState(
     isReviewerMode: Boolean,
     evaluations: Map<String, SampleEvaluation>,
+    initialFramework: Framework = Framework.KOTLIN_VIEWS,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): CatalogState {
-    return remember(isReviewerMode, evaluations, lazyListState, snackbarHostState, coroutineScope) {
+    return remember(isReviewerMode, evaluations, initialFramework, lazyListState, snackbarHostState, coroutineScope) {
         CatalogState(
             isReviewerMode = isReviewerMode,
             evaluations = evaluations,
             lazyListState = lazyListState,
             snackbarHostState = snackbarHostState,
-            coroutineScope = coroutineScope
+            coroutineScope = coroutineScope,
+            initialFramework = initialFramework
         )
     }
 }
