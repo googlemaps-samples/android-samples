@@ -40,8 +40,8 @@ import xml.etree.ElementTree as ET
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPT_DIR.parent
 EVAL_DIR = SCRIPT_DIR / "eval"
-sys.path.insert(0, str(EVAL_DIR))
-sys.path.append(str(SCRIPT_DIR))
+if str(EVAL_DIR) not in sys.path:
+    sys.path.insert(0, str(EVAL_DIR))
 
 import gemini_eval_engine
 from run_autonomous_qa_suite import SAMPLE_ACTIONS, AutonomousQaRunner
@@ -144,34 +144,50 @@ class VisualTestRunner:
 
         # 1. Execute Kotlin variant
         print(f"  -> Executing Kotlin variant: {sample['kotlinActivity']}")
-        kt_result = runner.test_sample_variant(sample, "kotlin")
+        kt_result = runner.capture_single_framework(sample, "kotlin")
         
         # 2. Execute Java variant
         print(f"  -> Executing Java variant: {sample['javaActivity']}")
-        ja_result = runner.test_sample_variant(sample, "java")
+        ja_result = runner.capture_single_framework(sample, "java")
+
+        # Combine screenshots into sample dict for eval_engine
+        short_name = sample.get("short_name") or sample["id"].split(".")[-1]
+        sample_eval = dict(sample)
+        sample_eval["kotlin_screenshot"] = f"screenshots/kotlin/{short_name}.png"
+        sample_eval["java_screenshot"] = f"screenshots/java/{short_name}.png"
+
+        # Match substep screenshots
+        substeps_list = []
+        kt_sub = {s["label"]: s["rel_path"] for s in kt_result.get("substeps", [])}
+        ja_sub = {s["label"]: s["rel_path"] for s in ja_result.get("substeps", [])}
+        for label in kt_sub.keys():
+            substeps_list.append({
+                "label": label,
+                "kotlin": kt_sub.get(label),
+                "java": ja_sub.get(label)
+            })
+        sample_eval["substep_screenshots"] = substeps_list
 
         # 3. Multimodal AI Visual Evaluation
         if self.eval_engine:
             print(f"  -> Invoking Gemini Multimodal Visual Evaluation ({self.gemini_model})...")
-            eval_res = self.eval_engine.evaluate_single_sample(
-                sample_meta=sample,
-                kt_res=kt_result,
-                ja_res=ja_result,
+            eval_res = self.eval_engine.evaluate_sample(
+                sample=sample_eval,
                 run_dir=self.output_dir,
             )
             test_result["evaluation"] = eval_res
-            test_result["passed"] = eval_res.get("overall_status") == "PASS"
+            test_result["passed"] = eval_res.get("verdict") == "PASS" or eval_res.get("overall_status") == "PASS"
             if not test_result["passed"]:
-                test_result["errors"].append(f"Visual QA Failure: {eval_res.get('summary', 'Unknown defect')}")
+                test_result["errors"].append(f"Visual QA Failure: {eval_res.get('reasoning') or eval_res.get('summary', 'Unknown defect')}")
         else:
             # Fallback if no Gemini API key: verify screenshots exist and have non-zero bytes
-            kt_screens = [s["file"] for s in kt_result.get("substeps", [])]
-            ja_screens = [s["file"] for s in ja_result.get("substeps", [])]
+            kt_screens = [s["rel_path"] for s in kt_result.get("substeps", [])] + [f"screenshots/kotlin/{short_name}.png"]
+            ja_screens = [s["rel_path"] for s in ja_result.get("substeps", [])] + [f"screenshots/java/{short_name}.png"]
             valid_kt = all((self.output_dir / s).exists() and (self.output_dir / s).stat().st_size > 5000 for s in kt_screens)
             valid_ja = all((self.output_dir / s).exists() and (self.output_dir / s).stat().st_size > 5000 for s in ja_screens)
             test_result["passed"] = valid_kt and valid_ja
             test_result["evaluation"] = {
-                "overall_status": "PASS" if test_result["passed"] else "FAIL",
+                "verdict": "PASS" if test_result["passed"] else "FAIL",
                 "summary": "Verified screenshot capture across all multi-state interactions.",
             }
 
@@ -227,11 +243,12 @@ class VisualTestRunner:
         qa_args = argparse.Namespace(
             sample=None,
             device=self.device_serial,
-            out=str(self.output_dir),
+            output_dir=str(self.output_dir),
             clean=False,
             video_size="540x1200",
             video_bitrate=2500000,
             limit=None,
+            settle_time=1.0,
         )
         runner = AutonomousQaRunner(qa_args)
 

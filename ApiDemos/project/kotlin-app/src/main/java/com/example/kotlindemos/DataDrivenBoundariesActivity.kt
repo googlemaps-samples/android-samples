@@ -116,6 +116,8 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
 
         // --- Setup Buttons ---
         findViewById<MaterialButton>(R.id.button_hawaii).setOnClickListener {
+            localityEnabled = true
+            updateStyles()
             centerMapOnLocation(HANA_HAWAII, 11f) // Adjusted zoom from Java
         }
         findViewById<MaterialButton>(R.id.button_us).setOnClickListener {

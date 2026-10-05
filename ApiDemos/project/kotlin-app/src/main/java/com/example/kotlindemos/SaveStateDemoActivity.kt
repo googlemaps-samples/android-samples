@@ -13,8 +13,6 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
-import com.example.common_ui.R
 import android.os.Bundle
 import android.os.Parcelable
 

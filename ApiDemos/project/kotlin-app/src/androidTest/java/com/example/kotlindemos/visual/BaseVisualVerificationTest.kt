@@ -94,9 +94,10 @@ abstract class BaseVisualVerificationTest {
 
         val response = helper.analyzeImage(bitmap, prompt, key!!)
         Log.i(TAG, "Gemini Visual Evaluation Response:\n$response")
+        val normalized = response?.trim()?.uppercase() ?: ""
         assertTrue(
             "Gemini visual verification failed. Response: $response",
-            response?.contains("PASSED", ignoreCase = true) == true
+            normalized.startsWith("PASSED") && !normalized.contains("FAILED")
         )
     }
 

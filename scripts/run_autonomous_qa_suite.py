@@ -22,6 +22,8 @@ EVAL_DIR = Path(__file__).resolve().parent / "eval"
 sys.path.insert(0, str(EVAL_DIR))
 
 import run_autonomous_qa_suite
+AutonomousQaRunner = run_autonomous_qa_suite.AutonomousQaRunner
+SAMPLE_ACTIONS = run_autonomous_qa_suite.SAMPLE_ACTIONS
 
 if __name__ == "__main__":
     run_autonomous_qa_suite.main()
