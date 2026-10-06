@@ -1,0 +1,45 @@
+package com.example.mapdemo
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.awaitMap
+import kotlinx.coroutines.launch
+
+/**
+ * Modern Kotlin View-based Google Maps Activity using coroutine awaitMap().
+ */
+class BasicMapActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_map)
+
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map_container) as SupportMapFragment
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                val googleMap = mapFragment.awaitMap()
+                setupMap(googleMap)
+            }
+        }
+    }
+
+    private fun setupMap(map: GoogleMap) {
+        val defaultLocation = LatLng(-34.0, 151.0) // Sydney
+        map.addMarker(
+            MarkerOptions()
+                .position(defaultLocation)
+                .title("Marker in Sydney")
+        )
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 10f))
+    }
+}

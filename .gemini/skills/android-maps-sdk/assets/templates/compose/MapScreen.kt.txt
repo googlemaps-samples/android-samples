@@ -1,0 +1,48 @@
+package com.example.mapdemo
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
+
+/**
+ * Modern Jetpack Compose Google Maps Screen.
+ */
+@Composable
+fun MapScreen(
+    modifier: Modifier = Modifier,
+    initialLocation: LatLng = LatLng(-34.0, 151.0), // Sydney
+    initialZoom: Float = 10f
+) {
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(initialLocation, initialZoom)
+    }
+
+    GoogleMap(
+        modifier = modifier.fillMaxSize(),
+        cameraPositionState = cameraPositionState,
+        properties = MapProperties(
+            isMyLocationEnabled = false,
+            isBuildingEnabled = true,
+            isTrafficEnabled = false
+        ),
+        uiSettings = MapUiSettings(
+            zoomControlsEnabled = true,
+            compassEnabled = true,
+            myLocationButtonEnabled = false
+        )
+    ) {
+        Marker(
+            state = MarkerState(position = initialLocation),
+            title = "Marker in Sydney",
+            snippet = "Interactive Jetpack Compose Marker"
+        )
+    }
+}
