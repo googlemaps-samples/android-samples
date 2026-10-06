@@ -43,6 +43,15 @@ class StreetViewActivity : AppCompatActivity(), OnStreetViewPanoramaReadyCallbac
     override fun onStreetViewPanoramaReady(streetViewPanorama: StreetViewPanorama) {
         val sanFrancisco = LatLng(37.754130, -122.447129)
         streetViewPanorama.setPosition(sanFrancisco)
+        // [START_EXCLUDE silent]
+        when (intent.getStringExtra("extra_action")) {
+            "LOCATION" -> setLocationOfThePanorama(streetViewPanorama)
+            "ZOOM" -> zoom(streetViewPanorama)
+            "PAN" -> pan(streetViewPanorama)
+            "TILT" -> tilt(streetViewPanorama)
+            "ANIMATE" -> animate(streetViewPanorama)
+        }
+        // [END_EXCLUDE]
     }
     // [END maps_street_view_on_street_view_panorama_ready_callback]
 

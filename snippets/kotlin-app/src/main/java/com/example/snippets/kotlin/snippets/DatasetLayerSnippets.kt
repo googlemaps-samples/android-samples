@@ -121,6 +121,7 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
             }
         }
 
+        // [START_EXCLUDE silent]
         // 4. Create and add the toggle button to the activity controls container
         val activity = context as? android.app.Activity
         if (activity != null) {
@@ -144,6 +145,7 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
                 container.visibility = android.view.View.VISIBLE
             }
         }
+        // [END_EXCLUDE]
 
         // Apply initial styling
         applyBoulderStyling()

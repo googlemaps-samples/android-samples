@@ -239,6 +239,12 @@ class MapActivity : AppCompatActivity() {
         mapView = null
         googleMap = null
 
+        // Remove any SupportMapFragment dynamically attached to map_container
+        val fragment = supportFragmentManager.findFragmentById(com.example.snippets.common.R.id.map_container)
+        if (fragment != null) {
+            supportFragmentManager.beginTransaction().remove(fragment).commitNowAllowingStateLoss()
+        }
+
         val options = GoogleMapOptions()
         if (!mapId.isNullOrEmpty() && mapId != "YOUR_MAP_ID") {
             options.mapId(mapId)

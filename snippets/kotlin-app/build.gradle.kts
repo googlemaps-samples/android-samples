@@ -79,15 +79,15 @@ dependencies {
     androidTestImplementation(libs.uiautomator)
     // [END_EXCLUDE]
 
-    // KTX for the Maps SDK for Android library
-    implementation(libs.maps.ktx)
+    // Maps SDK for Android Utils library (includes KTX extensions)
+    implementation(libs.android.maps.utils)
 }
 // [END maps_android_ktx_install_snippet]
 
 // [START maps_android_utils_ktx_install_snippet]
 dependencies {
-    // KTX for the Maps SDK for Android Utility Library
-    implementation(libs.maps.utils.ktx)
+    // Maps SDK for Android Utility Library
+    implementation(libs.android.maps.utils)
 }
 // [END maps_android_utils_ktx_install_snippet]
 

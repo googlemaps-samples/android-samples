@@ -122,8 +122,14 @@ object SnippetRegistry {
                                 } else {
                                     // Fallback or log error
                                 }
+                            } catch (e: java.lang.reflect.InvocationTargetException) {
+                                val cause = e.cause
+                                if (cause is RuntimeException) {
+                                    throw cause
+                                }
+                                throw RuntimeException("Snippet execution failed: ${method.name}", cause)
                             } catch (e: Exception) {
-                                e.printStackTrace()
+                                throw RuntimeException("Snippet reflection invocation failed: ${method.name}", e)
                             }
                         },
                     ),
@@ -131,7 +137,12 @@ object SnippetRegistry {
             }
 
             if (items.isNotEmpty()) {
-                items.sortBy { it.title }
+                val leadingNumRegex = Regex("""^(\d+)""")
+                fun parseLeadingNumber(title: String): Int {
+                    val match = leadingNumRegex.find(title.trim())
+                    return match?.groupValues?.get(1)?.toIntOrNull() ?: Int.MAX_VALUE
+                }
+                items.sortWith(compareBy<SnippetItemInfo> { parseLeadingNumber(it.title) }.thenBy { it.title })
                 groups.add(
                     SnippetGroupInfo(
                         title = groupAnnotation.title,

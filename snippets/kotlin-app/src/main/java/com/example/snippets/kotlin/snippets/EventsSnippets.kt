@@ -38,13 +38,14 @@ class EventsSnippets(private val context: Context, private val map: TrackedMap) 
         description = "What it does: Sets isClickable = false on the underlying MapView container.\nHow to see the effect: Direct tap interaction on the map view is disabled.",
     )
     fun mapViewDisableClickEvent() {
-        // [START maps_android_events_disable_clicks_mapview]
+        var mapView: MapView? = null
         if (context is android.app.Activity) {
-            val mapView = (context as? com.example.snippets.kotlin.MapActivity)?.mapView
+            mapView = (context as? com.example.snippets.kotlin.MapActivity)?.mapView
                 ?: context.findViewById<MapView>(R.id.mapView)
                 ?: (context.findViewById<android.widget.FrameLayout>(com.example.snippets.common.R.id.map_view_holder)?.getChildAt(0) as? MapView)
-            mapView?.isClickable = false
         }
+        // [START maps_android_events_disable_clicks_mapview]
+        mapView?.isClickable = false
         // [END maps_android_events_disable_clicks_mapview]
     }
 

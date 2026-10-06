@@ -76,6 +76,7 @@ class KtxSnippets(
             title("Marker in Sydney")
         }
         // [END maps_android_ktx_add_marker]
+        googleMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(sydney, 10f))
     }
 
     @SnippetItem(
@@ -134,6 +135,7 @@ class KtxSnippets(
             add(LatLng(37.45, -122.2))
             fillColor(android.graphics.Color.RED)
         }
+        googleMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(LatLng(37.4, -122.1), 10f))
     }
 
     @SnippetItem(

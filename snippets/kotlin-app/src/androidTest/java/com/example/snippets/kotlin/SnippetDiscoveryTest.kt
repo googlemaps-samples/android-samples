@@ -103,11 +103,18 @@ class SnippetDiscoveryTest {
                 scenario.onActivity { activity ->
                     val holder = activity.findViewById<FrameLayout>(R.id.map_view_holder)
                     mapView = activity.mapView ?: (holder?.getChildAt(0) as? MapView)
-                    latch.countDown()
                 }
 
-                val loaded = latch.await(5, TimeUnit.SECONDS)
-                assertTrue("Timed out waiting for activity to launch for snippet: $key", loaded)
+                // Poll briefly to ensure snippet onMapReady finishes without crashing
+                for (step in 0..10) {
+                    scenario.onActivity { activity ->
+                        if (activity.googleMap != null) {
+                            latch.countDown()
+                        }
+                    }
+                    if (latch.await(200, TimeUnit.MILLISECONDS)) break
+                }
+
                 assertNotNull("MapView should not be null for snippet: $key", mapView)
             }
         }

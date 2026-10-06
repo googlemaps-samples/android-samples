@@ -26,6 +26,7 @@ import com.example.snippets.kotlin.TrackedMap
 import com.example.snippets.kotlin.annotations.SnippetGroup
 import com.example.snippets.kotlin.annotations.SnippetItem
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -62,8 +63,9 @@ import org.xmlpull.v1.XmlPullParserException
     title = "Utility Library",
     description = "Snippets demonstrating marker clustering, heatmaps, GeoJSON, KML, and Multilayer managers."
 )
-class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
+class UtilsSnippets(private val context: Context, private val trackedMap: TrackedMap) {
 
+    private val map: GoogleMap = trackedMap.delegate
     private var clusterManager: ClusterManager<MyItem>? = null
     private var geoJsonLayer: GeoJsonLayer? = null
     private var heatmapTileOverlay: TileOverlay? = null
@@ -79,6 +81,18 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         override val position: LatLng = LatLng(lat, lng)
 
         override val zIndex: Float = 0f
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other !is MyItem) return false
+            return position == other.position && title == other.title
+        }
+
+        override fun hashCode(): Int {
+            var result = position.hashCode()
+            result = 31 * result + title.hashCode()
+            return result
+        }
     }
     // [END maps_android_utils_clustering_cluster_item]
 
@@ -93,7 +107,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
-        val manager = ClusterManager<MyItem>(context, map.delegate)
+        val manager = ClusterManager<MyItem>(context, map)
         clusterManager = manager
 
         // Point the map's listeners at the listeners implemented by the cluster
@@ -119,7 +133,8 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
             val offset = i / 60.0
             lat += offset
             lng += offset
-            val offsetItem = MyItem(lat, lng, "Title $i", "Snippet $i")
+            val title = if (i == 0) "Title to remove" else "Title $i"
+            val offsetItem = MyItem(lat, lng, title, "Snippet $i")
             items.add(offsetItem)
         }
         manager.addItems(items)
@@ -163,6 +178,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
 
             // Add the cluster item (marker) to the cluster manager.
             it.addItem(infoWindowItem)
+            it.cluster()
             // [END maps_android_utils_clustering_info_window]
         }
     }
@@ -230,7 +246,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
             // [START_EXCLUDE silent]
             JSONObject("""{"type": "FeatureCollection", "features": []}""")
             // [END_EXCLUDE]
-        val layer = GeoJsonLayer(map.delegate, geoJsonData)
+        val layer = GeoJsonLayer(map, geoJsonData)
         // [END maps_android_util_geojson_add_jsonobject]
     }
 
@@ -240,7 +256,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     )
     fun addGeoJsonLayerFile() {
         // [START maps_android_util_geojson_add_file]
-        val layer = GeoJsonLayer(map.delegate, R.raw.geojson_file, context)
+        val layer = GeoJsonLayer(map, R.raw.geojson_file, context)
         // [END maps_android_util_geojson_add_file]
         geoJsonLayer = layer
 
@@ -270,7 +286,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
         description = "What it does: Programmatically iterates, styles, and adds custom point and linestring GeoJsonFeatures.\nHow to see the effect: Draggable markers and styled lines render according to default GeoJson feature styles.",
     )
     fun geoJsonFeature() {
-        val layer = GeoJsonLayer(map.delegate, JSONObject("""{"type": "FeatureCollection", "features": []}"""))
+        val layer = GeoJsonLayer(map, JSONObject("""{"type": "FeatureCollection", "features": []}"""))
 
         // [START maps_android_util_geojson_point_feature]
         val point = GeoJsonPoint(LatLng(0.0, 0.0))
@@ -338,7 +354,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     )
     fun addKmlLayerFile() {
         // [START maps_android_utils_kml_add_file]
-        val layer = KmlLayer(map.delegate, R.raw.kml_file, context)
+        val layer = KmlLayer(map, R.raw.kml_file, context)
         // [END maps_android_utils_kml_add_file]
         layer.addLayerToMap()
         map.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(com.google.android.gms.maps.model.LatLng(37.422, -122.084), 16f))
@@ -351,7 +367,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     fun addKmlLayerFileInputStream() {
         // [START maps_android_utils_kml_add_input_stream]
         val inputStream: InputStream = context.resources.openRawResource(R.raw.kml_file)
-        val layer = KmlLayer(map.delegate, inputStream, context)
+        val layer = KmlLayer(map, inputStream, context)
         // [END maps_android_utils_kml_add_input_stream]
 
         // [START maps_android_utils_kml_add_layer]
@@ -509,16 +525,16 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
     )
     fun initMultilayer() {
         // [START maps_android_utils_multilayer_init]
-        val markerManager = MarkerManager(map.delegate)
-        val groundOverlayManager = GroundOverlayManager(map.delegate)
-        val polygonManager = PolygonManager(map.delegate)
-        val polylineManager = PolylineManager(map.delegate)
+        val markerManager = MarkerManager(map)
+        val groundOverlayManager = GroundOverlayManager(map)
+        val polygonManager = PolygonManager(map)
+        val polylineManager = PolylineManager(map)
         // [END maps_android_utils_multilayer_init]
 
         // [START maps_android_utils_multilayer_manager]
-        val clusterManager = ClusterManager<MyItem>(context, map.delegate, markerManager)
+        val clusterManager = ClusterManager<MyItem>(context, map, markerManager)
         val geoJsonLineLayer = GeoJsonLayer(
-            map.delegate,
+            map,
             R.raw.geojson_file,
             context,
             markerManager,
@@ -527,7 +543,7 @@ class UtilsSnippets(private val context: Context, private val map: TrackedMap) {
             groundOverlayManager
         )
         val kmlPolylineLayer = KmlLayer(
-            map.delegate,
+            map,
             R.raw.kml_file,
             context,
             markerManager,
