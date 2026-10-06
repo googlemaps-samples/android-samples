@@ -17,4 +17,6 @@
 
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-files-path name="reports" path="reports" />
+    <external-files-path name="screenshots" path="screenshots" />
+    <files-path name="internal_screenshots" path="screenshots" />
 </paths>

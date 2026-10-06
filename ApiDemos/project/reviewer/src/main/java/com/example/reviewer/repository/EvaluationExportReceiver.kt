@@ -69,12 +69,13 @@ class EvaluationExportReceiver : BroadcastReceiver() {
 
                         val sampleItem = SampleCatalogRegistry.findById(fqcn)
                         if (sampleItem != null) {
-                            repository.saveEvaluation(
+                            repository.saveEvaluationDirect(
                                 targetFqcn = fqcn,
                                 status = status,
                                 notes = notes,
                                 metadata = sampleItem,
-                                screenshotPath = screenshot
+                                screenshotPath = screenshot,
+                                syncToCounterpart = false
                             )
                             Log.i("EvaluationExportReceiver", "Recorded evaluation for $fqcn: status=$status")
                         } else {
@@ -83,7 +84,7 @@ class EvaluationExportReceiver : BroadcastReceiver() {
                     }
 
                     "com.google.maps.CLEAR_EVALUATIONS" -> {
-                        repository.clearAllEvaluations()
+                        repository.clearAllEvaluationsDirect(syncToCounterpart = false)
                         val screenshotDir = context.getExternalFilesDir("screenshots")
                         screenshotDir?.listFiles()?.forEach { it.delete() }
                         val reportsDir = context.getExternalFilesDir("reports")

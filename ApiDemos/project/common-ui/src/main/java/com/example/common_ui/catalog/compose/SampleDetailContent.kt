@@ -139,8 +139,8 @@ fun SampleDetailContent(
     onLaunch: (Framework) -> Unit,
     onSaveAndNext: ((ReviewStatus, String) -> Unit)? = null
 ) {
-    var currentStatus by rememberSaveable { mutableStateOf(ReviewStatus.fromString(existingEvaluation?.status)) }
-    var notesText by rememberSaveable { mutableStateOf(existingEvaluation?.notes.orEmpty()) }
+    var currentStatus by rememberSaveable(existingEvaluation) { mutableStateOf(ReviewStatus.fromString(existingEvaluation?.status)) }
+    var notesText by rememberSaveable(existingEvaluation) { mutableStateOf(existingEvaluation?.notes.orEmpty()) }
 
     Scaffold(
         topBar = {

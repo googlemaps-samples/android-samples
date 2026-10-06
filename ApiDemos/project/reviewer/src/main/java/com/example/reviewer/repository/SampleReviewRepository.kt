@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
@@ -46,6 +47,7 @@ import java.io.File
  */
 class SampleReviewRepository private constructor(
     private val dao: SampleEvaluationDao,
+    private val context: Context? = null,
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 ) {
 
@@ -61,6 +63,73 @@ class SampleReviewRepository private constructor(
         }
     }
 
+    private fun syncEvaluationToCounterpart(targetFqcn: String, status: ReviewStatus, notes: String, screenshotPath: String?) {
+        val ctx = context ?: return
+        val currentPkg = ctx.packageName
+        val otherPkg = if (currentPkg == "com.example.kotlindemos") "com.example.mapdemo" else "com.example.kotlindemos"
+        try {
+            val syncIntent = Intent("com.google.maps.RECORD_EVALUATION").apply {
+                setPackage(otherPkg)
+                putExtra("fqcn", targetFqcn)
+                putExtra("status", status.name)
+                putExtra("notes", notes)
+                if (screenshotPath != null) {
+                    putExtra("screenshot", screenshotPath)
+                }
+            }
+            ctx.sendBroadcast(syncIntent)
+        } catch (e: Exception) {
+            Log.w("SampleReviewRepository", "Could not sync evaluation to $otherPkg: ${e.message}")
+        }
+    }
+
+    private fun syncClearToCounterpart() {
+        val ctx = context ?: return
+        val currentPkg = ctx.packageName
+        val otherPkg = if (currentPkg == "com.example.kotlindemos") "com.example.mapdemo" else "com.example.kotlindemos"
+        try {
+            val syncIntent = Intent("com.google.maps.CLEAR_EVALUATIONS").apply {
+                setPackage(otherPkg)
+            }
+            ctx.sendBroadcast(syncIntent)
+        } catch (e: Exception) {
+            Log.w("SampleReviewRepository", "Could not sync clear to $otherPkg: ${e.message}")
+        }
+    }
+
+    suspend fun saveEvaluationDirect(
+        targetFqcn: String,
+        status: ReviewStatus,
+        notes: String,
+        metadata: SampleItem,
+        screenshotPath: String? = null,
+        syncToCounterpart: Boolean = true
+    ) = withContext(Dispatchers.IO) {
+        val frameworkName = if (targetFqcn.contains("mapdemo")) "JAVA" else "KOTLIN"
+        val entity = SampleEvaluationEntity(
+            sampleId = targetFqcn,
+            sampleTitle = metadata.title,
+            activityName = targetFqcn,
+            category = metadata.category,
+            framework = frameworkName,
+            status = status.name,
+            notes = notes,
+            screenshotPath = screenshotPath,
+            lastUpdated = System.currentTimeMillis()
+        )
+        dao.upsertEvaluation(entity)
+        if (syncToCounterpart) {
+            syncEvaluationToCounterpart(targetFqcn, status, notes, screenshotPath)
+        }
+    }
+
+    suspend fun clearAllEvaluationsDirect(syncToCounterpart: Boolean = true) = withContext(Dispatchers.IO) {
+        dao.clearAll()
+        if (syncToCounterpart) {
+            syncClearToCounterpart()
+        }
+    }
+
     fun saveEvaluation(
         targetFqcn: String,
         status: ReviewStatus,
@@ -70,19 +139,7 @@ class SampleReviewRepository private constructor(
         onComplete: (() -> Unit)? = null
     ) {
         coroutineScope.launch {
-            val frameworkName = if (targetFqcn.contains("mapdemo")) "JAVA" else "KOTLIN"
-            val entity = SampleEvaluationEntity(
-                sampleId = targetFqcn,
-                sampleTitle = metadata.title,
-                activityName = targetFqcn,
-                category = metadata.category,
-                framework = frameworkName,
-                status = status.name,
-                notes = notes,
-                screenshotPath = screenshotPath,
-                lastUpdated = System.currentTimeMillis()
-            )
-            dao.upsertEvaluation(entity)
+            saveEvaluationDirect(targetFqcn, status, notes, metadata, screenshotPath, syncToCounterpart = true)
             withContext(Dispatchers.Main) {
                 onComplete?.invoke()
             }
@@ -91,7 +148,7 @@ class SampleReviewRepository private constructor(
 
     fun clearAllEvaluations(onComplete: (() -> Unit)? = null) {
         coroutineScope.launch {
-            dao.clearAll()
+            clearAllEvaluationsDirect(syncToCounterpart = true)
             withContext(Dispatchers.Main) {
                 onComplete?.invoke()
             }
@@ -220,8 +277,9 @@ class SampleReviewRepository private constructor(
         fun getInstance(context: Context): SampleReviewRepository {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: run {
-                    val db = SampleCatalogDatabase.getInstance(context.applicationContext)
-                    SampleReviewRepository(db.sampleEvaluationDao()).also { INSTANCE = it }
+                    val appContext = context.applicationContext
+                    val db = SampleCatalogDatabase.getInstance(appContext)
+                    SampleReviewRepository(db.sampleEvaluationDao(), appContext).also { INSTANCE = it }
                 }
             }
         }
