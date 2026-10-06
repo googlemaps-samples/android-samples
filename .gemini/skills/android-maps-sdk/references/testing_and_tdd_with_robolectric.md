@@ -177,11 +177,131 @@ class MapGeometryTest {
 
 ---
 
-## 5. Summary of TDD Invariants for Maps
+## 5. Deterministic Golden Image Testing (`:golden-testing`)
 
-| Invariant | Why It Matters | Verification Tool |
-| :--- | :--- | :--- |
-| **No API Key Dependency in Unit Tests** | Tests run safely on test farms, PR bots, and CI without quota limits or secret leakage. | `android-maps-robolectric` |
-| **Fast JVM Feedback Loop** | Unit tests complete in < 2 seconds rather than minutes for emulator deploys. | Robolectric Runner |
-| **Complete Function Coverage** | Every use case, data transformation, and map controller method has a dedicated test. | JaCoCo / Gradle `testDebugUnitTest` |
-| **Falsifiable CUJ Validation** | Features directly trace back to verifiable user expectations. | Requirements &rarr; CUJ &rarr; Test matrix |
+Screenshot and visual regression testing on live Google Maps is often flaky due to network tile latency, cartography data shifts, and API quotas.
+
+The **`:golden-testing`** module solves this by setting `MAP_TYPE_NONE` and injecting deterministic, synthetic raster tiles (`GoldenTileProvider`).
+
+### Setup
+```kotlin
+dependencies {
+    testImplementation("com.google.android.maps.testing:golden:1.1.0-rc01")
+}
+```
+
+### Tile Strategies
+- `GoldenTileStrategy.CoordinateGrid`: Visual coordinate grid with tile boundaries and zoom/x/y coordinate labels.
+- `GoldenTileStrategy.SolidColorHash`: Deterministic pastel solid color per `(x, y, zoom)` tile.
+- `GoldenTileStrategy.Checkerboard`: High-contrast alternating checkerboard tiles.
+
+### Golden Testing Recipe
+```kotlin
+@Test
+fun `verify store map matches golden baseline`() = runTest {
+    val scenario = ActivityScenario.launch(MapActivity::class.java)
+    scenario.onActivity { activity ->
+        val googleMap = activity.getGoogleMap()
+
+        // 1. Enable golden testing with synthetic tile strategy
+        val overlay = googleMap.enableGoldenTesting(
+            strategy = GoldenTileStrategy.CoordinateGrid()
+        )
+
+        // 2. Wait for tiles and map rendering to stabilize
+        googleMap.awaitMapLoaded()
+
+        // 3. Capture snapshot bitmap
+        val currentBitmap = googleMap.captureSnapshot()
+
+        // 4. Assert pixel diff against reference golden
+        val goldenBitmap = loadGoldenBitmap("store_map_baseline.png")
+        val diffResult = GoldenImageDiff.compare(
+            actual = currentBitmap,
+            expected = goldenBitmap,
+            tolerancePercentage = 0.01f // 1% allowable pixel variance
+        )
+
+        // Highlight regressions with red diff overlay if test fails
+        if (!diffResult.passed) {
+            saveDiffArtifact("store_map_diff.png", diffResult.diffBitmap)
+            fail("Golden comparison failed: ${diffResult.differencePercentage}% pixel divergence")
+        }
+    }
+}
+```
+
+### Compose Support
+In Jetpack Compose, use `rememberGoldenTileProvider()`:
+```kotlin
+val goldenTileProvider = rememberGoldenTileProvider(GoldenTileStrategy.CoordinateGrid())
+GoogleMap(
+    properties = MapProperties(mapType = MapType.NONE)
+) {
+    TileOverlay(tileProvider = goldenTileProvider)
+    Marker(state = rememberMarkerState(position = targetLocation))
+}
+```
+
+---
+
+## 6. AI Visual Testing & Hybrid Fallback (`:visual-testing`)
+
+For scenarios where rigid pixel comparisons are too brittle (e.g. minor GPU antialiasing variances, dynamic text rendering, or natural language UI criteria), the **`:visual-testing`** module combines **Google Gemini Multimodal AI** with **UiAutomator**.
+
+### Setup
+```kotlin
+dependencies {
+    androidTestImplementation("com.google.android.maps.testing:visual:1.1.0-rc01")
+}
+```
+
+Provide the API key via environment variable:
+```bash
+export GEMINI_API_KEY="AIzaSy...YOUR_KEY"
+```
+
+### Hybrid Golden Fallback Workflow (`verifyScreenshotWithGoldenFallback`)
+Combines the speed of local pixel diffing with the resilience of semantic AI evaluation:
+
+```mermaid
+flowchart TD
+    Capture["1. Capture Map Screenshot"] --> Diff["2. Fast Local Pixel Diff (< tolerance)"]
+    Diff -->|Passed| Pass["Test PASSED (Zero Network / Zero Quota)"]
+    Diff -->|Failed| AI["3. Gemini Flash Multimodal Semantic Evaluation"]
+    AI -->|Valid Semantic Change| Approve["Test PASSED (Auto-Update Golden Baseline)"]
+    AI -->|Visual Regression Detected| Fail["Test FAILED (Regression Reported)"]
+```
+
+```kotlin
+@Test
+fun `verify map view semantics with hybrid AI fallback`() = runTest {
+    val orchestrator = VisualTestOrchestrator(context)
+
+    // Executes local pixel diff first; falls back to Gemini if pixel diff diverges
+    val result = orchestrator.verifyScreenshotWithGoldenFallback(
+        goldenName = "paris_landmarks",
+        semanticPrompt = "Verify that the map is centered on Paris, the Eiffel Tower marker is visible, and the custom info window displays without overlapping bottom navigation.",
+        tolerancePercentage = 0.02f
+    )
+
+    assertThat(result.passed).isTrue()
+}
+```
+
+---
+
+## 7. Summary of Testing Capabilities Matrix
+
+| Capability | `:robolectric-testing` | `:golden-testing` | `:visual-testing` |
+| :--- | :---: | :---: | :---: |
+| **Primary Goal** | Fast Behavioral / Functional Unit Tests | Deterministic Pixel Regression | Semantic UI / Resilient Visual QA |
+| **Execution Environment** | Headless Local JVM | Local JVM (RNG) & Android Device | Android Device / Emulator |
+| **Network & Quota Required** | ❌ None | ❌ None (Synthetic Tiles) | ⚠️ Only for Gemini AI API calls |
+| **Camera & Viewport Testing** | ✅ Full Simulation | ✅ Synthetic Raster | ✅ Full Visual Inspection |
+| **Marker & Shape Interactions** | ✅ Clicks, Drags, Info Windows | ⚠️ Indirect | ✅ UiAutomator AI Actions |
+| **Truth Distance Matchers** | ✅ `isWithin(20.meters)` | ❌ N/A | ❌ N/A |
+| **Strict Pixel Diff Engine** | ❌ N/A | ✅ `GoldenImageDiff` | ✅ Hybrid Pixel Diff |
+| **Natural Language Verification** | ❌ N/A | ❌ N/A | ✅ Gemini Flash Multimodal |
+| **Jetpack Compose Integration** | ✅ Supported | ✅ `rememberGoldenTileProvider` | ✅ Supported |
+

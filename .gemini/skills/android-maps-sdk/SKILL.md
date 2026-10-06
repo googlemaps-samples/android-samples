@@ -36,11 +36,15 @@ This skill is directly grounded in:
   2. **Green**: Write the minimal, cleanest production code required to satisfy the test.
   3. **Refactor**: Clean up the implementation, optimize performance, and enforce modularity while keeping tests 100% green.
 - **Solid Coverage on Every Function**: Test nominal flows, boundary conditions, empty collections, invalid coordinates, permission denials, and lifecycle interruptions.
+- **Three-Tier Testing Pyramid via `android-maps-robolectric`**:
+  - **Tier 1: Behavioral / Functional Unit Tests (`:robolectric-testing`)**: Fast headless JVM execution using shadows for `MapView`, `GoogleMap`, and markers without physical devices, emulators, or API key quotas. Asserts spatial distances with Google Truth geodesic matchers (`assertThat(marker.position).isWithin(20.meters).of(target)`).
+  - **Tier 2: Deterministic Golden Image Tests (`:golden-testing`)**: 100% offline, zero-quota screenshot regression testing using synthetic raster tiles (`MAP_TYPE_NONE`, `GoldenTileStrategy.CoordinateGrid`), deterministic pixel diff comparison (`GoldenImageDiff`), and red regression diff generation.
+  - **Tier 3: Multimodal AI Visual Tests (`:visual-testing`)**: Semantic UI verification using Google Gemini Flash multimodal evaluation, natural language visual assertions, and hybrid golden fallback (fast local pixel diff first, falling back to Gemini if minor rendering differences occur).
 
 ### 2. Transform Requirements &rarr; Critical User Journeys (CUJs) &rarr; Implementation Tests
 - **Active Requirement Gathering**: Proactively solicit and clarify functional requirements, user interactions, geographic entities, and error boundaries from the user.
 - **Formalize CUJs**: Translate user requirements into concrete, unambiguous Critical User Journeys (e.g. *CUJ-1: Initial map setup centers on delivery zone; CUJ-2: Tapping vendor pin displays custom info window and animates camera*).
-- **Build Implementation Tests with `android-maps-robolectric`**: Convert each CUJ into fast, deterministic, host-side JVM unit tests using [`dkhawk/android-maps-robolectric`](https://github.com/dkhawk/android-maps-robolectric) before writing production UI.
+- **Build Implementation Tests with `android-maps-robolectric`**: Convert each CUJ into fast, deterministic, host-side JVM unit tests, deterministic golden image snapshots, or semantic visual tests using [`dkhawk/android-maps-robolectric`](https://github.com/dkhawk/android-maps-robolectric) before writing production UI.
 
 ### 3. Anti-Bloat Mandate: Strict Modularity (No Monolithic Classes)
 - **Prohibition Against "God Classes"**: Agents must **NOT** create massive, sprawling source files (500–1000+ lines) combining UI, network, database, business logic, and map controllers.
@@ -106,16 +110,23 @@ Structure requirements into distinct, falsifiable journeys:
 
 ### Step 2: Write Implementation Tests First (TDD via `android-maps-robolectric`)
 
-Configure dependencies in `build.gradle.kts`:
+Configure testing modules from [`dkhawk/android-maps-robolectric`](https://github.com/dkhawk/android-maps-robolectric) in `build.gradle.kts`:
 ```kotlin
 dependencies {
+    // 1. Behavioral JVM Unit Tests (Robolectric Shadows & Truth Matchers)
     testImplementation("com.google.android.maps.robolectric:shadows:1.1.0-rc01")
     testImplementation("org.robolectric:robolectric:4.16.1")
     testImplementation("com.google.truth:truth:1.4.2")
+
+    // 2. Deterministic Golden Image Tests (Offline Synthetic Tiles & Pixel Diff)
+    testImplementation("com.google.android.maps.testing:golden:1.1.0-rc01")
+
+    // 3. AI Visual Tests (Gemini Flash Multimodal Semantic Evaluation)
+    androidTestImplementation("com.google.android.maps.testing:visual:1.1.0-rc01")
 }
 ```
 
-Write failing tests (Red) verifying each CUJ before building the UI:
+Write failing tests (Red) verifying each CUJ before building production UI:
 ```kotlin
 @RunWith(RobolectricTestRunner::class)
 class StoreMapTest {
@@ -138,6 +149,18 @@ class StoreMapTest {
             val markers = ShadowGoogleMap.getMarkers(map)
             assertThat(markers).isNotEmpty()
             assertThat(markers.first().title).isEqualTo("Downtown Store")
+        }
+    }
+
+    @Test
+    fun `CUJ-3 map renders deterministically against golden baseline`() = runTest {
+        val scenario = ActivityScenario.launch(MapActivity::class.java)
+        scenario.onActivity { activity ->
+            val map = activity.getGoogleMap()
+            map.enableGoldenTesting(strategy = GoldenTileStrategy.CoordinateGrid())
+            val currentSnapshot = map.captureSnapshot()
+            val diff = GoldenImageDiff.compare(currentSnapshot, loadGolden("store_map_baseline.png"))
+            assertThat(diff.passed).isTrue()
         }
     }
 }
