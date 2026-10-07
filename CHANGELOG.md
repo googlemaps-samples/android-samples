@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.2.0](https://github.com/googlemaps-samples/android-samples/compare/v2.1.0...v2.2.0) (2026-10-07)
+
+
+### Features
+
+* implement Java sample parity, animations, and interaction handlers ([#2423](https://github.com/googlemaps-samples/android-samples/issues/2423)) ([0757a57](https://github.com/googlemaps-samples/android-samples/commit/0757a570db190c7b5621c4ac1fe07d99c133807e))
+* implement Jetpack Compose sample catalog ([#2422](https://github.com/googlemaps-samples/android-samples/issues/2422)) ([735ec94](https://github.com/googlemaps-samples/android-samples/commit/735ec94776a13328d85dd7dadced53414ba6d5d3))
+* implement Kotlin sample parity, visual test suite, and autonomous QA automation ([#2424](https://github.com/googlemaps-samples/android-samples/issues/2424)) ([0c987c1](https://github.com/googlemaps-samples/android-samples/commit/0c987c148b648fe77355669418d7901c5f463a52))
+* introduce snippets common library module and documentation tools ([#2425](https://github.com/googlemaps-samples/android-samples/issues/2425)) ([614ef71](https://github.com/googlemaps-samples/android-samples/commit/614ef71a52eca4ad106e0b578cd9208ff673fb30))
+
 ## [2.1.0](https://github.com/googlemaps-samples/android-samples/compare/v2.0.2...v2.1.0) (2026-09-08)
 
 
