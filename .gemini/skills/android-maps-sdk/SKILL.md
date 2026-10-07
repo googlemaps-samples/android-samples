@@ -62,7 +62,8 @@ This skill is directly grounded in:
   1. Target `applicationId` (package name) is present in `allowedApplications` on the key.
   2. Signing keystore's SHA-1 fingerprint matches the key's application restriction.
   3. Maps SDK for Android (`maps-android-backend.googleapis.com`) is explicitly enabled in the project and allowed by API restrictions.
-- **Automated Fix via `gcloud`**: If verification fails, the agent must offer to fix it automatically using the `gcloud` CLI (using safe update scripts that preserve existing allowed applications).
+- **GCP Update Preconditions (`apiTargets` Preservation)**: When calling `gcloud services api-keys update`, all APIs with active traffic in the last 7 days (`maps-android-backend.googleapis.com`, `geocoding-backend.googleapis.com`, `places-backend.googleapis.com`, etc.) MUST be preserved and passed back as `--api-target=service=...` flags. Omitting them causes GCP to reject the update with `FAILED_PRECONDITION`.
+- **Automated Fix via `gcloud`**: If verification fails, the agent must offer to fix it automatically using the `gcloud` CLI (using safe update scripts that preserve existing allowed applications and active `apiTargets`).
 - **Fallback When `gcloud` Fails or is Missing**: If `gcloud` produces authentication errors (e.g., Context Aware Access block, expired credentials) or is missing:
   1. Offer to fix it automatically once the user authenticates `gcloud` (`gcloud auth login` or `go/gcloud-caa-error`).
   2. Provide exact, step-by-step instructions to fix it manually in the Google Cloud Console (exact Credentials URL, exact key, exact package name, and exact SHA-1 fingerprint).
@@ -74,7 +75,20 @@ This skill is directly grounded in:
 - **Multimodal AI Prompt Invariants**: When using Gemini Vision, prompts must include strict negative assertions:
   *"Reject if the map area is a blank solid color or shows only the watermark without streets or terrain. Approve only if a real, populated map with clear geographical features and expected markers is visible."*
 
-### 6. Single-Source-of-Truth Region Tags
+### 6. Geographic Asset Loading Discipline (AssetManager vs. ClassLoader)
+- **Android Runtime Rule**: Datasets (GeoJSON, KML, GeoPackage, JSON, shapefiles) placed in `app/src/main/assets/` or `app/src/main/res/raw/` **MUST** be loaded using Android's `AssetManager` (`context.assets.open(...)`) or raw resources (`context.resources.openRawResource(...)`).
+- **The ClassLoader Anti-Pattern**: **NEVER** use `ClassLoader.getResourceAsStream()` or `javaClass.getResourceAsStream()`. Inside an Android runtime APK, `getResourceAsStream` returns `null` because assets are not packaged in the root Java classpath. This leads to insidious bugs where tests pass on local host JVMs (where Gradle places assets on the classpath) but fail silently or fall back to empty datasets on physical devices or emulators.
+- **Robust Initialization**: Initialize geographic datasets from `Application.onCreate()` or presentation lifecycle using `applicationContext.assets.open(...)`.
+
+### 7. Marker Ownership & Clustering Integrity
+- **Single-Source Marker Ownership**: When integrating `ClusterManager`, **NEVER** call `map.addMarker(...)` directly for items being managed by the cluster manager. Adding direct markers draws static pins on top of cluster bubbles, hiding cluster counts and breaking cluster tap animations. `ClusterManager` and its `ClusterRenderer` MUST be the sole owner of marker creation.
+- **Cluster Renderer Customization**:
+  - Set `minClusterSize` (e.g. 2 or 3) for dense datasets to ensure neighboring points cluster cleanly.
+  - Override `onBeforeClusterItemRendered` to customize individual unclustered marker icons and titles.
+  - Set `setOnClusterClickListener` to smoothly zoom into cluster bounds.
+- **Deterministic Headless Testing**: To test `ClusterManager` in Robolectric without background worker race conditions, inject a synchronous `Executor` (`Executor { it.run() }`) into `DefaultClusterRenderer`.
+
+### 8. Single-Source-of-Truth Region Tags
 When quoting documentation snippets, only reference code surrounded with official region tags (`// [START <tag>]` ... `// [END <tag>]`) to ensure consistency with Google Maps Platform developer documentation.
 
 ---
