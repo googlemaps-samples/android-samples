@@ -36,32 +36,44 @@ public class VisibleRegionDemoActivityTest {
             new ActivityScenarioRule<>(VisibleRegionDemoActivity.class);
 
     @Test
-    public void testNoPaddingButton() {
-        onView(withId(com.example.common_ui.R.id.vr_normal_button)).perform(click());
-        onView(withId(com.example.common_ui.R.id.message_text)).check(matches(isDisplayed()));
+    public void testActionsMenuDisplayed() {
+        onView(withId(com.example.common_ui.R.id.camera_actions_button)).check(matches(isDisplayed()));
+        onView(withId(com.example.common_ui.R.id.camera_target_text)).check(matches(isDisplayed()));
+        onView(withId(com.example.common_ui.R.id.camera_details_text)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testMorePaddingButton() {
-        onView(withId(com.example.common_ui.R.id.vr_more_padded_button)).perform(click());
-        onView(withId(com.example.common_ui.R.id.message_text)).check(matches(isDisplayed()));
+    public void testNoPaddingAction() {
+        onView(withId(com.example.common_ui.R.id.camera_actions_button)).perform(click());
+        onView(withText("Default Padding (None)")).perform(click());
+        onView(withId(com.example.common_ui.R.id.camera_target_text)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testOperaHouseButton() {
-        onView(withId(com.example.common_ui.R.id.vr_soh_button)).perform(click());
-        onView(withId(com.example.common_ui.R.id.message_text)).check(matches(isDisplayed()));
+    public void testMorePaddingAction() {
+        onView(withId(com.example.common_ui.R.id.camera_actions_button)).perform(click());
+        onView(withText("Asymmetric Padding (Right + Bottom)")).perform(click());
+        onView(withId(com.example.common_ui.R.id.camera_target_text)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testSfoButton() {
-        onView(withId(com.example.common_ui.R.id.vr_sfo_button)).perform(click());
-        onView(withId(com.example.common_ui.R.id.message_text)).check(matches(isDisplayed()));
+    public void testOperaHouseAction() {
+        onView(withId(com.example.common_ui.R.id.camera_actions_button)).perform(click());
+        onView(withText("Move to Sydney Opera House")).perform(click());
+        onView(withId(com.example.common_ui.R.id.camera_target_text)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testAusButton() {
-        onView(withId(com.example.common_ui.R.id.vr_aus_button)).perform(click());
-        onView(withId(com.example.common_ui.R.id.message_text)).check(matches(isDisplayed()));
+    public void testSfoAction() {
+        onView(withId(com.example.common_ui.R.id.camera_actions_button)).perform(click());
+        onView(withText("Move to San Francisco Airport (SFO)")).perform(click());
+        onView(withId(com.example.common_ui.R.id.camera_target_text)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testAusAction() {
+        onView(withId(com.example.common_ui.R.id.camera_actions_button)).perform(click());
+        onView(withText("Fit Australia Bounds")).perform(click());
+        onView(withId(com.example.common_ui.R.id.camera_target_text)).check(matches(isDisplayed()));
     }
 }

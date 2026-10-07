@@ -14,6 +14,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
@@ -56,6 +60,18 @@ import java.util.Objects;
 /**
  * This shows how to draw circles on a map.
  */
+@Sample(
+    id = "circles",
+    title = "Circles & Geodesic Radii",
+    description = "Drawing geographic circles with dynamic center drag, radius sliders, and stroke styling.",
+    category = "Shapes & Geometry",
+    complexity = Complexity.SIMPLE,
+    tags = {"#shapes", "#circles", "#radius", "#geodesic"},
+    purpose = "Demonstrates drawing circles with radius defined in meters and dynamic updates via seekbars.",
+    successCriteria = "Adjusting radius slider dynamically updates circle boundary in real-time.",
+    failureIndicators = "Circle distorted or radius math inaccurate across high latitudes.",
+    framework = Framework.JAVA_VIEWS
+)
 public class CircleDemoActivity extends SamplesBaseActivity
     implements OnSeekBarChangeListener, OnMarkerDragListener, OnMapLongClickListener,
     OnItemSelectedListener, OnMapReadyCallback, MapProvider {

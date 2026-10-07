@@ -15,6 +15,10 @@
 
 package com.example.mapdemo;
 
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -38,6 +42,25 @@ import androidx.appcompat.app.AppCompatActivity;
  * launch the Google Maps Mobile application, {@link com.google.android.gms.maps.CameraUpdate}s
  * and {@link com.google.android.gms.maps.model.Polygon}s.
  */
+@Sample(
+    id = "com.example.mapdemo.LiteDemoActivity",
+    title = "Lite Mode Basics",
+    description = "Non-interactive raster map with programmatic camera jumps, markers, and polygons.",
+    category = "Lists & Performance",
+    complexity = Complexity.SIMPLE,
+    tags = {"#litemode", "#static", "#raster", "#markers", "#polygons"},
+    apiCalls = {
+        "GoogleMapOptions.liteMode(true)",
+        "GoogleMap.moveCamera(CameraUpdate)",
+        "GoogleMap.addMarker(MarkerOptions)",
+        "GoogleMap.addPolygon(PolygonOptions)"
+    },
+    purpose = "Demonstrates Lite Mode features: static raster rendering, markers launching Google Maps intent, and programmatic camera jumps.",
+    successCriteria = "Map renders lightweight static raster view; Darwin/Adelaide buttons immediately reposition camera.",
+    failureIndicators = "Full vector GL map loaded instead of lite mode, or buttons fail to move camera.",
+    framework = Framework.JAVA_VIEWS
+)
+// [START maps_android_sample_lite]
 public class LiteDemoActivity extends SamplesBaseActivity implements
         OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
@@ -73,7 +96,7 @@ public class LiteDemoActivity extends SamplesBaseActivity implements
 
         // Get the map and register for the ready callback
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
         applyInsets(binding.mapContainer);
 
@@ -190,3 +213,4 @@ public class LiteDemoActivity extends SamplesBaseActivity implements
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
     }
 }
+// [END maps_android_sample_lite]

@@ -11,3 +11,8 @@ secrets.properties
 .vscode/
 **/bin/
 .kotlin/
+eval_runs/
+scripts/eval/
+scripts/run_artemis_suite.py
+__pycache__/
+*.pyc
