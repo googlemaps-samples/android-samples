@@ -64,8 +64,50 @@ dependencies {
 Enable Robolectric Native Graphics or standard shadows in `robolectric.properties` or test annotations:
 ```properties
 # test/resources/robolectric.properties
+sdk=34
 robolectric.graphicsMode=NATIVE
 ```
+
+### Critical Robolectric Setup Invariants
+
+1. **Explicit Shadow Registration with `@Config`**:
+   In Robolectric 4.16+, if you apply `@Config(sdk = [...])` to a test class, Robolectric creates a new configuration that will **ignore shadows from meta-annotations** (such as `@EnableMapsShadows`). Always explicitly list the Google Maps shadows in `@Config(shadows = [...])` to guarantee they are registered:
+   ```kotlin
+   @RunWith(RobolectricTestRunner::class)
+   @GraphicsMode(GraphicsMode.Mode.NATIVE)
+   @Config(
+       sdk = [34],
+       shadows = [
+           ShadowMapView::class,
+           ShadowGoogleMap::class,
+           ShadowCameraUpdate::class,
+           ShadowCameraUpdateFactory::class,
+           ShadowMarker::class,
+           ShadowPolyline::class,
+           ShadowPolygon::class,
+           ShadowProjection::class,
+           ShadowCircle::class,
+           ShadowUiSettings::class,
+           ShadowBitmapDescriptor::class,
+           ShadowBitmapDescriptorFactory::class,
+           ShadowMapsInitializer::class,
+           ShadowSupportMapFragment::class,
+           ShadowGroundOverlay::class,
+           ShadowTileOverlay::class
+       ]
+   )
+   class MyMapTest
+   ```
+
+2. **Main Looper Synchronization for `getMapAsync`**:
+   Because `MapView.getMapAsync()` posts callback execution to `Looper.getMainLooper()`, tests must call `ShadowLooper.idleMainLooper()` immediately after calling `getMapAsync`:
+   ```kotlin
+   val mapRef = AtomicReference<GoogleMap>()
+   mapView.getMapAsync { mapRef.set(it) }
+   ShadowLooper.idleMainLooper() // Flush looper queue so onMapReady executes
+   val googleMap = mapRef.get() // Guaranteed non-null
+   val shadowMap = Shadow.extract(googleMap) as ShadowGoogleMap
+   ```
 
 ---
 
@@ -74,20 +116,23 @@ robolectric.graphicsMode=NATIVE
 ### Recipe 1: Verifying Map Initialization & Camera Position
 ```kotlin
 @RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(
+    sdk = [34],
+    shadows = [ShadowMapView::class, ShadowGoogleMap::class, ShadowCameraUpdate::class, ShadowCameraUpdateFactory::class]
+)
 class StoreMapViewModelTest {
 
     @Test
     fun `CUJ-1 initial map setup centers on default location with zoom`() = runTest {
-        // 1. Arrange: Create Activity / Fragment via Robolectric
-        val controller = Robolectric.buildActivity(MapActivity::class.java).setup()
-        val activity = controller.get()
-        val mapFragment = activity.supportFragmentManager
-            .findFragmentById(R.id.map_container) as SupportMapFragment
+        val activity = Robolectric.buildActivity(Activity::class.java).create().get()
+        val mapView = MapView(activity).apply { onCreate(Bundle()) }
 
-        // 2. Act: Await map ready via shadow
-        val googleMap = mapFragment.awaitMap()
+        val mapRef = AtomicReference<GoogleMap>()
+        mapView.getMapAsync { mapRef.set(it) }
+        ShadowLooper.idleMainLooper()
 
-        // 3. Assert: Verify camera position using Truth
+        val googleMap = mapRef.get()
         val camera = googleMap.cameraPosition
         assertThat(camera.target.latitude).isWithin(0.001).of(37.7749)
         assertThat(camera.target.longitude).isWithin(0.001).of(-122.4194)

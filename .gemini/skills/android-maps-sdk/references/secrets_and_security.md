@@ -93,3 +93,23 @@ keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -sto
 
 > [!CAUTION]
 > If you encounter `ERR_DIFFERENT_APP_OR_KEY` or `230 authorization errors`, verify that both the active build variant's `applicationId` and the signing key's SHA-1 fingerprint match the entry in Cloud Console. Debug and Release builds use different keystores and must both be registered.
+
+---
+
+## 4. Pre-Flight Device Verification & Whitelist Alignment
+
+### The Silent Authorization Failure Mode
+When an application with an unauthorized `applicationId` or mismatched SHA-1 fingerprint runs on a device:
+- The app **does NOT crash**.
+- The `SupportMapFragment` or `MapView` initializes normally.
+- However, the Google Maps SDK receives a `403 / 230 Authorization Error` in the background and renders an **empty, solid beige or grey canvas with only the Google logo watermark**.
+
+### Pre-Flight Checklist Before On-Device Deployment
+Before deploying a new app or module to physical hardware or emulators:
+1. **Check Allowed Applications**: Verify whether the API key in `secrets.properties` is restricted in Google Cloud Console.
+2. **Handle New Application IDs**: If creating a brand-new app (e.g. `com.example.boulderfountains`), either:
+   - Add the new package name and debug SHA-1 (`B6:54:7C:6C:FA:69:4D:59:22:65:E4:50:5B:9F:D1:16:9A:93:B7:26`) to the API key's whitelist using the safe helper script or Cloud Console.
+   - Or during development, set `defaultConfig.applicationId = "com.example.kotlindemos"` (or another already-whitelisted package name) to authorize immediately.
+3. **Secrets Plugin Manifest Placeholders**:
+   Avoid defining static dummy placeholders like `manifestPlaceholders["MAPS_API_KEY"] = "DEFAULT_KEY"` in `defaultConfig` if it prevents the Secrets Gradle Plugin from injecting the actual key from `secrets.properties`. Use `local.defaults.properties` for fallback values instead.
+

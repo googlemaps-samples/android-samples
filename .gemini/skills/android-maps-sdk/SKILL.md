@@ -199,6 +199,21 @@ In `build.gradle.kts`:
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.secrets.gradle.plugin)
+    // Note: Do NOT apply 'org.jetbrains.kotlin.android' in AGP 9.0+ (Kotlin is built-in)
+}
+
+android {
+    defaultConfig {
+        // Pre-Flight Check: Ensure applicationId is whitelisted in Google Cloud Console
+        // for the API key in secrets.properties along with your debug keystore SHA-1.
+        applicationId = "com.example.kotlindemos" // Or your whitelisted ID
+    }
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xskip-metadata-version-check")
+    }
 }
 
 dependencies {
