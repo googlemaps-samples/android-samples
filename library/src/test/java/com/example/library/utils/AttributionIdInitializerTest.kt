@@ -16,7 +16,6 @@
 package com.example.library.utils
 
 import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import com.example.library.utils.attribution.AttributionIdInitializer
 import com.example.library.utils.meta.AttributionId
 import com.google.android.gms.maps.MapsApiSettings
@@ -31,6 +30,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.RuntimeEnvironment
 
 @RunWith(RobolectricTestRunner::class)
 class AttributionIdInitializerTest {
@@ -47,7 +47,7 @@ class AttributionIdInitializerTest {
 
     @Test
     fun `create adds internal usage attribution id`() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
+        val context: Context = RuntimeEnvironment.getApplication()
         val initializer = AttributionIdInitializer()
 
         initializer.create(context)

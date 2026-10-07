@@ -38,35 +38,29 @@ android {
       )
     }
   }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+  }
   lint {
     abortOnError = false
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-  }
-  lint {
     disable += setOf("MissingInflatedId", "OnClick")
     sarifOutput = layout.buildDirectory.file("reports/lint-results-debug.sarif").get().asFile
   }
   kotlin {
     compilerOptions {
-      jvmTarget.set(JvmTarget.JVM_17)
+      jvmTarget.set(JvmTarget.JVM_11)
       javaParameters.set(true)
     }
   }
 }
 
 dependencies {
-  implementation(libs.appcompat)
-  implementation(libs.core.ktx)
-  implementation(libs.material)
   implementation(libs.startup.runtime)
   implementation(libs.play.services.maps)
   testImplementation(libs.junit)
   testImplementation(libs.robolectric)
   testImplementation(libs.mockk)
-  testImplementation(libs.espresso.core)
 }
 
 
