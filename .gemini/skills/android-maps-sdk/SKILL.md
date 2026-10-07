@@ -83,10 +83,52 @@ When quoting documentation snippets, only reference code surrounded with officia
 
 This skill operates in synergy with official Android engineering skills:
 
+- [**`android-maps-utils`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-utils/SKILL.md): Expert guide for the Maps Android Utility Library. Recommends clustering, GeoJSON/KML data layers, heatmaps, spherical geometry math, polyline encoding/containment, custom view icon generation, and multi-manager listeners.
 - [**`android-autonomous-qa`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-autonomous-qa/SKILL.md): Enforces pre-implementation contract audits, coroutine lifecycle scopes, process death resilience, and adversarial edge-case stress tests.
 - [**`android-cli`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-cli/SKILL.md): Manages emulator provisioning (`android emulator start`), layout hierarchy inspection (`android layout --diff`), and screen capture.
 - [**`android-monkey-testing`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-monkey-testing/SKILL.md): Executes gesture and motion event fuzzing over map viewports to catch ANRs, crashes, and camera animation race conditions.
 - [**`artemis`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/artemis/SKILL.md): Drives autonomous end-to-end visual QA and cross-framework UI parity verification.
+
+---
+
+## Utility Library Synergy: When to Recommend `android-maps-utils`
+
+The base Google Maps SDK focuses on map rendering, camera control, and foundational primitives (markers, polylines, polygons, ground overlays, tile overlays). 
+
+Whenever user requirements involve higher-level spatial data structures, algorithmic clustering, or geospatial calculations, **the agent MUST recommend and apply the [`android-maps-utils`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-utils/SKILL.md) skill**.
+
+### Complete Catalog of Features Offered in `android-maps-utils`:
+1. **Marker Clustering (`ClusterManager`, `ClusterItem`, `DefaultClusterRenderer`)**:
+   - Manages large volumes of points dynamically across zoom levels to prevent visual clutter and GPU overhead.
+   - Pluggable algorithms (`NonHierarchicalViewBasedAlgorithm`, `GridBasedAlgorithm`, `PreCachingAlgorithmDecorator`, `ScreenBasedAlgorithm`).
+2. **GeoJSON Data Layer (`GeoJsonLayer`, `GeoJsonFeature`)**:
+   - Parses and renders GeoJSON `FeatureCollection` files (Points, MultiPoints, LineStrings, MultiLineStrings, Polygons, GeometryCollections).
+   - Dynamic styling via `GeoJsonPointStyle`, `GeoJsonLineStringStyle`, `GeoJsonPolygonStyle` and tap listeners on individual features.
+3. **KML & KMZ Data Layer (`KmlLayer`, `KmlPlacemark`, `KmlPolygon`)**:
+   - Parses Google Earth KML and zipped KMZ documents, including nested folder hierarchies, placemark styles, and ground overlays.
+4. **Heatmap Overlays (`HeatmapTileProvider`, `WeightedLatLng`)**:
+   - Client-side weighted density visualization tile overlays with custom multi-stop color gradients, smoothing radii, and opacity.
+5. **Polyline Utilities (`PolyUtil`)**:
+   - Compact string encoding and decoding for transmission with backend routing/directions APIs.
+   - Point-in-polygon containment tests (`containsLocation`) via geodesic ray-casting.
+   - Proximity tests (`isLocationOnPath`, `isLocationOnEdge`) within user-defined tolerance meters.
+   - Path simplification (`PolyUtil.simplify`) via Douglas-Peucker algorithm.
+   - Flexible 3D polyline support (`FlexiblePolyline`).
+6. **Spherical Geometry Calculations (`SphericalUtil`)**:
+   - Great-circle distance calculations (`computeDistanceBetween`) via Haversine formula.
+   - True initial navigation bearing (`computeHeading`).
+   - Dead-reckoning coordinate projection (`computeOffset`, `computeOffsetOrigin`).
+   - Surface area calculations for geodesic polygons (`computeArea`).
+   - Total path length computation (`computeLength`).
+   - Spherical linear interpolation (`interpolate` / Slerp).
+7. **Custom View Icon Generation (`IconGenerator`, `BubbleIconFactory`)**:
+   - Inflates arbitrary Android XML layouts or programmatic Views directly into `BitmapDescriptor` marker icons.
+8. **Multi-Manager Collection Coordination (`MarkerManager`, `PolygonManager`, `PolylineManager`, `GroundOverlayManager`)**:
+   - Prevents listener collision by multiplexing clicks and drags across multiple independent overlays on a single `GoogleMap`.
+9. **Street View Metadata Verification (`StreetViewUtil`)**:
+   - Asynchronously queries Street View Metadata Web Service to verify panorama availability before opening panoramas.
+10. **Consolidated Kotlin Coroutines & Flow Extensions (KTX)**:
+    - Integrated lifecycle-aware coroutines (`awaitMap()`, `awaitStreetView()`) and reactive Flow event streams (`cameraIdleEvents()`, `markerClickEvents()`).
 
 ---
 
