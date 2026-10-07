@@ -56,14 +56,25 @@ This skill is directly grounded in:
   - **Data Layer** (Repositories): Remote APIs and local Room caching.
   - **Map Controller Layer** (`StoreMapController`): Encapsulates direct `GoogleMap` / `ClusterManager` interactions into a clean, testable delegate.
 
-### 4. Visual Testing Rigor & Rendered Map Ground Truth
+### 4. Mandatory Pre-Flight API Key & Restriction Audit via `gcloud`
+- **Hard Gate Before Building**: Agents must **ALWAYS** verify the status of the API key, application ID whitelist, debug keystore SHA-1 fingerprint, and required enabled APIs **BEFORE** building or deploying a new app to a device or emulator.
+- **Three Verification Requirements**:
+  1. Target `applicationId` (package name) is present in `allowedApplications` on the key.
+  2. Signing keystore's SHA-1 fingerprint matches the key's application restriction.
+  3. Maps SDK for Android (`maps-android-backend.googleapis.com`) is explicitly enabled in the project and allowed by API restrictions.
+- **Automated Fix via `gcloud`**: If verification fails, the agent must offer to fix it automatically using the `gcloud` CLI (using safe update scripts that preserve existing allowed applications).
+- **Fallback When `gcloud` Fails or is Missing**: If `gcloud` produces authentication errors (e.g., Context Aware Access block, expired credentials) or is missing:
+  1. Offer to fix it automatically once the user authenticates `gcloud` (`gcloud auth login` or `go/gcloud-caa-error`).
+  2. Provide exact, step-by-step instructions to fix it manually in the Google Cloud Console (exact Credentials URL, exact key, exact package name, and exact SHA-1 fingerprint).
+
+### 5. Visual Testing Rigor & Rendered Map Ground Truth
 - **Never Declare Success on Empty Canvas**: A visual test must **NEVER** pass merely because buttons, headers, or text exist in the view hierarchy (`uiautomator dump`). 
 - **Mandatory Map Surface Verification**: The viewport must be verified as actively rendered with real geographic cartography (streets, terrain, landuse) or deterministic synthetic golden tiles (`CoordinateGrid`, `Checkerboard`). A blank beige or grey surface with only the Google logo watermark indicates an **API key authorization failure (`ERR_DIFFERENT_APP_OR_KEY` / HTTP 403 / 230 error)** or unrendered map, and **MUST FAIL** the test immediately.
 - **Visual Entity Presence**: Overlays (route polylines, fountain/store markers) must be visually visible on the rendered map canvas, not just registered in ViewModel memory.
 - **Multimodal AI Prompt Invariants**: When using Gemini Vision, prompts must include strict negative assertions:
   *"Reject if the map area is a blank solid color or shows only the watermark without streets or terrain. Approve only if a real, populated map with clear geographical features and expected markers is visible."*
 
-### 5. Single-Source-of-Truth Region Tags
+### 6. Single-Source-of-Truth Region Tags
 When quoting documentation snippets, only reference code surrounded with official region tags (`// [START <tag>]` ... `// [END <tag>]`) to ensure consistency with Google Maps Platform developer documentation.
 
 ---
@@ -83,11 +94,12 @@ This skill operates in synergy with official Android engineering skills:
 
 ```mermaid
 flowchart TD
-    Step0["Step 0: Solicit Requirements & Detect Stack\n(Ask Clarifying Questions, Detect Compose vs Views)"] --> Step1["Step 1: Formalize Critical User Journeys (CUJs)\n(Define User Actions & Expected Map States)"]
-    Step1 --> Step2["Step 2: Write Implementation Tests First (TDD)\n(Build Headless JVM Tests via android-maps-robolectric)"]
-    Step2 --> Step3["Step 3: Setup Dependencies & Secrets\n(play-services-maps, android-maps-utils, Secrets Gradle Plugin)"]
-    Step3 --> Step4["Step 4: Implement Modular Production Code\n(UI Layer -> ViewModel -> UseCase -> MapController)"]
-    Step4 --> Step5["Step 5: Verify & Refactor\n(Run ./gradlew testDebugUnitTest, Lint, and Visual QA)"]
+    Step0["Step 0: Solicit Requirements & Detect Stack\n(Ask Clarifying Questions, Detect Compose vs Views)"] --> Step1["Step 1: Mandatory API Key & Restriction Audit via gcloud\n(Package Name, SHA-1, Required APIs Enabled)"]
+    Step1 --> Step2["Step 2: Formalize Critical User Journeys (CUJs)\n(Define User Actions & Expected Map States)"]
+    Step2 --> Step3["Step 3: Write Implementation Tests First (TDD)\n(Build Headless JVM Tests via android-maps-robolectric)"]
+    Step3 --> Step4["Step 4: Setup Dependencies & Secrets Plugin\n(play-services-maps, android-maps-utils, secrets.properties)"]
+    Step4 --> Step5["Step 5: Implement Modular Production Code\n(UI Layer -> ViewModel -> UseCase -> MapController)"]
+    Step5 --> Step6["Step 6: Verify & Refactor\n(Local JVM Tests, Lint, and Ground Truth Visual QA)"]
 ```
 
 ---
@@ -105,7 +117,23 @@ flowchart TD
 
 ---
 
-### Step 1: Formalize Critical User Journeys (CUJs)
+### Step 1: Mandatory API Key & Restriction Pre-Flight Audit (via `gcloud`)
+
+Before creating or running code on physical hardware or emulators:
+1. **Audit via `gcloud`**:
+   - Extract debug SHA-1: `keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android | grep "SHA1:"`
+   - Describe API key: `gcloud services api-keys describe <KEY_NAME> --format=json`
+   - Confirm target `applicationId` and SHA-1 are in `allowedApplications`.
+   - Confirm `maps-android-backend.googleapis.com` is enabled in project and key targets.
+2. **If Verification Fails**:
+   - **Offer to fix it automatically** via `gcloud` update script (`python3 .../add_android_restriction.py`).
+   - **If `gcloud` fails/missing (auth/CAA)**:
+     - Prompt user: *"If you authenticate gcloud via `gcloud auth login` (or follow `go/gcloud-caa-error`), I can fix this automatically."*
+     - Provide exact manual Google Cloud Console instructions: URL `https://console.cloud.google.com/apis/credentials`, target key, exact package name, and exact SHA-1.
+
+---
+
+### Step 2: Formalize Critical User Journeys (CUJs)
 
 Structure requirements into distinct, falsifiable journeys:
 - **CUJ-1 (Initialization & Viewport)**: Map initializes centered on default target with configured UI settings.
@@ -115,7 +143,7 @@ Structure requirements into distinct, falsifiable journeys:
 
 ---
 
-### Step 2: Write Implementation Tests First (TDD via `android-maps-robolectric`)
+### Step 3: Write Implementation Tests First (TDD via `android-maps-robolectric`)
 
 Configure testing modules from [`dkhawk/android-maps-robolectric`](https://github.com/dkhawk/android-maps-robolectric) in `build.gradle.kts`:
 ```kotlin
