@@ -281,7 +281,13 @@ fun `verify map view semantics with hybrid AI fallback`() = runTest {
     // Executes local pixel diff first; falls back to Gemini if pixel diff diverges
     val result = orchestrator.verifyScreenshotWithGoldenFallback(
         goldenName = "paris_landmarks",
-        semanticPrompt = "Verify that the map is centered on Paris, the Eiffel Tower marker is visible, and the custom info window displays without overlapping bottom navigation.",
+        semanticPrompt = """
+            Verify that:
+            1. An actual map is visually rendered with visible streets, water, or terrain features.
+            2. The map viewport is NOT an empty, solid-color (beige/grey) canvas with only a Google watermark.
+            3. The Eiffel Tower marker is clearly visible as an icon on the map.
+            4. The custom info window displays without overlapping bottom navigation.
+        """.trimIndent(),
         tolerancePercentage = 0.02f
     )
 
@@ -291,13 +297,62 @@ fun `verify map view semantics with hybrid AI fallback`() = runTest {
 
 ---
 
-## 7. Summary of Testing Capabilities Matrix
+## 7. Visual Verification Rigor: Detecting Blank Map & Tile Regressions
+
+> [!CAUTION]
+> **The "Empty Watermark" Failure Mode**:  
+> When the Google Maps SDK encounters an API key authorization failure (such as an unauthorized package name / Application ID, mismatched SHA-1 fingerprint, or quota exhaustion), the SDK **does not crash**. Instead, it renders an **empty, solid beige or grey canvas with only the Google logo watermark** in the bottom-left corner.  
+> Tests that only inspect the Android View hierarchy (`uiautomator dump`, `findViewById`, or checking ViewModel state) will **falsely report success** because UI controls and container views are present, completely missing the fact that **no map is visible to the user**.
+
+### Mandatory Visual Verification Rules for Maps
+
+To prevent false-positive visual verification:
+
+#### 1. Explicit Non-Blank Canvas Invariant
+Visual testing must verify that the map surface contains actual visual data:
+- **For live maps**: The viewport must contain visible roads, geographical labels, water bodies, or terrain features. A screen where >90% of the map viewport is a single uniform background color (e.g. `#EAE6DC` / `#E0E0E0`) with only a watermark **MUST be rejected as a failed test**.
+- **For offline golden tests (`:golden-testing`)**: Synthetic tile strategies (`CoordinateGrid`, `Checkerboard`, `SolidColorHash`) inject high-frequency pixel variations. If the map fails to initialize or tiles do not load, `GoldenImageDiff` will immediately produce a catastrophic pixel divergence (>80%), failing the test deterministically.
+
+#### 2. Visual Entity Presence Invariant
+Never assume markers or polylines are visible just because they were added to an in-memory list:
+- **Polylines**: Must produce visible colored pixel tracks across the map surface.
+- **Markers**: Must render visible glyphs/pins at their projected pixel coordinates.
+- **Info Cards / Popups**: Must appear above the map and contain populated text.
+
+#### 3. Strict AI Evaluation Prompt Template
+When evaluating screenshots with Multimodal AI (Gemini Vision), always include strict negative criteria:
+
+```text
+EVALUATION PROMPT TEMPLATE:
+
+You are verifying a Google Maps Android application screen.
+Evaluate the attached screenshot against these strict criteria:
+
+1. MAP SURFACE VERIFICATION:
+   - Is an actual, populated map rendered across the background showing streets, terrain, or water features?
+   - REJECT IMMEDIATELY if the map area is a blank, solid beige or grey canvas showing only the Google logo.
+
+2. OVERLAY & ENTITY VERIFICATION:
+   - Are the expected markers (fountain pins, store locations) visually rendered on the map surface?
+   - Is the expected route or path polyline visible with its specified color?
+
+3. UI & COMPOSITE ELEMENTS:
+   - Are header cards, filter chips, and action buttons properly displayed without obscuring the primary map subject?
+
+OUTPUT REQUIREMENT:
+If any criterion fails—especially if the map surface is blank—fail the test and report the exact visual defect.
+```
+
+---
+
+## 8. Summary of Testing Capabilities Matrix
 
 | Capability | `:robolectric-testing` | `:golden-testing` | `:visual-testing` |
 | :--- | :---: | :---: | :---: |
 | **Primary Goal** | Fast Behavioral / Functional Unit Tests | Deterministic Pixel Regression | Semantic UI / Resilient Visual QA |
 | **Execution Environment** | Headless Local JVM | Local JVM (RNG) & Android Device | Android Device / Emulator |
 | **Network & Quota Required** | ❌ None | ❌ None (Synthetic Tiles) | ⚠️ Only for Gemini AI API calls |
+| **Catches Blank Map Failures** | ⚠️ In-memory only | ✅ Strict Pixel Diff (>80% failure) | ✅ Multimodal Semantic Rejection |
 | **Camera & Viewport Testing** | ✅ Full Simulation | ✅ Synthetic Raster | ✅ Full Visual Inspection |
 | **Marker & Shape Interactions** | ✅ Clicks, Drags, Info Windows | ⚠️ Indirect | ✅ UiAutomator AI Actions |
 | **Truth Distance Matchers** | ✅ `isWithin(20.meters)` | ❌ N/A | ❌ N/A |

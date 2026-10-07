@@ -56,7 +56,14 @@ This skill is directly grounded in:
   - **Data Layer** (Repositories): Remote APIs and local Room caching.
   - **Map Controller Layer** (`StoreMapController`): Encapsulates direct `GoogleMap` / `ClusterManager` interactions into a clean, testable delegate.
 
-### 4. Single-Source-of-Truth Region Tags
+### 4. Visual Testing Rigor & Rendered Map Ground Truth
+- **Never Declare Success on Empty Canvas**: A visual test must **NEVER** pass merely because buttons, headers, or text exist in the view hierarchy (`uiautomator dump`). 
+- **Mandatory Map Surface Verification**: The viewport must be verified as actively rendered with real geographic cartography (streets, terrain, landuse) or deterministic synthetic golden tiles (`CoordinateGrid`, `Checkerboard`). A blank beige or grey surface with only the Google logo watermark indicates an **API key authorization failure (`ERR_DIFFERENT_APP_OR_KEY` / HTTP 403 / 230 error)** or unrendered map, and **MUST FAIL** the test immediately.
+- **Visual Entity Presence**: Overlays (route polylines, fountain/store markers) must be visually visible on the rendered map canvas, not just registered in ViewModel memory.
+- **Multimodal AI Prompt Invariants**: When using Gemini Vision, prompts must include strict negative assertions:
+  *"Reject if the map area is a blank solid color or shows only the watermark without streets or terrain. Approve only if a real, populated map with clear geographical features and expected markers is visible."*
+
+### 5. Single-Source-of-Truth Region Tags
 When quoting documentation snippets, only reference code surrounded with official region tags (`// [START <tag>]` ... `// [END <tag>]`) to ensure consistency with Google Maps Platform developer documentation.
 
 ---
