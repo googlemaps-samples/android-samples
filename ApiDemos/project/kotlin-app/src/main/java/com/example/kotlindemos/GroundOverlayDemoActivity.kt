@@ -14,6 +14,12 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.databinding.GroundOverlayDemoBinding
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -38,6 +44,18 @@ import com.google.android.gms.maps.model.LatLngBounds
  * oriented against the Earth's surface rather than the screen. Rotating, tilting, or zooming the
  * map changes the orientation of the camera, but not the overlay.
  */
+@Sample(
+    id = "com.example.kotlindemos.GroundOverlayDemoActivity",
+    title = "Ground Overlays",
+    description = "Anchoring raster bitmap images to geographic LatLngBounds on the map surface.",
+    category = "Overlays & Tiles",
+    complexity = Complexity.SIMPLE,
+    tags = ["#overlays", "#groundoverlay", "#images", "#bounds", "#transparency"],
+    purpose = "Demonstrates overlaying historical or custom aerial images onto the map with transparency sliders.",
+    successCriteria = "Historical Newark map image appears pinned to geographic coordinates with adjustable transparency.",
+    failureIndicators = "Overlay image stretched/misaligned or opacity slider unresponsive.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class GroundOverlayDemoActivity :  SamplesBaseActivity(),
     OnSeekBarChangeListener,
     OnMapReadyCallback,
@@ -55,12 +73,12 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
     override lateinit var map: GoogleMap
     override var mapReady = false
 
-    private lateinit var binding: com.example.common_ui.databinding.GroundOverlayDemoBinding
+    private lateinit var binding: GroundOverlayDemoBinding
     private var currentEntry = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.example.common_ui.databinding.GroundOverlayDemoBinding.inflate(layoutInflater)
+        binding = GroundOverlayDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.transparencySeekBar.max = TRANSPARENCY_MAX

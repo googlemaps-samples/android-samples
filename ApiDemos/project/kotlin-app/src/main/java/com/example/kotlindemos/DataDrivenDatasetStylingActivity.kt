@@ -13,6 +13,12 @@
 // limitations under the License.
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.graphics.Color
 import android.os.Build
 
@@ -53,6 +59,19 @@ private val TAG = DataDrivenDatasetStylingActivity::class.java.name
  * on how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
  */
+@Sample(
+    id = "com.example.kotlindemos.DataDrivenDatasetStylingActivity",
+    title = "Data-Driven Dataset Styling",
+    description = "Styling custom geospatial datasets uploaded to Google Cloud Platform based on attributes.",
+    category = "Data-Driven Styling",
+    complexity = Complexity.ADVANCED,
+    tags = ["#datasets", "#datadriven", "#clouddata", "#attributes", "#filtering"],
+    purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
+    successCriteria = "Dataset points and polygons display distinct styling according to attribute values.",
+    failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
+    framework = Framework.KOTLIN_VIEWS
+)
+// [START maps_android_data_driven_styling_datasets]
 class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
     private lateinit var mapContainer: ViewGroup
 
@@ -88,21 +107,21 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         if (dataSets.isEmpty()) {
             with(dataSets) {
                 put(
-                    getString(com.example.common_ui.R.string.boulder),
+                    getString(R.string.boulder),
                     DataSet(
                         BuildConfig.BOULDER_DATASET_ID,
                         LatLngBounds(LatLng(39.920, -105.340), LatLng(40.090, -105.210))
                     ) { styleBoulderDataset() }
                 )
                 put(
-                    getString(com.example.common_ui.R.string.new_york),
+                    getString(R.string.new_york),
                     DataSet(
                         BuildConfig.NEW_YORK_DATASET_ID,
                         LatLngBounds(LatLng(40.7640, -73.9820), LatLng(40.8000, -73.9490))
                     ) { styleNYCDataset() }
                 )
                 put(
-                    getString(com.example.common_ui.R.string.kyoto),
+                    getString(R.string.kyoto),
                     DataSet(
                         BuildConfig.KYOTO_DATASET_ID,
                         LatLngBounds(LatLng(34.9700, 135.7200), LatLng(35.0400, 135.8000))
@@ -111,9 +130,9 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
             }
         }
 
-        setContentView(com.example.common_ui.R.layout.data_driven_styling_demo)
+        setContentView(R.layout.data_driven_styling_demo)
 
-        mapContainer = findViewById(com.example.common_ui.R.id.map_container)
+        mapContainer = findViewById(R.id.map_container)
 
         // --- Programmatically create and add the map fragment ---
         // 1. Create GoogleMapOptions
@@ -127,23 +146,23 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         // 4. Add the fragment to your FrameLayout container
         supportFragmentManager.beginTransaction()
-            .replace(com.example.common_ui.R.id.map_fragment_container, mapFragment) // Use the container ID from XML
+            .replace(R.id.map_fragment_container, mapFragment) // Use the container ID from XML
             .commit()
         // --- End of programmatic creation ---
 
         mapFragment.getMapAsync(this)
 
         // Set the click listener for each of the buttons
-        listOf(com.example.common_ui.R.id.button_kyoto, com.example.common_ui.R.id.button_ny, com.example.common_ui.R.id.button_boulder).forEach { viewId ->
+        listOf(R.id.button_kyoto, R.id.button_ny, R.id.button_boulder).forEach { viewId ->
             findViewById<Button>(viewId).setOnClickListener { view ->
                 switchToDataset((view as Button).text.toString())
             }
         }
 
-        buttonLayout = findViewById<View>(com.example.common_ui.R.id.button_kyoto).parent as LinearLayout
+        buttonLayout = findViewById<View>(R.id.button_kyoto).parent as LinearLayout
 
         handleCutout()
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     private fun handleCutout() {
@@ -222,7 +241,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         val largePointRadius = 8F
         val smallPointRadius = 6F
-        val darkRedBrown = ContextCompat.getColor(this, R.color.darkRedBrown)
+        val darkRedBrown = 0xFF8B0000.toInt()
 
         val styleFactory = FeatureLayer.StyleFactory { feature: Feature ->
             if (feature is DatasetFeature) {
@@ -408,3 +427,4 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         datasetLayer?.featureStyle = styleFactory
     }
 }
+// [END maps_android_data_driven_styling_datasets]

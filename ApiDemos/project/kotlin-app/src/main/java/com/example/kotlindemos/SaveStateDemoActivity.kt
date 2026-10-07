@@ -133,7 +133,7 @@ class SaveStateDemoActivity : SamplesBaseActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(com.example.common_ui.R.layout.save_state_demo)
+    setContentView(R.layout.save_state_demo)
   }
 
   companion object {

@@ -16,6 +16,12 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,6 +54,18 @@ import java.util.Arrays
 /**
  * This shows how to draw polylines on a map.
  */
+@Sample(
+    id = "com.example.kotlindemos.PolylineDemoActivity",
+    title = "Polylines & Patterns",
+    description = "Drawing polylines with joint types, dash/dot stroke patterns, joint styles, and spans.",
+    category = "Shapes & Geometry",
+    complexity = Complexity.SIMPLE,
+    tags = ["#shapes", "#polylines", "#patterns", "#dashes", "#stroke", "#routes"],
+    purpose = "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel joints.",
+    successCriteria = "Polylines render crisp dashed and dotted stroke lines along coordinate vertices.",
+    failureIndicators = "Line caps distorted or custom pattern ignored on high-DPI screens.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class PolylineDemoActivity :
         SamplesBaseActivity(),
         OnMapReadyCallback,
@@ -93,69 +111,69 @@ class PolylineDemoActivity :
 
     // These are the options for polyline caps, joints and patterns. We use their
     // string resource IDs as identifiers.
-    private val capTypeNameResourceIds = intArrayOf(com.example.common_ui.R.string.cap_butt,
-                                                    com.example.common_ui.R.string.cap_round,
-                                                    com.example.common_ui.R.string.cap_square,
-                                                    com.example.common_ui.R.string.cap_image)
+    private val capTypeNameResourceIds = intArrayOf(R.string.cap_butt,
+                                                    R.string.cap_round,
+                                                    R.string.cap_square,
+                                                    R.string.cap_image)
 
-    private val jointTypeNameResourceIds = intArrayOf(com.example.common_ui.R.string.joint_type_default,
-                                                      com.example.common_ui.R.string.joint_type_bevel,
-                                                      com.example.common_ui.R.string.joint_type_round)
+    private val jointTypeNameResourceIds = intArrayOf(R.string.joint_type_default,
+                                                      R.string.joint_type_bevel,
+                                                      R.string.joint_type_round)
 
-    private val patternTypeNameResourceIds = intArrayOf(com.example.common_ui.R.string.pattern_solid,
-                                                        com.example.common_ui.R.string.pattern_dashed,
-                                                        com.example.common_ui.R.string.pattern_dotted,
-                                                        com.example.common_ui.R.string.pattern_mixed)
+    private val patternTypeNameResourceIds = intArrayOf(R.string.pattern_solid,
+                                                        R.string.pattern_dashed,
+                                                        R.string.pattern_dotted,
+                                                        R.string.pattern_mixed)
 
     // [START maps_android_sample_polylines]
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.polyline_demo)
+        setContentView(R.layout.polyline_demo)
 
-        hueBar = findViewById<SeekBar>(com.example.common_ui.R.id.hueSeekBar).apply {
+        hueBar = findViewById<SeekBar>(R.id.hueSeekBar).apply {
             max = MAX_HUE_DEGREES
             progress = 0
         }
 
-        alphaBar = findViewById<SeekBar>(com.example.common_ui.R.id.alphaSeekBar).apply {
+        alphaBar = findViewById<SeekBar>(R.id.alphaSeekBar).apply {
             max = MAX_ALPHA
             progress = MAX_ALPHA
         }
 
-        widthBar = findViewById<SeekBar>(com.example.common_ui.R.id.widthSeekBar).apply {
+        widthBar = findViewById<SeekBar>(R.id.widthSeekBar).apply {
             max = MAX_WIDTH_PX
             progress = MAX_WIDTH_PX / 2
         }
 
-        startCapSpinner = findViewById<Spinner>(com.example.common_ui.R.id.startCapSpinner).apply {
+        startCapSpinner = findViewById<Spinner>(R.id.startCapSpinner).apply {
             adapter = ArrayAdapter(this@PolylineDemoActivity,
                     android.R.layout.simple_spinner_item,
                     getResourceStrings(capTypeNameResourceIds))
         }
 
-        endCapSpinner = findViewById<Spinner>(com.example.common_ui.R.id.endCapSpinner).apply {
+        endCapSpinner = findViewById<Spinner>(R.id.endCapSpinner).apply {
             adapter = ArrayAdapter(this@PolylineDemoActivity,
                     android.R.layout.simple_spinner_item,
                     getResourceStrings(capTypeNameResourceIds))
         }
 
-        jointTypeSpinner = findViewById<Spinner>(com.example.common_ui.R.id.jointTypeSpinner).apply {
+        jointTypeSpinner = findViewById<Spinner>(R.id.jointTypeSpinner).apply {
             adapter = ArrayAdapter(this@PolylineDemoActivity,
                     android.R.layout.simple_spinner_item,
                     getResourceStrings(jointTypeNameResourceIds))
         }
 
-        patternSpinner = findViewById<Spinner>(com.example.common_ui.R.id.patternSpinner).apply {
+        patternSpinner = findViewById<Spinner>(R.id.patternSpinner).apply {
             adapter = ArrayAdapter(
                     this@PolylineDemoActivity, android.R.layout.simple_spinner_item,
                     getResourceStrings(patternTypeNameResourceIds))
         }
 
-        clickabilityCheckbox = findViewById<CheckBox>(com.example.common_ui.R.id.toggleClickability)
+        clickabilityCheckbox = findViewById<CheckBox>(R.id.toggleClickability)
 
-        val mapFragment = supportFragmentManager.findFragmentById(com.example.common_ui.R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
     // [START_EXCLUDE silent]
 
@@ -167,7 +185,7 @@ class PolylineDemoActivity :
     override fun onMapReady(googleMap: GoogleMap) {
         with(googleMap) {
             // Override the default content description on the view, for accessibility mode.
-            setContentDescription(getString(com.example.common_ui.R.string.polyline_demo_description))
+            setContentDescription(getString(R.string.polyline_demo_description))
 
             // A geodesic polyline that goes around the world.
             addPolyline(PolylineOptions().apply {
@@ -220,11 +238,11 @@ class PolylineDemoActivity :
 
     private fun getSelectedCap(pos: Int): Cap? {
         return when (capTypeNameResourceIds[pos]) {
-            com.example.common_ui.R.string.cap_butt -> ButtCap()
-            com.example.common_ui.R.string.cap_square -> SquareCap()
-            com.example.common_ui.R.string.cap_round -> RoundCap()
-            com.example.common_ui.R.string.cap_image -> CustomCap(
-              BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.chevron),
+            R.string.cap_butt -> ButtCap()
+            R.string.cap_square -> SquareCap()
+            R.string.cap_round -> RoundCap()
+            R.string.cap_image -> CustomCap(
+              BitmapDescriptorFactory.fromResource(R.drawable.chevron),
               CUSTOM_CAP_IMAGE_REF_WIDTH_PX.toFloat())
             else -> null
         }
@@ -232,19 +250,19 @@ class PolylineDemoActivity :
 
     private fun getSelectedJointType(pos: Int): Int {
         return when (jointTypeNameResourceIds[pos]) {
-            com.example.common_ui.R.string.joint_type_bevel -> JointType.BEVEL
-            com.example.common_ui.R.string.joint_type_round -> JointType.ROUND
-            com.example.common_ui.R.string.joint_type_default -> JointType.DEFAULT
+            R.string.joint_type_bevel -> JointType.BEVEL
+            R.string.joint_type_round -> JointType.ROUND
+            R.string.joint_type_default -> JointType.DEFAULT
             else -> 0
         }
     }
 
     private fun getSelectedPattern(pos: Int): List<PatternItem>? {
         return when (patternTypeNameResourceIds[pos]) {
-            com.example.common_ui.R.string.pattern_solid -> null
-            com.example.common_ui.R.string.pattern_dotted -> patternDotted
-            com.example.common_ui.R.string.pattern_dashed -> patternDashed
-            com.example.common_ui.R.string.pattern_mixed -> patternMixed
+            R.string.pattern_solid -> null
+            R.string.pattern_dotted -> patternDotted
+            R.string.pattern_dashed -> patternDashed
+            R.string.pattern_mixed -> patternMixed
             else -> null
         }
     }
@@ -281,10 +299,10 @@ class PolylineDemoActivity :
      */
     override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
         when (parent.id) {
-            com.example.common_ui.R.id.startCapSpinner -> mutablePolyline.startCap = getSelectedCap(pos) ?: ButtCap()
-            com.example.common_ui.R.id.endCapSpinner -> mutablePolyline.endCap = getSelectedCap(pos) ?: ButtCap()
-            com.example.common_ui.R.id.jointTypeSpinner -> mutablePolyline.jointType = getSelectedJointType(pos)
-            com.example.common_ui.R.id.patternSpinner -> mutablePolyline.pattern = getSelectedPattern(pos)
+            R.id.startCapSpinner -> mutablePolyline.startCap = getSelectedCap(pos) ?: ButtCap()
+            R.id.endCapSpinner -> mutablePolyline.endCap = getSelectedCap(pos) ?: ButtCap()
+            R.id.jointTypeSpinner -> mutablePolyline.jointType = getSelectedJointType(pos)
+            R.id.patternSpinner -> mutablePolyline.pattern = getSelectedPattern(pos)
         }
     }
 

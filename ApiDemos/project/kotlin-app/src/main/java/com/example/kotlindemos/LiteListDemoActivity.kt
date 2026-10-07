@@ -16,6 +16,12 @@
 
 package com.example.kotlindemos
 
+
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -41,6 +47,18 @@ import com.google.android.gms.maps.model.MarkerOptions
  * Note the use of the view holder pattern with the
  * [com.google.android.gms.maps.OnMapReadyCallback].
  */
+@Sample(
+    id = "com.example.kotlindemos.LiteListDemoActivity",
+    title = "Lite Mode in RecyclerView",
+    description = "High-performance Lite Mode map instances inside smooth scrolling RecyclerView list rows.",
+    category = "Lists & Performance",
+    complexity = Complexity.ADVANCED,
+    tags = ["#litemode", "#recyclerview", "#lists", "#viewholder", "#lifecycle"],
+    purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper lifecycle management.",
+    successCriteria = "List scrolls at 60/120fps without stutter; map snapshots display accurate markers per row.",
+    failureIndicators = "RecyclerView scrolling stutters or recycled MapViews display stale map markers.",
+    framework = Framework.KOTLIN_VIEWS
+)
 class LiteListDemoActivity : SamplesBaseActivity() {
 
     private val linearLayoutManager: LinearLayoutManager by lazy {
@@ -56,32 +74,33 @@ class LiteListDemoActivity : SamplesBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.common_ui.R.layout.lite_list_demo)
+        setContentView(R.layout.lite_list_demo)
 
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(com.example.common_ui.R.id.top_bar)
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.top_bar)
         setSupportActionBar(toolbar)
 
         mapAdapter = MapAdapter()
 
         // Initialise the RecyclerView.
-        recyclerView = findViewById<RecyclerView>(com.example.common_ui.R.id.recycler_view).apply {
+        recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
             adapter = mapAdapter
         }
-        applyInsets(findViewById(com.example.common_ui.R.id.map_container))
+        applyInsets(findViewById(R.id.map_container))
     }
 
     /** Create options menu to switch between the linear and grid layout managers. */
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(com.example.common_ui.R.menu.lite_list_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.lite_list_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         recyclerView.layoutManager = when (item.itemId) {
-            com.example.common_ui.R.id.layout_linear -> linearLayoutManager
-            com.example.common_ui.R.id.layout_grid -> gridLayoutManager
+            R.id.layout_linear -> linearLayoutManager
+            R.id.layout_grid -> gridLayoutManager
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -105,7 +124,7 @@ class LiteListDemoActivity : SamplesBaseActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val inflated = LayoutInflater.from(parent.context)
-                    .inflate(com.example.common_ui.R.layout.lite_list_demo_row, parent, false)
+                    .inflate(R.layout.lite_list_demo_row, parent, false)
             return ViewHolder(inflated)
         }
 
@@ -117,8 +136,8 @@ class LiteListDemoActivity : SamplesBaseActivity() {
                 OnMapReadyCallback {
 
             private val layout: View = view
-            private val mapView: MapView = layout.findViewById(com.example.common_ui.R.id.lite_listrow_map)
-            private val title: TextView = layout.findViewById(com.example.common_ui.R.id.lite_listrow_text)
+            private val mapView: MapView = layout.findViewById(R.id.lite_listrow_map)
+            private val title: TextView = layout.findViewById(R.id.lite_listrow_text)
             private lateinit var map: GoogleMap
             private lateinit var latLng: LatLng
 
