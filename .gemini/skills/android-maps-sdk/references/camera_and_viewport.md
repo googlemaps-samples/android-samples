@@ -13,7 +13,6 @@ A `CameraPosition` is composed of four parameters:
 - **`bearing`**: Direction the camera points, in degrees clockwise from North (0° to 359.9°).
 
 ```kotlin
-// [START maps_android_camera_position]
 val position = CameraPosition.Builder()
     .target(LatLng(37.7749, -122.4194)) // San Francisco
     .zoom(15.5f)
@@ -22,7 +21,6 @@ val position = CameraPosition.Builder()
     .build()
 
 map.animateCamera(CameraUpdateFactory.newCameraPosition(position))
-// [END maps_android_camera_position]
 ```
 
 ---
@@ -32,7 +30,6 @@ map.animateCamera(CameraUpdateFactory.newCameraPosition(position))
 Use `animateCamera` with a `GoogleMap.CancelableCallback` to coordinate multi-step tours, choreograph UI transitions, or detect when user pan gestures interrupt animations:
 
 ```kotlin
-// [START maps_android_camera_animate]
 map.animateCamera(
     CameraUpdateFactory.newLatLngZoom(targetLocation, 16f),
     2000, // Duration in milliseconds
@@ -48,7 +45,6 @@ map.animateCamera(
         }
     }
 )
-// [END maps_android_camera_animate]
 ```
 
 ---
@@ -58,7 +54,6 @@ map.animateCamera(
 To fit a collection of markers or shapes within the current viewport:
 
 ```kotlin
-// [START maps_android_camera_bounds]
 val boundsBuilder = LatLngBounds.Builder()
 for (marker in markerList) {
     boundsBuilder.include(marker.position)
@@ -68,7 +63,6 @@ val paddingPx = 100 // Padding in pixels from map edges
 
 // Ensure the map view has been measured before calling newLatLngBounds
 map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, paddingPx))
-// [END maps_android_camera_bounds]
 ```
 
 > [!NOTE]
@@ -81,7 +75,6 @@ map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, paddingPx))
 Restrict user panning to specific geographical areas (e.g., a specific city, country, or park) and restrict zoom levels:
 
 ```kotlin
-// [START maps_android_camera_clamping]
 // Define bounding box (e.g. Adelaide region)
 val ADELAIDE_BOUNDS = LatLngBounds(
     LatLng(-35.0, 138.4), // Southwest corner
@@ -94,7 +87,6 @@ map.setLatLngBoundsForCameraTarget(ADELAIDE_BOUNDS)
 // Constrain allowable zoom levels
 map.setMinZoomPreference(10.0f)
 map.setMaxZoomPreference(18.0f)
-// [END maps_android_camera_clamping]
 ```
 
 To release clamping constraints:
@@ -110,7 +102,6 @@ map.resetMinMaxZoomPreference()
 To convert between on-screen pixel coordinates (`android.graphics.Point`) and geographic coordinates (`LatLng`), use the map's `Projection`:
 
 ```kotlin
-// [START maps_android_projection]
 val projection = map.projection
 
 // Convert screen touch point to LatLng
@@ -124,5 +115,4 @@ val visibleRegion = projection.visibleRegion
 val bounds = visibleRegion.latLngBounds
 val nearLeft = visibleRegion.nearLeft
 val farRight = visibleRegion.farRight
-// [END maps_android_projection]
 ```

@@ -88,9 +88,6 @@ This skill is directly grounded in:
   - Set `setOnClusterClickListener` to smoothly zoom into cluster bounds.
 - **Deterministic Headless Testing**: To test `ClusterManager` in Robolectric without background worker race conditions, inject a synchronous `Executor` (`Executor { it.run() }`) into `DefaultClusterRenderer`.
 
-### 8. Single-Source-of-Truth Region Tags
-When quoting documentation snippets, only reference code surrounded with official region tags (`// [START <tag>]` ... `// [END <tag>]`) to ensure consistency with Google Maps Platform developer documentation.
-
 ---
 
 ## Alignment with Official Android Skills

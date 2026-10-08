@@ -8,7 +8,6 @@ This guide provides recipes for rendering points of interest, designing custom p
 
 ### Adding Basic & Customized Markers
 ```kotlin
-// [START maps_android_markers_add]
 val sydney = LatLng(-34.0, 151.0)
 val marker = map.addMarker(
     MarkerOptions()
@@ -21,14 +20,12 @@ val marker = map.addMarker(
         .alpha(0.9f)
         .zIndex(1.0f)
 )
-// [END maps_android_markers_add]
 ```
 
 ### Loading Custom Vector & Bitmap Icons
 Always render vector drawables to bitmaps before passing to `BitmapDescriptorFactory`:
 
 ```kotlin
-// [START maps_android_markers_icon_vector]
 fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
     val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)!!
     vectorDrawable.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
@@ -49,7 +46,6 @@ map.addMarker(
         .icon(bitmapDescriptorFromVector(context, R.drawable.ic_custom_pin))
         .anchor(0.5f, 1.0f) // Anchor bottom-center of icon to coordinate
 )
-// [END maps_android_markers_icon_vector]
 ```
 
 ---
@@ -61,7 +57,6 @@ Google Maps provides two levels of customization via `GoogleMap.InfoWindowAdapte
 - **`getInfoContents(marker)`**: Replaces only the inside contents, preserving the default bubble frame.
 
 ```kotlin
-// [START maps_android_markers_custom_infowindow]
 class CustomInfoWindowAdapter(private val context: Context) : GoogleMap.InfoWindowAdapter {
 
     private val contentsView: View = LayoutInflater.from(context)
@@ -88,7 +83,6 @@ map.setOnInfoWindowClickListener { marker ->
     // Handle tap on info window popup
     navigateToPlaceDetails(marker.tag as? String)
 }
-// [END maps_android_markers_custom_infowindow]
 ```
 
 ---
@@ -99,7 +93,6 @@ When displaying hundreds or thousands of markers, individual marker creation deg
 
 ### Step 1: Define Cluster Item with Value Equality
 ```kotlin
-// [START maps_android_utils_clustering_item]
 data class MyItem(
     private val position: LatLng,
     private val title: String,
@@ -125,12 +118,10 @@ data class MyItem(
         return result
     }
 }
-// [END maps_android_utils_clustering_item]
 ```
 
 ### Step 2: Initialize & Wire Cluster Manager
 ```kotlin
-// [START maps_android_utils_clustering_add]
 val clusterManager = ClusterManager<MyItem>(context, map)
 
 // Route map camera & click listeners through ClusterManager
@@ -147,7 +138,6 @@ clusterManager.addItems(items)
 
 // Trigger clustering calculation
 clusterManager.cluster()
-// [END maps_android_utils_clustering_add]
 ```
 
 ### Step 3: Custom Cluster Rendering (`DefaultClusterRenderer`)

@@ -21,7 +21,6 @@ buildscript {
 ### Step 2: App Module Setup
 In the app-level `build.gradle.kts`:
 ```kotlin
-// [START maps_android_secrets_gradle_plugin_config]
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.secrets.gradle.plugin)
@@ -37,7 +36,6 @@ secrets {
     // 3. Configure key keys to ignore or include
     ignoreList.add("keyToIgnore")
 }
-// [END maps_android_secrets_gradle_plugin_config]
 ```
 
 ### Step 3: Git Ignore Configuration

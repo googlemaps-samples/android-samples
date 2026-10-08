@@ -20,7 +20,6 @@ This guide covers map instantiation, lifecycle synchronization, and memory safet
 In modern Kotlin Android apps, avoid nesting asynchronous callbacks inside `onCreate`. Use the suspending `awaitMap()` extension function provided by `android-maps-utils` (`com.google.maps.android.awaitMap`):
 
 ```kotlin
-// [START maps_android_mapfragment_await]
 class BasicMapDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +43,6 @@ class BasicMapDemoActivity : AppCompatActivity() {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10f))
     }
 }
-// [END maps_android_mapfragment_await]
 ```
 
 ---
@@ -54,7 +52,6 @@ class BasicMapDemoActivity : AppCompatActivity() {
 When using `MapView` directly in an XML layout or programmatically, you **must** forward all lifecycle events. Failure to do so causes black viewports, unrendered tiles, or memory leaks:
 
 ```kotlin
-// [START maps_android_mapview_lifecycle]
 class RawMapViewDemoActivity : AppCompatActivity() {
 
     private lateinit var mapView: MapView
@@ -109,7 +106,6 @@ class RawMapViewDemoActivity : AppCompatActivity() {
         mapView.onSaveInstanceState(outState)
     }
 }
-// [END maps_android_mapview_lifecycle]
 ```
 
 ### Clean Architecture: `MapViewLifecycleObserver`
@@ -139,7 +135,6 @@ lifecycle.addObserver(MapViewLifecycleObserver(mapView))
 When adding a `SupportMapFragment` dynamically with custom `GoogleMapOptions`:
 
 ```kotlin
-// [START maps_android_map_options]
 val options = GoogleMapOptions()
     .mapType(GoogleMap.MAP_TYPE_NORMAL)
     .compassEnabled(true)
@@ -151,7 +146,6 @@ val mapFragment = SupportMapFragment.newInstance(options)
 supportFragmentManager.beginTransaction()
     .replace(R.id.map_container, mapFragment)
     .commit()
-// [END maps_android_map_options]
 ```
 
 > [!WARNING]
@@ -164,7 +158,6 @@ supportFragmentManager.beginTransaction()
 Lite Mode displays an image representation of the map at specified coordinates. It eliminates the overhead of OpenGL rendering and camera threads:
 
 ```kotlin
-// [START maps_android_mapview_litemode]
 val options = GoogleMapOptions().liteMode(true)
 val liteMapView = MapView(context, options)
 liteMapView.onCreate(null)
@@ -172,5 +165,4 @@ liteMapView.getMapAsync { map ->
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
     map.addMarker(MarkerOptions().position(location))
 }
-// [END maps_android_mapview_litemode]
 ```

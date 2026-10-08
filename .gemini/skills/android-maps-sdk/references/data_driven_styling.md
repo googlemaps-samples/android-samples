@@ -34,7 +34,6 @@ val mapFragment = SupportMapFragment.newInstance(options)
 Retrieve the `FeatureLayer` for the desired geographic boundary type:
 
 ```kotlin
-// [START maps_android_boundaries_get_layer]
 val areaLevel1Layer: FeatureLayer? = map.getFeatureLayer(
     FeatureType.ADMINISTRATIVE_AREA_LEVEL_1 // States / Provinces
 )
@@ -45,7 +44,6 @@ if (areaLevel1Layer?.isAvailable == true) {
 } else {
     Log.w("MapStyling", "FeatureLayer is not available on this Map ID")
 }
-// [END maps_android_boundaries_get_layer]
 ```
 
 Available `FeatureType` constants:
@@ -63,7 +61,6 @@ Available `FeatureType` constants:
 Apply custom fill, stroke, and opacity based on feature place IDs or application state:
 
 ```kotlin
-// [START maps_android_boundaries_style]
 // Define target place ID (e.g. State of Washington)
 val WASHINGTON_PLACE_ID = "ChIJ-bDD5__lhVQRuvNfbGhRlAw"
 var selectedPlaceId: String? = null
@@ -94,7 +91,6 @@ areaLevel1Layer.setFeatureStyle { feature ->
         null
     }
 }
-// [END maps_android_boundaries_style]
 ```
 
 ---
@@ -104,7 +100,6 @@ areaLevel1Layer.setFeatureStyle { feature ->
 Detect when a user taps within an administrative boundary:
 
 ```kotlin
-// [START maps_android_boundaries_click]
 areaLevel1Layer.addOnFeatureClickListener { event ->
     val features = event.features
     val clickedFeature = features.firstOrNull() as? PlaceFeature
@@ -116,7 +111,6 @@ areaLevel1Layer.addOnFeatureClickListener { event ->
         Toast.makeText(context, "Selected: ${clickedFeature.placeId}", Toast.LENGTH_SHORT).show()
     }
 }
-// [END maps_android_boundaries_click]
 ```
 
 To clear boundary styles:
