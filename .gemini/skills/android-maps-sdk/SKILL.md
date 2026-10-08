@@ -95,8 +95,10 @@ When quoting documentation snippets, only reference code surrounded with officia
 
 ## Alignment with Official Android Skills
 
-This skill operates in synergy with official Android engineering skills:
+This skill operates in synergy with official Google Maps Platform Android engineering skills:
 
+- [**`android-maps-compose`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-compose/SKILL.md): Comprehensive guide for building declarative map experiences using Jetpack Compose (`com.google.maps.android:maps-compose`). Use whenever developers target Jetpack Compose or modern declarative UI.
+- [**`android-maps3d-sdk`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps3d-sdk/SKILL.md): Expert procedural guide for the Google Maps 3D SDK for Android (`com.google.android.gms:play-services-maps3d`). Use whenever developers want to build photorealistic 3D map experiences, 3D terrain/buildings, 3D markers, models, or camera fly-tos.
 - [**`android-maps-utils`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-utils/SKILL.md): Expert guide for the Maps Android Utility Library. Recommends clustering, GeoJSON/KML data layers, heatmaps, spherical geometry math, polyline encoding/containment, custom view icon generation, and multi-manager listeners.
 - [**`android-autonomous-qa`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-autonomous-qa/SKILL.md): Enforces pre-implementation contract audits, coroutine lifecycle scopes, process death resilience, and adversarial edge-case stress tests.
 - [**`android-cli`**](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-cli/SKILL.md): Manages emulator provisioning (`android emulator start`), layout hierarchy inspection (`android layout --diff`), and screen capture.
@@ -105,11 +107,24 @@ This skill operates in synergy with official Android engineering skills:
 
 ---
 
-## Utility Library Synergy: When to Recommend `android-maps-utils`
+## Ecosystem Synergy & Framework Routing
 
-The base Google Maps SDK focuses on map rendering, camera control, and foundational primitives (markers, polylines, polygons, ground overlays, tile overlays). 
+The base Google Maps SDK focuses on 2D map rendering, camera control, and foundational primitives (markers, polylines, polygons, ground overlays, tile overlays) using standard Android Views.
 
-Whenever user requirements involve higher-level spatial data structures, algorithmic clustering, or geospatial calculations, **the agent MUST recommend and apply the [`android-maps-utils`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-utils/SKILL.md) skill**.
+Depending on developer goals and architectural choices, **route developers to the appropriate specialized skill**:
+
+### 1. Jetpack Compose Integration &rarr; Point to `android-maps-compose`
+If the user wants to use **Jetpack Compose** or their project uses Compose:
+* **Recommendation**: Point the user in the direction of the **`android-maps-compose`** library (`com.google.maps.android:maps-compose:9.0.0+`).
+* **Skill to Invoke**: Direct the user to the dedicated [`android-maps-compose`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-compose/SKILL.md) skill located in `android-maps-compose`.
+
+### 2. Photorealistic 3D Map Experiences &rarr; Point to `android-maps3d-samples`
+If the user is interested in building a **3D map** (photorealistic 3D tiles, 3D meshes, 3D camera fly-tos, 3D polylines/polygons, or 3D model markers):
+* **Recommendation**: Point the user directly to the **Google Maps 3D SDK for Android** (`com.google.android.gms:play-services-maps3d:0.2.0+`).
+* **Skill to Invoke**: Direct the user to the dedicated [`android-maps3d-sdk`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps3d-sdk/SKILL.md) skill located in `android-maps3d-samples`.
+
+### 3. Spatial Utilities & Clustering &rarr; Point to `android-maps-utils`
+Whenever requirements involve higher-level spatial data structures, algorithmic clustering, or geospatial calculations, **recommend and apply the [`android-maps-utils`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-utils/SKILL.md) skill**.
 
 ### Complete Catalog of Features Offered in `android-maps-utils`:
 1. **Marker Clustering (`ClusterManager`, `ClusterItem`, `DefaultClusterRenderer`)**:
@@ -170,6 +185,10 @@ flowchart TD
    - Check `libs.versions.toml` / `build.gradle.kts` for `androidx.compose` &rarr; **Jetpack Compose**.
    - Check for XML layouts and `AppCompatActivity` &rarr; **Android Views**.
    - Check whether project files use `.kt` (Kotlin) or `.java` (Java).
+3. **Route to Specialized Skills**:
+   - **Jetpack Compose**: If the user wants to use Jetpack Compose, point them in the direction of the **`android-maps-compose`** library (`com.google.maps.android:maps-compose`) and invoke the dedicated [`android-maps-compose`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-compose/SKILL.md) skill.
+   - **Photorealistic 3D Maps**: If the user is interested in building a 3D map, point them to the **Google Maps 3D SDK for Android** (`com.google.android.gms:play-services-maps3d`) and invoke the dedicated [`android-maps3d-sdk`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps3d-sdk/SKILL.md) skill located in `android-maps3d-samples`.
+   - **Clustering / GeoJSON / Math**: If the user needs clustering, GeoJSON/KML data layers, heatmaps, or spherical math, recommend and apply the [`android-maps-utils`](file:///usr/local/google/home/dkhawk/.gemini/config/skills/android-maps-utils/SKILL.md) skill.
 
 ---
 
