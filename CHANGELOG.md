@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.3.0](https://github.com/googlemaps-samples/android-samples/compare/v2.2.0...v2.3.0) (2026-10-08)
+
+
+### Features
+
+* extract on-device review app and tools to :ApiDemos:reviewer module ([#2428](https://github.com/googlemaps-samples/android-samples/issues/2428)) ([1c91025](https://github.com/googlemaps-samples/android-samples/commit/1c91025d64a2a5a18f284c024943803c81026d0d))
+* modernize Java snippets module with capabilities test suite ([#2426](https://github.com/googlemaps-samples/android-samples/issues/2426)) ([e11f53d](https://github.com/googlemaps-samples/android-samples/commit/e11f53d9f9e0b870db95bc93070782723b93bbf1))
+* modernize Kotlin snippets module with capabilities and visual test suites ([#2427](https://github.com/googlemaps-samples/android-samples/issues/2427)) ([ddae109](https://github.com/googlemaps-samples/android-samples/commit/ddae1098d0c6284b553520b1e96a66c2b37663b3))
+
+
+### Bug Fixes
+
+* crash on rotation in Kotlin BackgroundColorCustomizationProgrammaticDemoActivity ([f7f9020](https://github.com/googlemaps-samples/android-samples/commit/f7f90201a662373a9bb82dbe0ffc383d52004426))
+* crash on rotation in Kotlin LayersDemoActivity ([f7f9020](https://github.com/googlemaps-samples/android-samples/commit/f7f90201a662373a9bb82dbe0ffc383d52004426))
+
 ## [2.2.0](https://github.com/googlemaps-samples/android-samples/compare/v2.1.0...v2.2.0) (2026-10-07)
 
 
