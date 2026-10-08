@@ -56,6 +56,17 @@ demonstrate the same features and must stay in sync.
   python3 scripts/update_docs_versions.py --check # verify doc snippet versions match version catalog
   ```
 
+- **ApiDemos smoke test** (emulator, needs a real API key): opens every demo activity and checks
+  that its map loads and that it survives a zoom and a configuration change. New demos are picked
+  up from the manifest automatically.
+  ```bash
+  ./gradlew :ApiDemos:kotlin-app:connectedDebugAndroidTest \
+    -Pandroid.testInstrumentationRunnerArguments.package=com.example.kotlindemos.smoke \
+    -Pandroid.testInstrumentationRunnerArguments.requireMapLoaded=true
+  ```
+  For the Java app use `:ApiDemos:java-app` and `com.example.mapdemo.smoke`. Demos that need a
+  map ID are skipped unless `MAP_ID` is set.
+
 Snippet modules do not contain unit tests; they are verified through successful compilation (`assembleDebug`), Android lint (`lintDebug`), and doc version synchronization.
 
 Running the apps requires a Maps API key: copy the keys named in

@@ -34,6 +34,8 @@ android {
         versionCode = 1
         versionName = libs.versions.versionName.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Start every instrumented test from a clean app state.
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
         multiDexEnabled = true
     }
 
@@ -52,6 +54,11 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    testOptions {
+        // Each test runs in its own process, so a crashing demo does not abort the rest of the run.
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
 
     lint {
@@ -103,6 +110,8 @@ dependencies {
     androidTestImplementation(libs.truth)
     androidTestImplementation(project(":visual-testing"))
     androidTestImplementation(libs.uiautomator)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestUtil(libs.androidx.test.orchestrator)
 
     implementation(project(":ApiDemos:common-ui"))
     implementation(project(":ApiDemos:reviewer"))

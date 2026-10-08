@@ -269,7 +269,7 @@ class CircleDemoActivity : SamplesBaseActivity(),
 
     private fun getSelectedPattern(pos: Int): List<PatternItem>? = patterns[pos].second
 
-    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
         if (parent.id == R.id.strokePatternSpinner) {
             circles.map { it.setStrokePattern(getSelectedPattern(pos)) }
         }

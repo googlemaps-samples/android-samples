@@ -12,17 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Runs the instrumented (androidTest) suites on an emulator.
+# Opens every ApiDemos demo on an emulator and checks that it starts, its map or panorama loads,
+# and it survives a zoom and a configuration change. The tests live in the `smoke` package of each
+# app's androidTest sources and are excluded from the instrumentation workflow.
 #
-# build.yml already covers assembleDebug, testDebugUnitTest and lintDebug, so
-# JVM unit tests are not duplicated here. The androidTest sources under
-# ApiDemos were never executed by any workflow before this one.
-#
-# These tests drive a real map and therefore need a Maps API key. The key is
-# read from the ACTIONS_API_KEY secret; when it is absent the emulator job is
-# skipped rather than failed, so the workflow is a no-op until the secret is
-# provisioned for this repository.
-name: Run instrumentation tests
+# Like the instrumentation workflow, this needs the ACTIONS_API_KEY secret and is skipped
+# without it.
+name: Demo smoke test
 
 on:
   pull_request:
@@ -49,10 +45,10 @@ jobs:
             echo "has-key=true" >> "$GITHUB_OUTPUT"
           else
             echo "has-key=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::ACTIONS_API_KEY is not set; skipping instrumentation tests."
+            echo "::notice::ACTIONS_API_KEY is not set; skipping the demo smoke test."
           fi
 
-  instrumentation-test:
+  demo-smoke-test:
     needs: check-api-key
     if: needs.check-api-key.outputs.has-key == 'true'
     runs-on: ubuntu-latest
@@ -62,8 +58,10 @@ jobs:
       matrix:
         include:
           - module: ':ApiDemos:java-app'
+            path: ApiDemos/project/java-app
             smoke-package: com.example.mapdemo.smoke
           - module: ':ApiDemos:kotlin-app'
+            path: ApiDemos/project/kotlin-app
             smoke-package: com.example.kotlindemos.smoke
 
     steps:
@@ -79,10 +77,8 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6.3.0
 
-      # Hardware acceleration for the emulator. Without KVM the run is slow
-      # enough that the map never settles inside the IdlingResource timeouts.
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
@@ -95,22 +91,30 @@ jobs:
           MAPS_API_KEY: ${{ secrets.ACTIONS_API_KEY }}
         run: echo "MAPS_API_KEY=$MAPS_API_KEY" >> ./secrets.properties
 
-      - name: Run instrumentation tests
+      - name: Build demo and test APKs
+        run: ./gradlew ${{ matrix.module }}:assembleDebug ${{ matrix.module }}:assembleDebugAndroidTest --stacktrace
+
+      - name: Run demo smoke test
         uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2.38.0
         with:
-          api-level: 29
+          # Emulators never update Google Play services, so the image's bundled version is what
+          # the maps run on. Older images bundle a version where adding advanced markers crashes
+          # inside Play services. API 36 images bundle 25.26, which works.
+          api-level: 36
           target: google_apis
-          arch: x86
+          arch: x86_64
           disable-animations: true
-          # The demo smoke tests run in their own workflow on a newer emulator image.
           script: >-
             ./gradlew ${{ matrix.module }}:connectedDebugAndroidTest --stacktrace
-            -Pandroid.testInstrumentationRunnerArguments.notPackage=${{ matrix.smoke-package }}
+            -Pandroid.testInstrumentationRunnerArguments.package=${{ matrix.smoke-package }}
+            -Pandroid.testInstrumentationRunnerArguments.requireMapLoaded=true
 
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: instrumentation-reports-${{ strategy.job-index }}
-          path: ApiDemos/project/*/build/reports
+          name: demo-smoke-test-reports-${{ strategy.job-index }}
+          path: |
+            ${{ matrix.path }}/build/reports/androidTests
+            ${{ matrix.path }}/build/outputs/androidTest-results
           if-no-files-found: warn
