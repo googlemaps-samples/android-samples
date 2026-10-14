@@ -73,6 +73,9 @@ volley = "1.2.1"
 ktor = "3.6.0"
 kotlinxSerialization = "1.11.0"
 
+# Code formatting
+spotless = "8.9.0"
+
 [libraries]
 # Kotlin
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
@@ -169,3 +172,4 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

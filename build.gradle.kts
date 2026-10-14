@@ -22,4 +22,35 @@ plugins {
     alias(libs.plugins.secrets.gradle.plugin) apply false
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.spotless)
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        targetExclude("**/build/**")
+        ktlint().editorConfigOverride(
+            mapOf(
+                "indent_size" to "4",
+                "ktlint_function_naming_ignore_when_annotated_with" to "Composable",
+                "max_line_length" to "120",
+                // Naming rules are disabled because fixing them requires renaming packages,
+                // files or properties that developers copy from these samples.
+                "ktlint_standard_package-name" to "disabled",
+                "ktlint_standard_property-naming" to "disabled",
+                "ktlint_standard_backing-property-naming" to "disabled",
+                "ktlint_standard_filename" to "disabled",
+                // annotation-spacing would move region tags placed between an annotation and its
+                // declaration to above the annotation, changing the published snippet.
+                "ktlint_standard_annotation-spacing" to "disabled",
+            ),
+        )
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    java {
+        target("**/*.java")
+        targetExclude("**/build/**")
+        googleJavaFormat().aosp()
+    }
 }
