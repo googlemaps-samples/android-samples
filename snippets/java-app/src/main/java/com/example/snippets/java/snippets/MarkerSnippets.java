@@ -52,21 +52,7 @@ public class MarkerSnippets {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         LatLng sydney = new LatLng(-33.852, 151.211);
-        Marker marker =
-                map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        // [START_EXCLUDE silent]
-        if (marker != null) {
-            LatLng position = marker.getPosition();
-            String title = marker.getTitle();
-            String snippet = marker.getSnippet();
-            boolean isDraggable = marker.isDraggable();
-            boolean isFlat = marker.isFlat();
-            boolean isVisible = marker.isVisible();
-            float alpha = marker.getAlpha();
-            float rotation = marker.getRotation();
-            float zIndex = marker.getZIndex();
-        }
-        // [END_EXCLUDE]
+        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         // [END maps_android_markers_add_a_marker]
     }
@@ -79,9 +65,8 @@ public class MarkerSnippets {
         // [START maps_android_markers_draggable]
         final LatLng perthLocation = new LatLng(-31.90, 115.86);
         Marker perth = map.addMarker(new MarkerOptions().position(perthLocation).draggable(true));
-        map.moveCamera(
-                com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(perthLocation, 10f));
         // [END maps_android_markers_draggable]
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(perthLocation, 10f));
     }
 
     @SnippetItem(

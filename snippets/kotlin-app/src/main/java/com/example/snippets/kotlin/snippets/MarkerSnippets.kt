@@ -47,22 +47,11 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         val sydney = LatLng(-33.852, 151.211)
-        val marker = map.addMarker(
+        map.addMarker(
             MarkerOptions()
                 .position(sydney)
                 .title("Marker in Sydney"),
         )
-        marker?.let {
-            val position = it.position
-            val title = it.title
-            val snippet = it.snippet
-            val isDraggable = it.isDraggable
-            val isFlat = it.isFlat
-            val isVisible = it.isVisible
-            val alpha = it.alpha
-            val rotation = it.rotation
-            val zIndex = it.zIndex
-        }
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         // [END maps_android_markers_add_a_marker]
     }
@@ -80,8 +69,8 @@ class MarkerSnippets(private val context: Context, private val map: TrackedMap) 
                 .position(perthLocation)
                 .draggable(true),
         )
-        map.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(perthLocation, 10f))
         // [END maps_android_markers_draggable]
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(perthLocation, 10f))
     }
 
     @SnippetItem(

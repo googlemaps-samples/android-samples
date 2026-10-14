@@ -63,15 +63,6 @@ class ShapesSnippets(private val map: TrackedMap) {
 
         // Get back the mutable Polyline
         val polyline = map.addPolyline(polylineOptions)
-        polyline?.let {
-            val isClickable = it.isClickable
-            val isGeodesic = it.isGeodesic
-            val isVisible = it.isVisible
-            val color = it.color
-            val width = it.width
-            val zIndex = it.zIndex
-            val points = it.points
-        }
         // [END maps_android_shapes_polylines_polylineoptions]
     }
 
@@ -156,17 +147,6 @@ class ShapesSnippets(private val map: TrackedMap) {
                 .addHole(hole)
                 .fillColor(Color.BLUE),
         )
-        hollowPolygon?.let {
-            val isClickable = it.isClickable
-            val isGeodesic = it.isGeodesic
-            val isVisible = it.isVisible
-            val fillColor = it.fillColor
-            val strokeColor = it.strokeColor
-            val strokeWidth = it.strokeWidth
-            val zIndex = it.zIndex
-            val points = it.points
-            val holes = it.holes
-        }
         // [END maps_android_shapes_polygons_hollow]
     }
 
@@ -185,15 +165,6 @@ class ShapesSnippets(private val map: TrackedMap) {
 
         // Get back the mutable Circle
         val circle = map.addCircle(circleOptions)
-        circle?.let {
-            val isClickable = it.isClickable
-            val isVisible = it.isVisible
-            val center = it.center
-            val radius = it.radius
-            val fillColor = it.fillColor
-            val strokeWidth = it.strokeWidth
-            val zIndex = it.zIndex
-        }
         // [END maps_android_shapes_circles_circleoptions]
     }
 

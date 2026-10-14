@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import subprocess
 import glob
@@ -8,6 +9,13 @@ import json
 # Setup directories relative to the script location
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SNIPPETS_DIR = os.path.dirname(SCRIPT_DIR)
+
+
+def extract_annotation_attr(text, attr_name):
+    match = re.search(rf'{attr_name}\s*=\s*((?:"[^"]*"\s*\+?\s*)+)', text, re.DOTALL)
+    if not match:
+        return ""
+    return "".join(re.findall(r'"([^"]*)"', match.group(1)))
 
 def extract_region_tags(snippets_dir):
     region_tags = defaultdict(list)
@@ -44,7 +52,7 @@ def extract_region_tags(snippets_dir):
 def parse_javap_output(snippets_dir):
     class_files = []
     for module in ['java-app', 'kotlin-app']:
-        for ext in ['kotlin-classes', 'compileDebugJavaWithJavac', 'javac']:
+        for ext in ['kotlin-classes', 'built_in_kotlinc', 'compileDebugJavaWithJavac', 'javac']:
             path = os.path.join(snippets_dir, module, f"build/**/{ext}/**/*.class")
             class_files.extend(glob.glob(path, recursive=True))
 
@@ -139,13 +147,10 @@ def parse_snippet_groups(snippets_dir, file_map, region_tags):
                 if not group_match: continue
 
                 group_content = group_match.group(1)
-                group_title_match = re.search(r'title\s*=\s*"([^"]+)"', group_content)
-                group_desc_match = re.search(r'description\s*=\s*"([^"]+)"', group_content)
+                group_title = extract_annotation_attr(group_content, "title")
+                group_desc = extract_annotation_attr(group_content, "description")
 
-                if not group_title_match: continue
-
-                group_title = group_title_match.group(1)
-                group_desc = group_desc_match.group(1) if group_desc_match else ""
+                if not group_title: continue
 
                 if not groups[group_title]['description']:
                      groups[group_title]['description'] = group_desc
@@ -153,46 +158,44 @@ def parse_snippet_groups(snippets_dir, file_map, region_tags):
                 is_kotlin = name.endswith('.kt')
                 # Find Items
                 lines = content.split('\n')
-                for i, line in enumerate(lines):
-                    if '@SnippetItem' in line:
-                        # Grab context (usually next few lines have the full annotation)
-                        context = "\n".join(lines[i:i+12])
-                        item_title_match = re.search(r'title\s*=\s*"([^"]+)"', context)
-                        item_desc_match = re.search(r'description\s*=\s*"([^"]+)"', context)
+                snippet_item_lines = [idx for idx, l in enumerate(lines) if '@SnippetItem' in l]
+                for idx_pos, i in enumerate(snippet_item_lines):
+                    next_item_line = (snippet_item_lines[idx_pos + 1] + 1) if (idx_pos + 1 < len(snippet_item_lines)) else (len(lines) + 1)
+                    # Grab context (the @SnippetItem annotation block before the next @SnippetItem)
+                    context = "\n".join(lines[i:min(i + 20, next_item_line - 1)])
+                    item_title = extract_annotation_attr(context, "title")
+                    item_desc = extract_annotation_attr(context, "description")
 
-                        if item_title_match:
-                                item_title = item_title_match.group(1)
-                                item_desc = item_desc_match.group(1) if item_desc_match else ""
-                                
-                                # Find active region tag mapping
-                                active_tag = "No Tag"
-                                start_line = i + 1
-                                end_line = i + 1
-                                
-                                # Look up in region_tags
-                                if filepath in region_tags:
-                                    for region in region_tags[filepath]:
-                                        if region['start'] <= (i + 15) and region['end'] >= i:
-                                            active_tag = region['tag']
-                                            start_line = region['start']
-                                            end_line = region['end']
-                                            break
+                    if item_title:
+                            # Find active region tag mapping (first region starting before the next @SnippetItem)
+                            active_tag = "No Tag"
+                            start_line = i + 1
+                            end_line = i + 1
+                            
+                            # Look up in region_tags
+                            if filepath in region_tags:
+                                for region in region_tags[filepath]:
+                                    if region['start'] < next_item_line and region['end'] >= (i + 1):
+                                        active_tag = region['tag']
+                                        start_line = region['start']
+                                        end_line = region['end']
+                                        break
                                           
-                                rel_path = file_map.get(name, os.path.relpath(filepath, snippets_dir))
-                                basename = name
-                                if active_tag != "No Tag":
-                                     link = f"[{basename}]({rel_path}#L{start_line}-L{end_line})"
-                                else:
-                                     link = f"[{basename}:{i+1}]({rel_path}#L{i+1})"
+                            rel_path = file_map.get(name, os.path.relpath(filepath, snippets_dir))
+                            basename = name
+                            if active_tag != "No Tag":
+                                 link = f"[{basename}]({rel_path}#L{start_line}-L{end_line})"
+                            else:
+                                 link = f"[{basename}:{i+1}]({rel_path}#L{i+1})"
 
-                                current_item = groups[group_title]['items'][item_title]
-                                if not current_item['description']:
-                                    current_item['description'] = item_desc
-                                
-                                if is_kotlin:
-                                    current_item['kotlin'] = {'link': link, 'tag': active_tag}
-                                else:
-                                    current_item['java'] = {'link': link, 'tag': active_tag}
+                            current_item = groups[group_title]['items'][item_title]
+                            if not current_item['description']:
+                                current_item['description'] = item_desc
+                            
+                            if is_kotlin:
+                                current_item['kotlin'] = {'link': link, 'tag': active_tag}
+                            else:
+                                current_item['java'] = {'link': link, 'tag': active_tag}
 
     return groups
 
@@ -239,6 +242,8 @@ def format_catalog_section(section_title, api_surface, usages, file_map, region_
     missing_apis = []
     
     for class_name, methods in sorted(api_surface.items()):
+        if class_name == "GoogleMapKt" and language_ext == ".java":
+            continue
         lines.append(f"### `{class_name}`\n")
         methods = sorted(list(set(methods)))
         
@@ -254,7 +259,7 @@ def format_catalog_section(section_title, api_surface, usages, file_map, region_
                     filtered_uses.append(u)
                     
             if not filtered_uses:
-                if not (method.startswith("get") or method.startswith("set")):
+                if not (method.startswith("get") or method.startswith("set") or method.startswith("is")):
                     missing_apis.append(key)
                 lines.append(f"- `{method}`: ❌ No coverage\n")
             else:
@@ -312,11 +317,17 @@ def format_catalog_section(section_title, api_surface, usages, file_map, region_
 def main():
     print(f"Cataloging Maps SDK (2D) API snippets...\nSCRIPT_DIR: {SCRIPT_DIR}\nSNIPPETS_DIR: {SNIPPETS_DIR}")
     
-    print("Compiling Snippets to ensure fresh bytecode...")
-    ROOT_DIR = os.path.dirname(SNIPPETS_DIR)
-    res = subprocess.run(["./gradlew", ":snippets:java-app:assembleDebug", ":snippets:kotlin-app:assembleDebug", "-Dorg.gradle.java.home=/usr/lib/jvm/java-21-openjdk-amd64"], cwd=ROOT_DIR, capture_output=True, text=True)
-    if res.returncode != 0:
-         print(f"Warning: Build failed. javap results may be incomplete. {res.stderr}")
+    if "--skip-build" not in sys.argv:
+        print("Compiling Snippets to ensure fresh bytecode...")
+        ROOT_DIR = os.path.dirname(SNIPPETS_DIR)
+        gradle_cmd = ["./gradlew", ":snippets:java-app:assembleDebug", ":snippets:kotlin-app:assembleDebug"]
+        if os.path.exists("/usr/lib/jvm/java-21-openjdk-amd64"):
+            gradle_cmd.append("-Dorg.gradle.java.home=/usr/lib/jvm/java-21-openjdk-amd64")
+        elif os.path.exists("/usr/lib/jvm/java-25-openjdk-amd64"):
+            gradle_cmd.append("-Dorg.gradle.java.home=/usr/lib/jvm/java-25-openjdk-amd64")
+        res = subprocess.run(gradle_cmd, cwd=ROOT_DIR, capture_output=True, text=True)
+        if res.returncode != 0:
+             print(f"Warning: Build failed. javap results may be incomplete. {res.stderr}")
 
     manifest_path = os.path.join(SCRIPT_DIR, "api_manifest.json")
     if not os.path.exists(manifest_path):

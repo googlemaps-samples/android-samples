@@ -68,6 +68,7 @@ class UtilsSnippets(private val context: Context, private val trackedMap: Tracke
     private val map: GoogleMap = trackedMap.delegate
     private var clusterManager: ClusterManager<MyItem>? = null
     private var geoJsonLayer: GeoJsonLayer? = null
+    private var kmlLayer: KmlLayer? = null
     private var heatmapTileOverlay: TileOverlay? = null
 
     // [START maps_android_utils_clustering_cluster_item]
@@ -378,12 +379,26 @@ class UtilsSnippets(private val context: Context, private val trackedMap: Tracke
         val layer = KmlLayer(map, R.raw.kml_file, context)
         // [END maps_android_utils_kml_add_file]
         layer.addLayerToMap()
-        map.moveCamera(
-            com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(
-                com.google.android.gms.maps.model.LatLng(37.422, -122.084),
-                16f,
-            ),
-        )
+        kmlLayer = layer
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.422, -122.084), 16f))
+    }
+
+    @SnippetItem(
+        title = "7b. Remove KML Layer",
+        description = "What it does: Removes the imported KML layer from the active GoogleMap instance.\n" +
+            "How to see the effect: All vector polylines, polygons, and placemarks associated with the KML dataset " +
+            "disappear.",
+    )
+    fun removeKmlLayer() {
+        if (kmlLayer == null) {
+            addKmlLayerFile()
+        }
+        kmlLayer?.let { layer ->
+            // [START maps_android_utils_kml_remove_layer]
+            layer.removeLayerFromMap()
+            // [END maps_android_utils_kml_remove_layer]
+            kmlLayer = null
+        }
     }
 
     @SnippetItem(
@@ -401,12 +416,7 @@ class UtilsSnippets(private val context: Context, private val trackedMap: Tracke
         // [START maps_android_utils_kml_add_layer]
         layer.addLayerToMap()
         // [END maps_android_utils_kml_add_layer]
-        map.moveCamera(
-            com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(
-                com.google.android.gms.maps.model.LatLng(37.422, -122.084),
-                16f,
-            ),
-        )
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(37.422, -122.084), 16f))
 
         // [START maps_android_utils_kml_access_containers]
         for (container in layer.getContainers()) {
@@ -445,12 +455,6 @@ class UtilsSnippets(private val context: Context, private val trackedMap: Tracke
         }
     } // [END maps_android_utils_kml_access_containers_nested]
 
-    fun removeKmlLayer(layer: KmlLayer) {
-        // [START maps_android_utils_kml_remove_layer]
-        layer.removeLayerFromMap()
-        // [END maps_android_utils_kml_remove_layer]
-    }
-
     @SnippetItem(
         title = "9. Simple Heatmap",
         description = "What it does: Generates a HeatmapTileProvider visualization from police station coordinate " +
@@ -475,13 +479,8 @@ class UtilsSnippets(private val context: Context, private val trackedMap: Tracke
 
         // Add a tile overlay to the map, using the heat map tile provider.
         val overlay = map.addTileOverlay(TileOverlayOptions().tileProvider(provider))
-        map.moveCamera(
-            com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(
-                com.google.android.gms.maps.model.LatLng(-37.8136, 144.9631),
-                10f,
-            ),
-        )
         // [END maps_android_utils_heatmap_simple]
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-37.8136, 144.9631), 10f))
     }
 
     private fun readItems(@RawRes resource: Int): List<LatLng?> {
@@ -530,13 +529,8 @@ class UtilsSnippets(private val context: Context, private val trackedMap: Tracke
             TileOverlayOptions()
                 .tileProvider(provider),
         )
-        map.moveCamera(
-            com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(
-                com.google.android.gms.maps.model.LatLng(-37.8136, 144.9631),
-                10f,
-            ),
-        )
         // [END maps_android_utils_heatmap_customize]
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-37.8136, 144.9631), 10f))
         heatmapTileOverlay = tileOverlay
 
         // [START maps_android_utils_heatmap_customize_opacity]

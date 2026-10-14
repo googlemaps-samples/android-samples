@@ -128,10 +128,11 @@ class TrackedMap(val delegate: GoogleMap, val items: MutableList<Any>) {
     fun setOnCameraMoveStartedListener(listener: GoogleMap.OnCameraMoveStartedListener?) =
         delegate.setOnCameraMoveStartedListener(listener)
 
-    fun setMapType(type: Int) {
-        delegate.mapType = type
-    }
-    fun getMapType(): Int = delegate.mapType
+    var mapType: Int
+        get() = delegate.mapType
+        set(value) {
+            delegate.mapType = value
+        }
 
     var isTrafficEnabled: Boolean
         get() = delegate.isTrafficEnabled
