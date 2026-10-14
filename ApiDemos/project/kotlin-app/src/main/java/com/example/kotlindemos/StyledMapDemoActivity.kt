@@ -16,11 +16,6 @@
 
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-import com.example.common_ui.R
-
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +24,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,15 +46,17 @@ import java.util.ArrayList
     apiCalls = [
         "GoogleMap.setMapStyle(MapStyleOptions)",
         "MapStyleOptions.loadRawResourceStyle(Context, int)",
-        "MapStyleOptions(String)"
+        "MapStyleOptions(String)",
     ],
     purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
     successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
     failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_styled_map]
-class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
+class StyledMapDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
 
     private var mMap: GoogleMap? = null
     private var mSelectedStyleId = R.string.style_label_night
@@ -68,11 +68,11 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     }
 
     private val mStyleIds = intArrayOf(
-            R.string.style_label_retro,
-            R.string.style_label_night,
-            R.string.style_label_grayscale,
-            R.string.style_label_no_pois_no_transit,
-            R.string.style_label_default
+        R.string.style_label_retro,
+        R.string.style_label_night,
+        R.string.style_label_grayscale,
+        R.string.style_label_no_pois_no_transit,
+        R.string.style_label_default,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +83,7 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         setContentView(R.layout.styled_map_demo)
 
         val mapFragment =
-                supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         applyInsets(findViewById(R.id.map_container))
     }
@@ -119,14 +119,16 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.style_choose))
-        builder.setItems(styleNames.toTypedArray<CharSequence>(),
-                DialogInterface.OnClickListener { _, which ->
-                    mSelectedStyleId = mStyleIds[which]
-                    val msg = getString(R.string.style_set_to, getString(mSelectedStyleId))
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
-                    setSelectedStyle()
-                })
+        builder.setItems(
+            styleNames.toTypedArray<CharSequence>(),
+            DialogInterface.OnClickListener { _, which ->
+                mSelectedStyleId = mStyleIds[which]
+                val msg = getString(R.string.style_set_to, getString(mSelectedStyleId))
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                Log.d(TAG, msg)
+                setSelectedStyle()
+            },
+        )
         builder.show()
     }
 
@@ -136,34 +138,39 @@ class StyledMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
         style = when (id) {
             R.string.style_label_retro ->
                 MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro)
+
             R.string.style_label_night ->
                 MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night)
+
             R.string.style_label_grayscale ->
                 MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale)
+
             R.string.style_label_no_pois_no_transit ->
                 MapStyleOptions(
-                        "[" +
-                                "  {" +
-                                "    \"featureType\":\"poi.business\"," +
-                                "    \"elementType\":\"all\"," +
-                                "    \"stylers\":[" +
-                                "      {" +
-                                "        \"visibility\":\"off\"" +
-                                "      }" +
-                                "    ]" +
-                                "  }," +
-                                "  {" +
-                                "    \"featureType\":\"transit\"," +
-                                "    \"elementType\":\"all\"," +
-                                "    \"stylers\":[" +
-                                "      {" +
-                                "        \"visibility\":\"off\"" +
-                                "      }" +
-                                "    ]" +
-                                "  }" +
-                                "]"
+                    "[" +
+                        "  {" +
+                        "    \"featureType\":\"poi.business\"," +
+                        "    \"elementType\":\"all\"," +
+                        "    \"stylers\":[" +
+                        "      {" +
+                        "        \"visibility\":\"off\"" +
+                        "      }" +
+                        "    ]" +
+                        "  }," +
+                        "  {" +
+                        "    \"featureType\":\"transit\"," +
+                        "    \"elementType\":\"all\"," +
+                        "    \"stylers\":[" +
+                        "      {" +
+                        "        \"visibility\":\"off\"" +
+                        "      }" +
+                        "    ]" +
+                        "  }" +
+                        "]",
                 )
+
             R.string.style_label_default -> null
+
             else -> return
         }
         mMap?.setMapStyle(style)

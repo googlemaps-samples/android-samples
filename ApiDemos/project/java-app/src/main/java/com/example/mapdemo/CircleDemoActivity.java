@@ -14,10 +14,6 @@
 
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
-
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
@@ -28,9 +24,11 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-
 import androidx.annotation.NonNull;
-
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
+import com.example.mapdemo.utils.MapProvider;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCircleClickListener;
@@ -48,33 +46,33 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
-
-import com.example.mapdemo.utils.MapProvider;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-
-/**
- * This shows how to draw circles on a map.
- */
+/** This shows how to draw circles on a map. */
 @Sample(
-    id = "circles",
-    title = "Circles & Geodesic Radii",
-    description = "Drawing geographic circles with dynamic center drag, radius sliders, and stroke styling.",
-    category = "Shapes & Geometry",
-    complexity = Complexity.SIMPLE,
-    tags = {"#shapes", "#circles", "#radius", "#geodesic"},
-    purpose = "Demonstrates drawing circles with radius defined in meters and dynamic updates via seekbars.",
-    successCriteria = "Adjusting radius slider dynamically updates circle boundary in real-time.",
-    failureIndicators = "Circle distorted or radius math inaccurate across high latitudes.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "circles",
+        title = "Circles & Geodesic Radii",
+        description =
+                "Drawing geographic circles with dynamic center drag, radius sliders, and stroke styling.",
+        category = "Shapes & Geometry",
+        complexity = Complexity.SIMPLE,
+        tags = {"#shapes", "#circles", "#radius", "#geodesic"},
+        purpose =
+                "Demonstrates drawing circles with radius defined in meters and dynamic updates via seekbars.",
+        successCriteria =
+                "Adjusting radius slider dynamically updates circle boundary in real-time.",
+        failureIndicators = "Circle distorted or radius math inaccurate across high latitudes.",
+        framework = Framework.JAVA_VIEWS)
 public class CircleDemoActivity extends SamplesBaseActivity
-    implements OnSeekBarChangeListener, OnMarkerDragListener, OnMapLongClickListener,
-    OnItemSelectedListener, OnMapReadyCallback, MapProvider {
+        implements OnSeekBarChangeListener,
+                OnMarkerDragListener,
+                OnMapLongClickListener,
+                OnItemSelectedListener,
+                OnMapReadyCallback,
+                MapProvider {
 
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
     private static final double DEFAULT_RADIUS_METERS = 1000000;
@@ -131,21 +129,24 @@ public class CircleDemoActivity extends SamplesBaseActivity
 
         public DraggableCircle(LatLng center, double radiusMeters) {
             this.radiusMeters = radiusMeters;
-            centerMarker = map.addMarker(new MarkerOptions()
-                .position(center)
-                .draggable(true));
-            radiusMarker = map.addMarker(new MarkerOptions()
-                .position(toRadiusLatLng(center, radiusMeters))
-                .draggable(true)
-                .icon(BitmapDescriptorFactory.defaultMarker(
-                    BitmapDescriptorFactory.HUE_AZURE)));
-            circle = map.addCircle(new CircleOptions()
-                .center(center)
-                .radius(radiusMeters)
-                .strokeWidth(binding.strokeWidthSeekBar.getProgress())
-                .strokeColor(strokeColorArgb)
-                .fillColor(fillColorArgb)
-                .clickable(binding.toggleClickability.isChecked()));
+            centerMarker = map.addMarker(new MarkerOptions().position(center).draggable(true));
+            radiusMarker =
+                    map.addMarker(
+                            new MarkerOptions()
+                                    .position(toRadiusLatLng(center, radiusMeters))
+                                    .draggable(true)
+                                    .icon(
+                                            BitmapDescriptorFactory.defaultMarker(
+                                                    BitmapDescriptorFactory.HUE_AZURE)));
+            circle =
+                    map.addCircle(
+                            new CircleOptions()
+                                    .center(center)
+                                    .radius(radiusMeters)
+                                    .strokeWidth(binding.strokeWidthSeekBar.getProgress())
+                                    .strokeColor(strokeColorArgb)
+                                    .fillColor(fillColorArgb)
+                                    .clickable(binding.toggleClickability.isChecked()));
         }
 
         public boolean onMarkerMoved(Marker marker) {
@@ -156,7 +157,7 @@ public class CircleDemoActivity extends SamplesBaseActivity
             }
             if (marker.equals(radiusMarker)) {
                 radiusMeters =
-                    toRadiusMeters(centerMarker.getPosition(), radiusMarker.getPosition());
+                        toRadiusMeters(centerMarker.getPosition(), radiusMarker.getPosition());
                 circle.setRadius(radiusMeters);
                 return true;
             }
@@ -180,15 +181,16 @@ public class CircleDemoActivity extends SamplesBaseActivity
 
     /** Generate LatLng of radius marker */
     private static LatLng toRadiusLatLng(LatLng center, double radiusMeters) {
-        double radiusAngle = Math.toDegrees(radiusMeters / RADIUS_OF_EARTH_METERS) /
-            Math.cos(Math.toRadians(center.latitude));
+        double radiusAngle =
+                Math.toDegrees(radiusMeters / RADIUS_OF_EARTH_METERS)
+                        / Math.cos(Math.toRadians(center.latitude));
         return new LatLng(center.latitude, center.longitude + radiusAngle);
     }
 
     private static double toRadiusMeters(LatLng center, LatLng radius) {
         float[] result = new float[1];
-        Location.distanceBetween(center.latitude, center.longitude,
-            radius.latitude, radius.longitude, result);
+        Location.distanceBetween(
+                center.latitude, center.longitude, radius.latitude, radius.longitude, result);
         return result[0];
     }
 
@@ -213,14 +215,18 @@ public class CircleDemoActivity extends SamplesBaseActivity
         binding.strokeAlphaSeekBar.setMax(MAX_ALPHA);
         binding.strokeAlphaSeekBar.setProgress(MAX_ALPHA);
 
-        binding.strokePatternSpinner.setAdapter(new ArrayAdapter<>(
-            this, android.R.layout.simple_spinner_item,
-            getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
+        binding.strokePatternSpinner.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
         binding.toggleClickability.setOnClickListener(v -> toggleClickability());
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         applyInsets(binding.mapContainer);
@@ -237,16 +243,21 @@ public class CircleDemoActivity extends SamplesBaseActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         // Override the default content description on the view, for accessibility mode.
-        googleMap.setContentDescription(getString(com.example.common_ui.R.string.map_circle_description));
+        googleMap.setContentDescription(
+                getString(com.example.common_ui.R.string.map_circle_description));
 
         map = googleMap;
         map.setOnMarkerDragListener(this);
         map.setOnMapLongClickListener(this);
 
-        fillColorArgb = Color.HSVToColor(
-            binding.fillAlphaSeekBar.getProgress(), new float[]{binding.fillHueSeekBar.getProgress(), 1, 1});
-        strokeColorArgb = Color.HSVToColor(
-            binding.strokeAlphaSeekBar.getProgress(), new float[]{binding.strokeHueSeekBar.getProgress(), 1, 1});
+        fillColorArgb =
+                Color.HSVToColor(
+                        binding.fillAlphaSeekBar.getProgress(),
+                        new float[] {binding.fillHueSeekBar.getProgress(), 1, 1});
+        strokeColorArgb =
+                Color.HSVToColor(
+                        binding.strokeAlphaSeekBar.getProgress(),
+                        new float[] {binding.strokeHueSeekBar.getProgress(), 1, 1});
 
         binding.fillHueSeekBar.setOnSeekBarChangeListener(this);
         binding.fillAlphaSeekBar.setOnSeekBarChangeListener(this);
@@ -264,15 +275,17 @@ public class CircleDemoActivity extends SamplesBaseActivity
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(SYDNEY, 4.0f));
 
         // Set up the click listener for the circle.
-        googleMap.setOnCircleClickListener(new OnCircleClickListener() {
-            @Override
-            public void onCircleClick(@NonNull Circle circle) {
-                // Flip the red, green and blue components of the circle's stroke color.
-                circle.setStrokeColor(circle.getStrokeColor() ^ 0x00ffffff);
-            }
-        });
+        googleMap.setOnCircleClickListener(
+                new OnCircleClickListener() {
+                    @Override
+                    public void onCircleClick(@NonNull Circle circle) {
+                        // Flip the red, green and blue components of the circle's stroke color.
+                        circle.setStrokeColor(circle.getStrokeColor() ^ 0x00ffffff);
+                    }
+                });
 
-        List<PatternItem> pattern = getSelectedPattern(binding.strokePatternSpinner.getSelectedItemPosition());
+        List<PatternItem> pattern =
+                getSelectedPattern(binding.strokePatternSpinner.getSelectedItemPosition());
         for (DraggableCircle draggableCircle : circles) {
             draggableCircle.setStrokePattern(pattern);
         }
@@ -322,16 +335,24 @@ public class CircleDemoActivity extends SamplesBaseActivity
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (seekBar == binding.fillHueSeekBar) {
             fillColorArgb =
-                Color.HSVToColor(Color.alpha(fillColorArgb), new float[]{progress, 1, 1});
+                    Color.HSVToColor(Color.alpha(fillColorArgb), new float[] {progress, 1, 1});
         } else if (seekBar == binding.fillAlphaSeekBar) {
-            fillColorArgb = Color.argb(progress, Color.red(fillColorArgb),
-                Color.green(fillColorArgb), Color.blue(fillColorArgb));
+            fillColorArgb =
+                    Color.argb(
+                            progress,
+                            Color.red(fillColorArgb),
+                            Color.green(fillColorArgb),
+                            Color.blue(fillColorArgb));
         } else if (seekBar == binding.strokeHueSeekBar) {
             strokeColorArgb =
-                Color.HSVToColor(Color.alpha(strokeColorArgb), new float[]{progress, 1, 1});
+                    Color.HSVToColor(Color.alpha(strokeColorArgb), new float[] {progress, 1, 1});
         } else if (seekBar == binding.strokeAlphaSeekBar) {
-            strokeColorArgb = Color.argb(progress, Color.red(strokeColorArgb),
-                Color.green(strokeColorArgb), Color.blue(strokeColorArgb));
+            strokeColorArgb =
+                    Color.argb(
+                            progress,
+                            Color.red(strokeColorArgb),
+                            Color.green(strokeColorArgb),
+                            Color.blue(strokeColorArgb));
         }
 
         for (DraggableCircle draggableCircle : circles) {
@@ -365,10 +386,16 @@ public class CircleDemoActivity extends SamplesBaseActivity
     @Override
     public void onMapLongClick(@NonNull LatLng point) {
         // We know the center, let's place the outline at a point 3/4 along the view.
-        View view = Objects.requireNonNull(getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map)).getView();
+        View view =
+                Objects.requireNonNull(
+                                getSupportFragmentManager()
+                                        .findFragmentById(com.example.common_ui.R.id.map))
+                        .getView();
         assert view != null;
-        LatLng radiusLatLng = map.getProjection().fromScreenLocation(new Point(
-            view.getHeight() * 3 / 4, view.getWidth() * 3 / 4));
+        LatLng radiusLatLng =
+                map.getProjection()
+                        .fromScreenLocation(
+                                new Point(view.getHeight() * 3 / 4, view.getWidth() * 3 / 4));
 
         // Create the circle.
         DraggableCircle circle = new DraggableCircle(point, toRadiusMeters(point, radiusLatLng));

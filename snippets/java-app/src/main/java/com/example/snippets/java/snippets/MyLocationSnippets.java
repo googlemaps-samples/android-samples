@@ -28,8 +28,7 @@ import com.google.android.gms.maps.GoogleMap;
 
 @SnippetGroup(
         title = "My Location Layer",
-        description = "Snippets demonstrating my location layer setup and button clicks."
-)
+        description = "Snippets demonstrating my location layer setup and button clicks.")
 public class MyLocationSnippets {
 
     private final Context context;
@@ -43,29 +42,34 @@ public class MyLocationSnippets {
     @SuppressLint("MissingPermission")
     @SnippetItem(
             title = "1. Enable My Location Layer",
-            description = "What it does: Enables the My Location blue dot layer and attaches click handlers for the location button and dot.\nHow to see the effect: A blue location dot renders at your device coordinates, and tapping the location button or blue dot triggers a Toast message."
-    )
+            description =
+                    "What it does: Enables the My Location blue dot layer and attaches click handlers for the location button and dot.\nHow to see the effect: A blue location dot renders at your device coordinates, and tapping the location button or blue dot triggers a Toast message.")
     public void myLocationLayer() {
         // [START maps_android_my_location]
         // TODO: Before enabling the My Location layer, you must request
         // location permission from the user. This sample does not include
         // a request for location permission.
         map.setMyLocationEnabled(true);
-        map.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                Toast.makeText(context, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-                // Return false so that we don't consume the event and the default behavior still occurs
-                // (the camera animates to the user's current position).
-                return false;
-            }
-        });
-        map.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {
-            @Override
-            public void onMyLocationClick(@NonNull Location location) {
-                Toast.makeText(context, "Current location:\n" + location, Toast.LENGTH_LONG).show();
-            }
-        });
+        map.setOnMyLocationButtonClickListener(
+                new GoogleMap.OnMyLocationButtonClickListener() {
+                    @Override
+                    public boolean onMyLocationButtonClick() {
+                        Toast.makeText(context, "MyLocation button clicked", Toast.LENGTH_SHORT)
+                                .show();
+                        // Return false so that we don't consume the event and the default behavior
+                        // still occurs
+                        // (the camera animates to the user's current position).
+                        return false;
+                    }
+                });
+        map.setOnMyLocationClickListener(
+                new GoogleMap.OnMyLocationClickListener() {
+                    @Override
+                    public void onMyLocationClick(@NonNull Location location) {
+                        Toast.makeText(context, "Current location:\n" + location, Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
         // [END maps_android_my_location]
     }
 }

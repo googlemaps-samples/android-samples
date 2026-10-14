@@ -62,14 +62,16 @@ class GeminiVisualTestHelper : Closeable {
      * Executes a UI action based on a natural language prompt.
      * It analyzes the current UI hierarchy and asks Gemini to determine the best action.
      */
+    // The system prompt is a raw string: wrapping its JSON example would change the prompt.
+    @Suppress("ktlint:standard:max-line-length")
     suspend fun performActionFromPrompt(prompt: String, uiDevice: UiDevice, apiKey: String) {
         val hierarchyStream = ByteArrayOutputStream()
         uiDevice.dumpWindowHierarchy(hierarchyStream)
         val hierarchyXml = hierarchyStream.toString("UTF-8")
 
         val systemPrompt = """
-            You are an expert Android QA automaton. Your task is to translate a natural language command 
-            into a specific action to be performed on a UI. Given a UI hierarchy (in XML format), 
+            You are an expert Android QA automaton. Your task is to translate a natural language command
+            into a specific action to be performed on a UI. Given a UI hierarchy (in XML format),
             determine the correct action and selector.
 
             The available actions are: "click", "longClick", "setText".
@@ -88,13 +90,21 @@ class GeminiVisualTestHelper : Closeable {
         val fullPrompt = "$systemPrompt\n\nCommand: \"$prompt\"\n\nUI Hierarchy:\n$hierarchyXml"
 
         val requestJson = JSONObject().apply {
-            put("contents", JSONArray().apply {
-                put(JSONObject().apply {
-                    put("parts", JSONArray().apply {
-                        put(JSONObject().apply { put("text", fullPrompt) })
-                    })
-                })
-            })
+            put(
+                "contents",
+                JSONArray().apply {
+                    put(
+                        JSONObject().apply {
+                            put(
+                                "parts",
+                                JSONArray().apply {
+                                    put(JSONObject().apply { put("text", fullPrompt) })
+                                },
+                            )
+                        },
+                    )
+                },
+            )
         }
 
         val response: HttpResponse = client.post("$BASE_URL/$API_VERSION/models/$DEFAULT_MODEL:generateContent") {
@@ -127,7 +137,7 @@ class GeminiVisualTestHelper : Closeable {
             val aiAction = JSONObject(cleanedActionJson)
             val action = aiAction.getString("action")
             val selectorObj = aiAction.getJSONObject("selector")
-            
+
             val selector = when {
                 selectorObj.has("text") -> By.text(selectorObj.getString("text"))
                 selectorObj.has("contentDescription") -> By.desc(selectorObj.getString("contentDescription"))
@@ -140,11 +150,14 @@ class GeminiVisualTestHelper : Closeable {
 
             when (action.lowercase()) {
                 "click" -> uiObject.click()
+
                 "longclick" -> uiObject.longClick()
+
                 "settext" -> {
                     val textToSet = aiAction.getString("textValue")
                     uiObject.text = textToSet
                 }
+
                 else -> throw UnsupportedOperationException("Action '$action' is not supported.")
             }
         } catch (e: Exception) {
@@ -178,28 +191,36 @@ class GeminiVisualTestHelper : Closeable {
     /**
      * Analyzes an image with a given prompt using the Gemini API.
      */
-    suspend fun analyzeImage(
-        bitmap: Bitmap,
-        prompt: String,
-        apiKey: String,
-        model: String = DEFAULT_MODEL
-    ): String? {
+    suspend fun analyzeImage(bitmap: Bitmap, prompt: String, apiKey: String, model: String = DEFAULT_MODEL): String? {
         val base64Image = bitmap.toBase64EncodedJpeg()
-        
+
         val requestJson = JSONObject().apply {
-            put("contents", JSONArray().apply {
-                put(JSONObject().apply {
-                    put("parts", JSONArray().apply {
-                        put(JSONObject().apply { put("text", prompt) })
-                        put(JSONObject().apply {
-                            put("inline_data", JSONObject().apply {
-                                put("mime_type", "image/jpeg")
-                                put("data", base64Image)
-                            })
-                        })
-                    })
-                })
-            })
+            put(
+                "contents",
+                JSONArray().apply {
+                    put(
+                        JSONObject().apply {
+                            put(
+                                "parts",
+                                JSONArray().apply {
+                                    put(JSONObject().apply { put("text", prompt) })
+                                    put(
+                                        JSONObject().apply {
+                                            put(
+                                                "inline_data",
+                                                JSONObject().apply {
+                                                    put("mime_type", "image/jpeg")
+                                                    put("data", base64Image)
+                                                },
+                                            )
+                                        },
+                                    )
+                                },
+                            )
+                        },
+                    )
+                },
+            )
         }
 
         val response: HttpResponse = client.post("$BASE_URL/$API_VERSION/models/$model:generateContent") {
@@ -216,7 +237,7 @@ class GeminiVisualTestHelper : Closeable {
 
         val rawBody = response.bodyAsText()
         val jsonResponse = JSONObject(rawBody)
-        
+
         val candidates = jsonResponse.optJSONArray("candidates")
         if (candidates == null || candidates.length() == 0) {
             Log.w(TAG, "Gemini API returned empty candidates. Full response: $rawBody")

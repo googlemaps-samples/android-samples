@@ -38,7 +38,7 @@ import com.google.android.material.chip.Chip
 class SampleCardAdapter(
     private val onSampleClick: (SampleItem) -> Unit,
     private val onInfoClick: (SampleItem) -> Unit,
-    private val onStatusClick: (SampleItem, SampleEvaluation?) -> Unit
+    private val onStatusClick: (SampleItem, SampleEvaluation?) -> Unit,
 ) : ListAdapter<SampleItem, SampleCardAdapter.SampleViewHolder>(SampleDiffCallback()) {
 
     var currentFramework: Framework = Framework.KOTLIN_VIEWS
@@ -111,11 +111,13 @@ class SampleCardAdapter(
                         btnStatusBadge.iconTint = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
                         btnStatusBadge.setTextColor(Color.parseColor("#2E7D32"))
                     }
+
                     ReviewStatus.NEEDS_WORK -> {
                         btnStatusBadge.setIconResource(R.drawable.ic_status_needs_work)
                         btnStatusBadge.iconTint = ColorStateList.valueOf(Color.parseColor("#F44336"))
                         btnStatusBadge.setTextColor(Color.parseColor("#C62828"))
                     }
+
                     ReviewStatus.UNCHECKED -> {
                         btnStatusBadge.setIconResource(R.drawable.ic_status_unchecked)
                         btnStatusBadge.iconTint = ColorStateList.valueOf(Color.parseColor("#9E9E9E"))
@@ -165,10 +167,8 @@ class SampleCardAdapter(
     }
 
     class SampleDiffCallback : DiffUtil.ItemCallback<SampleItem>() {
-        override fun areItemsTheSame(oldItem: SampleItem, newItem: SampleItem): Boolean =
-            oldItem.id == newItem.id
+        override fun areItemsTheSame(oldItem: SampleItem, newItem: SampleItem): Boolean = oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: SampleItem, newItem: SampleItem): Boolean =
-            oldItem == newItem
+        override fun areContentsTheSame(oldItem: SampleItem, newItem: SampleItem): Boolean = oldItem == newItem
     }
 }

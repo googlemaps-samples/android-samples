@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -25,11 +27,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.Random;
 
 /**
@@ -42,18 +39,19 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
     private static final LatLng DEFAULT_MARKER_POSITION = new LatLng(48.858179, 2.294576);
 
     /** List of hues to use for the marker */
-    private static final float[] MARKER_HUES = new float[]{
-            BitmapDescriptorFactory.HUE_RED,
-            BitmapDescriptorFactory.HUE_ORANGE,
-            BitmapDescriptorFactory.HUE_YELLOW,
-            BitmapDescriptorFactory.HUE_GREEN,
-            BitmapDescriptorFactory.HUE_CYAN,
-            BitmapDescriptorFactory.HUE_AZURE,
-            BitmapDescriptorFactory.HUE_BLUE,
-            BitmapDescriptorFactory.HUE_VIOLET,
-            BitmapDescriptorFactory.HUE_MAGENTA,
-            BitmapDescriptorFactory.HUE_ROSE,
-    };
+    private static final float[] MARKER_HUES =
+            new float[] {
+                BitmapDescriptorFactory.HUE_RED,
+                BitmapDescriptorFactory.HUE_ORANGE,
+                BitmapDescriptorFactory.HUE_YELLOW,
+                BitmapDescriptorFactory.HUE_GREEN,
+                BitmapDescriptorFactory.HUE_CYAN,
+                BitmapDescriptorFactory.HUE_AZURE,
+                BitmapDescriptorFactory.HUE_BLUE,
+                BitmapDescriptorFactory.HUE_VIOLET,
+                BitmapDescriptorFactory.HUE_MAGENTA,
+                BitmapDescriptorFactory.HUE_ROSE,
+            };
 
     // Bundle keys.
     private static final String OTHER_OPTIONS = "options";
@@ -62,9 +60,7 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
 
     private static final String MARKER_INFO = "markerInfo";
 
-    /**
-     * Extra info about a marker.
-     */
+    /** Extra info about a marker. */
     static class MarkerInfo implements Parcelable {
 
         public static final Parcelable.Creator<MarkerInfo> CREATOR =
@@ -102,22 +98,19 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
     }
 
     /**
-     * Example of a custom {@code MapFragment} showing how the position of a marker and other
-     * custom
+     * Example of a custom {@code MapFragment} showing how the position of a marker and other custom
      * {@link Parcelable}s objects can be saved after rotation of the device.
-     * <p>
-     * Storing custom {@link Parcelable} objects directly in the {@link Bundle} provided by the
+     *
+     * <p>Storing custom {@link Parcelable} objects directly in the {@link Bundle} provided by the
      * {@link #onActivityCreated(Bundle)} method will throw a {@code ClassNotFoundException}. This
      * is due to the fact that this Bundle is parceled (thus losing its ClassLoader attribute at
-     * this moment) and unparceled later in a different ClassLoader.
-     * <br>
-     * A workaround to store these objects is to wrap the custom {@link Parcelable} objects in a
-     * new
+     * this moment) and unparceled later in a different ClassLoader. <br>
+     * A workaround to store these objects is to wrap the custom {@link Parcelable} objects in a new
      * {@link Bundle} object.
-     * <p>
-     * However, note that it is safe to store {@link Parcelable} objects from the Maps API (eg.
-     * MarkerOptions, LatLng, etc.) directly in the Bundle provided by the
-     * {@link #onActivityCreated(Bundle)} method.
+     *
+     * <p>However, note that it is safe to store {@link Parcelable} objects from the Maps API (eg.
+     * MarkerOptions, LatLng, etc.) directly in the Bundle provided by the {@link
+     * #onActivityCreated(Bundle)} method.
      */
     public static class SaveStateMapFragment extends SupportMapFragment
             implements OnMarkerClickListener, OnMarkerDragListener, OnMapReadyCallback {
@@ -127,7 +120,6 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
         private MarkerInfo mMarkerInfo;
 
         private boolean mMoveCameraToMarker;
-
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -153,9 +145,7 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
             }
 
             getMapAsync(this);
-
         }
-
 
         @Override
         public void onSaveInstanceState(Bundle outState) {
@@ -184,10 +174,11 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
 
         @Override
         public void onMapReady(GoogleMap map) {
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(mMarkerPosition)
-                    .icon(BitmapDescriptorFactory.defaultMarker(mMarkerInfo.mHue))
-                    .draggable(true);
+            MarkerOptions markerOptions =
+                    new MarkerOptions()
+                            .position(mMarkerPosition)
+                            .icon(BitmapDescriptorFactory.defaultMarker(mMarkerInfo.mHue))
+                            .draggable(true);
             map.addMarker(markerOptions);
             map.setOnMarkerDragListener(this);
             map.setOnMarkerClickListener(this);
@@ -198,12 +189,10 @@ public class SaveStateDemoActivity extends SamplesBaseActivity {
         }
 
         @Override
-        public void onMarkerDragStart(Marker marker) {
-        }
+        public void onMarkerDragStart(Marker marker) {}
 
         @Override
-        public void onMarkerDrag(Marker marker) {
-        }
+        public void onMarkerDrag(Marker marker) {}
 
         @Override
         public void onMarkerDragEnd(Marker marker) {

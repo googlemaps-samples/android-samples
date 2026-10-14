@@ -14,11 +14,6 @@
 
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
-import com.example.common_ui.R;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,10 +22,11 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.PopupMenu;
-import java.util.Locale;
-
+import com.example.common_ui.R;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
 import com.example.common_ui.databinding.VisibleRegionDemoBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,42 +37,41 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
- * This shows how to use setPadding to allow overlays that obscure part of the map without
- * obscuring the map UI or copyright notices.
+ * This shows how to use setPadding to allow overlays that obscure part of the map without obscuring
+ * the map UI or copyright notices.
  */
 @Sample(
-    id = "com.example.mapdemo.VisibleRegionDemoActivity",
-    title = "Visible Region & Projection",
-    description = "Querying current viewport bounding coordinates via GoogleMap.projection.",
-    category = "Camera Controls",
-    complexity = Complexity.SIMPLE,
-    tags = {"#camera", "#projection", "#visibleregion", "#latlngbounds"},
-    apiCalls = {
-        "GoogleMap.setPadding(int, int, int, int)",
-        "GoogleMap.moveCamera(CameraUpdate)",
-        "GoogleMap.cameraPosition",
-        "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)"
-    },
-    purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
-    successCriteria = "Bounding coordinates update live in the UI as the camera pans and zooms.",
-    failureIndicators = "Projection returns null or stale LatLng bounds after camera idle.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "com.example.mapdemo.VisibleRegionDemoActivity",
+        title = "Visible Region & Projection",
+        description = "Querying current viewport bounding coordinates via GoogleMap.projection.",
+        category = "Camera Controls",
+        complexity = Complexity.SIMPLE,
+        tags = {"#camera", "#projection", "#visibleregion", "#latlngbounds"},
+        apiCalls = {
+            "GoogleMap.setPadding(int, int, int, int)",
+            "GoogleMap.moveCamera(CameraUpdate)",
+            "GoogleMap.cameraPosition",
+            "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)"
+        },
+        purpose =
+                "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
+        successCriteria =
+                "Bounding coordinates update live in the UI as the camera pans and zooms.",
+        failureIndicators = "Projection returns null or stale LatLng bounds after camera idle.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_visible_region]
-public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
-    OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+public class VisibleRegionDemoActivity extends SamplesBaseActivity
+        implements OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
-    /**
-     * Note that this may be null if the Google Play services APK is not available.
-     */
+    /** Note that this may be null if the Google Play services APK is not available. */
     private GoogleMap mMap;
 
     private static final LatLng SOH = new LatLng(-33.85704, 151.21522);
 
     private static final LatLng SFO = new LatLng(37.614631, -122.385153);
 
-    private static final LatLngBounds AUS = new LatLngBounds(
-        new LatLng(-44, 113), new LatLng(-10, 154));
+    private static final LatLngBounds AUS =
+            new LatLngBounds(new LatLng(-44, 113), new LatLng(-10, 154));
 
     private VisibleRegionDemoBinding binding;
 
@@ -95,31 +90,33 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         binding = VisibleRegionDemoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.cameraActionsButton.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(this, v);
-            popup.getMenuInflater().inflate(R.menu.visible_region_menu, popup.getMenu());
-            popup.setOnMenuItemClickListener(item -> {
-                int itemId = item.getItemId();
-                if (itemId == R.id.menu_action_no_padding) {
-                    setNoPadding();
-                    return true;
-                } else if (itemId == R.id.menu_action_more_padding) {
-                    setMorePadding(v);
-                    return true;
-                } else if (itemId == R.id.menu_action_opera_house) {
-                    moveToOperaHouse(v);
-                    return true;
-                } else if (itemId == R.id.menu_action_sfo) {
-                    moveToSFO(v);
-                    return true;
-                } else if (itemId == R.id.menu_action_australia) {
-                    moveToAUS(v);
-                    return true;
-                }
-                return false;
-            });
-            popup.show();
-        });
+        binding.cameraActionsButton.setOnClickListener(
+                v -> {
+                    PopupMenu popup = new PopupMenu(this, v);
+                    popup.getMenuInflater().inflate(R.menu.visible_region_menu, popup.getMenu());
+                    popup.setOnMenuItemClickListener(
+                            item -> {
+                                int itemId = item.getItemId();
+                                if (itemId == R.id.menu_action_no_padding) {
+                                    setNoPadding();
+                                    return true;
+                                } else if (itemId == R.id.menu_action_more_padding) {
+                                    setMorePadding(v);
+                                    return true;
+                                } else if (itemId == R.id.menu_action_opera_house) {
+                                    moveToOperaHouse(v);
+                                    return true;
+                                } else if (itemId == R.id.menu_action_sfo) {
+                                    moveToSFO(v);
+                                    return true;
+                                } else if (itemId == R.id.menu_action_australia) {
+                                    moveToAUS(v);
+                                    return true;
+                                }
+                                return false;
+                            });
+                    popup.show();
+                });
 
         binding.vrNormalButton.setOnClickListener(v -> setNoPadding());
         binding.vrMorePaddedButton.setOnClickListener(this::setMorePadding);
@@ -128,7 +125,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         binding.vrAusButton.setOnClickListener(this::moveToAUS);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
         applyInsets(binding.mapContainer);
@@ -151,17 +148,11 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     private void updateCameraDisplay() {
         if (mMap == null) return;
         CameraPosition pos = mMap.getCameraPosition();
-        binding.cameraTargetText.setText(getString(
-            R.string.camera_target_format,
-            pos.target.latitude,
-            pos.target.longitude
-        ));
-        binding.cameraDetailsText.setText(getString(
-            R.string.camera_details_format,
-            pos.zoom,
-            pos.tilt,
-            pos.bearing
-        ));
+        binding.cameraTargetText.setText(
+                getString(
+                        R.string.camera_target_format, pos.target.latitude, pos.target.longitude));
+        binding.cameraDetailsText.setText(
+                getString(R.string.camera_details_format, pos.zoom, pos.tilt, pos.bearing));
     }
 
     /**
@@ -217,7 +208,7 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
     }
 
     public void animatePadding(
-        final int toLeft, final int toTop, final int toRight, final int toBottom) {
+            final int toLeft, final int toTop, final int toRight, final int toBottom) {
 
         final Handler handler = new Handler(Looper.getMainLooper());
         final long start = SystemClock.uptimeMillis();
@@ -235,25 +226,26 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity implements
         currentRight = toRight;
         currentBottom = toBottom;
 
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                long elapsed = SystemClock.uptimeMillis() - start;
-                float t = interpolator.getInterpolation((float) elapsed / duration);
+        handler.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        long elapsed = SystemClock.uptimeMillis() - start;
+                        float t = interpolator.getInterpolation((float) elapsed / duration);
 
-                int left = (int) (startLeft + ((toLeft - startLeft) * t));
-                int top = (int) (startTop + ((toTop - startTop) * t));
-                int right = (int) (startRight + ((toRight - startRight) * t));
-                int bottom = (int) (startBottom + ((toBottom - startBottom) * t));
+                        int left = (int) (startLeft + ((toLeft - startLeft) * t));
+                        int top = (int) (startTop + ((toTop - startTop) * t));
+                        int right = (int) (startRight + ((toRight - startRight) * t));
+                        int bottom = (int) (startBottom + ((toBottom - startBottom) * t));
 
-                mMap.setPadding(left, top, right, bottom);
+                        mMap.setPadding(left, top, right, bottom);
 
-                if (elapsed < duration) {
-                    // Post again 16ms later.
-                    handler.postDelayed(this, 16);
-                }
-            }
-        });
+                        if (elapsed < duration) {
+                            // Post again 16ms later.
+                            handler.postDelayed(this, 16);
+                        }
+                    }
+                });
     }
 }
 // [END maps_android_sample_visible_region]

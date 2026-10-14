@@ -37,7 +37,7 @@ annotation class Sample(
     val successCriteria: String = "",
     val failureIndicators: String = "",
     val helpHtml: String = "",
-    val framework: Framework = Framework.KOTLIN_VIEWS
+    val framework: Framework = Framework.KOTLIN_VIEWS,
 )
 
 /**
@@ -46,12 +46,11 @@ annotation class Sample(
 enum class Complexity(val displayName: String, val badge: String, val order: Int) : Serializable {
     SNIPPET("Snippet", "🔹", 1),
     SIMPLE("Simple", "🟢", 2),
-    ADVANCED("Advanced", "🔴", 3);
+    ADVANCED("Advanced", "🔴", 3),
+    ;
 
     companion object {
-        fun fromString(value: String?): Complexity {
-            return entries.find { it.name.equals(value, ignoreCase = true) } ?: SIMPLE
-        }
+        fun fromString(value: String?): Complexity = entries.find { it.name.equals(value, ignoreCase = true) } ?: SIMPLE
     }
 }
 
@@ -63,47 +62,42 @@ enum class Framework(
     val displayName: String,
     val badge: String,
     val iconEmoji: String,
-    val accentColorHex: Long
+    val accentColorHex: Long,
 ) : Serializable {
     KOTLIN_VIEWS(
         id = "kotlin",
         displayName = "Kotlin Views",
         badge = "Kotlin",
         iconEmoji = "💜",
-        accentColorHex = 0xFF7F52FF
+        accentColorHex = 0xFF7F52FF,
     ),
     JAVA_VIEWS(
         id = "java",
         displayName = "Java Views",
         badge = "Java",
         iconEmoji = "☕",
-        accentColorHex = 0xFFE76F51
-    );
+        accentColorHex = 0xFFE76F51,
+    ),
+    ;
 
     companion object {
-        fun fromId(id: String?): Framework {
-            return entries.find { it.id.equals(id, ignoreCase = true) } ?: KOTLIN_VIEWS
-        }
+        fun fromId(id: String?): Framework = entries.find { it.id.equals(id, ignoreCase = true) } ?: KOTLIN_VIEWS
     }
 }
 
 /**
  * Manual review evaluation status for a sample.
  */
-enum class ReviewStatus(
-    val displayName: String,
-    val badge: String,
-    val iconEmoji: String,
-    val colorHex: Long
-) : Serializable {
+enum class ReviewStatus(val displayName: String, val badge: String, val iconEmoji: String, val colorHex: Long) :
+    Serializable {
     UNCHECKED("Unchecked", "UNCHECKED", "⚪", 0xFF9E9E9E),
     NEEDS_WORK("Needs Work", "NEEDS_WORK", "🔴", 0xFFF44336),
-    PASSING("Passing", "PASSING", "🟢", 0xFF4CAF50);
+    PASSING("Passing", "PASSING", "🟢", 0xFF4CAF50),
+    ;
 
     companion object {
-        fun fromString(value: String?): ReviewStatus {
-            return entries.find { it.name.equals(value, ignoreCase = true) } ?: UNCHECKED
-        }
+        fun fromString(value: String?): ReviewStatus =
+            entries.find { it.name.equals(value, ignoreCase = true) } ?: UNCHECKED
     }
 }
 
@@ -123,7 +117,7 @@ data class SampleItem(
     val failureIndicators: String = "",
     val helpHtml: String = "",
     val kotlinActivity: String? = null,
-    val javaActivity: String? = null
+    val javaActivity: String? = null,
 ) : Serializable {
 
     /**
@@ -136,19 +130,19 @@ data class SampleItem(
             return helpHtml
         }
         val builder = StringBuilder()
-        builder.append("<h3><b>${title}</b></h3>")
-        builder.append("<p><i>${description}</i></p>")
+        builder.append("<h3><b>$title</b></h3>")
+        builder.append("<p><i>$description</i></p>")
         builder.append("<hr/>")
 
         if (purpose.isNotBlank()) {
-            builder.append("<p><b>🎯 Purpose:</b><br/>${purpose}</p>")
+            builder.append("<p><b>🎯 Purpose:</b><br/>$purpose</p>")
         }
         if (isReviewerMode) {
             if (successCriteria.isNotBlank()) {
-                builder.append("<p><b>✅ Success Criteria:</b><br/>${successCriteria}</p>")
+                builder.append("<p><b>✅ Success Criteria:</b><br/>$successCriteria</p>")
             }
             if (failureIndicators.isNotBlank()) {
-                builder.append("<p><b>⚠️ Failure / Broken Indicators:</b><br/>${failureIndicators}</p>")
+                builder.append("<p><b>⚠️ Failure / Broken Indicators:</b><br/>$failureIndicators</p>")
             }
         }
 
@@ -163,17 +157,13 @@ data class SampleItem(
     /**
      * Resolves the activity class name for a given target framework.
      */
-    fun getActivityForFramework(framework: Framework): String? {
-        return when (framework) {
-            Framework.KOTLIN_VIEWS -> kotlinActivity ?: javaActivity
-            Framework.JAVA_VIEWS -> javaActivity ?: kotlinActivity
-        }
+    fun getActivityForFramework(framework: Framework): String? = when (framework) {
+        Framework.KOTLIN_VIEWS -> kotlinActivity ?: javaActivity
+        Framework.JAVA_VIEWS -> javaActivity ?: kotlinActivity
     }
 
     /**
      * Returns the Fully Qualified Class Name (FQCN) identifier for the given framework.
      */
-    fun getTargetFqcn(framework: Framework): String {
-        return getActivityForFramework(framework) ?: id
-    }
+    fun getTargetFqcn(framework: Framework): String = getActivityForFramework(framework) ?: id
 }

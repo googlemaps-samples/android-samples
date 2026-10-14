@@ -13,24 +13,20 @@
 // limitations under the License.
 package com.example.mapdemo;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-
+import com.example.common_ui.R;
 import com.example.mapdemo.utils.MapDemoActivityTest;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.GroundOverlay;
-
+import com.google.android.gms.maps.model.LatLng;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import com.example.common_ui.R;
-
-import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(AndroidJUnit4.class)
 public class GroundOverlayDemoActivityTest extends MapDemoActivityTest<GroundOverlayDemoActivity> {
@@ -46,59 +42,69 @@ public class GroundOverlayDemoActivityTest extends MapDemoActivityTest<GroundOve
 
     @Before
     public void setUpChild() {
-        scenario.onActivity(activity -> {
-            groundOverlay = activity.groundOverlayRotated;
-        });
+        scenario.onActivity(
+                activity -> {
+                    groundOverlay = activity.groundOverlayRotated;
+                });
     }
 
     @Test
     public void testTransparencySeekBar() {
         final float[] initialTransparency = new float[1];
-        scenario.onActivity(activity -> {
-            initialTransparency[0] = activity.groundOverlay.getTransparency();
-        });
+        scenario.onActivity(
+                activity -> {
+                    initialTransparency[0] = activity.groundOverlay.getTransparency();
+                });
 
-        Espresso.onView(ViewMatchers.withId(R.id.transparencySeekBar)).perform(ViewActions.swipeRight());
+        Espresso.onView(ViewMatchers.withId(R.id.transparencySeekBar))
+                .perform(ViewActions.swipeRight());
 
-        scenario.onActivity(activity -> {
-            assertThat(activity.groundOverlay.getTransparency()).isNotEqualTo(initialTransparency[0]);
-            assertThat(activity.groundOverlayRotated.getTransparency()).isEqualTo(initialTransparency[0]);
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertThat(activity.groundOverlay.getTransparency())
+                            .isNotEqualTo(initialTransparency[0]);
+                    assertThat(activity.groundOverlayRotated.getTransparency())
+                            .isEqualTo(initialTransparency[0]);
+                });
     }
 
     @Test
     public void testSwitchImageButton() {
         final BitmapDescriptor[] initialBitmapDescriptor = new BitmapDescriptor[1];
-        scenario.onActivity(activity -> {
-            initialBitmapDescriptor[0] = (BitmapDescriptor) activity.groundOverlay.getTag();
-        });
+        scenario.onActivity(
+                activity -> {
+                    initialBitmapDescriptor[0] = (BitmapDescriptor) activity.groundOverlay.getTag();
+                });
 
         Espresso.onView(ViewMatchers.withId(R.id.switchImage)).perform(ViewActions.click());
 
-        scenario.onActivity(activity -> {
-            assertThat(activity.groundOverlay.getTag()).isNotEqualTo(initialBitmapDescriptor[0]);
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertThat(activity.groundOverlay.getTag())
+                            .isNotEqualTo(initialBitmapDescriptor[0]);
+                });
     }
 
     @Test
     public void testToggleClickability_DisablesClicks() {
         // 1. VERIFY CLICKABLE (WHEN ENABLED)
-        scenario.onActivity(activity -> {
-            // Ensure it's clickable for the first part of the test
-            activity.groundOverlayRotated.setClickable(true);
-        });
+        scenario.onActivity(
+                activity -> {
+                    // Ensure it's clickable for the first part of the test
+                    activity.groundOverlayRotated.setClickable(true);
+                });
 
         clickOnMapAt(OVERLAY_COORDINATE);
 
         idlingResource.waitForIdle(200); // Wait for listener to fire
 
-        scenario.onActivity(activity -> {
-            assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(1);
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(1);
+                });
 
         // 2. DISABLE CLICKABILITY
-        Espresso.onView(ViewMatchers.withId(R.id.toggleClickability))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.toggleClickability)).perform(ViewActions.click());
 
         // 3. VERIFY NOT CLICKABLE (WHEN DISABLED)
 
@@ -108,13 +114,13 @@ public class GroundOverlayDemoActivityTest extends MapDemoActivityTest<GroundOve
         idlingResource.waitForIdle(); // Give it time (listener shouldn't fire)
 
         // Assert the count did not change
-        scenario.onActivity(activity -> {
-            assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(1);
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(1);
+                });
 
         // And back to clickability
-        Espresso.onView(ViewMatchers.withId(R.id.toggleClickability))
-                .perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.toggleClickability)).perform(ViewActions.click());
 
         // Click the *exact same spot* again
         clickOnMapAt(OVERLAY_COORDINATE);
@@ -122,23 +128,27 @@ public class GroundOverlayDemoActivityTest extends MapDemoActivityTest<GroundOve
         idlingResource.waitForIdle(200); // Give it time (listener shouldn't fire)
 
         // Assert the count did not change
-        scenario.onActivity(activity -> {
-            assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(2);
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertThat(activity.groundOverlayRotatedClickCount).isEqualTo(2);
+                });
     }
 
     @Test
     public void testMainOverlay_IsNotClickable() {
         final float[] initialTransparency = new float[1];
-        scenario.onActivity(activity -> {
-            initialTransparency[0] = activity.groundOverlay.getTransparency();
-        });
+        scenario.onActivity(
+                activity -> {
+                    initialTransparency[0] = activity.groundOverlay.getTransparency();
+                });
 
         Espresso.onView(ViewMatchers.withId(R.id.map)).perform(ViewActions.click());
         idlingResource.waitForIdle();
 
-        scenario.onActivity(activity -> {
-            assertThat(activity.groundOverlay.getTransparency()).isEqualTo(initialTransparency[0]);
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertThat(activity.groundOverlay.getTransparency())
+                            .isEqualTo(initialTransparency[0]);
+                });
     }
 }

@@ -17,14 +17,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.example.common_ui.databinding.LiteDemoBinding
 import com.example.kotlindemos.OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -49,15 +49,19 @@ import com.google.android.gms.maps.model.PolylineOptions
         "GoogleMapOptions.liteMode(true)",
         "GoogleMap.moveCamera(CameraUpdate)",
         "GoogleMap.addMarker(MarkerOptions)",
-        "GoogleMap.addPolygon(PolygonOptions)"
+        "GoogleMap.addPolygon(PolygonOptions)",
     ],
-    purpose = "Demonstrates Lite Mode features: static raster rendering, markers launching Google Maps intent, and programmatic camera jumps.",
-    successCriteria = "Map renders lightweight static raster view; Darwin/Adelaide buttons immediately reposition camera.",
+    purpose = "Demonstrates Lite Mode features: static raster rendering, markers launching Google Maps intent, and " +
+        "programmatic camera jumps.",
+    successCriteria = "Map renders lightweight static raster view; Darwin/Adelaide buttons immediately reposition " +
+        "camera.",
     failureIndicators = "Full vector GL map loaded instead of lite mode, or buttons fail to move camera.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_lite]
-class LiteDemoActivity : SamplesBaseActivity(), OnGlobalLayoutAndMapReadyListener {
+class LiteDemoActivity :
+    SamplesBaseActivity(),
+    OnGlobalLayoutAndMapReadyListener {
     private lateinit var map: GoogleMap
     private lateinit var binding: LiteDemoBinding
 
@@ -141,17 +145,17 @@ class LiteDemoActivity : SamplesBaseActivity(), OnGlobalLayoutAndMapReadyListene
                 .add(
                     MELBOURNE,
                     ADELAIDE,
-                    PERTH
+                    PERTH,
                 )
                 .color(Color.GREEN)
-                .width(5f)
+                .width(5f),
         )
         map.addPolygon(
             PolygonOptions()
                 .add(*POLYGON)
                 .fillColor(Color.CYAN)
                 .strokeColor(Color.BLUE)
-                .strokeWidth(5f)
+                .strokeWidth(5f),
         )
     }
 
@@ -162,31 +166,31 @@ class LiteDemoActivity : SamplesBaseActivity(), OnGlobalLayoutAndMapReadyListene
         map.addMarker(
             MarkerOptions()
                 .position(BRISBANE)
-                .title("Brisbane")
+                .title("Brisbane"),
         )
         map.addMarker(
             MarkerOptions()
                 .position(MELBOURNE)
                 .title("Melbourne")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)),
         )
         map.addMarker(
             MarkerOptions()
                 .position(SYDNEY)
                 .title("Sydney")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)),
         )
         map.addMarker(
             MarkerOptions()
                 .position(ADELAIDE)
                 .title("Adelaide")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)),
         )
         map.addMarker(
             MarkerOptions()
                 .position(PERTH)
                 .title("Perth")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)),
         )
     }
 
@@ -202,9 +206,11 @@ class LiteDemoActivity : SamplesBaseActivity(), OnGlobalLayoutAndMapReadyListene
          * A Polygon with five points in the Norther Territory, Australia.
          */
         private val POLYGON = arrayOf(
-            LatLng(-18.000328, 130.473633), LatLng(-16.173880, 135.087891),
-            LatLng(-19.663970, 137.724609), LatLng(-23.202307, 135.395508),
-            LatLng(-19.705347, 129.550781)
+            LatLng(-18.000328, 130.473633),
+            LatLng(-16.173880, 135.087891),
+            LatLng(-19.663970, 137.724609),
+            LatLng(-23.202307, 135.395508),
+            LatLng(-19.705347, 129.550781),
         )
     }
 }

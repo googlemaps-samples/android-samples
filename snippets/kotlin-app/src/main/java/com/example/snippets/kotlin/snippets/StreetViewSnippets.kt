@@ -28,13 +28,15 @@ import com.google.android.gms.maps.model.StreetViewSource
 
 @SnippetGroup(
     title = "Street View",
-    description = "Snippets demonstrating Google Street View integration, camera movements, and panorama configuration."
+    description = "Snippets demonstrating Google Street View integration, camera movements, and panorama " +
+        "configuration.",
 )
 class StreetViewSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "1. Launch Street View Activity",
-        description = "What it does: Launches an Activity embedding a StreetViewPanoramaView initialized in San Francisco.\nHow to see the effect: A full-screen interactive 360-degree street view panorama opens.",
+        description = "What it does: Launches an Activity embedding a StreetViewPanoramaView initialized in San " +
+            "Francisco.\nHow to see the effect: A full-screen interactive 360-degree street view panorama opens.",
     )
     fun launchStreetView() {
         val intent = Intent(context, StreetViewActivity::class.java)
@@ -43,7 +45,8 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
 
     @SnippetItem(
         title = "2. Set Panorama Location",
-        description = "What it does: Sets the panorama view geographic coordinates, search radius, and outdoor source filter.\nHow to see the effect: The Street View camera jumps directly to target coordinates.",
+        description = "What it does: Sets the panorama view geographic coordinates, search radius, and outdoor " +
+            "source filter.\nHow to see the effect: The Street View camera jumps directly to target coordinates.",
     )
     fun setLocation() {
         val sanFrancisco = LatLng(37.754130, -122.447129)
@@ -55,7 +58,8 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
 
     @SnippetItem(
         title = "3. Zoom Panorama",
-        description = "What it does: Constructs a StreetViewPanoramaCamera configuration with an increased zoom level.\nHow to see the effect: The Street View perspective zooms closer into the street scene.",
+        description = "What it does: Constructs a StreetViewPanoramaCamera configuration with an increased zoom " +
+            "level.\nHow to see the effect: The Street View perspective zooms closer into the street scene.",
     )
     fun zoomPanorama() {
         val zoomBy = 0.5f
@@ -70,7 +74,8 @@ class StreetViewSnippets(private val context: Context, private val map: TrackedM
 
     @SnippetItem(
         title = "4. Animate Camera",
-        description = "What it does: Configures camera bearing rotation (heading adjustment) for smooth panorama panning.\nHow to see the effect: The Street View panorama camera view rotates horizontally.",
+        description = "What it does: Configures camera bearing rotation (heading adjustment) for smooth panorama " +
+            "panning.\nHow to see the effect: The Street View panorama camera view rotates horizontally.",
     )
     fun animatePanorama() {
         val duration: Long = 1000

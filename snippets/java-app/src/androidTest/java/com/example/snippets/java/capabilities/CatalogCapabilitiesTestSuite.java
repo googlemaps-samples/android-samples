@@ -20,8 +20,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Master falsifiable capability test suite for all Java verified capabilities.
- * Runs MarkerSnippetsTest, CameraControlSnippetsTest, EventsSnippetsTest, and MapInitSnippetsTest together.
+ * Master falsifiable capability test suite for all Java verified capabilities. Runs
+ * MarkerSnippetsTest, CameraControlSnippetsTest, EventsSnippetsTest, and MapInitSnippetsTest
+ * together.
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

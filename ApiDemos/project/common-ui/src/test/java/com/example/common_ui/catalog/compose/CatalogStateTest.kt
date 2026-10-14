@@ -33,17 +33,15 @@ class CatalogStateTest {
     private fun createTestCatalogState(
         isReviewerMode: Boolean = true,
         evaluations: Map<String, SampleEvaluation> = emptyMap(),
-        initialFramework: Framework = Framework.KOTLIN_VIEWS
-    ): CatalogState {
-        return CatalogState(
-            isReviewerMode = isReviewerMode,
-            evaluations = evaluations,
-            lazyListState = LazyListState(),
-            snackbarHostState = SnackbarHostState(),
-            coroutineScope = CoroutineScope(Dispatchers.Unconfined),
-            initialFramework = initialFramework
-        )
-    }
+        initialFramework: Framework = Framework.KOTLIN_VIEWS,
+    ): CatalogState = CatalogState(
+        isReviewerMode = isReviewerMode,
+        evaluations = evaluations,
+        lazyListState = LazyListState(),
+        snackbarHostState = SnackbarHostState(),
+        coroutineScope = CoroutineScope(Dispatchers.Unconfined),
+        initialFramework = initialFramework,
+    )
 
     @Test
     fun initialState_defaultsCorrectly() {
@@ -77,7 +75,7 @@ class CatalogStateTest {
 
         val evals = mapOf(
             fqcn1 to SampleEvaluation(sampleId = sample1.id, status = "PASSING", notes = "All good"),
-            fqcn2 to SampleEvaluation(sampleId = sample2.id, status = "NEEDS_WORK", notes = "Bug found")
+            fqcn2 to SampleEvaluation(sampleId = sample2.id, status = "NEEDS_WORK", notes = "Bug found"),
         )
 
         val state = createTestCatalogState(evaluations = evals)
@@ -92,7 +90,7 @@ class CatalogStateTest {
         val evals = mapOf(
             "sample1" to SampleEvaluation(sampleId = "sample1", status = "NEEDS_WORK", notes = "Broken"),
             "sample2" to SampleEvaluation(sampleId = "sample2", status = "PASSING", notes = "Good with note"),
-            "sample3" to SampleEvaluation(sampleId = "sample3", status = "PASSING", notes = "")
+            "sample3" to SampleEvaluation(sampleId = "sample3", status = "PASSING", notes = ""),
         )
 
         val state = createTestCatalogState(evaluations = evals)
@@ -106,7 +104,7 @@ class CatalogStateTest {
         val fqcn1 = sample1.getTargetFqcn(Framework.KOTLIN_VIEWS)
 
         val evals = mapOf(
-            fqcn1 to SampleEvaluation(sampleId = sample1.id, status = "PASSING", notes = "Pass")
+            fqcn1 to SampleEvaluation(sampleId = sample1.id, status = "PASSING", notes = "Pass"),
         )
 
         val state = createTestCatalogState(evaluations = evals)
@@ -136,7 +134,7 @@ class CatalogStateTest {
 
         // Mark s0 as passing
         val evals = mapOf(
-            fqcn0 to SampleEvaluation(sampleId = s0.id, status = "PASSING", notes = "Pass")
+            fqcn0 to SampleEvaluation(sampleId = s0.id, status = "PASSING", notes = "Pass"),
         )
 
         val state = createTestCatalogState(evaluations = evals)
@@ -158,7 +156,7 @@ class CatalogStateTest {
         // Mark s0 and s1 as passing
         val evals = mapOf(
             fqcn0 to SampleEvaluation(sampleId = s0.id, status = "PASSING", notes = "Pass"),
-            fqcn1 to SampleEvaluation(sampleId = s1.id, status = "PASSING", notes = "Pass")
+            fqcn1 to SampleEvaluation(sampleId = s1.id, status = "PASSING", notes = "Pass"),
         )
 
         val state = createTestCatalogState(evaluations = evals)

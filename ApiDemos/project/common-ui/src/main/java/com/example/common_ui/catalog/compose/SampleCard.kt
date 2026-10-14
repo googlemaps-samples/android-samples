@@ -74,22 +74,19 @@ fun statusVisuals(status: ReviewStatus): Triple<String, Color, Color> = when (st
  * Reusable visual badge representing sample review status.
  */
 @Composable
-fun ReviewStatusBadge(
-    status: ReviewStatus,
-    modifier: Modifier = Modifier
-) {
+fun ReviewStatusBadge(status: ReviewStatus, modifier: Modifier = Modifier) {
     val (statusText, statusBg, statusFg) = statusVisuals(status)
     Surface(
         shape = RoundedCornerShape(8.dp),
         color = statusBg,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Text(
             text = statusText,
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
             color = statusFg,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
         )
     }
 }
@@ -107,7 +104,7 @@ fun SampleComposeCard(
     status: ReviewStatus,
     onSampleClick: () -> Unit,
     onInfoClick: () -> Unit,
-    onQuickGrade: (ReviewStatus) -> Unit
+    onQuickGrade: (ReviewStatus) -> Unit,
 ) {
     val hasActivity = sample.getActivityForFramework(framework) != null
     val isReviewed = isReviewerMode && (status == ReviewStatus.PASSING || status == ReviewStatus.NEEDS_WORK)
@@ -120,9 +117,9 @@ fun SampleComposeCard(
             .clickable { isExpandedManually = !isCardExpanded },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surface,
         ),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = if (isCardExpanded) 2.dp else 1.dp)
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = if (isCardExpanded) 2.dp else 1.dp),
     ) {
         if (!isCardExpanded) {
             SampleCardCollapsedRow(
@@ -130,7 +127,7 @@ fun SampleComposeCard(
                 status = status,
                 evaluation = evaluation,
                 hasActivity = hasActivity,
-                onSampleClick = onSampleClick
+                onSampleClick = onSampleClick,
             )
         } else {
             SampleCardExpandedContent(
@@ -144,7 +141,7 @@ fun SampleComposeCard(
                 onCollapse = { isExpandedManually = false },
                 onQuickGrade = onQuickGrade,
                 onInfoClick = onInfoClick,
-                onSampleClick = onSampleClick
+                onSampleClick = onSampleClick,
             )
         }
     }
@@ -156,25 +153,25 @@ private fun SampleCardCollapsedRow(
     status: ReviewStatus,
     evaluation: SampleEvaluation?,
     hasActivity: Boolean,
-    onSampleClick: () -> Unit
+    onSampleClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Row(
             modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Text(
                 text = sample.title,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                maxLines = 1
+                maxLines = 1,
             )
 
             ReviewStatusBadge(status = status)
@@ -182,25 +179,25 @@ private fun SampleCardCollapsedRow(
             if (!evaluation?.notes.isNullOrBlank()) {
                 Text(
                     text = "📝",
-                    fontSize = 12.sp
+                    fontSize = 12.sp,
                 )
             }
         }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             if (hasActivity) {
                 IconButton(
                     onClick = onSampleClick,
-                    modifier = Modifier.size(32.dp)
+                    modifier = Modifier.size(32.dp),
                 ) {
                     Icon(
                         Icons.Default.PlayArrow,
                         contentDescription = "Launch Sample",
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp),
                     )
                 }
             }
@@ -209,7 +206,7 @@ private fun SampleCardCollapsedRow(
                 imageVector = Icons.Default.KeyboardArrowDown,
                 contentDescription = "Expand",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
         }
     }
@@ -227,43 +224,43 @@ private fun SampleCardExpandedContent(
     onCollapse: () -> Unit,
     onQuickGrade: (ReviewStatus) -> Unit,
     onInfoClick: () -> Unit,
-    onSampleClick: () -> Unit
+    onSampleClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp),
     ) {
         // Top Header: Category, Complexity Chip, and Collapse Chevron
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 text = sample.category,
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 SuggestionChip(
                     onClick = {},
-                    label = { Text("${sample.complexity.badge} ${sample.complexity.displayName}", fontSize = 11.sp) }
+                    label = { Text("${sample.complexity.badge} ${sample.complexity.displayName}", fontSize = 11.sp) },
                 )
 
                 IconButton(
                     onClick = onCollapse,
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(28.dp),
                 ) {
                     Icon(
                         Icons.Default.KeyboardArrowUp,
                         contentDescription = "Collapse",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -274,14 +271,14 @@ private fun SampleCardExpandedContent(
         Text(
             text = sample.title,
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
 
         // FQCN Target Identifier
         Text(
             text = targetFqcn.substringAfterLast('.'),
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.outline
+            color = MaterialTheme.colorScheme.outline,
         )
 
         // Description
@@ -289,7 +286,7 @@ private fun SampleCardExpandedContent(
         Text(
             text = sample.description,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         // Review Status Badge & Notes (Reviewer Mode Only)
@@ -297,7 +294,7 @@ private fun SampleCardExpandedContent(
             Spacer(modifier = Modifier.height(10.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 ReviewStatusBadge(status = status)
 
@@ -307,7 +304,7 @@ private fun SampleCardExpandedContent(
                         style = MaterialTheme.typography.bodySmall,
                         color = Color(0xFFE65100),
                         maxLines = 1,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
             }
@@ -316,7 +313,7 @@ private fun SampleCardExpandedContent(
             Spacer(modifier = Modifier.height(10.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 FilledTonalButton(
                     onClick = { onQuickGrade(ReviewStatus.PASSING) },
@@ -324,9 +321,9 @@ private fun SampleCardExpandedContent(
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
                         containerColor = Color(0xFFE8F5E9),
-                        contentColor = Color(0xFF2E7D32)
+                        contentColor = Color(0xFF2E7D32),
                     ),
-                    contentPadding = PaddingValues(vertical = 6.dp)
+                    contentPadding = PaddingValues(vertical = 6.dp),
                 ) {
                     Text("👍 Good Job", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
@@ -337,9 +334,9 @@ private fun SampleCardExpandedContent(
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.filledTonalButtonColors(
                         containerColor = Color(0xFFFFEBEE),
-                        contentColor = Color(0xFFC62828)
+                        contentColor = Color(0xFFC62828),
                     ),
-                    contentPadding = PaddingValues(vertical = 6.dp)
+                    contentPadding = PaddingValues(vertical = 6.dp),
                 ) {
                     Text("⚠️ Issue", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
@@ -352,7 +349,7 @@ private fun SampleCardExpandedContent(
             Text(
                 text = sample.tags.joinToString(" "),
                 style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
         }
 
@@ -361,17 +358,17 @@ private fun SampleCardExpandedContent(
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             OutlinedButton(
                 onClick = onInfoClick,
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Icon(
                     Icons.Default.Info,
                     contentDescription = null,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier.size(16.dp),
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("About & APIs", fontSize = 12.sp)
@@ -381,11 +378,11 @@ private fun SampleCardExpandedContent(
                 onClick = onSampleClick,
                 enabled = hasActivity,
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) {
                 Text(
                     if (hasActivity) "Launch Sample" else "No ${framework.badge} Impl",
-                    fontSize = 12.sp
+                    fontSize = 12.sp,
                 )
             }
         }

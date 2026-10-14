@@ -37,7 +37,7 @@ private val LightColors = lightColorScheme(
     surfaceVariant = Color(0xFFF1F3F4),
     onSurfaceVariant = Color(0xFF5F6368),
     outline = Color(0xFFDADCE0),
-    outlineVariant = Color(0xFFE8EAED)
+    outlineVariant = Color(0xFFE8EAED),
 )
 
 private val DarkColors = darkColorScheme(
@@ -54,17 +54,14 @@ private val DarkColors = darkColorScheme(
     surfaceVariant = Color(0xFF303134),
     onSurfaceVariant = Color(0xFFBDC1C6),
     outline = Color(0xFF5F6368),
-    outlineVariant = Color(0xFF3C4043)
+    outlineVariant = Color(0xFF3C4043),
 )
 
 @Composable
-fun CatalogTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
+fun CatalogTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) DarkColors else LightColors
     MaterialTheme(
         colorScheme = colors,
-        content = content
+        content = content,
     )
 }

@@ -33,8 +33,8 @@ public class LatLngSubject extends Subject {
 
     public void isNear(LatLng expected) {
         double tolerance = 1e-6;
-        if (Math.abs(actual.latitude - expected.latitude) > tolerance ||
-            Math.abs(actual.longitude - expected.longitude) > tolerance) {
+        if (Math.abs(actual.latitude - expected.latitude) > tolerance
+                || Math.abs(actual.longitude - expected.longitude) > tolerance) {
             failWithActual("expected to be near", expected);
         }
     }

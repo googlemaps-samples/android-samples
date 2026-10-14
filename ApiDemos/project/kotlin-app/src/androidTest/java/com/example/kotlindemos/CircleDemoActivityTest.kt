@@ -31,8 +31,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class CircleDemoActivityTest :
-    MapDemoActivityTest<CircleDemoActivity>(CircleDemoActivity::class.java) {
+class CircleDemoActivityTest : MapDemoActivityTest<CircleDemoActivity>(CircleDemoActivity::class.java) {
 
     @Test
     fun testMapIsDisplayed() {

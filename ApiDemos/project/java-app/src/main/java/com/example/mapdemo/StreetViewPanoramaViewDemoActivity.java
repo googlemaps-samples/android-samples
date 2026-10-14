@@ -12,22 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
+import android.os.Bundle;
+import android.view.ViewGroup.LayoutParams;
+import androidx.annotation.NonNull;
 import com.google.android.gms.maps.StreetViewPanoramaOptions;
 import com.google.android.gms.maps.StreetViewPanoramaView;
 import com.google.android.gms.maps.model.LatLng;
 
-import android.os.Bundle;
-import android.view.ViewGroup.LayoutParams;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-/**
- * This shows how to create a simple activity with streetview
- */
+/** This shows how to create a simple activity with streetview */
 public class StreetViewPanoramaViewDemoActivity extends SamplesBaseActivity {
 
     // George St, Sydney
@@ -47,7 +41,8 @@ public class StreetViewPanoramaViewDemoActivity extends SamplesBaseActivity {
         }
 
         streetViewPanoramaView = new StreetViewPanoramaView(this, options);
-        addContentView(streetViewPanoramaView,
+        addContentView(
+                streetViewPanoramaView,
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
         // *** IMPORTANT ***

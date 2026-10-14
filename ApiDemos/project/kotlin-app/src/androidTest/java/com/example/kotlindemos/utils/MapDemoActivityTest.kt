@@ -34,10 +34,10 @@ import org.junit.Before
 
 abstract class MapDemoActivityTest<T>(
     // Pass the class to the constructor as a property
-    private val klass: Class<T>
+    private val klass: Class<T>,
 )
 // Use a 'where' clause for multiple type constraints
-        where T : AppCompatActivity, T : MapProvider {
+    where T : AppCompatActivity, T : MapProvider {
     // Made protected so children can access
     protected lateinit var mapView: View
     protected lateinit var map: GoogleMap
@@ -47,7 +47,8 @@ abstract class MapDemoActivityTest<T>(
     @Before
     open fun setUp() { // Made open so it can be overridden
         scenario = ActivityScenario.launch(klass) // <-- Uses constructor property
-        scenario.onActivity { activity -> // <-- 'activity' is now of type T
+        scenario.onActivity { activity ->
+            // <-- 'activity' is now of type T
             // Wait for the map to be ready
             val startTime = System.currentTimeMillis()
             val endTime = startTime + 5000 // 5 second timeout
@@ -82,21 +83,14 @@ abstract class MapDemoActivityTest<T>(
         scenario.close()
     }
 
-    protected fun clickOnMapAt(
-        latLng: LatLng,
-        tapType: Tapper = Tap.SINGLE) {
+    protected fun clickOnMapAt(latLng: LatLng, tapType: Tapper = Tap.SINGLE) {
         clickOnMapAt(latLng, map, mapView, tapType)
     }
 
     /**
      * Helper function to perform a click at a specific geographical location on the map.
      */
-    protected fun clickOnMapAt(
-        latLng: LatLng,
-        map: GoogleMap,
-        mapView: View,
-        tapType: Tapper = Tap.SINGLE
-    ) {
+    protected fun clickOnMapAt(latLng: LatLng, map: GoogleMap, mapView: View, tapType: Tapper = Tap.SINGLE) {
         val coordinates = FloatArray(2)
         scenario.onActivity { activity ->
             val mapLocation = IntArray(2)
@@ -110,11 +104,16 @@ abstract class MapDemoActivityTest<T>(
         }
 
         val clickAction = GeneralClickAction(
-            /* tapper = */ tapType,
-            /* coordinatesProvider = */ { _ -> coordinates },
-            /* precisionDescriber = */ Press.FINGER,
-            /* inputDevice = */ InputDevice.SOURCE_UNKNOWN,
-            /* buttonState = */ MotionEvent.BUTTON_PRIMARY
+            /* tapper = */
+            tapType,
+            /* coordinatesProvider = */
+            { _ -> coordinates },
+            /* precisionDescriber = */
+            Press.FINGER,
+            /* inputDevice = */
+            InputDevice.SOURCE_UNKNOWN,
+            /* buttonState = */
+            MotionEvent.BUTTON_PRIMARY,
         )
         Espresso.onView(ViewMatchers.withId(R.id.map)).perform(clickAction)
     }

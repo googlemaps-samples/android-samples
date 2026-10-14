@@ -13,10 +13,6 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -27,6 +23,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -64,13 +63,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
     category = "Street View",
     complexity = Complexity.ADVANCED,
     tags = ["#streetview", "#panorama", "#pegman", "#sync", "#bidirectional"],
-    purpose = "Demonstrates bidirectional synchronization: dragging map Pegman updates panorama; walking Street View moves map marker.",
-    successCriteria = "Moving Pegman on map instantly loads new 360 panorama; street navigation rotates Pegman bearing.",
+    purpose = "Demonstrates bidirectional synchronization: dragging map Pegman updates panorama; walking Street View " +
+        "moves map marker.",
+    successCriteria = "Moving Pegman on map instantly loads new 360 panorama; street navigation rotates Pegman " +
+        "bearing.",
     failureIndicators = "Infinite update feedback loops, Pegman desyncing from panorama, or FAB jump failing.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
-class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
-    OnMarkerDragListener, OnStreetViewPanoramaChangeListener,
+class SplitStreetViewPanoramaAndMapDemoActivity :
+    SamplesBaseActivity(),
+    OnMarkerDragListener,
+    OnStreetViewPanoramaChangeListener,
     ActivityCompat.OnRequestPermissionsResultCallback {
 
     private var streetViewPanorama: StreetViewPanorama? = null
@@ -95,7 +98,7 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama ->
             streetViewPanorama = panorama
             streetViewPanorama?.setOnStreetViewPanoramaChangeListener(
-                this@SplitStreetViewPanoramaAndMapDemoActivity
+                this@SplitStreetViewPanoramaAndMapDemoActivity,
             )
             // Street View maintains its own state across orientation changes; only set position initially.
             savedInstanceState ?: streetViewPanorama?.setPosition(SYDNEY)
@@ -122,7 +125,7 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
                 MarkerOptions()
                     .position(markerPosition)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman))
-                    .draggable(true)
+                    .draggable(true),
             )
         }
 
@@ -136,13 +139,13 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
     /**
      * Checks if fine or coarse location permission is granted.
      */
-    private fun hasLocationPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            this, Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
-            this, Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    }
+    private fun hasLocationPermission(): Boolean = ContextCompat.checkSelfPermission(
+        this,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+    ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+        this,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+    ) == PackageManager.PERMISSION_GRANTED
 
     /**
      * Requests high-accuracy live location via [FusedLocationProviderClient] and teleports
@@ -152,16 +155,18 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
     private fun moveToMyLocation() {
         if (!hasLocationPermission()) {
             if (permissionRequested && !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, Manifest.permission.ACCESS_FINE_LOCATION
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 ) && !ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
                 )
             ) {
                 // Permanently denied ("Don't ask again") -> show informative toast guidance
                 Toast.makeText(
                     this,
                     R.string.location_permission_required_toast,
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
             } else {
                 permissionRequested = true
@@ -181,7 +186,7 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
         // Actively query NLP / GNSS for the current high-accuracy position
         fusedLocationClient.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY,
-            cts.token
+            cts.token,
         ).addOnSuccessListener { location: Location? ->
             if (location != null) {
                 updatePositionToLocation(location)
@@ -214,11 +219,7 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
         Toast.makeText(this, getString(R.string.moved_pegman_to_location), Toast.LENGTH_SHORT).show()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
             return
@@ -226,23 +227,24 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
         if (PermissionUtils.isPermissionGranted(
                 permissions,
                 grantResults,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) || PermissionUtils.isPermissionGranted(
                 permissions,
                 grantResults,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         ) {
             moveToMyLocation()
         } else {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, Manifest.permission.ACCESS_FINE_LOCATION
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
                 )
             ) {
                 Toast.makeText(
                     this,
                     R.string.location_permission_required_toast,
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
             }
         }
@@ -257,7 +259,7 @@ class SplitStreetViewPanoramaAndMapDemoActivity : SamplesBaseActivity(),
         super.onSaveInstanceState(outState)
         outState.putParcelable(
             MARKER_POSITION_KEY,
-            marker?.position
+            marker?.position,
         )
     }
 

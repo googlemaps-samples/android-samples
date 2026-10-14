@@ -55,7 +55,7 @@ fun CatalogDialogHost(
     state: CatalogState,
     onSaveEvaluation: ((targetFqcn: String, status: ReviewStatus, notes: String, sample: SampleItem) -> Unit)?,
     onClearEvaluations: (() -> Unit)?,
-    onLaunchSample: (SampleItem, Framework) -> Unit
+    onLaunchSample: (SampleItem, Framework) -> Unit,
 ) {
     if (state.showClearConfirmDialog) {
         ClearEvaluationsDialog(
@@ -63,7 +63,7 @@ fun CatalogDialogHost(
                 onClearEvaluations?.invoke()
                 state.showClearConfirmDialog = false
             },
-            onDismiss = { state.showClearConfirmDialog = false }
+            onDismiss = { state.showClearConfirmDialog = false },
         )
     }
 
@@ -84,7 +84,7 @@ fun CatalogDialogHost(
             onLaunch = { fw ->
                 state.activeSampleDetailId = null
                 onLaunchSample(sample, fw)
-            }
+            },
         )
     }
 
@@ -114,7 +114,7 @@ fun CatalogDialogHost(
             onDismiss = {
                 state.activeQuickGradingSampleId = null
                 state.activeQuickGradingStatus = null
-            }
+            },
         )
     }
 }
@@ -123,30 +123,30 @@ fun CatalogDialogHost(
  * Confirmation dialog for clearing / resetting all evaluations back to unchecked.
  */
 @Composable
-fun ClearEvaluationsDialog(
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
-) {
+fun ClearEvaluationsDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = {
             Icon(
                 painter = painterResource(R.drawable.ic_undo),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.error
+                tint = MaterialTheme.colorScheme.error,
             )
         },
         title = { Text("Reset All Review Evaluations?") },
         text = {
-            Text("This will reset all ratings, status marks, and reviewer notes across all Kotlin and Java samples back to Unchecked.")
+            Text(
+                "This will reset all ratings, status marks, and reviewer notes across all Kotlin and Java " +
+                    "samples back to Unchecked.",
+            )
         },
         confirmButton = {
             Button(
                 onClick = onConfirm,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.error,
-                    contentColor = MaterialTheme.colorScheme.onError
-                )
+                    contentColor = MaterialTheme.colorScheme.onError,
+                ),
             ) {
                 Text("Reset All")
             }
@@ -155,7 +155,7 @@ fun ClearEvaluationsDialog(
             TextButton(onClick = onDismiss) {
                 Text("Cancel")
             }
-        }
+        },
     )
 }
 
@@ -170,7 +170,7 @@ fun QuickGradingDialog(
     initialNotes: String,
     onSave: (notes: String) -> Unit,
     onSaveAndNext: (notes: String) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     var notes by rememberSaveable { mutableStateOf(initialNotes) }
 
@@ -178,9 +178,15 @@ fun QuickGradingDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = if (gradeStatus == ReviewStatus.PASSING) "👍 Good Job: ${sample.title}" else "⚠️ Something's Wrong: ${sample.title}",
+                text = if (gradeStatus ==
+                    ReviewStatus.PASSING
+                ) {
+                    "👍 Good Job: ${sample.title}"
+                } else {
+                    "⚠️ Something's Wrong: ${sample.title}"
+                },
                 fontWeight = FontWeight.Bold,
-                fontSize = 17.sp
+                fontSize = 17.sp,
             )
         },
         text = {
@@ -188,7 +194,7 @@ fun QuickGradingDialog(
                 Text(
                     text = "Target: ${targetFqcn.substringAfterLast('.')}",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.outline
+                    color = MaterialTheme.colorScheme.outline,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
@@ -198,7 +204,7 @@ fun QuickGradingDialog(
                     modifier = Modifier.fillMaxWidth(),
                     minLines = 3,
                     maxLines = 5,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(10.dp),
                 )
             }
         },
@@ -210,8 +216,8 @@ fun QuickGradingDialog(
                 Button(
                     onClick = { onSaveAndNext(notes) },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
+                        containerColor = MaterialTheme.colorScheme.primary,
+                    ),
                 ) {
                     Text("Save & Next ⏭️", fontWeight = FontWeight.Bold)
                 }
@@ -221,6 +227,6 @@ fun QuickGradingDialog(
             TextButton(onClick = onDismiss) {
                 Text("Cancel")
             }
-        }
+        },
     )
 }

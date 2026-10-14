@@ -13,22 +13,20 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.graphics.Color
-import androidx.core.graphics.toColorInt
-
-import com.google.android.gms.maps.OnMapReadyCallback
 import android.os.Bundle
 import android.util.Log
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.GoogleMap
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.AdvancedMarkerOptions
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -36,7 +34,6 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapCapabilities
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.PinConfig
-
 
 private val SINGAPORE = LatLng(1.3521, 103.8198)
 private val KUALA_LUMPUR = LatLng(3.1390, 101.6869)
@@ -49,7 +46,6 @@ private const val ZOOM_LEVEL = 3.5f
 
 private val TAG = AdvancedMarkersDemoActivity::class.java.name
 
-
 /**
  * The following sample showcases how to create Advanced Markers, and use all their customization
  * possibilities.
@@ -61,15 +57,20 @@ private val TAG = AdvancedMarkersDemoActivity::class.java.name
     category = "Markers & Overlays",
     complexity = Complexity.ADVANCED,
     tags = ["#markers", "#advancedmarkers", "#pinconfig", "#collision", "#badges", "#mapid"],
-    purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and custom View icons.",
-    successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with collision handling.",
-    failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge text blurry.",
-    framework = Framework.KOTLIN_VIEWS
+    purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and " +
+        "custom View icons.",
+    successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with " +
+        "collision handling.",
+    failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge " +
+        "text blurry.",
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_marker_advanced]
-class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
+class AdvancedMarkersDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
 
-    /**
+    /*
      * This method is called when the activity is first created.
      *
      * It sets up the activity's layout and then initializes the map.
@@ -154,7 +155,6 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-
         val bounds = LatLngBounds.builder()
             .include(SINGAPORE)
             .include(KUALA_LUMPUR)
@@ -177,7 +177,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             setPadding(padding, padding, padding, padding)
             layoutParams = android.view.ViewGroup.LayoutParams(
                 (44 * resources.displayMetrics.density).toInt(),
-                (44 * resources.displayMetrics.density).toInt()
+                (44 * resources.displayMetrics.density).toInt(),
             )
         }
         map.addMarker(
@@ -185,7 +185,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
                 .position(SINGAPORE)
                 .iconView(iconImageView)
                 .title("Singapore (Custom Framed Badge)")
-                .zIndex(1f)
+                .zIndex(1f),
         )
 
         // 2. PinConfig with custom background color
@@ -196,7 +196,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigMagenta))
                 .position(KUALA_LUMPUR)
-                .title("Kuala Lumpur (Magenta Pin)")
+                .title("Kuala Lumpur (Magenta Pin)"),
         )
         klMarker?.showInfoWindow()
 
@@ -208,7 +208,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigBorder))
                 .position(JAKARTA)
-                .title("Jakarta (Blue Border)")
+                .title("Jakarta (Blue Border)"),
         )
 
         // 4. PinConfig with text glyph ("A")
@@ -219,7 +219,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigTextGlyph))
                 .position(BANGKOK)
-                .title("Bangkok (Text Glyph 'A')")
+                .title("Bangkok (Text Glyph 'A')"),
         )
 
         // 5. PinConfig with transparent glyph (cutout / donut pin)
@@ -231,7 +231,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             AdvancedMarkerOptions()
                 .icon(BitmapDescriptorFactory.fromPinConfig(pinConfigHole))
                 .position(MANILA)
-                .title("Manila (Transparent Cutout Glyph)")
+                .title("Manila (Transparent Cutout Glyph)"),
         )
 
         // 6. Collision behavior
@@ -241,7 +241,7 @@ class AdvancedMarkersDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             AdvancedMarkerOptions()
                 .position(HO_CHI_MINH_CITY)
                 .collisionBehavior(collisionBehavior)
-                .title("Ho Chi Minh City (Collision Behavior)")
+                .title("Ho Chi Minh City (Collision Behavior)"),
         )
     }
 }

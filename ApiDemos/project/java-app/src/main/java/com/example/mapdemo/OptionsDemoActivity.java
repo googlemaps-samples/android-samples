@@ -12,16 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-/**
- * An activity that creates a map with some initial options.
- */
+/** An activity that creates a map with some initial options. */
 public final class OptionsDemoActivity extends SamplesBaseActivity {
 
     @Override

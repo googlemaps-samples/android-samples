@@ -49,7 +49,10 @@ interface SampleEvaluationDao {
     @Query("UPDATE sample_evaluations SET notes = :notes, lastUpdated = :timestamp WHERE sampleId = :sampleId")
     fun updateNotes(sampleId: String, notes: String, timestamp: Long): Int
 
-    @Query("SELECT * FROM sample_evaluations WHERE status = 'NEEDS_WORK' OR (notes IS NOT NULL AND notes != '') ORDER BY lastUpdated DESC")
+    @Query(
+        "SELECT * FROM sample_evaluations WHERE status = 'NEEDS_WORK' OR (notes IS NOT NULL AND notes != '') " +
+            "ORDER BY lastUpdated DESC",
+    )
     fun getGrievances(): List<SampleEvaluationEntity>
 
     @Query("DELETE FROM sample_evaluations WHERE sampleId = :sampleId")

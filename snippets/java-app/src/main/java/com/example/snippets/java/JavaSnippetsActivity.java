@@ -36,24 +36,29 @@ public class JavaSnippetsActivity extends AppCompatActivity {
         }
 
         android.view.View mainView = findViewById(R.id.main);
-        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-            androidx.core.graphics.Insets systemBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(
+                mainView,
+                (v, insets) -> {
+                    androidx.core.graphics.Insets systemBars =
+                            insets.getInsets(
+                                    androidx.core.view.WindowInsetsCompat.Type.systemBars());
+                    v.setPadding(
+                            systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                    return insets;
+                });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        SnippetGroupAdapter adapter = new SnippetGroupAdapter(
-                SnippetRegistry.getSnippetGroups(),
-                item -> {
-                    Intent intent = new Intent(this, MapActivity.class);
-                    intent.putExtra("group_title", item.getGroupTitle());
-                    intent.putExtra(MapActivity.EXTRA_SNIPPET_TITLE, item.getTitle());
-                    startActivity(intent);
-                }
-        );
+        SnippetGroupAdapter adapter =
+                new SnippetGroupAdapter(
+                        SnippetRegistry.getSnippetGroups(),
+                        item -> {
+                            Intent intent = new Intent(this, MapActivity.class);
+                            intent.putExtra("group_title", item.getGroupTitle());
+                            intent.putExtra(MapActivity.EXTRA_SNIPPET_TITLE, item.getTitle());
+                            startActivity(intent);
+                        });
         recyclerView.setAdapter(adapter);
     }
 }

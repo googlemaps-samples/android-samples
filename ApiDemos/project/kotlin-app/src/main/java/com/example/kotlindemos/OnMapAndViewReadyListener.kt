@@ -31,10 +31,10 @@ import com.google.android.gms.maps.SupportMapFragment
  * (ie. anything that needs to know the View's true size like snapshotting).
  */
 class OnMapAndViewReadyListener(
-        private val mapFragment: SupportMapFragment,
-        private val toBeNotified: OnGlobalLayoutAndMapReadyListener
+    private val mapFragment: SupportMapFragment,
+    private val toBeNotified: OnGlobalLayoutAndMapReadyListener,
 ) : OnGlobalLayoutListener,
-        OnMapReadyCallback {
+    OnMapReadyCallback {
 
     private var mapView: View? = null
 
@@ -81,7 +81,7 @@ class OnMapAndViewReadyListener(
 
     // We use the new method when supported
     @Suppress("DEPRECATION")
-    @SuppressLint("NewApi")  // We check which build version we are using.
+    @SuppressLint("NewApi") // We check which build version we are using.
     override fun onGlobalLayout() {
         // Remove our listener.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {

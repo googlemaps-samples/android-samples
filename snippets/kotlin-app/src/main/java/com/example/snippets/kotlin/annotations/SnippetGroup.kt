@@ -24,7 +24,4 @@ package com.example.snippets.kotlin.annotations
  */
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class SnippetGroup(
-    val title: String,
-    val description: String = "",
-)
+annotation class SnippetGroup(val title: String, val description: String = "")

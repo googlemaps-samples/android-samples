@@ -42,7 +42,11 @@ abstract class BaseVisualTest {
     }
 
     protected fun captureScreenshot(filename: String = "screenshot_${System.currentTimeMillis()}.png"): Bitmap {
-        val rawFile = File(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS), "raw_$filename")
+        val rawFile =
+            File(
+                android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS),
+                "raw_$filename",
+            )
         val screenshotTaken = uiDevice.takeScreenshot(rawFile)
         assertTrue("Failed to take screenshot: $filename", screenshotTaken)
 
@@ -50,7 +54,11 @@ abstract class BaseVisualTest {
         assertTrue("Failed to decode screenshot file: $filename", rawBitmap != null)
 
         val scaledBitmap = Bitmap.createScaledBitmap(rawBitmap, rawBitmap.width / 4, rawBitmap.height / 4, true)
-        val screenshotFile = File(android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS), filename)
+        val screenshotFile =
+            File(
+                android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS),
+                filename,
+            )
         screenshotFile.outputStream().use { out ->
             scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
         }
@@ -74,7 +82,7 @@ abstract class BaseVisualTest {
             android.util.Log.i("BaseVisualTest", "Gemini's analysis: $geminiResponse")
             assertTrue(
                 "Visual verification failed. Gemini response: $geminiResponse",
-                geminiResponse?.contains("PASSED", ignoreCase = true) == true
+                geminiResponse?.contains("PASSED", ignoreCase = true) == true,
             )
         } else {
             assertTrue("Captured screenshot should be valid", screenshotBitmap.width > 0 && screenshotBitmap.height > 0)
@@ -85,7 +93,7 @@ abstract class BaseVisualTest {
         groupTitle: String,
         snippetTitle: String,
         screenshotFilename: String,
-        prompt: String
+        prompt: String,
     ) {
         runBlocking {
             val intent = Intent(context, MapActivity::class.java).apply {

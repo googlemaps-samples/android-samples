@@ -73,7 +73,7 @@ object ScreenCaptureHelper {
                             activity.runOnUiThread { onCaptured(captureViewFallback(decorView, width, height)) }
                         }
                     },
-                    Handler(Looper.getMainLooper())
+                    Handler(Looper.getMainLooper()),
                 )
             } catch (e: Exception) {
                 onCaptured(captureViewFallback(decorView, width, height))
@@ -83,15 +83,13 @@ object ScreenCaptureHelper {
         }
     }
 
-    private fun captureViewFallback(view: View, width: Int, height: Int): Bitmap? {
-        return try {
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            view.draw(canvas)
-            bitmap
-        } catch (e: Exception) {
-            null
-        }
+    private fun captureViewFallback(view: View, width: Int, height: Int): Bitmap? = try {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        bitmap
+    } catch (e: Exception) {
+        null
     }
 
     @JvmStatic
@@ -101,7 +99,7 @@ object ScreenCaptureHelper {
             mkdirs()
         }
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val file = File(dir, "issue_${cleanName}_${timeStamp}.png")
+        val file = File(dir, "issue_${cleanName}_$timeStamp.png")
         FileOutputStream(file).use { out ->
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
         }

@@ -25,14 +25,16 @@ import com.example.snippets.kotlin.annotations.SnippetItem
 
 @SnippetGroup(
     title = "My Location Layer",
-    description = "Snippets demonstrating my location layer setup and button clicks."
+    description = "Snippets demonstrating my location layer setup and button clicks.",
 )
 class MyLocationSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SuppressLint("MissingPermission")
     @SnippetItem(
         title = "1. Enable My Location Layer",
-        description = "What it does: Enables the My Location blue dot layer and attaches click handlers for the location button and dot.\nHow to see the effect: A blue location dot renders at your device coordinates, and tapping the location button or blue dot triggers a Toast message.",
+        description = "What it does: Enables the My Location blue dot layer and attaches click handlers for the " +
+            "location button and dot.\nHow to see the effect: A blue location dot renders at your device " +
+            "coordinates, and tapping the location button or blue dot triggers a Toast message.",
     )
     fun myLocationLayer() {
         // [START maps_android_my_location]

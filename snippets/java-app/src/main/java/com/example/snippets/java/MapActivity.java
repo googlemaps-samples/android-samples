@@ -20,21 +20,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.snippets.common.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.List;
-import android.widget.FrameLayout;
-import com.google.android.gms.maps.GoogleMapOptions;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -52,28 +51,50 @@ public class MapActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_map);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#E76F00")));
+            getSupportActionBar()
+                    .setBackgroundDrawable(
+                            new android.graphics.drawable.ColorDrawable(
+                                    android.graphics.Color.parseColor("#E76F00")));
         }
         getWindow().setStatusBarColor(android.graphics.Color.parseColor("#C05D00"));
         android.view.View mainView = findViewById(R.id.map_container);
         if (mainView != null) {
-            androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
-                androidx.core.graphics.Insets systemBars = insets.getInsets(androidx.core.view.WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
+            androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(
+                    mainView,
+                    (v, insets) -> {
+                        androidx.core.graphics.Insets systemBars =
+                                insets.getInsets(
+                                        androidx.core.view.WindowInsetsCompat.Type.systemBars());
+                        v.setPadding(
+                                systemBars.left,
+                                systemBars.top,
+                                systemBars.right,
+                                systemBars.bottom);
+                        return insets;
+                    });
         }
         // MapView will be dynamically initialized and added to map_view_holder in runSnippet()
         try {
-            android.content.pm.ApplicationInfo appInfo = getPackageManager().getApplicationInfo(
-                    getPackageName(), android.content.pm.PackageManager.GET_META_DATA);
+            android.content.pm.ApplicationInfo appInfo =
+                    getPackageManager()
+                            .getApplicationInfo(
+                                    getPackageName(),
+                                    android.content.pm.PackageManager.GET_META_DATA);
             if (appInfo.metaData != null) {
                 String apiKey = appInfo.metaData.getString("com.google.android.geo.API_KEY");
                 if (apiKey != null) {
                     apiKey = apiKey.trim();
                 }
-                if (apiKey == null || apiKey.isEmpty() || apiKey.equals("DEFAULT_API_KEY") || apiKey.equals("YOUR_API_KEY") || !apiKey.startsWith("AIza")) {
-                    Toast.makeText(this, "ERROR: Invalid Google Maps API Key configured in secrets.properties", Toast.LENGTH_LONG).show();
+                if (apiKey == null
+                        || apiKey.isEmpty()
+                        || apiKey.equals("DEFAULT_API_KEY")
+                        || apiKey.equals("YOUR_API_KEY")
+                        || !apiKey.startsWith("AIza")) {
+                    Toast.makeText(
+                                    this,
+                                    "ERROR: Invalid Google Maps API Key configured in secrets.properties",
+                                    Toast.LENGTH_LONG)
+                            .show();
                     Log.e("MapActivity", "Invalid MAPS_API_KEY configured in manifest");
                     finish();
                     return;
@@ -96,23 +117,38 @@ public class MapActivity extends AppCompatActivity {
                                 double rawBearing = cam.bearing;
                                 double bearing = (rawBearing % 360.0 + 360.0) % 360.0;
 
-                                String codeSnippet = String.format(
-                                        java.util.Locale.US,
-                                        "CameraPosition.builder()\n    .target(new LatLng(%.6f, %.6f))\n    .zoom(%.1ff)\n    .tilt(%.1ff)\n    .bearing(%.1ff)\n    .build()",
-                                        target.latitude,
-                                        target.longitude,
-                                        cam.zoom,
-                                        cam.tilt,
-                                        bearing);
+                                String codeSnippet =
+                                        String.format(
+                                                java.util.Locale.US,
+                                                "CameraPosition.builder()\n    .target(new LatLng(%.6f, %.6f))\n    .zoom(%.1ff)\n    .tilt(%.1ff)\n    .bearing(%.1ff)\n    .build()",
+                                                target.latitude,
+                                                target.longitude,
+                                                cam.zoom,
+                                                cam.tilt,
+                                                bearing);
 
-                                android.content.ClipboardManager cm = (android.content.ClipboardManager) getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+                                android.content.ClipboardManager cm =
+                                        (android.content.ClipboardManager)
+                                                getSystemService(
+                                                        android.content.Context.CLIPBOARD_SERVICE);
                                 if (cm != null) {
-                                    cm.setPrimaryClip(android.content.ClipData.newPlainText("CameraPosition", codeSnippet));
+                                    cm.setPrimaryClip(
+                                            android.content.ClipData.newPlainText(
+                                                    "CameraPosition", codeSnippet));
                                 }
-                                Toast.makeText(MapActivity.this, "📷 Camera Pose copied to clipboard!\n" + codeSnippet, Toast.LENGTH_LONG).show();
+                                Toast.makeText(
+                                                MapActivity.this,
+                                                "📷 Camera Pose copied to clipboard!\n"
+                                                        + codeSnippet,
+                                                Toast.LENGTH_LONG)
+                                        .show();
                                 Log.d("MapActivity", "Camera Pose copied:\n" + codeSnippet);
                             } else {
-                                Toast.makeText(MapActivity.this, "Map not initialized yet", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(
+                                                MapActivity.this,
+                                                "Map not initialized yet",
+                                                Toast.LENGTH_SHORT)
+                                        .show();
                             }
                         });
 
@@ -147,13 +183,21 @@ public class MapActivity extends AppCompatActivity {
                             String desc = "Demonstrates " + snippetTitle;
                             if (currentIndex >= 0 && currentIndex < snippetList.size()) {
                                 SnippetItemInfo item = snippetList.get(currentIndex);
-                                if (item.getDescription() != null && !item.getDescription().isEmpty()) {
+                                if (item.getDescription() != null
+                                        && !item.getDescription().isEmpty()) {
                                     desc = item.getDescription();
                                 }
                             }
                             new androidx.appcompat.app.AlertDialog.Builder(MapActivity.this)
-                                    .setTitle("ℹ️ " + (snippetTitle != null ? snippetTitle : "Snippet Purpose"))
-                                    .setMessage("🎯 Purpose & Point:\n" + desc + "\n\n👀 What you should see / do:\nInteract with the live map on your device screen to test this capability.")
+                                    .setTitle(
+                                            "ℹ️ "
+                                                    + (snippetTitle != null
+                                                            ? snippetTitle
+                                                            : "Snippet Purpose"))
+                                    .setMessage(
+                                            "🎯 Purpose & Point:\n"
+                                                    + desc
+                                                    + "\n\n👀 What you should see / do:\nInteract with the live map on your device screen to test this capability.")
                                     .setPositiveButton("Got It", null)
                                     .show();
                         });
@@ -194,7 +238,8 @@ public class MapActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            android.content.Intent intent = new android.content.Intent(this, JavaSnippetsActivity.class);
+            android.content.Intent intent =
+                    new android.content.Intent(this, JavaSnippetsActivity.class);
             intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
@@ -227,7 +272,8 @@ public class MapActivity extends AppCompatActivity {
 
         // Remove any SupportMapFragment dynamically attached to map_container
         androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
-        androidx.fragment.app.Fragment fragment = fm.findFragmentById(com.example.snippets.common.R.id.map_container);
+        androidx.fragment.app.Fragment fragment =
+                fm.findFragmentById(com.example.snippets.common.R.id.map_container);
         if (fragment != null) {
             fm.beginTransaction().remove(fragment).commitNowAllowingStateLoss();
         }
@@ -241,8 +287,11 @@ public class MapActivity extends AppCompatActivity {
         }
 
         this.mapView = new MapView(this, options);
-        holder.addView(this.mapView, new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        holder.addView(
+                this.mapView,
+                new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT,
+                        FrameLayout.LayoutParams.MATCH_PARENT));
 
         // Sync lifecycle
         this.mapView.onCreate(null);
@@ -271,8 +320,12 @@ public class MapActivity extends AppCompatActivity {
                     allSnippets.addAll(g.getItems());
                 }
                 for (int i = 0; i < allSnippets.size(); i++) {
-                    if (allSnippets.get(i).getTitle().equals(finalSnippet.getTitle()) &&
-                        (groupTitle == null || allSnippets.get(i).getGroupTitle().equals(finalSnippet.getGroupTitle()))) {
+                    if (allSnippets.get(i).getTitle().equals(finalSnippet.getTitle())
+                            && (groupTitle == null
+                                    || allSnippets
+                                            .get(i)
+                                            .getGroupTitle()
+                                            .equals(finalSnippet.getGroupTitle()))) {
                         currentIndex = i;
                         break;
                     }
@@ -283,40 +336,54 @@ public class MapActivity extends AppCompatActivity {
                 }
                 android.view.View topBar = findViewById(androidx.appcompat.R.id.action_bar);
                 if (topBar != null) {
-                    topBar.setOnClickListener(v -> {
-                        android.view.View pb = findViewById(R.id.purpose_button);
-                        if (pb != null) pb.performClick();
-                    });
+                    topBar.setOnClickListener(
+                            v -> {
+                                android.view.View pb = findViewById(R.id.purpose_button);
+                                if (pb != null) pb.performClick();
+                            });
                 }
-                
+
                 // Aggressively recreate MapView
                 recreateMapView(BuildConfig.MAP_ID);
                 SnippetRegistry.clearTrackedItems();
-                android.widget.LinearLayout controlsContainer = findViewById(R.id.custom_controls_container);
+                android.widget.LinearLayout controlsContainer =
+                        findViewById(R.id.custom_controls_container);
                 if (controlsContainer != null) {
                     controlsContainer.removeAllViews();
                     controlsContainer.setVisibility(android.view.View.GONE);
                 }
 
-                this.mapView.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(@NonNull GoogleMap map) {
-                        MapActivity.this.googleMap = map;
-                        TrackedMap.resetMapToDefaults(map);
-                        try {
-                            finalSnippet.getAction().execute(MapActivity.this, map);
-                            map.setOnMapLoadedCallback(() -> {
-                                if (mapView != null) mapView.setContentDescription("MapLoaded");
-                            });
-                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                if (mapView != null) mapView.setContentDescription("MapLoaded");
-                            }, 2000);
-                        } catch (Exception e) {
-                            Toast.makeText(MapActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                this.mapView.getMapAsync(
+                        new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(@NonNull GoogleMap map) {
+                                MapActivity.this.googleMap = map;
+                                TrackedMap.resetMapToDefaults(map);
+                                try {
+                                    finalSnippet.getAction().execute(MapActivity.this, map);
+                                    map.setOnMapLoadedCallback(
+                                            () -> {
+                                                if (mapView != null)
+                                                    mapView.setContentDescription("MapLoaded");
+                                            });
+                                    new Handler(Looper.getMainLooper())
+                                            .postDelayed(
+                                                    () -> {
+                                                        if (mapView != null)
+                                                            mapView.setContentDescription(
+                                                                    "MapLoaded");
+                                                    },
+                                                    2000);
+                                } catch (Exception e) {
+                                    Toast.makeText(
+                                                    MapActivity.this,
+                                                    "Error: " + e.getMessage(),
+                                                    Toast.LENGTH_LONG)
+                                            .show();
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
             } else {
                 Toast.makeText(
                                 MapActivity.this,

@@ -18,6 +18,7 @@ package com.example.kotlindemos.visual
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.uiautomator.By
 import com.example.kotlindemos.CameraDemoActivity
 import com.example.kotlindemos.CloudBasedMapStylingDemoActivity
 import com.example.kotlindemos.DataDrivenBoundariesActivity
@@ -27,7 +28,6 @@ import com.example.kotlindemos.MapColorSchemeActivity
 import com.example.kotlindemos.MarkerDemoActivity
 import com.example.kotlindemos.TileOverlayDemoActivity
 import com.example.kotlindemos.VisibleRegionDemoActivity
-import androidx.test.uiautomator.By
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -65,7 +65,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 2. Camera control buttons (Bondi, Sydney, Stop) are visible and responsive.
                 3. The catalog screen did not leak through or obscure the view.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -93,7 +93,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 2. The HUD telemetry card displays projection bounds and camera coordinates.
                 3. The "Actions ▾" button is clearly positioned below the toolbar.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -126,7 +126,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 2. An InfoWindow or custom info contents popup is visible above a marker.
                 3. The controls at the top and bottom are visible without crashing or overlapping.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -156,7 +156,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 2. State administrative boundaries are rendered with choropleth styling or outlines.
                 3. A selected state polygon exhibits highlight styling.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -181,7 +181,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 1. The map is centered on Kyoto with custom dataset feature styling applied.
                 2. Dataset polygons/features are visibly rendered over the base map.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -209,7 +209,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 1. The map renders Cloud-based map styling with terrain contours or photographic layers.
                 2. The styling mode buttons (Normal, Satellite, Hybrid, Terrain) are visible along the bottom.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -237,7 +237,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 1. The map is rendered with the selected color scheme applied.
                 2. Mode buttons (Light, Dark, Follow System) are visible and responsive at the top.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -267,7 +267,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 2. Transparency is applied to the overlay.
                 3. The transparency slider and Switch Image button are visible.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -297,7 +297,7 @@ class VerifiedSamplesVisualTest : BaseVisualVerificationTest() {
                 2. The Fade In checkbox and transparency slider are functional.
                 3. No bottom sheet modal obscures the view.
                 If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }

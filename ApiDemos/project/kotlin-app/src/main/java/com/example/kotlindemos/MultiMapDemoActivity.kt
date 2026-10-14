@@ -37,12 +37,12 @@ import com.google.android.gms.maps.model.MarkerOptions
     apiCalls = [
         "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
         "GoogleMap.animateCamera(CameraUpdate, int, CancelableCallback)",
-        "GoogleMap.addMarker(MarkerOptions)"
+        "GoogleMap.addMarker(MarkerOptions)",
     ],
     purpose = "Shows how to render and control multiple independent GoogleMap instances concurrently in one screen.",
     successCriteria = "All 4 map fragments render distinct geographic locations simultaneously with smooth scrolling.",
     failureIndicators = "GL context collision, thread locking, or tile stuttering when dragging multiple maps.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_multimap]
 class MultiMapDemoActivity : SamplesBaseActivity() {

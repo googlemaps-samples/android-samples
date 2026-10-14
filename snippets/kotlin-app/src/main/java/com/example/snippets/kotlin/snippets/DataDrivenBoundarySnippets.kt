@@ -36,7 +36,7 @@ import kotlin.math.roundToInt
 
 @SnippetGroup(
     title = "Data-Driven Boundary Styling",
-    description = "Snippets demonstrating administrative boundary feature layers, polygon styling, and click events."
+    description = "Snippets demonstrating administrative boundary feature layers, polygon styling, and click events.",
 )
 class DataDrivenBoundarySnippets(private val context: Context, private val map: TrackedMap) {
 
@@ -44,7 +44,9 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
 
     @SnippetItem(
         title = "1. Boundaries - Localities (Hana, HI)",
-        description = "What it does: Fetches the LOCALITY FeatureLayer and styles Hana, HI (Place ID: ChIJ0zQtYiWsVHkRk8lRoB1RNPo) with a 50% opacity purple fill.\nHow to see the effect: Hana, Hawaii displays highlighted with a purple boundary polygon.",
+        description = "What it does: Fetches the LOCALITY FeatureLayer and styles Hana, HI (Place ID: " +
+            "ChIJ0zQtYiWsVHkRk8lRoB1RNPo) with a 50% opacity purple fill.\n" +
+            "How to see the effect: Hana, Hawaii displays highlighted with a purple boundary polygon.",
     )
     fun styleLocalityBoundary() {
         // [START maps_android_dds_locality_boundary]
@@ -52,12 +54,12 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
         val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.LOCALITY)
-                .build()
+                .build(),
         )
 
         // 2. Center the camera over Hana, Hawaii
         map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(20.7522, -155.9877), 11.0f)
+            CameraUpdateFactory.newLatLngZoom(LatLng(20.7522, -155.9877), 11.0f),
         )
 
         // 3. Define styling: 50% opacity purple fill, opaque purple stroke
@@ -81,7 +83,9 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
 
     @SnippetItem(
         title = "2. Boundaries - Admin Area 1 (States)",
-        description = "What it does: Fetches the ADMINISTRATIVE_AREA_LEVEL_1 FeatureLayer and styles state boundaries with unique colors derived from Place ID hashes.\nHow to see the effect: US state boundaries display with multi-colored semi-transparent polygon fills.",
+        description = "What it does: Fetches the ADMINISTRATIVE_AREA_LEVEL_1 FeatureLayer and styles state " +
+            "boundaries with unique colors derived from Place ID hashes.\nHow to see the effect: US state boundaries " +
+            "display with multi-colored semi-transparent polygon fills.",
     )
     fun styleStateBoundaries() {
         // [START maps_android_dds_state_boundaries]
@@ -89,12 +93,12 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
         val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.ADMINISTRATIVE_AREA_LEVEL_1)
-                .build()
+                .build(),
         )
 
         // 2. Center the camera over the USA
         map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(39.8283, -98.5795), 4.0f)
+            CameraUpdateFactory.newLatLngZoom(LatLng(39.8283, -98.5795), 4.0f),
         )
 
         // 3. Define styling: Assign pseudo-random hue fills dynamically based on place ID
@@ -117,7 +121,9 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
 
     @SnippetItem(
         title = "3. Boundaries - Countries (Interactive)",
-        description = "What it does: Fetches the COUNTRY FeatureLayer and toggles country polygon fill colors between 10% black and 33% red on tap.\nHow to see the effect: Tap any country boundary to highlight its area in red; tap again to deselect.",
+        description = "What it does: Fetches the COUNTRY FeatureLayer and toggles country polygon fill colors " +
+            "between 10% black and 33% red on tap.\nHow to see the effect: Tap any country boundary to highlight its " +
+            "area in red; tap again to deselect.",
     )
     fun styleCountryInteractive() {
         // [START maps_android_dds_country_interactive]
@@ -125,12 +131,12 @@ class DataDrivenBoundarySnippets(private val context: Context, private val map: 
         val layer = map.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.COUNTRY)
-                .build()
+                .build(),
         )
 
         // 2. Center the camera globally
         map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(0.0, 0.0), 2.0f)
+            CameraUpdateFactory.newLatLngZoom(LatLng(0.0, 0.0), 2.0f),
         )
 
         // Track selected country place IDs

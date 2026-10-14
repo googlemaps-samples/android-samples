@@ -17,7 +17,6 @@ package com.example.mapdemo;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -54,25 +53,27 @@ import org.xmlpull.v1.XmlPullParser;
  * using a custom {@link LocationSource}.
  */
 @Sample(
-    id = "com.example.mapdemo.LocationSourceDemoActivity",
-    title = "Custom LocationSource",
-    description = "Providing a custom mock LocationSource for simulated GPS navigation playback along a trail.",
-    category = "Location & Sensors",
-    complexity = Complexity.ADVANCED,
-    tags = {"#location", "#locationsource", "#mock", "#simulation", "#gpx", "#navigation"},
-    apiCalls = {
-        "GoogleMap.setLocationSource(LocationSource)",
-        "LocationSource.activate(OnLocationChangedListener)",
-        "LocationSource.deactivate()",
-        "GoogleMap.setMyLocationEnabled(Boolean)",
-        "GoogleMap.addPolyline(PolylineOptions)",
-        "CameraUpdateFactory.newLatLngBounds(LatLngBounds, Int)"
-    },
-    purpose = "Shows how to feed programmatic coordinates from a GPX track into the GoogleMap location layer using a custom LocationSource.",
-    successCriteria = "The map bounds to the trail, draws a polyline, and the blue dot animates smoothly along the route.",
-    failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "com.example.mapdemo.LocationSourceDemoActivity",
+        title = "Custom LocationSource",
+        description =
+                "Providing a custom mock LocationSource for simulated GPS navigation playback along a trail.",
+        category = "Location & Sensors",
+        complexity = Complexity.ADVANCED,
+        tags = {"#location", "#locationsource", "#mock", "#simulation", "#gpx", "#navigation"},
+        apiCalls = {
+            "GoogleMap.setLocationSource(LocationSource)",
+            "LocationSource.activate(OnLocationChangedListener)",
+            "LocationSource.deactivate()",
+            "GoogleMap.setMyLocationEnabled(Boolean)",
+            "GoogleMap.addPolyline(PolylineOptions)",
+            "CameraUpdateFactory.newLatLngBounds(LatLngBounds, Int)"
+        },
+        purpose =
+                "Shows how to feed programmatic coordinates from a GPX track into the GoogleMap location layer using a custom LocationSource.",
+        successCriteria =
+                "The map bounds to the trail, draws a polyline, and the blue dot animates smoothly along the route.",
+        failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_location_source]
 public class LocationSourceDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
@@ -81,12 +82,17 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
     private LatLngBounds mTrackBounds;
 
     private final ActivityResultLauncher<String[]> mPermissionLauncher =
-        registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted -> {
-            if (Boolean.TRUE.equals(isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION))
-                || Boolean.TRUE.equals(isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION))) {
-                enableMyLocation();
-            }
-        });
+            registerForActivityResult(
+                    new ActivityResultContracts.RequestMultiplePermissions(),
+                    isGranted -> {
+                        if (Boolean.TRUE.equals(
+                                        isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION))
+                                || Boolean.TRUE.equals(
+                                        isGranted.get(
+                                                Manifest.permission.ACCESS_COARSE_LOCATION))) {
+                            enableMyLocation();
+                        }
+                    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,29 +105,39 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
         }
 
         mLocationSource = new GpxLocationSource(new ArrayList<>(), 60L);
-        Executors.newSingleThreadExecutor().execute(() -> {
-            List<LatLng> trackPoints = parseGpxTrack(getResources().openRawResource(R.raw.fowler_rattlesnake));
-            runOnUiThread(() -> {
-                mLocationSource.setTrackPoints(trackPoints);
-                if (mMap != null) {
-                    setupTrackOnMap(mMap);
-                }
-            });
-        });
+        Executors.newSingleThreadExecutor()
+                .execute(
+                        () -> {
+                            List<LatLng> trackPoints =
+                                    parseGpxTrack(
+                                            getResources()
+                                                    .openRawResource(R.raw.fowler_rattlesnake));
+                            runOnUiThread(
+                                    () -> {
+                                        mLocationSource.setTrackPoints(trackPoints);
+                                        if (mMap != null) {
+                                            setupTrackOnMap(mMap);
+                                        }
+                                    });
+                        });
 
         MaterialButton toggleButton = findViewById(R.id.btn_toggle_playback);
         if (toggleButton != null) {
-            toggleButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    boolean isPlaying = mLocationSource.togglePlayback();
-                    toggleButton.setText(isPlaying ? R.string.location_source_pause : R.string.location_source_play);
-                }
-            });
+            toggleButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean isPlaying = mLocationSource.togglePlayback();
+                            toggleButton.setText(
+                                    isPlaying
+                                            ? R.string.location_source_pause
+                                            : R.string.location_source_play);
+                        }
+                    });
         }
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
@@ -172,44 +188,46 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
 
         // 1. Draw route polyline with outer casing and core color
         map.addPolyline(
-            new PolylineOptions()
-                .addAll(trackPoints)
-                .color(0xFF0D47A1)
-                .width(16f)
-                .jointType(JointType.ROUND)
-                .startCap(new RoundCap())
-                .endCap(new RoundCap())
-        );
+                new PolylineOptions()
+                        .addAll(trackPoints)
+                        .color(0xFF0D47A1)
+                        .width(16f)
+                        .jointType(JointType.ROUND)
+                        .startCap(new RoundCap())
+                        .endCap(new RoundCap()));
         map.addPolyline(
-            new PolylineOptions()
-                .addAll(trackPoints)
-                .color(0xFF2196F3)
-                .width(10f)
-                .jointType(JointType.ROUND)
-                .startCap(new RoundCap())
-                .endCap(new RoundCap())
-        );
+                new PolylineOptions()
+                        .addAll(trackPoints)
+                        .color(0xFF2196F3)
+                        .width(10f)
+                        .jointType(JointType.ROUND)
+                        .startCap(new RoundCap())
+                        .endCap(new RoundCap()));
 
         // 2. Center and bound camera
         int padding = (int) (getResources().getDisplayMetrics().density * 56);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(mTrackBounds.getCenter(), 14.5f));
-        map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                map.animateCamera(CameraUpdateFactory.newLatLngBounds(mTrackBounds, padding));
-            }
-        });
+        map.setOnMapLoadedCallback(
+                new GoogleMap.OnMapLoadedCallback() {
+                    @Override
+                    public void onMapLoaded() {
+                        map.animateCamera(
+                                CameraUpdateFactory.newLatLngBounds(mTrackBounds, padding));
+                    }
+                });
 
         MaterialButton recenterButton = findViewById(R.id.btn_recenter_bounds);
         if (recenterButton != null) {
-            recenterButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mTrackBounds != null) {
-                        map.animateCamera(CameraUpdateFactory.newLatLngBounds(mTrackBounds, padding));
-                    }
-                }
-            });
+            recenterButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mTrackBounds != null) {
+                                map.animateCamera(
+                                        CameraUpdateFactory.newLatLngBounds(mTrackBounds, padding));
+                            }
+                        }
+                    });
         }
     }
 
@@ -218,15 +236,17 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
             return;
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-            || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+                        == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(
+                                this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         } else {
-            mPermissionLauncher.launch(new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            });
+            mPermissionLauncher.launch(
+                    new String[] {
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    });
         }
     }
 
@@ -264,18 +284,19 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
         private int currentIndex;
         private final Handler handler = new Handler(Looper.getMainLooper());
 
-        private final Runnable stepRunnable = new Runnable() {
-            @Override
-            public void run() {
-                if (!isRunning || listener == null || trackPoints.isEmpty()) {
-                    return;
-                }
-                emitCurrentPoint();
-                currentIndex = (currentIndex + 1) % trackPoints.size();
-                handler.removeCallbacks(this);
-                handler.postDelayed(this, intervalMs);
-            }
-        };
+        private final Runnable stepRunnable =
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isRunning || listener == null || trackPoints.isEmpty()) {
+                            return;
+                        }
+                        emitCurrentPoint();
+                        currentIndex = (currentIndex + 1) % trackPoints.size();
+                        handler.removeCallbacks(this);
+                        handler.postDelayed(this, intervalMs);
+                    }
+                };
 
         public GpxLocationSource(List<LatLng> trackPoints, long intervalMs) {
             this.trackPoints = trackPoints;

@@ -53,7 +53,10 @@ open class ReviewerActivity : ComponentActivity() {
         setContent {
             CatalogTheme {
                 val evaluationsList by repository.allEvaluationsFlow.collectAsState(initial = emptyList())
-                val evaluationsMap: Map<String, SampleEvaluation> = evaluationsList.associate { it.sampleId to it.toModel() }
+                val evaluationsMap: Map<String, SampleEvaluation> = evaluationsList.associate {
+                    it.sampleId to
+                        it.toModel()
+                }
 
                 CatalogScreen(
                     isReviewerMode = true,
@@ -79,9 +82,13 @@ open class ReviewerActivity : ComponentActivity() {
                             startActivity(intent)
                             finish()
                         } catch (e: Exception) {
-                            Toast.makeText(this@ReviewerActivity, "Catalog mode not available: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@ReviewerActivity,
+                                "Catalog mode not available: ${e.message}",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         }
-                    }
+                    },
                 )
             }
         }

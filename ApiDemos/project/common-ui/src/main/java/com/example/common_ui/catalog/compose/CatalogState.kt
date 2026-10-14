@@ -45,7 +45,7 @@ class CatalogState(
     val lazyListState: LazyListState,
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
-    initialFramework: Framework = Framework.KOTLIN_VIEWS
+    initialFramework: Framework = Framework.KOTLIN_VIEWS,
 ) {
     var selectedFramework by mutableStateOf(initialFramework)
     var selectedComplexity by mutableStateOf<Complexity?>(null)
@@ -97,10 +97,11 @@ class CatalogState(
             framework = selectedFramework,
             complexity = selectedComplexity,
             selectedTags = selectedTags,
-            searchQuery = searchQuery
+            searchQuery = searchQuery,
         ).filter { sample ->
-            if (selectedStatusFilter == null) true
-            else {
+            if (selectedStatusFilter == null) {
+                true
+            } else {
                 val targetFqcn = sample.getTargetFqcn(selectedFramework)
                 val eval = evaluations[targetFqcn] ?: evaluations[sample.id]
                 ReviewStatus.fromString(eval?.status) == selectedStatusFilter
@@ -154,16 +155,15 @@ fun rememberCatalogState(
     initialFramework: Framework = Framework.KOTLIN_VIEWS,
     lazyListState: LazyListState = rememberLazyListState(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
-): CatalogState {
-    return remember(isReviewerMode, evaluations, initialFramework, lazyListState, snackbarHostState, coroutineScope) {
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+): CatalogState =
+    remember(isReviewerMode, evaluations, initialFramework, lazyListState, snackbarHostState, coroutineScope) {
         CatalogState(
             isReviewerMode = isReviewerMode,
             evaluations = evaluations,
             lazyListState = lazyListState,
             snackbarHostState = snackbarHostState,
             coroutineScope = coroutineScope,
-            initialFramework = initialFramework
+            initialFramework = initialFramework,
         )
     }
-}

@@ -63,7 +63,7 @@ class FireMarkersApplication : Application() {
                 Toast.makeText(
                     this,
                     "Maps API Key was not set in secrets.properties",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
                 throw RuntimeException("Maps API Key was not set in secrets.properties")
             }

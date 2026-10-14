@@ -16,16 +16,14 @@ package com.example.mapdemo;
 
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import com.example.common_ui.catalog.compose.CatalogActivity;
 
 /**
  * The main activity of the Google Maps Java demo gallery.
  *
- * Provides the developer/learner catalog with multi-framework browsing,
- * instant search, sample details, and syntax-highlighted source code snippets.
+ * <p>Provides the developer/learner catalog with multi-framework browsing, instant search, sample
+ * details, and syntax-highlighted source code snippets.
  */
 public final class MainActivity extends CatalogActivity {
 
@@ -34,10 +32,10 @@ public final class MainActivity extends CatalogActivity {
         super.onCreate(savedInstanceState);
         if (BuildConfig.MAPS_API_KEY.isEmpty()) {
             Toast.makeText(
-                this,
-                "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY",
-                Toast.LENGTH_LONG
-            ).show();
+                            this,
+                            "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY",
+                            Toast.LENGTH_LONG)
+                    .show();
         }
     }
 }

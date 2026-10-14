@@ -29,10 +29,10 @@ import com.google.maps.android.withSphericalLinearInterpolation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -94,9 +94,7 @@ import kotlin.time.Duration.Companion.milliseconds
  * @param firebaseConnection The Hilt-injected provider for the Firebase Realtime Database instance.
  */
 @HiltViewModel
-class MarkersViewModel @Inject constructor(
-    private val firebaseConnection: FirebaseConnection
-) : ViewModel() {
+class MarkersViewModel @Inject constructor(private val firebaseConnection: FirebaseConnection) : ViewModel() {
 
     internal val viewModelId = UUID.randomUUID().toString().substring(0, 4)
     private val _markers = MutableStateFlow<List<MarkerData>>(emptyList())
@@ -108,7 +106,7 @@ class MarkersViewModel @Inject constructor(
 
     val markers: StateFlow<List<MarkerData>> = combine(
         _markers,
-        _animationStateDB
+        _animationStateDB,
     ) { markers, animState ->
         if (markers.isEmpty()) {
             markers
@@ -118,25 +116,25 @@ class MarkersViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = emptyList()
+        initialValue = emptyList(),
     )
 
     val animationRunning: StateFlow<Boolean> = _animationStateDB.map { it.running }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = false
+        initialValue = false,
     )
 
     val hasMarkers: StateFlow<Boolean> = _markers.map { it.isNotEmpty() }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = false
+        initialValue = false,
     )
 
     val isController: StateFlow<Boolean> = _animationStateDB.map { it.controllerId == viewModelId }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = false
+        initialValue = false,
     )
 
     init {
@@ -166,7 +164,6 @@ class MarkersViewModel @Inject constructor(
                     val animState = snapshot.getValue(AnimationState::class.java) ?: AnimationState()
                     _animationStateDB.value = animState
                     Log.d(TAG, "[$viewModelId] DB anim state received: $animState")
-
 
                     val shouldDrive = animState.controllerId == viewModelId && animState.running
                     val isDriving = animationJob?.isActive == true
@@ -235,7 +232,7 @@ class MarkersViewModel @Inject constructor(
         val currentState = _animationStateDB.value
         val newState = currentState.copy(
             controllerId = viewModelId,
-            running = false
+            running = false,
         )
         Log.d(TAG, "[$viewModelId] takeControl: Writing new state to DB: $newState")
         animRef.setValue(newState.toMap())
@@ -260,7 +257,7 @@ class MarkersViewModel @Inject constructor(
 
                 loopState = loopState.copy(
                     fraction = nextFraction,
-                    direction = nextDirection
+                    direction = nextDirection,
                 )
                 Log.d(TAG, "[$viewModelId] Driver loop tick: Writing new state to DB: $loopState")
                 animRef.setValue(loopState.toMap())
@@ -285,7 +282,7 @@ class MarkersViewModel @Inject constructor(
                 latitude = newLocations[index].latitude,
                 longitude = newLocations[index].longitude,
                 label = if (fraction > 0.5) Shape.Tree.label else Shape.JackOLantern.label,
-                color = colors[index].toFloat()
+                color = colors[index].toFloat(),
             )
         }
     }
@@ -319,7 +316,7 @@ class MarkersViewModel @Inject constructor(
                     longitude = BOULDER_LAT_LNG.longitude + shapePoint.lonOffset,
                     label = "Pumpkin",
                     style = "jack-o-lantern",
-                    color = shapePoint.color
+                    color = shapePoint.color,
                 )
             }
             databaseReference.setValue(markersToSeed)
@@ -363,22 +360,20 @@ class MarkersViewModel @Inject constructor(
         val fraction: Double = 0.0,
         val direction: Double = 1.0,
         val controllerId: String = "",
-        val timestamp: Long = 0
+        val timestamp: Long = 0,
     ) {
         /**
          * Converts this object to a Map for writing to Firebase.
          * This is necessary to include the `ServerValue.TIMESTAMP`, which allows Firebase
          * to write a consistent, server-side timestamp for when the update occurred.
          */
-        fun toMap(): Map<String, Any> {
-            return mapOf(
-                "running" to running,
-                "fraction" to fraction,
-                "direction" to direction,
-                "controllerId" to controllerId,
-                "timestamp" to ServerValue.TIMESTAMP
-            )
-        }
+        fun toMap(): Map<String, Any> = mapOf(
+            "running" to running,
+            "fraction" to fraction,
+            "direction" to direction,
+            "controllerId" to controllerId,
+            "timestamp" to ServerValue.TIMESTAMP,
+        )
     }
 
     private sealed class Shape(val shapeData: List<ShapePoint>, val label: String) {
@@ -405,6 +400,7 @@ class MarkersViewModel @Inject constructor(
     }
 }
 
-private operator fun LatLng.plus(other: ShapePoint): LatLng {
-    return LatLng(other.latOffset + this.latitude, other.lonOffset + this.longitude)
-}
+private operator fun LatLng.plus(other: ShapePoint): LatLng = LatLng(
+    other.latOffset + this.latitude,
+    other.lonOffset + this.longitude,
+)

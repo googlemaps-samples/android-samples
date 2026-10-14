@@ -23,10 +23,11 @@ import org.junit.runners.Suite
  * Test suite grouping all on-device visual verification tests for the 9 calibrated samples.
  *
  * Run with:
- * ./gradlew :ApiDemos:kotlin-app:connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.example.kotlindemos.visual.VisualVerificationTestSuite
+ * ./gradlew :ApiDemos:kotlin-app:connectedAndroidTest \
+ *   -Pandroid.testInstrumentationRunnerArguments.class=com.example.kotlindemos.visual.VisualVerificationTestSuite
  */
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    VerifiedSamplesVisualTest::class
+    VerifiedSamplesVisualTest::class,
 )
 class VisualVerificationTestSuite

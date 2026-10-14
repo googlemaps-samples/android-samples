@@ -35,7 +35,9 @@ internal class MapsObject : AppCompatActivity() {
     // [END maps_android_on_create_set_content_view]
 
     // [START maps_android_on_map_ready_callback]
-    class MainActivity : AppCompatActivity(), OnMapReadyCallback {
+    class MainActivity :
+        AppCompatActivity(),
+        OnMapReadyCallback {
 
         // [START_EXCLUDE]
         // [START maps_android_on_map_ready_add_marker]
@@ -43,7 +45,7 @@ internal class MapsObject : AppCompatActivity() {
             googleMap.addMarker(
                 MarkerOptions()
                     .position(LatLng(0.0, 0.0))
-                    .title("Marker")
+                    .title("Marker"),
             )
         }
         // [END maps_android_on_map_ready_add_marker]

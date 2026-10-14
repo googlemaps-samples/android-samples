@@ -13,25 +13,15 @@
 // limitations under the License.
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 import com.example.common_ui.R;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -50,17 +40,20 @@ import com.google.android.gms.maps.model.PinConfig;
  * possibilities.
  */
 @Sample(
-    id = "advanced_markers",
-    title = "Advanced Markers & Pins",
-    description = "Modern PinConfig pins, custom glyphs, badge icon views, and collision behavior.",
-    category = "Markers & Overlays",
-    complexity = Complexity.ADVANCED,
-    tags = {"#markers", "#advancedmarkers", "#pinconfig", "#collision", "#badges", "#mapid"},
-    purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and custom View icons.",
-    successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with collision handling.",
-    failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge text blurry.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "advanced_markers",
+        title = "Advanced Markers & Pins",
+        description =
+                "Modern PinConfig pins, custom glyphs, badge icon views, and collision behavior.",
+        category = "Markers & Overlays",
+        complexity = Complexity.ADVANCED,
+        tags = {"#markers", "#advancedmarkers", "#pinconfig", "#collision", "#badges", "#mapid"},
+        purpose =
+                "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and custom View icons.",
+        successCriteria =
+                "Custom colored pins and badge icon views render sharply at correct anchor points with collision handling.",
+        failureIndicators =
+                "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge text blurry.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_marker_advanced]
 public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
@@ -78,29 +71,27 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
     /**
      * This method is called when the activity is first created.
      *
-     * It sets up the activity's layout and then initializes the map.
+     * <p>It sets up the activity's layout and then initializes the map.
      *
-     * The key logic here is to check if the developer has provided a Map ID in the
-     * `strings.xml` file.
+     * <p>The key logic here is to check if the developer has provided a Map ID in the `strings.xml`
+     * file.
      *
-     * If the `R.string.map_id` value is not the default "DEMO_MAP_ID", it means a
-     * custom Map ID has been provided. In this case, we can rely on the simpler setup
-     * where the `SupportMapFragment` is inflated directly from the XML layout, and it
-     * will automatically use the Map ID from the string resource.
+     * <p>If the `R.string.map_id` value is not the default "DEMO_MAP_ID", it means a custom Map ID
+     * has been provided. In this case, we can rely on the simpler setup where the
+     * `SupportMapFragment` is inflated directly from the XML layout, and it will automatically use
+     * the Map ID from the string resource.
      *
-     * However, if the `R.string.map_id` is still the default value, we fall back to a
-     * programmatic setup. This involves:
-     * 1. Retrieving the Map ID from the `secrets.properties` file, which is managed by the
-     *    `ApiDemoApplication` class.
-     * 2. Creating a `GoogleMapOptions` object.
-     * 3. Explicitly setting the retrieved `mapId` on the `GoogleMapOptions`. This step is
-     *    **critical** because Advanced Markers will not work without a valid Map ID.
-     * 4. Creating a new `SupportMapFragment` instance with these options and replacing the
-     *    placeholder fragment in the layout.
+     * <p>However, if the `R.string.map_id` is still the default value, we fall back to a
+     * programmatic setup. This involves: 1. Retrieving the Map ID from the `secrets.properties`
+     * file, which is managed by the `ApiDemoApplication` class. 2. Creating a `GoogleMapOptions`
+     * object. 3. Explicitly setting the retrieved `mapId` on the `GoogleMapOptions`. This step is
+     * **critical** because Advanced Markers will not work without a valid Map ID. 4. Creating a new
+     * `SupportMapFragment` instance with these options and replacing the placeholder fragment in
+     * the layout.
      *
-     * This dual approach ensures that the demo can run seamlessly while also providing a
-     * clear path for developers to use their own Map IDs, which is a requirement for using
-     * Advanced Markers.
+     * <p>This dual approach ensures that the demo can run seamlessly while also providing a clear
+     * path for developers to use their own Map IDs, which is a requirement for using Advanced
+     * Markers.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +99,10 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         setContentView(com.example.common_ui.R.layout.advanced_markers_demo);
 
         if (!getString(com.example.common_ui.R.string.map_id).equals("DEMO_MAP_ID")) {
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+            SupportMapFragment mapFragment =
+                    (SupportMapFragment)
+                            getSupportFragmentManager()
+                                    .findFragmentById(com.example.common_ui.R.id.map);
             if (mapFragment != null) {
                 mapFragment.getMapAsync(this);
             }
@@ -121,27 +115,27 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
 
             GoogleMapOptions mapOptions = new GoogleMapOptions().mapId(mapId);
             SupportMapFragment mapFragment = SupportMapFragment.newInstance(mapOptions);
-            getSupportFragmentManager().beginTransaction()
-                .replace(com.example.common_ui.R.id.map, mapFragment)
-                .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(com.example.common_ui.R.id.map, mapFragment)
+                    .commit();
             mapFragment.getMapAsync(this);
         }
 
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
-
-
     @Override
     public void onMapReady(GoogleMap map) {
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(SINGAPORE)
-                .include(KUALA_LUMPUR)
-                .include(JAKARTA)
-                .include(BANGKOK)
-                .include(MANILA)
-                .include(HO_CHI_MINH_CITY)
-                .build();
+        LatLngBounds bounds =
+                new LatLngBounds.Builder()
+                        .include(SINGAPORE)
+                        .include(KUALA_LUMPUR)
+                        .include(JAKARTA)
+                        .include(BANGKOK)
+                        .include(MANILA)
+                        .include(HO_CHI_MINH_CITY)
+                        .build();
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 120));
 
         MapCapabilities capabilities = map.getMapCapabilities();
@@ -157,11 +151,12 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         int size = (int) (44 * getResources().getDisplayMetrics().density);
         iconImageView.setLayoutParams(new ViewGroup.LayoutParams(size, size));
 
-        map.addMarker(new AdvancedMarkerOptions()
-                .position(SINGAPORE)
-                .iconView(iconImageView)
-                .title("Singapore (Custom Framed Badge)")
-                .zIndex(1f));
+        map.addMarker(
+                new AdvancedMarkerOptions()
+                        .position(SINGAPORE)
+                        .iconView(iconImageView)
+                        .title("Singapore (Custom Framed Badge)")
+                        .zIndex(1f));
 
         // This uses PinConfig.Builder to create an instance of PinConfig.
         PinConfig.Builder pinConfigBuilder = PinConfig.builder();
@@ -169,10 +164,11 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         PinConfig pinConfig = pinConfigBuilder.build();
 
         // Use the PinConfig instance to set the icon for AdvancedMarkerOptions.
-        AdvancedMarkerOptions advancedMarkerOptions = new AdvancedMarkerOptions()
-                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig))
-                .position(KUALA_LUMPUR)
-                .title("Kuala Lumpur (Magenta Pin)");
+        AdvancedMarkerOptions advancedMarkerOptions =
+                new AdvancedMarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig))
+                        .position(KUALA_LUMPUR)
+                        .title("Kuala Lumpur (Magenta Pin)");
 
         // Pass the AdvancedMarkerOptions instance to addMarker().
         Marker marker = map.addMarker(advancedMarkerOptions);
@@ -185,10 +181,11 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         pinConfigBuilder2.setBorderColor(Color.BLUE);
         PinConfig pinConfig2 = pinConfigBuilder2.build();
 
-        AdvancedMarkerOptions advancedMarkerOptions2 = new AdvancedMarkerOptions()
-                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig2))
-                .position(JAKARTA)
-                .title("Jakarta (Blue Border)");
+        AdvancedMarkerOptions advancedMarkerOptions2 =
+                new AdvancedMarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig2))
+                        .position(JAKARTA)
+                        .title("Jakarta (Blue Border)");
 
         Marker marker2 = map.addMarker(advancedMarkerOptions2);
 
@@ -201,10 +198,11 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         pinConfigBuilder3.setGlyph(glyphText);
         PinConfig pinConfig3 = pinConfigBuilder3.build();
 
-        AdvancedMarkerOptions advancedMarkerOptions3 = new AdvancedMarkerOptions()
-                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig3))
-                .position(BANGKOK)
-                .title("Bangkok (Text Glyph 'A')");
+        AdvancedMarkerOptions advancedMarkerOptions3 =
+                new AdvancedMarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig3))
+                        .position(BANGKOK)
+                        .title("Bangkok (Text Glyph 'A')");
 
         Marker marker3 = map.addMarker(advancedMarkerOptions3);
 
@@ -214,20 +212,22 @@ public class AdvancedMarkersDemoActivity extends SamplesBaseActivity implements 
         pinConfigBuilder4.setGlyph(new PinConfig.Glyph(Color.TRANSPARENT));
         PinConfig pinConfig4 = pinConfigBuilder4.build();
 
-        AdvancedMarkerOptions advancedMarkerOptions4 = new AdvancedMarkerOptions()
-                .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig4))
-                .position(MANILA)
-                .title("Manila (Transparent Cutout Glyph)");
+        AdvancedMarkerOptions advancedMarkerOptions4 =
+                new AdvancedMarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromPinConfig(pinConfig4))
+                        .position(MANILA)
+                        .title("Manila (Transparent Cutout Glyph)");
 
         Marker marker4 = map.addMarker(advancedMarkerOptions4);
 
         // Collision behavior can only be changed in the AdvancedMarkerOptions object.
         // Changes to collision behavior after a marker has been created are not possible
         int collisionBehavior = AdvancedMarkerOptions.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
-        AdvancedMarkerOptions advancedMarkerOptions5 = new AdvancedMarkerOptions()
-                .position(HO_CHI_MINH_CITY)
-                .collisionBehavior(collisionBehavior)
-                .title("Ho Chi Minh City (Collision Behavior)");
+        AdvancedMarkerOptions advancedMarkerOptions5 =
+                new AdvancedMarkerOptions()
+                        .position(HO_CHI_MINH_CITY)
+                        .collisionBehavior(collisionBehavior)
+                        .title("Ho Chi Minh City (Collision Behavior)");
 
         Marker marker5 = map.addMarker(advancedMarkerOptions5);
     }

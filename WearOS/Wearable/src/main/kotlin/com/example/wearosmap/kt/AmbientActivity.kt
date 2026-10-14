@@ -15,18 +15,20 @@
  */
 package com.example.wearosmap.kt
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.wear.ambient.AmbientModeSupport
-import com.google.android.gms.maps.SupportMapFragment
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.wear.ambient.AmbientModeSupport
 import com.example.wearosmap.R
+import com.google.android.gms.maps.SupportMapFragment
 
 /**
  * Sample that shows how to set up a basic Google Map on Wear OS.
  */
 // [START maps_wear_os_ambient_mode_support]
-class AmbientActivity : AppCompatActivity(), AmbientModeSupport.AmbientCallbackProvider {
+class AmbientActivity :
+    AppCompatActivity(),
+    AmbientModeSupport.AmbientCallbackProvider {
 
     private lateinit var mapFragment: SupportMapFragment
 
@@ -51,8 +53,8 @@ class AmbientActivity : AppCompatActivity(), AmbientModeSupport.AmbientCallbackP
             .findFragmentById(R.id.map) as SupportMapFragment
     }
 
-    override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback {
-        return object : AmbientModeSupport.AmbientCallback() {
+    override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback =
+        object : AmbientModeSupport.AmbientCallback() {
             /**
              * Starts ambient mode on the map.
              * The API swaps to a non-interactive and low-color rendering of the map when the user is no
@@ -72,6 +74,5 @@ class AmbientActivity : AppCompatActivity(), AmbientModeSupport.AmbientCallbackP
                 mapFragment.onExitAmbient()
             }
         }
-    }
 }
 // [END maps_wear_os_ambient_mode_support]

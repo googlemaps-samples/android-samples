@@ -36,12 +36,12 @@ fun CatalogScreen(
     onLaunchSample: (SampleItem, Framework) -> Unit,
     onExportGrievances: (() -> Unit)? = null,
     onClearEvaluations: (() -> Unit)? = null,
-    onSwitchMode: (() -> Unit)? = null
+    onSwitchMode: (() -> Unit)? = null,
 ) {
     val state = rememberCatalogState(
         isReviewerMode = isReviewerMode,
         evaluations = evaluations,
-        initialFramework = initialFramework
+        initialFramework = initialFramework,
     )
 
     Scaffold(
@@ -53,13 +53,18 @@ fun CatalogScreen(
                 uncheckedCount = state.uncheckedCount,
                 selectedStatusFilter = state.selectedStatusFilter,
                 onToggleUncheckedFilter = {
-                    state.selectedStatusFilter = if (state.selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
+                    state.selectedStatusFilter =
+                        if (state.selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED
                 },
                 onLaunchNextUnchecked = { state.launchNextUnchecked(onLaunchSample) },
-                onClearEvaluationsClick = if (onClearEvaluations != null) { { state.showClearConfirmDialog = true } } else null,
+                onClearEvaluationsClick = if (onClearEvaluations != null) {
+                    { state.showClearConfirmDialog = true }
+                } else {
+                    null
+                },
                 onScrollToTop = state::scrollToTop,
                 onExportGrievances = onExportGrievances,
-                onSwitchMode = onSwitchMode
+                onSwitchMode = onSwitchMode,
             )
         },
         snackbarHost = { SnackbarHost(state.snackbarHostState) },
@@ -69,14 +74,14 @@ fun CatalogScreen(
                 uncheckedCount = state.uncheckedCount,
                 grievancesCount = state.grievancesCount,
                 onLaunchNextUnchecked = { state.launchNextUnchecked(onLaunchSample) },
-                onExportGrievances = onExportGrievances
+                onExportGrievances = onExportGrievances,
             )
-        }
+        },
     ) { paddingValues ->
         CatalogSampleList(
             state = state,
             paddingValues = paddingValues,
-            onLaunchSample = onLaunchSample
+            onLaunchSample = onLaunchSample,
         )
     }
 
@@ -84,6 +89,6 @@ fun CatalogScreen(
         state = state,
         onSaveEvaluation = onSaveEvaluation,
         onClearEvaluations = onClearEvaluations,
-        onLaunchSample = onLaunchSample
+        onLaunchSample = onLaunchSample,
     )
 }

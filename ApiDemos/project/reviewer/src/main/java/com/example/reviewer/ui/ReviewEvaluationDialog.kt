@@ -50,11 +50,11 @@ import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleItem
 import com.example.reviewer.compose.ReviewerActivity
 import com.example.reviewer.repository.SampleReviewRepository
-import com.google.android.material.R as MaterialR
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import java.io.File
+import com.google.android.material.R as MaterialR
 
 /**
  * On-device reviewer grading dialog with pinned bottom action bar containing
@@ -70,7 +70,7 @@ object ReviewEvaluationDialog {
         activity: Activity,
         sample: SampleItem,
         framework: Framework,
-        initialStatus: ReviewStatus = ReviewStatus.PASSING
+        initialStatus: ReviewStatus = ReviewStatus.PASSING,
     ) {
         if (activity.isFinishing || activity.isDestroyed) return
         if (initialStatus == ReviewStatus.NEEDS_WORK) {
@@ -90,7 +90,7 @@ object ReviewEvaluationDialog {
         sample: SampleItem,
         framework: Framework,
         status: ReviewStatus,
-        capturedBitmap: Bitmap?
+        capturedBitmap: Bitmap?,
     ) {
         val targetFqcn = sample.getTargetFqcn(framework)
         val repository = SampleReviewRepository.getInstance(activity)
@@ -120,7 +120,7 @@ object ReviewEvaluationDialog {
             orientation = LinearLayout.VERTICAL
             layoutParams = ViewGroup.LayoutParams(
                 (displayMetrics.widthPixels * 0.94).toInt(),
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.WRAP_CONTENT,
             )
             setBackgroundColor(Color.WHITE)
         }
@@ -139,10 +139,25 @@ object ReviewEvaluationDialog {
         }
 
         val headerTitle = TextView(activity).apply {
-            text = if (status == ReviewStatus.PASSING) "👍 Good Job: ${sample.title}" else "⚠️ Something's Wrong: ${sample.title}"
+            text =
+                if (status ==
+                    ReviewStatus.PASSING
+                ) {
+                    "👍 Good Job: ${sample.title}"
+                } else {
+                    "⚠️ Something's Wrong: ${sample.title}"
+                }
             textSize = 17f
             setTypeface(null, Typeface.BOLD)
-            setTextColor(if (status == ReviewStatus.PASSING) Color.parseColor("#2E7D32") else Color.parseColor("#C62828"))
+            setTextColor(
+                if (status ==
+                    ReviewStatus.PASSING
+                ) {
+                    Color.parseColor("#2E7D32")
+                } else {
+                    Color.parseColor("#C62828")
+                },
+            )
         }
         val headerSub = TextView(activity).apply {
             text = "Evaluation for ${framework.displayName}"
@@ -167,7 +182,7 @@ object ReviewEvaluationDialog {
             layoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 0,
-                1f
+                1f,
             )
             isFillViewport = true
         }
@@ -207,7 +222,8 @@ object ReviewEvaluationDialog {
 
             // Drawing Toolbar
             val toolsScroll = HorizontalScrollView(activity).apply {
-                layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                layoutParams =
+                    LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 isHorizontalScrollBarEnabled = false
             }
             val toolsLayout = LinearLayout(activity).apply {
@@ -216,8 +232,8 @@ object ReviewEvaluationDialog {
             }
             toolsScroll.addView(toolsLayout)
 
-            fun createEmojiBtn(emoji: String, tooltip: String, minWidthDp: Int = 46): MaterialButton {
-                return MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+            fun createEmojiBtn(emoji: String, tooltip: String, minWidthDp: Int = 46): MaterialButton =
+                MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
                     text = emoji
                     textSize = 17f
                     setPadding(16, 6, 16, 6)
@@ -228,7 +244,6 @@ object ReviewEvaluationDialog {
                     TooltipCompat.setTooltipText(this, tooltip)
                     contentDescription = tooltip
                 }
-            }
 
             val penBtn = createEmojiBtn("🔴", "Draw Red Circle").apply { minWidth = 140 }
             val highlightBtn = createEmojiBtn("🟡", "Yellow Highlighter").apply { minWidth = 140 }
@@ -240,16 +255,20 @@ object ReviewEvaluationDialog {
             val reloadEditorBtn = createEmojiBtn("📥", "Reload External Edits")
 
             // Divider views for clear visual groups
-            fun createDivider(): View {
-                return View(activity).apply {
-                    val params = LinearLayout.LayoutParams((1 * resources.displayMetrics.density).toInt(), (28 * resources.displayMetrics.density).toInt()).apply {
-                        marginStart = 12
-                        marginEnd = 12
-                        gravity = Gravity.CENTER_VERTICAL
-                    }
-                    layoutParams = params
-                    setBackgroundColor(Color.parseColor("#CFD8DC"))
+            fun createDivider(): View = View(activity).apply {
+                val params = LinearLayout.LayoutParams(
+                    (1 * resources.displayMetrics.density).toInt(),
+                    (
+                        28 *
+                            resources.displayMetrics.density
+                        ).toInt(),
+                ).apply {
+                    marginStart = 12
+                    marginEnd = 12
+                    gravity = Gravity.CENTER_VERTICAL
                 }
+                layoutParams = params
+                setBackgroundColor(Color.parseColor("#CFD8DC"))
             }
 
             toolsLayout.addView(penBtn)
@@ -271,7 +290,10 @@ object ReviewEvaluationDialog {
                 setPadding(24, 8, 24, 8)
                 setBackgroundColor(Color.parseColor("#FFEBEE"))
                 setTextColor(Color.parseColor("#C62828"))
-                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+                val params = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                ).apply {
                     bottomMargin = 14
                 }
                 layoutParams = params
@@ -287,7 +309,8 @@ object ReviewEvaluationDialog {
             }
 
             val canvas = AnnotationCanvasView(activity).apply {
-                layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                layoutParams =
+                    FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
                 setBaseBitmap(capturedBitmap)
             }
             canvasView = canvas
@@ -319,6 +342,7 @@ object ReviewEvaluationDialog {
                         activeToolStatus.setBackgroundColor(Color.parseColor("#FFEBEE"))
                         activeToolStatus.setTextColor(Color.parseColor("#C62828"))
                     }
+
                     AnnotationCanvasView.ToolMode.HIGHLIGHTER -> {
                         penBtn.setBackgroundColor(Color.TRANSPARENT)
                         penBtn.strokeColor = inactiveStroke
@@ -336,6 +360,7 @@ object ReviewEvaluationDialog {
                         activeToolStatus.setBackgroundColor(Color.parseColor("#FFFDE7"))
                         activeToolStatus.setTextColor(Color.parseColor("#F57F17"))
                     }
+
                     AnnotationCanvasView.ToolMode.PAN_ZOOM -> {
                         penBtn.setBackgroundColor(Color.TRANSPARENT)
                         penBtn.strokeColor = inactiveStroke
@@ -388,7 +413,7 @@ object ReviewEvaluationDialog {
                     val uri: Uri = FileProvider.getUriForFile(
                         activity,
                         "${activity.packageName}.fileprovider",
-                        tempFile
+                        tempFile,
                     )
                     val editIntent = Intent(Intent.ACTION_EDIT).apply {
                         setDataAndType(uri, "image/png")
@@ -424,7 +449,11 @@ object ReviewEvaluationDialog {
             setBackgroundColor(Color.parseColor("#F5F5F7"))
         }
 
-        val cancelBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+        val cancelBtn = MaterialButton(
+            activity,
+            null,
+            com.google.android.material.R.attr.materialButtonOutlinedStyle,
+        ).apply {
             text = "Cancel"
             textSize = 11f
             setPadding(8, 0, 8, 0)
@@ -434,7 +463,11 @@ object ReviewEvaluationDialog {
             setOnClickListener { dialog.dismiss() }
         }
 
-        val saveCurrentBtn = MaterialButton(activity, null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+        val saveCurrentBtn = MaterialButton(
+            activity,
+            null,
+            com.google.android.material.R.attr.materialButtonOutlinedStyle,
+        ).apply {
             text = if (status == ReviewStatus.PASSING) "Save Pass 👍" else "Save Issue ⚠️"
             textSize = 11f
             setPadding(8, 0, 8, 0)
@@ -511,7 +544,7 @@ object ReviewEvaluationDialog {
         activity: Activity,
         currentSample: SampleItem,
         framework: Framework,
-        repository: SampleReviewRepository
+        repository: SampleReviewRepository,
     ) {
         if (activity is AppCompatActivity) {
             activity.lifecycleScope.launch {
@@ -519,7 +552,11 @@ object ReviewEvaluationDialog {
                 if (nextSample != null) {
                     SampleReviewRepository.launchSample(activity, nextSample, framework)
                 } else {
-                    Toast.makeText(activity, "🎉 All ${framework.displayName} samples reviewed!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        activity,
+                        "🎉 All ${framework.displayName} samples reviewed!",
+                        Toast.LENGTH_LONG,
+                    ).show()
                     if (activity.isTaskRoot) {
                         try {
                             val intent = Intent(activity, ReviewerActivity::class.java)
@@ -540,7 +577,7 @@ object ReviewEvaluationDialog {
         sample: SampleItem,
         framework: Framework,
         status: ReviewStatus,
-        repository: SampleReviewRepository
+        repository: SampleReviewRepository,
     ) {
         val rootView = activity.findViewById<View>(android.R.id.content) ?: return
         val statusText = if (status == ReviewStatus.PASSING) "Marked Pass 👍" else "Flagged Issue ⚠️"

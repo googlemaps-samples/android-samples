@@ -16,7 +16,6 @@
 
 package com.example.kotlindemos
 
-
 /**
  * A simple POJO that holds the details about the demo that are used by the List Adapter.
  *
@@ -24,5 +23,4 @@ package com.example.kotlindemos
  * @property descriptionId the resources id of the description of the demo.
  * @property activityClass the demo activity's class.
  */
-data class DemoDetails(val titleId: Int, val descriptionId: Int,
-                       val activityClass: Class<out SamplesBaseActivity>)
+data class DemoDetails(val titleId: Int, val descriptionId: Int, val activityClass: Class<out SamplesBaseActivity>)

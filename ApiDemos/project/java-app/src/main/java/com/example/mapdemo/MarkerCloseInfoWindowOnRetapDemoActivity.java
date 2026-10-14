@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
+import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -25,17 +25,11 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-/**
- * This shows how to close the info window when the currently selected marker is re-tapped.
- */
-public class MarkerCloseInfoWindowOnRetapDemoActivity extends SamplesBaseActivity implements
-        OnMarkerClickListener,
-        OnMapClickListener,
-        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+/** This shows how to close the info window when the currently selected marker is re-tapped. */
+public class MarkerCloseInfoWindowOnRetapDemoActivity extends SamplesBaseActivity
+        implements OnMarkerClickListener,
+                OnMapClickListener,
+                OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
     private static final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
@@ -45,9 +39,7 @@ public class MarkerCloseInfoWindowOnRetapDemoActivity extends SamplesBaseActivit
 
     private GoogleMap mMap = null;
 
-    /**
-     * Keeps track of the selected marker.
-     */
+    /** Keeps track of the selected marker. */
     private Marker mSelectedMarker;
 
     @Override
@@ -56,7 +48,9 @@ public class MarkerCloseInfoWindowOnRetapDemoActivity extends SamplesBaseActivit
         setContentView(com.example.common_ui.R.layout.marker_close_info_window_on_retap_demo);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
@@ -80,44 +74,51 @@ public class MarkerCloseInfoWindowOnRetapDemoActivity extends SamplesBaseActivit
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localized.
-        map.setContentDescription("Demo showing how to close the info window when the currently"
-            + " selected marker is re-tapped.");
+        map.setContentDescription(
+                "Demo showing how to close the info window when the currently"
+                        + " selected marker is re-tapped.");
 
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(PERTH)
-                .include(SYDNEY)
-                .include(ADELAIDE)
-                .include(BRISBANE)
-                .include(MELBOURNE)
-                .build();
+        LatLngBounds bounds =
+                new LatLngBounds.Builder()
+                        .include(PERTH)
+                        .include(SYDNEY)
+                        .include(ADELAIDE)
+                        .include(BRISBANE)
+                        .include(MELBOURNE)
+                        .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
     }
 
     private void addMarkersToMap() {
-       mMap.addMarker(new MarkerOptions()
-                .position(BRISBANE)
-                .title("Brisbane")
-                .snippet("Population: 2,074,200"));
+        mMap.addMarker(
+                new MarkerOptions()
+                        .position(BRISBANE)
+                        .title("Brisbane")
+                        .snippet("Population: 2,074,200"));
 
-        mMap.addMarker(new MarkerOptions()
-                .position(SYDNEY)
-                .title("Sydney")
-                .snippet("Population: 4,627,300"));
+        mMap.addMarker(
+                new MarkerOptions()
+                        .position(SYDNEY)
+                        .title("Sydney")
+                        .snippet("Population: 4,627,300"));
 
-        mMap.addMarker(new MarkerOptions()
-                .position(MELBOURNE)
-                .title("Melbourne")
-                .snippet("Population: 4,137,400"));
+        mMap.addMarker(
+                new MarkerOptions()
+                        .position(MELBOURNE)
+                        .title("Melbourne")
+                        .snippet("Population: 4,137,400"));
 
-        mMap.addMarker(new MarkerOptions()
-                .position(PERTH)
-                .title("Perth")
-                .snippet("Population: 1,738,800"));
+        mMap.addMarker(
+                new MarkerOptions()
+                        .position(PERTH)
+                        .title("Perth")
+                        .snippet("Population: 1,738,800"));
 
-        mMap.addMarker(new MarkerOptions()
-                .position(ADELAIDE)
-                .title("Adelaide")
-                .snippet("Population: 1,213,000"));
+        mMap.addMarker(
+                new MarkerOptions()
+                        .position(ADELAIDE)
+                        .title("Adelaide")
+                        .snippet("Population: 1,213,000"));
     }
 
     @Override

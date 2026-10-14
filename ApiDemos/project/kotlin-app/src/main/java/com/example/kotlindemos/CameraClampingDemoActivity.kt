@@ -13,17 +13,14 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.CameraClampingDemoBinding
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.os.Bundle
 import android.widget.Toast
-
 import androidx.lifecycle.lifecycleScope
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.databinding.CameraClampingDemoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -45,125 +42,124 @@ import kotlinx.coroutines.launch
     category = "Camera Controls",
     complexity = Complexity.SIMPLE,
     tags = ["#camera", "#clamping", "#bounds", "#zoomlimits", "#latlngbounds"],
-    purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider limits.",
-    successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds immediately.",
+    purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider " +
+        "limits.",
+    successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds " +
+        "immediately.",
     failureIndicators = "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset Bounds'.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 class CameraClampingDemoActivity : SamplesBaseActivity() {
 
-  internal lateinit var map: GoogleMap
-  private lateinit var binding: CameraClampingDemoBinding
+    internal lateinit var map: GoogleMap
+    private lateinit var binding: CameraClampingDemoBinding
 
+    /**
+     * Internal min zoom level that can be toggled via the demo.
+     */
+    private var minZoom = DEFAULT_MIN_ZOOM
+    private var maxZoom = DEFAULT_MAX_ZOOM
 
-  /**
-   * Internal min zoom level that can be toggled via the demo.
-   */
-  private var minZoom = DEFAULT_MIN_ZOOM
-  private var maxZoom = DEFAULT_MAX_ZOOM
-
-  @OptIn(ExperimentalCoroutinesApi::class)
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    binding = CameraClampingDemoBinding.inflate(layoutInflater)
-    setContentView(binding.root)
-    updateZoomLabel(minZoom, maxZoom)
-    val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-    lifecycleScope.launch {
-      map = mapFragment.awaitMap()
-      updateCameraPosition()
-      map.setOnCameraMoveListener {
-        updateCameraPosition()
-      }
-      map.setOnCameraIdleListener {
-        updateCameraPosition()
-      }
-      setControls()
-    }
-  }
-
-  private fun setControls() {
-    binding.zoomRangeSlider.addOnChangeListener { slider, _, fromUser ->
-      val values = slider.values
-      minZoom = values[0]
-      maxZoom = values[1]
-      updateZoomLabel(minZoom, maxZoom)
-      if (fromUser && ::map.isInitialized) {
-        map.setMinZoomPreference(minZoom)
-        map.setMaxZoomPreference(maxZoom)
-      }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = CameraClampingDemoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        updateZoomLabel(minZoom, maxZoom)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        lifecycleScope.launch {
+            map = mapFragment.awaitMap()
+            updateCameraPosition()
+            map.setOnCameraMoveListener {
+                updateCameraPosition()
+            }
+            map.setOnCameraIdleListener {
+                updateCameraPosition()
+            }
+            setControls()
+        }
     }
 
-    binding.clampZoomReset.setOnClickListener {
-      resetMinMaxZoom()
-      binding.zoomRangeSlider.setValues(DEFAULT_MIN_ZOOM, DEFAULT_MAX_ZOOM)
-      updateZoomLabel(DEFAULT_MIN_ZOOM, DEFAULT_MAX_ZOOM)
-      if (::map.isInitialized) {
-        map.resetMinMaxZoomPreference()
-      }
-      toast("Min/Max zoom preferences reset.")
+    private fun setControls() {
+        binding.zoomRangeSlider.addOnChangeListener { slider, _, fromUser ->
+            val values = slider.values
+            minZoom = values[0]
+            maxZoom = values[1]
+            updateZoomLabel(minZoom, maxZoom)
+            if (fromUser && ::map.isInitialized) {
+                map.setMinZoomPreference(minZoom)
+                map.setMaxZoomPreference(maxZoom)
+            }
+        }
+
+        binding.clampZoomReset.setOnClickListener {
+            resetMinMaxZoom()
+            binding.zoomRangeSlider.setValues(DEFAULT_MIN_ZOOM, DEFAULT_MAX_ZOOM)
+            updateZoomLabel(DEFAULT_MIN_ZOOM, DEFAULT_MAX_ZOOM)
+            if (::map.isInitialized) {
+                map.resetMinMaxZoomPreference()
+            }
+            toast("Min/Max zoom preferences reset.")
+        }
+
+        binding.clampLatlngAdelaide.setOnClickListener {
+            binding.latlngClampToggleGroup.check(R.id.clamp_latlng_adelaide)
+            map.setLatLngBoundsForCameraTarget(ADELAIDE_BOUNDS)
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(ADELAIDE_CAMERA))
+            binding.clampStatusText.text = getString(R.string.latlng_clamp_status_adelaide)
+        }
+
+        binding.clampLatlngPacific.setOnClickListener {
+            binding.latlngClampToggleGroup.check(R.id.clamp_latlng_pacific)
+            map.setLatLngBoundsForCameraTarget(PACIFIC)
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(PACIFIC_CAMERA))
+            binding.clampStatusText.text = getString(R.string.latlng_clamp_status_pacific)
+        }
+
+        binding.clampLatlngReset.setOnClickListener {
+            binding.latlngClampToggleGroup.clearChecked()
+            map.setLatLngBoundsForCameraTarget(null)
+            binding.clampStatusText.text = getString(R.string.latlng_clamp_status_none)
+            toast("LatLngBounds clamp reset.")
+        }
     }
 
-    binding.clampLatlngAdelaide.setOnClickListener {
-      binding.latlngClampToggleGroup.check(R.id.clamp_latlng_adelaide)
-      map.setLatLngBoundsForCameraTarget(ADELAIDE_BOUNDS)
-      map.animateCamera(CameraUpdateFactory.newCameraPosition(ADELAIDE_CAMERA))
-      binding.clampStatusText.text = getString(R.string.latlng_clamp_status_adelaide)
+    private fun updateZoomLabel(min: Float, max: Float) {
+        binding.zoomLabel.text = getString(R.string.zoom_bounds_label, min, max)
     }
 
-    binding.clampLatlngPacific.setOnClickListener {
-      binding.latlngClampToggleGroup.check(R.id.clamp_latlng_pacific)
-      map.setLatLngBoundsForCameraTarget(PACIFIC)
-      map.animateCamera(CameraUpdateFactory.newCameraPosition(PACIFIC_CAMERA))
-      binding.clampStatusText.text = getString(R.string.latlng_clamp_status_pacific)
+    private fun updateCameraPosition() {
+        if (!::map.isInitialized) return
+        val pos = map.cameraPosition
+        binding.cameraText.text = getString(
+            R.string.camera_position_format,
+            pos.target.latitude,
+            pos.target.longitude,
+            pos.zoom,
+            pos.tilt,
+            pos.bearing,
+        )
     }
 
-    binding.clampLatlngReset.setOnClickListener {
-      binding.latlngClampToggleGroup.clearChecked()
-      map.setLatLngBoundsForCameraTarget(null)
-      binding.clampStatusText.text = getString(R.string.latlng_clamp_status_none)
-      toast("LatLngBounds clamp reset.")
+    private fun toast(msg: String) {
+        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
     }
-  }
 
-  private fun updateZoomLabel(min: Float, max: Float) {
-    binding.zoomLabel.text = getString(R.string.zoom_bounds_label, min, max)
-  }
+    private fun resetMinMaxZoom() {
+        minZoom = DEFAULT_MIN_ZOOM
+        maxZoom = DEFAULT_MAX_ZOOM
+    }
 
-  private fun updateCameraPosition() {
-    if (!::map.isInitialized) return
-    val pos = map.cameraPosition
-    binding.cameraText.text = getString(
-      R.string.camera_position_format,
-      pos.target.latitude,
-      pos.target.longitude,
-      pos.zoom,
-      pos.tilt,
-      pos.bearing
-    )
-  }
-
-  private fun toast(msg: String) {
-    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-  }
-
-  private fun resetMinMaxZoom() {
-    minZoom = DEFAULT_MIN_ZOOM
-    maxZoom = DEFAULT_MAX_ZOOM
-  }
-
-  companion object {
-    private val TAG = CameraClampingDemoActivity::class.java.name
-    private const val ZOOM_DELTA = 2.0f
-    private const val DEFAULT_MIN_ZOOM = 2.0f
-    private const val DEFAULT_MAX_ZOOM = 21.0f
-    val ADELAIDE_BOUNDS = LatLngBounds(
-      LatLng(-35.0, 138.58), LatLng(-34.9, 138.61))
-    private val ADELAIDE_CAMERA = CameraPosition.Builder()
-      .target(LatLng(-34.92873, 138.59995)).zoom(20.0f).bearing(0f).tilt(0f).build()
-    private val PACIFIC = LatLngBounds(
-      LatLng(-15.0, 165.0), LatLng(15.0, -165.0))
-    private val PACIFIC_CAMERA = CameraPosition.Builder()
-      .target(LatLng(0.0, (-180).toDouble())).zoom(4.0f).bearing(0f).tilt(0f).build()
-  }
+    companion object {
+        private val TAG = CameraClampingDemoActivity::class.java.name
+        private const val ZOOM_DELTA = 2.0f
+        private const val DEFAULT_MIN_ZOOM = 2.0f
+        private const val DEFAULT_MAX_ZOOM = 21.0f
+        val ADELAIDE_BOUNDS = LatLngBounds(LatLng(-35.0, 138.58), LatLng(-34.9, 138.61))
+        private val ADELAIDE_CAMERA = CameraPosition.Builder()
+            .target(LatLng(-34.92873, 138.59995)).zoom(20.0f).bearing(0f).tilt(0f).build()
+        private val PACIFIC = LatLngBounds(LatLng(-15.0, 165.0), LatLng(15.0, -165.0))
+        private val PACIFIC_CAMERA = CameraPosition.Builder()
+            .target(LatLng(0.0, (-180).toDouble())).zoom(4.0f).bearing(0f).tilt(0f).build()
+    }
 }

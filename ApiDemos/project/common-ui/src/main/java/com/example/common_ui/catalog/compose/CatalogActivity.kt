@@ -53,15 +53,26 @@ open class CatalogActivity : ComponentActivity() {
                     },
                     onSwitchMode = {
                         try {
-                            val intent = Intent().setClassName(packageName, "com.example.reviewer.compose.ReviewerActivity")
+                            val intent = Intent().setClassName(
+                                packageName,
+                                "com.example.reviewer.compose.ReviewerActivity",
+                            )
                             startActivity(intent)
                             finish()
                         } catch (e: ActivityNotFoundException) {
-                            Toast.makeText(this@CatalogActivity, "Reviewer mode is not available", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@CatalogActivity,
+                                "Reviewer mode is not available",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         } catch (e: Exception) {
-                            Toast.makeText(this@CatalogActivity, "Could not switch to Reviewer mode: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@CatalogActivity,
+                                "Could not switch to Reviewer mode: ${e.message}",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         }
-                    }
+                    },
                 )
             }
         }
@@ -70,7 +81,11 @@ open class CatalogActivity : ComponentActivity() {
     protected fun launchSample(sample: SampleItem, framework: Framework) {
         val className = sample.getActivityForFramework(framework)
         if (className.isNullOrBlank()) {
-            Toast.makeText(this, "No ${framework.displayName} implementation available for ${sample.title}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "No ${framework.displayName} implementation available for ${sample.title}",
+                Toast.LENGTH_SHORT,
+            ).show()
             return
         }
 
@@ -91,7 +106,7 @@ open class CatalogActivity : ComponentActivity() {
             Toast.makeText(
                 this,
                 "${framework.displayName} app ($targetPackage) is not installed",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_LONG,
             ).show()
         } catch (e: Exception) {
             Toast.makeText(this, "Could not launch ${sample.title}: ${e.message}", Toast.LENGTH_LONG).show()

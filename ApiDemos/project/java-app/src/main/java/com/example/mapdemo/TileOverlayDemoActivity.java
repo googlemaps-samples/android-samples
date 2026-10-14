@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
+import android.os.Bundle;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
-
+import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -26,34 +27,23 @@ import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.TileProvider;
 import com.google.android.gms.maps.model.UrlTileProvider;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 
-/**
- * This demonstrates how to add a tile overlay to a map.
- */
+/** This demonstrates how to add a tile overlay to a map. */
 @Sample(
-    id = "tile_overlay",
-    title = "Tile Overlays & TileProvider",
-    description = "Custom TileProvider rendering coordinate grid tiles and custom imagery.",
-    category = "Overlays & Tiles",
-    complexity = Complexity.SIMPLE,
-    tags = {"#overlays", "#tiles", "#tileprovider", "#customtiles"},
-    purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate overlays).",
-    successCriteria = "Tile grid numbers (x, y, zoom) render cleanly over the base map.",
-    failureIndicators = "Tile rendering blocks UI thread or tiles fail to fetch on pan.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "tile_overlay",
+        title = "Tile Overlays & TileProvider",
+        description = "Custom TileProvider rendering coordinate grid tiles and custom imagery.",
+        category = "Overlays & Tiles",
+        complexity = Complexity.SIMPLE,
+        tags = {"#overlays", "#tiles", "#tileprovider", "#customtiles"},
+        purpose =
+                "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate overlays).",
+        successCriteria = "Tile grid numbers (x, y, zoom) render cleanly over the base map.",
+        failureIndicators = "Tile rendering blocks UI thread or tiles fail to fetch on pan.",
+        framework = Framework.JAVA_VIEWS)
 public class TileOverlayDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnMapReadyCallback {
 
@@ -69,7 +59,9 @@ public class TileOverlayDemoActivity extends SamplesBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.common_ui.databinding.TileOverlayDemoBinding.inflate(getLayoutInflater());
+        binding =
+                com.example.common_ui.databinding.TileOverlayDemoBinding.inflate(
+                        getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.transparencySeekBar.setMax(TRANSPARENCY_MAX);
@@ -77,7 +69,9 @@ public class TileOverlayDemoActivity extends SamplesBaseActivity
         binding.fadeInToggle.setOnClickListener(v -> setFadeIn());
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
         applyInsets(binding.mapContainer);
@@ -87,21 +81,23 @@ public class TileOverlayDemoActivity extends SamplesBaseActivity
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        TileProvider tileProvider = new UrlTileProvider(256, 256) {
-            @Override
-            public synchronized URL getTileUrl(int x, int y, int zoom) {
-                // The moon tile coordinate system is reversed.  This is not normal.
-                int reversedY = (1 << zoom) - y - 1;
-                String s = String.format(Locale.US, MOON_MAP_URL_FORMAT, zoom, x, reversedY);
-                URL url = null;
-                try {
-                    url = new URL(s);
-                } catch (MalformedURLException e) {
-                    throw new AssertionError(e);
-                }
-                return url;
-            }
-        };
+        TileProvider tileProvider =
+                new UrlTileProvider(256, 256) {
+                    @Override
+                    public synchronized URL getTileUrl(int x, int y, int zoom) {
+                        // The moon tile coordinate system is reversed.  This is not normal.
+                        int reversedY = (1 << zoom) - y - 1;
+                        String s =
+                                String.format(Locale.US, MOON_MAP_URL_FORMAT, zoom, x, reversedY);
+                        URL url = null;
+                        try {
+                            url = new URL(s);
+                        } catch (MalformedURLException e) {
+                            throw new AssertionError(e);
+                        }
+                        return url;
+                    }
+                };
 
         moonTiles = map.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
         binding.transparencySeekBar.setOnSeekBarChangeListener(this);
@@ -115,12 +111,10 @@ public class TileOverlayDemoActivity extends SamplesBaseActivity
     }
 
     @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-    }
+    public void onStopTrackingTouch(SeekBar seekBar) {}
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-    }
+    public void onStartTrackingTouch(SeekBar seekBar) {}
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

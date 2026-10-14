@@ -16,12 +16,6 @@
 
 package com.example.kotlindemos
 
-
-import com.example.common_ui.R
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -30,14 +24,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -54,10 +51,11 @@ import com.google.android.gms.maps.model.MarkerOptions
     category = "Lists & Performance",
     complexity = Complexity.ADVANCED,
     tags = ["#litemode", "#recyclerview", "#lists", "#viewholder", "#lifecycle"],
-    purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper lifecycle management.",
+    purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper lifecycle " +
+        "management.",
     successCriteria = "List scrolls at 60/120fps without stutter; map snapshots display accurate markers per row.",
     failureIndicators = "RecyclerView scrolling stutters or recycled MapViews display stale map markers.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 class LiteListDemoActivity : SamplesBaseActivity() {
 
@@ -124,7 +122,7 @@ class LiteListDemoActivity : SamplesBaseActivity() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val inflated = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.lite_list_demo_row, parent, false)
+                .inflate(R.layout.lite_list_demo_row, parent, false)
             return ViewHolder(inflated)
         }
 
@@ -132,8 +130,8 @@ class LiteListDemoActivity : SamplesBaseActivity() {
 
         /** A view holder for the map and title. */
         inner class ViewHolder(view: View) :
-                RecyclerView.ViewHolder(view),
-                OnMapReadyCallback {
+            RecyclerView.ViewHolder(view),
+            OnMapReadyCallback {
 
             private val layout: View = view
             private val mapView: MapView = layout.findViewById(R.id.lite_listrow_map)
@@ -141,7 +139,7 @@ class LiteListDemoActivity : SamplesBaseActivity() {
             private lateinit var map: GoogleMap
             private lateinit var latLng: LatLng
 
-            /** Initialises the MapView by calling its lifecycle methods */
+            /* Initialises the MapView by calling its lifecycle methods */
             init {
                 with(mapView) {
                     // Initialise the MapView
@@ -158,8 +156,11 @@ class LiteListDemoActivity : SamplesBaseActivity() {
                     addMarker(MarkerOptions().position(latLng))
                     mapType = GoogleMap.MAP_TYPE_NORMAL
                     setOnMapClickListener {
-                        Toast.makeText(this@LiteListDemoActivity, "Clicked on ${title.text}",
-                                Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@LiteListDemoActivity,
+                            "Clicked on ${title.text}",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     }
                 }
             }
@@ -196,39 +197,39 @@ class LiteListDemoActivity : SamplesBaseActivity() {
 
     /** A list of locations of to show in the RecyclerView */
     private val listLocations: List<Pair<String, LatLng>> = listOf(
-            Pair("Cape Town", LatLng(-33.920455, 18.466941)),
-            Pair("Beijing", LatLng(39.937795, 116.387224)),
-            Pair("Bern", LatLng(46.948020, 7.448206)),
-            Pair("Breda", LatLng(51.589256, 4.774396)),
-            Pair("Brussels", LatLng(50.854509, 4.376678)),
-            Pair("Copenhagen", LatLng(55.679423, 12.577114)),
-            Pair("Hannover", LatLng(52.372026, 9.735672)),
-            Pair("Helsinki", LatLng(60.169653, 24.939480)),
-            Pair("Hong Kong", LatLng(22.325862, 114.165532)),
-            Pair("Istanbul", LatLng(41.034435, 28.977556)),
-            Pair("Johannesburg", LatLng(-26.202886, 28.039753)),
-            Pair("Lisbon", LatLng(38.707163, -9.135517)),
-            Pair("London", LatLng(51.500208, -0.126729)),
-            Pair("Madrid", LatLng(40.420006, -3.709924)),
-            Pair("Mexico City", LatLng(19.427050, -99.127571)),
-            Pair("Moscow", LatLng(55.750449, 37.621136)),
-            Pair("New York", LatLng(40.750580, -73.993584)),
-            Pair("Oslo", LatLng(59.910761, 10.749092)),
-            Pair("Paris", LatLng(48.859972, 2.340260)),
-            Pair("Prague", LatLng(50.087811, 14.420460)),
-            Pair("Rio de Janeiro", LatLng(-22.90187, -43.232437)),
-            Pair("Rome", LatLng(41.889998, 12.500162)),
-            Pair("Sao Paolo", LatLng(-22.863878, -43.244097)),
-            Pair("Seoul", LatLng(37.560908, 126.987705)),
-            Pair("Stockholm", LatLng(59.330650, 18.067360)),
-            Pair("Sydney", LatLng(-33.873651, 151.2068896)),
-            Pair("Taipei", LatLng(25.022112, 121.478019)),
-            Pair("Tokyo", LatLng(35.670267, 139.769955)),
-            Pair("Tulsa Oklahoma", LatLng(36.149777, -95.993398)),
-            Pair("Vaduz", LatLng(47.141076, 9.521482)),
-            Pair("Vienna", LatLng(48.209206, 16.372778)),
-            Pair("Warsaw", LatLng(52.235474, 21.004057)),
-            Pair("Wellington", LatLng(-41.286480, 174.776217)),
-            Pair("Winnipeg", LatLng(49.875832, -97.150726))
+        Pair("Cape Town", LatLng(-33.920455, 18.466941)),
+        Pair("Beijing", LatLng(39.937795, 116.387224)),
+        Pair("Bern", LatLng(46.948020, 7.448206)),
+        Pair("Breda", LatLng(51.589256, 4.774396)),
+        Pair("Brussels", LatLng(50.854509, 4.376678)),
+        Pair("Copenhagen", LatLng(55.679423, 12.577114)),
+        Pair("Hannover", LatLng(52.372026, 9.735672)),
+        Pair("Helsinki", LatLng(60.169653, 24.939480)),
+        Pair("Hong Kong", LatLng(22.325862, 114.165532)),
+        Pair("Istanbul", LatLng(41.034435, 28.977556)),
+        Pair("Johannesburg", LatLng(-26.202886, 28.039753)),
+        Pair("Lisbon", LatLng(38.707163, -9.135517)),
+        Pair("London", LatLng(51.500208, -0.126729)),
+        Pair("Madrid", LatLng(40.420006, -3.709924)),
+        Pair("Mexico City", LatLng(19.427050, -99.127571)),
+        Pair("Moscow", LatLng(55.750449, 37.621136)),
+        Pair("New York", LatLng(40.750580, -73.993584)),
+        Pair("Oslo", LatLng(59.910761, 10.749092)),
+        Pair("Paris", LatLng(48.859972, 2.340260)),
+        Pair("Prague", LatLng(50.087811, 14.420460)),
+        Pair("Rio de Janeiro", LatLng(-22.90187, -43.232437)),
+        Pair("Rome", LatLng(41.889998, 12.500162)),
+        Pair("Sao Paolo", LatLng(-22.863878, -43.244097)),
+        Pair("Seoul", LatLng(37.560908, 126.987705)),
+        Pair("Stockholm", LatLng(59.330650, 18.067360)),
+        Pair("Sydney", LatLng(-33.873651, 151.2068896)),
+        Pair("Taipei", LatLng(25.022112, 121.478019)),
+        Pair("Tokyo", LatLng(35.670267, 139.769955)),
+        Pair("Tulsa Oklahoma", LatLng(36.149777, -95.993398)),
+        Pair("Vaduz", LatLng(47.141076, 9.521482)),
+        Pair("Vienna", LatLng(48.209206, 16.372778)),
+        Pair("Warsaw", LatLng(52.235474, 21.004057)),
+        Pair("Wellington", LatLng(-41.286480, 174.776217)),
+        Pair("Winnipeg", LatLng(49.875832, -97.150726)),
     )
 }

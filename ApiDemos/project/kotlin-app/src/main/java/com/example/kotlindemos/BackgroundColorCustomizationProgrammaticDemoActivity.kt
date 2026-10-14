@@ -14,24 +14,24 @@
 package com.example.kotlindemos
 
 import android.graphics.Color
-
-import com.google.android.gms.maps.OnMapReadyCallback
 import android.os.Bundle
 import android.view.View
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.GoogleMapOptions
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.LatLng
 import com.example.common_ui.R
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMapOptions
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 /**
  * This shows how to to instantiate a SupportMapFragment programmatically with a custom background
  * color applied to the map, and add a marker on the map.
  */
-class BackgroundColorCustomizationProgrammaticDemoActivity : SamplesBaseActivity(),
-                                                             OnMapReadyCallback {
+class BackgroundColorCustomizationProgrammaticDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.background_color_customization_programmatic_demo)
@@ -47,8 +47,8 @@ class BackgroundColorCustomizationProgrammaticDemoActivity : SamplesBaseActivity
             // GoogleMapOptions to set the custom background color displayed before the map tiles load.
             mapFragment = SupportMapFragment.newInstance(
                 GoogleMapOptions().backgroundColor(
-                    LIGHT_PINK_COLOR
-                )
+                    LIGHT_PINK_COLOR,
+                ),
             )
 
             // Then we add the fragment using a FragmentTransaction.

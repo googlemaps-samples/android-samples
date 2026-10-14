@@ -16,7 +16,10 @@ package com.example.mapdemo;
 import androidx.test.espresso.IdlingResource;
 import com.google.android.gms.maps.GoogleMap;
 
-public class MapIdlingResource implements IdlingResource, GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveStartedListener {
+public class MapIdlingResource
+        implements IdlingResource,
+                GoogleMap.OnCameraIdleListener,
+                GoogleMap.OnCameraMoveStartedListener {
     private final GoogleMap map;
     private ResourceCallback callback;
     private boolean isIdle = true;

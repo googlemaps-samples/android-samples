@@ -16,15 +16,21 @@ package com.example.snippets.kotlin
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.*
+import com.example.snippets.kotlin.R
+import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback
+import com.google.android.gms.maps.StreetViewPanorama
+import com.google.android.gms.maps.StreetViewPanoramaOptions
+import com.google.android.gms.maps.StreetViewPanoramaView
+import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera
 import com.google.android.gms.maps.model.StreetViewPanoramaLink
 import com.google.android.gms.maps.model.StreetViewSource
-import com.example.snippets.kotlin.R
 
 // [START maps_street_view_on_street_view_panorama_ready]
-class StreetViewActivity : AppCompatActivity(), OnStreetViewPanoramaReadyCallback {
+class StreetViewActivity :
+    AppCompatActivity(),
+    OnStreetViewPanoramaReadyCallback {
     // [START_EXCLUDE]
     // [START maps_street_view_on_create]
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +66,7 @@ class StreetViewActivity : AppCompatActivity(), OnStreetViewPanoramaReadyCallbac
         val sanFrancisco = LatLng(37.754130, -122.447129)
         val view = StreetViewPanoramaView(
             this,
-            StreetViewPanoramaOptions().position(sanFrancisco)
+            StreetViewPanoramaOptions().position(sanFrancisco),
         )
         // [END maps_street_view_new_panorama_view]
     }

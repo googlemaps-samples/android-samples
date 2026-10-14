@@ -15,7 +15,6 @@ package com.example.kotlindemos
 
 import android.content.Context
 import android.content.Intent
-import com.example.common_ui.R
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Menu
@@ -31,6 +30,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.common_ui.R
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
 import com.example.common_ui.catalog.SampleCatalogRegistry
@@ -119,7 +119,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
             val container = baseView.findViewById<ViewGroup>(com.example.common_ui.R.id.sample_content_container)
             container.addView(
                 childView,
-                ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+                ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT),
             )
             super.setContentView(baseView)
         }
@@ -230,6 +230,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 navigateBackToCatalog()
                 true
             }
+
             2001 -> {
                 if (metadata != null) {
                     val sheet = SampleExpectationsBottomSheet.newInstance(
@@ -238,34 +239,37 @@ open class SamplesBaseActivity : AppCompatActivity() {
                         isReviewerMode = isReviewerMode,
                         onLaunch = { s, fw ->
                             SampleReviewRepository.launchSample(this@SamplesBaseActivity, s, fw, isReviewerMode)
-                        }
+                        },
                     )
                     sheet.show(supportFragmentManager, "SampleExpectationsBottomSheet")
                 }
                 true
             }
+
             2003 -> {
                 if (metadata != null) {
                     ReviewEvaluationDialog.show(
                         this,
                         metadata,
                         Framework.KOTLIN_VIEWS,
-                        ReviewStatus.PASSING
+                        ReviewStatus.PASSING,
                     )
                 }
                 true
             }
+
             2004 -> {
                 if (metadata != null) {
                     ReviewEvaluationDialog.show(
                         this,
                         metadata,
                         Framework.KOTLIN_VIEWS,
-                        ReviewStatus.NEEDS_WORK
+                        ReviewStatus.NEEDS_WORK,
                     )
                 }
                 true
             }
+
             2005 -> {
                 // Advance to Next Unchecked Sample
                 if (metadata != null) {
@@ -274,13 +278,18 @@ open class SamplesBaseActivity : AppCompatActivity() {
                         if (next != null) {
                             SampleReviewRepository.launchSample(this@SamplesBaseActivity, next, Framework.KOTLIN_VIEWS)
                         } else {
-                            Toast.makeText(this@SamplesBaseActivity, "🎉 All Kotlin samples reviewed!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                this@SamplesBaseActivity,
+                                "🎉 All Kotlin samples reviewed!",
+                                Toast.LENGTH_LONG,
+                            ).show()
                             navigateBackToCatalog()
                         }
                     }
                 }
                 true
             }
+
             2006 -> {
                 // Return to Previous Sample
                 if (metadata != null) {
@@ -293,6 +302,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 }
                 true
             }
+
             2007 -> {
                 // Reset to Unchecked
                 if (metadata != null) {
@@ -303,12 +313,14 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 }
                 true
             }
+
             2002 -> {
                 if (metadata != null && metadata.javaActivity != null) {
                     SampleReviewRepository.launchSample(this, metadata, Framework.JAVA_VIEWS, isReviewerMode)
                 }
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -329,7 +341,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
                     cutout.left,
                     cutout.top,
                     cutout.right,
-                    0
+                    0,
                 )
                 view.layoutParams.height = baseHeight + cutout.top
                 view.requestLayout()
@@ -346,7 +358,7 @@ open class SamplesBaseActivity : AppCompatActivity() {
                 cutout.left,
                 0,
                 cutout.right,
-                cutout.bottom
+                cutout.bottom,
             )
             insets
         }
@@ -357,14 +369,14 @@ open class SamplesBaseActivity : AppCompatActivity() {
             if (view == null) return
             ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
                 val navBars = insets.getInsets(
-                    WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.displayCutout()
+                    WindowInsetsCompat.Type.navigationBars() or WindowInsetsCompat.Type.displayCutout(),
                 )
                 val statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
                 v.setPadding(
                     navBars.left,
                     statusBars.top,
                     navBars.right,
-                    navBars.bottom
+                    navBars.bottom,
                 )
                 insets
             }

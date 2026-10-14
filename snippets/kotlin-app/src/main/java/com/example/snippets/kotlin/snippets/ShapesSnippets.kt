@@ -41,13 +41,15 @@ import com.google.android.gms.maps.model.TextureStyle
 
 @SnippetGroup(
     title = "Shapes",
-    description = "Snippets demonstrating shapes, custom styled polylines, polygons, and circles."
+    description = "Snippets demonstrating shapes, custom styled polylines, polygons, and circles.",
 )
 class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "1. Simple Polyline",
-        description = "What it does: Creates a polyline path and connects sequential coordinates to form a rectangular boundary line.\nHow to see the effect: A solid stroke outline connects four geographic coordinates on the map.",
+        description = "What it does: Creates a polyline path and connects sequential coordinates to form a " +
+            "rectangular boundary line.\nHow to see the effect: A solid stroke outline connects four geographic " +
+            "coordinates on the map.",
     )
     fun polylines() {
         // [START maps_android_shapes_polylines_polylineoptions]
@@ -75,7 +77,8 @@ class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "2. Simple Polygon",
-        description = "What it does: Constructs a filled polygon covering a rectangular geographic region.\nHow to see the effect: A solid filled rectangular polygon shape overlays the map surface.",
+        description = "What it does: Constructs a filled polygon covering a rectangular geographic region.\n" +
+            "How to see the effect: A solid filled rectangular polygon shape overlays the map surface.",
     )
     fun polygons() {
         // [START maps_android_shapes_polygons_polygonoptions]
@@ -86,7 +89,7 @@ class ShapesSnippets(private val map: TrackedMap) {
                 LatLng(37.45, -122.0),
                 LatLng(37.45, -122.2),
                 LatLng(37.35, -122.2),
-                LatLng(37.35, -122.0)
+                LatLng(37.35, -122.0),
             )
 
         // Get back the mutable Polygon
@@ -96,7 +99,9 @@ class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "3. Polygon Autocompletion",
-        description = "What it does: Demonstrates that open coordinate paths automatically join the last point back to origin.\nHow to see the effect: Unclosed polygon vertices automatically connect to form a closed, filled shape.",
+        description = "What it does: Demonstrates that open coordinate paths automatically join the last point back " +
+            "to origin.\nHow to see the effect: Unclosed polygon vertices automatically connect to form a closed, " +
+            "filled shape.",
     )
     fun polygonAutocompletion() {
         // [START maps_android_shapes_polygons_autocompletion]
@@ -106,27 +111,29 @@ class ShapesSnippets(private val map: TrackedMap) {
                     LatLng(0.0, 0.0),
                     LatLng(0.0, 5.0),
                     LatLng(3.0, 5.0),
-                    LatLng(0.0, 0.0)
+                    LatLng(0.0, 0.0),
                 )
                 .strokeColor(Color.RED)
-                .fillColor(Color.BLUE)
+                .fillColor(Color.BLUE),
         )
         val polygon2 = map.addPolygon(
             PolygonOptions()
                 .add(
                     LatLng(0.0, 0.0),
                     LatLng(0.0, 5.0),
-                    LatLng(3.0, 5.0)
+                    LatLng(3.0, 5.0),
                 )
                 .strokeColor(Color.RED)
-                .fillColor(Color.BLUE)
+                .fillColor(Color.BLUE),
         )
         // [END maps_android_shapes_polygons_autocompletion]
     }
 
     @SnippetItem(
         title = "4. Hollow Polygon",
-        description = "What it does: Adds interior coordinate hole paths (cutouts) inside an outer filled polygon boundary.\nHow to see the effect: A solid polygon displays with a transparent window cutout in its center.",
+        description = "What it does: Adds interior coordinate hole paths (cutouts) inside an outer filled polygon " +
+            "boundary.\nHow to see the effect: A solid polygon displays with a transparent window cutout in its " +
+            "center.",
     )
     fun polygonHollow() {
         // [START maps_android_shapes_polygons_hollow]
@@ -135,7 +142,7 @@ class ShapesSnippets(private val map: TrackedMap) {
             LatLng(1.0, 2.0),
             LatLng(2.0, 2.0),
             LatLng(2.0, 1.0),
-            LatLng(1.0, 1.0)
+            LatLng(1.0, 1.0),
         )
         val hollowPolygon = map.addPolygon(
             PolygonOptions()
@@ -144,10 +151,10 @@ class ShapesSnippets(private val map: TrackedMap) {
                     LatLng(0.0, 5.0),
                     LatLng(3.0, 5.0),
                     LatLng(3.0, 0.0),
-                    LatLng(0.0, 0.0)
+                    LatLng(0.0, 0.0),
                 )
                 .addHole(hole)
-                .fillColor(Color.BLUE)
+                .fillColor(Color.BLUE),
         )
         hollowPolygon?.let {
             val isClickable = it.isClickable
@@ -165,7 +172,9 @@ class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "5. Circle",
-        description = "What it does: Draws a circular shape specified by center coordinates and radius in meters.\nHow to see the effect: A circular overlay ring appears surrounding the center point with a 1,000 meter radius.",
+        description = "What it does: Draws a circular shape specified by center coordinates and radius in meters.\n" +
+            "How to see the effect: A circular overlay ring appears surrounding the center point with a 1,000 " +
+            "meter radius.",
     )
     fun circles() {
         // [START maps_android_shapes_circles_circleoptions]
@@ -190,7 +199,8 @@ class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "6. Circle Click Event",
-        description = "What it does: Attaches a touch listener directly to a clickable circle shape overlay.\nHow to see the effect: Tap inside the circle shape; its border stroke color immediately flips.",
+        description = "What it does: Attaches a touch listener directly to a clickable circle shape overlay.\n" +
+            "How to see the effect: Tap inside the circle shape; its border stroke color immediately flips.",
     )
     fun circlesEvents() {
         // [START maps_android_shapes_circles_events]
@@ -201,7 +211,7 @@ class ShapesSnippets(private val map: TrackedMap) {
                 .strokeWidth(10f)
                 .strokeColor(Color.GREEN)
                 .fillColor(Color.argb(128, 255, 0, 0))
-                .clickable(true)
+                .clickable(true),
         )
         map.setOnCircleClickListener {
             // Flip the r, g and b components of the circle's stroke color.
@@ -213,7 +223,9 @@ class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "7. Custom Polyline Appearance",
-        description = "What it does: Configures custom stroke patterns (dots and dashes), joint types, and custom cap icons.\nHow to see the effect: The polyline line renders with a dashed pattern and custom arrow icon end-cap.",
+        description = "What it does: Configures custom stroke patterns (dots and dashes), joint types, and custom " +
+            "cap icons.\nHow to see the effect: The polyline line renders with a dashed pattern and custom arrow " +
+            "icon end-cap.",
     )
     fun customAppearances() {
         // [START maps_android_shapes_custom_appearances]
@@ -222,13 +234,16 @@ class ShapesSnippets(private val map: TrackedMap) {
                 .add(LatLng(-37.81319, 144.96298), LatLng(-31.95285, 115.85734))
                 .width(25f)
                 .color(Color.BLUE)
-                .geodesic(true)
+                .geodesic(true),
         )
         // [END maps_android_shapes_custom_appearances]
 
         // [START maps_android_shapes_custom_appearances_stroke_pattern]
         val pattern = listOf(
-            Dot(), Gap(20F), Dash(30F), Gap(20F)
+            Dot(),
+            Gap(20F),
+            Dash(30F),
+            Gap(20F),
         )
         polyline?.pattern = pattern
         // [END maps_android_shapes_custom_appearances_stroke_pattern]
@@ -248,7 +263,9 @@ class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "8. Associate Data Tag",
-        description = "What it does: Attaches a custom metadata tag object ('A') to a clickable polyline.\nHow to see the effect: Click listeners can inspect the polyline's tag property for business logic routing.",
+        description = "What it does: Attaches a custom metadata tag object ('A') to a clickable polyline.\n" +
+            "How to see the effect: Click listeners can inspect the polyline's tag property for business logic " +
+            "routing.",
     )
     fun associateData() {
         // [START maps_android_shapes_associate_data]
@@ -261,8 +278,8 @@ class ShapesSnippets(private val map: TrackedMap) {
                     LatLng(-34.364, 147.891),
                     LatLng(-33.501, 150.217),
                     LatLng(-32.306, 149.248),
-                    LatLng(-32.491, 147.309)
-                )
+                    LatLng(-32.491, 147.309),
+                ),
         )
         polyline?.tag = "A"
         // [END maps_android_shapes_associate_data]
@@ -270,7 +287,9 @@ class ShapesSnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "9. Multicolored Polyline Spans",
-        description = "What it does: Applies multiple StyleSpan stroke colors to distinct segments along a single polyline.\nHow to see the effect: The polyline shifts colors from red to green across different segment lengths.",
+        description = "What it does: Applies multiple StyleSpan stroke colors to distinct segments along a single " +
+            "polyline.\nHow to see the effect: The polyline shifts colors from red to green across different segment " +
+            "lengths.",
     )
     fun multicoloredPolyline() {
         // [START maps_android_polyline_multicolored]
@@ -278,14 +297,16 @@ class ShapesSnippets(private val map: TrackedMap) {
             PolylineOptions()
                 .add(LatLng(47.6677146, -122.3470447), LatLng(47.6442757, -122.2814693))
                 .addSpan(StyleSpan(Color.RED))
-                .addSpan(StyleSpan(Color.GREEN))
+                .addSpan(StyleSpan(Color.GREEN)),
         )
         // [END maps_android_polyline_multicolored]
     }
 
     @SnippetItem(
         title = "10. Multicolored Gradient Polyline",
-        description = "What it does: Creates a smooth color gradient transition across a polyline segment using StrokeStyle.gradientBuilder.\nHow to see the effect: The polyline line smoothly blends from red to yellow along its continuous path.",
+        description = "What it does: Creates a smooth color gradient transition across a polyline segment using " +
+            "StrokeStyle.gradientBuilder.\nHow to see the effect: The polyline line smoothly blends from red to " +
+            "yellow along its continuous path.",
     )
     fun multicoloredGradientPolyline() {
         // [START maps_android_polyline_gradient]
@@ -296,17 +317,19 @@ class ShapesSnippets(private val map: TrackedMap) {
                     StyleSpan(
                         StrokeStyle.gradientBuilder(
                             Color.RED,
-                            Color.YELLOW
-                        ).build()
-                    )
-                )
+                            Color.YELLOW,
+                        ).build(),
+                    ),
+                ),
         )
         // [END maps_android_polyline_gradient]
     }
 
     @SnippetItem(
         title = "11. Stamped Texture Polyline",
-        description = "What it does: Stamps a repeating bitmap texture (walking dots) onto the polyline stroke using TextureStyle.\nHow to see the effect: A repeating sequence of walking dot icons renders along the polyline path.",
+        description = "What it does: Stamps a repeating bitmap texture (walking dots) onto the polyline stroke using " +
+            "TextureStyle.\nHow to see the effect: A repeating sequence of walking dot icons renders along the " +
+            "polyline path.",
     )
     fun stampedPolyline() {
         // [START maps_android_polyline_stamped]
@@ -316,7 +339,7 @@ class ShapesSnippets(private val map: TrackedMap) {
         map.addPolyline(
             PolylineOptions()
                 .add(LatLng(47.6677146, -122.3470447), LatLng(47.6442757, -122.2814693))
-                .addSpan(span)
+                .addSpan(span),
         )
         // [END maps_android_polyline_stamped]
     }

@@ -41,11 +41,7 @@ import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.TileOverlay
 import kotlinx.coroutines.CoroutineScope
 
-data class SnippetGroupInfo(
-    val title: String,
-    val description: String,
-    val items: List<SnippetItemInfo>,
-)
+data class SnippetGroupInfo(val title: String, val description: String, val items: List<SnippetItemInfo>)
 
 data class SnippetItemInfo(
     val title: String,
@@ -117,7 +113,9 @@ object SnippetRegistry {
                                 // Most snippet methods take no args because they use initialized class fields
                                 if (method.parameterCount == 0) {
                                     method.invoke(instance)
-                                } else if (method.parameterCount == 1 && method.parameterTypes[0] == Context::class.java) {
+                                } else if (method.parameterCount == 1 &&
+                                    method.parameterTypes[0] == Context::class.java
+                                ) {
                                     method.invoke(instance, context)
                                 } else {
                                     // Fallback or log error
@@ -155,21 +153,23 @@ object SnippetRegistry {
         return groups
     }
 
-    private fun createInstance(clazz: Class<*>, context: Context, map: TrackedMap, scope: CoroutineScope): Any {
-        return try {
-            clazz.getConstructor(Context::class.java, TrackedMap::class.java, CoroutineScope::class.java).newInstance(context, map, scope)
+    private fun createInstance(clazz: Class<*>, context: Context, map: TrackedMap, scope: CoroutineScope): Any = try {
+        clazz.getConstructor(
+            Context::class.java,
+            TrackedMap::class.java,
+            CoroutineScope::class.java,
+        ).newInstance(context, map, scope)
+    } catch (e: Exception) {
+        try {
+            clazz.getConstructor(TrackedMap::class.java, CoroutineScope::class.java).newInstance(map, scope)
         } catch (e: Exception) {
             try {
-                clazz.getConstructor(TrackedMap::class.java, CoroutineScope::class.java).newInstance(map, scope)
+                clazz.getConstructor(Context::class.java, TrackedMap::class.java).newInstance(context, map)
             } catch (e: Exception) {
                 try {
-                    clazz.getConstructor(Context::class.java, TrackedMap::class.java).newInstance(context, map)
+                    clazz.getConstructor(TrackedMap::class.java).newInstance(map)
                 } catch (e: Exception) {
-                    try {
-                        clazz.getConstructor(TrackedMap::class.java).newInstance(map)
-                    } catch (e: Exception) {
-                        clazz.getConstructor().newInstance()
-                    }
+                    clazz.getConstructor().newInstance()
                 }
             }
         }

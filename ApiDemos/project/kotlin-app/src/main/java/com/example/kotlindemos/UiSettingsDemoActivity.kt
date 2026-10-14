@@ -16,7 +16,6 @@
 
 package com.example.kotlindemos
 
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -27,10 +26,10 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.common_ui.R
-import com.example.common_ui.databinding.UiSettingsDemoBinding
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.Sample
+import com.example.common_ui.databinding.UiSettingsDemoBinding
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -49,12 +48,13 @@ import com.google.android.gms.maps.UiSettings
         "GoogleMap.uiSettings.isMyLocationButtonEnabled = Boolean",
         "GoogleMap.uiSettings.isScrollGesturesEnabled = Boolean",
         "GoogleMap.uiSettings.isTiltGesturesEnabled = Boolean",
-        "GoogleMap.uiSettings.isRotateGesturesEnabled = Boolean"
+        "GoogleMap.uiSettings.isRotateGesturesEnabled = Boolean",
     ],
     purpose = "Shows how to toggle GoogleMap.uiSettings controls (compass, zoom buttons, scroll/tilt gestures).",
-    successCriteria = "Toggling checkboxes in the drawer instantly enables/disables corresponding map gestures and UI controls.",
+    successCriteria = "Toggling checkboxes in the drawer instantly enables/disables corresponding map gestures and " +
+        "UI controls.",
     failureIndicators = "Gesture toggles ignored or UI control icons clipped by safe area.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 class UiSettingsDemoActivity :
     SamplesBaseActivity(),
@@ -95,10 +95,10 @@ class UiSettingsDemoActivity :
         uiSettings.isMyLocationButtonEnabled = binding.mylocationbuttonToggle.isChecked
         if (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             return
@@ -138,9 +138,10 @@ class UiSettingsDemoActivity :
             return
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+        ) {
             uiSettings.isMyLocationButtonEnabled = binding.mylocationbuttonToggle.isChecked
         } else {
             // Uncheck the box and request missing location permission.
@@ -156,9 +157,10 @@ class UiSettingsDemoActivity :
             return
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+        ) {
             map.isMyLocationEnabled = binding.mylocationlayerToggle.isChecked
         } else {
             // Uncheck the box and request missing location permission.

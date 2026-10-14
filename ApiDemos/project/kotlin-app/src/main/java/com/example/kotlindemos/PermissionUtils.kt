@@ -13,8 +13,6 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
-import com.example.common_ui.R
 import android.Manifest.permission
 import android.app.AlertDialog
 import android.app.Dialog
@@ -22,9 +20,9 @@ import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
-
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
+import com.example.common_ui.R
 
 /**
  * Utility class for access to runtime permissions.
@@ -35,19 +33,15 @@ object PermissionUtils {
      * Requests the fine and coarse location permissions. If a rationale with an additional
      * explanation should be shown to the user, displays a dialog that triggers the request.
      */
-    fun requestLocationPermissions(
-        activity: SamplesBaseActivity,
-        requestId: Int,
-        finishActivity: Boolean
-    ) {
+    fun requestLocationPermissions(activity: SamplesBaseActivity, requestId: Int, finishActivity: Boolean) {
         if (
             ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
-                permission.ACCESS_FINE_LOCATION
+                permission.ACCESS_FINE_LOCATION,
             ) ||
             ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
-                permission.ACCESS_COARSE_LOCATION
+                permission.ACCESS_COARSE_LOCATION,
             )
         ) {
             // Display a dialog with rationale.
@@ -59,9 +53,9 @@ object PermissionUtils {
                 activity,
                 arrayOf(
                     permission.ACCESS_FINE_LOCATION,
-                    permission.ACCESS_COARSE_LOCATION
+                    permission.ACCESS_COARSE_LOCATION,
                 ),
-                requestId
+                requestId,
             )
         }
     }
@@ -73,10 +67,7 @@ object PermissionUtils {
      * @see androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
      */
     @JvmStatic
-    fun isPermissionGranted(
-        grantPermissions: Array<String>, grantResults: IntArray,
-        permission: String
-    ): Boolean {
+    fun isPermissionGranted(grantPermissions: Array<String>, grantResults: IntArray, permission: String): Boolean {
         for (i in grantPermissions.indices) {
             if (permission == grantPermissions[i]) {
                 return grantResults[i] == PackageManager.PERMISSION_GRANTED
@@ -103,8 +94,9 @@ object PermissionUtils {
             super.onDismiss(dialog)
             if (finishActivity) {
                 Toast.makeText(
-                    activity, R.string.permission_required_toast,
-                    Toast.LENGTH_SHORT
+                    activity,
+                    R.string.permission_required_toast,
+                    Toast.LENGTH_SHORT,
                 ).show()
                 activity?.finish()
             }
@@ -147,14 +139,15 @@ object PermissionUtils {
                 arguments?.getBoolean(ARGUMENT_FINISH_ACTIVITY) ?: false
             return AlertDialog.Builder(activity)
                 .setMessage(R.string.permission_rationale_location)
-                .setPositiveButton(R.string.ok) { dialog, which -> // After click on Ok, request the permission.
+                .setPositiveButton(R.string.ok) { dialog, which ->
+                    // After click on Ok, request the permission.
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(
                             permission.ACCESS_FINE_LOCATION,
-                            permission.ACCESS_COARSE_LOCATION
+                            permission.ACCESS_COARSE_LOCATION,
                         ),
-                        requestCode
+                        requestCode,
                     )
                     // Do not finish the Activity while requesting permission.
                     finishActivity = false
@@ -169,7 +162,7 @@ object PermissionUtils {
                 Toast.makeText(
                     activity,
                     R.string.permission_required_toast,
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
                 activity?.finish()
             }
@@ -192,10 +185,7 @@ object PermissionUtils {
              * @param finishActivity Whether the calling Activity should be finished if the dialog is
              * cancelled.
              */
-            fun newInstance(
-                requestCode: Int,
-                finishActivity: Boolean
-            ): RationaleDialog {
+            fun newInstance(requestCode: Int, finishActivity: Boolean): RationaleDialog {
                 val arguments = Bundle().apply {
                     putInt(ARGUMENT_PERMISSION_REQUEST_CODE, requestCode)
                     putBoolean(ARGUMENT_FINISH_ACTIVITY, finishActivity)

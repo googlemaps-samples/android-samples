@@ -43,11 +43,11 @@ import com.google.android.gms.maps.model.RoundCap
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.maps.android.awaitMap
-import java.io.InputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
+import java.io.InputStream
 
 /**
  * Demonstrates feeding programmatic coordinates from a GPX track into the GoogleMap location layer
@@ -66,12 +66,14 @@ import org.xmlpull.v1.XmlPullParser
         "LocationSource.deactivate()",
         "GoogleMap.setMyLocationEnabled(Boolean)",
         "GoogleMap.addPolyline(PolylineOptions)",
-        "CameraUpdateFactory.newLatLngBounds(LatLngBounds, Int)"
+        "CameraUpdateFactory.newLatLngBounds(LatLngBounds, Int)",
     ],
-    purpose = "Shows how to feed programmatic coordinates from a GPX track into the GoogleMap location layer using a custom LocationSource.",
-    successCriteria = "The map bounds to the trail, draws a polyline, and the blue dot animates smoothly along the route.",
+    purpose = "Shows how to feed programmatic coordinates from a GPX track into the GoogleMap location layer using a " +
+        "custom LocationSource.",
+    successCriteria = "The map bounds to the trail, draws a polyline, and the blue dot animates smoothly along the " +
+        "route.",
     failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_location_source]
 class LocationSourceDemoActivity : SamplesBaseActivity() {
@@ -81,7 +83,7 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
     private var trackBounds: LatLngBounds? = null
 
     private val permissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
+        ActivityResultContracts.RequestMultiplePermissions(),
     ) { permissions ->
         if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
             permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
@@ -145,7 +147,7 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
                 .width(16f)
                 .jointType(JointType.ROUND)
                 .startCap(RoundCap())
-                .endCap(RoundCap())
+                .endCap(RoundCap()),
         )
         map.addPolyline(
             PolylineOptions()
@@ -154,7 +156,7 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
                 .width(10f)
                 .jointType(JointType.ROUND)
                 .startCap(RoundCap())
-                .endCap(RoundCap())
+                .endCap(RoundCap()),
         )
 
         // 2. Center and bound camera
@@ -172,8 +174,8 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
     private fun enableMyLocation() {
         val map = googleMap ?: return
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-            || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
             map.isMyLocationEnabled = true
@@ -181,8 +183,8 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
             permissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                )
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                ),
             )
         }
     }
@@ -211,10 +213,9 @@ class LocationSourceDemoActivity : SamplesBaseActivity() {
 /**
  * A [LocationSource] that sequentially replays GPS track points along a trail.
  */
-class GpxLocationSource(
-    private val trackPoints: List<LatLng>,
-    private val intervalMs: Long = 60L
-) : LocationSource, DefaultLifecycleObserver {
+class GpxLocationSource(private val trackPoints: List<LatLng>, private val intervalMs: Long = 60L) :
+    LocationSource,
+    DefaultLifecycleObserver {
 
     private var listener: OnLocationChangedListener? = null
     private var isRunning = true

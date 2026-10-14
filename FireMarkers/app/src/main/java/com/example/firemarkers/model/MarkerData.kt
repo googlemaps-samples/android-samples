@@ -17,8 +17,8 @@ package com.example.firemarkers.model
  * A data class representing a single marker on the map.
  *
  * This class is used to store the data for each marker, including its location, label, and style.
- * It is used by the [com.example.firemarkers.viewmodel.MarkersViewModel] to manage the state of the markers and by the UI to
- * render the markers on the map.
+ * It is used by the [com.example.firemarkers.viewmodel.MarkersViewModel] to manage the state of
+ * the markers and by the UI to render the markers on the map.
  *
  * @property id The unique ID of the marker.
  * @property latitude The latitude of the marker's location.
@@ -33,5 +33,5 @@ data class MarkerData(
     val longitude: Double = 0.0,
     val label: String = "",
     val style: String = "",
-    val color: Float = 0.0f
+    val color: Float = 0.0f,
 )

@@ -25,7 +25,7 @@ import com.example.snippets.common.R
 
 class SnippetGroupAdapter(
     private val allGroups: List<SnippetGroupInfo>,
-    private val listener: (SnippetItemInfo) -> Unit
+    private val listener: (SnippetItemInfo) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -60,12 +60,10 @@ class SnippetGroupAdapter(
         notifyDataSetChanged()
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (visibleItems[position] is SnippetGroupInfo) {
-            TYPE_HEADER
-        } else {
-            TYPE_ITEM
-        }
+    override fun getItemViewType(position: Int): Int = if (visibleItems[position] is SnippetGroupInfo) {
+        TYPE_HEADER
+    } else {
+        TYPE_ITEM
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

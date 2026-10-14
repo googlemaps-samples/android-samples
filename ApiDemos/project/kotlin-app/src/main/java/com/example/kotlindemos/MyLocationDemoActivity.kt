@@ -13,10 +13,6 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -24,11 +20,13 @@ import android.location.Location
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.example.kotlindemos.PermissionUtils.PermissionDeniedDialog.Companion.newInstance
 import com.example.kotlindemos.PermissionUtils.isPermissionGranted
 import com.google.android.gms.maps.GoogleMap
@@ -53,12 +51,14 @@ import com.google.android.gms.maps.SupportMapFragment
     purpose = "Demonstrates requesting ACCESS_FINE_LOCATION permissions and enabling the blue dot location layer.",
     successCriteria = "Tapping My Location button centers camera on user's current GPS position.",
     failureIndicators = "Permission denial causes unhandled crash or location button missing.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_my_location]
-class MyLocationDemoActivity : SamplesBaseActivity(),
+class MyLocationDemoActivity :
+    SamplesBaseActivity(),
     OnMyLocationButtonClickListener,
-    OnMyLocationClickListener, OnMapReadyCallback,
+    OnMyLocationClickListener,
+    OnMapReadyCallback,
     OnRequestPermissionsResultCallback {
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -87,15 +87,14 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
      */
     @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
-
         // [START maps_check_location_permission]
         // 1. Check if permissions are granted, if so, enable the my location layer
         if (ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             map.isMyLocationEnabled = true
@@ -105,14 +104,15 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
         // 2. If if a permission rationale dialog should be shown
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) || ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         ) {
             PermissionUtils.RationaleDialog.newInstance(
-                LOCATION_PERMISSION_REQUEST_CODE, true
+                LOCATION_PERMISSION_REQUEST_CODE,
+                true,
             ).show(supportFragmentManager, "dialog")
             return
         }
@@ -122,9 +122,9 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
             this,
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             ),
-            LOCATION_PERMISSION_REQUEST_CODE
+            LOCATION_PERMISSION_REQUEST_CODE,
         )
         // [END maps_check_location_permission]
     }
@@ -143,16 +143,12 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
     }
 
     // [START maps_check_location_permission_result]
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             super.onRequestPermissionsResult(
                 requestCode,
                 permissions,
-                grantResults
+                grantResults,
             )
             return
         }
@@ -160,11 +156,11 @@ class MyLocationDemoActivity : SamplesBaseActivity(),
         if (isPermissionGranted(
                 permissions,
                 grantResults,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
             ) || isPermissionGranted(
                 permissions,
                 grantResults,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
             )
         ) {
             // Enable the my location layer if the permission has been granted.

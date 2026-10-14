@@ -16,8 +16,9 @@
 
 package com.google.maps.android.visualtesting;
 
-import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class PlaceholderTest {
     @Test

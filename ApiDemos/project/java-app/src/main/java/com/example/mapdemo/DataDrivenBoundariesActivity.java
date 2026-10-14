@@ -13,10 +13,6 @@
 // limitations under the License.
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
-
 import static java.lang.Math.round;
 
 import android.graphics.Color;
@@ -25,16 +21,15 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-//noinspection UnusedImport
 import com.example.common_ui.R; // <-- Keep this import
-
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -50,36 +45,41 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapCapabilities;
 import com.google.android.gms.maps.model.PlaceFeature;
 import com.google.android.material.button.MaterialButton;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 /**
- * This sample showcases how to use the Data-driven styling for boundaries. For more information
- * on how the Data-driven styling for boundaries work, check out the following link:
+ * This sample showcases how to use the Data-driven styling for boundaries. For more information on
+ * how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-boundaries/overview
  */
 @Sample(
-    id = "data_driven_boundaries",
-    title = "Data-Driven Boundaries",
-    description = "Dynamic styling and click handlers for administrative boundaries (Localities, States, Countries).",
-    category = "Data-Driven Styling",
-    complexity = Complexity.ADVANCED,
-    tags = {"#boundaries", "#datadriven", "#featurelayer", "#locality", "#choropleth"},
-    purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary clicks.",
-    successCriteria = "Boundaries render with custom stroke and fill colors; tapping a region highlights its polygon.",
-    failureIndicators = "Boundary layer is null (requires vector map / Map ID) or click listener not firing.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "data_driven_boundaries",
+        title = "Data-Driven Boundaries",
+        description =
+                "Dynamic styling and click handlers for administrative boundaries (Localities, States, Countries).",
+        category = "Data-Driven Styling",
+        complexity = Complexity.ADVANCED,
+        tags = {"#boundaries", "#datadriven", "#featurelayer", "#locality", "#choropleth"},
+        purpose =
+                "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary clicks.",
+        successCriteria =
+                "Boundaries render with custom stroke and fill colors; tapping a region highlights its polygon.",
+        failureIndicators =
+                "Boundary layer is null (requires vector map / Map ID) or click listener not firing.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_data_driven_styling_boundaries]
-public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements OnMapReadyCallback,
-        FeatureLayer.OnFeatureClickListener, PopupMenu.OnMenuItemClickListener {
+public class DataDrivenBoundariesActivity extends SamplesBaseActivity
+        implements OnMapReadyCallback,
+                FeatureLayer.OnFeatureClickListener,
+                PopupMenu.OnMenuItemClickListener {
     private static final String TAG = DataDrivenBoundariesActivity.class.getName();
 
     private static final LatLng HANA_HAWAII = new LatLng(20.7522, -155.9877); // Hana, Hawaii
-    private static final LatLng CENTER_US = new LatLng(39.8283, -98.5795); // Approximate geographical center of the contiguous US
+    private static final LatLng CENTER_US =
+            new LatLng(39.8283, -98.5795); // Approximate geographical center of the contiguous US
 
     private GoogleMap map;
 
@@ -129,22 +129,27 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
         // 4. Add the fragment to your FrameLayout container using FragmentManager
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.map_fragment_container, mapFragment); // Use the container ID from XML
+        fragmentTransaction.replace(
+                R.id.map_fragment_container, mapFragment); // Use the container ID from XML
         fragmentTransaction.commit();
         // --- End Programmatic Creation ---
 
         mapFragment.getMapAsync(this);
 
-        findViewById(R.id.button_hawaii).setOnClickListener(view -> {
-            localityEnabled = true;
-            updateStyles();
-            centerMapOnLocation(HANA_HAWAII, 11f);
-        });
-        findViewById(R.id.button_us).setOnClickListener(view -> {
-            adminAreaEnabled = true;
-            updateStyles();
-            centerMapOnLocation(CENTER_US, 3.8f);
-        });
+        findViewById(R.id.button_hawaii)
+                .setOnClickListener(
+                        view -> {
+                            localityEnabled = true;
+                            updateStyles();
+                            centerMapOnLocation(HANA_HAWAII, 11f);
+                        });
+        findViewById(R.id.button_us)
+                .setOnClickListener(
+                        view -> {
+                            adminAreaEnabled = true;
+                            updateStyles();
+                            centerMapOnLocation(CENTER_US, 3.8f);
+                        });
 
         applyInsets(findViewById(R.id.map_container));
 
@@ -157,19 +162,30 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
 
     private void setupBoundarySelectorButton() {
         MaterialButton stylingTypeButton = findViewById(R.id.button_feature_type);
-        stylingTypeButton.setOnClickListener(v -> {
-                PopupMenu popupMenu = new PopupMenu(this, v);
-                MenuInflater inflater = popupMenu.getMenuInflater();
-                inflater.inflate(R.menu.boundary_types_menu, popupMenu.getMenu());
+        stylingTypeButton.setOnClickListener(
+                v -> {
+                    PopupMenu popupMenu = new PopupMenu(this, v);
+                    MenuInflater inflater = popupMenu.getMenuInflater();
+                    inflater.inflate(R.menu.boundary_types_menu, popupMenu.getMenu());
 
-                popupMenu.setOnMenuItemClickListener(this);
+                    popupMenu.setOnMenuItemClickListener(this);
 
-                popupMenu.getMenu().findItem(R.id.boundary_type_locality).setChecked(localityEnabled);
-                popupMenu.getMenu().findItem(R.id.boundary_type_administrative_area_level_1).setChecked(adminAreaEnabled);
-                popupMenu.getMenu().findItem(R.id.boundary_type_country).setChecked(countryEnabled);
-                popupMenu.show();
-        });
+                    popupMenu
+                            .getMenu()
+                            .findItem(R.id.boundary_type_locality)
+                            .setChecked(localityEnabled);
+                    popupMenu
+                            .getMenu()
+                            .findItem(R.id.boundary_type_administrative_area_level_1)
+                            .setChecked(adminAreaEnabled);
+                    popupMenu
+                            .getMenu()
+                            .findItem(R.id.boundary_type_country)
+                            .setChecked(countryEnabled);
+                    popupMenu.show();
+                });
     }
+
     // [END_EXCLUDE]
 
     private void centerMapOnLocation(LatLng location, float zoomLevel) {
@@ -180,36 +196,36 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
         MapCapabilities capabilities = map.getMapCapabilities();
-        Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
+        Log.d(
+                TAG,
+                "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
 
         if (!capabilities.isDataDrivenStylingAvailable()) {
             Toast.makeText(
-                    this,
-                    "Data-driven Styling is not available.  See README.md for instructions.",
-                    Toast.LENGTH_LONG
-            ).show();
+                            this,
+                            "Data-driven Styling is not available.  See README.md for instructions.",
+                            Toast.LENGTH_LONG)
+                    .show();
         }
 
         // Gets the LOCALITY feature layer.
-        localityLayer = googleMap.getFeatureLayer(
-                new FeatureLayerOptions.Builder()
-                        .featureType(FeatureType.LOCALITY)
-                        .build()
-        );
+        localityLayer =
+                googleMap.getFeatureLayer(
+                        new FeatureLayerOptions.Builder()
+                                .featureType(FeatureType.LOCALITY)
+                                .build());
 
         // Gets the ADMINISTRATIVE_AREA_LEVEL_1 feature layer.
-        areaLevel1Layer = googleMap.getFeatureLayer(
-                new FeatureLayerOptions.Builder()
-                        .featureType(FeatureType.ADMINISTRATIVE_AREA_LEVEL_1)
-                        .build()
-        );
+        areaLevel1Layer =
+                googleMap.getFeatureLayer(
+                        new FeatureLayerOptions.Builder()
+                                .featureType(FeatureType.ADMINISTRATIVE_AREA_LEVEL_1)
+                                .build());
 
         // Gets the COUNTRY feature layer.
-        countryLayer = googleMap.getFeatureLayer(
-                new FeatureLayerOptions.Builder()
-                        .featureType(FeatureType.COUNTRY)
-                        .build()
-        );
+        countryLayer =
+                googleMap.getFeatureLayer(
+                        new FeatureLayerOptions.Builder().featureType(FeatureType.COUNTRY).build());
         countryLayer.addOnFeatureClickListener(this);
 
         centerMapOnLocation(HANA_HAWAII, 11f);
@@ -221,9 +237,9 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
     /**
      * Updates the styles of the locality, area level 1, and country layers based on the current
      * state of the `localityEnabled`, `adminAreaEnabled`, and `countryEnabled` flags.
-     * <p>
-     * For each layer, if the corresponding flag is true, the layer's features will be styled using
-     * the layer specific style factory function.
+     *
+     * <p>For each layer, if the corresponding flag is true, the layer's features will be styled
+     * using the layer specific style factory function.
      */
     private void updateStyles() {
         if (localityLayer != null && areaLevel1Layer != null && countryLayer != null) {
@@ -239,13 +255,14 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
 
     /**
      * Creates a StyleFactory for a FeatureLayer that styles Hana, HI on its Place ID.
-     * <p>
-     * This method defines a style factory that checks if a given feature is a {@link PlaceFeature}.
-     * and if that feature matches "ChIJ0zQtYiWsVHkRk8lRoB1RNPo" (Hana, HI) applies a specific style.
-     * Otherwise, it returns null, indicating no specific styling is applied.
      *
-     * @return A {@link FeatureLayer.StyleFactory} instance that can be used to style features in a FeatureLayer.
-     *         The factory returns a {@link FeatureStyle} for Hana, HI, and null for other features.
+     * <p>This method defines a style factory that checks if a given feature is a {@link
+     * PlaceFeature}. and if that feature matches "ChIJ0zQtYiWsVHkRk8lRoB1RNPo" (Hana, HI) applies a
+     * specific style. Otherwise, it returns null, indicating no specific styling is applied.
+     *
+     * @return A {@link FeatureLayer.StyleFactory} instance that can be used to style features in a
+     *     FeatureLayer. The factory returns a {@link FeatureStyle} for Hana, HI, and null for other
+     *     features.
      */
     private static FeatureLayer.StyleFactory getLocalityStyleFactory() {
         int purple = 0x810FCB;
@@ -275,9 +292,11 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
 
     /**
      * Creates a StyleFactory for area level 1 features (e.g., states, provinces).
+     *
+     * <p>This factory provides a semi-transparent fill color for each area level 1 feature.
+     *
      * <p>
-     * This factory provides a semi-transparent fill color for each area level 1 feature.
-     * <p>
+     *
      * @return A StyleFactory that can be used to style area level 1 features on a map.
      */
     private static FeatureLayer.StyleFactory getAreaLevel1StyleFactory() {
@@ -294,7 +313,7 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
                 }
                 return new FeatureStyle.Builder()
                         // Set the fill color for the state based on the hashed hue color.
-                        .fillColor(Color.HSVToColor(alpha, new float[]{hueColor, 1f, 1f}))
+                        .fillColor(Color.HSVToColor(alpha, new float[] {hueColor, 1f, 1f}))
                         .build();
             }
             return null;
@@ -304,10 +323,12 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
     /**
      * Creates a StyleFactory for styling country features on a FeatureLayer highlighting selected
      * countries. Selection is determined via the selectedPlaceIds set.
+     *
+     * <p>*Note:* If the set of selected countries changes, this function must be called to update
+     * the styling.
+     *
      * <p>
-     * *Note:* If the set of selected countries changes, this function must be called to update the
-     * styling.
-     * <p>
+     *
      * @return A FeatureLayer.StyleFactory that can be used to style country features.
      */
     private FeatureLayer.StyleFactory getCountryStyleFactory() {
@@ -315,7 +336,10 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
         int selectedFillColor = setAlphaValueOnColor(Color.RED, 0.33f);
         return feature -> {
             if (feature instanceof PlaceFeature) {
-                int fillColor = selectedPlaceIds.contains(((PlaceFeature) feature).getPlaceId()) ? selectedFillColor : defaultFillColor;
+                int fillColor =
+                        selectedPlaceIds.contains(((PlaceFeature) feature).getPlaceId())
+                                ? selectedFillColor
+                                : defaultFillColor;
                 FeatureStyle.Builder build = new FeatureStyle.Builder();
                 return build.fillColor(fillColor).strokeColor(Color.BLACK).build();
             }
@@ -324,10 +348,11 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
     }
 
     /**
-     * Called when a feature is clicked on the map.  It is only applied to the country layer.
-     * <p>
-     * Each time a country is clicked, its place ID is added to the selectedPlaceIds set or removed
-     * if it was already present.  Each time the set is
+     * Called when a feature is clicked on the map. It is only applied to the country layer.
+     *
+     * <p>Each time a country is clicked, its place ID is added to the selectedPlaceIds set or
+     * removed if it was already present. Each time the set is
+     *
      * <p>
      */
     @Override
@@ -364,14 +389,17 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity implements
     }
 
     /**
-     * Handles the click events for menu items in the boundary type selection menu.
-     * This method is called when a user selects a boundary type (locality, administrative area, or country) from the menu.
-     * It toggles the checked state of the selected menu item and updates the corresponding boolean flags (localityEnabled, adminAreaEnabled, countryEnabled).
-     * Finally, it calls the {@link #updateStyles()} method to reflect the changes in the map's display.
+     * Handles the click events for menu items in the boundary type selection menu. This method is
+     * called when a user selects a boundary type (locality, administrative area, or country) from
+     * the menu. It toggles the checked state of the selected menu item and updates the
+     * corresponding boolean flags (localityEnabled, adminAreaEnabled, countryEnabled). Finally, it
+     * calls the {@link #updateStyles()} method to reflect the changes in the map's display.
      *
      * @param item The MenuItem that was clicked.
-     * @return True if the event was handled, false otherwise. In this case it always return true if one of the correct items was selected.
-     */ // [START_EXCLUDE silent]
+     * @return True if the event was handled, false otherwise. In this case it always return true if
+     *     one of the correct items was selected.
+     */
+    // [START_EXCLUDE silent]
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         Log.d(TAG, "onMenuItemClick: " + item.getItemId());

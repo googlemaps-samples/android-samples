@@ -46,7 +46,7 @@ fun CatalogSampleList(
     state: CatalogState,
     paddingValues: PaddingValues,
     onLaunchSample: (SampleItem, Framework) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         state = state.lazyListState,
@@ -54,7 +54,7 @@ fun CatalogSampleList(
             .fillMaxSize()
             .padding(paddingValues),
         contentPadding = PaddingValues(bottom = 80.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         item(key = "catalog_filter_bar") {
             CatalogFilterBar(
@@ -72,8 +72,9 @@ fun CatalogSampleList(
                 onComplexitySelected = { state.selectedComplexity = it },
                 selectedTags = state.selectedTags,
                 onTagToggled = { tag ->
-                    state.selectedTags = if (state.selectedTags.contains(tag)) state.selectedTags - tag else state.selectedTags + tag
-                }
+                    state.selectedTags =
+                        if (state.selectedTags.contains(tag)) state.selectedTags - tag else state.selectedTags + tag
+                },
             )
         }
 
@@ -82,7 +83,7 @@ fun CatalogSampleList(
             item(key = "empty_samples_state") {
                 CatalogEmptyState(
                     selectedStatusFilter = state.selectedStatusFilter,
-                    onClearStatusFilter = { state.selectedStatusFilter = null }
+                    onClearStatusFilter = { state.selectedStatusFilter = null },
                 )
             }
         } else {
@@ -103,7 +104,7 @@ fun CatalogSampleList(
                         onQuickGrade = { gradeStatus ->
                             state.activeQuickGradingSampleId = sample.id
                             state.activeQuickGradingStatus = gradeStatus
-                        }
+                        },
                     )
                 }
             }
@@ -118,13 +119,13 @@ fun CatalogSampleList(
 fun CatalogEmptyState(
     selectedStatusFilter: ReviewStatus?,
     onClearStatusFilter: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 48.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
@@ -134,7 +135,7 @@ fun CatalogEmptyState(
                     "No matching samples found."
                 },
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             if (selectedStatusFilter != null) {
                 Spacer(modifier = Modifier.height(8.dp))

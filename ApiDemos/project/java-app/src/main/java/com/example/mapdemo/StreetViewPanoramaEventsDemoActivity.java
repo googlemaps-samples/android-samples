@@ -12,15 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import android.graphics.Point;
 import android.os.Bundle;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener;
 import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener;
@@ -32,12 +28,12 @@ import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
 import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 import com.google.android.gms.maps.model.StreetViewPanoramaOrientation;
 
-/**
- * This shows how to listen to some {@link StreetViewPanorama} events.
- */
+/** This shows how to listen to some {@link StreetViewPanorama} events. */
 public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
-        implements OnStreetViewPanoramaChangeListener, OnStreetViewPanoramaCameraChangeListener,
-        OnStreetViewPanoramaClickListener, OnStreetViewPanoramaLongClickListener {
+        implements OnStreetViewPanoramaChangeListener,
+                OnStreetViewPanoramaCameraChangeListener,
+                OnStreetViewPanoramaClickListener,
+                OnStreetViewPanoramaLongClickListener {
 
     // George St, Sydney
     private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
@@ -72,7 +68,8 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 panorama -> {
                     streetViewPanorama = panorama;
@@ -98,13 +95,17 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
     @Override
     public void onStreetViewPanoramaChange(StreetViewPanoramaLocation location) {
         if (location != null) {
-            panoChangeTimesTextView.setText(getString(com.example.common_ui.R.string.pano_change_times, ++panoChangeTimes));
+            panoChangeTimesTextView.setText(
+                    getString(com.example.common_ui.R.string.pano_change_times, ++panoChangeTimes));
         }
     }
 
     @Override
     public void onStreetViewPanoramaCameraChange(StreetViewPanoramaCamera camera) {
-        panoCameraChangeTextView.setText(getString(com.example.common_ui.R.string.pano_camera_change_times, ++panoCameraChangeTimes));
+        panoCameraChangeTextView.setText(
+                getString(
+                        com.example.common_ui.R.string.pano_camera_change_times,
+                        ++panoCameraChangeTimes));
     }
 
     @Override
@@ -113,12 +114,16 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
         if (point != null) {
             panoClickTimes++;
             panoClickTextView.setText(
-                    getString(com.example.common_ui.R.string.pano_click_times, panoClickTimes, point));
+                    getString(
+                            com.example.common_ui.R.string.pano_click_times,
+                            panoClickTimes,
+                            point));
             streetViewPanorama.animateTo(
                     new StreetViewPanoramaCamera.Builder()
                             .orientation(orientation)
                             .zoom(streetViewPanorama.getPanoramaCamera().zoom)
-                            .build(), 1000);
+                            .build(),
+                    1000);
         }
     }
 
@@ -128,7 +133,10 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
         if (point != null) {
             panoLongClickTimes++;
             panoLongClickTextView.setText(
-                    getString(com.example.common_ui.R.string.pano_long_click_times, panoLongClickTimes, point));
+                    getString(
+                            com.example.common_ui.R.string.pano_long_click_times,
+                            panoLongClickTimes,
+                            point));
         }
     }
 }

@@ -16,12 +16,6 @@
 
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.MarkerDemoBinding
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -47,6 +41,10 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.toColorInt
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.databinding.MarkerDemoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter
@@ -72,24 +70,27 @@ import kotlin.math.sin
 @Sample(
     id = "com.example.kotlindemos.MarkerDemoActivity",
     title = "Standard Markers & Info Windows",
-    description = "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info window layouts.",
+    description = "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info " +
+        "window layouts.",
     category = "Markers & Overlays",
     complexity = Complexity.SIMPLE,
     tags = ["#markers", "#infowindow", "#draggable", "#icons", "#anchor"],
-    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins (long press Melbourne to drag), and custom InfoWindowAdapter views.",
-    successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
+    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins (long press Melbourne to " +
+        "drag), and custom InfoWindowAdapter views.",
+    successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates " +
+        "position.",
     failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_marker]
 class MarkerDemoActivity :
-        SamplesBaseActivity(),
-        OnMarkerClickListener,
-        OnInfoWindowClickListener,
-        OnMarkerDragListener,
-        OnInfoWindowLongClickListener,
-        OnInfoWindowCloseListener,
-        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+    SamplesBaseActivity(),
+    OnMarkerClickListener,
+    OnInfoWindowClickListener,
+    OnMarkerDragListener,
+    OnInfoWindowLongClickListener,
+    OnInfoWindowCloseListener,
+    OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private val TAG = MarkerDemoActivity::class.java.name
 
@@ -108,13 +109,13 @@ class MarkerDemoActivity :
 
     /** map to store place names and locations */
     private val places = mapOf(
-            "BRISBANE" to LatLng(-27.47093, 153.0235),
-            "MELBOURNE" to LatLng(-37.81319, 144.96298),
-            "DARWIN" to LatLng(-12.4634, 130.8456),
-            "SYDNEY" to LatLng(-33.87365, 151.20689),
-            "ADELAIDE" to LatLng(-34.92873, 138.59995),
-            "PERTH" to LatLng(-31.952854, 115.857342),
-            "ALICE_SPRINGS" to LatLng(-24.6980, 133.8807)
+        "BRISBANE" to LatLng(-27.47093, 153.0235),
+        "MELBOURNE" to LatLng(-37.81319, 144.96298),
+        "DARWIN" to LatLng(-12.4634, 130.8456),
+        "SYDNEY" to LatLng(-33.87365, 151.20689),
+        "ADELAIDE" to LatLng(-34.92873, 138.59995),
+        "PERTH" to LatLng(-31.952854, 115.857342),
+        "ALICE_SPRINGS" to LatLng(-24.6980, 133.8807),
     )
 
     private lateinit var binding: MarkerDemoBinding
@@ -193,7 +194,7 @@ class MarkerDemoActivity :
 
         binding.rotationSeekBar.apply {
             max = 360
-            setOnSeekBarChangeListener(object: OnSeekBarChangeListener {
+            setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
 
                 /** Called when the Rotation progress bar is moved */
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -206,10 +207,9 @@ class MarkerDemoActivity :
                 }
 
                 override fun onStopTrackingTouch(p0: SeekBar?) {
-                    //do nothing
+                    // do nothing
                 }
-
-            } )
+            })
         }
 
         binding.customInfoWindowOptions.apply {
@@ -236,7 +236,6 @@ class MarkerDemoActivity :
      * This is the callback that is triggered when the GoogleMap has loaded and is ready for use
      */
     override fun onMapReady(googleMap: GoogleMap?) {
-
         // return early if the map was not initialised properly
         map = googleMap ?: return
 
@@ -270,76 +269,73 @@ class MarkerDemoActivity :
 
         // Add lots of markers to the googleMap.
         addMarkersToMap()
-
     }
 
     /**
      * Show all the specified markers on the map
      */
     private fun addMarkersToMap() {
-
         val placeDetailsMap = mutableMapOf(
-                // Uses a coloured icon
-                "BRISBANE" to PlaceDetails(
-                        position = places.getValue("BRISBANE"),
-                        title = "Brisbane",
-                        snippet = "Population: 2,074,200",
-                        icon = BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
-                ),
+            // Uses a coloured icon
+            "BRISBANE" to PlaceDetails(
+                position = places.getValue("BRISBANE"),
+                title = "Brisbane",
+                snippet = "Population: 2,074,200",
+                icon = BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
+            ),
 
-                // Uses a custom icon with the info window popping out of the center of the icon.
-                "SYDNEY" to PlaceDetails(
-                        position = places.getValue("SYDNEY"),
-                        title = "Sydney",
-                        snippet = "Population: 4,627,300",
-                        icon = BitmapDescriptorFactory.fromResource(R.drawable.arrow),
-                        infoWindowAnchorX = 0.5f,
-                        infoWindowAnchorY = 0.5f
-                ),
+            // Uses a custom icon with the info window popping out of the center of the icon.
+            "SYDNEY" to PlaceDetails(
+                position = places.getValue("SYDNEY"),
+                title = "Sydney",
+                snippet = "Population: 4,627,300",
+                icon = BitmapDescriptorFactory.fromResource(R.drawable.arrow),
+                infoWindowAnchorX = 0.5f,
+                infoWindowAnchorY = 0.5f,
+            ),
 
-                // Will create a draggable marker. Long press to drag.
-                "MELBOURNE" to PlaceDetails(
-                        position = places.getValue("MELBOURNE"),
-                        title = "Melbourne",
-                        snippet = getString(R.string.melbourne_drag_snippet),
-                        icon = vectorToBitmap(
-                                R.drawable.ic_drag_pan, "#E65100".toColorInt()),
-                        draggable = true
-                ),
+            // Will create a draggable marker. Long press to drag.
+            "MELBOURNE" to PlaceDetails(
+                position = places.getValue("MELBOURNE"),
+                title = "Melbourne",
+                snippet = getString(R.string.melbourne_drag_snippet),
+                icon = vectorToBitmap(R.drawable.ic_drag_pan, "#E65100".toColorInt()),
+                draggable = true,
+            ),
 
-                // Use a vector drawable resource as a marker icon.
-                "ALICE_SPRINGS" to PlaceDetails(
-                        position = places.getValue("ALICE_SPRINGS"),
-                        title = "Alice Springs",
-                        icon = vectorToBitmap(
-                                R.drawable.ic_android, "#A4C639".toColorInt())
-                ),
+            // Use a vector drawable resource as a marker icon.
+            "ALICE_SPRINGS" to PlaceDetails(
+                position = places.getValue("ALICE_SPRINGS"),
+                title = "Alice Springs",
+                icon = vectorToBitmap(R.drawable.ic_android, "#A4C639".toColorInt()),
+            ),
 
-                // More markers for good measure
-                "PERTH" to PlaceDetails(
-                        position = places.getValue("PERTH"),
-                        title = "Perth",
-                        snippet = "Population: 1,738,800"
-                ),
+            // More markers for good measure
+            "PERTH" to PlaceDetails(
+                position = places.getValue("PERTH"),
+                title = "Perth",
+                snippet = "Population: 1,738,800",
+            ),
 
-                "ADELAIDE" to PlaceDetails(
-                        position = places.getValue("ADELAIDE"),
-                        title = "Adelaide",
-                        snippet = "Population: 1,213,000"
-                )
+            "ADELAIDE" to PlaceDetails(
+                position = places.getValue("ADELAIDE"),
+                title = "Adelaide",
+                snippet = "Population: 1,213,000",
+            ),
 
         )
 
         // add 4 markers on top of each other in Darwin with varying z-indexes
         (0 until 4).map {
             placeDetailsMap.put(
-                "DARWIN ${it + 1}", PlaceDetails(
+                "DARWIN ${it + 1}",
+                PlaceDetails(
                     position = places.getValue("DARWIN"),
                     title = "Darwin Marker ${it + 1}",
                     snippet = "z-index initially ${it + 1}",
-                    zIndex = it.toFloat()
-                )
+                    zIndex = it.toFloat(),
+                ),
             )
         }
 
@@ -347,14 +343,16 @@ class MarkerDemoActivity :
         var melbourneMarker: Marker? = null
         placeDetailsMap.keys.map {
             with(placeDetailsMap.getValue(it)) {
-                val marker = map.addMarker(MarkerOptions()
+                val marker = map.addMarker(
+                    MarkerOptions()
                         .position(position)
                         .title(title)
                         .snippet(snippet)
                         .icon(icon)
                         .infoWindowAnchor(infoWindowAnchorX, infoWindowAnchorY)
                         .draggable(draggable)
-                        .zIndex(zIndex))
+                        .zIndex(zIndex),
+                )
                 if (it == "MELBOURNE") {
                     melbourneMarker = marker
                 }
@@ -369,17 +367,25 @@ class MarkerDemoActivity :
         // hues (colors).
         val numMarkersInRainbow = 12
         (0 until numMarkersInRainbow).mapTo(markerRainbow) {
-            map.addMarker(MarkerOptions().apply{
-                position(LatLng(
-                    -30 + 10 * sin(it * Math.PI / (numMarkersInRainbow - 1)),
-                    135 - 10 * cos(it * Math.PI / (numMarkersInRainbow - 1))
-                ))
-                title("Marker $it")
-                icon(BitmapDescriptorFactory.defaultMarker((it * 360 / numMarkersInRainbow)
-                                                               .toFloat()))
-                flat(binding.flat.isChecked)
-                rotation(binding.rotationSeekBar.progress.toFloat())
-            })!!
+            map.addMarker(
+                MarkerOptions().apply {
+                    position(
+                        LatLng(
+                            -30 + 10 * sin(it * Math.PI / (numMarkersInRainbow - 1)),
+                            135 - 10 * cos(it * Math.PI / (numMarkersInRainbow - 1)),
+                        ),
+                    )
+                    title("Marker $it")
+                    icon(
+                        BitmapDescriptorFactory.defaultMarker(
+                            (it * 360 / numMarkersInRainbow)
+                                .toFloat(),
+                        ),
+                    )
+                    flat(binding.flat.isChecked)
+                    rotation(binding.rotationSeekBar.progress.toFloat())
+                },
+            )!!
         }
     }
 
@@ -387,7 +393,7 @@ class MarkerDemoActivity :
      * Demonstrates converting a [Drawable] to a [BitmapDescriptor],
      * for use as a marker icon.
      */
-    private fun vectorToBitmap(@DrawableRes id : Int, @ColorInt color : Int): BitmapDescriptor {
+    private fun vectorToBitmap(@DrawableRes id: Int, @ColorInt color: Int): BitmapDescriptor {
         val vectorDrawable: Drawable? = ResourcesCompat.getDrawable(resources, id, null)
         if (vectorDrawable == null) {
             Log.e(TAG, "Resource not found")
@@ -396,7 +402,7 @@ class MarkerDemoActivity :
         val bitmap = createBitmap(
             vectorDrawable.intrinsicWidth,
             vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
+            Bitmap.Config.ARGB_8888,
         )
         val canvas = Canvas(bitmap)
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
@@ -423,12 +429,14 @@ class MarkerDemoActivity :
     //
     // Marker related listeners.
     //
-    override fun onMarkerClick(marker : Marker): Boolean {
-
+    override fun onMarkerClick(marker: Marker): Boolean {
         // Markers have a z-index that is settable and gettable.
         marker.zIndex += 1.0f
-        Toast.makeText(this, "${marker.title} z-index set to ${marker.zIndex}",
-                Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            "${marker.title} z-index set to ${marker.zIndex}",
+            Toast.LENGTH_SHORT,
+        ).show()
 
         lastSelectedMarker = marker
 
@@ -445,7 +453,7 @@ class MarkerDemoActivity :
                     val elapsed = SystemClock.uptimeMillis() - start
                     val t =
                         (1 - interpolator.getInterpolation(elapsed.toFloat() / duration)).coerceAtLeast(
-                            0f
+                            0f,
                         )
                     marker.setAnchor(0.5f, 1.0f + 2 * t)
 
@@ -469,29 +477,29 @@ class MarkerDemoActivity :
         return false
     }
 
-    override fun onInfoWindowClick(marker : Marker) {
+    override fun onInfoWindowClick(marker: Marker) {
         Toast.makeText(this, "Click Info Window", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onInfoWindowClose(marker : Marker) {
+    override fun onInfoWindowClose(marker: Marker) {
         Toast.makeText(this, "Close Info Window", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onInfoWindowLongClick(marker : Marker) {
+    override fun onInfoWindowLongClick(marker: Marker) {
         Toast.makeText(this, "Info Window long click", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onMarkerDragStart(marker : Marker) {
+    override fun onMarkerDragStart(marker: Marker) {
         binding.topText.visibility = View.VISIBLE
         binding.topText.text = getString(R.string.on_marker_drag_start)
     }
 
-    override fun onMarkerDragEnd(marker : Marker) {
+    override fun onMarkerDragEnd(marker: Marker) {
         binding.topText.visibility = View.VISIBLE
         binding.topText.text = getString(R.string.on_marker_drag_end)
     }
 
-    override fun onMarkerDrag(marker : Marker) {
+    override fun onMarkerDrag(marker: Marker) {
         binding.topText.visibility = View.VISIBLE
         binding.topText.text = getString(R.string.on_marker_drag, marker.position.latitude, marker.position.longitude)
     }
@@ -501,7 +509,7 @@ class MarkerDemoActivity :
      *
      * @param stuffToDo the code to be executed if the map is ready
      */
-    private fun checkReadyThen(stuffToDo : () -> Unit) {
+    private fun checkReadyThen(stuffToDo: () -> Unit) {
         if (!::map.isInitialized) {
             Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
         } else {
@@ -515,11 +523,12 @@ class MarkerDemoActivity :
  * This stores the details of a place that used to draw a marker
  */
 class PlaceDetails(
-        val position: LatLng,
-        val title: String = "Marker",
-        val snippet: String? = null,
-        val icon: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(),
-        val infoWindowAnchorX: Float = 0.5F,
-        val infoWindowAnchorY: Float = 0F,
-        val draggable: Boolean = false,
-        val zIndex: Float = 0F)
+    val position: LatLng,
+    val title: String = "Marker",
+    val snippet: String? = null,
+    val icon: BitmapDescriptor = BitmapDescriptorFactory.defaultMarker(),
+    val infoWindowAnchorX: Float = 0.5F,
+    val infoWindowAnchorY: Float = 0F,
+    val draggable: Boolean = false,
+    val zIndex: Float = 0F,
+)

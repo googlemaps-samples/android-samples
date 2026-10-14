@@ -30,10 +30,8 @@ import kotlin.math.abs
  * assertThat(actual).isNear(expected)
  * ```
  */
-class LatLngSubject private constructor(
-    failureMetadata: FailureMetadata,
-    private val actual: LatLng?
-) : Subject(failureMetadata, actual) {
+class LatLngSubject private constructor(failureMetadata: FailureMetadata, private val actual: LatLng?) :
+    Subject(failureMetadata, actual) {
 
     /**
      * Asserts that the actual [LatLng] is within a small tolerance of the expected value.
@@ -55,9 +53,7 @@ class LatLngSubject private constructor(
     /**
      * Starts a chained assertion to check the distance of the actual [LatLng] from an expected value.
      */
-    fun isWithin(tolerance: Number): LatLngDistanceSubject {
-        return LatLngDistanceSubject(tolerance.toDouble())
-    }
+    fun isWithin(tolerance: Number): LatLngDistanceSubject = LatLngDistanceSubject(tolerance.toDouble())
 
     /**
      * A subject for asserting the distance between two [LatLng] objects.
@@ -73,7 +69,10 @@ class LatLngSubject private constructor(
             }
             val distance = SphericalUtil.computeDistanceBetween(actual, expected)
             if (distance > tolerance) {
-                failWithActual("expected to be within $tolerance meters of $expected [was $distance meters away]", expected)
+                failWithActual(
+                    "expected to be within $tolerance meters of $expected [was $distance meters away]",
+                    expected,
+                )
             }
         }
     }
@@ -84,8 +83,6 @@ class LatLngSubject private constructor(
         /**
          * Creates a [LatLngSubject] for asserting on the given [LatLng].
          */
-        fun assertThat(actual: LatLng?): LatLngSubject {
-            return Truth.assertAbout(latLngs()).that(actual)
-        }
+        fun assertThat(actual: LatLng?): LatLngSubject = Truth.assertAbout(latLngs()).that(actual)
     }
 }

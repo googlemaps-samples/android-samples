@@ -15,14 +15,13 @@
  */
 package com.example.kotlindemos
 
-
-import com.example.common_ui.R
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Bundle
-
+import androidx.core.graphics.createBitmap
+import com.example.common_ui.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -30,12 +29,13 @@ import com.google.android.gms.maps.model.Tile
 import com.google.android.gms.maps.model.TileOverlayOptions
 import com.google.android.gms.maps.model.TileProvider
 import java.io.ByteArrayOutputStream
-import androidx.core.graphics.createBitmap
 
 /**
  * This demonstrates tile overlay coordinates.
  */
-class TileCoordinateDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
+class TileCoordinateDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,22 +58,30 @@ class TileCoordinateDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             val stream = ByteArrayOutputStream()
             coordTile.compress(Bitmap.CompressFormat.PNG, 0, stream)
             val bitmapData = stream.toByteArray()
-            return Tile((TILE_SIZE_DP * scaleFactor).toInt(),
-                (TILE_SIZE_DP * scaleFactor).toInt(), bitmapData)
+            return Tile(
+                (TILE_SIZE_DP * scaleFactor).toInt(),
+                (TILE_SIZE_DP * scaleFactor).toInt(),
+                bitmapData,
+            )
         }
 
         private fun createTile(x: Int, y: Int, zoom: Int): Bitmap {
             val tile = createBitmap(
                 (TILE_SIZE_DP * scaleFactor).toInt(),
-                (TILE_SIZE_DP * scaleFactor).toInt()
+                (TILE_SIZE_DP * scaleFactor).toInt(),
             )
             val canvas = Canvas(tile)
 
             // Draw the tile borders.
             val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG)
             borderPaint.style = Paint.Style.STROKE
-            canvas.drawRect(0f, 0f, TILE_SIZE_DP * scaleFactor, TILE_SIZE_DP * scaleFactor,
-                borderPaint)
+            canvas.drawRect(
+                0f,
+                0f,
+                TILE_SIZE_DP * scaleFactor,
+                TILE_SIZE_DP * scaleFactor,
+                borderPaint,
+            )
 
             // Draw the tile position text.
             val tileCoords = "($x, $y)"
@@ -81,10 +89,18 @@ class TileCoordinateDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
             val mTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
             mTextPaint.textAlign = Paint.Align.CENTER
             mTextPaint.textSize = 18 * scaleFactor
-            canvas.drawText(tileCoords, TILE_SIZE_DP * scaleFactor / 2,
-                TILE_SIZE_DP * scaleFactor / 2, mTextPaint)
-            canvas.drawText(zoomLevel, TILE_SIZE_DP * scaleFactor / 2,
-                TILE_SIZE_DP * scaleFactor * 2 / 3, mTextPaint)
+            canvas.drawText(
+                tileCoords,
+                TILE_SIZE_DP * scaleFactor / 2,
+                TILE_SIZE_DP * scaleFactor / 2,
+                mTextPaint,
+            )
+            canvas.drawText(
+                zoomLevel,
+                TILE_SIZE_DP * scaleFactor / 2,
+                TILE_SIZE_DP * scaleFactor * 2 / 3,
+                mTextPaint,
+            )
 
             return tile
         }

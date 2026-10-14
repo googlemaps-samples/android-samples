@@ -16,12 +16,6 @@
 
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.CircleDemoBinding
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
@@ -30,9 +24,11 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.databinding.CircleDemoBinding
 import com.example.kotlindemos.utils.MapProvider
-
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -49,7 +45,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PatternItem
 import com.google.maps.android.sphericalDistance
 import com.google.maps.android.withSphericalOffset
-
 import java.util.ArrayList
 
 /**
@@ -65,9 +60,10 @@ import java.util.ArrayList
     purpose = "Demonstrates drawing circles with radius defined in meters and dynamic updates via seekbars.",
     successCriteria = "Adjusting radius slider dynamically updates circle boundary in real-time.",
     failureIndicators = "Circle distorted or radius math inaccurate across high latitudes.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
-class CircleDemoActivity : SamplesBaseActivity(),
+class CircleDemoActivity :
+    SamplesBaseActivity(),
     SeekBar.OnSeekBarChangeListener,
     AdapterView.OnItemSelectedListener,
     OnMapReadyCallback,
@@ -81,10 +77,10 @@ class CircleDemoActivity : SamplesBaseActivity(),
 
     // These are the options for stroke patterns
     private val patterns: List<Pair<Int, List<PatternItem>?>> = listOf(
-            Pair(R.string.pattern_solid, null),
-            Pair(R.string.pattern_dashed, patternDashed),
-            Pair(R.string.pattern_dotted, patternDotted),
-            Pair(R.string.pattern_mixed, patternMixed)
+        Pair(R.string.pattern_solid, null),
+        Pair(R.string.pattern_dashed, patternDashed),
+        Pair(R.string.pattern_dotted, patternDotted),
+        Pair(R.string.pattern_mixed, patternMixed),
     )
 
     override lateinit var map: GoogleMap
@@ -93,7 +89,7 @@ class CircleDemoActivity : SamplesBaseActivity(),
 
     internal val circles = ArrayList<DraggableCircle>(1)
 
-    private var fillColorArgb : Int = 0
+    private var fillColorArgb: Int = 0
     private var strokeColorArgb: Int = 0
 
     internal lateinit var binding: CircleDemoBinding
@@ -102,28 +98,32 @@ class CircleDemoActivity : SamplesBaseActivity(),
      * This class contains information about a circle, including its markers
      */
     internal inner class DraggableCircle(center: LatLng, private var radiusMeters: Double) {
-        private val centerMarker: Marker? = map.addMarker(MarkerOptions().apply {
-            position(center)
-            draggable(true)
-        })
+        private val centerMarker: Marker? = map.addMarker(
+            MarkerOptions().apply {
+                position(center)
+                draggable(true)
+            },
+        )
 
         private val radiusMarker: Marker? = map.addMarker(
-                MarkerOptions().apply {
-                    position(center.withSphericalOffset(radiusMeters, 90.0))
-                    icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                    draggable(true)
-                })
+            MarkerOptions().apply {
+                position(center.withSphericalOffset(radiusMeters, 90.0))
+                icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                draggable(true)
+            },
+        )
 
         internal val circle: Circle = map.addCircle(
-                CircleOptions().apply {
-                    center(center)
-                    radius(radiusMeters)
-                    strokeWidth(binding.strokeWidthSeekBar.progress.toFloat())
-                    strokeColor(strokeColorArgb)
-                    fillColor(fillColorArgb)
-                    clickable(binding.toggleClickability.isChecked)
-                    strokePattern(getSelectedPattern(binding.strokePatternSpinner.selectedItemPosition))
-                })
+            CircleOptions().apply {
+                center(center)
+                radius(radiusMeters)
+                strokeWidth(binding.strokeWidthSeekBar.progress.toFloat())
+                strokeColor(strokeColorArgb)
+                fillColor(fillColorArgb)
+                clickable(binding.toggleClickability.isChecked)
+                strokePattern(getSelectedPattern(binding.strokePatternSpinner.selectedItemPosition))
+            },
+        )
 
         fun onMarkerMoved(marker: Marker): Boolean {
             when (marker) {
@@ -131,11 +131,13 @@ class CircleDemoActivity : SamplesBaseActivity(),
                     circle.center = marker.position
                     radiusMarker?.position = marker.position.withSphericalOffset(radiusMeters, 90.0)
                 }
+
                 radiusMarker -> {
                     radiusMeters =
                         centerMarker?.position?.sphericalDistance(radiusMarker.position)!!
                     circle.radius = radiusMeters
                 }
+
                 else -> return false
             }
             return true
@@ -187,9 +189,11 @@ class CircleDemoActivity : SamplesBaseActivity(),
         }
 
         binding.strokePatternSpinner.apply {
-            adapter = ArrayAdapter(this@CircleDemoActivity,
-                    android.R.layout.simple_spinner_item,
-                    getResourceStrings())
+            adapter = ArrayAdapter(
+                this@CircleDemoActivity,
+                android.R.layout.simple_spinner_item,
+                getResourceStrings(),
+            )
         }
 
         binding.toggleClickability.setOnClickListener {
@@ -218,10 +222,12 @@ class CircleDemoActivity : SamplesBaseActivity(),
                 // We know the center, let's place the outline at a point 1/4 along the view.
                 val viewRatio = 1.0 / 4.0
                 val view: View = supportFragmentManager.findFragmentById(R.id.map)?.view
-                        ?: return@setOnMapLongClickListener
+                    ?: return@setOnMapLongClickListener
                 val radiusLatLng = map.projection.fromScreenLocation(
-                        Point((view.height * viewRatio).toInt(),
-                            (view.width * viewRatio).toInt())
+                    Point(
+                        (view.height * viewRatio).toInt(),
+                        (view.width * viewRatio).toInt(),
+                    ),
                 )
                 // Create the circle.
                 val newCircle = DraggableCircle(point, point.sphericalDistance(radiusLatLng))
@@ -246,10 +252,14 @@ class CircleDemoActivity : SamplesBaseActivity(),
             setOnCircleClickListener { c -> c.strokeColor = c.strokeColor xor 0x00ffffff }
         }
 
-        fillColorArgb = Color.HSVToColor(binding.fillAlphaSeekBar.progress,
-                floatArrayOf(binding.fillHueSeekBar.progress.toFloat(), 1f, 1f))
-        strokeColorArgb = Color.HSVToColor(binding.strokeAlphaSeekBar.progress,
-                floatArrayOf(binding.strokeHueSeekBar.progress.toFloat(), 1f, 1f))
+        fillColorArgb = Color.HSVToColor(
+            binding.fillAlphaSeekBar.progress,
+            floatArrayOf(binding.fillHueSeekBar.progress.toFloat(), 1f, 1f),
+        )
+        strokeColorArgb = Color.HSVToColor(
+            binding.strokeAlphaSeekBar.progress,
+            floatArrayOf(binding.strokeHueSeekBar.progress.toFloat(), 1f, 1f),
+        )
 
         val circle = DraggableCircle(SYDNEY, DEFAULT_RADIUS_METERS)
         circles.add(circle)
@@ -290,19 +300,35 @@ class CircleDemoActivity : SamplesBaseActivity(),
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         // Update the fillColorArgb if the SeekBars for it is changed, otherwise keep the old value
         fillColorArgb = when (seekBar) {
-            binding.fillHueSeekBar -> Color.HSVToColor(Color.alpha(fillColorArgb),
-                    floatArrayOf(progress.toFloat(), 1f, 1f))
-            binding.fillAlphaSeekBar -> Color.argb(progress, Color.red(fillColorArgb),
-                    Color.green(fillColorArgb), Color.blue(fillColorArgb))
+            binding.fillHueSeekBar -> Color.HSVToColor(
+                Color.alpha(fillColorArgb),
+                floatArrayOf(progress.toFloat(), 1f, 1f),
+            )
+
+            binding.fillAlphaSeekBar -> Color.argb(
+                progress,
+                Color.red(fillColorArgb),
+                Color.green(fillColorArgb),
+                Color.blue(fillColorArgb),
+            )
+
             else -> fillColorArgb
         }
 
         // Set the strokeColorArgb if the SeekBars for it is changed, otherwise keep the old value
         strokeColorArgb = when (seekBar) {
-            binding.strokeHueSeekBar -> Color.HSVToColor(Color.alpha(strokeColorArgb),
-                    floatArrayOf(progress.toFloat(), 1f, 1f))
-            binding.strokeAlphaSeekBar -> Color.argb(progress, Color.red(strokeColorArgb),
-                    Color.green(strokeColorArgb), Color.blue(strokeColorArgb))
+            binding.strokeHueSeekBar -> Color.HSVToColor(
+                Color.alpha(strokeColorArgb),
+                floatArrayOf(progress.toFloat(), 1f, 1f),
+            )
+
+            binding.strokeAlphaSeekBar -> Color.argb(
+                progress,
+                Color.red(strokeColorArgb),
+                Color.green(strokeColorArgb),
+                Color.blue(strokeColorArgb),
+            )
+
             else -> strokeColorArgb
         }
 

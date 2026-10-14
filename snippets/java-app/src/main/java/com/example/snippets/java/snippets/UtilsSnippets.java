@@ -22,6 +22,7 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
+import com.example.snippets.common.R;
 import com.example.snippets.java.TrackedMap;
 import com.example.snippets.java.annotations.SnippetGroup;
 import com.example.snippets.java.annotations.SnippetItem;
@@ -52,11 +53,9 @@ import com.google.maps.android.data.kml.KmlPlacemark;
 import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
-import com.example.snippets.common.R;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -67,8 +66,8 @@ import org.xmlpull.v1.XmlPullParserException;
 
 @SnippetGroup(
         title = "Utility Library",
-        description = "Snippets demonstrating marker clustering, heatmaps, GeoJSON, KML, and Multilayer managers."
-)
+        description =
+                "Snippets demonstrating marker clustering, heatmaps, GeoJSON, KML, and Multilayer managers.")
 public class UtilsSnippets {
 
     private final Context context;
@@ -118,12 +117,13 @@ public class UtilsSnippets {
             return 0f;
         }
     }
+
     // [END maps_android_utils_clustering_cluster_item]
 
     @SnippetItem(
             title = "1. Marker Clustering Setup",
-            description = "What it does: Initializes a ClusterManager with 10 markers in close geographic proximity in London.\nHow to see the effect: Zooming out aggregates markers into numbered cluster circles; zooming in breaks them into pins."
-    )
+            description =
+                    "What it does: Initializes a ClusterManager with 10 markers in close geographic proximity in London.\nHow to see the effect: Zooming out aggregates markers into numbered cluster circles; zooming in breaks them into pins.")
     public void setUpClusterer() {
         // [START maps_android_utils_clustering_cluster_manager]
         // Position the map.
@@ -163,8 +163,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "2. Disable Cluster Animation",
-            description = "What it does: Disables smooth position transition animations on ClusterManager.\nHow to see the effect: When zooming or panning, cluster pins immediately snap to position without smooth sliding."
-    )
+            description =
+                    "What it does: Disables smooth position transition animations on ClusterManager.\nHow to see the effect: When zooming or panning, cluster pins immediately snap to position without smooth sliding.")
     public void clusterAnimation() {
         if (clusterManager == null) {
             setUpClusterer();
@@ -176,8 +176,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "3. Add Clustering Info Window Item",
-            description = "What it does: Adds a single ClusterItem with a custom title and snippet to the ClusterManager.\nHow to see the effect: Tap the individual cluster item pin to view its custom title and snippet callout."
-    )
+            description =
+                    "What it does: Adds a single ClusterItem with a custom title and snippet to the ClusterManager.\nHow to see the effect: Tap the individual cluster item pin to view its custom title and snippet callout.")
     public void infoWindow() {
         if (clusterManager == null) {
             setUpClusterer();
@@ -201,8 +201,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "3b. Clear Cluster Items",
-            description = "What it does: Clears all items and clusters from the ClusterManager.\nHow to see the effect: All cluster pin circles and individual cluster markers disappear from the map view."
-    )
+            description =
+                    "What it does: Clears all items and clusters from the ClusterManager.\nHow to see the effect: All cluster pin circles and individual cluster markers disappear from the map view.")
     public void clearClusterItems() {
         if (clusterManager == null) {
             setUpClusterer();
@@ -217,8 +217,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "3c. Remove Single Cluster Item",
-            description = "What it does: Removes a specified single item from the active ClusterManager collection.\nHow to see the effect: The target marker pin is removed and surrounding cluster count numbers decrement."
-    )
+            description =
+                    "What it does: Removes a specified single item from the active ClusterManager collection.\nHow to see the effect: The target marker pin is removed and surrounding cluster count numbers decrement.")
     public void removeSingleClusterItem() {
         if (clusterManager == null) {
             setUpClusterer();
@@ -234,8 +234,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "3d. Cluster Listeners",
-            description = "What it does: Registers click listeners for clusters, cluster items, and info window popups.\nHow to see the effect: Tapping a cluster circle or item displays a Toast notification with cluster details."
-    )
+            description =
+                    "What it does: Registers click listeners for clusters, cluster items, and info window popups.\nHow to see the effect: Tapping a cluster circle or item displays a Toast notification with cluster details.")
     public void demonstrateClusterListeners() {
         if (clusterManager == null) {
             setUpClusterer();
@@ -244,38 +244,54 @@ public class UtilsSnippets {
         if (clusterManager == null) {
             return;
         }
-        clusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
-            @Override
-            public boolean onClusterClick(com.google.maps.android.clustering.Cluster<MyItem> cluster) {
-                Toast.makeText(context, "Cluster clicked: " + cluster.getSize() + " items", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
-            @Override
-            public boolean onClusterItemClick(MyItem item) {
-                Toast.makeText(context, "Cluster item clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-        clusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
-            @Override
-            public void onClusterItemInfoWindowClick(MyItem item) {
-                Toast.makeText(context, "Cluster item info window clicked: " + item.getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        clusterManager.setOnClusterClickListener(
+                new ClusterManager.OnClusterClickListener<MyItem>() {
+                    @Override
+                    public boolean onClusterClick(
+                            com.google.maps.android.clustering.Cluster<MyItem> cluster) {
+                        Toast.makeText(
+                                        context,
+                                        "Cluster clicked: " + cluster.getSize() + " items",
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                        return false;
+                    }
+                });
+        clusterManager.setOnClusterItemClickListener(
+                new ClusterManager.OnClusterItemClickListener<MyItem>() {
+                    @Override
+                    public boolean onClusterItemClick(MyItem item) {
+                        Toast.makeText(
+                                        context,
+                                        "Cluster item clicked: " + item.getTitle(),
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                        return false;
+                    }
+                });
+        clusterManager.setOnClusterItemInfoWindowClickListener(
+                new ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>() {
+                    @Override
+                    public void onClusterItemInfoWindowClick(MyItem item) {
+                        Toast.makeText(
+                                        context,
+                                        "Cluster item info window clicked: " + item.getTitle(),
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
         // [END maps_android_utils_clustering_listeners]
     }
 
     @SnippetItem(
             title = "4. GeoJSON Layer from JSONObject",
-            description = "What it does: Constructs a GeoJsonLayer programmatically from an in-memory JSON object schema.\nHow to see the effect: Parsed GeoJSON points, lines, or polygons instantiate onto the map instance."
-    )
+            description =
+                    "What it does: Constructs a GeoJsonLayer programmatically from an in-memory JSON object schema.\nHow to see the effect: Parsed GeoJSON points, lines, or polygons instantiate onto the map instance.")
     public void addGeoJsonLayerJsonObject() throws JSONException {
         // [START maps_android_util_geojson_add_jsonobject]
         JSONObject geoJsonData = // JSONObject containing the GeoJSON data
-        // [START_EXCLUDE silent]
-            new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}");
+                // [START_EXCLUDE silent]
+                new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}");
         // [END_EXCLUDE]
         GeoJsonLayer layer = new GeoJsonLayer(map, geoJsonData);
         // [END maps_android_util_geojson_add_jsonobject]
@@ -283,8 +299,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "5. Add GeoJSON Layer from File",
-            description = "What it does: Imports and renders a GeoJSON dataset file from raw resources onto the map view.\nHow to see the effect: US geographic boundary lines and features render over the map in red vector lines."
-    )
+            description =
+                    "What it does: Imports and renders a GeoJSON dataset file from raw resources onto the map view.\nHow to see the effect: US geographic boundary lines and features render over the map in red vector lines.")
     public void addGeoJsonLayerFile() throws IOException, JSONException {
         // [START maps_android_util_geojson_add_file]
         GeoJsonLayer layer = new GeoJsonLayer(map, R.raw.geojson_file, context);
@@ -294,13 +310,15 @@ public class UtilsSnippets {
         // [START maps_android_util_geojson_add_layer_to_map]
         layer.addLayerToMap();
         // [END maps_android_util_geojson_add_layer_to_map]
-        map.animateCamera(com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(new com.google.android.gms.maps.model.LatLng(38.0, -97.0), 3f));
+        map.animateCamera(
+                com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom(
+                        new com.google.android.gms.maps.model.LatLng(38.0, -97.0), 3f));
     }
 
     @SnippetItem(
             title = "5b. Remove GeoJSON Layer",
-            description = "What it does: Removes the imported GeoJSON layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines and points associated with the GeoJSON dataset disappear."
-    )
+            description =
+                    "What it does: Removes the imported GeoJSON layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines and points associated with the GeoJSON dataset disappear.")
     public void removeGeoJsonLayerFile() throws IOException, JSONException {
         if (geoJsonLayer == null) {
             addGeoJsonLayerFile();
@@ -314,11 +332,12 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "6. GeoJSON Features and Styling",
-            description = "What it does: Programmatically iterates, styles, and adds custom point and linestring GeoJsonFeatures.\nHow to see the effect: Draggable markers and styled lines render according to default GeoJson feature styles."
-    )
+            description =
+                    "What it does: Programmatically iterates, styles, and adds custom point and linestring GeoJsonFeatures.\nHow to see the effect: Draggable markers and styled lines render according to default GeoJson feature styles.")
     public void geoJsonFeature() throws JSONException {
-        GeoJsonLayer layer = new GeoJsonLayer(map,
-                new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}"));
+        GeoJsonLayer layer =
+                new GeoJsonLayer(
+                        map, new JSONObject("{\"type\": \"FeatureCollection\", \"features\": []}"));
 
         // [START maps_android_util_geojson_point_feature]
         GeoJsonPoint point = new GeoJsonPoint(new LatLng(0, 0));
@@ -350,12 +369,13 @@ public class UtilsSnippets {
 
         // [START maps_android_util_geojson_geometry_click_events]
         // Set a listener for geometry clicked events.
-        layer.setOnFeatureClickListener(new Layer.OnFeatureClickListener() {
-            @Override
-            public void onFeatureClick(Feature feature) {
-                Log.i("GeoJsonClick", "Feature clicked: " + feature.getProperty("title"));
-            }
-        });
+        layer.setOnFeatureClickListener(
+                new Layer.OnFeatureClickListener() {
+                    @Override
+                    public void onFeatureClick(Feature feature) {
+                        Log.i("GeoJsonClick", "Feature clicked: " + feature.getProperty("title"));
+                    }
+                });
         // [END maps_android_util_geojson_geometry_click_events]
 
         // [START maps_android_util_geojson_style]
@@ -364,7 +384,8 @@ public class UtilsSnippets {
         pointStyle.setTitle("Hello, World!");
         pointStyle.setSnippet("I am a draggable marker");
         GeoJsonLineStringStyle lineStyle = layer.getDefaultLineStringStyle();
-        com.google.maps.android.data.geojson.GeoJsonPolygonStyle polygonStyle = layer.getDefaultPolygonStyle();
+        com.google.maps.android.data.geojson.GeoJsonPolygonStyle polygonStyle =
+                layer.getDefaultPolygonStyle();
         // [END maps_android_util_geojson_style]
 
         // [START maps_android_util_geojson_style_specific]
@@ -386,8 +407,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "7. KML Layer from File Resource",
-            description = "What it does: Imports KML 3D building polygons from raw resource files and renders them over Mountain View.\nHow to see the effect: KML campus polygon outlines and placemarks render over the Google Campus."
-    )
+            description =
+                    "What it does: Imports KML 3D building polygons from raw resource files and renders them over Mountain View.\nHow to see the effect: KML campus polygon outlines and placemarks render over the Google Campus.")
     public void addKmlLayerFile() throws IOException, XmlPullParserException {
         // [START maps_android_utils_kml_add_file]
         KmlLayer layer = new KmlLayer(map, R.raw.kml_file, context);
@@ -399,8 +420,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "7b. Remove KML Layer",
-            description = "What it does: Removes the imported KML layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines, polygons, and placemarks associated with the KML dataset disappear."
-    )
+            description =
+                    "What it does: Removes the imported KML layer from the active GoogleMap instance.\nHow to see the effect: All vector polylines, polygons, and placemarks associated with the KML dataset disappear.")
     public void removeKmlLayer() throws IOException, XmlPullParserException {
         if (kmlLayer == null) {
             addKmlLayerFile();
@@ -415,8 +436,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "8. KML Layer from Input Stream",
-            description = "What it does: Parses a KML dataset stream, iterates nested placemark containers, and binds click listeners.\nHow to see the effect: Tap any KML feature line or placemark to trigger a log and view container hierarchy."
-    )
+            description =
+                    "What it does: Parses a KML dataset stream, iterates nested placemark containers, and binds click listeners.\nHow to see the effect: Tap any KML feature line or placemark to trigger a log and view container hierarchy.")
     public void addKmlLayerFileInputStream() throws IOException, XmlPullParserException {
         // [START maps_android_utils_kml_add_input_stream]
         InputStream inputStream = context.getResources().openRawResource(R.raw.kml_file);
@@ -450,12 +471,13 @@ public class UtilsSnippets {
 
         // [START maps_android_utils_kml_click_listener]
         // Set a listener for geometry clicked events.
-        layer.setOnFeatureClickListener(new KmlLayer.OnFeatureClickListener() {
-            @Override
-            public void onFeatureClick(Feature feature) {
-                Log.i("KML", "Feature clicked: " + feature.getId());
-            }
-        });
+        layer.setOnFeatureClickListener(
+                new KmlLayer.OnFeatureClickListener() {
+                    @Override
+                    public void onFeatureClick(Feature feature) {
+                        Log.i("KML", "Feature clicked: " + feature.getId());
+                    }
+                });
         // [END maps_android_utils_kml_click_listener]
     }
 
@@ -467,12 +489,13 @@ public class UtilsSnippets {
             }
         }
     }
+
     // [END maps_android_utils_kml_access_containers_nested]
 
     @SnippetItem(
             title = "9. Simple Heatmap",
-            description = "What it does: Generates a HeatmapTileProvider visualization from police station coordinate data.\nHow to see the effect: A red/yellow density heatmap overlay displays over Melbourne showing location concentrations."
-    )
+            description =
+                    "What it does: Generates a HeatmapTileProvider visualization from police station coordinate data.\nHow to see the effect: A red/yellow density heatmap overlay displays over Melbourne showing location concentrations.")
     public void addHeatMap() {
         // [START maps_android_utils_heatmap_simple]
         List<LatLng> latLngs = new ArrayList<>();
@@ -485,9 +508,7 @@ public class UtilsSnippets {
         }
 
         // Create a heat map tile provider, passing it the latlngs of the police stations.
-        HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
-            .data(latLngs)
-            .build();
+        HeatmapTileProvider provider = new HeatmapTileProvider.Builder().data(latLngs).build();
 
         // Add a tile overlay to the map, using the heat map tile provider.
         TileOverlay overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
@@ -511,8 +532,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "10. Add Custom Heatmap",
-            description = "What it does: Configures a custom color gradient (green to red), 0.7 opacity, and weighted data points.\nHow to see the effect: A custom green/red gradient heatmap overlay renders with custom transparency over the map."
-    )
+            description =
+                    "What it does: Configures a custom color gradient (green to red), 0.7 opacity, and weighted data points.\nHow to see the effect: A custom green/red gradient heatmap overlay renders with custom transparency over the map.")
     public void addCustomHeatmap() {
         List<LatLng> latLngs = new ArrayList<>();
         try {
@@ -524,23 +545,20 @@ public class UtilsSnippets {
         // Create the gradient.
         int[] colors = {
             Color.rgb(102, 225, 0), // green
-            Color.rgb(255, 0, 0)    // red
+            Color.rgb(255, 0, 0) // red
         };
 
-        float[] startPoints = {
-            0.2f, 1f
-        };
+        float[] startPoints = {0.2f, 1f};
 
         Gradient gradient = new Gradient(colors, startPoints);
 
         // Create the tile provider.
-        HeatmapTileProvider provider = new HeatmapTileProvider.Builder()
-            .data(latLngs)
-            .gradient(gradient)
-            .build();
+        HeatmapTileProvider provider =
+                new HeatmapTileProvider.Builder().data(latLngs).gradient(gradient).build();
 
         // Add the tile overlay to the map.
-        TileOverlay tileOverlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
+        TileOverlay tileOverlay =
+                map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.8136, 144.9631), 10f));
         // [END maps_android_utils_heatmap_customize]
         heatmapTileOverlay = tileOverlay;
@@ -564,8 +582,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "10b. Remove Custom Heatmap",
-            description = "What it does: Removes the custom heatmap TileOverlay from the active GoogleMap instance.\nHow to see the effect: The heatmap color density overlay disappears completely from the viewport."
-    )
+            description =
+                    "What it does: Removes the custom heatmap TileOverlay from the active GoogleMap instance.\nHow to see the effect: The heatmap color density overlay disappears completely from the viewport.")
     public void removeCustomHeatmap() throws JSONException {
         if (heatmapTileOverlay == null) {
             addCustomHeatmap();
@@ -579,8 +597,8 @@ public class UtilsSnippets {
 
     @SnippetItem(
             title = "11. Multilayer Collections Init",
-            description = "What it does: Demonstrates sharing MarkerManager, PolylineManager, and PolygonManager across GeoJSON, KML, and ClusterManager.\nHow to see the effect: Unclustered markers, GeoJSON features, and KML layers co-exist without event or rendering conflict."
-    )
+            description =
+                    "What it does: Demonstrates sharing MarkerManager, PolylineManager, and PolygonManager across GeoJSON, KML, and ClusterManager.\nHow to see the effect: Unclustered markers, GeoJSON features, and KML layers co-exist without event or rendering conflict.")
     public void initMultilayer() throws IOException, JSONException, XmlPullParserException {
         // [START maps_android_utils_multilayer_init]
         MarkerManager markerManager = new MarkerManager(map);
@@ -590,32 +608,61 @@ public class UtilsSnippets {
         // [END maps_android_utils_multilayer_init]
 
         // [START maps_android_utils_multilayer_manager]
-        ClusterManager<MyItem> localClusterManager = new ClusterManager<>(context, map, markerManager);
-        GeoJsonLayer geoJsonLineLayer = new GeoJsonLayer(map, R.raw.geojson_file, context, markerManager, polygonManager, polylineManager, groundOverlayManager);
-        KmlLayer kmlPolylineLayer = new KmlLayer(map, R.raw.kml_file, context, markerManager, polygonManager, polylineManager, groundOverlayManager, null);
+        ClusterManager<MyItem> localClusterManager =
+                new ClusterManager<>(context, map, markerManager);
+        GeoJsonLayer geoJsonLineLayer =
+                new GeoJsonLayer(
+                        map,
+                        R.raw.geojson_file,
+                        context,
+                        markerManager,
+                        polygonManager,
+                        polylineManager,
+                        groundOverlayManager);
+        KmlLayer kmlPolylineLayer =
+                new KmlLayer(
+                        map,
+                        R.raw.kml_file,
+                        context,
+                        markerManager,
+                        polygonManager,
+                        polylineManager,
+                        groundOverlayManager,
+                        null);
         // [END maps_android_utils_multilayer_manager]
 
         // [START maps_android_utils_multilayer_unclustered_marker]
         MarkerManager.Collection markerCollection = markerManager.newCollection();
-        markerCollection.addMarker(new MarkerOptions()
-            .position(new LatLng(51.150000, -0.150032))
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-            .title("Unclustered marker"));
+        markerCollection.addMarker(
+                new MarkerOptions()
+                        .position(new LatLng(51.150000, -0.150032))
+                        .icon(
+                                BitmapDescriptorFactory.defaultMarker(
+                                        BitmapDescriptorFactory.HUE_AZURE))
+                        .title("Unclustered marker"));
         // [END maps_android_utils_multilayer_unclustered_marker]
 
         // [START maps_android_utils_multilayer_kml_click_events]
         kmlPolylineLayer.addLayerToMap();
-        kmlPolylineLayer.setOnFeatureClickListener(feature -> Toast.makeText(context,
-            "KML polyline clicked: " + feature.getProperty("name"),
-            Toast.LENGTH_SHORT).show());
+        kmlPolylineLayer.setOnFeatureClickListener(
+                feature ->
+                        Toast.makeText(
+                                        context,
+                                        "KML polyline clicked: " + feature.getProperty("name"),
+                                        Toast.LENGTH_SHORT)
+                                .show());
         // [END maps_android_utils_multilayer_kml_click_events]
 
         // [START maps_android_utils_multilayer_marker_click_events]
-        markerCollection.setOnMarkerClickListener(marker -> { Toast.makeText(context,
-            "Marker clicked: " + marker.getTitle(),
-                Toast.LENGTH_SHORT).show();
-            return false;
-        });
+        markerCollection.setOnMarkerClickListener(
+                marker -> {
+                    Toast.makeText(
+                                    context,
+                                    "Marker clicked: " + marker.getTitle(),
+                                    Toast.LENGTH_SHORT)
+                            .show();
+                    return false;
+                });
         // [END maps_android_utils_multilayer_marker_click_events]
     }
 }

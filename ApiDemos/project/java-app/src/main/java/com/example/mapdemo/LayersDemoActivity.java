@@ -12,30 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
-
-import android.Manifest.permission;
-import android.annotation.SuppressLint;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.Spinner;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID;
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NONE;
@@ -43,12 +20,28 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_SATELLITE;
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
 
-/**
- * Demonstrates the different base layers of a map.
- */
+import android.Manifest;
+import android.Manifest.permission;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+
+/** Demonstrates the different base layers of a map. */
 public class LayersDemoActivity extends SamplesBaseActivity
-    implements OnItemSelectedListener, OnMapReadyCallback,
-    ActivityCompat.OnRequestPermissionsResultCallback {
+        implements OnItemSelectedListener,
+                OnMapReadyCallback,
+                ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -68,8 +61,11 @@ public class LayersDemoActivity extends SamplesBaseActivity
         binding = com.example.common_ui.databinding.LayersDemoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-            this, com.example.common_ui.R.array.layers_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter =
+                ArrayAdapter.createFromResource(
+                        this,
+                        com.example.common_ui.R.array.layers_array,
+                        android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.layersSpinner.setAdapter(adapter);
         binding.layersSpinner.setOnItemSelectedListener(this);
@@ -80,7 +76,9 @@ public class LayersDemoActivity extends SamplesBaseActivity
         binding.indoor.setOnClickListener(v -> onIndoorToggled());
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
         applyInsets(binding.mapContainer);
     }
@@ -95,7 +93,8 @@ public class LayersDemoActivity extends SamplesBaseActivity
                         .zoom(16.5f)
                         .tilt(40.0f)
                         .build();
-        mMap.moveCamera(com.google.android.gms.maps.CameraUpdateFactory.newCameraPosition(initialPosition));
+        mMap.moveCamera(
+                com.google.android.gms.maps.CameraUpdateFactory.newCameraPosition(initialPosition));
 
         updateMapType();
         updateTraffic();
@@ -106,7 +105,8 @@ public class LayersDemoActivity extends SamplesBaseActivity
 
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT)
+                    .show();
             return false;
         }
         return true;
@@ -140,15 +140,15 @@ public class LayersDemoActivity extends SamplesBaseActivity
 
         // Enable the location layer. Request the location permission if needed.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+                        == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         } else {
             // Uncheck the box until the layer has been enabled and request missing permission.
             binding.myLocation.setChecked(false);
-            PermissionUtils
-                .requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE,false);
+            PermissionUtils.requestLocationPermissions(
+                    this, LOCATION_PERMISSION_REQUEST_CODE, false);
         }
     }
 
@@ -160,8 +160,8 @@ public class LayersDemoActivity extends SamplesBaseActivity
             return;
         }
 
-        if (PermissionUtils.isPermissionGranted(permissions, results,
-            permission.ACCESS_FINE_LOCATION)) {
+        if (PermissionUtils.isPermissionGranted(
+                permissions, results, permission.ACCESS_FINE_LOCATION)) {
             mMap.setMyLocationEnabled(true);
             binding.myLocation.setChecked(true);
         } else {
@@ -173,8 +173,8 @@ public class LayersDemoActivity extends SamplesBaseActivity
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mShowPermissionDeniedDialog) {
-            PermissionUtils.PermissionDeniedDialog
-                .newInstance(false).show(getSupportFragmentManager(), "dialog");
+            PermissionUtils.PermissionDeniedDialog.newInstance(false)
+                    .show(getSupportFragmentManager(), "dialog");
             mShowPermissionDeniedDialog = false;
         }
     }
@@ -218,7 +218,6 @@ public class LayersDemoActivity extends SamplesBaseActivity
             mMap.setMapType(MAP_TYPE_NORMAL);
         } else if (layerName.equals(getString(com.example.common_ui.R.string.hybrid))) {
             mMap.setMapType(MAP_TYPE_HYBRID);
-
 
         } else if (layerName.equals(getString(com.example.common_ui.R.string.satellite))) {
             mMap.setMapType(MAP_TYPE_SATELLITE);

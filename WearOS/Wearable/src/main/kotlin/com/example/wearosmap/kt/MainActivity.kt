@@ -15,25 +15,27 @@
  */
 package com.example.wearosmap.kt
 
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.OnMapReadyCallback
-import androidx.wear.ambient.AmbientModeSupport
-import com.google.android.gms.maps.SupportMapFragment
 import android.os.Bundle
 import android.util.Log
-import com.example.wearosmap.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.wear.ambient.AmbientModeSupport
 import androidx.wear.widget.SwipeDismissFrameLayout
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.MarkerOptions
+import com.example.wearosmap.R
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 /**
  * Sample that shows how to set up a basic Google Map on Wear OS.
  */
 // [START maps_wear_os_swipe_dismiss_callback]
-class MainActivity : AppCompatActivity(), OnMapReadyCallback,
-                     AmbientModeSupport.AmbientCallbackProvider {
+class MainActivity :
+    AppCompatActivity(),
+    OnMapReadyCallback,
+    AmbientModeSupport.AmbientCallbackProvider {
 
     // [START_EXCLUDE silent]
     private lateinit var mapFragment: SupportMapFragment
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback,
         // Add a marker with a title that is shown in its info window.
         googleMap.addMarker(
             MarkerOptions().position(sydney)
-                .title("Sydney Opera House")
+                .title("Sydney Opera House"),
         )
 
         // Move the camera to show the marker.
@@ -88,8 +90,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback,
     }
     // [END maps_wear_os_on_map_ready]
 
-    override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback {
-        return object : AmbientModeSupport.AmbientCallback() {
+    override fun getAmbientCallback(): AmbientModeSupport.AmbientCallback =
+        object : AmbientModeSupport.AmbientCallback() {
             /**
              * Starts ambient mode on the map.
              * The API swaps to a non-interactive and low-color rendering of the map when the user is no
@@ -109,7 +111,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback,
                 mapFragment.onExitAmbient()
             }
         }
-    }
     // [END_EXCLUDE]
 }
 // [END maps_wear_os_swipe_dismiss_callback]

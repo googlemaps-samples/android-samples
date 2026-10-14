@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
+import android.os.Bundle;
+import android.widget.Toast;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
-
+import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
@@ -28,24 +28,22 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import android.os.Bundle;
-import android.widget.Toast;
-
-/**
- * This shows how to constrain the camera to specific boundaries and zoom levels.
- */
+/** This shows how to constrain the camera to specific boundaries and zoom levels. */
 @Sample(
-    id = "camera_clamping",
-    title = "Camera Clamping & Bounds",
-    description = "Constraining camera viewport to LatLngBounds and dynamic min/max zoom limits.",
-    category = "Camera Controls",
-    complexity = Complexity.SIMPLE,
-    tags = {"#camera", "#clamping", "#bounds", "#zoomlimits", "#latlngbounds"},
-    purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider limits.",
-    successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds immediately.",
-    failureIndicators = "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset Bounds'.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "camera_clamping",
+        title = "Camera Clamping & Bounds",
+        description =
+                "Constraining camera viewport to LatLngBounds and dynamic min/max zoom limits.",
+        category = "Camera Controls",
+        complexity = Complexity.SIMPLE,
+        tags = {"#camera", "#clamping", "#bounds", "#zoomlimits", "#latlngbounds"},
+        purpose =
+                "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider limits.",
+        successCriteria =
+                "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds immediately.",
+        failureIndicators =
+                "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset Bounds'.",
+        framework = Framework.JAVA_VIEWS)
 public class CameraClampingDemoActivity extends SamplesBaseActivity
         implements OnMapReadyCallback, OnCameraIdleListener, GoogleMap.OnCameraMoveListener {
 
@@ -55,26 +53,32 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
     private static final float DEFAULT_MIN_ZOOM = 2.0f;
     private static final float DEFAULT_MAX_ZOOM = 21.0f;
 
-    static final LatLngBounds ADELAIDE_BOUNDS = new LatLngBounds(
-            new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
-    private static final CameraPosition ADELAIDE_CAMERA = new CameraPosition.Builder()
-            .target(new LatLng(-34.92873, 138.59995)).zoom(20.0f).bearing(0).tilt(0).build();
+    static final LatLngBounds ADELAIDE_BOUNDS =
+            new LatLngBounds(new LatLng(-35.0, 138.58), new LatLng(-34.9, 138.61));
+    private static final CameraPosition ADELAIDE_CAMERA =
+            new CameraPosition.Builder()
+                    .target(new LatLng(-34.92873, 138.59995))
+                    .zoom(20.0f)
+                    .bearing(0)
+                    .tilt(0)
+                    .build();
 
-    private static final LatLngBounds PACIFIC = new LatLngBounds(
-            new LatLng(-15.0, 165.0), new LatLng(15.0, -165.0));
-    private static final CameraPosition PACIFIC_CAMERA = new CameraPosition.Builder()
-            .target(new LatLng(0, -180)).zoom(4.0f).bearing(0).tilt(0).build();
+    private static final LatLngBounds PACIFIC =
+            new LatLngBounds(new LatLng(-15.0, 165.0), new LatLng(15.0, -165.0));
+    private static final CameraPosition PACIFIC_CAMERA =
+            new CameraPosition.Builder()
+                    .target(new LatLng(0, -180))
+                    .zoom(4.0f)
+                    .bearing(0)
+                    .tilt(0)
+                    .build();
 
     protected GoogleMap mMap;
 
-    /**
-     * Internal min zoom level that can be toggled via the demo.
-     */
+    /** Internal min zoom level that can be toggled via the demo. */
     private float mMinZoom;
 
-    /**
-     * Internal max zoom level that can be toggled via the demo.
-     */
+    /** Internal max zoom level that can be toggled via the demo. */
     private float mMaxZoom;
 
     private com.example.common_ui.databinding.CameraClampingDemoBinding binding;
@@ -82,23 +86,26 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.common_ui.databinding.CameraClampingDemoBinding.inflate(getLayoutInflater());
+        binding =
+                com.example.common_ui.databinding.CameraClampingDemoBinding.inflate(
+                        getLayoutInflater());
         setContentView(binding.getRoot());
 
         mMap = null;
         resetMinMaxZoom();
         updateZoomLabel(mMinZoom, mMaxZoom);
 
-        binding.zoomRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
-            java.util.List<Float> values = slider.getValues();
-            mMinZoom = values.get(0);
-            mMaxZoom = values.get(1);
-            updateZoomLabel(mMinZoom, mMaxZoom);
-            if (fromUser && mMap != null) {
-                mMap.setMinZoomPreference(mMinZoom);
-                mMap.setMaxZoomPreference(mMaxZoom);
-            }
-        });
+        binding.zoomRangeSlider.addOnChangeListener(
+                (slider, value, fromUser) -> {
+                    java.util.List<Float> values = slider.getValues();
+                    mMinZoom = values.get(0);
+                    mMaxZoom = values.get(1);
+                    updateZoomLabel(mMinZoom, mMaxZoom);
+                    if (fromUser && mMap != null) {
+                        mMap.setMinZoomPreference(mMinZoom);
+                        mMap.setMaxZoomPreference(mMaxZoom);
+                    }
+                });
 
         binding.clampLatlngAdelaide.setOnClickListener(v -> onClampToAdelaide());
         binding.clampLatlngPacific.setOnClickListener(v -> onClampToPacific());
@@ -106,7 +113,9 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         binding.clampZoomReset.setOnClickListener(v -> onMinMaxZoomClampReset());
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -136,27 +145,29 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
     private void updateCameraPosition() {
         if (mMap == null) return;
         CameraPosition pos = mMap.getCameraPosition();
-        binding.cameraText.setText(getString(
-            com.example.common_ui.R.string.camera_position_format,
-            pos.target.latitude,
-            pos.target.longitude,
-            pos.zoom,
-            pos.tilt,
-            pos.bearing
-        ));
+        binding.cameraText.setText(
+                getString(
+                        com.example.common_ui.R.string.camera_position_format,
+                        pos.target.latitude,
+                        pos.target.longitude,
+                        pos.zoom,
+                        pos.tilt,
+                        pos.bearing));
     }
 
     private void updateZoomLabel(float min, float max) {
-        binding.zoomLabel.setText(getString(com.example.common_ui.R.string.zoom_bounds_label, min, max));
+        binding.zoomLabel.setText(
+                getString(com.example.common_ui.R.string.zoom_bounds_label, min, max));
     }
 
     /**
-     * Before the map is ready many calls will fail.
-     * This should be called on all entry points that call methods on the Google Maps API.
+     * Before the map is ready many calls will fail. This should be called on all entry points that
+     * call methods on the Google Maps API.
      */
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT)
+                    .show();
             return false;
         }
         return true;
@@ -178,7 +189,8 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         binding.latlngClampToggleGroup.check(com.example.common_ui.R.id.clamp_latlng_adelaide);
         mMap.setLatLngBoundsForCameraTarget(ADELAIDE_BOUNDS);
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(ADELAIDE_CAMERA));
-        binding.clampStatusText.setText(getString(com.example.common_ui.R.string.latlng_clamp_status_adelaide));
+        binding.clampStatusText.setText(
+                getString(com.example.common_ui.R.string.latlng_clamp_status_adelaide));
     }
 
     private void onClampToPacific() {
@@ -188,7 +200,8 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         binding.latlngClampToggleGroup.check(com.example.common_ui.R.id.clamp_latlng_pacific);
         mMap.setLatLngBoundsForCameraTarget(PACIFIC);
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(PACIFIC_CAMERA));
-        binding.clampStatusText.setText(getString(com.example.common_ui.R.string.latlng_clamp_status_pacific));
+        binding.clampStatusText.setText(
+                getString(com.example.common_ui.R.string.latlng_clamp_status_pacific));
     }
 
     private void onLatLngClampReset() {
@@ -198,7 +211,8 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         binding.latlngClampToggleGroup.clearChecked();
         // Setting bounds to null removes any previously set bounds.
         mMap.setLatLngBoundsForCameraTarget(null);
-        binding.clampStatusText.setText(getString(com.example.common_ui.R.string.latlng_clamp_status_none));
+        binding.clampStatusText.setText(
+                getString(com.example.common_ui.R.string.latlng_clamp_status_none));
         toast("LatLngBounds clamp reset.");
     }
 

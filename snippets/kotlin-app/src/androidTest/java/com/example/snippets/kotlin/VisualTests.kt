@@ -35,10 +35,12 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible focused on Sydney or Mountain View with zoom constraints applied.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
+    // Gemini prompt text in a raw string: wrapping it would change the prompt.
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun verifySettingBoundariesSnippet() {
         kotlinx.coroutines.runBlocking {
@@ -49,7 +51,12 @@ class VisualTests : BaseVisualTest() {
             }
             context.startActivity(intent)
 
-            uiDevice.wait(androidx.test.uiautomator.Until.hasObject(androidx.test.uiautomator.By.pkg(context.packageName).depth(0)), 10000)
+            uiDevice.wait(
+                androidx.test.uiautomator.Until.hasObject(
+                    androidx.test.uiautomator.By.pkg(context.packageName).depth(0),
+                ),
+                10000,
+            )
             waitForMapRendering(60)
             kotlinx.coroutines.delay(3000) // Settle map camera on Australia bounds
 
@@ -63,7 +70,7 @@ class VisualTests : BaseVisualTest() {
                     2. Confirm that the camera is NOT zoomed in tightly on a single city or artificially blocked by zoom constraints, but rather shows the entire Australian continent fitting cleanly within the map viewport.
 
                     If all criteria are met, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }
@@ -80,7 +87,7 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible demonstrating click event handling on MapView.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -96,7 +103,7 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible initialized with basic map configuration.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -112,7 +119,7 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible showing a red marker pin displayed near the center.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -128,7 +135,7 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible with the blue My Location dot enabled.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -144,7 +151,7 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible with a historical map image overlay placed on top.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -160,10 +167,12 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible with a polyline drawing a rectangular boundary across the map.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
+    // Gemini prompt text in a raw string: wrapping it would change the prompt.
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun verifyGeoJsonSnippet() {
         launchAndVerifySnippet(
@@ -176,10 +185,12 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible with a gray shaded polygon with a red border covering the United States of America.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
+    // Gemini prompt text in a raw string: wrapping it would change the prompt.
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun verifyHeatmapSnippet() {
         launchAndVerifySnippet(
@@ -192,7 +203,7 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible focused on Melbourne, Australia displaying colored thermal heatmap intensity dots.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -208,10 +219,12 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible focused on London showing numbered marker cluster circles.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
+    // Gemini prompt text in a raw string: wrapping it would change the prompt.
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun verifyKmlSnippet() {
         launchAndVerifySnippet(
@@ -224,10 +237,12 @@ class VisualTests : BaseVisualTest() {
                 1. Confirm that a map is visible focused on Google Campus in Mountain View displaying imported KML 3D building polygons.
 
                 If all elements are present, reply with "PASSED".
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
+    // Gemini prompt text in a raw string: wrapping it would change the prompt.
+    @Suppress("ktlint:standard:max-line-length")
     @Test
     fun verifyMarkerDraggableSnippet() {
         kotlinx.coroutines.runBlocking {
@@ -238,7 +253,12 @@ class VisualTests : BaseVisualTest() {
             }
             context.startActivity(intent)
 
-            uiDevice.wait(androidx.test.uiautomator.Until.hasObject(androidx.test.uiautomator.By.pkg(context.packageName).depth(0)), 10000)
+            uiDevice.wait(
+                androidx.test.uiautomator.Until.hasObject(
+                    androidx.test.uiautomator.By.pkg(context.packageName).depth(0),
+                ),
+                10000,
+            )
             waitForMapRendering(60)
             kotlinx.coroutines.delay(4000) // Settle map camera on Perth
 
@@ -255,7 +275,7 @@ class VisualTests : BaseVisualTest() {
                     Please act as a UI tester and analyze this screenshot to verify a draggable map marker interaction.
                     Confirm that a map is visible showing a marker pin located away from the center (at location B after being dragged).
                     If the marker pin is visible, reply with "PASSED".
-                """.trimIndent()
+                """.trimIndent(),
             )
         }
     }

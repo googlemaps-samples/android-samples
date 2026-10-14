@@ -12,15 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.Tile;
-import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.android.gms.maps.model.TileProvider;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -28,14 +20,15 @@ import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Tile;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.maps.model.TileProvider;
 import java.io.ByteArrayOutputStream;
 
-/**
- * This demonstrates tile overlay coordinates.
- */
+/** This demonstrates tile overlay coordinates. */
 public class TileCoordinateDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     @Override
@@ -44,7 +37,9 @@ public class TileCoordinateDemoActivity extends SamplesBaseActivity implements O
         setContentView(com.example.common_ui.R.layout.tile_coordinate_demo);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
         applyInsets(findViewById(com.example.common_ui.R.id.map));
@@ -74,23 +69,25 @@ public class TileCoordinateDemoActivity extends SamplesBaseActivity implements O
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             coordTile.compress(Bitmap.CompressFormat.PNG, 0, stream);
             byte[] bitmapData = stream.toByteArray();
-            return new Tile((int) (TILE_SIZE_DP * scaleFactor),
-                    (int) (TILE_SIZE_DP * scaleFactor), bitmapData);
+            return new Tile(
+                    (int) (TILE_SIZE_DP * scaleFactor),
+                    (int) (TILE_SIZE_DP * scaleFactor),
+                    bitmapData);
         }
 
         private Bitmap createTile(int x, int y, int zoom) {
             Bitmap tile =
-                Bitmap.createBitmap(
-                    (int) (TILE_SIZE_DP * scaleFactor),
-                    (int) (TILE_SIZE_DP * scaleFactor),
-                    Config.ARGB_8888);
+                    Bitmap.createBitmap(
+                            (int) (TILE_SIZE_DP * scaleFactor),
+                            (int) (TILE_SIZE_DP * scaleFactor),
+                            Config.ARGB_8888);
             Canvas canvas = new Canvas(tile);
 
             // Draw the tile borders.
             Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             borderPaint.setStyle(Paint.Style.STROKE);
-            canvas.drawRect(0, 0, TILE_SIZE_DP * scaleFactor,
-                    TILE_SIZE_DP * scaleFactor, borderPaint);
+            canvas.drawRect(
+                    0, 0, TILE_SIZE_DP * scaleFactor, TILE_SIZE_DP * scaleFactor, borderPaint);
 
             // Draw the tile position text.
             String tileCoords = "(" + x + ", " + y + ")";
@@ -98,10 +95,16 @@ public class TileCoordinateDemoActivity extends SamplesBaseActivity implements O
             Paint mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mTextPaint.setTextAlign(Paint.Align.CENTER);
             mTextPaint.setTextSize(18 * scaleFactor);
-            canvas.drawText(tileCoords, TILE_SIZE_DP * scaleFactor / 2,
-                    TILE_SIZE_DP * scaleFactor / 2, mTextPaint);
-            canvas.drawText(zoomLevel, TILE_SIZE_DP * scaleFactor / 2,
-                    TILE_SIZE_DP * scaleFactor * 2 / 3, mTextPaint);
+            canvas.drawText(
+                    tileCoords,
+                    TILE_SIZE_DP * scaleFactor / 2,
+                    TILE_SIZE_DP * scaleFactor / 2,
+                    mTextPaint);
+            canvas.drawText(
+                    zoomLevel,
+                    TILE_SIZE_DP * scaleFactor / 2,
+                    TILE_SIZE_DP * scaleFactor * 2 / 3,
+                    mTextPaint);
 
             return tile;
         }

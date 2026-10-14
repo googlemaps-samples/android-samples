@@ -18,10 +18,7 @@ package com.example.mapdemo;
 
 import android.os.Bundle;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -37,7 +34,10 @@ public class MapColorSchemeActivity extends SamplesBaseActivity implements OnMap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.common_ui.R.layout.map_color_scheme_demo);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
@@ -49,13 +49,14 @@ public class MapColorSchemeActivity extends SamplesBaseActivity implements OnMap
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        
+
         googleMap.setMapColorScheme(MapColorScheme.DARK);
 
         buttonLight.setOnClickListener(view -> googleMap.setMapColorScheme(MapColorScheme.LIGHT));
 
         buttonDark.setOnClickListener(view -> googleMap.setMapColorScheme(MapColorScheme.DARK));
 
-        buttonFollowSystem.setOnClickListener(view -> googleMap.setMapColorScheme(MapColorScheme.FOLLOW_SYSTEM));
+        buttonFollowSystem.setOnClickListener(
+                view -> googleMap.setMapColorScheme(MapColorScheme.FOLLOW_SYSTEM));
     }
 }
