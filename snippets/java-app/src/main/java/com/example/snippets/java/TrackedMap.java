@@ -23,19 +23,19 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.FeatureLayer;
+import com.google.android.gms.maps.model.FeatureLayerOptions;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.GroundOverlayOptions;
+import com.google.android.gms.maps.model.IndoorBuilding;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.maps.model.FeatureLayer;
-import com.google.android.gms.maps.model.FeatureLayerOptions;
-import com.google.android.gms.maps.model.IndoorBuilding;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import java.util.List;
@@ -123,7 +123,8 @@ public class TrackedMap {
         delegate.animateCamera(update, callback);
     }
 
-    public void animateCamera(CameraUpdate update, int durationMs, GoogleMap.CancelableCallback callback) {
+    public void animateCamera(
+            CameraUpdate update, int durationMs, GoogleMap.CancelableCallback callback) {
         delegate.animateCamera(update, durationMs, callback);
     }
 
@@ -229,7 +230,8 @@ public class TrackedMap {
         return delegate.getFocusedBuilding();
     }
 
-    public void setOnMyLocationButtonClickListener(GoogleMap.OnMyLocationButtonClickListener listener) {
+    public void setOnMyLocationButtonClickListener(
+            GoogleMap.OnMyLocationButtonClickListener listener) {
         delegate.setOnMyLocationButtonClickListener(listener);
     }
 
@@ -290,7 +292,10 @@ public class TrackedMap {
         items.clear();
     }
 
-    /** Aggressively resets all GoogleMap camera locks, styles, padding, UI settings, and event listeners. */
+    /**
+     * Aggressively resets all GoogleMap camera locks, styles, padding, UI settings, and event
+     * listeners.
+     */
     public static void resetMapToDefaults(GoogleMap map) {
         if (map == null) return;
         map.clear();

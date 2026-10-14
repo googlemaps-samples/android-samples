@@ -65,16 +65,17 @@ import org.junit.runners.Parameterized;
 /**
  * End-to-end smoke test covering every demo in the app.
  *
- * <p>The parameter list is every activity the manifest declares in the app's package except
- * {@link MainActivity}, so a demo added to the app is covered here with no change to this file.
+ * <p>The parameter list is every activity the manifest declares in the app's package except {@link
+ * MainActivity}, so a demo added to the app is covered here with no change to this file.
  *
  * <p>Each demo is checked for these things:
+ *
  * <ul>
- *   <li>it reaches {@link Lifecycle.State#RESUMED} without throwing,</li>
- *   <li>a map or Street View panorama is attached, laid out and ready,</li>
- *   <li>its map survives a zoom out and back in,</li>
- *   <li>it survives a configuration change,</li>
- *   <li>nothing crashes on a background thread while it is open.</li>
+ *   <li>it reaches {@link Lifecycle.State#RESUMED} without throwing,
+ *   <li>a map or Street View panorama is attached, laid out and ready,
+ *   <li>its map survives a zoom out and back in,
+ *   <li>it survives a configuration change,
+ *   <li>nothing crashes on a background thread while it is open.
  * </ul>
  *
  * <p>This deliberately does not assert on map content. Checking a particular marker or overlay
@@ -104,21 +105,24 @@ public class DemoSmokeTest {
     private static final Set<String> DEMOS_WITHOUT_MAP = Collections.emptySet();
 
     /** Demos that close themselves when no map ID is configured, see the README. */
-    private static final Set<String> DEMOS_REQUIRING_MAP_ID = new HashSet<>(Arrays.asList(
-        "AdvancedMarkersDemoActivity",
-        "DataDrivenBoundariesActivity",
-        "DataDrivenDatasetStylingActivity"));
+    private static final Set<String> DEMOS_REQUIRING_MAP_ID =
+            new HashSet<>(
+                    Arrays.asList(
+                            "AdvancedMarkersDemoActivity",
+                            "DataDrivenBoundariesActivity",
+                            "DataDrivenDatasetStylingActivity"));
 
     @Parameterized.Parameters(name = "{0}")
     public static List<Object[]> demos() throws Exception {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        PackageInfo packageInfo = context.getPackageManager()
-            .getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
+        PackageInfo packageInfo =
+                context.getPackageManager()
+                        .getPackageInfo(context.getPackageName(), PackageManager.GET_ACTIVITIES);
         List<String> names = new ArrayList<>();
         if (packageInfo.activities != null) {
             for (ActivityInfo activity : packageInfo.activities) {
                 if (activity.name.startsWith(context.getPackageName() + ".")
-                    && !activity.name.equals(MainActivity.class.getName())) {
+                        && !activity.name.equals(MainActivity.class.getName())) {
                     names.add(activity.name);
                 }
             }
@@ -127,29 +131,32 @@ public class DemoSmokeTest {
 
         List<Object[]> demos = new ArrayList<>();
         for (String name : names) {
-            demos.add(new Object[] {
-                name.substring(name.lastIndexOf('.') + 1),
-                Class.forName(name).asSubclass(Activity.class),
-            });
+            demos.add(
+                    new Object[] {
+                        name.substring(name.lastIndexOf('.') + 1),
+                        Class.forName(name).asSubclass(Activity.class),
+                    });
         }
         return demos;
     }
 
     /** The location demos ask for this on start; a permission dialog would cover the map. */
     @Rule
-    public final GrantPermissionRule permissions = GrantPermissionRule.grant(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION);
+    public final GrantPermissionRule permissions =
+            GrantPermissionRule.grant(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION);
 
     private final String demoName;
     private final Class<? extends Activity> demoActivity;
 
     /**
-     * Tiles only render with a real key, so waiting for them is opt-in: pass
-     * {@code -Pandroid.testInstrumentationRunnerArguments.requireMapLoaded=true}.
+     * Tiles only render with a real key, so waiting for them is opt-in: pass {@code
+     * -Pandroid.testInstrumentationRunnerArguments.requireMapLoaded=true}.
      */
-    private final boolean requireMapLoaded = Boolean.parseBoolean(
-        InstrumentationRegistry.getArguments().getString("requireMapLoaded"));
+    private final boolean requireMapLoaded =
+            Boolean.parseBoolean(
+                    InstrumentationRegistry.getArguments().getString("requireMapLoaded"));
 
     private final List<Throwable> uncaughtExceptions = new CopyOnWriteArrayList<>();
     private Thread.UncaughtExceptionHandler defaultHandler;
@@ -167,14 +174,16 @@ public class DemoSmokeTest {
 
         Thread.UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
         defaultHandler = handler;
-        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
-            uncaughtExceptions.add(throwable);
-            // The main looper cannot recover from a crash, so let it take the process down: the
-            // orchestrator reports it against this test and carries on with the next one.
-            if (thread == Looper.getMainLooper().getThread() && handler != null) {
-                handler.uncaughtException(thread, throwable);
-            }
-        });
+        Thread.setDefaultUncaughtExceptionHandler(
+                (thread, throwable) -> {
+                    uncaughtExceptions.add(throwable);
+                    // The main looper cannot recover from a crash, so let it take the process down:
+                    // the
+                    // orchestrator reports it against this test and carries on with the next one.
+                    if (thread == Looper.getMainLooper().getThread() && handler != null) {
+                        handler.uncaughtException(thread, throwable);
+                    }
+                });
     }
 
     /** Also catches crashes while the demo is torn down after the test body. */
@@ -195,12 +204,13 @@ public class DemoSmokeTest {
     private static boolean hasMapId() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         return !BuildConfig.MAP_ID.equals("MAP_ID")
-            || !context.getString(R.string.map_id).equals("DEMO_MAP_ID");
+                || !context.getString(R.string.map_id).equals("DEMO_MAP_ID");
     }
 
     @Test
     public void demoLaunchesAndShowsMap() throws InterruptedException {
-        try (ActivityScenario<? extends Activity> scenario = ActivityScenario.launch(demoActivity)) {
+        try (ActivityScenario<? extends Activity> scenario =
+                ActivityScenario.launch(demoActivity)) {
             assertResumed(scenario);
             if (!DEMOS_WITHOUT_MAP.contains(demoName)) {
                 GoogleMap map = awaitMapSurfaceReady(scenario);
@@ -214,12 +224,13 @@ public class DemoSmokeTest {
     }
 
     /**
-     * Rotation and other configuration changes are where saved state and retained fragments tend
-     * to regress, and they are easy to miss when clicking through the app by hand.
+     * Rotation and other configuration changes are where saved state and retained fragments tend to
+     * regress, and they are easy to miss when clicking through the app by hand.
      */
     @Test
     public void demoSurvivesConfigurationChange() throws InterruptedException {
-        try (ActivityScenario<? extends Activity> scenario = ActivityScenario.launch(demoActivity)) {
+        try (ActivityScenario<? extends Activity> scenario =
+                ActivityScenario.launch(demoActivity)) {
             assertResumed(scenario);
             if (!DEMOS_WITHOUT_MAP.contains(demoName)) {
                 awaitMapSurfaceReady(scenario);
@@ -240,33 +251,35 @@ public class DemoSmokeTest {
     }
 
     /**
-     * Waits until the demo shows a map or panorama that is laid out on screen, then until the
-     * Maps SDK reports it ready. Returns the map to zoom, or null when the demo only shows Street
-     * View. A map fully on screen is preferred: in a scrolling list of maps, one partly off screen
-     * may never report that it finished loading.
+     * Waits until the demo shows a map or panorama that is laid out on screen, then until the Maps
+     * SDK reports it ready. Returns the map to zoom, or null when the demo only shows Street View.
+     * A map fully on screen is preferred: in a scrolling list of maps, one partly off screen may
+     * never report that it finished loading.
      */
     @Nullable
     private GoogleMap awaitMapSurfaceReady(ActivityScenario<? extends Activity> scenario)
-        throws InterruptedException {
+            throws InterruptedException {
         long deadline = System.currentTimeMillis() + MAP_READY_TIMEOUT_MS;
         List<MapSurface> surfaces = new ArrayList<>();
         List<MapSurface> shown = new ArrayList<>();
 
         while (shown.isEmpty() && System.currentTimeMillis() < deadline) {
-            scenario.onActivity(activity -> {
-                surfaces.clear();
-                surfaces.addAll(mapSurfaces(activity));
-                shown.clear();
-                for (MapSurface surface : surfaces) {
-                    if (surface.view != null && isLaidOutOnScreen(surface.view)) {
-                        shown.add(surface);
-                    }
-                }
-                // Demos such as MapInPager open on a page without a map: swipe on to find it.
-                if (shown.isEmpty()) {
-                    turnPagerPage(activity.getWindow().getDecorView());
-                }
-            });
+            scenario.onActivity(
+                    activity -> {
+                        surfaces.clear();
+                        surfaces.addAll(mapSurfaces(activity));
+                        shown.clear();
+                        for (MapSurface surface : surfaces) {
+                            if (surface.view != null && isLaidOutOnScreen(surface.view)) {
+                                shown.add(surface);
+                            }
+                        }
+                        // Demos such as MapInPager open on a page without a map: swipe on to find
+                        // it.
+                        if (shown.isEmpty()) {
+                            turnPagerPage(activity.getWindow().getDecorView());
+                        }
+                    });
             if (shown.isEmpty()) {
                 Thread.sleep(POLL_INTERVAL_MS);
             }
@@ -281,21 +294,33 @@ public class DemoSmokeTest {
                     detail.append(' ').append(surface.name);
                 }
             }
-            throw new AssertionError(demoName + " did not show a map within "
-                + MAP_READY_TIMEOUT_MS + "ms: " + detail);
+            throw new AssertionError(
+                    demoName
+                            + " did not show a map within "
+                            + MAP_READY_TIMEOUT_MS
+                            + "ms: "
+                            + detail);
         }
 
         MapSurface surface = pickSurface(shown);
         AtomicReference<GoogleMap> map = new AtomicReference<>();
         CountDownLatch ready = new CountDownLatch(1);
-        scenario.onActivity(activity -> surface.awaitReady.accept(readyMap -> {
-            map.set(readyMap);
-            ready.countDown();
-        }));
-        assertWithMessage(demoName + " " + surface.name + " was not ready within "
-            + MAP_READY_TIMEOUT_MS + "ms")
-            .that(ready.await(MAP_READY_TIMEOUT_MS, TimeUnit.MILLISECONDS))
-            .isTrue();
+        scenario.onActivity(
+                activity ->
+                        surface.awaitReady.accept(
+                                readyMap -> {
+                                    map.set(readyMap);
+                                    ready.countDown();
+                                }));
+        assertWithMessage(
+                        demoName
+                                + " "
+                                + surface.name
+                                + " was not ready within "
+                                + MAP_READY_TIMEOUT_MS
+                                + "ms")
+                .that(ready.await(MAP_READY_TIMEOUT_MS, TimeUnit.MILLISECONDS))
+                .isTrue();
         return map.get();
     }
 
@@ -319,19 +344,20 @@ public class DemoSmokeTest {
      * for the rest of the test.
      */
     private void zoomOutAndBackIn(ActivityScenario<? extends Activity> scenario, GoogleMap map)
-        throws InterruptedException {
+            throws InterruptedException {
         for (float delta : new float[] {-1f, 1f}) {
             CountDownLatch loaded = new CountDownLatch(1);
-            scenario.onActivity(activity -> {
-                if (requireMapLoaded) {
-                    map.setOnMapLoadedCallback(loaded::countDown);
-                }
-                map.moveCamera(CameraUpdateFactory.zoomBy(delta));
-            });
+            scenario.onActivity(
+                    activity -> {
+                        if (requireMapLoaded) {
+                            map.setOnMapLoadedCallback(loaded::countDown);
+                        }
+                        map.moveCamera(CameraUpdateFactory.zoomBy(delta));
+                    });
             if (requireMapLoaded) {
                 assertWithMessage(demoName + " map did not finish loading after zooming")
-                    .that(loaded.await(MAP_LOADED_TIMEOUT_MS, TimeUnit.MILLISECONDS))
-                    .isTrue();
+                        .that(loaded.await(MAP_LOADED_TIMEOUT_MS, TimeUnit.MILLISECONDS))
+                        .isTrue();
             }
             Thread.sleep(SETTLE_MS);
         }
@@ -339,8 +365,8 @@ public class DemoSmokeTest {
 
     private void assertNoUncaughtExceptions() {
         if (!uncaughtExceptions.isEmpty()) {
-            throw new AssertionError(demoName + " crashed on a background thread",
-                uncaughtExceptions.get(0));
+            throw new AssertionError(
+                    demoName + " crashed on a background thread", uncaughtExceptions.get(0));
         }
     }
 
@@ -355,8 +381,11 @@ public class DemoSmokeTest {
         final boolean isMap;
         final Consumer<Consumer<GoogleMap>> awaitReady;
 
-        MapSurface(String name, @Nullable View view, boolean isMap,
-                   Consumer<Consumer<GoogleMap>> awaitReady) {
+        MapSurface(
+                String name,
+                @Nullable View view,
+                boolean isMap,
+                Consumer<Consumer<GoogleMap>> awaitReady) {
             this.name = name;
             this.view = view;
             this.isMap = isMap;
@@ -369,8 +398,8 @@ public class DemoSmokeTest {
         List<MapSurface> surfaces = new ArrayList<>();
         walk(activity.getWindow().getDecorView(), surfaces);
         if (activity instanceof FragmentActivity) {
-            for (Fragment fragment
-                : ((FragmentActivity) activity).getSupportFragmentManager().getFragments()) {
+            for (Fragment fragment :
+                    ((FragmentActivity) activity).getSupportFragmentManager().getFragments()) {
                 walk(fragment, surfaces);
             }
         }
@@ -380,13 +409,22 @@ public class DemoSmokeTest {
     private static void walk(View view, List<MapSurface> surfaces) {
         if (view instanceof MapView) {
             MapView mapView = (MapView) view;
-            surfaces.add(new MapSurface("MapView", view, true,
-                callback -> mapView.getMapAsync(callback::accept)));
+            surfaces.add(
+                    new MapSurface(
+                            "MapView",
+                            view,
+                            true,
+                            callback -> mapView.getMapAsync(callback::accept)));
         } else if (view instanceof StreetViewPanoramaView) {
             StreetViewPanoramaView panoramaView = (StreetViewPanoramaView) view;
-            surfaces.add(new MapSurface("StreetViewPanoramaView", view, false,
-                callback -> panoramaView.getStreetViewPanoramaAsync(
-                    panorama -> callback.accept(null))));
+            surfaces.add(
+                    new MapSurface(
+                            "StreetViewPanoramaView",
+                            view,
+                            false,
+                            callback ->
+                                    panoramaView.getStreetViewPanoramaAsync(
+                                            panorama -> callback.accept(null))));
         }
         if (view instanceof ViewGroup) {
             ViewGroup group = (ViewGroup) view;
@@ -399,14 +437,23 @@ public class DemoSmokeTest {
     private static void walk(Fragment fragment, List<MapSurface> surfaces) {
         if (fragment instanceof SupportMapFragment) {
             SupportMapFragment mapFragment = (SupportMapFragment) fragment;
-            surfaces.add(new MapSurface("SupportMapFragment", fragment.getView(), true,
-                callback -> mapFragment.getMapAsync(callback::accept)));
+            surfaces.add(
+                    new MapSurface(
+                            "SupportMapFragment",
+                            fragment.getView(),
+                            true,
+                            callback -> mapFragment.getMapAsync(callback::accept)));
         } else if (fragment instanceof SupportStreetViewPanoramaFragment) {
             SupportStreetViewPanoramaFragment panoramaFragment =
-                (SupportStreetViewPanoramaFragment) fragment;
-            surfaces.add(new MapSurface("SupportStreetViewPanoramaFragment", fragment.getView(),
-                false, callback -> panoramaFragment.getStreetViewPanoramaAsync(
-                    panorama -> callback.accept(null))));
+                    (SupportStreetViewPanoramaFragment) fragment;
+            surfaces.add(
+                    new MapSurface(
+                            "SupportStreetViewPanoramaFragment",
+                            fragment.getView(),
+                            false,
+                            callback ->
+                                    panoramaFragment.getStreetViewPanoramaAsync(
+                                            panorama -> callback.accept(null))));
         }
         for (Fragment child : fragment.getChildFragmentManager().getFragments()) {
             walk(child, surfaces);
@@ -445,7 +492,7 @@ public class DemoSmokeTest {
         }
         Rect visible = new Rect();
         return view.getGlobalVisibleRect(visible)
-            && visible.width() == view.getWidth()
-            && visible.height() == view.getHeight();
+                && visible.width() == view.getWidth()
+                && visible.height() == view.getHeight();
     }
 }

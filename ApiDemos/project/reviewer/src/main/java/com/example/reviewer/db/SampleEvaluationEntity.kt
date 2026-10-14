@@ -35,7 +35,7 @@ data class SampleEvaluationEntity(
     val status: String,
     val notes: String,
     val screenshotPath: String? = null,
-    val lastUpdated: Long = System.currentTimeMillis()
+    val lastUpdated: Long = System.currentTimeMillis(),
 ) : Serializable {
     fun toModel(): SampleEvaluation = SampleEvaluation(
         sampleId = sampleId,
@@ -46,7 +46,7 @@ data class SampleEvaluationEntity(
         status = status,
         notes = notes,
         screenshotPath = screenshotPath,
-        lastUpdated = lastUpdated
+        lastUpdated = lastUpdated,
     )
 
     companion object {
@@ -59,7 +59,7 @@ data class SampleEvaluationEntity(
             status = model.status,
             notes = model.notes,
             screenshotPath = model.screenshotPath,
-            lastUpdated = model.lastUpdated
+            lastUpdated = model.lastUpdated,
         )
     }
 }

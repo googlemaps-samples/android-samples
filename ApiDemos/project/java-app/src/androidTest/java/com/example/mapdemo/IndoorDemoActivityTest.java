@@ -39,30 +39,34 @@ public class IndoorDemoActivityTest {
     @Before
     public void setUp() {
         scenario = ActivityScenario.launch(IndoorDemoActivity.class);
-        scenario.onActivity(activity -> {
-            idlingResource = new MapIdlingResource(activity.map);
-            IdlingRegistry.getInstance().register(idlingResource);
-        });
+        scenario.onActivity(
+                activity -> {
+                    idlingResource = new MapIdlingResource(activity.map);
+                    IdlingRegistry.getInstance().register(idlingResource);
+                });
     }
 
     @Test
     public void testToggleLevelPicker() {
         // By default, the level picker is enabled.
-        scenario.onActivity(activity -> {
-            assertTrue(activity.map.getUiSettings().isIndoorLevelPickerEnabled());
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertTrue(activity.map.getUiSettings().isIndoorLevelPickerEnabled());
+                });
 
         // Click the toggle button and verify the level picker is disabled.
         onView(withId(R.id.toggle_level_picker_button)).perform(click());
-        scenario.onActivity(activity -> {
-            assertFalse(activity.map.getUiSettings().isIndoorLevelPickerEnabled());
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertFalse(activity.map.getUiSettings().isIndoorLevelPickerEnabled());
+                });
 
         // Click it again and verify it's re-enabled.
         onView(withId(R.id.toggle_level_picker_button)).perform(click());
-        scenario.onActivity(activity -> {
-            assertTrue(activity.map.getUiSettings().isIndoorLevelPickerEnabled());
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertTrue(activity.map.getUiSettings().isIndoorLevelPickerEnabled());
+                });
     }
 
     @Test

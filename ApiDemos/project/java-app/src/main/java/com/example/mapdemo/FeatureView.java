@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import android.content.Context;
@@ -20,14 +19,10 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-/**
- * A widget that describes an activity that demonstrates a feature.
- */
+/** A widget that describes an activity that demonstrates a feature. */
 public final class FeatureView extends FrameLayout {
 
-    /**
-     * Constructs a feature view by inflating layout/feature.xml.
-     */
+    /** Constructs a feature view by inflating layout/feature.xml. */
     public FeatureView(Context context) {
         super(context);
 
@@ -53,5 +48,4 @@ public final class FeatureView extends FrameLayout {
     public synchronized void setDescriptionId(int descriptionId) {
         ((TextView) (findViewById(com.example.common_ui.R.id.description))).setText(descriptionId);
     }
-
 }

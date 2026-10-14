@@ -147,7 +147,7 @@ class SampleCatalogRegistryTest {
             successCriteria = "Pass",
             failureIndicators = "Fail",
             kotlinActivity = "com.example.kotlindemos.TestKotlinActivity",
-            javaActivity = "com.example.mapdemo.TestJavaActivity"
+            javaActivity = "com.example.mapdemo.TestJavaActivity",
         )
 
         assertThat(sample.getTargetFqcn(Framework.KOTLIN_VIEWS)).isEqualTo("com.example.kotlindemos.TestKotlinActivity")

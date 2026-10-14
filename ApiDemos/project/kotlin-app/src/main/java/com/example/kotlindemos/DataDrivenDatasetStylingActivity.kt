@@ -13,16 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
-import com.example.common_ui.R
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.graphics.Color
 import android.os.Build
-
-import com.google.android.gms.maps.OnMapReadyCallback
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -35,9 +27,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.GoogleMap
+import androidx.core.view.WindowCompat
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMapOptions
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.DatasetFeature
 import com.google.android.gms.maps.model.Feature
 import com.google.android.gms.maps.model.FeatureClickEvent
@@ -48,9 +47,6 @@ import com.google.android.gms.maps.model.FeatureType
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapCapabilities
-import androidx.core.view.WindowCompat
-import com.google.android.gms.maps.GoogleMapOptions
-
 
 private val TAG = DataDrivenDatasetStylingActivity::class.java.name
 
@@ -66,13 +62,17 @@ private val TAG = DataDrivenDatasetStylingActivity::class.java.name
     category = "Data-Driven Styling",
     complexity = Complexity.ADVANCED,
     tags = ["#datasets", "#datadriven", "#clouddata", "#attributes", "#filtering"],
-    purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
+    purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature " +
+        "properties.",
     successCriteria = "Dataset points and polygons display distinct styling according to attribute values.",
     failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_data_driven_styling_datasets]
-class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
+class DataDrivenDatasetStylingActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback,
+    FeatureLayer.OnFeatureClickListener {
     private lateinit var mapContainer: ViewGroup
 
     private lateinit var map: GoogleMap
@@ -85,7 +85,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
     private data class DataSet(
         val datasetId: String,
         val bounds: LatLngBounds,
-        val callback: DataDrivenDatasetStylingActivity.() -> Unit
+        val callback: DataDrivenDatasetStylingActivity.() -> Unit,
     )
 
     private val dataSets = mutableMapOf<String, DataSet>()
@@ -110,22 +110,22 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
                     getString(R.string.boulder),
                     DataSet(
                         BuildConfig.BOULDER_DATASET_ID,
-                        LatLngBounds(LatLng(39.920, -105.340), LatLng(40.090, -105.210))
-                    ) { styleBoulderDataset() }
+                        LatLngBounds(LatLng(39.920, -105.340), LatLng(40.090, -105.210)),
+                    ) { styleBoulderDataset() },
                 )
                 put(
                     getString(R.string.new_york),
                     DataSet(
                         BuildConfig.NEW_YORK_DATASET_ID,
-                        LatLngBounds(LatLng(40.7640, -73.9820), LatLng(40.8000, -73.9490))
-                    ) { styleNYCDataset() }
+                        LatLngBounds(LatLng(40.7640, -73.9820), LatLng(40.8000, -73.9490)),
+                    ) { styleNYCDataset() },
                 )
                 put(
                     getString(R.string.kyoto),
                     DataSet(
                         BuildConfig.KYOTO_DATASET_ID,
-                        LatLngBounds(LatLng(34.9700, 135.7200), LatLng(35.0400, 135.8000))
-                    ) { styleKyotoDataset() }
+                        LatLngBounds(LatLng(34.9700, 135.7200), LatLng(35.0400, 135.8000)),
+                    ) { styleKyotoDataset() },
                 )
             }
         }
@@ -196,7 +196,8 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
      *   4. Centers the map on the location associated with the dataset.
      * If no dataset with the given label is found, it displays a Toast message indicating an unknown dataset.
      *
-     * @param label The label identifying the dataset to switch to. This label should correspond to a key in the `dataSets` map.
+     * @param label The label identifying the dataset to switch to. This label should correspond to a
+     *   key in the `dataSets` map.
      * @throws IllegalStateException if `map` is not initialized.
      */
     private fun switchToDataset(label: String) {
@@ -206,7 +207,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
                     featureType(FeatureType.DATASET)
                     // Specify the dataset ID.
                     datasetId(dataSet.datasetId)
-                }.build()
+                }.build(),
             )
             dataSet.callback(this)
             centerMapOnBounds(dataSet.bounds)
@@ -220,7 +221,12 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
         googleMap.setOnCameraIdleListener {
             val cp = googleMap.cameraPosition
-            Log.i(TAG, "CAMERA_PARAMS: target=LatLng(${cp.target.latitude}, ${cp.target.longitude}), zoom=${cp.zoom}f, tilt=${cp.tilt}f, bearing=${cp.bearing}f")
+            Log.i(
+                TAG,
+                "CAMERA_PARAMS: target=LatLng(${cp.target.latitude}, ${cp.target.longitude}), " +
+                    "zoom=${cp.zoom}f, " +
+                    "tilt=${cp.tilt}f, bearing=${cp.bearing}f",
+            )
         }
 
         val capabilities: MapCapabilities = map.mapCapabilities
@@ -233,11 +239,7 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
     }
 
     private fun styleNYCDataset() {
-        data class Style(
-            @ColorInt val fillColor: Int,
-            @ColorInt val strokeColor: Int,
-            val pointRadius: Float,
-        )
+        data class Style(@ColorInt val fillColor: Int, @ColorInt val strokeColor: Int, val pointRadius: Float)
 
         val largePointRadius = 8F
         val smallPointRadius = 6F
@@ -250,14 +252,24 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
 
                 val style = when (furColor) {
                     "Black+" -> Style(Color.BLACK, Color.BLACK, largePointRadius)
+
                     "Cinnamon+" -> Style(darkRedBrown, darkRedBrown, largePointRadius)
+
                     "Cinnamon+Gray" -> Style(darkRedBrown, darkRedBrown, smallPointRadius)
+
                     "Cinnamon+White" -> Style(darkRedBrown, Color.WHITE, smallPointRadius)
-                    "Gray+" -> Style(Color.GRAY, Color.YELLOW, largePointRadius) // Default stroke
+
+                    "Gray+" -> Style(Color.GRAY, Color.YELLOW, largePointRadius)
+
+                    // Default stroke
                     "Gray+Cinnamon" -> Style(Color.GRAY, darkRedBrown, smallPointRadius)
+
                     "Gray+Cinnamon, White" -> Style(Color.LTGRAY, darkRedBrown, smallPointRadius)
+
                     "Gray+White" -> Style(Color.GRAY, Color.WHITE, smallPointRadius)
-                    else -> Style(Color.GREEN, Color.YELLOW, largePointRadius) // Default style if furColor is null or doesn't match
+
+                    // Default style if furColor is null or doesn't match
+                    else -> Style(Color.GREEN, Color.YELLOW, largePointRadius)
                 }
 
                 return@StyleFactory FeatureStyle.Builder()
@@ -274,7 +286,6 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
     }
 
     private fun styleKyotoDataset() {
-
         // Create the style factory function.
         val styleFactory = FeatureLayer.StyleFactory { feature: Feature ->
 
@@ -327,7 +338,6 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
             var strokeWidth = 3F
             // Check if the feature is an instance of DatasetFeature.
             if (feature is DatasetFeature) {
-
                 val attributes: MutableMap<String, String> = feature.datasetAttributes
                 val difficulty = attributes["OSMPTrailsOSMPDIFFICULTY"]
                 val name = attributes["OSMPTrailsOSMPTRAILNAME"]
@@ -337,12 +347,15 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
                     "Easy" -> {
                         fillColor = EASY
                     }
+
                     "Moderate" -> {
                         fillColor = MODERATE
                     }
+
                     "Difficult" -> {
                         fillColor = DIFFICULT
                     }
+
                     else -> {
                         Log.w(TAG, "$name -> Unknown difficulty: $difficulty")
                         fillColor = Color.MAGENTA
@@ -354,11 +367,14 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
                         fillColor = ColorUtils.setAlphaComponent(fillColor, 66)
                         strokeWidth = 5f
                     }
+
                     "LVS" -> {
                     }
+
                     "LR", "RV" -> {
                         fillColor = ColorUtils.setAlphaComponent(fillColor, 75)
                     }
+
                     else -> {
                         Log.w(TAG, "$name -> Unknown dogs reg: $dogsAllowed")
                     }
@@ -379,7 +395,6 @@ class DataDrivenDatasetStylingActivity : SamplesBaseActivity(), OnMapReadyCallba
         // Apply the style factory function to the feature layer.
         datasetLayer?.featureStyle = styleFactory
     }
-
 
     private fun centerMapOnBounds(bounds: LatLngBounds, padding: Int = 80) {
         map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding))

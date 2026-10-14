@@ -67,10 +67,7 @@ import java.util.concurrent.TimeUnit
  * belongs in the focused tests next to this one; the value here is breadth.
  */
 @RunWith(Parameterized::class)
-class DemoSmokeTest(
-    private val demoName: String,
-    private val demoActivity: Class<out Activity>,
-) {
+class DemoSmokeTest(private val demoName: String, private val demoActivity: Class<out Activity>) {
 
     companion object {
         /**
@@ -294,19 +291,19 @@ class DemoSmokeTest(
     )
 
     private fun mapSurface(name: String, view: View?, getMapAsync: (OnMapReadyCallback) -> Unit) =
-        MapSurface(name, view, isMap = true) { callback -> getMapAsync { callback(it) } }
+        MapSurface(name, view, isMap = true) { callback ->
+            getMapAsync { callback(it) }
+        }
 
-    private fun panoramaSurface(
-        name: String,
-        view: View?,
-        getPanoramaAsync: (() -> Unit) -> Unit,
-    ) = MapSurface(name, view, isMap = false) { callback -> getPanoramaAsync { callback(null) } }
+    private fun panoramaSurface(name: String, view: View?, getPanoramaAsync: (() -> Unit) -> Unit) =
+        MapSurface(name, view, isMap = false) { callback -> getPanoramaAsync { callback(null) } }
 
     /** Every map and panorama in the activity, from its views and its fragments. */
     private fun Activity.mapSurfaces(): List<MapSurface> = buildList {
         fun walk(view: View) {
             when (view) {
                 is MapView -> add(mapSurface("MapView", view, view::getMapAsync))
+
                 is StreetViewPanoramaView -> add(
                     panoramaSurface("StreetViewPanoramaView", view) { onReady ->
                         view.getStreetViewPanoramaAsync { onReady() }
@@ -323,6 +320,7 @@ class DemoSmokeTest(
                 is SupportMapFragment -> add(
                     mapSurface("SupportMapFragment", fragment.view, fragment::getMapAsync),
                 )
+
                 is SupportStreetViewPanoramaFragment -> add(
                     panoramaSurface("SupportStreetViewPanoramaFragment", fragment.view) { onReady ->
                         fragment.getStreetViewPanoramaAsync { onReady() }

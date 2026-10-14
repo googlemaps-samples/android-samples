@@ -20,6 +20,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static com.example.mapdemo.truth.LatLngSubject.assertThat;
 import static com.google.common.truth.Truth.assertThat;
+
 import androidx.test.espresso.action.Tap;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.common_ui.R;
@@ -34,7 +35,8 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class CircleDemoActivityTest extends MapDemoActivityTest<CircleDemoActivity> {
 
-    private static final LatLng HERE_BE_DRAGONS = new LatLng(-34.91459615762562, 138.60572619793246);
+    private static final LatLng HERE_BE_DRAGONS =
+            new LatLng(-34.91459615762562, 138.60572619793246);
 
     public CircleDemoActivityTest() {
         super(CircleDemoActivity.class);
@@ -47,61 +49,67 @@ public class CircleDemoActivityTest extends MapDemoActivityTest<CircleDemoActivi
 
     @Test
     public void testInitialCircleIsDrawn() {
-        scenario.onActivity(activity -> {
-            assertThat(activity.circles).hasSize(1);
-        });
+        scenario.onActivity(
+                activity -> {
+                    assertThat(activity.circles).hasSize(1);
+                });
     }
 
     @Test
     public void testFillColorChanges() {
-        scenario.onActivity(activity -> {
-            Circle circle = activity.circles.get(0).circle;
-            int initialColor = circle.getFillColor();
+        scenario.onActivity(
+                activity -> {
+                    Circle circle = activity.circles.get(0).circle;
+                    int initialColor = circle.getFillColor();
 
-            activity.binding.fillHueSeekBar.setProgress(120);
+                    activity.binding.fillHueSeekBar.setProgress(120);
 
-            assertThat(circle.getFillColor()).isNotEqualTo(initialColor);
-        });
+                    assertThat(circle.getFillColor()).isNotEqualTo(initialColor);
+                });
     }
 
     @Test
     public void testStrokeColorChanges() {
-        scenario.onActivity(activity -> {
-            Circle circle = activity.circles.get(0).circle;
-            int initialColor = circle.getStrokeColor();
+        scenario.onActivity(
+                activity -> {
+                    Circle circle = activity.circles.get(0).circle;
+                    int initialColor = circle.getStrokeColor();
 
-            activity.binding.strokeHueSeekBar.setProgress(120);
+                    activity.binding.strokeHueSeekBar.setProgress(120);
 
-            assertThat(circle.getStrokeColor()).isNotEqualTo(initialColor);
-        });
+                    assertThat(circle.getStrokeColor()).isNotEqualTo(initialColor);
+                });
     }
 
     @Test
     public void testStrokeWidthChanges() {
-        scenario.onActivity(activity -> {
-            Circle circle = activity.circles.get(0).circle;
-            float initialWidth = circle.getStrokeWidth();
+        scenario.onActivity(
+                activity -> {
+                    Circle circle = activity.circles.get(0).circle;
+                    float initialWidth = circle.getStrokeWidth();
 
-            activity.binding.strokeWidthSeekBar.setProgress(20);
+                    activity.binding.strokeWidthSeekBar.setProgress(20);
 
-            assertThat(circle.getStrokeWidth()).isNotEqualTo(initialWidth);
-        });
+                    assertThat(circle.getStrokeWidth()).isNotEqualTo(initialWidth);
+                });
     }
 
     @Test
     public void testToggleClickability() {
         final boolean[] initialClickable = new boolean[1];
-        scenario.onActivity(activity -> {
-            Circle circle = activity.circles.get(0).circle;
-            initialClickable[0] = circle.isClickable();
-        });
+        scenario.onActivity(
+                activity -> {
+                    Circle circle = activity.circles.get(0).circle;
+                    initialClickable[0] = circle.isClickable();
+                });
 
         onView(withId(R.id.toggleClickability)).perform(click());
 
-        scenario.onActivity(activity -> {
-            Circle circle = activity.circles.get(0).circle;
-            assertThat(circle.isClickable()).isEqualTo(!initialClickable[0]);
-        });
+        scenario.onActivity(
+                activity -> {
+                    Circle circle = activity.circles.get(0).circle;
+                    assertThat(circle.isClickable()).isEqualTo(!initialClickable[0]);
+                });
     }
 
     @Test
@@ -109,20 +117,22 @@ public class CircleDemoActivityTest extends MapDemoActivityTest<CircleDemoActivi
         final CameraPosition[] camera = new CameraPosition[1];
 
         // 1. Initial state check and camera setup
-        scenario.onActivity(activity -> {
-            // Assert that there is initially only one circle on the map.
-            assertThat(activity.circles).hasSize(1);
+        scenario.onActivity(
+                activity -> {
+                    // Assert that there is initially only one circle on the map.
+                    assertThat(activity.circles).hasSize(1);
 
-            // Store the initial camera position so we can restore it later.
-            camera[0] = map.getCameraPosition();
+                    // Store the initial camera position so we can restore it later.
+                    camera[0] = map.getCameraPosition();
 
-            // Move the camera to center on the target coordinates (HERE_BE_DRAGONS).
-            // The clickOnMapAt() function translates a LatLng coordinate to screen pixels.
-            // This translation loses precision, especially if the coordinate is far from the
-            // screen's center. By centering the camera on the target, we ensure the click
-            // is as accurate as possible.
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(HERE_BE_DRAGONS, 12.0f));
-        });
+                    // Move the camera to center on the target coordinates (HERE_BE_DRAGONS).
+                    // The clickOnMapAt() function translates a LatLng coordinate to screen pixels.
+                    // This translation loses precision, especially if the coordinate is far from
+                    // the
+                    // screen's center. By centering the camera on the target, we ensure the click
+                    // is as accurate as possible.
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(HERE_BE_DRAGONS, 12.0f));
+                });
 
         // Wait for the map to finish moving and become idle.
         idlingResource.waitForIdle();
@@ -136,24 +146,26 @@ public class CircleDemoActivityTest extends MapDemoActivityTest<CircleDemoActivi
         idlingResource.waitForIdle(200);
 
         // 3. Restore camera and verify results
-        scenario.onActivity(activity -> {
-            // Restore the camera to its original position.
-            map.moveCamera(CameraUpdateFactory.newCameraPosition(camera[0]));
-        });
+        scenario.onActivity(
+                activity -> {
+                    // Restore the camera to its original position.
+                    map.moveCamera(CameraUpdateFactory.newCameraPosition(camera[0]));
+                });
 
         idlingResource.waitForIdle();
 
-        scenario.onActivity(activity -> {
-            // Assert that a new circle was added.
-            assertThat(activity.circles).hasSize(2);
-            Circle newCircle = activity.circles.get(1).circle;
+        scenario.onActivity(
+                activity -> {
+                    // Assert that a new circle was added.
+                    assertThat(activity.circles).hasSize(2);
+                    Circle newCircle = activity.circles.get(1).circle;
 
-            // Verify the new circle is located at the target coordinates, allowing for a
-            // small margin of error (10 meters) due to the LatLng-to-pixel conversion.
-            assertThat(newCircle.getCenter()).isWithin(10).of(HERE_BE_DRAGONS);
+                    // Verify the new circle is located at the target coordinates, allowing for a
+                    // small margin of error (10 meters) due to the LatLng-to-pixel conversion.
+                    assertThat(newCircle.getCenter()).isWithin(10).of(HERE_BE_DRAGONS);
 
-            // Ensure the new circle has a visible size.
-            assertThat(newCircle.getRadius()).isNotEqualTo(0.0);
-        });
+                    // Ensure the new circle has a visible size.
+                    assertThat(newCircle.getRadius()).isNotEqualTo(0.0);
+                });
     }
 }

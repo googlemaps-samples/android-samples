@@ -18,24 +18,15 @@ package com.example.wearosmap;
 
 import android.os.Bundle;
 import android.util.Log;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.wear.ambient.AmbientModeSupport;
 import androidx.wear.ambient.AmbientModeSupport.AmbientCallback;
-import androidx.wear.widget.SwipeDismissFrameLayout;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * Sample that shows how to set up a basic Google Map on Wear OS.
- */
+/** Sample that shows how to set up a basic Google Map on Wear OS. */
 // [START maps_wear_os_ambient_mode_support]
-public class AmbientActivity extends AppCompatActivity implements
-    AmbientModeSupport.AmbientCallbackProvider {
+public class AmbientActivity extends AppCompatActivity
+        implements AmbientModeSupport.AmbientCallbackProvider {
 
     private SupportMapFragment mapFragment;
 
@@ -50,23 +41,25 @@ public class AmbientActivity extends AppCompatActivity implements
         // watch face.
         try {
             AmbientModeSupport.AmbientController controller = AmbientModeSupport.attach(this);
-            Log.d(AmbientActivity.class.getSimpleName(), "Is ambient enabled: " + controller.isAmbient());
+            Log.d(
+                    AmbientActivity.class.getSimpleName(),
+                    "Is ambient enabled: " + controller.isAmbient());
         } catch (Exception e) {
-            Log.w(AmbientActivity.class.getSimpleName(), "Ambient mode unavailable on this device: " + e.getMessage());
+            Log.w(
+                    AmbientActivity.class.getSimpleName(),
+                    "Ambient mode unavailable on this device: " + e.getMessage());
         }
 
         // Obtain the MapFragment and set the async listener to be notified when the map is ready.
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-            .findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
     }
 
     @Override
     public AmbientCallback getAmbientCallback() {
         return new AmbientCallback() {
             /**
-             * Starts ambient mode on the map.
-             * The API swaps to a non-interactive and low-color rendering of the map when the user is no
-             * longer actively using the app.
+             * Starts ambient mode on the map. The API swaps to a non-interactive and low-color
+             * rendering of the map when the user is no longer actively using the app.
              */
             @Override
             public void onEnterAmbient(Bundle ambientDetails) {
@@ -75,8 +68,8 @@ public class AmbientActivity extends AppCompatActivity implements
             }
 
             /**
-             * Exits ambient mode on the map.
-             * The API swaps to the normal rendering of the map when the user starts actively using the app.
+             * Exits ambient mode on the map. The API swaps to the normal rendering of the map when
+             * the user starts actively using the app.
              */
             @Override
             public void onExitAmbient() {

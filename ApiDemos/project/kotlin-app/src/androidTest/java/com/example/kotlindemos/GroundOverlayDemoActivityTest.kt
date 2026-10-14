@@ -32,8 +32,8 @@ class GroundOverlayDemoActivityTest :
     MapDemoActivityTest<GroundOverlayDemoActivity>(GroundOverlayDemoActivity::class.java) {
     private lateinit var groundOverlay: GroundOverlay
 
-    @Before
     // This @Before will run *after* the parent's @Before
+    @Before
     fun setUpChild() {
         scenario.onActivity { activity ->
             groundOverlay = activity.groundOverlayRotated

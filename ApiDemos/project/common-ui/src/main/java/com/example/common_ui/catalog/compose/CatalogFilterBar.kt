@@ -70,30 +70,30 @@ fun CatalogFilterBar(
     onComplexitySelected: (Complexity?) -> Unit,
     selectedTags: Set<String>,
     onTagToggled: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
-            .padding(bottom = 6.dp)
+            .padding(bottom = 6.dp),
     ) {
         // Framework Tabs
         PrimaryTabRow(
             selectedTabIndex = when (selectedFramework) {
                 Framework.KOTLIN_VIEWS -> 0
                 Framework.JAVA_VIEWS -> 1
-            }
+            },
         ) {
             Tab(
                 selected = selectedFramework == Framework.KOTLIN_VIEWS,
                 onClick = { onFrameworkSelected(Framework.KOTLIN_VIEWS) },
-                text = { Text("💜 Kotlin Views", fontWeight = FontWeight.Bold) }
+                text = { Text("💜 Kotlin Views", fontWeight = FontWeight.Bold) },
             )
             Tab(
                 selected = selectedFramework == Framework.JAVA_VIEWS,
                 onClick = { onFrameworkSelected(Framework.JAVA_VIEWS) },
-                text = { Text("☕ Java Views", fontWeight = FontWeight.Bold) }
+                text = { Text("☕ Java Views", fontWeight = FontWeight.Bold) },
             )
         }
 
@@ -117,8 +117,8 @@ fun CatalogFilterBar(
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-            )
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
+            ),
         )
 
         // Review Status Filter Chips (Reviewer Mode Only)
@@ -128,38 +128,68 @@ fun CatalogFilterBar(
                     .fillMaxWidth()
                     .horizontalScroll(rememberScrollState())
                     .padding(horizontal = 12.dp, vertical = 2.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 FilterChip(
                     selected = selectedStatusFilter == null,
                     onClick = { onStatusFilterSelected(null) },
-                    label = { Text("All Status") }
+                    label = { Text("All Status") },
                 )
                 FilterChip(
                     selected = selectedStatusFilter == ReviewStatus.UNCHECKED,
                     onClick = {
-                        onStatusFilterSelected(if (selectedStatusFilter == ReviewStatus.UNCHECKED) null else ReviewStatus.UNCHECKED)
+                        onStatusFilterSelected(
+                            if (selectedStatusFilter ==
+                                ReviewStatus.UNCHECKED
+                            ) {
+                                null
+                            } else {
+                                ReviewStatus.UNCHECKED
+                            },
+                        )
                     },
                     label = {
                         Text(
                             "⚪ Unchecked ($uncheckedCount)",
-                            fontWeight = if (selectedStatusFilter == ReviewStatus.UNCHECKED) FontWeight.Bold else FontWeight.Normal
+                            fontWeight = if (selectedStatusFilter ==
+                                ReviewStatus.UNCHECKED
+                            ) {
+                                FontWeight.Bold
+                            } else {
+                                FontWeight.Normal
+                            },
                         )
-                    }
+                    },
                 )
                 FilterChip(
                     selected = selectedStatusFilter == ReviewStatus.NEEDS_WORK,
                     onClick = {
-                        onStatusFilterSelected(if (selectedStatusFilter == ReviewStatus.NEEDS_WORK) null else ReviewStatus.NEEDS_WORK)
+                        onStatusFilterSelected(
+                            if (selectedStatusFilter ==
+                                ReviewStatus.NEEDS_WORK
+                            ) {
+                                null
+                            } else {
+                                ReviewStatus.NEEDS_WORK
+                            },
+                        )
                     },
-                    label = { Text("🔴 Needs Work ($needsWorkCount)") }
+                    label = { Text("🔴 Needs Work ($needsWorkCount)") },
                 )
                 FilterChip(
                     selected = selectedStatusFilter == ReviewStatus.PASSING,
                     onClick = {
-                        onStatusFilterSelected(if (selectedStatusFilter == ReviewStatus.PASSING) null else ReviewStatus.PASSING)
+                        onStatusFilterSelected(
+                            if (selectedStatusFilter ==
+                                ReviewStatus.PASSING
+                            ) {
+                                null
+                            } else {
+                                ReviewStatus.PASSING
+                            },
+                        )
                     },
-                    label = { Text("🟢 Passing ($passingCount)") }
+                    label = { Text("🟢 Passing ($passingCount)") },
                 )
             }
         }
@@ -170,27 +200,57 @@ fun CatalogFilterBar(
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = 12.dp, vertical = 2.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             FilterChip(
                 selected = selectedComplexity == null,
                 onClick = { onComplexitySelected(null) },
-                label = { Text("All Complexity") }
+                label = { Text("All Complexity") },
             )
             FilterChip(
                 selected = selectedComplexity == Complexity.SNIPPET,
-                onClick = { onComplexitySelected(if (selectedComplexity == Complexity.SNIPPET) null else Complexity.SNIPPET) },
-                label = { Text("🔹 Snippet") }
+                onClick = {
+                    onComplexitySelected(
+                        if (selectedComplexity ==
+                            Complexity.SNIPPET
+                        ) {
+                            null
+                        } else {
+                            Complexity.SNIPPET
+                        },
+                    )
+                },
+                label = { Text("🔹 Snippet") },
             )
             FilterChip(
                 selected = selectedComplexity == Complexity.SIMPLE,
-                onClick = { onComplexitySelected(if (selectedComplexity == Complexity.SIMPLE) null else Complexity.SIMPLE) },
-                label = { Text("🟢 Simple") }
+                onClick = {
+                    onComplexitySelected(
+                        if (selectedComplexity ==
+                            Complexity.SIMPLE
+                        ) {
+                            null
+                        } else {
+                            Complexity.SIMPLE
+                        },
+                    )
+                },
+                label = { Text("🟢 Simple") },
             )
             FilterChip(
                 selected = selectedComplexity == Complexity.ADVANCED,
-                onClick = { onComplexitySelected(if (selectedComplexity == Complexity.ADVANCED) null else Complexity.ADVANCED) },
-                label = { Text("🔴 Advanced") }
+                onClick = {
+                    onComplexitySelected(
+                        if (selectedComplexity ==
+                            Complexity.ADVANCED
+                        ) {
+                            null
+                        } else {
+                            Complexity.ADVANCED
+                        },
+                    )
+                },
+                label = { Text("🔴 Advanced") },
             )
         }
 
@@ -201,14 +261,14 @@ fun CatalogFilterBar(
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
                 .padding(horizontal = 12.dp, vertical = 4.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             allTags.forEach { tag ->
                 val isSelected = selectedTags.contains(tag)
                 FilterChip(
                     selected = isSelected,
                     onClick = { onTagToggled(tag) },
-                    label = { Text(tag, fontSize = 12.sp) }
+                    label = { Text(tag, fontSize = 12.sp) },
                 )
             }
         }

@@ -39,8 +39,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.ui.res.painterResource
-import com.example.common_ui.R
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -68,6 +66,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -75,10 +74,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.common_ui.R
 import com.example.common_ui.catalog.Framework
 import com.example.common_ui.catalog.ReviewStatus
-import com.example.common_ui.catalog.SampleItem
 import com.example.common_ui.catalog.SampleEvaluation
+import com.example.common_ui.catalog.SampleItem
 import java.io.File
 
 /**
@@ -94,14 +94,14 @@ fun SampleDetailFullScreenDialog(
     onDismiss: () -> Unit,
     onSaveEvaluation: (ReviewStatus, String) -> Unit,
     onLaunch: (Framework) -> Unit,
-    onSaveAndNext: ((ReviewStatus, String) -> Unit)? = null
+    onSaveAndNext: ((ReviewStatus, String) -> Unit)? = null,
 ) {
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
             usePlatformDefaultWidth = false,
-            decorFitsSystemWindows = false
-        )
+            decorFitsSystemWindows = false,
+        ),
     ) {
         SampleDetailContent(
             sample = sample,
@@ -112,7 +112,7 @@ fun SampleDetailFullScreenDialog(
             onDismiss = onDismiss,
             onSaveEvaluation = onSaveEvaluation,
             onLaunch = onLaunch,
-            onSaveAndNext = onSaveAndNext
+            onSaveAndNext = onSaveAndNext,
         )
     }
 }
@@ -137,9 +137,11 @@ fun SampleDetailContent(
     onDismiss: () -> Unit,
     onSaveEvaluation: (ReviewStatus, String) -> Unit,
     onLaunch: (Framework) -> Unit,
-    onSaveAndNext: ((ReviewStatus, String) -> Unit)? = null
+    onSaveAndNext: ((ReviewStatus, String) -> Unit)? = null,
 ) {
-    var currentStatus by rememberSaveable(existingEvaluation) { mutableStateOf(ReviewStatus.fromString(existingEvaluation?.status)) }
+    var currentStatus by rememberSaveable(existingEvaluation) {
+        mutableStateOf(ReviewStatus.fromString(existingEvaluation?.status))
+    }
     var notesText by rememberSaveable(existingEvaluation) { mutableStateOf(existingEvaluation?.notes.orEmpty()) }
 
     Scaffold(
@@ -151,12 +153,12 @@ fun SampleDetailContent(
                             text = sample.title,
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            maxLines = 1
+                            maxLines = 1,
                         )
                         Text(
                             text = "${sample.category} • ${sample.complexity.badge} ${sample.complexity.displayName}",
                             style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 },
@@ -169,7 +171,7 @@ fun SampleDetailContent(
                     Button(
                         onClick = { onLaunch(framework) },
                         shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier.padding(end = 8.dp),
                     ) {
                         Icon(Icons.Default.PlayArrow, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(4.dp))
@@ -177,15 +179,15 @@ fun SampleDetailContent(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                )
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
             )
         },
         bottomBar = {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 tonalElevation = 6.dp,
-                shadowElevation = 8.dp
+                shadowElevation = 8.dp,
             ) {
                 Row(
                     modifier = Modifier
@@ -193,7 +195,7 @@ fun SampleDetailContent(
                         .navigationBarsPadding()
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     val altFramework = when (framework) {
                         Framework.KOTLIN_VIEWS -> if (sample.javaActivity != null) Framework.JAVA_VIEWS else null
@@ -204,9 +206,13 @@ fun SampleDetailContent(
                         OutlinedButton(
                             onClick = { onLaunch(altFramework) },
                             modifier = Modifier.weight(1f),
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(10.dp),
                         ) {
-                            Icon(painterResource(R.drawable.ic_swap_framework), contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(
+                                painterResource(R.drawable.ic_swap_framework),
+                                contentDescription = null,
+                                modifier = Modifier.size(18.dp),
+                            )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text("Switch to ${altFramework.displayName}", fontSize = 12.sp, maxLines = 1)
                         }
@@ -215,7 +221,7 @@ fun SampleDetailContent(
                     Button(
                         onClick = { onLaunch(framework) },
                         modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(10.dp)
+                        shape = RoundedCornerShape(10.dp),
                     ) {
                         Icon(Icons.Default.PlayArrow, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(4.dp))
@@ -223,7 +229,7 @@ fun SampleDetailContent(
                     }
                 }
             }
-        }
+        },
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -231,26 +237,26 @@ fun SampleDetailContent(
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp, vertical = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             // FQCN Target Info Banner
             Surface(
                 shape = RoundedCornerShape(10.dp),
                 color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Text(
                         text = "Target Class (FQCN)",
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
                     )
                     Text(
                         text = targetFqcn,
                         style = MaterialTheme.typography.bodySmall,
                         fontFamily = FontFamily.Monospace,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -260,19 +266,19 @@ fun SampleDetailContent(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.elevatedCardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                )
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp)
+                        .padding(16.dp),
                 ) {
                     Text(
                         text = if (isReviewerMode) "🎯 Purpose & Verification Criteria" else "💡 About This Sample",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     AndroidView(
@@ -283,9 +289,10 @@ fun SampleDetailContent(
                             }
                         },
                         update = { textView ->
-                            textView.text = Html.fromHtml(sample.getFormattedHelpHtml(isReviewerMode), Html.FROM_HTML_MODE_COMPACT)
+                            textView.text =
+                                Html.fromHtml(sample.getFormattedHelpHtml(isReviewerMode), Html.FROM_HTML_MODE_COMPACT)
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }
@@ -296,29 +303,29 @@ fun SampleDetailContent(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.elevatedCardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    )
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(16.dp),
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_code),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(20.dp)
+                                modifier = Modifier.size(20.dp),
                             )
                             Text(
                                 text = "Key API Calls",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary
+                                color = MaterialTheme.colorScheme.primary,
                             )
                         }
                         Spacer(modifier = Modifier.height(10.dp))
@@ -328,7 +335,7 @@ fun SampleDetailContent(
                                 color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(vertical = 3.dp)
+                                    .padding(vertical = 3.dp),
                             ) {
                                 Text(
                                     text = apiCall,
@@ -336,7 +343,7 @@ fun SampleDetailContent(
                                     fontFamily = FontFamily.Monospace,
                                     fontWeight = FontWeight.Medium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp)
+                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
                                 )
                             }
                         }
@@ -350,36 +357,48 @@ fun SampleDetailContent(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.elevatedCardColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    )
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    ),
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp)
+                            .padding(16.dp),
                     ) {
                         Text(
                             text = "🔍 Reviewer Evaluation & Grievances",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.primary,
                         )
                         Spacer(modifier = Modifier.height(12.dp))
 
                         // Status Buttons (Clean, Non-wrapping layout)
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             Button(
                                 onClick = { currentStatus = ReviewStatus.PASSING },
                                 modifier = Modifier.weight(1f),
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (currentStatus == ReviewStatus.PASSING) Color(0xFF2E7D32) else Color(0xFFE8F5E9),
-                                    contentColor = if (currentStatus == ReviewStatus.PASSING) Color.White else Color(0xFF2E7D32)
+                                    containerColor = if (currentStatus ==
+                                        ReviewStatus.PASSING
+                                    ) {
+                                        Color(0xFF2E7D32)
+                                    } else {
+                                        Color(0xFFE8F5E9)
+                                    },
+                                    contentColor = if (currentStatus ==
+                                        ReviewStatus.PASSING
+                                    ) {
+                                        Color.White
+                                    } else {
+                                        Color(0xFF2E7D32)
+                                    },
                                 ),
-                                contentPadding = PaddingValues(vertical = 8.dp)
+                                contentPadding = PaddingValues(vertical = 8.dp),
                             ) {
                                 Text("🟢 Pass", fontWeight = FontWeight.Bold, fontSize = 12.sp)
                             }
@@ -389,10 +408,22 @@ fun SampleDetailContent(
                                 modifier = Modifier.weight(1.2f),
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (currentStatus == ReviewStatus.NEEDS_WORK) Color(0xFFC62828) else Color(0xFFFFEBEE),
-                                    contentColor = if (currentStatus == ReviewStatus.NEEDS_WORK) Color.White else Color(0xFFC62828)
+                                    containerColor = if (currentStatus ==
+                                        ReviewStatus.NEEDS_WORK
+                                    ) {
+                                        Color(0xFFC62828)
+                                    } else {
+                                        Color(0xFFFFEBEE)
+                                    },
+                                    contentColor = if (currentStatus ==
+                                        ReviewStatus.NEEDS_WORK
+                                    ) {
+                                        Color.White
+                                    } else {
+                                        Color(0xFFC62828)
+                                    },
                                 ),
-                                contentPadding = PaddingValues(vertical = 8.dp)
+                                contentPadding = PaddingValues(vertical = 8.dp),
                             ) {
                                 Text("🔴 Needs Work", fontWeight = FontWeight.Bold, fontSize = 12.sp)
                             }
@@ -402,10 +433,22 @@ fun SampleDetailContent(
                                 modifier = Modifier.weight(1.1f),
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (currentStatus == ReviewStatus.UNCHECKED) Color(0xFF616161) else Color(0xFFEEEEEE),
-                                    contentColor = if (currentStatus == ReviewStatus.UNCHECKED) Color.White else Color(0xFF616161)
+                                    containerColor = if (currentStatus ==
+                                        ReviewStatus.UNCHECKED
+                                    ) {
+                                        Color(0xFF616161)
+                                    } else {
+                                        Color(0xFFEEEEEE)
+                                    },
+                                    contentColor = if (currentStatus ==
+                                        ReviewStatus.UNCHECKED
+                                    ) {
+                                        Color.White
+                                    } else {
+                                        Color(0xFF616161)
+                                    },
                                 ),
-                                contentPadding = PaddingValues(vertical = 8.dp)
+                                contentPadding = PaddingValues(vertical = 8.dp),
                             ) {
                                 Text("⚪ Unchecked", fontWeight = FontWeight.Bold, fontSize = 12.sp)
                             }
@@ -419,7 +462,7 @@ fun SampleDetailContent(
                             modifier = Modifier.fillMaxWidth(),
                             minLines = 3,
                             maxLines = 6,
-                            shape = RoundedCornerShape(10.dp)
+                            shape = RoundedCornerShape(10.dp),
                         )
 
                         if (!existingEvaluation?.screenshotPath.isNullOrBlank()) {
@@ -430,7 +473,7 @@ fun SampleDetailContent(
                                     text = "📸 Attached Screenshot & Markup:",
                                     style = MaterialTheme.typography.labelMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.primary
+                                    color = MaterialTheme.colorScheme.primary,
                                 )
                                 Spacer(modifier = Modifier.height(6.dp))
                                 val bitmap = remember(sFile.absolutePath) {
@@ -444,8 +487,12 @@ fun SampleDetailContent(
                                             .fillMaxWidth()
                                             .height(240.dp)
                                             .clip(RoundedCornerShape(10.dp))
-                                            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(10.dp)),
-                                        contentScale = ContentScale.Fit
+                                            .border(
+                                                1.dp,
+                                                MaterialTheme.colorScheme.outlineVariant,
+                                                RoundedCornerShape(10.dp),
+                                            ),
+                                        contentScale = ContentScale.Fit,
                                     )
                                 }
                             }
@@ -454,7 +501,7 @@ fun SampleDetailContent(
                         Spacer(modifier = Modifier.height(14.dp))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             if (existingEvaluation != null) {
                                 OutlinedButton(
@@ -464,7 +511,7 @@ fun SampleDetailContent(
                                         onSaveEvaluation(ReviewStatus.UNCHECKED, "")
                                     },
                                     modifier = Modifier.weight(1f),
-                                    shape = RoundedCornerShape(10.dp)
+                                    shape = RoundedCornerShape(10.dp),
                                 ) {
                                     Text("Reset", color = MaterialTheme.colorScheme.error)
                                 }
@@ -473,7 +520,7 @@ fun SampleDetailContent(
                             OutlinedButton(
                                 onClick = { onSaveEvaluation(currentStatus, notesText) },
                                 modifier = Modifier.weight(1f),
-                                shape = RoundedCornerShape(10.dp)
+                                shape = RoundedCornerShape(10.dp),
                             ) {
                                 Text("Save", maxLines = 1)
                             }
@@ -488,8 +535,8 @@ fun SampleDetailContent(
                                 modifier = Modifier.weight(1.5f),
                                 shape = RoundedCornerShape(10.dp),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
-                                )
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                ),
                             ) {
                                 Text("Save & Next ⏭️", fontWeight = FontWeight.Bold, maxLines = 1)
                             }

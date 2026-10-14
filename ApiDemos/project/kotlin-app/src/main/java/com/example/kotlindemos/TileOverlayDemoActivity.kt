@@ -15,19 +15,16 @@
  */
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.TileOverlayDemoBinding
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.example.common_ui.R
-
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.databinding.TileOverlayDemoBinding
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -49,12 +46,16 @@ import java.util.*
     category = "Overlays & Tiles",
     complexity = Complexity.SIMPLE,
     tags = ["#overlays", "#tiles", "#tileprovider", "#customtiles"],
-    purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate overlays).",
+    purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate " +
+        "overlays).",
     successCriteria = "Tile grid numbers (x, y, zoom) render cleanly over the base map.",
     failureIndicators = "Tile rendering blocks UI thread or tiles fail to fetch on pan.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
-class TileOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener, OnMapReadyCallback {
+class TileOverlayDemoActivity :
+    SamplesBaseActivity(),
+    OnSeekBarChangeListener,
+    OnMapReadyCallback {
 
     private lateinit var mMoonTiles: TileOverlay
     private lateinit var binding: TileOverlayDemoBinding
@@ -106,6 +107,7 @@ class TileOverlayDemoActivity : SamplesBaseActivity(), OnSeekBarChangeListener, 
         private const val TRANSPARENCY_MAX = 100
 
         /** This returns moon tiles.  */
+        @Suppress("ktlint:standard:max-line-length")
         private const val MOON_MAP_URL_FORMAT = "https://mw1.google.com/mw-planetary/lunar/lunarmaps_v1/clem_bw/%d/%d/%d.jpg"
     }
 }

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
+import android.os.Bundle;
+import android.widget.TextView;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
-
+import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -26,32 +26,29 @@ import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
-import android.os.Bundle;
-import android.widget.TextView;
 import java.util.Locale;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-/**
- * This shows how to listen to some {@link GoogleMap} events.
- */
+/** This shows how to listen to some {@link GoogleMap} events. */
 @Sample(
-    id = "events_demo",
-    title = "Events & Gestures",
-    description = "Handling map taps, long clicks, camera change events, and POI selections.",
-    category = "Events & Gestures",
-    complexity = Complexity.SNIPPET,
-    tags = {"#events", "#gestures", "#clicks", "#poi", "#listeners"},
-    purpose = "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI selections.",
-    successCriteria = "Event log text updates with coordinates and POI names upon user interaction.",
-    failureIndicators = "Click events swallowed or POI name unresolved.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "events_demo",
+        title = "Events & Gestures",
+        description = "Handling map taps, long clicks, camera change events, and POI selections.",
+        category = "Events & Gestures",
+        complexity = Complexity.SNIPPET,
+        tags = {"#events", "#gestures", "#clicks", "#poi", "#listeners"},
+        purpose =
+                "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI selections.",
+        successCriteria =
+                "Event log text updates with coordinates and POI names upon user interaction.",
+        failureIndicators = "Click events swallowed or POI name unresolved.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_events]
 public class EventsDemoActivity extends SamplesBaseActivity
-        implements OnMapClickListener, OnMapLongClickListener, OnCameraIdleListener,
-        GoogleMap.OnCameraMoveListener, OnMapReadyCallback {
+        implements OnMapClickListener,
+                OnMapLongClickListener,
+                OnCameraIdleListener,
+                GoogleMap.OnCameraMoveListener,
+                OnMapReadyCallback {
 
     private TextView tapTextView;
     private TextView cameraTextView;
@@ -66,7 +63,9 @@ public class EventsDemoActivity extends SamplesBaseActivity
         cameraTextView = findViewById(com.example.common_ui.R.id.camera_text);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
@@ -85,14 +84,16 @@ public class EventsDemoActivity extends SamplesBaseActivity
     public void onMapClick(LatLng point) {
         String lat = String.format(Locale.US, "%.6f", point.latitude);
         String lng = String.format(Locale.US, "%.6f", point.longitude);
-        tapTextView.setText(getString(com.example.common_ui.R.string.events_tapped_format, lat, lng));
+        tapTextView.setText(
+                getString(com.example.common_ui.R.string.events_tapped_format, lat, lng));
     }
 
     @Override
     public void onMapLongClick(LatLng point) {
         String lat = String.format(Locale.US, "%.6f", point.latitude);
         String lng = String.format(Locale.US, "%.6f", point.longitude);
-        tapTextView.setText(getString(com.example.common_ui.R.string.events_long_pressed_format, lat, lng));
+        tapTextView.setText(
+                getString(com.example.common_ui.R.string.events_long_pressed_format, lat, lng));
     }
 
     @Override
@@ -113,14 +114,14 @@ public class EventsDemoActivity extends SamplesBaseActivity
         String zoom = String.format(Locale.US, "%.1f", pos.zoom);
         String tilt = String.format(Locale.US, "%.1f", pos.tilt);
         String bearing = String.format(Locale.US, "%.1f", pos.bearing);
-        cameraTextView.setText(getString(
-            com.example.common_ui.R.string.events_camera_position_format,
-            lat,
-            lng,
-            zoom,
-            tilt,
-            bearing
-        ));
+        cameraTextView.setText(
+                getString(
+                        com.example.common_ui.R.string.events_camera_position_format,
+                        lat,
+                        lng,
+                        zoom,
+                        tilt,
+                        bearing));
     }
 }
 // [END maps_android_sample_events]

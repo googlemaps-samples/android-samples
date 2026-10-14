@@ -14,29 +14,22 @@
 
 package com.example.mapdemo;
 
+import android.Manifest;
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import com.example.common_ui.databinding.UiSettingsDemoBinding;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.example.common_ui.databinding.UiSettingsDemoBinding;
 import com.google.android.gms.maps.UiSettings;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.Toast;
-
-/**
- * This shows how UI settings can be toggled.
- */
+/** This shows how UI settings can be toggled. */
 public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -62,7 +55,9 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         setContentView(binding.getRoot());
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
         applyInsets(binding.mapContainer);
@@ -95,13 +90,14 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         mUiSettings.setRotateGesturesEnabled(binding.rotateToggle.isChecked());
 
         if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         mMap.setMyLocationEnabled(binding.mylocationlayerToggle.isChecked());
     }
+
     // [END maps_android_sample_ui_settings]
 
     /**
@@ -110,7 +106,8 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
      */
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT)
+                    .show();
             return false;
         }
         return true;
@@ -143,15 +140,15 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         // layer is not enabled.
         // First verify that the location permission has been granted.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED
-            || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+                        == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
             mUiSettings.setMyLocationButtonEnabled(binding.mylocationbuttonToggle.isChecked());
         } else {
             // Uncheck the box and request missing location permission.
             binding.mylocationbuttonToggle.setChecked(false);
-            PermissionUtils
-                .requestLocationPermissions(this, MY_LOCATION_PERMISSION_REQUEST_CODE, false);
+            PermissionUtils.requestLocationPermissions(
+                    this, MY_LOCATION_PERMISSION_REQUEST_CODE, false);
         }
     }
 
@@ -164,15 +161,15 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
         // will also cause the my location button to show (if it is enabled); if disabled, the my
         // location button will never show.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+                        == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(binding.mylocationlayerToggle.isChecked());
         } else {
             // Uncheck the box and request missing location permission.
             binding.mylocationlayerToggle.setChecked(false);
-            PermissionUtils
-                .requestLocationPermissions(this, LOCATION_LAYER_PERMISSION_REQUEST_CODE, false);
+            PermissionUtils.requestLocationPermissions(
+                    this, LOCATION_LAYER_PERMISSION_REQUEST_CODE, false);
         }
     }
 
@@ -210,15 +207,14 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
 
     @SuppressLint("MissingPermission")
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-        @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_LOCATION_PERMISSION_REQUEST_CODE) {
             // Enable the My Location button if the permission has been granted.
-            if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                Manifest.permission.ACCESS_FINE_LOCATION) ||
-                PermissionUtils.isPermissionGranted(permissions, grantResults,
-                    permission.ACCESS_COARSE_LOCATION)
-            ) {
+            if (PermissionUtils.isPermissionGranted(
+                            permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)
+                    || PermissionUtils.isPermissionGranted(
+                            permissions, grantResults, permission.ACCESS_COARSE_LOCATION)) {
                 mUiSettings.setMyLocationButtonEnabled(true);
                 binding.mylocationbuttonToggle.setChecked(true);
             } else {
@@ -227,11 +223,10 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
             return;
         } else if (requestCode == LOCATION_LAYER_PERMISSION_REQUEST_CODE) {
             // Enable the My Location layer if the permission has been granted.
-            if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                Manifest.permission.ACCESS_FINE_LOCATION) ||
-                PermissionUtils.isPermissionGranted(permissions, grantResults,
-                    permission.ACCESS_COARSE_LOCATION)
-            ) {
+            if (PermissionUtils.isPermissionGranted(
+                            permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)
+                    || PermissionUtils.isPermissionGranted(
+                            permissions, grantResults, permission.ACCESS_COARSE_LOCATION)) {
                 mMap.setMyLocationEnabled(true);
                 binding.mylocationlayerToggle.setChecked(true);
             } else {
@@ -246,8 +241,8 @@ public class UiSettingsDemoActivity extends SamplesBaseActivity implements OnMap
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mLocationPermissionDenied) {
-            PermissionUtils.PermissionDeniedDialog
-                .newInstance(false).show(getSupportFragmentManager(), "dialog");
+            PermissionUtils.PermissionDeniedDialog.newInstance(false)
+                    .show(getSupportFragmentManager(), "dialog");
             mLocationPermissionDenied = false;
         }
     }

@@ -13,19 +13,16 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding
 import android.os.Bundle
 import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import com.example.common_ui.R
-
+import com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding
 import com.google.android.gms.maps.StreetViewPanorama
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.StreetViewSource
-
 
 /**
  * This shows how to create an activity with static streetview (all options have been switched off)
@@ -65,7 +62,7 @@ class StreetViewPanoramaOptionsDemoActivity : SamplesBaseActivity() {
         streetViewPanorama?.setPosition(
             SAN_FRAN,
             RADIUS,
-            if (binding.outdoor.isChecked) StreetViewSource.OUTDOOR else StreetViewSource.DEFAULT
+            if (binding.outdoor.isChecked) StreetViewSource.OUTDOOR else StreetViewSource.DEFAULT,
         )
     }
 

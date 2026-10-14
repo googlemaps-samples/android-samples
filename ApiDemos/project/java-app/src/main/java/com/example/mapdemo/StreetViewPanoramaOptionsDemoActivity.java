@@ -12,16 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -44,7 +38,9 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding.inflate(getLayoutInflater());
+        binding =
+                com.example.common_ui.databinding.StreetViewPanoramaOptionsDemoBinding.inflate(
+                        getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.streetnames.setOnClickListener(v -> onStreetNamesToggled());
@@ -55,7 +51,8 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 panorama -> {
                     streetViewPanorama = panorama;
@@ -78,13 +75,13 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
         streetViewPanorama.setPosition(
                 SAN_FRAN,
                 RADIUS,
-                binding.outdoor.isChecked() ? StreetViewSource.OUTDOOR : StreetViewSource.DEFAULT
-        );
+                binding.outdoor.isChecked() ? StreetViewSource.OUTDOOR : StreetViewSource.DEFAULT);
     }
 
     private boolean checkReady() {
         if (streetViewPanorama == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT)
+                    .show();
             return false;
         }
         return true;

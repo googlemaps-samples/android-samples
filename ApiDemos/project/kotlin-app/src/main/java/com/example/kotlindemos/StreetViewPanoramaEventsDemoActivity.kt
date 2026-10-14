@@ -17,9 +17,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.example.common_ui.R
-
 import com.google.android.gms.maps.StreetViewPanorama
-import com.google.android.gms.maps.StreetViewPanorama.*
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaCameraChangeListener
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaChangeListener
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaClickListener
+import com.google.android.gms.maps.StreetViewPanorama.OnStreetViewPanoramaLongClickListener
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera
@@ -29,9 +31,12 @@ import com.google.android.gms.maps.model.StreetViewPanoramaOrientation
 /**
  * This shows how to listen to some [StreetViewPanorama] events.
  */
-class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
-    OnStreetViewPanoramaChangeListener, OnStreetViewPanoramaCameraChangeListener,
-    OnStreetViewPanoramaClickListener, OnStreetViewPanoramaLongClickListener {
+class StreetViewPanoramaEventsDemoActivity :
+    SamplesBaseActivity(),
+    OnStreetViewPanoramaChangeListener,
+    OnStreetViewPanoramaCameraChangeListener,
+    OnStreetViewPanoramaClickListener,
+    OnStreetViewPanoramaLongClickListener {
 
     private lateinit var streetViewPanorama: StreetViewPanorama
     private lateinit var panoChangeTimesTextView: TextView
@@ -58,16 +63,16 @@ class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
         streetViewPanoramaFragment?.getStreetViewPanoramaAsync { panorama: StreetViewPanorama ->
             streetViewPanorama = panorama
             streetViewPanorama.setOnStreetViewPanoramaChangeListener(
-                this@StreetViewPanoramaEventsDemoActivity
+                this@StreetViewPanoramaEventsDemoActivity,
             )
             streetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
-                this@StreetViewPanoramaEventsDemoActivity
+                this@StreetViewPanoramaEventsDemoActivity,
             )
             streetViewPanorama.setOnStreetViewPanoramaClickListener(
-                this@StreetViewPanoramaEventsDemoActivity
+                this@StreetViewPanoramaEventsDemoActivity,
             )
             streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
-                this@StreetViewPanoramaEventsDemoActivity
+                this@StreetViewPanoramaEventsDemoActivity,
             )
 
             // Only set the panorama to SYDNEY on startup (when no panoramas have been
@@ -94,7 +99,8 @@ class StreetViewPanoramaEventsDemoActivity : SamplesBaseActivity(),
                 StreetViewPanoramaCamera.Builder()
                     .orientation(orientation)
                     .zoom(streetViewPanorama.panoramaCamera.zoom)
-                    .build(), 1000
+                    .build(),
+                1000,
             )
         }
     }

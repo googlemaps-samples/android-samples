@@ -39,8 +39,8 @@ import com.example.common_ui.catalog.SampleItem
 import com.example.common_ui.catalog.compose.SampleDetailContent
 import com.example.reviewer.compose.ReviewerActivity
 import com.example.reviewer.repository.SampleReviewRepository
-import com.google.android.material.R as MaterialR
 import kotlinx.coroutines.launch
+import com.google.android.material.R as MaterialR
 
 /**
  * On-device "Criteria & Purpose" dialog that displays the full "Info & Code" section,
@@ -68,16 +68,14 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
             sample: SampleItem,
             framework: Framework,
             isReviewerMode: Boolean = true,
-            onLaunch: ((SampleItem, Framework) -> Unit)? = null
-        ): SampleExpectationsBottomSheet {
-            return SampleExpectationsBottomSheet().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_SAMPLE, sample)
-                    putSerializable(ARG_FRAMEWORK, framework)
-                    putBoolean(ARG_IS_REVIEWER_MODE, isReviewerMode)
-                }
-                this.onLaunchRequested = onLaunch
+            onLaunch: ((SampleItem, Framework) -> Unit)? = null,
+        ): SampleExpectationsBottomSheet = SampleExpectationsBottomSheet().apply {
+            arguments = Bundle().apply {
+                putSerializable(ARG_SAMPLE, sample)
+                putSerializable(ARG_FRAMEWORK, framework)
+                putBoolean(ARG_IS_REVIEWER_MODE, isReviewerMode)
             }
+            this.onLaunchRequested = onLaunch
         }
     }
 
@@ -96,12 +94,8 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return ComposeView(requireContext()).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 MaterialTheme {
@@ -112,7 +106,8 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
                         val targetFqcn = s.getTargetFqcn(currentFramework)
 
                         LaunchedEffect(s.id) {
-                            evaluation = (repository.getEvaluation(targetFqcn) ?: repository.getEvaluation(s.id))?.toModel()
+                            evaluation =
+                                (repository.getEvaluation(targetFqcn) ?: repository.getEvaluation(s.id))?.toModel()
                         }
 
                         SampleDetailContent(
@@ -140,7 +135,11 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
                                             if (nextSample != null) {
                                                 SampleReviewRepository.launchSample(act, nextSample, currentFramework)
                                             } else {
-                                                Toast.makeText(act, "🎉 All ${currentFramework.displayName} samples reviewed!", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(
+                                                    act,
+                                                    "🎉 All ${currentFramework.displayName} samples reviewed!",
+                                                    Toast.LENGTH_LONG,
+                                                ).show()
                                                 if (act.isTaskRoot) {
                                                     try {
                                                         val intent = Intent(act, ReviewerActivity::class.java)
@@ -163,11 +162,10 @@ class SampleExpectationsBottomSheet : AppCompatDialogFragment() {
                                 } else {
                                     onLaunchRequested?.invoke(s, fw)
                                 }
-                            }
+                            },
                         )
                     }
                 }
             }
         }
-    }
 }

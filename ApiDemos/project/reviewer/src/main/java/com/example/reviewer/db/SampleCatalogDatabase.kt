@@ -27,7 +27,7 @@ import androidx.room.RoomDatabase
 @Database(
     entities = [SampleEvaluationEntity::class],
     version = 2,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class SampleCatalogDatabase : RoomDatabase() {
 
@@ -37,16 +37,14 @@ abstract class SampleCatalogDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: SampleCatalogDatabase? = null
 
-        fun getInstance(context: Context): SampleCatalogDatabase {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
-                    context.applicationContext,
-                    SampleCatalogDatabase::class.java,
-                    "gmp_samples_catalog.db"
-                )
+        fun getInstance(context: Context): SampleCatalogDatabase = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: Room.databaseBuilder(
+                context.applicationContext,
+                SampleCatalogDatabase::class.java,
+                "gmp_samples_catalog.db",
+            )
                 .fallbackToDestructiveMigration()
                 .build().also { INSTANCE = it }
-            }
         }
     }
 }

@@ -57,8 +57,18 @@ class SnippetDiscoveryTest {
     @Test
     fun verifyMapConfigurationsLoaded() {
         val snippets = SnippetRegistry.snippets
-        assertTrue("Registry should contain Map Color Scheme snippet", snippets.keys.any { it.contains("Color Scheme", ignoreCase = true) })
-        assertTrue("Registry should contain Traffic Layer snippet", snippets.keys.any { it.contains("Traffic", ignoreCase = true) })
+        assertTrue(
+            "Registry should contain Map Color Scheme snippet",
+            snippets.keys.any {
+                it.contains("Color Scheme", ignoreCase = true)
+            },
+        )
+        assertTrue(
+            "Registry should contain Traffic Layer snippet",
+            snippets.keys.any {
+                it.contains("Traffic", ignoreCase = true)
+            },
+        )
     }
 
     @Test

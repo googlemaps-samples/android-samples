@@ -14,36 +14,32 @@
  * limitations under the License.
  */
 
-
 package com.example.kotlindemos
-
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Spinner
-import android.widget.CheckBox
-import android.widget.ArrayAdapter
 import com.example.common_ui.R
-
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Dot
 import com.google.android.gms.maps.model.Gap
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.JointType
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.PatternItem
 import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
-import com.google.android.gms.maps.SupportMapFragment
-
 import java.util.Arrays
 
 /**
@@ -56,16 +52,17 @@ import java.util.Arrays
     category = "Shapes & Geometry",
     complexity = Complexity.SIMPLE,
     tags = ["#shapes", "#polygons", "#holes", "#geometry", "#stroke", "#fill"],
-    purpose = "Demonstrates drawing styled polygons with interior holes (donut polygons), click listeners, and stroke caps.",
+    purpose = "Demonstrates drawing styled polygons with interior holes (donut polygons), click listeners, and " +
+        "stroke caps.",
     successCriteria = "Polygons render with specified fill opacity and interior cutout holes properly subtracted.",
     failureIndicators = "Holes not rendering as transparent cutouts or stroke color incorrect.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 class PolygonDemoActivity :
-        SamplesBaseActivity(),
-        OnMapReadyCallback,
-        SeekBar.OnSeekBarChangeListener,
-        AdapterView.OnItemSelectedListener {
+    SamplesBaseActivity(),
+    OnMapReadyCallback,
+    SeekBar.OnSeekBarChangeListener,
+    AdapterView.OnItemSelectedListener {
 
     private val center = LatLng(-20.0, 130.0)
     private val MAX_WIDTH_PX = 100
@@ -95,11 +92,16 @@ class PolygonDemoActivity :
 
     private val jointTypeNameResourceIds = intArrayOf(
         R.string.joint_type_default, // Default
-            R.string.joint_type_bevel, R.string.joint_type_round)
+        R.string.joint_type_bevel,
+        R.string.joint_type_round,
+    )
 
     private val patternTypeNameResourceIds = intArrayOf(
         R.string.pattern_solid, // Default
-            R.string.pattern_dashed, R.string.pattern_dotted, R.string.pattern_mixed)
+        R.string.pattern_dashed,
+        R.string.pattern_dotted,
+        R.string.pattern_mixed,
+    )
 
     // [START maps_android_sample_polygons]
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,14 +135,18 @@ class PolygonDemoActivity :
 
         strokeJointTypeSpinner = findViewById<Spinner>(R.id.strokeJointTypeSpinner).apply {
             adapter = ArrayAdapter(
-                    this@PolygonDemoActivity, android.R.layout.simple_spinner_item,
-                    getResourceStrings(jointTypeNameResourceIds))
+                this@PolygonDemoActivity,
+                android.R.layout.simple_spinner_item,
+                getResourceStrings(jointTypeNameResourceIds),
+            )
         }
 
         strokePatternSpinner = findViewById<Spinner>(R.id.strokePatternSpinner).apply {
             adapter = ArrayAdapter(
-                    this@PolygonDemoActivity, android.R.layout.simple_spinner_item,
-                    getResourceStrings(patternTypeNameResourceIds))
+                this@PolygonDemoActivity,
+                android.R.layout.simple_spinner_item,
+                getResourceStrings(patternTypeNameResourceIds),
+            )
         }
 
         clickabilityCheckbox = findViewById(R.id.toggleClickability)
@@ -151,16 +157,15 @@ class PolygonDemoActivity :
     }
     // [START_EXCLUDE silent]
 
-    private fun getResourceStrings(resourceIds: IntArray): List<String> {
-        return resourceIds.map { getString(it) }
-    }
+    private fun getResourceStrings(resourceIds: IntArray): List<String> = resourceIds.map { getString(it) }
     // [END_EXCLUDE]
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val fillColorArgb = Color.HSVToColor(
-                fillAlphaBar.progress, floatArrayOf(fillHueBar.progress.toFloat(), 1f, 1f))
+        val fillColorArgb = Color.HSVToColor(fillAlphaBar.progress, floatArrayOf(fillHueBar.progress.toFloat(), 1f, 1f))
         val strokeColorArgb = Color.HSVToColor(
-                strokeAlphaBar.progress, floatArrayOf(strokeHueBar.progress.toFloat(), 1f, 1f))
+            strokeAlphaBar.progress,
+            floatArrayOf(strokeHueBar.progress.toFloat(), 1f, 1f),
+        )
 
         with(googleMap) {
             // Override the default content description on the view, for accessibility mode.
@@ -169,15 +174,17 @@ class PolygonDemoActivity :
             moveCamera(CameraUpdateFactory.newLatLngZoom(center, 4f))
 
             // Create a rectangle with two rectangular holes.
-            mutablePolygon = addPolygon(PolygonOptions().apply {
-                addAll(createRectangle(center, 5.0, 5.0))
-                addHole(createRectangle(LatLng(-22.0, 128.0), 1.0, 1.0))
-                addHole(createRectangle(LatLng(-18.0, 133.0), 0.5, 1.5))
-                fillColor(fillColorArgb)
-                strokeColor(strokeColorArgb)
-                strokeWidth(strokeWidthBar.progress.toFloat())
-                clickable(clickabilityCheckbox.isChecked)
-            })
+            mutablePolygon = addPolygon(
+                PolygonOptions().apply {
+                    addAll(createRectangle(center, 5.0, 5.0))
+                    addHole(createRectangle(LatLng(-22.0, 128.0), 1.0, 1.0))
+                    addHole(createRectangle(LatLng(-18.0, 133.0), 0.5, 1.5))
+                    fillColor(fillColorArgb)
+                    strokeColor(strokeColorArgb)
+                    strokeWidth(strokeWidthBar.progress.toFloat())
+                    clickable(clickabilityCheckbox.isChecked)
+                },
+            )
 
             // Add a listener for polygon clicks that changes the clicked polygon's stroke color.
             setOnPolygonClickListener { polygon ->
@@ -201,43 +208,33 @@ class PolygonDemoActivity :
             strokeJointType = getSelectedJointType(strokeJointTypeSpinner.selectedItemPosition)
             strokePattern = getSelectedPattern(strokePatternSpinner.selectedItemPosition)
         }
-
     }
     // [END maps_android_sample_polygons]
 
     /**
      * Creates a List of LatLngs that form a rectangle with the given dimensions.
      */
-    private fun createRectangle(
-            center: LatLng,
-            halfWidth: Double,
-            halfHeight: Double
-    ): List<LatLng> {
-        return Arrays.asList(
-                LatLng(center.latitude - halfHeight, center.longitude - halfWidth),
-                LatLng(center.latitude - halfHeight, center.longitude + halfWidth),
-                LatLng(center.latitude + halfHeight, center.longitude + halfWidth),
-                LatLng(center.latitude + halfHeight, center.longitude - halfWidth),
-                LatLng(center.latitude - halfHeight, center.longitude - halfWidth))
+    private fun createRectangle(center: LatLng, halfWidth: Double, halfHeight: Double): List<LatLng> = Arrays.asList(
+        LatLng(center.latitude - halfHeight, center.longitude - halfWidth),
+        LatLng(center.latitude - halfHeight, center.longitude + halfWidth),
+        LatLng(center.latitude + halfHeight, center.longitude + halfWidth),
+        LatLng(center.latitude + halfHeight, center.longitude - halfWidth),
+        LatLng(center.latitude - halfHeight, center.longitude - halfWidth),
+    )
+
+    private fun getSelectedJointType(pos: Int): Int = when (jointTypeNameResourceIds[pos]) {
+        R.string.joint_type_bevel -> JointType.BEVEL
+        R.string.joint_type_round -> JointType.ROUND
+        R.string.joint_type_default -> JointType.DEFAULT
+        else -> 0
     }
 
-    private fun getSelectedJointType(pos: Int): Int {
-        return when (jointTypeNameResourceIds[pos]) {
-            R.string.joint_type_bevel -> JointType.BEVEL
-            R.string.joint_type_round -> JointType.ROUND
-            R.string.joint_type_default -> JointType.DEFAULT
-            else -> 0
-        }
-    }
-
-    private fun getSelectedPattern(pos: Int): List<PatternItem>? {
-        return when (patternTypeNameResourceIds[pos]) {
-            R.string.pattern_solid -> null
-            R.string.pattern_dotted -> patternDotted
-            R.string.pattern_dashed -> patternDashed
-            R.string.pattern_mixed -> patternMixed
-            else -> null
-        }
+    private fun getSelectedPattern(pos: Int): List<PatternItem>? = when (patternTypeNameResourceIds[pos]) {
+        R.string.pattern_solid -> null
+        R.string.pattern_dotted -> patternDotted
+        R.string.pattern_dashed -> patternDashed
+        R.string.pattern_mixed -> patternMixed
+        else -> null
     }
 
     /**
@@ -251,39 +248,50 @@ class PolygonDemoActivity :
         }
     }
 
-
     /**
      * Listener that is called when a seek bar is moved.
      * Can change polygon fill color/transparency, stroke color/transparency and stroke width.
      */
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int,
-                                   fromUser: Boolean) {
-
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         mutablePolygon.fillColor = when (seekBar) {
-            fillHueBar -> Color.HSVToColor(Color.alpha(mutablePolygon.fillColor),
-                    floatArrayOf(progress.toFloat(), 1f, 1f))
+            fillHueBar -> Color.HSVToColor(
+                Color.alpha(mutablePolygon.fillColor),
+                floatArrayOf(progress.toFloat(), 1f, 1f),
+            )
+
             fillAlphaBar -> {
                 val prevColor = mutablePolygon.fillColor
-                Color.argb(progress, Color.red(prevColor), Color.green(prevColor),
-                        Color.blue(prevColor))
+                Color.argb(
+                    progress,
+                    Color.red(prevColor),
+                    Color.green(prevColor),
+                    Color.blue(prevColor),
+                )
             }
+
             else -> mutablePolygon.fillColor
         }
 
         mutablePolygon.strokeColor = when (seekBar) {
             strokeHueBar -> Color.HSVToColor(
-                    Color.alpha(mutablePolygon.strokeColor),
-                    floatArrayOf(progress.toFloat(), 1f, 1f))
+                Color.alpha(mutablePolygon.strokeColor),
+                floatArrayOf(progress.toFloat(), 1f, 1f),
+            )
+
             strokeAlphaBar -> {
                 val prevColorArgb = mutablePolygon.strokeColor
-                Color.argb(progress, Color.red(prevColorArgb),
-                        Color.green(prevColorArgb), Color.blue(prevColorArgb))
+                Color.argb(
+                    progress,
+                    Color.red(prevColorArgb),
+                    Color.green(prevColorArgb),
+                    Color.blue(prevColorArgb),
+                )
             }
+
             else -> mutablePolygon.strokeColor
         }
 
         if (seekBar == strokeWidthBar) mutablePolygon.strokeWidth = progress.toFloat()
-
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -298,11 +306,11 @@ class PolygonDemoActivity :
      * Listener for when an item is selected using a spinner.
      * Can change line pattern and joint type.
      */
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int,
-                                id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         when (parent?.id) {
             R.id.strokeJointTypeSpinner ->
                 mutablePolygon.strokeJointType = getSelectedJointType(pos)
+
             R.id.strokePatternSpinner ->
                 mutablePolygon.strokePattern = getSelectedPattern(pos)
         }
@@ -311,5 +319,4 @@ class PolygonDemoActivity :
     override fun onNothingSelected(parent: AdapterView<*>?) {
         // don't do anything here
     }
-
 }

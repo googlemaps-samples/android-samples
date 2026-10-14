@@ -56,7 +56,7 @@ class BasicMapReviewerUiTest {
             // Verify menu items are present in toolbar
             val menu = toolbar.menu
             assertNotNull("Toolbar menu must not be null", menu)
-            
+
             val infoItem = menu.findItem(2001)
             assertNotNull("Criteria & Purpose (id 2001) action button must exist in toolbar menu", infoItem)
 

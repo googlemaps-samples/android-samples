@@ -12,21 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
+import android.os.Bundle;
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-/**
- * This shows how to create a simple activity with streetview
- */
+/** This shows how to create a simple activity with streetview */
 public class StreetViewPanoramaBasicDemoActivity extends SamplesBaseActivity {
 
     // George St, Sydney
@@ -39,7 +33,8 @@ public class StreetViewPanoramaBasicDemoActivity extends SamplesBaseActivity {
 
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
                 (SupportStreetViewPanoramaFragment)
-                        getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(
                 new OnStreetViewPanoramaReadyCallback() {
                     @Override

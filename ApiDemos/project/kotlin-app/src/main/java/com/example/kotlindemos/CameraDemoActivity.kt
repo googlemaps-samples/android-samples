@@ -16,10 +16,6 @@
 
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -28,7 +24,10 @@ import android.widget.CompoundButton
 import android.widget.SeekBar
 import android.widget.Toast
 import com.example.common_ui.R
-
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.databinding.CameraDemoBinding
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -42,7 +41,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.common_ui.databinding.CameraDemoBinding
 import com.google.android.gms.maps.model.PolylineOptions
 
 /**
@@ -59,21 +57,21 @@ import com.google.android.gms.maps.model.PolylineOptions
         "GoogleMap.animateCamera(CameraUpdate)",
         "GoogleMap.moveCamera(CameraUpdate)",
         "GoogleMap.addMarker(MarkerOptions)",
-        "CameraUpdateFactory.newCameraPosition(CameraPosition)"
+        "CameraUpdateFactory.newCameraPosition(CameraPosition)",
     ],
     purpose = "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing rotations.",
     successCriteria = "Buttons animate camera smoothly with custom durations, stops, and rotation angles.",
     failureIndicators = "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform constraints.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_camera_events]
 class CameraDemoActivity :
-        SamplesBaseActivity(),
-        OnCameraMoveStartedListener,
-        OnCameraMoveListener,
-        OnCameraMoveCanceledListener,
-        OnCameraIdleListener,
-        OnMapReadyCallback {
+    SamplesBaseActivity(),
+    OnCameraMoveStartedListener,
+    OnCameraMoveListener,
+    OnCameraMoveCanceledListener,
+    OnCameraIdleListener,
+    OnMapReadyCallback {
     // [START_EXCLUDE silent]
     /**
      * The amount by which to scroll the camera. Note that this amount is in raw pixels, not dp
@@ -83,21 +81,22 @@ class CameraDemoActivity :
     private val TAG = CameraDemoActivity::class.java.name
     private val sydneyLatLng = LatLng(-33.87365, 151.20689)
     private val bondiLocation: CameraPosition = CameraPosition.Builder()
-            .target(LatLng(-33.891614, 151.276417))
-            .zoom(15.5f)
-            .bearing(300f)
-            .tilt(50f)
-            .build()
+        .target(LatLng(-33.891614, 151.276417))
+        .zoom(15.5f)
+        .bearing(300f)
+        .tilt(50f)
+        .build()
 
-    private val sydneyLocation: CameraPosition = CameraPosition.Builder().
-            target(LatLng(-33.87365, 151.20689))
-            .zoom(15.5f)
-            .bearing(0f)
-            .tilt(25f)
-            .build()
+    private val sydneyLocation: CameraPosition = CameraPosition.Builder()
+        .target(LatLng(-33.87365, 151.20689))
+        .zoom(15.5f)
+        .bearing(0f)
+        .tilt(25f)
+        .build()
     // [END_EXCLUDE]
 
     private lateinit var map: GoogleMap
+
     // [START_EXCLUDE silent]
     private lateinit var animateToggle: CompoundButton
     private lateinit var customDurationToggle: CompoundButton
@@ -167,6 +166,7 @@ class CameraDemoActivity :
     }
 
     // [START_EXCLUDE silent]
+
     /**
      * When the map is not ready the CameraUpdateFactory cannot be used. This should be used to wrap
      * all entry points that call methods on the Google Maps API.
@@ -197,18 +197,26 @@ class CameraDemoActivity :
     @Suppress("UNUSED_PARAMETER")
     fun onGoToSydney(view: View) {
         checkReadyThen {
-            changeCamera(CameraUpdateFactory.newCameraPosition(sydneyLocation),
-                    object : CancelableCallback {
-                        override fun onFinish() {
-                            Toast.makeText(baseContext, "Animation to Sydney complete",
-                                    Toast.LENGTH_SHORT).show()
-                        }
+            changeCamera(
+                CameraUpdateFactory.newCameraPosition(sydneyLocation),
+                object : CancelableCallback {
+                    override fun onFinish() {
+                        Toast.makeText(
+                            baseContext,
+                            "Animation to Sydney complete",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
 
-                        override fun onCancel() {
-                            Toast.makeText(baseContext, "Animation to Sydney canceled",
-                                    Toast.LENGTH_SHORT).show()
-                        }
-                    })
+                    override fun onCancel() {
+                        Toast.makeText(
+                            baseContext,
+                            "Animation to Sydney canceled",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                },
+            )
         }
     }
 
@@ -236,7 +244,6 @@ class CameraDemoActivity :
     @Suppress("UNUSED_PARAMETER")
     fun onTiltMore(view: View) {
         checkReadyThen {
-
             val newTilt = Math.min(map.cameraPosition.tilt + 10, 90F)
             val cameraPosition = CameraPosition.Builder(map.cameraPosition).tilt(newTilt).build()
 
@@ -250,7 +257,6 @@ class CameraDemoActivity :
     @Suppress("UNUSED_PARAMETER")
     fun onTiltLess(view: View) {
         checkReadyThen {
-
             val newTilt = Math.max(map.cameraPosition.tilt - 10, 0F)
             val cameraPosition = CameraPosition.Builder(map.cameraPosition).tilt(newTilt).build()
 
@@ -264,7 +270,7 @@ class CameraDemoActivity :
     @Suppress("UNUSED_PARAMETER")
     fun onScrollLeft(view: View) {
         checkReadyThen {
-            changeCamera(CameraUpdateFactory.scrollBy((-SCROLL_BY_PX).toFloat(),0f))
+            changeCamera(CameraUpdateFactory.scrollBy((-SCROLL_BY_PX).toFloat(), 0f))
         }
     }
 
@@ -352,12 +358,14 @@ class CameraDemoActivity :
                 // [END_EXCLUDE]
                 reasonText = "GESTURE"
             }
+
             OnCameraMoveStartedListener.REASON_API_ANIMATION -> {
                 // [START_EXCLUDE silent]
                 currPolylineOptions?.color(Color.RED)
                 // [END_EXCLUDE]
                 reasonText = "API_ANIMATION"
             }
+
             OnCameraMoveStartedListener.REASON_DEVELOPER_ANIMATION -> {
                 // [START_EXCLUDE silent]
                 currPolylineOptions?.color(Color.GREEN)
@@ -372,6 +380,7 @@ class CameraDemoActivity :
     }
 
     // [START_EXCLUDE silent]
+
     /**
      * Ensures that currPolyLine options is not null before accessing it
      *
@@ -398,7 +407,7 @@ class CameraDemoActivity :
             map.addPolyline(currPolylineOptions!!)
         }
 
-        isCanceled = true  // Set to clear the map when dragging starts again.
+        isCanceled = true // Set to clear the map when dragging starts again.
         currPolylineOptions = null
         // [END_EXCLUDE]
         Log.d(TAG, "onCameraMoveCancelled")
@@ -412,10 +421,11 @@ class CameraDemoActivity :
         }
 
         currPolylineOptions = null
-        isCanceled = false  // Set to *not* clear the map when dragging starts again.
+        isCanceled = false // Set to *not* clear the map when dragging starts again.
         // [END_EXCLUDE]
         Log.d(TAG, "onCameraIdle")
     }
+
     // [START_EXCLUDE silent]
     private fun addCameraTargetToPath() {
         currPolylineOptions?.add(map.cameraPosition.target)

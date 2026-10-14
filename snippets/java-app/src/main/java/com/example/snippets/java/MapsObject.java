@@ -19,7 +19,6 @@ package com.example.snippets.java;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.snippets.java.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -34,6 +33,7 @@ class MapsObject extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
+
     // [END maps_android_on_create_set_content_view]
 
     // [START maps_android_on_map_ready_callback]
@@ -42,16 +42,15 @@ class MapsObject extends AppCompatActivity {
         // [START maps_android_on_map_ready_add_marker]
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         }
+
         // [END maps_android_on_map_ready_add_marker]
 
         private void getMapAsync() {
             // [START maps_android_get_map_async]
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+            SupportMapFragment mapFragment =
+                    (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
             // [END maps_android_get_map_async]
         }

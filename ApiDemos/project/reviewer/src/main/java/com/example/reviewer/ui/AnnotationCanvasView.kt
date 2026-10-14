@@ -36,21 +36,16 @@ import android.view.View
 class AnnotationCanvasView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : View(context, attrs, defStyleAttr) {
 
     enum class ToolMode {
         PEN_CIRCLE,
         HIGHLIGHTER,
-        PAN_ZOOM
+        PAN_ZOOM,
     }
 
-    private data class Stroke(
-        val path: Path,
-        val color: Int,
-        val strokeWidth: Float,
-        val alpha: Int
-    )
+    private data class Stroke(val path: Path, val color: Int, val strokeWidth: Float, val alpha: Int)
 
     private var baseBitmap: Bitmap? = null
     private val strokes = mutableListOf<Stroke>()
@@ -76,39 +71,42 @@ class AnnotationCanvasView @JvmOverloads constructor(
     private var lastTouchY = 0f
     private var isPinching = false
 
-    private val scaleDetector = ScaleGestureDetector(context, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-            isPinching = true
-            // Discard active drawing stroke if user starts pinching
-            if (currentStroke != null) {
-                strokes.remove(currentStroke)
-                currentStroke = null
-                invalidate()
+    private val scaleDetector = ScaleGestureDetector(
+        context,
+        object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+                isPinching = true
+                // Discard active drawing stroke if user starts pinching
+                if (currentStroke != null) {
+                    strokes.remove(currentStroke)
+                    currentStroke = null
+                    invalidate()
+                }
+                return true
             }
-            return true
-        }
 
-        override fun onScale(detector: ScaleGestureDetector): Boolean {
-            val scaleFactor = detector.scaleFactor
-            val targetScale = currentScale * scaleFactor
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                val scaleFactor = detector.scaleFactor
+                val targetScale = currentScale * scaleFactor
 
-            if (targetScale in 0.95f..6.0f) {
-                currentScale = targetScale.coerceIn(1.0f, 6.0f)
-                userTransformMatrix.postScale(scaleFactor, scaleFactor, detector.focusX, detector.focusY)
+                if (targetScale in 0.95f..6.0f) {
+                    currentScale = targetScale.coerceIn(1.0f, 6.0f)
+                    userTransformMatrix.postScale(scaleFactor, scaleFactor, detector.focusX, detector.focusY)
+                    clampTransform()
+                    recalculateMatrices()
+                    invalidate()
+                }
+                return true
+            }
+
+            override fun onScaleEnd(detector: ScaleGestureDetector) {
+                isPinching = false
                 clampTransform()
                 recalculateMatrices()
                 invalidate()
             }
-            return true
-        }
-
-        override fun onScaleEnd(detector: ScaleGestureDetector) {
-            isPinching = false
-            clampTransform()
-            recalculateMatrices()
-            invalidate()
-        }
-    })
+        },
+    )
 
     fun setBaseBitmap(bitmap: Bitmap) {
         this.baseBitmap = bitmap

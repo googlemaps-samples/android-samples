@@ -16,8 +16,6 @@
 
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.LayersDemoBinding
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -29,7 +27,7 @@ import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.Spinner
 import com.example.common_ui.R
-
+import com.example.common_ui.databinding.LayersDemoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID
@@ -50,10 +48,10 @@ private const val LOCATION_PERMISSION_REQUEST_CODE = 1
  * Demonstrates the different base layers of a map.
  */
 class LayersDemoActivity :
-        SamplesBaseActivity(),
-        OnMapReadyCallback,
-        AdapterView.OnItemSelectedListener,
-        EasyPermissions.PermissionCallbacks {
+    SamplesBaseActivity(),
+    OnMapReadyCallback,
+    AdapterView.OnItemSelectedListener,
+    EasyPermissions.PermissionCallbacks {
 
     private val TAG = MarkerDemoActivity::class.java.name
 
@@ -73,10 +71,13 @@ class LayersDemoActivity :
         setContentView(binding.root)
 
         binding.layersSpinner.apply {
-            adapter = ArrayAdapter.createFromResource(this@LayersDemoActivity,
-                    R.array.layers_array, android.R.layout.simple_spinner_item).apply {
-                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    }
+            adapter = ArrayAdapter.createFromResource(
+                this@LayersDemoActivity,
+                R.array.layers_array,
+                android.R.layout.simple_spinner_item,
+            ).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
 
             // set a listener for when the spinner to select map type is changed.
             onItemSelectedListener = this@LayersDemoActivity
@@ -138,16 +139,19 @@ class LayersDemoActivity :
         // Enable the location layer. Request the location permission if needed.
         val permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_COARSE_LOCATION,
         )
 
         if (EasyPermissions.hasPermissions(this, *permissions)) {
             map.isMyLocationEnabled = true
         } else {
             // if permissions are not currently granted, request permissions
-            EasyPermissions.requestPermissions(this,
-                    getString(R.string.permission_rationale_location),
-                    LOCATION_PERMISSION_REQUEST_CODE, *permissions)
+            EasyPermissions.requestPermissions(
+                this,
+                getString(R.string.permission_rationale_location),
+                LOCATION_PERMISSION_REQUEST_CODE,
+                *permissions,
+            )
         }
     }
 
@@ -161,10 +165,15 @@ class LayersDemoActivity :
 
         map.mapType = when (binding.layersSpinner.selectedItem) {
             getString(R.string.normal) -> MAP_TYPE_NORMAL
+
             getString(R.string.hybrid) -> MAP_TYPE_HYBRID
+
             getString(R.string.satellite) -> MAP_TYPE_SATELLITE
+
             getString(R.string.terrain) -> MAP_TYPE_TERRAIN
+
             getString(R.string.none_map) -> MAP_TYPE_NONE
+
             else -> {
                 map.mapType // do not change map type
                 Log.e(TAG, "Error setting layer with name ${binding.layersSpinner.selectedItem}")
@@ -172,14 +181,14 @@ class LayersDemoActivity :
         }
     }
 
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode,
-                permissions, grantResults, this)
+        EasyPermissions.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults,
+            this,
+        )
     }
 
     override fun onPermissionsDenied(requestCode: Int, list: List<String>) {

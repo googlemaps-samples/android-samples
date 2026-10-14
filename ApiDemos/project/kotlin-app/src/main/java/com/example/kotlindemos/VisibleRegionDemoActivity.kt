@@ -16,17 +16,17 @@
 
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-import com.example.common_ui.R
-
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.view.View
 import android.view.animation.OvershootInterpolator
+import androidx.appcompat.widget.PopupMenu
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.example.common_ui.databinding.VisibleRegionDemoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -34,8 +34,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
-
-import androidx.appcompat.widget.PopupMenu
 import java.util.Locale
 
 /**
@@ -53,12 +51,12 @@ import java.util.Locale
         "GoogleMap.setPadding(int, int, int, int)",
         "GoogleMap.moveCamera(CameraUpdate)",
         "GoogleMap.cameraPosition",
-        "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)"
+        "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)",
     ],
     purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
     successCriteria = "Bounding coordinates update live in the UI as the camera pans and zooms.",
     failureIndicators = "Projection returns null or stale LatLng bounds after camera idle.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_visible_region]
 class VisibleRegionDemoActivity :
@@ -67,8 +65,10 @@ class VisibleRegionDemoActivity :
 
     private val operaHouseLatLng = LatLng(-33.85704, 151.21522)
     private val sfoLatLng = LatLng(37.614631, -122.385153)
-    private val australiaBounds = LatLngBounds(LatLng(-44.0, 113.0),
-        LatLng(-10.0, 154.0))
+    private val australiaBounds = LatLngBounds(
+        LatLng(-44.0, 113.0),
+        LatLng(-10.0, 154.0),
+    )
 
     private lateinit var map: GoogleMap
     private lateinit var binding: VisibleRegionDemoBinding
@@ -89,11 +89,31 @@ class VisibleRegionDemoActivity :
             popup.menuInflater.inflate(R.menu.visible_region_menu, popup.menu)
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.menu_action_no_padding -> { setNoPadding(); true }
-                    R.id.menu_action_more_padding -> { setMorePadding(); true }
-                    R.id.menu_action_opera_house -> { moveToOperaHouse(); true }
-                    R.id.menu_action_sfo -> { moveToSFO(); true }
-                    R.id.menu_action_australia -> { moveToAUS(); true }
+                    R.id.menu_action_no_padding -> {
+                        setNoPadding()
+                        true
+                    }
+
+                    R.id.menu_action_more_padding -> {
+                        setMorePadding()
+                        true
+                    }
+
+                    R.id.menu_action_opera_house -> {
+                        moveToOperaHouse()
+                        true
+                    }
+
+                    R.id.menu_action_sfo -> {
+                        moveToSFO()
+                        true
+                    }
+
+                    R.id.menu_action_australia -> {
+                        moveToAUS()
+                        true
+                    }
+
                     else -> false
                 }
             }
@@ -108,7 +128,7 @@ class VisibleRegionDemoActivity :
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         OnMapAndViewReadyListener(mapFragment, this)
-        
+
         applyInsets(binding.mapContainer)
     }
 
@@ -134,14 +154,14 @@ class VisibleRegionDemoActivity :
             Locale.US,
             "Lat: %.4f°, Lng: %.4f°",
             pos.target.latitude,
-            pos.target.longitude
+            pos.target.longitude,
         )
         binding.cameraDetailsText.text = String.format(
             Locale.US,
             "Zoom: %.1fx  •  Tilt: %.1f°  •  Bearing: %.1f°",
             pos.zoom,
             pos.tilt,
-            pos.bearing
+            pos.bearing,
         )
     }
 
@@ -153,8 +173,12 @@ class VisibleRegionDemoActivity :
     private fun setMorePadding() {
         if (!::map.isInitialized) return
         val mapView: View? = supportFragmentManager.findFragmentById(R.id.map)?.view
-        animatePadding(0, 0, (mapView?.width ?: 0) / 3,
-            (mapView?.height ?: 0)/ 4)
+        animatePadding(
+            0,
+            0,
+            (mapView?.width ?: 0) / 3,
+            (mapView?.height ?: 0) / 4,
+        )
     }
 
     private fun moveToOperaHouse() {
@@ -174,7 +198,6 @@ class VisibleRegionDemoActivity :
 
     // this function smoothly changes the amount of padding over a period of time
     private fun animatePadding(toLeft: Int, toTop: Int, toRight: Int, toBottom: Int) {
-
         val handler = Handler(Looper.getMainLooper())
         val start = SystemClock.uptimeMillis()
         val duration: Long = 1000
@@ -209,7 +232,9 @@ class VisibleRegionDemoActivity :
                 map.setPadding(left, top, right, bottom)
 
                 // Post again 16ms later.
-                if (elapsed < duration) { handler.postDelayed(this, 16) }
+                if (elapsed < duration) {
+                    handler.postDelayed(this, 16)
+                }
             }
         })
     }

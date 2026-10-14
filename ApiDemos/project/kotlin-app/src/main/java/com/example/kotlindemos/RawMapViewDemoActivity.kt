@@ -13,10 +13,8 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
-import com.example.common_ui.R
 import android.os.Bundle
-
+import com.example.common_ui.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,65 +25,67 @@ import com.google.android.gms.maps.model.MarkerOptions
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
  * requires forwarding all the important lifecycle methods onto MapView.
  */
-class RawMapViewDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
-  private lateinit var mapView: MapView
+class RawMapViewDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
+    private lateinit var mapView: MapView
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.raw_mapview_demo)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.raw_mapview_demo)
 
-    // *** IMPORTANT ***
-    // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
-    // objects or sub-Bundles.
-    val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
-    mapView = findViewById(R.id.map)
-    mapView.onCreate(mapViewBundle)
-    mapView.getMapAsync(this)
-  }
-
-  override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    val mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY) ?: Bundle().also {
-      outState.putBundle(MAPVIEW_BUNDLE_KEY, it)
+        // *** IMPORTANT ***
+        // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
+        // objects or sub-Bundles.
+        val mapViewBundle = savedInstanceState?.getBundle(MAPVIEW_BUNDLE_KEY)
+        mapView = findViewById(R.id.map)
+        mapView.onCreate(mapViewBundle)
+        mapView.getMapAsync(this)
     }
-    mapView.onSaveInstanceState(mapViewBundle)
-  }
 
-  override fun onResume() {
-    super.onResume()
-    mapView.onResume()
-  }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY) ?: Bundle().also {
+            outState.putBundle(MAPVIEW_BUNDLE_KEY, it)
+        }
+        mapView.onSaveInstanceState(mapViewBundle)
+    }
 
-  override fun onStart() {
-    super.onStart()
-    mapView.onStart()
-  }
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
 
-  override fun onStop() {
-    super.onStop()
-    mapView.onStop()
-  }
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
 
-  override fun onMapReady(map: GoogleMap) {
-    map.addMarker(MarkerOptions().position(LatLng(0.0, 0.0)).title("Marker"))
-  }
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
 
-  override fun onPause() {
-    mapView.onPause()
-    super.onPause()
-  }
+    override fun onMapReady(map: GoogleMap) {
+        map.addMarker(MarkerOptions().position(LatLng(0.0, 0.0)).title("Marker"))
+    }
 
-  override fun onDestroy() {
-    mapView.onDestroy()
-    super.onDestroy()
-  }
+    override fun onPause() {
+        mapView.onPause()
+        super.onPause()
+    }
 
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
+    override fun onDestroy() {
+        mapView.onDestroy()
+        super.onDestroy()
+    }
 
-  companion object {
-    private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
-  }
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    companion object {
+        private const val MAPVIEW_BUNDLE_KEY = "MapViewBundleKey"
+    }
 }

@@ -12,15 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCircleClickListener;
@@ -44,16 +40,14 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-/**
- * This shows how to use setTag/getTag on API objects.
- */
-public class TagsDemoActivity extends SamplesBaseActivity implements
-        OnCircleClickListener,
-        OnGroundOverlayClickListener,
-        OnMarkerClickListener,
-        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener,
-        OnPolygonClickListener,
-        OnPolylineClickListener  {
+/** This shows how to use setTag/getTag on API objects. */
+public class TagsDemoActivity extends SamplesBaseActivity
+        implements OnCircleClickListener,
+                OnGroundOverlayClickListener,
+                OnMarkerClickListener,
+                OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener,
+                OnPolygonClickListener,
+                OnPolylineClickListener {
 
     private static final LatLng ADELAIDE = new LatLng(-34.92873, 138.59995);
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
@@ -99,7 +93,9 @@ public class TagsDemoActivity extends SamplesBaseActivity implements
         mTagText = findViewById(com.example.common_ui.R.id.tag_text);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         new OnMapAndViewReadyListener(mapFragment, this);
 
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
@@ -133,35 +129,43 @@ public class TagsDemoActivity extends SamplesBaseActivity implements
 
         // Override the default content description on the view, for accessibility mode.
         // Ideally this string would be localised.
-        map.setContentDescription(getString(com.example.common_ui.R.string.tags_demo_map_description));
+        map.setContentDescription(
+                getString(com.example.common_ui.R.string.tags_demo_map_description));
 
         // Create bounds that include all locations of the map.
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(ADELAIDE)
-                .include(BRISBANE)
-                .include(DARWIN)
-                .include(HOBART)
-                .include(PERTH)
-                .include(SYDNEY)
-                .build();
+        LatLngBounds bounds =
+                new LatLngBounds.Builder()
+                        .include(ADELAIDE)
+                        .include(BRISBANE)
+                        .include(DARWIN)
+                        .include(HOBART)
+                        .include(PERTH)
+                        .include(SYDNEY)
+                        .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
     }
 
     private void addObjectsToMap() {
         // A circle centered on Adelaide.
-        mAdelaideCircle = mMap.addCircle(new CircleOptions()
-                .center(ADELAIDE)
-                .radius(500000)
-                .fillColor(Color.argb(150, 66, 173, 244))
-                .strokeColor(Color.rgb(66, 173, 244))
-                .clickable(true));
+        mAdelaideCircle =
+                mMap.addCircle(
+                        new CircleOptions()
+                                .center(ADELAIDE)
+                                .radius(500000)
+                                .fillColor(Color.argb(150, 66, 173, 244))
+                                .strokeColor(Color.rgb(66, 173, 244))
+                                .clickable(true));
         mAdelaideCircle.setTag(new CustomTag("Adelaide circle"));
 
         // A ground overlay at Sydney.
-        mSydneyGroundOverlay = mMap.addGroundOverlay(new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(com.example.common_ui.R.drawable.harbour_bridge))
-                .position(SYDNEY, 700000)
-                .clickable(true));
+        mSydneyGroundOverlay =
+                mMap.addGroundOverlay(
+                        new GroundOverlayOptions()
+                                .image(
+                                        BitmapDescriptorFactory.fromResource(
+                                                com.example.common_ui.R.drawable.harbour_bridge))
+                                .position(SYDNEY, 700000)
+                                .clickable(true));
         mSydneyGroundOverlay.setTag(new CustomTag("Sydney ground overlay"));
 
         // A marker at Hobart.
@@ -169,23 +173,27 @@ public class TagsDemoActivity extends SamplesBaseActivity implements
         mHobartMarker.setTag(new CustomTag("Hobart marker"));
 
         // A polygon centered at Darwin.
-        mDarwinPolygon = mMap.addPolygon(new PolygonOptions()
-                .add(
-                        new LatLng(DARWIN.latitude + 3, DARWIN.longitude - 3),
-                        new LatLng(DARWIN.latitude + 3, DARWIN.longitude + 3),
-                        new LatLng(DARWIN.latitude - 3, DARWIN.longitude + 3),
-                        new LatLng(DARWIN.latitude - 3, DARWIN.longitude - 3))
-                .fillColor(Color.argb(150, 34, 173, 24))
-                .strokeColor(Color.rgb(34, 173, 24))
-                .clickable(true));
+        mDarwinPolygon =
+                mMap.addPolygon(
+                        new PolygonOptions()
+                                .add(
+                                        new LatLng(DARWIN.latitude + 3, DARWIN.longitude - 3),
+                                        new LatLng(DARWIN.latitude + 3, DARWIN.longitude + 3),
+                                        new LatLng(DARWIN.latitude - 3, DARWIN.longitude + 3),
+                                        new LatLng(DARWIN.latitude - 3, DARWIN.longitude - 3))
+                                .fillColor(Color.argb(150, 34, 173, 24))
+                                .strokeColor(Color.rgb(34, 173, 24))
+                                .clickable(true));
         mDarwinPolygon.setTag(new CustomTag("Darwin polygon"));
 
         // A polyline from Perth to Brisbane.
-        mPolyline = mMap.addPolyline(new PolylineOptions()
-                .add(PERTH, BRISBANE)
-                .color(Color.rgb(103, 24, 173))
-                .width(30)
-                .clickable(true));
+        mPolyline =
+                mMap.addPolyline(
+                        new PolylineOptions()
+                                .add(PERTH, BRISBANE)
+                                .color(Color.rgb(103, 24, 173))
+                                .width(30)
+                                .clickable(true));
         mPolyline.setTag(new CustomTag("Perth to Brisbane polyline"));
     }
 

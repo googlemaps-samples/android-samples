@@ -74,7 +74,7 @@ abstract class BaseVisualVerificationTest {
     protected fun captureScreenshot(filename: String = "visual_test_${System.currentTimeMillis()}.png"): Bitmap {
         val storageDir = context.getExternalFilesDir(null) ?: context.filesDir
         val screenshotFile = File(storageDir, filename)
-        
+
         val taken = uiDevice.takeScreenshot(screenshotFile)
         assertTrue("UiDevice failed to capture screenshot: $filename", taken)
 
@@ -97,7 +97,7 @@ abstract class BaseVisualVerificationTest {
         val normalized = response?.trim()?.uppercase() ?: ""
         assertTrue(
             "Gemini visual verification failed. Response: $response",
-            normalized.startsWith("PASSED") && !normalized.contains("FAILED")
+            normalized.startsWith("PASSED") && !normalized.contains("FAILED"),
         )
     }
 

@@ -28,8 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
-import org.junit.Assert.assertTrue
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.CountDownLatch
@@ -89,13 +89,13 @@ class CameraControlSnippetsTest {
 
             assertTrue(
                 "Zoom level ($clampedMinZoom) must strictly clamp to >= 6.0f when minZoomPreference is enabled! " +
-                "If setMinZoomPreference(6.0f) is removed or broken in the snippet, this test fails.",
-                clampedMinZoom >= 5.9f
+                    "If setMinZoomPreference(6.0f) is removed or broken in the snippet, this test fails.",
+                clampedMinZoom >= 5.9f,
             )
             assertTrue(
                 "Zoom level ($clampedMaxZoom) must strictly clamp to <= 14.0f when maxZoomPreference is enabled! " +
-                "If setMaxZoomPreference(14.0f) is removed or broken in the snippet, this test fails.",
-                clampedMaxZoom <= 14.1f
+                    "If setMaxZoomPreference(14.0f) is removed or broken in the snippet, this test fails.",
+                clampedMaxZoom <= 14.1f,
             )
         }
     }
@@ -116,16 +116,19 @@ class CameraControlSnippetsTest {
 
             assertNotNull("Camera target must not be null", currentTarget)
             // Adelaide bounds are LatLng(-35.0, 138.58) to LatLng(-34.9, 138.61).
-            // When clamped, target latitude MUST NOT be near London (51.5), but clamped inside/near Adelaide (-35 to -34.9).
+            // When clamped, target latitude MUST NOT be near London (51.5), but clamped inside/near
+            // Adelaide (-35 to -34.9).
             assertTrue(
-                "Camera target latitude (${currentTarget!!.latitude}) must be clamped near Adelaide bounds (-35.0 to -34.9) and NOT allowed to move to London (51.5)! " +
-                "If setLatLngBoundsForCameraTarget() is removed from the snippet, this test fails.",
-                currentTarget!!.latitude < -30.0
+                "Camera target latitude (${currentTarget!!.latitude}) must be clamped near Adelaide bounds " +
+                    "(-35.0 to -34.9) and NOT allowed to move to London (51.5)! " +
+                    "If setLatLngBoundsForCameraTarget() is removed from the snippet, this test fails.",
+                currentTarget!!.latitude < -30.0,
             )
             assertTrue(
-                "Camera target longitude (${currentTarget!!.longitude}) must be clamped near Adelaide bounds (138.58 to 138.61) and NOT London (-0.12)! " +
-                "If setLatLngBoundsForCameraTarget() is removed from the snippet, this test fails.",
-                currentTarget!!.longitude > 130.0
+                "Camera target longitude (${currentTarget!!.longitude}) must be clamped near Adelaide bounds " +
+                    "(138.58 to 138.61) and NOT London (-0.12)! " +
+                    "If setLatLngBoundsForCameraTarget() is removed from the snippet, this test fails.",
+                currentTarget!!.longitude > 130.0,
             )
         }
     }

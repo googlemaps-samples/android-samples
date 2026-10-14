@@ -16,14 +16,11 @@
 
 package com.example.kotlindemos
 
-
+import android.os.Bundle
 import com.example.common_ui.R
-import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
-
-import android.os.Bundle
-
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -44,15 +41,19 @@ import com.google.android.gms.maps.model.MarkerOptions
     apiCalls = [
         "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
         "GoogleMap.addMarker(MarkerOptions)",
-        "GoogleMap.moveCamera(CameraUpdate)"
+        "GoogleMap.moveCamera(CameraUpdate)",
     ],
     purpose = "Demonstrates clean, minimal map instantiation using SupportMapFragment.",
-    successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with working gestures.",
-    failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map failing to unpause.",
-    framework = Framework.KOTLIN_VIEWS
+    successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with working " +
+        "gestures.",
+    failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map failing to " +
+        "unpause.",
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_basic_map]
-class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
+class BasicMapDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
 
     val SYDNEY = LatLng(-33.862, 151.21)
     val ZOOM_LEVEL = 13f
@@ -60,8 +61,8 @@ class BasicMapDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.basic_demo)
-        val mapFragment : SupportMapFragment? =
-                supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+        val mapFragment: SupportMapFragment? =
+            supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
     }
 

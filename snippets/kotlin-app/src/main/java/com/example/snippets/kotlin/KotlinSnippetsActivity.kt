@@ -43,7 +43,7 @@ class KotlinSnippetsActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val adapter = SnippetGroupAdapter(
-            SnippetRegistry.getSnippetGroups()
+            SnippetRegistry.getSnippetGroups(),
         ) { item ->
             val intent = Intent(this, MapActivity::class.java).apply {
                 putExtra("group_title", item.groupTitle)

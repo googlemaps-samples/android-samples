@@ -20,8 +20,8 @@ import com.example.common_ui.R
  * An activity that creates a map with some initial options.
  */
 class OptionsDemoActivity : SamplesBaseActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.options_demo)
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.options_demo)
+    }
 }

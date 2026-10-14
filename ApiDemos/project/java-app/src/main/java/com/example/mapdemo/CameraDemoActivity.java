@@ -12,12 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
-
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,9 +21,10 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.databinding.CameraDemoBinding;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,37 +38,36 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.common_ui.databinding.CameraDemoBinding;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-/**
- * This shows how to change the camera position for the map.
- */
+/** This shows how to change the camera position for the map. */
 @Sample(
-    id = "camera_demo",
-    title = "Camera Controls & Animation",
-    description = "Programmatic camera panning, zooming, tilt, bearing, and smooth animations.",
-    category = "Camera Controls",
-    complexity = Complexity.SIMPLE,
-    tags = {"#camera", "#animation", "#bearing", "#tilt", "#zoom", "#pan"},
-    apiCalls = {
-        "GoogleMap.animateCamera(CameraUpdate)",
-        "GoogleMap.moveCamera(CameraUpdate)",
-        "GoogleMap.addMarker(MarkerOptions)",
-        "CameraUpdateFactory.newCameraPosition(CameraPosition)"
-    },
-    purpose = "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing rotations.",
-    successCriteria = "Buttons animate camera smoothly with custom durations, stops, and rotation angles.",
-    failureIndicators = "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform constraints.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "camera_demo",
+        title = "Camera Controls & Animation",
+        description = "Programmatic camera panning, zooming, tilt, bearing, and smooth animations.",
+        category = "Camera Controls",
+        complexity = Complexity.SIMPLE,
+        tags = {"#camera", "#animation", "#bearing", "#tilt", "#zoom", "#pan"},
+        apiCalls = {
+            "GoogleMap.animateCamera(CameraUpdate)",
+            "GoogleMap.moveCamera(CameraUpdate)",
+            "GoogleMap.addMarker(MarkerOptions)",
+            "CameraUpdateFactory.newCameraPosition(CameraPosition)"
+        },
+        purpose =
+                "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing rotations.",
+        successCriteria =
+                "Buttons animate camera smoothly with custom durations, stops, and rotation angles.",
+        failureIndicators =
+                "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform constraints.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_camera_events]
-public class CameraDemoActivity extends SamplesBaseActivity implements
-        OnCameraMoveStartedListener,
-        OnCameraMoveListener,
-        OnCameraMoveCanceledListener,
-        OnCameraIdleListener,
-        OnMapReadyCallback {
+public class CameraDemoActivity extends SamplesBaseActivity
+        implements OnCameraMoveStartedListener,
+                OnCameraMoveListener,
+                OnCameraMoveCanceledListener,
+                OnCameraIdleListener,
+                OnMapReadyCallback {
     // [START_EXCLUDE silent]
     private static final String TAG = CameraDemoActivity.class.getName();
 
@@ -83,14 +78,16 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
     private static final int SCROLL_BY_PX = 100;
 
     public static final CameraPosition BONDI =
-            new CameraPosition.Builder().target(new LatLng(-33.891614, 151.276417))
+            new CameraPosition.Builder()
+                    .target(new LatLng(-33.891614, 151.276417))
                     .zoom(15.5f)
                     .bearing(300)
                     .tilt(50)
                     .build();
 
     public static final CameraPosition SYDNEY =
-            new CameraPosition.Builder().target(new LatLng(-33.87365, 151.20689))
+            new CameraPosition.Builder()
+                    .target(new LatLng(-33.87365, 151.20689))
                     .zoom(15.5f)
                     .bearing(0)
                     .tilt(25)
@@ -105,6 +102,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
     private PolylineOptions currPolylineOptions;
     private boolean isCanceled = false;
     private CameraDemoBinding binding;
+
     // [END_EXCLUDE]
 
     @Override
@@ -121,7 +119,9 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         // [END_EXCLUDE]
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
         applyInsets(binding.mapContainer);
 
@@ -146,6 +146,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         super.onResume();
         updateEnabledState();
     }
+
     // [END_EXCLUDE]
 
     @Override
@@ -182,15 +183,14 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
      */
     private boolean checkReady() {
         if (map == null) {
-            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, com.example.common_ui.R.string.map_not_ready, Toast.LENGTH_SHORT)
+                    .show();
             return false;
         }
         return true;
     }
 
-    /**
-     * Called when the Go To Bondi button is clicked.
-     */
+    /** Called when the Go To Bondi button is clicked. */
     public void onGoToBondi(View view) {
         if (!checkReady()) {
             return;
@@ -199,32 +199,36 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         changeCamera(CameraUpdateFactory.newCameraPosition(BONDI));
     }
 
-    /**
-     * Called when the Animate To Sydney button is clicked.
-     */
+    /** Called when the Animate To Sydney button is clicked. */
     public void onGoToSydney(View view) {
         if (!checkReady()) {
             return;
         }
 
-        changeCamera(CameraUpdateFactory.newCameraPosition(SYDNEY), new CancelableCallback() {
-            @Override
-            public void onFinish() {
-                Toast.makeText(getBaseContext(), "Animation to Sydney complete", Toast.LENGTH_SHORT)
-                        .show();
-            }
+        changeCamera(
+                CameraUpdateFactory.newCameraPosition(SYDNEY),
+                new CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        Toast.makeText(
+                                        getBaseContext(),
+                                        "Animation to Sydney complete",
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    }
 
-            @Override
-            public void onCancel() {
-                Toast.makeText(getBaseContext(), "Animation to Sydney canceled", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        });
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(
+                                        getBaseContext(),
+                                        "Animation to Sydney canceled",
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
     }
 
-    /**
-     * Called when the stop button is clicked.
-     */
+    /** Called when the stop button is clicked. */
     public void onStopAnimation(View view) {
         if (!checkReady()) {
             return;
@@ -233,9 +237,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         map.stopAnimation();
     }
 
-    /**
-     * Called when the zoom in button (the one with the +) is clicked.
-     */
+    /** Called when the zoom in button (the one with the +) is clicked. */
     public void onZoomIn(View view) {
         if (!checkReady()) {
             return;
@@ -244,9 +246,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         changeCamera(CameraUpdateFactory.zoomIn());
     }
 
-    /**
-     * Called when the zoom out button (the one with the -) is clicked.
-     */
+    /** Called when the zoom out button (the one with the -) is clicked. */
     public void onZoomOut(View view) {
         if (!checkReady()) {
             return;
@@ -255,9 +255,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         changeCamera(CameraUpdateFactory.zoomOut());
     }
 
-    /**
-     * Called when the tilt more button (the one with the /) is clicked.
-     */
+    /** Called when the tilt more button (the one with the /) is clicked. */
     public void onTiltMore(View view) {
         if (!checkReady()) {
             return;
@@ -269,15 +267,13 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
 
         newTilt = (newTilt > 90) ? 90 : newTilt;
 
-        CameraPosition cameraPosition = new CameraPosition.Builder(currentCameraPosition)
-                .tilt(newTilt).build();
+        CameraPosition cameraPosition =
+                new CameraPosition.Builder(currentCameraPosition).tilt(newTilt).build();
 
         changeCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
-    /**
-     * Called when the tilt less button (the one with the \) is clicked.
-     */
+    /** Called when the tilt less button (the one with the \) is clicked. */
     public void onTiltLess(View view) {
         if (!checkReady()) {
             return;
@@ -290,15 +286,13 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         float newTilt = currentTilt - 10;
         newTilt = (newTilt > 0) ? newTilt : 0;
 
-        CameraPosition cameraPosition = new CameraPosition.Builder(currentCameraPosition)
-                .tilt(newTilt).build();
+        CameraPosition cameraPosition =
+                new CameraPosition.Builder(currentCameraPosition).tilt(newTilt).build();
 
         changeCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
-    /**
-     * Called when the left arrow button is clicked. This causes the camera to move to the left
-     */
+    /** Called when the left arrow button is clicked. This causes the camera to move to the left */
     public void onScrollLeft(View view) {
         if (!checkReady()) {
             return;
@@ -318,9 +312,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         changeCamera(CameraUpdateFactory.scrollBy(SCROLL_BY_PX, 0));
     }
 
-    /**
-     * Called when the up arrow button is clicked. The causes the camera to move up.
-     */
+    /** Called when the up arrow button is clicked. The causes the camera to move up. */
     public void onScrollUp(View view) {
         if (!checkReady()) {
             return;
@@ -329,9 +321,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         changeCamera(CameraUpdateFactory.scrollBy(0, -SCROLL_BY_PX));
     }
 
-    /**
-     * Called when the down arrow button is clicked. This causes the camera to move down.
-     */
+    /** Called when the down arrow button is clicked. This causes the camera to move down. */
     public void onScrollDown(View view) {
         if (!checkReady()) {
             return;
@@ -340,27 +330,20 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
         changeCamera(CameraUpdateFactory.scrollBy(0, SCROLL_BY_PX));
     }
 
-    /**
-     * Called when the animate button is toggled
-     */
+    /** Called when the animate button is toggled */
     public void onToggleAnimate(View view) {
         updateEnabledState();
     }
 
-    /**
-     * Called when the custom duration checkbox is toggled
-     */
+    /** Called when the custom duration checkbox is toggled */
     public void onToggleCustomDuration(View view) {
         updateEnabledState();
     }
 
-    /**
-     * Update the enabled state of the custom duration controls.
-     */
+    /** Update the enabled state of the custom duration controls. */
     private void updateEnabledState() {
         customDurationToggle.setEnabled(animateToggle.isChecked());
-        customDurationBar
-                .setEnabled(animateToggle.isChecked() && customDurationToggle.isChecked());
+        customDurationBar.setEnabled(animateToggle.isChecked() && customDurationToggle.isChecked());
     }
 
     private void changeCamera(CameraUpdate update) {
@@ -384,6 +367,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
             map.moveCamera(update);
         }
     }
+
     // [END_EXCLUDE]
 
     @Override
@@ -443,7 +427,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
             addCameraTargetToPath();
             map.addPolyline(currPolylineOptions);
         }
-        isCanceled = true;  // Set to clear the map when dragging starts again.
+        isCanceled = true; // Set to clear the map when dragging starts again.
         currPolylineOptions = null;
         // [END_EXCLUDE]
         Log.d(TAG, "onCameraMoveCancelled");
@@ -457,7 +441,7 @@ public class CameraDemoActivity extends SamplesBaseActivity implements
             map.addPolyline(currPolylineOptions);
         }
         currPolylineOptions = null;
-        isCanceled = false;  // Set to *not* clear the map when dragging starts again.
+        isCanceled = false; // Set to *not* clear the map when dragging starts again.
         // [END_EXCLUDE]
         Log.d(TAG, "onCameraIdle");
     }

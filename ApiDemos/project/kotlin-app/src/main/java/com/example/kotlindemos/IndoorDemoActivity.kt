@@ -13,10 +13,9 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.IndoorDemoBinding
 import android.os.Bundle
 import com.example.common_ui.R
+import com.example.common_ui.databinding.IndoorDemoBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,7 +26,9 @@ import com.google.android.gms.maps.model.LatLng
 /**
  * A demo activity showing how to use indoor.
  */
-class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
+class IndoorDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
 
     internal lateinit var map: GoogleMap
     private var showLevelPicker = true
@@ -65,7 +66,7 @@ class IndoorDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
                 override fun onIndoorLevelActivated(p0: IndoorBuilding) {
                     activeLevelIndex = p0.activeLevelIndex
                 }
-            }
+            },
         )
 
         this.mapReady = true

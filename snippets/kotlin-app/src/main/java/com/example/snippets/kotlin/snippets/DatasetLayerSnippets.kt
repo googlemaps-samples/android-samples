@@ -21,9 +21,9 @@ import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
 import androidx.core.graphics.ColorUtils
+import com.example.snippets.common.R
 import com.example.snippets.kotlin.BuildConfig
 import com.example.snippets.kotlin.TrackedMap
-import com.example.snippets.common.R
 import com.example.snippets.kotlin.annotations.SnippetGroup
 import com.example.snippets.kotlin.annotations.SnippetItem
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -38,7 +38,8 @@ import kotlinx.coroutines.CoroutineScope
 
 @SnippetGroup(
     title = "Custom Geospatial Datasets",
-    description = "Snippets demonstrating custom Cloud geospatial dataset feature layers, attribute styling, and click events."
+    description = "Snippets demonstrating custom Cloud geospatial dataset feature layers, attribute styling, and " +
+        "click events.",
 )
 class DatasetLayerSnippets(private val context: Context, private val map: TrackedMap) {
 
@@ -46,12 +47,18 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
 
     @SnippetItem(
         title = "1. Dataset - Boulder Trails",
-        description = "What it does: Fetches a Cloud OSMP Boulder Trails dataset layer and dynamically styles trail lines by difficulty or dog regulations.\nHow to see the effect: Trail lines render in green (Easy), blue (Moderate), or red (Difficult), with line thickness indicating dog restrictions.",
+        description = "What it does: Fetches a Cloud OSMP Boulder Trails dataset layer and dynamically styles trail " +
+            "lines by difficulty or dog regulations.\nHow to see the effect: Trail lines render in green (Easy), " +
+            "blue (Moderate), or red (Difficult), with line thickness indicating dog restrictions.",
     )
     fun styleBoulderTrails() {
         val datasetId = BuildConfig.BOULDER_DATASET_ID
         if (datasetId.isEmpty() || datasetId == "YOUR_DATASET_ID") {
-            Toast.makeText(context, "Please configure BOULDER_DATASET_ID in secrets.properties", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context,
+                "Please configure BOULDER_DATASET_ID in secrets.properties",
+                Toast.LENGTH_LONG,
+            ).show()
             return
         }
 
@@ -65,13 +72,13 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
-                .build()
+                .build(),
         )
         Log.d(TAG, "Dataset layer retrieved: $layer")
 
         // 2. Center the camera over Boulder OSMP Trails
         map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(40.0150, -105.2705), 13.0f)
+            CameraUpdateFactory.newLatLngZoom(LatLng(40.0150, -105.2705), 13.0f),
         )
 
         // 3. Define toggle state and custom styling application function
@@ -103,10 +110,16 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
                     } else {
                         // Mode 2: Color by dog regulations
                         strokeColor = when (dogsAllowed) {
-                            "No Dogs" -> Color.RED          // Prohibited
-                            "LR", "LVS" -> Color.YELLOW      // Leash Required / Conditional
-                            "RV" -> Color.GREEN             // Off Leash / Voice & Sight
-                            else -> Color.LTGRAY            // Default / Unknown
+                            "No Dogs" -> Color.RED
+
+                            // Prohibited
+                            "LR", "LVS" -> Color.YELLOW
+
+                            // Leash Required / Conditional
+                            "RV" -> Color.GREEN
+
+                            // Off Leash / Voice & Sight
+                            else -> Color.LTGRAY // Default / Unknown
                         }
                         strokeWidth = 4f
                     }
@@ -154,12 +167,18 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
 
     @SnippetItem(
         title = "2. Dataset - NYC Squirrels",
-        description = "What it does: Imports a Cloud Central Park Squirrel Sightings dataset layer and styles point features by fur color.\nHow to see the effect: Point markers display across Central Park colored by squirrel fur color (black, cinnamon, gray).",
+        description = "What it does: Imports a Cloud Central Park Squirrel Sightings dataset layer and styles point " +
+            "features by fur color.\nHow to see the effect: Point markers display across Central Park colored by " +
+            "squirrel fur color (black, cinnamon, gray).",
     )
     fun styleNycSquirrels() {
         val datasetId = BuildConfig.NEW_YORK_DATASET_ID
         if (datasetId.isEmpty() || datasetId == "YOUR_DATASET_ID") {
-            Toast.makeText(context, "Please configure NEW_YORK_DATASET_ID in secrets.properties", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context,
+                "Please configure NEW_YORK_DATASET_ID in secrets.properties",
+                Toast.LENGTH_LONG,
+            ).show()
             return
         }
 
@@ -170,13 +189,13 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
-                .build()
+                .build(),
         )
         Log.d(TAG, "NYC Squirrels layer retrieved: $layer")
 
         // 2. Center the camera over Central Park, New York
         map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(40.786244, -73.962684), 14.0f)
+            CameraUpdateFactory.newLatLngZoom(LatLng(40.786244, -73.962684), 14.0f),
         )
 
         // 3. Define styling rules based on squirrel fur color attributes
@@ -187,8 +206,12 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
 
                 val color = when (furColor) {
                     "Black+" -> Color.BLACK
-                    "Cinnamon+" -> Color.rgb(210, 105, 30) // Chocolate brown
+
+                    "Cinnamon+" -> Color.rgb(210, 105, 30)
+
+                    // Chocolate brown
                     "Gray+" -> Color.GRAY
+
                     else -> Color.GREEN // default
                 }
 
@@ -206,7 +229,9 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
 
     @SnippetItem(
         title = "3. Dataset - Kyoto Temples (Clickable)",
-        description = "What it does: Renders Cloud Kyoto temple boundary polygons and updates clicked polygon styling to highlight yellow.\nHow to see the effect: Temple grounds render in semi-transparent blue; tap any temple polygon to highlight it in yellow.",
+        description = "What it does: Renders Cloud Kyoto temple boundary polygons and updates clicked polygon " +
+            "styling to highlight yellow.\nHow to see the effect: Temple grounds render in semi-transparent blue; " +
+            "tap any temple polygon to highlight it in yellow.",
     )
     fun styleKyotoTemples() {
         val datasetId = BuildConfig.KYOTO_DATASET_ID
@@ -222,13 +247,13 @@ class DatasetLayerSnippets(private val context: Context, private val map: Tracke
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.DATASET)
                 .datasetId(datasetId)
-                .build()
+                .build(),
         )
         Log.d(TAG, "Kyoto Temples layer retrieved: $layer")
 
         // 2. Center the camera over Kyoto, Japan
         map.moveCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(35.005081, 135.764385), 13.5f)
+            CameraUpdateFactory.newLatLngZoom(LatLng(35.005081, 135.764385), 13.5f),
         )
 
         // Track the ID of the clicked temple area

@@ -37,15 +37,13 @@ import com.google.android.gms.maps.model.RoundCap;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
- * An activity that displays a Google map with polylines to represent paths or routes,
- * and polygons to represent areas.
+ * An activity that displays a Google map with polylines to represent paths or routes, and polygons
+ * to represent areas.
  */
 // [START maps_poly_activity_on_map_ready]
 public class PolyActivity extends AppCompatActivity
-        implements
-                OnMapReadyCallback,
+        implements OnMapReadyCallback,
                 GoogleMap.OnPolylineClickListener,
                 GoogleMap.OnPolygonClickListener {
 
@@ -59,17 +57,17 @@ public class PolyActivity extends AppCompatActivity
         setContentView(R.layout.activity_maps);
 
         // Get the SupportMapFragment and request notification when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
     // [END maps_poly_activity_get_map_async]
 
     /**
-     * Manipulates the map when it's available.
-     * The API invokes this callback when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera.
-     * In this tutorial, we add polylines and polygons to represent routes and areas on the map.
+     * Manipulates the map when it's available. The API invokes this callback when the map is ready
+     * to be used. This is where we can add markers or lines, add listeners or move the camera. In
+     * this tutorial, we add polylines and polygons to represent routes and areas on the map.
      */
     // [END EXCLUDE]
     @Override
@@ -79,15 +77,17 @@ public class PolyActivity extends AppCompatActivity
         // Polylines are useful to show a route or some other connection between points.
         // [START maps_poly_activity_add_polyline_set_tag]
         // [START maps_poly_activity_add_polyline]
-        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(
-                        new LatLng(-35.016, 143.321),
-                        new LatLng(-34.747, 145.592),
-                        new LatLng(-34.364, 147.891),
-                        new LatLng(-33.501, 150.217),
-                        new LatLng(-32.306, 149.248),
-                        new LatLng(-32.491, 147.309)));
+        Polyline polyline1 =
+                googleMap.addPolyline(
+                        new PolylineOptions()
+                                .clickable(true)
+                                .add(
+                                        new LatLng(-35.016, 143.321),
+                                        new LatLng(-34.747, 145.592),
+                                        new LatLng(-34.364, 147.891),
+                                        new LatLng(-33.501, 150.217),
+                                        new LatLng(-32.306, 149.248),
+                                        new LatLng(-32.491, 147.309)));
         // [END maps_poly_activity_add_polyline]
         // [START_EXCLUDE silent]
         // Store a data object with the polyline, used here to indicate an arbitrary type.
@@ -96,40 +96,46 @@ public class PolyActivity extends AppCompatActivity
         // Style the polyline.
         stylePolyline(polyline1);
 
-        Polyline polyline2 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(
-                        new LatLng(-29.501, 119.700),
-                        new LatLng(-27.456, 119.672),
-                        new LatLng(-25.971, 124.187),
-                        new LatLng(-28.081, 126.555),
-                        new LatLng(-28.848, 124.229),
-                        new LatLng(-28.215, 123.938)));
+        Polyline polyline2 =
+                googleMap.addPolyline(
+                        new PolylineOptions()
+                                .clickable(true)
+                                .add(
+                                        new LatLng(-29.501, 119.700),
+                                        new LatLng(-27.456, 119.672),
+                                        new LatLng(-25.971, 124.187),
+                                        new LatLng(-28.081, 126.555),
+                                        new LatLng(-28.848, 124.229),
+                                        new LatLng(-28.215, 123.938)));
         polyline2.setTag("B");
         stylePolyline(polyline2);
 
         // [START maps_poly_activity_add_polygon]
         // Add polygons to indicate areas on the map.
-        Polygon polygon1 = googleMap.addPolygon(new PolygonOptions()
-                .clickable(true)
-                .add(
-                        new LatLng(-27.457, 153.040),
-                        new LatLng(-33.852, 151.211),
-                        new LatLng(-37.813, 144.962),
-                        new LatLng(-34.928, 138.599)));
+        Polygon polygon1 =
+                googleMap.addPolygon(
+                        new PolygonOptions()
+                                .clickable(true)
+                                .add(
+                                        new LatLng(-27.457, 153.040),
+                                        new LatLng(-33.852, 151.211),
+                                        new LatLng(-37.813, 144.962),
+                                        new LatLng(-34.928, 138.599)));
         // Store a data object with the polygon, used here to indicate an arbitrary type.
         polygon1.setTag("alpha");
         // [END maps_poly_activity_add_polygon]
         // Style the polygon.
         stylePolygon(polygon1);
 
-        Polygon polygon2 = googleMap.addPolygon(new PolygonOptions()
-                .clickable(true)
-                .add(
-                        new LatLng(-31.673, 128.892),
-                        new LatLng(-31.952, 115.857),
-                        new LatLng(-17.785, 122.258),
-                        new LatLng(-12.4258, 130.7932)));
+        Polygon polygon2 =
+                googleMap.addPolygon(
+                        new PolygonOptions()
+                                .clickable(true)
+                                .add(
+                                        new LatLng(-31.673, 128.892),
+                                        new LatLng(-31.952, 115.857),
+                                        new LatLng(-17.785, 122.258),
+                                        new LatLng(-12.4258, 130.7932)));
         polygon2.setTag("beta");
         stylePolygon(polygon2);
         // [END_EXCLUDE]
@@ -142,6 +148,7 @@ public class PolyActivity extends AppCompatActivity
         googleMap.setOnPolylineClickListener(this);
         googleMap.setOnPolygonClickListener(this);
     }
+
     // [END maps_poly_activity_on_map_ready]
 
     // [START maps_poly_activity_style_polyline]
@@ -150,6 +157,7 @@ public class PolyActivity extends AppCompatActivity
 
     /**
      * Styles the polyline, based on type.
+     *
      * @param polyline The polyline object that needs styling.
      */
     private void stylePolyline(Polyline polyline) {
@@ -178,6 +186,7 @@ public class PolyActivity extends AppCompatActivity
         polyline.setColor(COLOR_BLACK_ARGB);
         polyline.setJointType(JointType.ROUND);
     }
+
     // [END maps_poly_activity_style_polyline]
 
     // [START maps_poly_activity_on_polyline_click]
@@ -190,6 +199,7 @@ public class PolyActivity extends AppCompatActivity
 
     /**
      * Listens for clicks on a polyline.
+     *
      * @param polyline The polyline object that the user has clicked.
      */
     @Override
@@ -202,13 +212,15 @@ public class PolyActivity extends AppCompatActivity
             polyline.setPattern(null);
         }
 
-        Toast.makeText(this, "Route type " + polyline.getTag().toString(),
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Route type " + polyline.getTag().toString(), Toast.LENGTH_SHORT)
+                .show();
     }
+
     // [END maps_poly_activity_on_polyline_click]
 
     /**
      * Listens for clicks on a polygon.
+     *
      * @param polygon The polygon object that the user has clicked.
      */
     @Override
@@ -238,10 +250,11 @@ public class PolyActivity extends AppCompatActivity
 
     // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
     private static final List<PatternItem> PATTERN_POLYGON_BETA =
-        Arrays.asList(DOT, GAP, DASH, GAP);
+            Arrays.asList(DOT, GAP, DASH, GAP);
 
     /**
      * Styles the polygon, based on type.
+     *
      * @param polygon The polygon object that needs styling.
      */
     private void stylePolygon(Polygon polygon) {

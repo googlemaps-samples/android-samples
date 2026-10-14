@@ -19,18 +19,17 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.kotlindemos.truth.LatLngBoundsSubject
+import com.example.kotlindemos.truth.LatLngSubject
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.example.kotlindemos.truth.LatLngBoundsSubject
-import com.example.kotlindemos.truth.LatLngSubject
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-
 
 @RunWith(AndroidJUnit4::class)
 class CameraClampingDemoActivityTest {
@@ -60,7 +59,8 @@ class CameraClampingDemoActivityTest {
         // 3. Assert that the camera is still inside the Adelaide bounds
         scenario.onActivity { activity ->
             val adelaideBounds = LatLngBounds(
-                LatLng(-35.0, 138.58), LatLng(-34.9, 138.61)
+                LatLng(-35.0, 138.58),
+                LatLng(-34.9, 138.61),
             )
             val cameraPosition: CameraPosition = activity.map.cameraPosition
             LatLngBoundsSubject.assertThat(adelaideBounds).containsWithTolerance(cameraPosition.target)
@@ -80,7 +80,8 @@ class CameraClampingDemoActivityTest {
         // 3. Assert that the camera is still inside the Pacific bounds
         scenario.onActivity { activity ->
             val pacificBounds = LatLngBounds(
-                LatLng(-45.0, 160.0), LatLng(45.0, -160.0)
+                LatLng(-45.0, 160.0),
+                LatLng(45.0, -160.0),
             )
             val cameraPosition: CameraPosition = activity.map.cameraPosition
             LatLngBoundsSubject.assertThat(pacificBounds).containsWithTolerance(cameraPosition.target)

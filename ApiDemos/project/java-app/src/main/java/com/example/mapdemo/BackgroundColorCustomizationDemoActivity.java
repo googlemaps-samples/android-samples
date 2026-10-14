@@ -15,11 +15,7 @@
 package com.example.mapdemo;
 
 import android.os.Bundle;
-import android.widget.CheckBox;
-
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.common.internal.Preconditions;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,10 +27,9 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 /**
  * This shows how to create a simple activity with a custom background color appiled to the map, and
  * add a marker on the map.
- *
  */
 public class BackgroundColorCustomizationDemoActivity extends SamplesBaseActivity
-    implements OnMapReadyCallback {
+        implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,10 +37,11 @@ public class BackgroundColorCustomizationDemoActivity extends SamplesBaseActivit
         setContentView(com.example.common_ui.R.layout.background_color_customization_demo);
 
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
 
-        Preconditions.checkNotNull(mapFragment)
-            .getMapAsync(this);
+        Preconditions.checkNotNull(mapFragment).getMapAsync(this);
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
 
@@ -57,9 +53,12 @@ public class BackgroundColorCustomizationDemoActivity extends SamplesBaseActivit
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        SwitchMaterial mapTypeToggleCheckbox = findViewById(com.example.common_ui.R.id.map_type_toggle);
+        SwitchMaterial mapTypeToggleCheckbox =
+                findViewById(com.example.common_ui.R.id.map_type_toggle);
         mapTypeToggleCheckbox.setOnCheckedChangeListener(
-            (view, isChecked) -> map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
+                (view, isChecked) ->
+                        map.setMapType(
+                                isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 
         map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }

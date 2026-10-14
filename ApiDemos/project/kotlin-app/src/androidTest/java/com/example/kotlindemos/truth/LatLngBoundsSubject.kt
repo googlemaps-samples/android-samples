@@ -24,10 +24,8 @@ import com.google.common.truth.Truth
  *
  * To use, static import [assertThat] and call assertions on the subject.
  */
-class LatLngBoundsSubject private constructor(
-    failureMetadata: FailureMetadata,
-    private val actual: LatLngBounds?
-) : Subject(failureMetadata, actual) {
+class LatLngBoundsSubject private constructor(failureMetadata: FailureMetadata, private val actual: LatLngBounds?) :
+    Subject(failureMetadata, actual) {
 
     /**
      * Asserts that the given [LatLng] is contained within the actual bounds, allowing for
@@ -51,8 +49,10 @@ class LatLngBoundsSubject private constructor(
      * Checks if a longitude is within the bounds, correctly handling cases where the bounds
      * cross the antimeridian (e.g., from 160 to -160).
      */
-    private fun isLongitudeWithinBounds(longitude: Double, bounds: LatLngBounds, tolerance: Double): Boolean {
-        return if (bounds.southwest.longitude <= bounds.northeast.longitude) {
+    private fun isLongitudeWithinBounds(longitude: Double, bounds: LatLngBounds, tolerance: Double): Boolean =
+        if (bounds.southwest.longitude <=
+            bounds.northeast.longitude
+        ) {
             // Standard case (e.g., from 10 to 20).
             longitude >= bounds.southwest.longitude - tolerance &&
                 longitude <= bounds.northeast.longitude + tolerance
@@ -61,7 +61,6 @@ class LatLngBoundsSubject private constructor(
             longitude >= bounds.southwest.longitude - tolerance ||
                 longitude <= bounds.northeast.longitude + tolerance
         }
-    }
 
     companion object {
         fun latLngBounds(): Factory<LatLngBoundsSubject, LatLngBounds> = Factory(::LatLngBoundsSubject)
@@ -69,8 +68,6 @@ class LatLngBoundsSubject private constructor(
         /**
          * Creates a [LatLngBoundsSubject] for asserting on the given [LatLngBounds].
          */
-        fun assertThat(actual: LatLngBounds?): LatLngBoundsSubject {
-            return Truth.assertAbout(latLngBounds()).that(actual)
-        }
+        fun assertThat(actual: LatLngBounds?): LatLngBoundsSubject = Truth.assertAbout(latLngBounds()).that(actual)
     }
 }

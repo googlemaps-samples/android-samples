@@ -46,7 +46,7 @@ class AppLaunchTest {
         // Launch the activity
         ActivityScenario.launch(MainActivity::class.java).use {
             val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-            
+
             // Wait for the map container to appear
             val mapContainer = device.findObject(UiSelector().resourceId("com.example.wearos:id/map_container"))
             assertThat(mapContainer.waitForExists(5000)).isTrue()
@@ -63,12 +63,12 @@ class AppLaunchTest {
             // Note: This relies on the Google Map rendering the marker and it being visible/accessible.
             // In a real device/emulator, this might need more robust waiting logic or accessibility settings.
             val markerTitle = device.findObject(UiSelector().descriptionContains("Sydney Opera House"))
-            
+
             // Allow some time for map loading and rendering
             if (!markerTitle.exists()) {
                 markerTitle.waitForExists(10000)
             }
-            
+
             // Verify if found (Bonus check, might flake on some emulators if map doesn't render)
             // We use a softer check here or assertion if we are confident.
             // For now, let's assert it exists if we want to be strict, or just log if we want to be lenient.

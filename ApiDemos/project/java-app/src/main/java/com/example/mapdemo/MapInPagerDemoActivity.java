@@ -12,24 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
-
-import com.google.android.gms.maps.SupportMapFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import com.google.android.gms.maps.SupportMapFragment;
+
 /**
- * This shows how to add a map to a ViewPager. Note the use of
- * {@link ViewGroup#requestTransparentRegion(View)} to reduce jankiness.
+ * This shows how to add a map to a ViewPager. Note the use of {@link
+ * ViewGroup#requestTransparentRegion(View)} to reduce jankiness.
  */
 public class MapInPagerDemoActivity extends SamplesBaseActivity {
 

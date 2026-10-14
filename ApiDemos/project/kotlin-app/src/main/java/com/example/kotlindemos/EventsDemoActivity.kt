@@ -13,21 +13,22 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import com.example.common_ui.R
-import java.util.Locale
-
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.*
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener
+import com.google.android.gms.maps.GoogleMap.OnCameraMoveListener
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import java.util.Locale
 
 /**
  * This shows how to listen to some [GoogleMap] events.
@@ -42,11 +43,16 @@ import com.google.android.gms.maps.model.LatLng
     purpose = "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI selections.",
     successCriteria = "Event log text updates with coordinates and POI names upon user interaction.",
     failureIndicators = "Click events swallowed or POI name unresolved.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_sample_events]
-class EventsDemoActivity : SamplesBaseActivity(), OnMapClickListener,
-    OnMapLongClickListener, OnCameraIdleListener, OnCameraMoveListener, OnMapReadyCallback {
+class EventsDemoActivity :
+    SamplesBaseActivity(),
+    OnMapClickListener,
+    OnMapLongClickListener,
+    OnCameraIdleListener,
+    OnCameraMoveListener,
+    OnMapReadyCallback {
 
     private lateinit var tapTextView: TextView
     private lateinit var cameraTextView: TextView

@@ -18,7 +18,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -26,11 +25,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
-/**
- * A styled map using JSON styles from a raw resource.
- */
-public class MapsActivityRaw extends AppCompatActivity
-        implements OnMapReadyCallback {
+/** A styled map using JSON styles from a raw resource. */
+public class MapsActivityRaw extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = MapsActivityRaw.class.getSimpleName();
 
@@ -43,14 +39,13 @@ public class MapsActivityRaw extends AppCompatActivity
         // Get the SupportMapFragment and register for the callback
         // when the map is ready for use.
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
+                (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     /**
-     * Manipulates the map when it's available.
-     * The API invokes this callback when the map is ready for use.
+     * Manipulates the map when it's available. The API invokes this callback when the map is ready
+     * for use.
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -58,9 +53,9 @@ public class MapsActivityRaw extends AppCompatActivity
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
-            boolean success = googleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_json));
+            boolean success =
+                    googleMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json));
 
             if (!success) {
                 Log.e(TAG, "Style parsing failed.");

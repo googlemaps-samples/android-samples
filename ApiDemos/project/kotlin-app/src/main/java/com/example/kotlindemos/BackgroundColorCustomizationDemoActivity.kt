@@ -13,21 +13,22 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-
 import android.os.Bundle
 import android.view.View
+import com.example.common_ui.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.example.common_ui.R
 /**
  * This shows how to create a simple activity with a custom background color appiled to the map, and
  * add a marker on the map.
  */
-class BackgroundColorCustomizationDemoActivity : SamplesBaseActivity(), OnMapReadyCallback {
+class BackgroundColorCustomizationDemoActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.background_color_customization_demo)

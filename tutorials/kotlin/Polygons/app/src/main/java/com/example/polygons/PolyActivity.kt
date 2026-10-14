@@ -41,7 +41,11 @@ import com.google.android.gms.maps.model.RoundCap
  * and polygons to represent areas.
  */
 // [START maps_poly_activity_on_map_ready]
-class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickListener, OnPolygonClickListener {
+class PolyActivity :
+    AppCompatActivity(),
+    OnMapReadyCallback,
+    OnPolylineClickListener,
+    OnPolygonClickListener {
 
     // [START EXCLUDE]
     // [START maps_poly_activity_get_map_async]
@@ -66,20 +70,22 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
      */
     // [END EXCLUDE]
     override fun onMapReady(googleMap: GoogleMap) {
-
         // Add polylines to the map.
         // Polylines are useful to show a route or some other connection between points.
         // [START maps_poly_activity_add_polyline_set_tag]
         // [START maps_poly_activity_add_polyline]
-        val polyline1 = googleMap.addPolyline(PolylineOptions()
-            .clickable(true)
-            .add(
-                LatLng(-35.016, 143.321),
-                LatLng(-34.747, 145.592),
-                LatLng(-34.364, 147.891),
-                LatLng(-33.501, 150.217),
-                LatLng(-32.306, 149.248),
-                LatLng(-32.491, 147.309)))
+        val polyline1 = googleMap.addPolyline(
+            PolylineOptions()
+                .clickable(true)
+                .add(
+                    LatLng(-35.016, 143.321),
+                    LatLng(-34.747, 145.592),
+                    LatLng(-34.364, 147.891),
+                    LatLng(-33.501, 150.217),
+                    LatLng(-32.306, 149.248),
+                    LatLng(-32.491, 147.309),
+                ),
+        )
         // [END maps_poly_activity_add_polyline]
         // [START_EXCLUDE silent]
         // Store a data object with the polyline, used here to indicate an arbitrary type.
@@ -88,40 +94,49 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         // Style the polyline.
         stylePolyline(polyline1)
 
-        val polyline2 = googleMap.addPolyline(PolylineOptions()
-            .clickable(true)
-            .add(
-                LatLng(-29.501, 119.700),
-                LatLng(-27.456, 119.672),
-                LatLng(-25.971, 124.187),
-                LatLng(-28.081, 126.555),
-                LatLng(-28.848, 124.229),
-                LatLng(-28.215, 123.938)))
+        val polyline2 = googleMap.addPolyline(
+            PolylineOptions()
+                .clickable(true)
+                .add(
+                    LatLng(-29.501, 119.700),
+                    LatLng(-27.456, 119.672),
+                    LatLng(-25.971, 124.187),
+                    LatLng(-28.081, 126.555),
+                    LatLng(-28.848, 124.229),
+                    LatLng(-28.215, 123.938),
+                ),
+        )
         polyline2.tag = "B"
         stylePolyline(polyline2)
 
         // [START maps_poly_activity_add_polygon]
         // Add polygons to indicate areas on the map.
-        val polygon1 = googleMap.addPolygon(PolygonOptions()
-            .clickable(true)
-            .add(
-                LatLng(-27.457, 153.040),
-                LatLng(-33.852, 151.211),
-                LatLng(-37.813, 144.962),
-                LatLng(-34.928, 138.599)))
+        val polygon1 = googleMap.addPolygon(
+            PolygonOptions()
+                .clickable(true)
+                .add(
+                    LatLng(-27.457, 153.040),
+                    LatLng(-33.852, 151.211),
+                    LatLng(-37.813, 144.962),
+                    LatLng(-34.928, 138.599),
+                ),
+        )
         // Store a data object with the polygon, used here to indicate an arbitrary type.
         polygon1.tag = "alpha"
         // Style the polygon.
         // [END maps_poly_activity_add_polygon]
         stylePolygon(polygon1)
 
-        val polygon2 = googleMap.addPolygon(PolygonOptions()
-            .clickable(true)
-            .add(
-                LatLng(-31.673, 128.892),
-                LatLng(-31.952, 115.857),
-                LatLng(-17.785, 122.258),
-                LatLng(-12.4258, 130.7932)))
+        val polygon2 = googleMap.addPolygon(
+            PolygonOptions()
+                .clickable(true)
+                .add(
+                    LatLng(-31.673, 128.892),
+                    LatLng(-31.952, 115.857),
+                    LatLng(-17.785, 122.258),
+                    LatLng(-12.4258, 130.7932),
+                ),
+        )
         polygon2.tag = "beta"
         stylePolygon(polygon2)
         // [END_EXCLUDE]
@@ -150,11 +165,11 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
         when (type) {
             "A" -> {
                 // Use a custom bitmap as the cap at the start of the line.
-                polyline.startCap = CustomCap(
-                    BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 10f)
+                polyline.startCap = CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 10f)
             }
+
             "B" -> {
-               // Use a round cap at the start of the line.
+                // Use a round cap at the start of the line.
                 polyline.startCap = RoundCap()
             }
         }
@@ -185,8 +200,11 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
             // The default pattern is a solid stroke.
             polyline.pattern = null
         }
-        Toast.makeText(this, "Route type ${polyline.tag}",
-            Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            "Route type ${polyline.tag}",
+            Toast.LENGTH_SHORT,
+        ).show()
     }
     // [END maps_poly_activity_on_polyline_click]
 
@@ -237,6 +255,7 @@ class PolyActivity : AppCompatActivity(), OnMapReadyCallback, OnPolylineClickLis
                 strokeColor = COLOR_DARK_GREEN_ARGB
                 fillColor = COLOR_LIGHT_GREEN_ARGB
             }
+
             "beta" -> {
                 // Apply a stroke pattern to render a line of dots and dashes, and define colors.
                 pattern = PATTERN_POLYGON_BETA

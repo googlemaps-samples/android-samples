@@ -13,24 +13,19 @@
 // limitations under the License.
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-//noinspection UnusedImport
 import com.example.common_ui.R; // <-- Keep this import
-
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -46,61 +41,71 @@ import com.google.android.gms.maps.model.FeatureType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapCapabilities;
-
 import java.util.List;
 import java.util.Map;
 
-
 /**
- * This sample showcases how to use the Data-driven styling for datasets. For more information
- * on how the Data-driven styling for boundaries work, check out the following link:
+ * This sample showcases how to use the Data-driven styling for datasets. For more information on
+ * how the Data-driven styling for boundaries work, check out the following link:
  * https://developers.google.com/maps/documentation/android-sdk/dds-datasets/overview
- * <p>
- * This is meant to work with the datasets in the res/raw directory.
+ *
+ * <p>This is meant to work with the datasets in the res/raw directory.
  */
 @Sample(
-    id = "data_driven_datasets",
-    title = "Data-Driven Dataset Styling",
-    description = "Styling custom geospatial datasets uploaded to Google Cloud Platform based on attributes.",
-    category = "Data-Driven Styling",
-    complexity = Complexity.ADVANCED,
-    tags = {"#datasets", "#datadriven", "#clouddata", "#attributes", "#filtering"},
-    purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
-    successCriteria = "Dataset points and polygons display distinct styling according to attribute values.",
-    failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "data_driven_datasets",
+        title = "Data-Driven Dataset Styling",
+        description =
+                "Styling custom geospatial datasets uploaded to Google Cloud Platform based on attributes.",
+        category = "Data-Driven Styling",
+        complexity = Complexity.ADVANCED,
+        tags = {"#datasets", "#datadriven", "#clouddata", "#attributes", "#filtering"},
+        purpose =
+                "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
+        successCriteria =
+                "Dataset points and polygons display distinct styling according to attribute values.",
+        failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_data_driven_styling_datasets]
-public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
+public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity
+        implements OnMapReadyCallback, FeatureLayer.OnFeatureClickListener {
     private record DataSet(
             String label,
             String datasetId,
             LatLngBounds bounds,
             DataDrivenDatasetStylingActivity.DataSet.StylingCallback callback) {
-            public interface StylingCallback {
-                void styleDatasetLayer();
-            }
+        public interface StylingCallback {
+            void styleDatasetLayer();
+        }
     }
 
     /**
-     * An array of DataSet objects representing different geographic locations and their associated data.
-     * Each DataSet contains:
-     *  - A human-readable name (e.g., "Boulder", "New York").
-     *  - A unique Dataset ID, which should correspond to a dataset id in the Datasets console tab.
-     *  - The LatLngBounds of the dataset area.
-     *  - A styling function (method reference) that defines how to style the data from that dataset on a map.
+     * An array of DataSet objects representing different geographic locations and their associated
+     * data. Each DataSet contains: - A human-readable name (e.g., "Boulder", "New York"). - A
+     * unique Dataset ID, which should correspond to a dataset id in the Datasets console tab. - The
+     * LatLngBounds of the dataset area. - A styling function (method reference) that defines how to
+     * style the data from that dataset on a map.
      */
-    private final DataSet[] dataSets = new DataSet[] {
-            new DataSet("Boulder", BuildConfig.BOULDER_DATASET_ID,
-                    new LatLngBounds(new LatLng(39.920, -105.340), new LatLng(40.090, -105.210)),
-                    this::styleBoulderDatasetLayer),
-            new DataSet("New York", BuildConfig.NEW_YORK_DATASET_ID,
-                    new LatLngBounds(new LatLng(40.7640, -73.9820), new LatLng(40.8000, -73.9490)),
-                    this::styleNYCDatasetLayer),
-            new DataSet("Kyoto", BuildConfig.KYOTO_DATASET_ID,
-                    new LatLngBounds(new LatLng(34.9700, 135.7200), new LatLng(35.0400, 135.8000)),
-                    this::styleKyotoDatasetsLayer),
-    };
+    private final DataSet[] dataSets =
+            new DataSet[] {
+                new DataSet(
+                        "Boulder",
+                        BuildConfig.BOULDER_DATASET_ID,
+                        new LatLngBounds(
+                                new LatLng(39.920, -105.340), new LatLng(40.090, -105.210)),
+                        this::styleBoulderDatasetLayer),
+                new DataSet(
+                        "New York",
+                        BuildConfig.NEW_YORK_DATASET_ID,
+                        new LatLngBounds(
+                                new LatLng(40.7640, -73.9820), new LatLng(40.8000, -73.9490)),
+                        this::styleNYCDatasetLayer),
+                new DataSet(
+                        "Kyoto",
+                        BuildConfig.KYOTO_DATASET_ID,
+                        new LatLngBounds(
+                                new LatLng(34.9700, 135.7200), new LatLng(35.0400, 135.8000)),
+                        this::styleKyotoDatasetsLayer),
+            };
 
     private DataSet findDataSetByLabel(String label) {
         for (DataSet dataSet : dataSets) {
@@ -148,14 +153,16 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
         // 4. Add the fragment to your FrameLayout container using FragmentManager
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.map_fragment_container, mapFragment); // Use the container ID from XML
+        fragmentTransaction.replace(
+                R.id.map_fragment_container, mapFragment); // Use the container ID from XML
         fragmentTransaction.commit();
         // --- End Programmatic Creation ---
 
-
         int[] buttonIds = {R.id.button_boulder, R.id.button_ny, R.id.button_kyoto};
         for (int buttonId : buttonIds) {
-            findViewById(buttonId).setOnClickListener(view -> switchDataSet(((Button) view).getText().toString()));
+            findViewById(buttonId)
+                    .setOnClickListener(
+                            view -> switchDataSet(((Button) view).getText().toString()));
         }
 
         applyInsets(findViewById(R.id.map_container));
@@ -163,28 +170,30 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
 
     /**
      * Switches the currently displayed dataset to the one specified by the provided label.
+     *
+     * <p>This method attempts to find a DataSet object associated with the given label. If a
+     * matching DataSet is found, it updates the map's feature layer to display the data from that
+     * dataset. It also applies styling to the new dataset layer and centers the map on the
+     * dataset's specified location.
+     *
+     * <p>If no matching DataSet is found, a toast message is displayed indicating the failure.
+     *
      * <p>
-     * This method attempts to find a DataSet object associated with the given label.
-     * If a matching DataSet is found, it updates the map's feature layer to display the
-     * data from that dataset. It also applies styling to the new dataset layer and centers
-     * the map on the dataset's specified location.
-     * <p>
-     * If no matching DataSet is found, a toast message is displayed indicating the failure.
-     * <p>
-     * @param label The label of the dataset to switch to. This label should correspond to a
-     *              dataset that has been previously added or loaded.
+     *
+     * @param label The label of the dataset to switch to. This label should correspond to a dataset
+     *     that has been previously added or loaded.
      */
     private void switchDataSet(String label) {
         DataSet dataSet = findDataSetByLabel(label);
         if (dataSet == null) {
             Toast.makeText(this, "Failed to find dataset" + label, Toast.LENGTH_SHORT).show();
         } else {
-            datasetLayer = map.getFeatureLayer(
-                    new FeatureLayerOptions.Builder()
-                            .featureType(FeatureType.DATASET)
-                            .datasetId(dataSet.datasetId())
-                            .build()
-            );
+            datasetLayer =
+                    map.getFeatureLayer(
+                            new FeatureLayerOptions.Builder()
+                                    .featureType(FeatureType.DATASET)
+                                    .datasetId(dataSet.datasetId())
+                                    .build());
             dataSet.callback.styleDatasetLayer();
             centerMapOnBounds(dataSet.bounds());
         }
@@ -194,19 +203,35 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
 
-        googleMap.setOnCameraIdleListener(() -> {
-            com.google.android.gms.maps.model.CameraPosition cp = googleMap.getCameraPosition();
-            Log.i(TAG, "CAMERA_PARAMS: target=LatLng(" + cp.target.latitude + ", " + cp.target.longitude + "), zoom=" + cp.zoom + "f, tilt=" + cp.tilt + "f, bearing=" + cp.bearing + "f");
-        });
+        googleMap.setOnCameraIdleListener(
+                () -> {
+                    com.google.android.gms.maps.model.CameraPosition cp =
+                            googleMap.getCameraPosition();
+                    Log.i(
+                            TAG,
+                            "CAMERA_PARAMS: target=LatLng("
+                                    + cp.target.latitude
+                                    + ", "
+                                    + cp.target.longitude
+                                    + "), zoom="
+                                    + cp.zoom
+                                    + "f, tilt="
+                                    + cp.tilt
+                                    + "f, bearing="
+                                    + cp.bearing
+                                    + "f");
+                });
 
         MapCapabilities capabilities = map.getMapCapabilities();
-        Log.d(TAG, "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
+        Log.d(
+                TAG,
+                "Data-driven Styling is available: " + capabilities.isDataDrivenStylingAvailable());
         if (!capabilities.isDataDrivenStylingAvailable()) {
             Toast.makeText(
-                    this,
-                    "Data-driven Styling is not available.  See README.md for instructions.",
-                    Toast.LENGTH_LONG
-            ).show();
+                            this,
+                            "Data-driven Styling is not available.  See README.md for instructions.",
+                            Toast.LENGTH_LONG)
+                    .show();
         }
 
         // Switch to the default dataset which must happen before adding the feature click listener
@@ -216,64 +241,66 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
     }
 
     private void styleNYCDatasetLayer() {
-        FeatureLayer.StyleFactory styleFactory = feature -> {
-            int fillColor = Color.GREEN;
-            int strokeColor = Color.YELLOW;
-            float pointRadius = 12F;
+        FeatureLayer.StyleFactory styleFactory =
+                feature -> {
+                    int fillColor = Color.GREEN;
+                    int strokeColor = Color.YELLOW;
+                    float pointRadius = 12F;
 
-            if (feature instanceof DatasetFeature) {
-                Map<String, String> furColors = ((DatasetFeature) feature).getDatasetAttributes();
-                String furColor = furColors.get("Color");
+                    if (feature instanceof DatasetFeature) {
+                        Map<String, String> furColors =
+                                ((DatasetFeature) feature).getDatasetAttributes();
+                        String furColor = furColors.get("Color");
 
-                if (furColor != null) {
-                    switch (furColor) {
-                        case "Black+":
-                            fillColor = Color.BLACK;
-                            strokeColor = Color.BLACK;
-                            break;
-                        case "Cinnamon+":
-                            fillColor = 0xFF8B0000; // dark red color
-                            strokeColor = 0xFF8B0000;
-                            break;
-                        case "Cinnamon+Gray":
-                            fillColor = 0xFF8B0000; // dark red color
-                            strokeColor = 0xFF8B0000;
-                            pointRadius = 10F;
-                            break;
-                        case "Cinnamon+White":
-                            fillColor = 0xFF8B0000; // dark red color
-                            strokeColor = Color.WHITE;
-                            pointRadius = 10F;
-                            break;
-                        case "Gray+":
-                            fillColor = Color.GRAY;
-                            break;
-                        case "Gray+Cinnamon":
-                            fillColor = Color.GRAY;
-                            strokeColor = 0xFF8B0000; // dark red color
-                            pointRadius = 10F;
-                            break;
-                        case "Gray+Cinnamon, White":
-                            fillColor = Color.LTGRAY;
-                            strokeColor = 0xFF8B0000; // dark red color
-                            pointRadius = 10F;
-                            break;
-                        case "Gray+White":
-                            fillColor = Color.GRAY;
-                            strokeColor = Color.WHITE;
-                            pointRadius = 10F;
-                            break;
+                        if (furColor != null) {
+                            switch (furColor) {
+                                case "Black+":
+                                    fillColor = Color.BLACK;
+                                    strokeColor = Color.BLACK;
+                                    break;
+                                case "Cinnamon+":
+                                    fillColor = 0xFF8B0000; // dark red color
+                                    strokeColor = 0xFF8B0000;
+                                    break;
+                                case "Cinnamon+Gray":
+                                    fillColor = 0xFF8B0000; // dark red color
+                                    strokeColor = 0xFF8B0000;
+                                    pointRadius = 10F;
+                                    break;
+                                case "Cinnamon+White":
+                                    fillColor = 0xFF8B0000; // dark red color
+                                    strokeColor = Color.WHITE;
+                                    pointRadius = 10F;
+                                    break;
+                                case "Gray+":
+                                    fillColor = Color.GRAY;
+                                    break;
+                                case "Gray+Cinnamon":
+                                    fillColor = Color.GRAY;
+                                    strokeColor = 0xFF8B0000; // dark red color
+                                    pointRadius = 10F;
+                                    break;
+                                case "Gray+Cinnamon, White":
+                                    fillColor = Color.LTGRAY;
+                                    strokeColor = 0xFF8B0000; // dark red color
+                                    pointRadius = 10F;
+                                    break;
+                                case "Gray+White":
+                                    fillColor = Color.GRAY;
+                                    strokeColor = Color.WHITE;
+                                    pointRadius = 10F;
+                                    break;
+                            }
+                        }
+
+                        return new FeatureStyle.Builder()
+                                .fillColor(fillColor)
+                                .strokeColor(strokeColor)
+                                .pointRadius(pointRadius)
+                                .build();
                     }
-                }
-
-                return new FeatureStyle.Builder()
-                        .fillColor(fillColor)
-                        .strokeColor(strokeColor)
-                        .pointRadius(pointRadius)
-                        .build();
-            }
-            return null;
-        };
+                    return null;
+                };
 
         if (datasetLayer != null) {
             datasetLayer.setFeatureStyle(styleFactory);
@@ -282,35 +309,36 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
 
     private void styleKyotoDatasetsLayer() {
         // Create the style factory function.
-        FeatureLayer.StyleFactory styleFactory = feature -> {
-            // Check if the feature is an instance of DatasetFeature.
-            if (feature instanceof DatasetFeature datasetFeature) {
-                // Determine the value of the typecategory attribute.
-                Map<String, String> typeCategories = datasetFeature.getDatasetAttributes();
-                String typeCategory = typeCategories.get("type");
+        FeatureLayer.StyleFactory styleFactory =
+                feature -> {
+                    // Check if the feature is an instance of DatasetFeature.
+                    if (feature instanceof DatasetFeature datasetFeature) {
+                        // Determine the value of the typecategory attribute.
+                        Map<String, String> typeCategories = datasetFeature.getDatasetAttributes();
+                        String typeCategory = typeCategories.get("type");
 
-                // Set default colors to green.
-                int fillColor;
-                int strokeColor;
+                        // Set default colors to green.
+                        int fillColor;
+                        int strokeColor;
 
-                if ("temple".equals(typeCategory)) {
-                    // Color temples areas blue.
-                    fillColor = Color.BLUE;
-                    strokeColor = Color.BLUE;
-                } else {
-                    // Color all other areas green.
-                    fillColor = Color.GREEN;
-                    strokeColor = Color.GREEN;
-                }
+                        if ("temple".equals(typeCategory)) {
+                            // Color temples areas blue.
+                            fillColor = Color.BLUE;
+                            strokeColor = Color.BLUE;
+                        } else {
+                            // Color all other areas green.
+                            fillColor = Color.GREEN;
+                            strokeColor = Color.GREEN;
+                        }
 
-                return new FeatureStyle.Builder()
-                        .fillColor(fillColor)
-                        .strokeColor(strokeColor)
-                        .strokeWidth(2F)
-                        .build();
-            }
-            return null;
-        };
+                        return new FeatureStyle.Builder()
+                                .fillColor(fillColor)
+                                .strokeColor(strokeColor)
+                                .strokeWidth(2F)
+                                .build();
+                    }
+                    return null;
+                };
 
         // Apply the style factory function to the feature layer.
         if (datasetLayer != null) {
@@ -324,60 +352,60 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
         final int DIFFICULT = Color.RED;
 
         // Create the style factory function.
-        FeatureLayer.StyleFactory styleFactory = feature -> {
-            // Set default colors to yellow and point radius to 8.
-            int fillColor;
-            int strokeColor;
-            float pointRadius = 8F;
-            float strokeWidth = 3F;
+        FeatureLayer.StyleFactory styleFactory =
+                feature -> {
+                    // Set default colors to yellow and point radius to 8.
+                    int fillColor;
+                    int strokeColor;
+                    float pointRadius = 8F;
+                    float strokeWidth = 3F;
 
-            // Check if the feature is an instance of DatasetFeature.
-            if (feature instanceof DatasetFeature datasetFeature) {
-                Map<String, String> attributes = datasetFeature.getDatasetAttributes();
-                String difficulty = attributes.get("OSMPTrailsOSMPDIFFICULTY");
-                String name = attributes.get("OSMPTrailsOSMPTRAILNAME");
-                String dogsAllowed = attributes.get("OSMPTrailsOSMPDOGREGGEN");
+                    // Check if the feature is an instance of DatasetFeature.
+                    if (feature instanceof DatasetFeature datasetFeature) {
+                        Map<String, String> attributes = datasetFeature.getDatasetAttributes();
+                        String difficulty = attributes.get("OSMPTrailsOSMPDIFFICULTY");
+                        String name = attributes.get("OSMPTrailsOSMPTRAILNAME");
+                        String dogsAllowed = attributes.get("OSMPTrailsOSMPDOGREGGEN");
 
-                if ("Easy".equals(difficulty)) {
-                    fillColor = EASY;
-                } else if ("Moderate".equals(difficulty)) {
-                    fillColor = MODERATE;
-                } else if ("Difficult".equals(difficulty)) {
-                    fillColor = DIFFICULT;
-                } else {
-                    Log.w(TAG, name + " -> Unknown difficulty: " + difficulty);
-                    fillColor = Color.MAGENTA;
-                }
+                        if ("Easy".equals(difficulty)) {
+                            fillColor = EASY;
+                        } else if ("Moderate".equals(difficulty)) {
+                            fillColor = MODERATE;
+                        } else if ("Difficult".equals(difficulty)) {
+                            fillColor = DIFFICULT;
+                        } else {
+                            Log.w(TAG, name + " -> Unknown difficulty: " + difficulty);
+                            fillColor = Color.MAGENTA;
+                        }
 
-                if ("No Dogs".equals(dogsAllowed)) {
-                    fillColor = ColorUtils.setAlphaComponent(fillColor, 66);
-                    strokeWidth = 5f;
-                } else if ("LVS".equals(dogsAllowed)) {
-                    // No change needed
-                } else if ("LR".equals(dogsAllowed) || "RV".equals(dogsAllowed)) {
-                    fillColor = ColorUtils.setAlphaComponent(fillColor, 75);
-                } else {
-                    Log.w(TAG, name + " -> Unknown dogs reg: " + dogsAllowed);
-                }
+                        if ("No Dogs".equals(dogsAllowed)) {
+                            fillColor = ColorUtils.setAlphaComponent(fillColor, 66);
+                            strokeWidth = 5f;
+                        } else if ("LVS".equals(dogsAllowed)) {
+                            // No change needed
+                        } else if ("LR".equals(dogsAllowed) || "RV".equals(dogsAllowed)) {
+                            fillColor = ColorUtils.setAlphaComponent(fillColor, 75);
+                        } else {
+                            Log.w(TAG, name + " -> Unknown dogs reg: " + dogsAllowed);
+                        }
 
-                strokeColor = fillColor;
+                        strokeColor = fillColor;
 
-                return new FeatureStyle.Builder()
-                        .fillColor(fillColor)
-                        .strokeColor(strokeColor)
-                        .pointRadius(pointRadius)
-                        .strokeWidth(strokeWidth)
-                        .build();
-            }
-            return null;
-        };
+                        return new FeatureStyle.Builder()
+                                .fillColor(fillColor)
+                                .strokeColor(strokeColor)
+                                .pointRadius(pointRadius)
+                                .strokeWidth(strokeWidth)
+                                .build();
+                    }
+                    return null;
+                };
 
         // Apply the style factory function to the feature layer.
         if (datasetLayer != null) {
             datasetLayer.setFeatureStyle(styleFactory);
         }
     }
-
 
     private void centerMapOnBounds(LatLngBounds bounds) {
         map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 80));
@@ -388,31 +416,34 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
         List<Feature> clickFeatures = event.getFeatures();
         lastGlobalId = null;
         if (clickFeatures.get(0) instanceof DatasetFeature) {
-            lastGlobalId = ((DatasetFeature) clickFeatures.get(0)).getDatasetAttributes().get("globalid");
+            lastGlobalId =
+                    ((DatasetFeature) clickFeatures.get(0)).getDatasetAttributes().get("globalid");
             styleDatasetsLayerClickEvent();
         }
     }
 
     private void styleDatasetsLayerClickEvent() {
-        FeatureLayer.StyleFactory styleFactory = feature -> {
-            if (feature instanceof DatasetFeature) {
-                Map<String, String> globalIDs = ((DatasetFeature) feature).getDatasetAttributes();
-                String globalID = globalIDs.get("globalid");
-                int fillColor = Color.GREEN;
-                int strokeColor = Color.GREEN;
+        FeatureLayer.StyleFactory styleFactory =
+                feature -> {
+                    if (feature instanceof DatasetFeature) {
+                        Map<String, String> globalIDs =
+                                ((DatasetFeature) feature).getDatasetAttributes();
+                        String globalID = globalIDs.get("globalid");
+                        int fillColor = Color.GREEN;
+                        int strokeColor = Color.GREEN;
 
-                if (globalID != null && globalID.equals(lastGlobalId)) {
-                    fillColor = Color.BLUE;
-                    strokeColor = Color.BLUE;
-                }
+                        if (globalID != null && globalID.equals(lastGlobalId)) {
+                            fillColor = Color.BLUE;
+                            strokeColor = Color.BLUE;
+                        }
 
-                return new FeatureStyle.Builder()
-                        .fillColor(fillColor)
-                        .strokeColor(strokeColor)
-                        .build();
-            }
-            return null;
-        };
+                        return new FeatureStyle.Builder()
+                                .fillColor(fillColor)
+                                .strokeColor(strokeColor)
+                                .build();
+                    }
+                    return null;
+                };
 
         if (datasetLayer != null) {
             datasetLayer.setFeatureStyle(styleFactory);
@@ -420,4 +451,3 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity implem
     }
 }
 // [END maps_android_data_driven_styling_datasets]
-

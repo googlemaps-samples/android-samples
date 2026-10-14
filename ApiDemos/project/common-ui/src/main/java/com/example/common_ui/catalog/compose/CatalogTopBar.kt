@@ -65,7 +65,7 @@ fun CatalogTopBar(
     onClearEvaluationsClick: (() -> Unit)?,
     onScrollToTop: () -> Unit,
     onExportGrievances: (() -> Unit)?,
-    onSwitchMode: (() -> Unit)?
+    onSwitchMode: (() -> Unit)?,
 ) {
     var showMoreMenu by remember { mutableStateOf(false) }
 
@@ -75,17 +75,18 @@ fun CatalogTopBar(
                 Text(
                     text = if (isReviewerMode) "GMP Sample Reviewer" else "Google Maps Platform Samples",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
                 Text(
                     text = if (isReviewerMode) {
-                        val filterSummary = if (selectedStatusFilter == ReviewStatus.UNCHECKED) " • ⚪ Unchecked Only" else ""
+                        val filterSummary =
+                            if (selectedStatusFilter == ReviewStatus.UNCHECKED) " • ⚪ Unchecked Only" else ""
                         "${selectedFramework.displayName} • $sampleCount samples$filterSummary"
                     } else {
                         "Unified Multi-Framework Catalog • $sampleCount samples"
                     },
                     style = MaterialTheme.typography.labelSmall,
-                    color = if (isReviewerMode) Color(0xFFD93025) else MaterialTheme.colorScheme.onSurfaceVariant
+                    color = if (isReviewerMode) Color(0xFFD93025) else MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         },
@@ -98,16 +99,23 @@ fun CatalogTopBar(
                             if (uncheckedCount > 0) {
                                 Badge { Text("$uncheckedCount") }
                             }
-                        }
+                        },
                     ) {
                         Icon(
                             painter = painterResource(
-                                if (selectedStatusFilter == ReviewStatus.UNCHECKED) R.drawable.ic_status_passing
-                                else R.drawable.ic_status_unchecked
+                                if (selectedStatusFilter == ReviewStatus.UNCHECKED) {
+                                    R.drawable.ic_status_passing
+                                } else {
+                                    R.drawable.ic_status_unchecked
+                                },
                             ),
                             contentDescription = "Filter Unchecked Only",
-                            tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.size(24.dp)
+                            tint = if (selectedStatusFilter == ReviewStatus.UNCHECKED) {
+                                MaterialTheme.colorScheme.primary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            },
+                            modifier = Modifier.size(24.dp),
                         )
                     }
                 }
@@ -119,7 +127,7 @@ fun CatalogTopBar(
                             painter = painterResource(R.drawable.ic_skip_next),
                             contentDescription = "Launch Next Unchecked Sample",
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(24.dp),
                         )
                     }
                 }
@@ -131,7 +139,7 @@ fun CatalogTopBar(
                             painter = painterResource(R.drawable.ic_undo),
                             contentDescription = "Reset All Evaluations",
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(24.dp),
                         )
                     }
                 }
@@ -142,7 +150,7 @@ fun CatalogTopBar(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Jump to Search & Filters",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
 
@@ -154,7 +162,7 @@ fun CatalogTopBar(
 
                 DropdownMenu(
                     expanded = showMoreMenu,
-                    onDismissRequest = { showMoreMenu = false }
+                    onDismissRequest = { showMoreMenu = false },
                 ) {
                     if (isReviewerMode) {
                         if (onClearEvaluationsClick != null) {
@@ -163,7 +171,7 @@ fun CatalogTopBar(
                                 onClick = {
                                     showMoreMenu = false
                                     onClearEvaluationsClick()
-                                }
+                                },
                             )
                         }
                         if (onExportGrievances != null) {
@@ -172,29 +180,41 @@ fun CatalogTopBar(
                                 onClick = {
                                     showMoreMenu = false
                                     onExportGrievances()
-                                }
+                                },
                             )
                         }
                         DropdownMenuItem(
                             text = {
-                                Text(if (selectedStatusFilter == ReviewStatus.UNCHECKED) "Show All Samples" else "⚪ Show Unchecked Only")
+                                Text(
+                                    if (selectedStatusFilter == ReviewStatus.UNCHECKED) {
+                                        "Show All Samples"
+                                    } else {
+                                        "⚪ Show Unchecked Only"
+                                    },
+                                )
                             },
                             onClick = {
                                 showMoreMenu = false
                                 onToggleUncheckedFilter()
-                            }
+                            },
                         )
                         HorizontalDivider()
                     }
                     if (onSwitchMode != null) {
                         DropdownMenuItem(
                             text = {
-                                Text(if (isReviewerMode) "📱 Switch to Developer Mode" else "🛠️ Switch to Reviewer Mode")
+                                Text(
+                                    if (isReviewerMode) {
+                                        "📱 Switch to Developer Mode"
+                                    } else {
+                                        "🛠️ Switch to Reviewer Mode"
+                                    },
+                                )
                             },
                             onClick = {
                                 showMoreMenu = false
                                 onSwitchMode()
-                            }
+                            },
                         )
                         HorizontalDivider()
                     }
@@ -203,13 +223,13 @@ fun CatalogTopBar(
                         onClick = {
                             showMoreMenu = false
                             onScrollToTop()
-                        }
+                        },
                     )
                 }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
     )
 }

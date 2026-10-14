@@ -39,7 +39,8 @@ import java.util.concurrent.TimeUnit
 
 /**
  * Falsifiable Kotlin capability tests for Markers (`7bbfe87e`, `bdbefba5`, `de757d41`, `4c2a9906`).
- * Proves that breaking, mutating, or removing marker creation, styling, and drag properties causes these tests to strictly fail.
+ * Proves that breaking, mutating, or removing marker creation, styling, and drag properties causes
+ * these tests to strictly fail.
  */
 @RunWith(AndroidJUnit4::class)
 class MarkerSnippetsTest {
@@ -79,20 +80,26 @@ class MarkerSnippetsTest {
         runWithMap("Markers", "1. Add a Marker") { map ->
             val marker = TrackedMap.lastInstance?.items?.filterIsInstance<Marker>()?.firstOrNull()
             assertNotNull(
-                "Marker must be added by '1. Add a Marker'! If addMarker() snippet code is removed or broken, this test fails.",
-                marker
+                "Marker must be added by '1. Add a Marker'! If addMarker() snippet code is removed or broken, " +
+                    "this test fails.",
+                marker,
             )
             assertEquals(
                 "Marker latitude must exactly match Sydney (-33.852)",
-                -33.852, marker!!.position.latitude, 0.001
+                -33.852,
+                marker!!.position.latitude,
+                0.001,
             )
             assertEquals(
                 "Marker longitude must exactly match Sydney (151.211)",
-                151.211, marker.position.longitude, 0.001
+                151.211,
+                marker.position.longitude,
+                0.001,
             )
             assertEquals(
                 "Marker title must be exactly 'Marker in Sydney'",
-                "Marker in Sydney", marker.title
+                "Marker in Sydney",
+                marker.title,
             )
         }
     }
@@ -104,10 +111,14 @@ class MarkerSnippetsTest {
             val marker = TrackedMap.lastInstance?.items?.filterIsInstance<Marker>()?.firstOrNull()
             assertNotNull(
                 "Marker must be added by '11. Add Info Window'! If snippet code is removed, this test fails.",
-                marker
+                marker,
             )
             assertEquals("Marker title must be exactly 'Melbourne'", "Melbourne", marker!!.title)
-            assertEquals("Marker snippet must be exactly 'Population: 4,137,400'", "Population: 4,137,400", marker.snippet)
+            assertEquals(
+                "Marker snippet must be exactly 'Population: 4,137,400'",
+                "Population: 4,137,400",
+                marker.snippet,
+            )
         }
     }
 
@@ -118,8 +129,11 @@ class MarkerSnippetsTest {
             val marker = TrackedMap.lastInstance?.items?.filterIsInstance<Marker>()?.firstOrNull()
             assertNotNull("Marker must be added by '5. Marker Opacity'", marker)
             assertEquals(
-                "Marker alpha must exactly match 0.7f! If .alpha(0.7f) is removed or mutated in snippet, this test fails.",
-                0.7f, marker!!.alpha, 0.001f
+                "Marker alpha must exactly match 0.7f! If .alpha(0.7f) is removed or mutated in snippet, this " +
+                    "test fails.",
+                0.7f,
+                marker!!.alpha,
+                0.001f,
             )
         }
 
@@ -128,7 +142,7 @@ class MarkerSnippetsTest {
             assertNotNull("Marker must be added by '7. Flat Marker'", marker)
             assertTrue(
                 "Marker isFlat must exactly match true! If .flat(true) is removed in snippet, this test fails.",
-                marker!!.isFlat
+                marker!!.isFlat,
             )
         }
 
@@ -137,7 +151,9 @@ class MarkerSnippetsTest {
             assertNotNull("Marker must be added by '8. Rotate Marker'", marker)
             assertEquals(
                 "Marker rotation must exactly match 90.0f! If .rotation(90.0f) is removed in snippet, this test fails.",
-                90.0f, marker!!.rotation, 0.001f
+                90.0f,
+                marker!!.rotation,
+                0.001f,
             )
         }
     }
@@ -150,14 +166,14 @@ class MarkerSnippetsTest {
             assertNotNull("Draggable marker must be added by '2. Draggable Marker'", marker)
             assertTrue(
                 "Marker isDraggable must strictly be true! If .draggable(true) is removed in snippet, this test fails.",
-                marker!!.isDraggable
+                marker!!.isDraggable,
             )
 
             // Adversarial negative check (Pillar 2): Mutate to false and verify constraint enforcement
             marker.isDraggable = false
             assertFalse(
                 "Marker should strictly reject drag interactions when isDraggable is set to false",
-                marker.isDraggable
+                marker.isDraggable,
             )
         }
     }

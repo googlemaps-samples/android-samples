@@ -12,21 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
+import android.os.Bundle;
+import androidx.annotation.NonNull;
+import com.example.common_ui.R; // <-- Keep this import
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
-//noinspection UnusedImport
-import com.example.common_ui.R; // <-- Keep this import
 
 /**
  * This shows how to create a simple activity with a raw MapView and add a marker to it. This
@@ -111,5 +106,4 @@ public class RawMapViewDemoActivity extends SamplesBaseActivity implements OnMap
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-
 }

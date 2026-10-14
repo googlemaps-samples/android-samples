@@ -42,13 +42,13 @@ fun CatalogFloatingActionButtons(
     uncheckedCount: Int,
     grievancesCount: Int,
     onLaunchNextUnchecked: () -> Unit,
-    onExportGrievances: (() -> Unit)?
+    onExportGrievances: (() -> Unit)?,
 ) {
     if (!isReviewerMode) return
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         if (uncheckedCount > 0) {
             ExtendedFloatingActionButton(
@@ -56,7 +56,7 @@ fun CatalogFloatingActionButtons(
                 icon = { Icon(Icons.Default.PlayArrow, contentDescription = null) },
                 text = { Text("Review Next ($uncheckedCount)") },
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
+                contentColor = MaterialTheme.colorScheme.onPrimary,
             )
         }
 
@@ -64,18 +64,18 @@ fun CatalogFloatingActionButtons(
             FloatingActionButton(
                 onClick = onExportGrievances,
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             ) {
                 BadgedBox(
                     badge = {
                         if (grievancesCount > 0) {
                             Badge { Text("$grievancesCount") }
                         }
-                    }
+                    },
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_grievances),
-                        contentDescription = "Generate Report"
+                        contentDescription = "Generate Report",
                     )
                 }
             }

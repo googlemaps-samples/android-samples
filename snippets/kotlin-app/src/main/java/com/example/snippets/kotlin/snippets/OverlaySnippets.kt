@@ -34,13 +34,15 @@ import java.net.URL
 
 @SnippetGroup(
     title = "Overlays",
-    description = "Snippets demonstrating GroundOverlays and TileOverlays."
+    description = "Snippets demonstrating GroundOverlays and TileOverlays.",
 )
 class OverlaySnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "1. Ground Overlays",
-        description = "What it does: Binds an image bitmap (historical map graphic) to fixed geographic coordinates on the map surface.\nHow to see the effect: A historical 1922 map image overlays the ground in Newark, NJ.",
+        description = "What it does: Binds an image bitmap (historical map graphic) to fixed geographic coordinates " +
+            "on the map surface.\nHow to see the effect: A historical 1922 map image overlays the ground in Newark, " +
+            "NJ.",
     )
     fun groundOverlays() {
         // [START maps_android_ground_overlays_add]
@@ -80,7 +82,7 @@ class OverlaySnippets(private val map: TrackedMap) {
             GroundOverlayOptions()
                 .image(BitmapDescriptorFactory.fromResource(R.drawable.harbour_bridge))
                 .position(LatLng(-33.873, 151.206), 100f)
-                .clickable(true)
+                .clickable(true),
         )
         sydneyGroundOverlay?.tag = "Sydney"
         // [END maps_android_ground_overlays_associate_data]
@@ -88,7 +90,9 @@ class OverlaySnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "2. Ground Overlay Position Image Location",
-        description = "What it does: Configures ground overlay placement using anchor offset and center LatLng coordinates.\nHow to see the effect: The image aligns precisely relative to its anchor point and width/height dimensions.",
+        description = "What it does: Configures ground overlay placement using anchor offset and center LatLng " +
+            "coordinates.\nHow to see the effect: The image aligns precisely relative to its anchor point and " +
+            "width/height dimensions.",
     )
     fun positionImageLocation() {
         // [START maps_android_ground_overlays_position_image_location]
@@ -101,13 +105,15 @@ class OverlaySnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "3. Ground Overlay Position Image Bounds",
-        description = "What it does: Stretches and bounds a ground overlay image across a LatLngBounds rectangle.\nHow to see the effect: The image overlay scales to fit exactly within SW and NE geographic boundary corners.",
+        description = "What it does: Stretches and bounds a ground overlay image across a LatLngBounds rectangle.\n" +
+            "How to see the effect: The image overlay scales to fit exactly within SW and NE geographic boundary " +
+            "corners.",
     )
     fun positionImageBounds() {
         // [START maps_android_ground_overlays_position_image_bounds]
         val newarkBounds = LatLngBounds(
-            LatLng(40.712216, -74.22655),  // South west corner
-            LatLng(40.773941, -74.12544)   // North east corner
+            LatLng(40.712216, -74.22655), // South west corner
+            LatLng(40.773941, -74.12544), // North east corner
         )
         val newarkMap = GroundOverlayOptions()
             .image(BitmapDescriptorFactory.fromResource(R.drawable.newark_nj_1922))
@@ -117,21 +123,24 @@ class OverlaySnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "4. Tile Overlays Add",
-        description = "What it does: Adds a custom TileOverlay layer backed by a custom web URL tile server (UrlTileProvider).\nHow to see the effect: Custom raster imagery tiles fetch and overlay the base map as you pan and zoom.",
+        description = "What it does: Adds a custom TileOverlay layer backed by a custom web URL tile server " +
+            "(UrlTileProvider).\nHow to see the effect: Custom raster imagery tiles fetch and overlay the base map " +
+            "as you pan and zoom.",
     )
     fun tileOverlaysAdd() {
         // [START maps_android_tile_overlays_add]
         val tileProvider: TileProvider = object : UrlTileProvider(256, 256) {
             override fun getTileUrl(x: Int, y: Int, zoom: Int): URL? {
-
                 /* Define the URL pattern for the tile images */
                 val url = "http://my.image.server/images/$zoom/$x/$y.png"
                 return if (!checkTileExists(x, y, zoom)) {
                     null
-                } else try {
-                    URL(url)
-                } catch (e: MalformedURLException) {
-                    throw AssertionError(e)
+                } else {
+                    try {
+                        URL(url)
+                    } catch (e: MalformedURLException) {
+                        throw AssertionError(e)
+                    }
                 }
             }
 
@@ -150,7 +159,7 @@ class OverlaySnippets(private val map: TrackedMap) {
 
         val tileOverlay = map.addTileOverlay(
             TileOverlayOptions()
-                .tileProvider(tileProvider)
+                .tileProvider(tileProvider),
         )
         tileOverlay?.let {
             val isVisible = it.isVisible
@@ -171,7 +180,9 @@ class OverlaySnippets(private val map: TrackedMap) {
 
     @SnippetItem(
         title = "5. Tile Overlays Transparency",
-        description = "What it does: Configures and toggles semi-transparency (0.5f) on a custom tile overlay layer.\nHow to see the effect: Base map vector features show through the semi-transparent custom tile layer.",
+        description = "What it does: Configures and toggles semi-transparency (0.5f) on a custom tile overlay " +
+            "layer.\nHow to see the effect: Base map vector features show through the semi-transparent custom tile " +
+            "layer.",
     )
     fun tileOverlaysTransparency() {
         // [START maps_android_tile_overlays_transparency]
@@ -179,11 +190,10 @@ class OverlaySnippets(private val map: TrackedMap) {
             TileOverlayOptions()
                 .tileProvider(object : UrlTileProvider(256, 256) {
                     // [START_EXCLUDE]
-                    override fun getTileUrl(i: Int, i1: Int, i2: Int): URL? {
-                        return null
-                    } // [END_EXCLUDE]
+                    override fun getTileUrl(i: Int, i1: Int, i2: Int): URL? = null
+                    // [END_EXCLUDE]
                 })
-                .transparency(0.5f)
+                .transparency(0.5f),
         )
 
         // Switch between 0.0f and 0.5f transparency.

@@ -13,10 +13,6 @@
 // limitations under the License.
 package com.example.kotlindemos
 
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -26,7 +22,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.graphics.ColorUtils
-
+import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
@@ -42,8 +41,6 @@ import com.google.android.gms.maps.model.MapCapabilities
 import com.google.android.gms.maps.model.PlaceFeature
 import com.google.android.material.button.MaterialButton
 import kotlin.math.roundToInt
-import com.example.common_ui.R
-
 
 private val TAG = DataDrivenBoundariesActivity::class.java.simpleName
 
@@ -59,15 +56,19 @@ private val TAG = DataDrivenBoundariesActivity::class.java.simpleName
     category = "Data-Driven Styling",
     complexity = Complexity.ADVANCED,
     tags = ["#boundaries", "#datadriven", "#featurelayer", "#locality", "#choropleth"],
-    purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary clicks.",
+    purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary " +
+        "clicks.",
     successCriteria = "Boundaries render with custom stroke and fill colors; tapping a region highlights its polygon.",
     failureIndicators = "Boundary layer is null (requires vector map / Map ID) or click listener not firing.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 // [START maps_android_data_driven_styling_boundaries]
 // Add PopupMenu.OnMenuItemClickListener interface
-class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
-    FeatureLayer.OnFeatureClickListener, PopupMenu.OnMenuItemClickListener {
+class DataDrivenBoundariesActivity :
+    SamplesBaseActivity(),
+    OnMapReadyCallback,
+    FeatureLayer.OnFeatureClickListener,
+    PopupMenu.OnMenuItemClickListener {
 
     private lateinit var map: GoogleMap
 
@@ -87,9 +88,9 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
     // --- Style Factories (defined once) ---
     private val localityStyleFactory: FeatureLayer.StyleFactory = createLocalityStyleFactory()
     private val areaLevel1StyleFactory: FeatureLayer.StyleFactory = createAreaLevel1StyleFactory()
+
     // Country factory references selectedPlaceIds, needs to be instance property or re-created if needed
     private val countryStyleFactory: FeatureLayer.StyleFactory = createCountryStyleFactory()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,7 +167,7 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
             Toast.makeText(
                 this,
                 "Data-driven Styling is not available. See README.md for instructions.",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_LONG,
             ).show()
         }
 
@@ -174,17 +175,17 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
         localityLayer = googleMap.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.LOCALITY)
-                .build()
+                .build(),
         )
         areaLevel1Layer = googleMap.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.ADMINISTRATIVE_AREA_LEVEL_1)
-                .build()
+                .build(),
         )
         countryLayer = googleMap.getFeatureLayer(
             FeatureLayerOptions.Builder()
                 .featureType(FeatureType.COUNTRY)
-                .build()
+                .build(),
         ).also {
             it.addOnFeatureClickListener(this)
         }
@@ -296,7 +297,6 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
         }
     }
 
-
     /**
      * Handles clicks on the PopupMenu items.
      */
@@ -308,14 +308,17 @@ class DataDrivenBoundariesActivity : SamplesBaseActivity(), OnMapReadyCallback,
             R.id.boundary_type_locality -> {
                 localityEnabled = item.isChecked
             }
+
             R.id.boundary_type_administrative_area_level_1 -> {
                 adminAreaEnabled = item.isChecked
             }
+
             R.id.boundary_type_country -> {
                 countryEnabled = item.isChecked
                 // If disabling country layer, clear selection visually (optional)
                 // if (!countryEnabled) selectedPlaceIds.clear()
             }
+
             else -> return false // Unknown item
         }
 

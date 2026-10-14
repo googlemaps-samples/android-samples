@@ -12,12 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
-
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,10 +24,9 @@ import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.mapdemo.R;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,25 +45,24 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 import com.google.android.gms.maps.model.SquareCap;
-
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * This shows how to draw polylines on a map.
- */
+/** This shows how to draw polylines on a map. */
 @Sample(
-    id = "polylines",
-    title = "Polylines & Patterns",
-    description = "Drawing polylines with joint types, dash/dot stroke patterns, joint styles, and spans.",
-    category = "Shapes & Geometry",
-    complexity = Complexity.SIMPLE,
-    tags = {"#shapes", "#polylines", "#patterns", "#dashes", "#stroke", "#routes"},
-    purpose = "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel joints.",
-    successCriteria = "Polylines render crisp dashed and dotted stroke lines along coordinate vertices.",
-    failureIndicators = "Line caps distorted or custom pattern ignored on high-DPI screens.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "polylines",
+        title = "Polylines & Patterns",
+        description =
+                "Drawing polylines with joint types, dash/dot stroke patterns, joint styles, and spans.",
+        category = "Shapes & Geometry",
+        complexity = Complexity.SIMPLE,
+        tags = {"#shapes", "#polylines", "#patterns", "#dashes", "#stroke", "#routes"},
+        purpose =
+                "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel joints.",
+        successCriteria =
+                "Polylines render crisp dashed and dotted stroke lines along coordinate vertices.",
+        failureIndicators = "Line caps distorted or custom pattern ignored on high-DPI screens.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_polylines]
 public class PolylineDemoActivity extends SamplesBaseActivity
         implements OnSeekBarChangeListener, OnItemSelectedListener, OnMapReadyCallback {
@@ -115,23 +108,23 @@ public class PolylineDemoActivity extends SamplesBaseActivity
     // string resource IDs as identifiers.
 
     private static final int[] CAP_TYPE_NAME_RESOURCE_IDS = {
-            com.example.common_ui.R.string.cap_butt, // Default
-            com.example.common_ui.R.string.cap_round,
-            com.example.common_ui.R.string.cap_square,
-            com.example.common_ui.R.string.cap_image,
+        com.example.common_ui.R.string.cap_butt, // Default
+        com.example.common_ui.R.string.cap_round,
+        com.example.common_ui.R.string.cap_square,
+        com.example.common_ui.R.string.cap_image,
     };
 
     private static final int[] JOINT_TYPE_NAME_RESOURCE_IDS = {
-            com.example.common_ui.R.string.joint_type_default, // Default
-            com.example.common_ui.R.string.joint_type_bevel,
-            com.example.common_ui.R.string.joint_type_round,
+        com.example.common_ui.R.string.joint_type_default, // Default
+        com.example.common_ui.R.string.joint_type_bevel,
+        com.example.common_ui.R.string.joint_type_round,
     };
 
     private static final int[] PATTERN_TYPE_NAME_RESOURCE_IDS = {
-            com.example.common_ui.R.string.pattern_solid, // Default
-            com.example.common_ui.R.string.pattern_dashed,
-            com.example.common_ui.R.string.pattern_dotted,
-            com.example.common_ui.R.string.pattern_mixed,
+        com.example.common_ui.R.string.pattern_solid, // Default
+        com.example.common_ui.R.string.pattern_dashed,
+        com.example.common_ui.R.string.pattern_dotted,
+        com.example.common_ui.R.string.pattern_mixed,
     };
 
     @Override
@@ -152,33 +145,44 @@ public class PolylineDemoActivity extends SamplesBaseActivity
         widthBar.setProgress(MAX_WIDTH_PX / 2);
 
         startCapSpinner = findViewById(com.example.common_ui.R.id.startCapSpinner);
-        startCapSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
-                getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
+        startCapSpinner.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
 
         endCapSpinner = findViewById(com.example.common_ui.R.id.endCapSpinner);
-        endCapSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
-                getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
+        endCapSpinner.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        getResourceStrings(CAP_TYPE_NAME_RESOURCE_IDS)));
 
         jointTypeSpinner = findViewById(com.example.common_ui.R.id.jointTypeSpinner);
-        jointTypeSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
-                getResourceStrings(JOINT_TYPE_NAME_RESOURCE_IDS)));
+        jointTypeSpinner.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        getResourceStrings(JOINT_TYPE_NAME_RESOURCE_IDS)));
 
         patternSpinner = findViewById(com.example.common_ui.R.id.patternSpinner);
-        patternSpinner.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item,
-                getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
+        patternSpinner.setAdapter(
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        getResourceStrings(PATTERN_TYPE_NAME_RESOURCE_IDS)));
 
         clickabilityCheckbox = findViewById(com.example.common_ui.R.id.toggleClickability);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
 
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }
+
     // [START_EXCLUDE silent]
 
     private String[] getResourceStrings(int[] resourceIds) {
@@ -188,30 +192,35 @@ public class PolylineDemoActivity extends SamplesBaseActivity
         }
         return strings;
     }
+
     // [END_EXCLUDE]
 
     @Override
     public void onMapReady(GoogleMap map) {
 
         // Override the default content description on the view, for accessibility mode.
-        map.setContentDescription(getString(com.example.common_ui.R.string.polyline_demo_description));
+        map.setContentDescription(
+                getString(com.example.common_ui.R.string.polyline_demo_description));
 
         // A geodesic polyline that goes around the world.
-        map.addPolyline(new PolylineOptions()
-                .add(LHR, AKL, LAX, JFK, LHR)
-                .width(INITIAL_STROKE_WIDTH_PX)
-                .color(Color.BLUE)
-                .geodesic(true)
-                .clickable(clickabilityCheckbox.isChecked()));
+        map.addPolyline(
+                new PolylineOptions()
+                        .add(LHR, AKL, LAX, JFK, LHR)
+                        .width(INITIAL_STROKE_WIDTH_PX)
+                        .color(Color.BLUE)
+                        .geodesic(true)
+                        .clickable(clickabilityCheckbox.isChecked()));
 
         // A simple polyline across Australia. This polyline will be mutable.
-        int color = Color.HSVToColor(
-                alphaBar.getProgress(), new float[]{hueBar.getProgress(), 1, 1});
-        mutablePolyline = map.addPolyline(new PolylineOptions()
-                .color(color)
-                .width(widthBar.getProgress())
-                .clickable(clickabilityCheckbox.isChecked())
-                .add(MELBOURNE, ADELAIDE, PERTH, DARWIN));
+        int color =
+                Color.HSVToColor(alphaBar.getProgress(), new float[] {hueBar.getProgress(), 1, 1});
+        mutablePolyline =
+                map.addPolyline(
+                        new PolylineOptions()
+                                .color(color)
+                                .width(widthBar.getProgress())
+                                .clickable(clickabilityCheckbox.isChecked())
+                                .add(MELBOURNE, ADELAIDE, PERTH, DARWIN));
 
         hueBar.setOnSeekBarChangeListener(this);
         alphaBar.setOnSeekBarChangeListener(this);
@@ -224,20 +233,23 @@ public class PolylineDemoActivity extends SamplesBaseActivity
 
         mutablePolyline.setStartCap(getSelectedCap(startCapSpinner.getSelectedItemPosition()));
         mutablePolyline.setEndCap(getSelectedCap(endCapSpinner.getSelectedItemPosition()));
-        mutablePolyline.setJointType(getSelectedJointType(jointTypeSpinner.getSelectedItemPosition()));
+        mutablePolyline.setJointType(
+                getSelectedJointType(jointTypeSpinner.getSelectedItemPosition()));
         mutablePolyline.setPattern(getSelectedPattern(patternSpinner.getSelectedItemPosition()));
 
         // Move the map so that it is centered on the mutable polyline.
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(MELBOURNE, 3));
 
         // Add a listener for polyline clicks that changes the clicked polyline's color.
-        map.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener() {
-            @Override
-            public void onPolylineClick(Polyline polyline) {
-                // Flip the values of the red, green and blue components of the polyline's color.
-                polyline.setColor(polyline.getColor() ^ 0x00ffffff);
-            }
-        });
+        map.setOnPolylineClickListener(
+                new GoogleMap.OnPolylineClickListener() {
+                    @Override
+                    public void onPolylineClick(Polyline polyline) {
+                        // Flip the values of the red, green and blue components of the polyline's
+                        // color.
+                        polyline.setColor(polyline.getColor() ^ 0x00ffffff);
+                    }
+                });
     }
 
     // [START_EXCLUDE silent]
@@ -320,8 +332,9 @@ public class PolylineDemoActivity extends SamplesBaseActivity
         }
 
         if (seekBar == hueBar) {
-            mutablePolyline.setColor(Color.HSVToColor(
-                    Color.alpha(mutablePolyline.getColor()), new float[]{progress, 1, 1}));
+            mutablePolyline.setColor(
+                    Color.HSVToColor(
+                            Color.alpha(mutablePolyline.getColor()), new float[] {progress, 1, 1}));
         } else if (seekBar == alphaBar) {
             float[] prevHSV = new float[3];
             Color.colorToHSV(mutablePolyline.getColor(), prevHSV);
@@ -333,8 +346,7 @@ public class PolylineDemoActivity extends SamplesBaseActivity
 
     /**
      * Toggles the clickability of the polyline based on the state of the View that triggered this
-     * call.
-     * This callback is defined on the CheckBox in the layout for this Activity.
+     * call. This callback is defined on the CheckBox in the layout for this Activity.
      */
     public void toggleClickability(View view) {
         if (mutablePolyline != null) {

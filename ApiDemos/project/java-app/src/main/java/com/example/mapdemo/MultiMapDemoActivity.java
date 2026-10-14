@@ -12,42 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import android.os.Bundle;
-
 import com.example.common_ui.R;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
 import com.example.common_ui.catalog.Sample;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
- * Demonstrates rendering and animating multiple independent GoogleMap instances concurrently.
- * Each quadrant showcases a UNESCO World Heritage Site with simultaneous smooth zoom animations.
+ * Demonstrates rendering and animating multiple independent GoogleMap instances concurrently. Each
+ * quadrant showcases a UNESCO World Heritage Site with simultaneous smooth zoom animations.
  */
 @Sample(
-    id = "com.example.mapdemo.MultiMapDemoActivity",
-    title = "Multi-Map View",
-    description = "Rendering multiple independent GoogleMap instances in a single activity layout.",
-    category = "Map Initialization",
-    complexity = Complexity.ADVANCED,
-    tags = {"#multimap", "#multiple", "#layout", "#rendering"},
-    apiCalls = {
-        "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
-        "GoogleMap.animateCamera(CameraUpdate, int, CancelableCallback)",
-        "GoogleMap.addMarker(MarkerOptions)"
-    },
-    purpose = "Shows how to render and control multiple independent GoogleMap instances concurrently in one screen.",
-    successCriteria = "All 4 map fragments render distinct geographic locations simultaneously with smooth scrolling.",
-    failureIndicators = "GL context collision, thread locking, or tile stuttering when dragging multiple maps.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "com.example.mapdemo.MultiMapDemoActivity",
+        title = "Multi-Map View",
+        description =
+                "Rendering multiple independent GoogleMap instances in a single activity layout.",
+        category = "Map Initialization",
+        complexity = Complexity.ADVANCED,
+        tags = {"#multimap", "#multiple", "#layout", "#rendering"},
+        apiCalls = {
+            "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
+            "GoogleMap.animateCamera(CameraUpdate, int, CancelableCallback)",
+            "GoogleMap.addMarker(MarkerOptions)"
+        },
+        purpose =
+                "Shows how to render and control multiple independent GoogleMap instances concurrently in one screen.",
+        successCriteria =
+                "All 4 map fragments render distinct geographic locations simultaneously with smooth scrolling.",
+        failureIndicators =
+                "GL context collision, thread locking, or tile stuttering when dragging multiple maps.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_multimap]
 public class MultiMapDemoActivity extends SamplesBaseActivity {
 
@@ -76,11 +76,16 @@ public class MultiMapDemoActivity extends SamplesBaseActivity {
         SupportMapFragment fragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(fragmentId);
         if (fragment != null) {
-            fragment.getMapAsync(map -> {
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(COMMON_START, INITIAL_ZOOM));
-                map.addMarker(new MarkerOptions().position(location).title(title));
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, TARGET_ZOOM), ANIM_DURATION_MS, null);
-            });
+            fragment.getMapAsync(
+                    map -> {
+                        map.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(COMMON_START, INITIAL_ZOOM));
+                        map.addMarker(new MarkerOptions().position(location).title(title));
+                        map.animateCamera(
+                                CameraUpdateFactory.newLatLngZoom(location, TARGET_ZOOM),
+                                ANIM_DURATION_MS,
+                                null);
+                    });
         }
     }
 }

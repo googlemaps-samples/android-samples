@@ -37,45 +37,45 @@ import com.google.maps.android.compose.rememberUpdatedMarkerState
 
 @Composable
 fun AddAMap() {
-  // [START maps_android_compose_add_a_map]
-  val singapore = LatLng(1.35, 103.87)
-  val singaporeMarkerState = rememberUpdatedMarkerState(position = singapore)
-  val cameraPositionState = rememberCameraPositionState {
-    position = CameraPosition.fromLatLngZoom(singapore, 10f)
-  }
-  GoogleMap(
-    modifier = Modifier.fillMaxSize(),
-    cameraPositionState = cameraPositionState
-  ) {
-    Marker(
-      state = singaporeMarkerState,
-      title = "Singapore",
-      snippet = "Marker in Singapore"
-    )
-  }
-  // [END maps_android_compose_add_a_map]
+    // [START maps_android_compose_add_a_map]
+    val singapore = LatLng(1.35, 103.87)
+    val singaporeMarkerState = rememberUpdatedMarkerState(position = singapore)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(singapore, 10f)
+    }
+    GoogleMap(
+        modifier = Modifier.fillMaxSize(),
+        cameraPositionState = cameraPositionState,
+    ) {
+        Marker(
+            state = singaporeMarkerState,
+            title = "Singapore",
+            snippet = "Marker in Singapore",
+        )
+    }
+    // [END maps_android_compose_add_a_map]
 }
 
 @Composable
 fun Properties() {
-  // [START maps_android_compose_set_properties]
-  var uiSettings by remember { mutableStateOf(MapUiSettings()) }
-  var properties by remember {
-    mutableStateOf(MapProperties(mapType = MapType.SATELLITE))
-  }
+    // [START maps_android_compose_set_properties]
+    var uiSettings by remember { mutableStateOf(MapUiSettings()) }
+    var properties by remember {
+        mutableStateOf(MapProperties(mapType = MapType.SATELLITE))
+    }
 
-  Box(Modifier.fillMaxSize()) {
-    GoogleMap(
-      modifier = Modifier.matchParentSize(),
-      properties = properties,
-      uiSettings = uiSettings
-    )
-    Switch(
-      checked = uiSettings.zoomControlsEnabled,
-      onCheckedChange = {
-        uiSettings = uiSettings.copy(zoomControlsEnabled = it)
-      }
-    )
-  }
-  // [END maps_android_compose_set_properties]
+    Box(Modifier.fillMaxSize()) {
+        GoogleMap(
+            modifier = Modifier.matchParentSize(),
+            properties = properties,
+            uiSettings = uiSettings,
+        )
+        Switch(
+            checked = uiSettings.zoomControlsEnabled,
+            onCheckedChange = {
+                uiSettings = uiSettings.copy(zoomControlsEnabled = it)
+            },
+        )
+    }
+    // [END maps_android_compose_set_properties]
 }

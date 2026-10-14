@@ -28,6 +28,6 @@ import org.junit.runners.Suite
     MarkerSnippetsTest::class,
     CameraControlSnippetsTest::class,
     EventsSnippetsTest::class,
-    MapInitSnippetsTest::class
+    MapInitSnippetsTest::class,
 )
 class CatalogCapabilitiesTestSuite

@@ -13,6 +13,7 @@
 // limitations under the License.
 package com.example.firemarkers.viewmodel
 
+import app.cash.turbine.test
 import com.example.firemarkers.CustomTestRunner
 import com.example.firemarkers.data.FirebaseConnection
 import com.google.common.truth.Truth.assertThat
@@ -41,10 +42,9 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.robolectric.annotation.Config
-import app.cash.turbine.test
 
 @RunWith(CustomTestRunner::class)
-@Config(manifest=Config.NONE)
+@Config(manifest = Config.NONE)
 @ExperimentalCoroutinesApi
 class MarkersViewModelTest {
 
@@ -85,7 +85,7 @@ class MarkersViewModelTest {
 
             // Simulate the Firebase update making this VM the controller
             val mockSnapshot = mockAnimationStateSnapshot(
-                MarkersViewModel.AnimationState(controllerId = viewModel.viewModelId)
+                MarkersViewModel.AnimationState(controllerId = viewModel.viewModelId),
             )
             listenerCaptor.firstValue.onDataChange(mockSnapshot)
 
@@ -100,7 +100,7 @@ class MarkersViewModelTest {
         verify(mockAnimationRef).addValueEventListener(listenerCaptor.capture())
 
         val mockSnapshot = mockAnimationStateSnapshot(
-            MarkersViewModel.AnimationState(controllerId = "some-other-id")
+            MarkersViewModel.AnimationState(controllerId = "some-other-id"),
         )
         listenerCaptor.firstValue.onDataChange(mockSnapshot)
         testDispatcher.scheduler.advanceUntilIdle()
@@ -113,7 +113,7 @@ class MarkersViewModelTest {
         val listenerCaptor = argumentCaptor<ValueEventListener>()
         verify(mockAnimationRef).addValueEventListener(listenerCaptor.capture())
         val mockSnapshot = mockAnimationStateSnapshot(
-            MarkersViewModel.AnimationState(controllerId = "not-this-vm")
+            MarkersViewModel.AnimationState(controllerId = "not-this-vm"),
         )
         listenerCaptor.firstValue.onDataChange(mockSnapshot)
         testDispatcher.scheduler.advanceUntilIdle()

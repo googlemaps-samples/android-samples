@@ -14,16 +14,14 @@
 
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.GroundOverlayDemoBinding
-import com.example.common_ui.catalog.Sample
-import com.example.common_ui.catalog.Complexity
-import com.example.common_ui.catalog.Framework
-
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.example.common_ui.R
+import com.example.common_ui.catalog.Complexity
+import com.example.common_ui.catalog.Framework
+import com.example.common_ui.catalog.Sample
+import com.example.common_ui.databinding.GroundOverlayDemoBinding
 import com.example.kotlindemos.utils.MapProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -52,16 +50,17 @@ import com.google.android.gms.maps.model.LatLngBounds
     complexity = Complexity.SIMPLE,
     tags = ["#overlays", "#groundoverlay", "#images", "#bounds", "#transparency"],
     purpose = "Demonstrates overlaying historical or custom aerial images onto the map with transparency sliders.",
-    successCriteria = "Historical Newark map image appears pinned to geographic coordinates with adjustable transparency.",
+    successCriteria = "Historical Newark map image appears pinned to geographic coordinates with adjustable " +
+        "transparency.",
     failureIndicators = "Overlay image stretched/misaligned or opacity slider unresponsive.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
-class GroundOverlayDemoActivity :  SamplesBaseActivity(),
+class GroundOverlayDemoActivity :
+    SamplesBaseActivity(),
     OnSeekBarChangeListener,
     OnMapReadyCallback,
     OnGroundOverlayClickListener,
-    MapProvider
-{
+    MapProvider {
     private val images: MutableList<BitmapDescriptor> = ArrayList()
     internal lateinit var groundOverlay: GroundOverlay
 
@@ -133,7 +132,7 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
                 // The bearing of the overlay in degrees, clockwise from north.
                 .bearing(30f)
                 // The initial clickability of the overlay.
-                .clickable(binding.toggleClickability.isChecked)
+                .clickable(binding.toggleClickability.isChecked),
         ) ?: error("Expected a non null addGroundOverlay")
 
         // Add a large overlay at Newark on top of the smaller overlay.
@@ -141,7 +140,7 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
             GroundOverlayOptions()
                 .image(images[currentEntry]).anchor(0f, 1f)
                 .position(NEWARK, 8600f, 6500f)
-                .transparency(binding.transparencySeekBar.progress.toFloat() / TRANSPARENCY_MAX.toFloat())
+                .transparency(binding.transparencySeekBar.progress.toFloat() / TRANSPARENCY_MAX.toFloat()),
         ) ?: error("Expected a non null addGroundOverlay")
 
         groundOverlay.tag = images[currentEntry]
@@ -203,11 +202,11 @@ class GroundOverlayDemoActivity :  SamplesBaseActivity(),
         internal val NEWARK = LatLng(40.714086, -74.228697)
         internal val NEAR_NEWARK = LatLng(
             NEWARK.latitude - 0.001,
-            NEWARK.longitude - 0.025
+            NEWARK.longitude - 0.025,
         )
         internal val OVERLAY_BOUNDS = LatLngBounds(
             LatLng(40.7050, -74.2600),
-            LatLng(40.7800, -74.1200)
+            LatLng(40.7800, -74.1200),
         )
     }
 }

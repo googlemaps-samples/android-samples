@@ -29,20 +29,25 @@ import com.google.android.gms.maps.model.IndoorBuilding
 
 @SnippetGroup(
     title = "Events",
-    description = "Snippets demonstrating clicks, camera events, POI clicks and indoor building levels."
+    description = "Snippets demonstrating clicks, camera events, POI clicks and indoor building levels.",
 )
 class EventsSnippets(private val context: Context, private val map: TrackedMap) {
 
     @SnippetItem(
         title = "1. MapView Disable Click Event",
-        description = "What it does: Sets isClickable = false on the underlying MapView container.\nHow to see the effect: Direct tap interaction on the map view is disabled.",
+        description = "What it does: Sets isClickable = false on the underlying MapView container.\n" +
+            "How to see the effect: Direct tap interaction on the map view is disabled.",
     )
     fun mapViewDisableClickEvent() {
         var mapView: MapView? = null
         if (context is android.app.Activity) {
             mapView = (context as? com.example.snippets.kotlin.MapActivity)?.mapView
                 ?: context.findViewById<MapView>(R.id.mapView)
-                ?: (context.findViewById<android.widget.FrameLayout>(com.example.snippets.common.R.id.map_view_holder)?.getChildAt(0) as? MapView)
+                ?: (
+                    context.findViewById<android.widget.FrameLayout>(
+                        com.example.snippets.common.R.id.map_view_holder,
+                    )?.getChildAt(0) as? MapView
+                    )
         }
         // [START maps_android_events_disable_clicks_mapview]
         mapView?.isClickable = false
@@ -51,7 +56,8 @@ class EventsSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "2. Map Fragment Disable Click Event",
-        description = "What it does: Sets isClickable = false on the SupportMapFragment root view container.\nHow to see the effect: Touch interactions on the map fragment view are ignored.",
+        description = "What it does: Sets isClickable = false on the SupportMapFragment root view container.\n" +
+            "How to see the effect: Touch interactions on the map fragment view are ignored.",
     )
     fun mapFragmentDisableClickEvent() {
         // [START maps_android_events_disable_clicks_mapfragment]
@@ -66,7 +72,9 @@ class EventsSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "3. Active Indoor Building Level",
-        description = "What it does: Queries map.focusedBuilding to retrieve active indoor level indices.\nHow to see the effect: Active floor level information is extracted when viewing an indoor building plan.",
+        description = "What it does: Queries map.focusedBuilding to retrieve active indoor level indices.\n" +
+            "How to see the effect: Active floor level information is extracted when viewing an indoor building " +
+            "plan.",
     )
     fun focusedBuilding() {
         // [START maps_android_events_active_level]
@@ -79,16 +87,19 @@ class EventsSnippets(private val context: Context, private val map: TrackedMap) 
 
     @SnippetItem(
         title = "4. POI Click Listener",
-        description = "What it does: Registers an OnPoiClickListener to capture tap events on Points of Interest.\nHow to see the effect: Tap any POI icon (such as a park or business); a Toast popup displays its name, Place ID, and location.",
+        description = "What it does: Registers an OnPoiClickListener to capture tap events on Points of Interest.\n" +
+            "How to see the effect: Tap any POI icon (such as a park or business); a Toast popup displays its " +
+            "name, Place ID, and location.",
     )
     fun poiClickListener() {
         // [START maps_android_on_poi_click_demo]
         map.setOnPoiClickListener { poi ->
             Toast.makeText(
-                context, """Clicked: ${poi.name}
+                context,
+                """Clicked: ${poi.name}
                 Place ID:${poi.placeId}
                 Latitude:${poi.latLng.latitude} Longitude:${poi.latLng.longitude}""",
-                Toast.LENGTH_SHORT
+                Toast.LENGTH_SHORT,
             ).show()
         }
         // [END maps_android_on_poi_click_demo]

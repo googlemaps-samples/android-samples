@@ -14,20 +14,15 @@
 
 package com.example.mapdemo;
 
+import android.os.Bundle;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
-/**
- * Demonstrates how to instantiate a SupportMapFragment programmatically and add a marker to it.
- */
+/** Demonstrates how to instantiate a SupportMapFragment programmatically and add a marker to it. */
 public class ProgrammaticDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     private static final String MAP_FRAGMENT_TAG = "map";
@@ -39,18 +34,23 @@ public class ProgrammaticDemoActivity extends SamplesBaseActivity implements OnM
 
         // It isn't possible to set a fragment's id programmatically so we set a tag instead and
         // search for it using that.
-        SupportMapFragment mapFragment = (SupportMapFragment)
-                getSupportFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
+        SupportMapFragment mapFragment =
+                (SupportMapFragment)
+                        getSupportFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
 
         // We only create a fragment if it doesn't already exist.
         if (mapFragment == null) {
             // To programmatically add the map, we first create a SupportMapFragment.
             mapFragment = SupportMapFragment.newInstance();
 
-            // Then we add it using a FragmentTransaction into the standard sample content container.
+            // Then we add it using a FragmentTransaction into the standard sample content
+            // container.
             FragmentTransaction fragmentTransaction =
                     getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(com.example.common_ui.R.id.sample_content_container, mapFragment, MAP_FRAGMENT_TAG);
+            fragmentTransaction.add(
+                    com.example.common_ui.R.id.sample_content_container,
+                    mapFragment,
+                    MAP_FRAGMENT_TAG);
             fragmentTransaction.commit();
         }
         mapFragment.getMapAsync(this);

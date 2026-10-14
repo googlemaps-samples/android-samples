@@ -16,14 +16,12 @@
 
 package com.example.kotlindemos
 
-
-import com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import com.example.common_ui.R
-
+import com.example.common_ui.databinding.StreetViewPanoramaNavigationDemoBinding
 import com.google.android.gms.maps.StreetViewPanorama
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
@@ -38,15 +36,19 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
 
     // George St, Sydney
     private val sydney = LatLng(-33.87365, 151.20689)
+
     // Cole St, San Francisco
     private val sanFrancisco = LatLng(37.769263, -122.450727)
+
     // Santorini, Greece using the Pano ID of the location instead of a LatLng object
     private val santoriniPanoId = "WddsUw1geEoAAAQIt9RnsQ"
+
     // LatLng with no panorama
     private val invalid = LatLng(-45.125783, 151.276417)
 
     // The amount in degrees by which to scroll the camera
     private val PAN_BY_DEGREES = 30
+
     // The amount of zoom
     private val ZOOM_BY = 0.5f
 
@@ -56,7 +58,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     private val duration: Long
         get() = binding.durationBar.progress.toLong()
 
-    override fun onCreate(savedInstanceState:Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = StreetViewPanoramaNavigationDemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -75,7 +77,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
         binding.movePosition.setOnClickListener { onMovePosition() }
 
         val streetViewPanoramaFragment = supportFragmentManager
-                .findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment
+            .findFragmentById(R.id.streetviewpanorama) as SupportStreetViewPanoramaFragment
         streetViewPanoramaFragment.getStreetViewPanoramaAsync { panorama ->
             streetViewPanorama = panorama
             // Only set the panorama to sydney on startup (when no panoramas have been
@@ -92,7 +94,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
      *
      * @param stuffToDo the code to be executed if [streetViewPanorama] is ready
      */
-    private fun checkReadyThen(stuffToDo : () -> Unit) {
+    private fun checkReadyThen(stuffToDo: () -> Unit) {
         if (!::streetViewPanorama.isInitialized) {
             Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show()
         } else {
@@ -121,11 +123,14 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
      * specified arguments.
      */
     private fun updateStreetViewPanorama(zoom: Float, tilt: Float, bearing: Float) {
-        streetViewPanorama.animateTo(StreetViewPanoramaCamera.Builder().apply {
-            zoom(zoom)
-            tilt(tilt)
-            bearing(bearing)
-        } .build(), duration)
+        streetViewPanorama.animateTo(
+            StreetViewPanoramaCamera.Builder().apply {
+                zoom(zoom)
+                tilt(tilt)
+                bearing(bearing)
+            }.build(),
+            duration,
+        )
     }
 
     private fun onZoomIn() {
@@ -183,8 +188,11 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     private fun onRequestPosition() {
         checkReadyThen {
             streetViewPanorama.location.let {
-                Toast.makeText(this, streetViewPanorama.location.position.toString(),
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    streetViewPanorama.location.position.toString(),
+                    Toast.LENGTH_SHORT,
+                ).show()
             }
         }
     }
@@ -199,10 +207,7 @@ class StreetViewPanoramaNavigationDemoActivity : SamplesBaseActivity() {
     }
 
     /** Extension function to find the closest link from a point. */
-    private fun Array<StreetViewPanoramaLink>.findClosestLinkToBearing(
-            bearing: Float
-    ): StreetViewPanoramaLink {
-
+    private fun Array<StreetViewPanoramaLink>.findClosestLinkToBearing(bearing: Float): StreetViewPanoramaLink {
         // Find the difference between angle a and b as a value between 0 and 180.
         val findNormalizedDifference = fun (a: Float, b: Float): Float {
             val diff = a - b

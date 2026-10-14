@@ -31,7 +31,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
  * color applied to the map, and add a marker on the map.
  */
 public class BackgroundColorCustomizationProgrammaticDemoActivity extends SamplesBaseActivity
-    implements OnMapReadyCallback {
+        implements OnMapReadyCallback {
 
     private static final String MAP_FRAGMENT_TAG = "map";
 
@@ -40,23 +40,29 @@ public class BackgroundColorCustomizationProgrammaticDemoActivity extends Sample
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.example.common_ui.R.layout.background_color_customization_programmatic_demo);
+        setContentView(
+                com.example.common_ui.R.layout.background_color_customization_programmatic_demo);
 
         // It isn't possible to set a fragment's id programmatically so we set a tag instead and
         // search for it using that.
         SupportMapFragment mapFragment =
-            (SupportMapFragment) getSupportFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
+                (SupportMapFragment)
+                        getSupportFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
 
         // We only create a fragment if it doesn't already exist.
         if (mapFragment == null) {
             // To programmatically add the map, we first create a SupportMapFragment, with the
-            // GoogleMapOptions to set the custom background color displayed before the map tiles load.
+            // GoogleMapOptions to set the custom background color displayed before the map tiles
+            // load.
             mapFragment =
-                SupportMapFragment.newInstance(new GoogleMapOptions().backgroundColor(LIGHT_PINK_COLOR));
+                    SupportMapFragment.newInstance(
+                            new GoogleMapOptions().backgroundColor(LIGHT_PINK_COLOR));
 
             // Then we add the fragment using a FragmentTransaction.
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(com.example.common_ui.R.id.map, mapFragment, MAP_FRAGMENT_TAG);
+            FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(
+                    com.example.common_ui.R.id.map, mapFragment, MAP_FRAGMENT_TAG);
             fragmentTransaction.commit();
         }
         mapFragment.getMapAsync(this);
@@ -67,9 +73,12 @@ public class BackgroundColorCustomizationProgrammaticDemoActivity extends Sample
     public void onMapReady(GoogleMap map) {
         map.setMapType(GoogleMap.MAP_TYPE_NONE);
 
-        SwitchMaterial mapTypeToggleCheckbox = findViewById(com.example.common_ui.R.id.map_type_toggle);
+        SwitchMaterial mapTypeToggleCheckbox =
+                findViewById(com.example.common_ui.R.id.map_type_toggle);
         mapTypeToggleCheckbox.setOnCheckedChangeListener(
-            (view, isChecked) -> map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
+                (view, isChecked) ->
+                        map.setMapType(
+                                isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 
         map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }

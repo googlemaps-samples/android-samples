@@ -34,7 +34,7 @@ class MainActivity : CatalogActivity() {
             Toast.makeText(
                 this,
                 "Add your own API key in secrets.properties as MAPS_API_KEY=YOUR_API_KEY",
-                Toast.LENGTH_LONG
+                Toast.LENGTH_LONG,
             ).show()
         }
     }

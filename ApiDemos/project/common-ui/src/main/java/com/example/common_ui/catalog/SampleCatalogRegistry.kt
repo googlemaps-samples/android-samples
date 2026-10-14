@@ -38,13 +38,15 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
                 "GoogleMap.addMarker(MarkerOptions)",
-                "GoogleMap.moveCamera(CameraUpdate)"
+                "GoogleMap.moveCamera(CameraUpdate)",
             ),
             purpose = "Demonstrates clean, minimal map instantiation using SupportMapFragment.",
-            successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with working gestures.",
-            failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map failing to unpause.",
+            successCriteria = "The map loads default vector tiles cleanly centered at the initial coordinates with " +
+                "working gestures.",
+            failureIndicators = "Grey tiles (missing API key or auth mismatch), crash on back navigation, or map " +
+                "failing to unpause.",
             kotlinActivity = "com.example.kotlindemos.BasicMapDemoActivity",
-            javaActivity = "com.example.mapdemo.BasicMapDemoActivity"
+            javaActivity = "com.example.mapdemo.BasicMapDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.ProgrammaticDemoActivity",
@@ -56,13 +58,15 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "SupportMapFragment.newInstance()",
                 "FragmentManager.beginTransaction().add(...)",
-                "SupportMapFragment.getMapAsync(OnMapReadyCallback)"
+                "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
             ),
-            purpose = "Shows how to dynamically instantiate and attach SupportMapFragment using FragmentManager transactions.",
+            purpose = "Shows how to dynamically instantiate and attach SupportMapFragment using FragmentManager " +
+                "transactions.",
             successCriteria = "Map attaches dynamically to the container layout and renders correctly on launch.",
-            failureIndicators = "Blank screen, fragment transaction exception, or duplicate map fragments on orientation change.",
+            failureIndicators = "Blank screen, fragment transaction exception, or duplicate map fragments on " +
+                "orientation change.",
             kotlinActivity = "com.example.kotlindemos.ProgrammaticDemoActivity",
-            javaActivity = "com.example.mapdemo.ProgrammaticDemoActivity"
+            javaActivity = "com.example.mapdemo.ProgrammaticDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.RawMapViewDemoActivity",
@@ -74,13 +78,14 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "MapView.onCreate(Bundle)",
                 "MapView.getMapAsync(OnMapReadyCallback)",
-                "MapView.onStart() / onResume() / onPause()"
+                "MapView.onStart() / onResume() / onPause()",
             ),
             purpose = "Shows how to embed MapView directly in a layout and forward all Activity lifecycle callbacks.",
             successCriteria = "MapView loads tiles and pauses/resumes correctly when backgrounded and foregrounded.",
-            failureIndicators = "Black rendering surface, memory leaks on orientation change, or crash when onLowMemory is triggered.",
+            failureIndicators = "Black rendering surface, memory leaks on orientation change, or crash when " +
+                "onLowMemory is triggered.",
             kotlinActivity = "com.example.kotlindemos.RawMapViewDemoActivity",
-            javaActivity = "com.example.mapdemo.RawMapViewDemoActivity"
+            javaActivity = "com.example.mapdemo.RawMapViewDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.RetainMapDemoActivity",
@@ -91,13 +96,14 @@ object SampleCatalogRegistry {
             tags = listOf("#retain", "#configuration", "#rotation", "#lifecycle"),
             apiCalls = listOf(
                 "SupportMapFragment.retainInstance = true",
-                "SupportMapFragment.getMapAsync(OnMapReadyCallback)"
+                "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
             ),
             purpose = "Demonstrates retaining map instance state across orientation changes without reloading tiles.",
-            successCriteria = "Rotating device does not flash or re-initialize map state; markers and camera remain intact.",
+            successCriteria = "Rotating device does not flash or re-initialize map state; markers and camera remain " +
+                "intact.",
             failureIndicators = "Map resets to initial position or flashes white/black on rotation.",
             kotlinActivity = "com.example.kotlindemos.RetainMapDemoActivity",
-            javaActivity = "com.example.mapdemo.RetainMapDemoActivity"
+            javaActivity = "com.example.mapdemo.RetainMapDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.MultiMapDemoActivity",
@@ -109,13 +115,15 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "SupportMapFragment.getMapAsync(OnMapReadyCallback)",
                 "GoogleMap.animateCamera(CameraUpdate, int, CancelableCallback)",
-                "GoogleMap.addMarker(MarkerOptions)"
+                "GoogleMap.addMarker(MarkerOptions)",
             ),
-            purpose = "Shows how to render and control multiple independent GoogleMap instances concurrently in one screen.",
-            successCriteria = "All 4 map fragments render distinct geographic locations simultaneously with smooth scrolling.",
+            purpose = "Shows how to render and control multiple independent GoogleMap instances concurrently in one " +
+                "screen.",
+            successCriteria = "All 4 map fragments render distinct geographic locations simultaneously with smooth " +
+                "scrolling.",
             failureIndicators = "GL context collision, thread locking, or tile stuttering when dragging multiple maps.",
             kotlinActivity = "com.example.kotlindemos.MultiMapDemoActivity",
-            javaActivity = "com.example.mapdemo.MultiMapDemoActivity"
+            javaActivity = "com.example.mapdemo.MultiMapDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.MapInPagerDemoActivity",
@@ -127,13 +135,13 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "ViewPager2.adapter",
                 "MapView.getMapAsync(OnMapReadyCallback)",
-                "ViewParent.requestDisallowInterceptTouchEvent(true)"
+                "ViewParent.requestDisallowInterceptTouchEvent(true)",
             ),
             purpose = "Demonstrates embedding maps inside ViewPager tabs with proper touch disallow interception.",
             successCriteria = "Panning map does not accidentally trigger ViewPager page swipe.",
             failureIndicators = "Swiping horizontally pans the ViewPager instead of the map camera.",
             kotlinActivity = "com.example.kotlindemos.MapInPagerDemoActivity",
-            javaActivity = "com.example.mapdemo.MapInPagerDemoActivity"
+            javaActivity = "com.example.mapdemo.MapInPagerDemoActivity",
         ),
 
         // ==========================================
@@ -149,13 +157,15 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "GoogleMap.animateCamera(CameraUpdate, Int, CancelableCallback)",
                 "CameraPosition.Builder().target(...).zoom(...).bearing(...).tilt(...).build()",
-                "CameraUpdateFactory.newCameraPosition(CameraPosition)"
+                "CameraUpdateFactory.newCameraPosition(CameraPosition)",
             ),
-            purpose = "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing rotations.",
+            purpose = "Demonstrates programmatic camera movements, animated transitions, tilt angles, and bearing " +
+                "rotations.",
             successCriteria = "Buttons animate camera smoothly with custom durations, stops, and rotation angles.",
-            failureIndicators = "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform constraints.",
+            failureIndicators = "Jerky animations, unexpected camera jumps, or tilt angle exceeding platform " +
+                "constraints.",
             kotlinActivity = "com.example.kotlindemos.CameraDemoActivity",
-            javaActivity = "com.example.mapdemo.CameraDemoActivity"
+            javaActivity = "com.example.mapdemo.CameraDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.CameraClampingDemoActivity",
@@ -167,13 +177,16 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "GoogleMap.setLatLngBoundsForCameraTarget(LatLngBounds)",
                 "GoogleMap.setMinZoomPreference(Float)",
-                "GoogleMap.setMaxZoomPreference(Float)"
+                "GoogleMap.setMaxZoomPreference(Float)",
             ),
-            purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and zoom slider limits.",
-            successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max bounds immediately.",
-            failureIndicators = "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset Bounds'.",
+            purpose = "Demonstrates restricting camera panning to a specific bounding box (Adelaide/Pacific) and " +
+                "zoom slider limits.",
+            successCriteria = "User cannot pan the camera outside the clamped region; zoom sliders enforce min/max " +
+                "bounds immediately.",
+            failureIndicators = "Camera pans outside bounding box or resetting bounds fails when selecting 'Reset " +
+                "Bounds'.",
             kotlinActivity = "com.example.kotlindemos.CameraClampingDemoActivity",
-            javaActivity = "com.example.mapdemo.CameraClampingDemoActivity"
+            javaActivity = "com.example.mapdemo.CameraClampingDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.VisibleRegionDemoActivity",
@@ -186,13 +199,14 @@ object SampleCatalogRegistry {
                 "GoogleMap.setPadding(int, int, int, int)",
                 "GoogleMap.moveCamera(CameraUpdate)",
                 "GoogleMap.cameraPosition",
-                "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)"
+                "GoogleMap.setOnCameraIdleListener(OnCameraIdleListener)",
             ),
-            purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds dynamically.",
+            purpose = "Demonstrates reading GoogleMap.projection.visibleRegion and calculating viewport bounds " +
+                "dynamically.",
             successCriteria = "Bounding coordinates update live in the UI as the camera pans and zooms.",
             failureIndicators = "Projection returns null or stale LatLng bounds after camera idle.",
             kotlinActivity = "com.example.kotlindemos.VisibleRegionDemoActivity",
-            javaActivity = "com.example.mapdemo.VisibleRegionDemoActivity"
+            javaActivity = "com.example.mapdemo.VisibleRegionDemoActivity",
         ),
 
         // ==========================================
@@ -210,13 +224,16 @@ object SampleCatalogRegistry {
                 "PinConfig.builder().setBackgroundColor(...).setGlyph(...).build()",
                 "AdvancedMarkerOptions.icon(BitmapDescriptorFactory.fromPinConfig(...))",
                 "AdvancedMarkerOptions.collisionBehavior(Int)",
-                "GoogleMap.addMarker(AdvancedMarkerOptions)"
+                "GoogleMap.addMarker(AdvancedMarkerOptions)",
             ),
-            purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision behaviors, and custom View icons.",
-            successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with collision handling.",
-            failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or badge text blurry.",
+            purpose = "Demonstrates Cloud-backed Advanced Markers with custom colors, pin glyphs, collision " +
+                "behaviors, and custom View icons.",
+            successCriteria = "Custom colored pins and badge icon views render sharply at correct anchor points with " +
+                "collision handling.",
+            failureIndicators = "Pins render as default red markers (missing Map ID), collision behavior ignored, or " +
+                "badge text blurry.",
             kotlinActivity = "com.example.kotlindemos.AdvancedMarkersDemoActivity",
-            javaActivity = "com.example.mapdemo.AdvancedMarkersDemoActivity"
+            javaActivity = "com.example.mapdemo.AdvancedMarkersDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.MarkerDemoActivity",
@@ -230,13 +247,15 @@ object SampleCatalogRegistry {
                 "MarkerOptions.position(LatLng).title(String).draggable(Boolean)",
                 "GoogleMap.setInfoWindowAdapter(InfoWindowAdapter)",
                 "GoogleMap.setOnMarkerClickListener(OnMarkerClickListener)",
-                "GoogleMap.setOnMarkerDragListener(OnMarkerDragListener)"
+                "GoogleMap.setOnMarkerDragListener(OnMarkerDragListener)",
             ),
-            purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins, and custom InfoWindowAdapter views.",
-            successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
+            purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins, and custom " +
+                "InfoWindowAdapter views.",
+            successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins " +
+                "updates position.",
             failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
             kotlinActivity = "com.example.kotlindemos.MarkerDemoActivity",
-            javaActivity = "com.example.mapdemo.MarkerDemoActivity"
+            javaActivity = "com.example.mapdemo.MarkerDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.MarkerCloseInfoWindowOnRetapDemoActivity",
@@ -249,13 +268,13 @@ object SampleCatalogRegistry {
                 "GoogleMap.setOnMarkerClickListener(OnMarkerClickListener)",
                 "Marker.showInfoWindow()",
                 "Marker.hideInfoWindow()",
-                "Marker.isInfoWindowShown"
+                "Marker.isInfoWindowShown",
             ),
             purpose = "Shows how to implement re-tap to dismiss toggle behavior for active marker info windows.",
             successCriteria = "First tap opens info window; second tap on the same marker closes it cleanly.",
             failureIndicators = "Info window stays stuck open or re-tap triggers unnecessary camera repositioning.",
             kotlinActivity = "com.example.kotlindemos.MarkerCloseInfoWindowOnRetapDemoActivity",
-            javaActivity = "com.example.mapdemo.MarkerCloseInfoWindowOnRetapDemoActivity"
+            javaActivity = "com.example.mapdemo.MarkerCloseInfoWindowOnRetapDemoActivity",
         ),
 
         // ==========================================
@@ -264,7 +283,8 @@ object SampleCatalogRegistry {
         SampleItem(
             id = "com.example.kotlindemos.PolygonDemoActivity",
             title = "Polygons & Holes",
-            description = "Drawing geodesic polygons with fill colors, stroke patterns, click events, and interior holes.",
+            description = "Drawing geodesic polygons with fill colors, stroke patterns, click events, and interior " +
+                "holes.",
             category = "Shapes & Geometry",
             complexity = Complexity.SIMPLE,
             tags = listOf("#shapes", "#polygons", "#holes", "#geometry", "#stroke", "#fill"),
@@ -273,13 +293,15 @@ object SampleCatalogRegistry {
                 "PolygonOptions.addAll(Iterable<LatLng>)",
                 "PolygonOptions.addHole(Iterable<LatLng>)",
                 "PolygonOptions.fillColor(Int).strokeColor(Int).strokeWidth(Float)",
-                "Polygon.isClickable = true"
+                "Polygon.isClickable = true",
             ),
-            purpose = "Demonstrates drawing styled polygons with interior holes (donut polygons), click listeners, and stroke caps.",
-            successCriteria = "Polygons render with specified fill opacity and interior cutout holes properly subtracted.",
+            purpose = "Demonstrates drawing styled polygons with interior holes (donut polygons), click listeners, " +
+                "and stroke caps.",
+            successCriteria = "Polygons render with specified fill opacity and interior cutout holes properly " +
+                "subtracted.",
             failureIndicators = "Holes not rendering as transparent cutouts or stroke color incorrect.",
             kotlinActivity = "com.example.kotlindemos.PolygonDemoActivity",
-            javaActivity = "com.example.mapdemo.PolygonDemoActivity"
+            javaActivity = "com.example.mapdemo.PolygonDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.PolylineDemoActivity",
@@ -293,13 +315,14 @@ object SampleCatalogRegistry {
                 "PolylineOptions.addAll(Iterable<LatLng>)",
                 "PolylineOptions.pattern(List<PatternItem>)",
                 "PolylineOptions.jointType(JointType).startCap(Cap).endCap(Cap)",
-                "Polyline.isClickable = true"
+                "Polyline.isClickable = true",
             ),
-            purpose = "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel joints.",
+            purpose = "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel " +
+                "joints.",
             successCriteria = "Polylines render crisp dashed and dotted stroke lines along coordinate vertices.",
             failureIndicators = "Line caps distorted or custom pattern ignored on high-DPI screens.",
             kotlinActivity = "com.example.kotlindemos.PolylineDemoActivity",
-            javaActivity = "com.example.mapdemo.PolylineDemoActivity"
+            javaActivity = "com.example.mapdemo.PolylineDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.CircleDemoActivity",
@@ -312,13 +335,13 @@ object SampleCatalogRegistry {
                 "GoogleMap.addCircle(CircleOptions)",
                 "CircleOptions.center(LatLng).radius(Double)",
                 "CircleOptions.fillColor(Int).strokeColor(Int).strokeWidth(Float)",
-                "Circle.center = LatLng / Circle.radius = Double"
+                "Circle.center = LatLng / Circle.radius = Double",
             ),
             purpose = "Demonstrates drawing circles with radius defined in meters and dynamic updates via seekbars.",
             successCriteria = "Adjusting radius slider dynamically updates circle boundary in real-time.",
             failureIndicators = "Circle distorted or radius math inaccurate across high latitudes.",
             kotlinActivity = "com.example.kotlindemos.CircleDemoActivity",
-            javaActivity = "com.example.mapdemo.CircleDemoActivity"
+            javaActivity = "com.example.mapdemo.CircleDemoActivity",
         ),
 
         // ==========================================
@@ -327,7 +350,8 @@ object SampleCatalogRegistry {
         SampleItem(
             id = "com.example.kotlindemos.DataDrivenBoundariesActivity",
             title = "Data-Driven Boundaries",
-            description = "Dynamic styling and click handlers for administrative boundaries (Localities, States, Countries).",
+            description = "Dynamic styling and click handlers for administrative boundaries (Localities, States, " +
+                "Countries).",
             category = "Data-Driven Styling",
             complexity = Complexity.ADVANCED,
             tags = listOf("#boundaries", "#datadriven", "#featurelayer", "#locality", "#choropleth"),
@@ -335,13 +359,15 @@ object SampleCatalogRegistry {
                 "GoogleMap.getFeatureLayer(FeatureLayerOptions)",
                 "FeatureLayer.setFeatureStyle(FeatureStyleFunction)",
                 "FeatureStyle.Builder().fillColor(Int).strokeColor(Int).build()",
-                "FeatureLayer.addOnFeatureClickListener(OnFeatureClickListener)"
+                "FeatureLayer.addOnFeatureClickListener(OnFeatureClickListener)",
             ),
-            purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing boundary clicks.",
-            successCriteria = "Boundaries render with custom stroke and fill colors; tapping a region highlights its polygon.",
+            purpose = "Demonstrates styling administrative boundaries dynamically via FeatureLayer and capturing " +
+                "boundary clicks.",
+            successCriteria = "Boundaries render with custom stroke and fill colors; tapping a region highlights its " +
+                "polygon.",
             failureIndicators = "Boundary layer is null (requires vector map / Map ID) or click listener not firing.",
             kotlinActivity = "com.example.kotlindemos.DataDrivenBoundariesActivity",
-            javaActivity = "com.example.mapdemo.DataDrivenBoundariesActivity"
+            javaActivity = "com.example.mapdemo.DataDrivenBoundariesActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.DataDrivenDatasetStylingActivity",
@@ -353,13 +379,14 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "GoogleMap.getDatasetFeatureLayer(datasetId)",
                 "FeatureLayer.setFeatureStyle(FeatureStyleFunction)",
-                "DatasetFeature.datasetAttributes[attributeKey]"
+                "DatasetFeature.datasetAttributes[attributeKey]",
             ),
-            purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on feature properties.",
+            purpose = "Demonstrates loading a Cloud Dataset FeatureLayer and applying dynamic style rules based on " +
+                "feature properties.",
             successCriteria = "Dataset points and polygons display distinct styling according to attribute values.",
             failureIndicators = "Dataset ID invalid or attributes fail to filter correctly.",
             kotlinActivity = "com.example.kotlindemos.DataDrivenDatasetStylingActivity",
-            javaActivity = "com.example.mapdemo.DataDrivenDatasetStylingActivity"
+            javaActivity = "com.example.mapdemo.DataDrivenDatasetStylingActivity",
         ),
 
         // ==========================================
@@ -374,13 +401,14 @@ object SampleCatalogRegistry {
             tags = listOf("#cloudstyling", "#mapid", "#vector", "#theming"),
             apiCalls = listOf(
                 "SupportMapFragment.newInstance(GoogleMapOptions().mapId(String))",
-                "GoogleMap.mapType = GoogleMap.MAP_TYPE_NORMAL"
+                "GoogleMap.mapType = GoogleMap.MAP_TYPE_NORMAL",
             ),
             purpose = "Demonstrates linking a map to a Cloud-managed Map ID for instant over-the-air style updates.",
             successCriteria = "Map renders with the customized cloud style colors without local JSON parsing.",
-            failureIndicators = "Default styling rendered (Map ID unlinked or network error during initial style fetch).",
+            failureIndicators = "Default styling rendered (Map ID unlinked or network error during initial style " +
+                "fetch).",
             kotlinActivity = "com.example.kotlindemos.CloudBasedMapStylingDemoActivity",
-            javaActivity = "com.example.mapdemo.CloudBasedMapStylingDemoActivity"
+            javaActivity = "com.example.mapdemo.CloudBasedMapStylingDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.StyledMapDemoActivity",
@@ -391,13 +419,14 @@ object SampleCatalogRegistry {
             tags = listOf("#styling", "#json", "#darkmode", "#night", "#retro"),
             apiCalls = listOf(
                 "GoogleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(Context, Int))",
-                "MapStyleOptions(jsonStyleString)"
+                "MapStyleOptions(jsonStyleString)",
             ),
             purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
-            successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
+            successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / " +
+                "Standard).",
             failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
             kotlinActivity = "com.example.kotlindemos.StyledMapDemoActivity",
-            javaActivity = "com.example.mapdemo.StyledMapDemoActivity"
+            javaActivity = "com.example.mapdemo.StyledMapDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.MapColorSchemeActivity",
@@ -409,13 +438,13 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "GoogleMapOptions.mapColorScheme(MapColorScheme.FOLLOW_SYSTEM)",
                 "GoogleMapOptions.mapColorScheme(MapColorScheme.DARK)",
-                "GoogleMapOptions.mapColorScheme(MapColorScheme.LIGHT)"
+                "GoogleMapOptions.mapColorScheme(MapColorScheme.LIGHT)",
             ),
             purpose = "Shows how to set GoogleMapOptions.mapColorScheme to follow system night mode automatically.",
             successCriteria = "Toggling device dark mode flips map styling between light and dark palettes seamlessly.",
             failureIndicators = "Map remains stuck in light theme when system dark mode is enabled.",
             kotlinActivity = "com.example.kotlindemos.MapColorSchemeActivity",
-            javaActivity = "com.example.mapdemo.MapColorSchemeActivity"
+            javaActivity = "com.example.mapdemo.MapColorSchemeActivity",
         ),
 
         // ==========================================
@@ -424,7 +453,8 @@ object SampleCatalogRegistry {
         SampleItem(
             id = "com.example.kotlindemos.SplitStreetViewPanoramaAndMapDemoActivity",
             title = "Split Street View & Map Sync",
-            description = "Dual synchronized view: draggable 2D Pegman marker synchronized with 3D Street View panorama.",
+            description = "Dual synchronized view: draggable 2D Pegman marker synchronized with 3D Street View " +
+                "panorama.",
             category = "Street View",
             complexity = Complexity.ADVANCED,
             tags = listOf("#streetview", "#panorama", "#pegman", "#sync", "#bidirectional"),
@@ -433,13 +463,15 @@ object SampleCatalogRegistry {
                 "StreetViewPanorama.setPosition(LatLng)",
                 "StreetViewPanorama.setOnStreetViewPanoramaChangeListener(...)",
                 "StreetViewPanorama.animateTo(StreetViewPanoramaCamera, Long)",
-                "GoogleMap.addMarker(MarkerOptions)"
+                "GoogleMap.addMarker(MarkerOptions)",
             ),
-            purpose = "Demonstrates bidirectional synchronization: dragging map Pegman updates panorama; walking Street View moves map marker.",
-            successCriteria = "Moving Pegman on map instantly loads new 360 panorama; street navigation rotates Pegman bearing.",
+            purpose = "Demonstrates bidirectional synchronization: dragging map Pegman updates panorama; walking " +
+                "Street View moves map marker.",
+            successCriteria = "Moving Pegman on map instantly loads new 360 panorama; street navigation rotates " +
+                "Pegman bearing.",
             failureIndicators = "Infinite update feedback loops, Pegman desyncing from panorama, or FAB jump failing.",
             kotlinActivity = "com.example.kotlindemos.SplitStreetViewPanoramaAndMapDemoActivity",
-            javaActivity = "com.example.mapdemo.SplitStreetViewPanoramaAndMapDemoActivity"
+            javaActivity = "com.example.mapdemo.SplitStreetViewPanoramaAndMapDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.StreetViewPanoramaBasicDemoActivity",
@@ -450,13 +482,13 @@ object SampleCatalogRegistry {
             tags = listOf("#streetview", "#panorama", "#init", "#sydney"),
             apiCalls = listOf(
                 "StreetViewPanoramaFragment.getStreetViewPanoramaAsync(OnStreetViewPanoramaReadyCallback)",
-                "StreetViewPanorama.setPosition(LatLng)"
+                "StreetViewPanorama.setPosition(LatLng)",
             ),
             purpose = "Demonstrates embedding StreetViewPanoramaFragment and setting initial position by LatLng.",
             successCriteria = "360-degree panorama loads smoothly with working touch gestures.",
             failureIndicators = "Black panorama canvas, missing imagery at coordinates, or gesture freeze.",
             kotlinActivity = "com.example.kotlindemos.StreetViewPanoramaBasicDemoActivity",
-            javaActivity = "com.example.mapdemo.StreetViewPanoramaBasicDemoActivity"
+            javaActivity = "com.example.mapdemo.StreetViewPanoramaBasicDemoActivity",
         ),
 
         // ==========================================
@@ -473,13 +505,15 @@ object SampleCatalogRegistry {
                 "GoogleMapOptions.liteMode(true)",
                 "MapView.onCreate(null)",
                 "MapView.getMapAsync(OnMapReadyCallback)",
-                "RecyclerView.Adapter.onBindViewHolder(...)"
+                "RecyclerView.Adapter.onBindViewHolder(...)",
             ),
-            purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper lifecycle management.",
-            successCriteria = "List scrolls at 60/120fps without stutter; map snapshots display accurate markers per row.",
+            purpose = "Demonstrates embedding MapView lite mode instances inside RecyclerView rows with proper " +
+                "lifecycle management.",
+            successCriteria = "List scrolls at 60/120fps without stutter; map snapshots display accurate markers per " +
+                "row.",
             failureIndicators = "RecyclerView scrolling stutters or recycled MapViews display stale map markers.",
             kotlinActivity = "com.example.kotlindemos.LiteListDemoActivity",
-            javaActivity = "com.example.mapdemo.LiteListDemoActivity"
+            javaActivity = "com.example.mapdemo.LiteListDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.LiteDemoActivity",
@@ -492,13 +526,15 @@ object SampleCatalogRegistry {
                 "GoogleMapOptions.liteMode(true)",
                 "GoogleMap.moveCamera(CameraUpdate)",
                 "GoogleMap.addMarker(MarkerOptions)",
-                "GoogleMap.addPolygon(PolygonOptions)"
+                "GoogleMap.addPolygon(PolygonOptions)",
             ),
-            purpose = "Demonstrates Lite Mode features: static raster rendering, markers launching Google Maps intent, and programmatic camera jumps.",
-            successCriteria = "Map renders lightweight static raster view; Darwin/Adelaide buttons immediately reposition camera.",
+            purpose = "Demonstrates Lite Mode features: static raster rendering, markers launching Google Maps " +
+                "intent, and programmatic camera jumps.",
+            successCriteria = "Map renders lightweight static raster view; Darwin/Adelaide buttons immediately " +
+                "reposition camera.",
             failureIndicators = "Full vector GL map loaded instead of lite mode, or buttons fail to move camera.",
             kotlinActivity = "com.example.kotlindemos.LiteDemoActivity",
-            javaActivity = "com.example.mapdemo.LiteDemoActivity"
+            javaActivity = "com.example.mapdemo.LiteDemoActivity",
         ),
 
         // ==========================================
@@ -507,19 +543,22 @@ object SampleCatalogRegistry {
         SampleItem(
             id = "com.example.kotlindemos.SnapshotDemoActivity",
             title = "Map Snapshot & Image Capture",
-            description = "Asynchronous bitmap frame capture using GoogleMap.snapshot() rendered in Material 3 preview cards.",
+            description = "Asynchronous bitmap frame capture using GoogleMap.snapshot() rendered in Material 3 " +
+                "preview cards.",
             category = "Snapshots & Sharing",
             complexity = Complexity.SIMPLE,
             tags = listOf("#snapshot", "#bitmap", "#export", "#material3", "#capture"),
             apiCalls = listOf(
                 "GoogleMap.snapshot(SnapshotReadyCallback)",
-                "GoogleMap.snapshot(SnapshotReadyCallback, Bitmap)"
+                "GoogleMap.snapshot(SnapshotReadyCallback, Bitmap)",
             ),
-            purpose = "Demonstrates taking asynchronous high-resolution bitmap snapshots of the map with snapshot ready callbacks.",
-            successCriteria = "Tapping 'Take Snapshot' captures the current map frame and displays it in the Material 3 preview card.",
+            purpose = "Demonstrates taking asynchronous high-resolution bitmap snapshots of the map with snapshot " +
+                "ready callbacks.",
+            successCriteria = "Tapping 'Take Snapshot' captures the current map frame and displays it in the " +
+                "Material 3 preview card.",
             failureIndicators = "Snapshot returns blank bitmap or blocks UI thread during GL readback.",
             kotlinActivity = "com.example.kotlindemos.SnapshotDemoActivity",
-            javaActivity = "com.example.mapdemo.SnapshotDemoActivity"
+            javaActivity = "com.example.mapdemo.SnapshotDemoActivity",
         ),
 
         // ==========================================
@@ -535,13 +574,14 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "GoogleMap.isMyLocationEnabled = true",
                 "GoogleMap.uiSettings.isMyLocationButtonEnabled = true",
-                "ActivityCompat.requestPermissions(..., ACCESS_FINE_LOCATION)"
+                "ActivityCompat.requestPermissions(..., ACCESS_FINE_LOCATION)",
             ),
-            purpose = "Demonstrates requesting ACCESS_FINE_LOCATION permissions and enabling the blue dot location layer.",
+            purpose = "Demonstrates requesting ACCESS_FINE_LOCATION permissions and enabling the blue dot location " +
+                "layer.",
             successCriteria = "Tapping My Location button centers camera on user's current GPS position.",
             failureIndicators = "Permission denial causes unhandled crash or location button missing.",
             kotlinActivity = "com.example.kotlindemos.MyLocationDemoActivity",
-            javaActivity = "com.example.mapdemo.MyLocationDemoActivity"
+            javaActivity = "com.example.mapdemo.MyLocationDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.LocationSourceDemoActivity",
@@ -556,13 +596,15 @@ object SampleCatalogRegistry {
                 "LocationSource.deactivate()",
                 "GoogleMap.setMyLocationEnabled(Boolean)",
                 "GoogleMap.addPolyline(PolylineOptions)",
-                "CameraUpdateFactory.newLatLngBounds(LatLngBounds, Int)"
+                "CameraUpdateFactory.newLatLngBounds(LatLngBounds, Int)",
             ),
-            purpose = "Shows how to feed programmatic coordinates from a GPX track into the GoogleMap location layer using a custom LocationSource.",
-            successCriteria = "The map bounds to the trail, draws a polyline, and the blue dot animates smoothly along the route.",
+            purpose = "Shows how to feed programmatic coordinates from a GPX track into the GoogleMap location layer " +
+                "using a custom LocationSource.",
+            successCriteria = "The map bounds to the trail, draws a polyline, and the blue dot animates smoothly " +
+                "along the route.",
             failureIndicators = "Blue dot fails to move or location updates cause memory leaks.",
             kotlinActivity = "com.example.kotlindemos.LocationSourceDemoActivity",
-            javaActivity = "com.example.mapdemo.LocationSourceDemoActivity"
+            javaActivity = "com.example.mapdemo.LocationSourceDemoActivity",
         ),
 
         // ==========================================
@@ -578,13 +620,15 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "GoogleMap.addGroundOverlay(GroundOverlayOptions)",
                 "GroundOverlayOptions.image(BitmapDescriptor).position(LatLng, Float, Float)",
-                "GroundOverlayOptions.positionFromBounds(LatLngBounds).transparency(Float)"
+                "GroundOverlayOptions.positionFromBounds(LatLngBounds).transparency(Float)",
             ),
-            purpose = "Demonstrates overlaying historical or custom aerial images onto the map with transparency sliders.",
-            successCriteria = "Historical Newark map image appears pinned to geographic coordinates with adjustable transparency.",
+            purpose = "Demonstrates overlaying historical or custom aerial images onto the map with transparency " +
+                "sliders.",
+            successCriteria = "Historical Newark map image appears pinned to geographic coordinates with adjustable " +
+                "transparency.",
             failureIndicators = "Overlay image stretched/misaligned or opacity slider unresponsive.",
             kotlinActivity = "com.example.kotlindemos.GroundOverlayDemoActivity",
-            javaActivity = "com.example.mapdemo.GroundOverlayDemoActivity"
+            javaActivity = "com.example.mapdemo.GroundOverlayDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.TileOverlayDemoActivity",
@@ -596,13 +640,14 @@ object SampleCatalogRegistry {
             apiCalls = listOf(
                 "GoogleMap.addTileOverlay(TileOverlayOptions)",
                 "TileOverlayOptions.tileProvider(TileProvider)",
-                "TileProvider.getTile(x, y, zoom)"
+                "TileProvider.getTile(x, y, zoom)",
             ),
-            purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider (coordinate overlays).",
+            purpose = "Demonstrates generating custom raster tiles on the fly using a custom TileProvider " +
+                "(coordinate overlays).",
             successCriteria = "Tile grid numbers (x, y, zoom) render cleanly over the base map.",
             failureIndicators = "Tile rendering blocks UI thread or tiles fail to fetch on pan.",
             kotlinActivity = "com.example.kotlindemos.TileOverlayDemoActivity",
-            javaActivity = "com.example.mapdemo.TileOverlayDemoActivity"
+            javaActivity = "com.example.mapdemo.TileOverlayDemoActivity",
         ),
 
         // ==========================================
@@ -619,13 +664,14 @@ object SampleCatalogRegistry {
                 "GoogleMap.setOnMapClickListener(OnMapClickListener)",
                 "GoogleMap.setOnMapLongClickListener(OnMapLongClickListener)",
                 "GoogleMap.setOnCameraMoveListener(OnCameraMoveListener)",
-                "GoogleMap.setOnPoiClickListener(OnPoiClickListener)"
+                "GoogleMap.setOnPoiClickListener(OnPoiClickListener)",
             ),
-            purpose = "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI selections.",
+            purpose = "Demonstrates registering listeners for map clicks, long presses, camera moves, and POI " +
+                "selections.",
             successCriteria = "Event log text updates with coordinates and POI names upon user interaction.",
             failureIndicators = "Click events swallowed or POI name unresolved.",
             kotlinActivity = "com.example.kotlindemos.EventsDemoActivity",
-            javaActivity = "com.example.mapdemo.EventsDemoActivity"
+            javaActivity = "com.example.mapdemo.EventsDemoActivity",
         ),
         SampleItem(
             id = "com.example.kotlindemos.UiSettingsDemoActivity",
@@ -640,43 +686,39 @@ object SampleCatalogRegistry {
                 "GoogleMap.uiSettings.isMyLocationButtonEnabled = Boolean",
                 "GoogleMap.uiSettings.isScrollGesturesEnabled = Boolean",
                 "GoogleMap.uiSettings.isTiltGesturesEnabled = Boolean",
-                "GoogleMap.uiSettings.isRotateGesturesEnabled = Boolean"
+                "GoogleMap.uiSettings.isRotateGesturesEnabled = Boolean",
             ),
-            purpose = "Shows how to toggle GoogleMap.uiSettings controls (compass, zoom buttons, scroll/tilt gestures).",
-            successCriteria = "Toggling checkboxes in the drawer instantly enables/disables corresponding map gestures and UI controls.",
+            purpose = "Shows how to toggle GoogleMap.uiSettings controls (compass, zoom buttons, scroll/tilt " +
+                "gestures).",
+            successCriteria = "Toggling checkboxes in the drawer instantly enables/disables corresponding map " +
+                "gestures and UI controls.",
             failureIndicators = "Gesture toggles ignored or UI control icons clipped by safe area.",
             kotlinActivity = "com.example.kotlindemos.UiSettingsDemoActivity",
-            javaActivity = "com.example.mapdemo.UiSettingsDemoActivity"
-        )
+            javaActivity = "com.example.mapdemo.UiSettingsDemoActivity",
+        ),
     )
 
-    fun getAllTags(): List<String> {
-        return SAMPLES.flatMap { it.tags }.distinct().sorted()
-    }
+    fun getAllTags(): List<String> = SAMPLES.flatMap { it.tags }.distinct().sorted()
 
-    fun getCategories(): List<String> {
-        return SAMPLES.map { it.category }.distinct().sorted()
-    }
+    fun getCategories(): List<String> = SAMPLES.map { it.category }.distinct().sorted()
 
     fun filter(
         framework: Framework = Framework.KOTLIN_VIEWS,
         complexity: Complexity? = null,
         selectedTags: Set<String> = emptySet(),
-        searchQuery: String = ""
-    ): List<SampleItem> {
-        return SAMPLES.filter { sample ->
-            val matchesFramework = sample.getActivityForFramework(framework) != null
-            val matchesComplexity = complexity == null || sample.complexity == complexity
-            val matchesTags = selectedTags.isEmpty() || sample.tags.any { selectedTags.contains(it) }
-            val matchesSearch = searchQuery.isBlank() ||
-                sample.title.contains(searchQuery, ignoreCase = true) ||
-                sample.description.contains(searchQuery, ignoreCase = true) ||
-                sample.category.contains(searchQuery, ignoreCase = true) ||
-                sample.tags.any { it.contains(searchQuery, ignoreCase = true) } ||
-                sample.id.contains(searchQuery, ignoreCase = true)
+        searchQuery: String = "",
+    ): List<SampleItem> = SAMPLES.filter { sample ->
+        val matchesFramework = sample.getActivityForFramework(framework) != null
+        val matchesComplexity = complexity == null || sample.complexity == complexity
+        val matchesTags = selectedTags.isEmpty() || sample.tags.any { selectedTags.contains(it) }
+        val matchesSearch = searchQuery.isBlank() ||
+            sample.title.contains(searchQuery, ignoreCase = true) ||
+            sample.description.contains(searchQuery, ignoreCase = true) ||
+            sample.category.contains(searchQuery, ignoreCase = true) ||
+            sample.tags.any { it.contains(searchQuery, ignoreCase = true) } ||
+            sample.id.contains(searchQuery, ignoreCase = true)
 
-            matchesFramework && matchesComplexity && matchesTags && matchesSearch
-        }
+        matchesFramework && matchesComplexity && matchesTags && matchesSearch
     }
 
     fun findById(id: String?): SampleItem? {

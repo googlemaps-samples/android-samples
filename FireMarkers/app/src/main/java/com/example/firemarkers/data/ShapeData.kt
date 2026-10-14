@@ -94,19 +94,19 @@ object ShapeData {
         ShapePoint(-0.12, -0.06, BLACK_HUE), // down
         ShapePoint(-0.1, -0.04, BLACK_HUE), // up (tooth)
         ShapePoint(-0.12, -0.02, BLACK_HUE), // down
-        ShapePoint(-0.1, 0.0, BLACK_HUE),   // up (center)
-        ShapePoint(-0.12, 0.02, BLACK_HUE),  // down
-        ShapePoint(-0.1, 0.04, BLACK_HUE),   // up (tooth)
-        ShapePoint(-0.12, 0.06, BLACK_HUE),  // down
-        ShapePoint(-0.1, 0.08, BLACK_HUE),   // up (tooth)
-        ShapePoint(-0.12, 0.1, BLACK_HUE),  // down
+        ShapePoint(-0.1, 0.0, BLACK_HUE), // up (center)
+        ShapePoint(-0.12, 0.02, BLACK_HUE), // down
+        ShapePoint(-0.1, 0.04, BLACK_HUE), // up (tooth)
+        ShapePoint(-0.12, 0.06, BLACK_HUE), // down
+        ShapePoint(-0.1, 0.08, BLACK_HUE), // up (tooth)
+        ShapePoint(-0.12, 0.1, BLACK_HUE), // down
         ShapePoint(-0.1, 0.12, BLACK_HUE),
         ShapePoint(-0.14, 0.0, BLACK_HUE), // Center dip
         ShapePoint(-0.15, -0.12, BLACK_HUE),
         ShapePoint(-0.15, 0.12, BLACK_HUE),
         ShapePoint(0.16, 0.0, ORANGE_HUE), // Extra point to match count
         ShapePoint(0.0, 0.0, ORANGE_HUE), // Extra point to match count
-        ShapePoint(-0.16, 0.0, ORANGE_HUE) // Extra point to match count
+        ShapePoint(-0.16, 0.0, ORANGE_HUE), // Extra point to match count
     )
 
     /**
@@ -181,6 +181,6 @@ object ShapeData {
         ShapePoint(-0.04, 0.0, BLUE_HUE),
         ShapePoint(-0.08, 0.0, YELLOW_HUE),
         ShapePoint(-0.12, 0.05, RED_HUE),
-        ShapePoint(-0.12, -0.05, BLUE_HUE)
+        ShapePoint(-0.12, -0.05, BLUE_HUE),
     )
 }

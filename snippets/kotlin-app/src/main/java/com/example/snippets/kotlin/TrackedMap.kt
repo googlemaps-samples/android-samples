@@ -18,38 +18,35 @@ package com.example.snippets.kotlin
 
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.Projection
-import com.google.maps.android.ktx.cameraIdleEvents
-import com.google.maps.android.ktx.cameraMoveEvents
+import com.google.android.gms.maps.UiSettings
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.FeatureLayer
+import com.google.android.gms.maps.model.FeatureLayerOptions
 import com.google.android.gms.maps.model.GroundOverlay
 import com.google.android.gms.maps.model.GroundOverlayOptions
+import com.google.android.gms.maps.model.IndoorBuilding
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapCapabilities
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.gms.maps.model.FeatureLayer
-import com.google.android.gms.maps.model.FeatureLayerOptions
-import com.google.android.gms.maps.model.IndoorBuilding
-import com.google.android.gms.maps.model.MapCapabilities
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.TileOverlay
 import com.google.android.gms.maps.model.TileOverlayOptions
+import com.google.maps.android.ktx.cameraIdleEvents
+import com.google.maps.android.ktx.cameraMoveEvents
 
 /**
  * Decorator wrapper around GoogleMap to track elements added during a snippet session
  * and clean them up automatically.
  */
-class TrackedMap(
-    val delegate: GoogleMap,
-    val items: MutableList<Any>,
-) {
+class TrackedMap(val delegate: GoogleMap, val items: MutableList<Any>) {
     init {
         lastInstance = this
     }
@@ -120,19 +117,27 @@ class TrackedMap(
         registeredMapClickListener = listener
         delegate.setOnMapClickListener(listener)
     }
-    fun setOnMapLongClickListener(listener: GoogleMap.OnMapLongClickListener?) = delegate.setOnMapLongClickListener(listener)
-    fun setOnMarkerClickListener(listener: GoogleMap.OnMarkerClickListener?) = delegate.setOnMarkerClickListener(listener)
-    fun setOnInfoWindowClickListener(listener: GoogleMap.OnInfoWindowClickListener?) = delegate.setOnInfoWindowClickListener(listener)
+    fun setOnMapLongClickListener(listener: GoogleMap.OnMapLongClickListener?) =
+        delegate.setOnMapLongClickListener(listener)
+    fun setOnMarkerClickListener(listener: GoogleMap.OnMarkerClickListener?) =
+        delegate.setOnMarkerClickListener(listener)
+    fun setOnInfoWindowClickListener(listener: GoogleMap.OnInfoWindowClickListener?) =
+        delegate.setOnInfoWindowClickListener(listener)
     fun setOnCameraIdleListener(listener: GoogleMap.OnCameraIdleListener?) = delegate.setOnCameraIdleListener(listener)
     fun setOnCameraMoveListener(listener: GoogleMap.OnCameraMoveListener?) = delegate.setOnCameraMoveListener(listener)
-    fun setOnCameraMoveStartedListener(listener: GoogleMap.OnCameraMoveStartedListener?) = delegate.setOnCameraMoveStartedListener(listener)
+    fun setOnCameraMoveStartedListener(listener: GoogleMap.OnCameraMoveStartedListener?) =
+        delegate.setOnCameraMoveStartedListener(listener)
 
-    fun setMapType(type: Int) { delegate.mapType = type }
+    fun setMapType(type: Int) {
+        delegate.mapType = type
+    }
     fun getMapType(): Int = delegate.mapType
 
     var isTrafficEnabled: Boolean
         get() = delegate.isTrafficEnabled
-        set(value) { delegate.isTrafficEnabled = value }
+        set(value) {
+            delegate.isTrafficEnabled = value
+        }
 
     fun setIndoorEnabled(enabled: Boolean): Boolean = delegate.setIndoorEnabled(enabled)
     fun isIndoorEnabled(): Boolean = delegate.isIndoorEnabled

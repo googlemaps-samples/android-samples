@@ -30,7 +30,8 @@ import kotlinx.coroutines.launch
  * Manifest-registered broadcast receiver that allows CI, automation scripts, and ADB commands
  * to:
  * 1. Record evaluations into Room DB:
- *    `adb shell am broadcast -a com.google.maps.RECORD_EVALUATION --es fqcn "<FQCN>" --es status "<PASSING|NEEDS_WORK|UNCHECKED>" --es notes "<notes>" [--es screenshot "<path>"]`
+ *    `adb shell am broadcast -a com.google.maps.RECORD_EVALUATION --es fqcn "<FQCN>"
+ *    --es status "<PASSING|NEEDS_WORK|UNCHECKED>" --es notes "<notes>" [--es screenshot "<path>"]`
  * 2. Clear all evaluations and screenshots:
  *    `adb shell am broadcast -a com.google.maps.CLEAR_EVALUATIONS`
  * 3. Export the latest evaluation report:
@@ -75,7 +76,7 @@ class EvaluationExportReceiver : BroadcastReceiver() {
                                 notes = notes,
                                 metadata = sampleItem,
                                 screenshotPath = screenshot,
-                                syncToCounterpart = false
+                                syncToCounterpart = false,
                             )
                             Log.i("EvaluationExportReceiver", "Recorded evaluation for $fqcn: status=$status")
                         } else {

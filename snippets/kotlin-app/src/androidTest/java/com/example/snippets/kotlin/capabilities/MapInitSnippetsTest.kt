@@ -17,11 +17,11 @@
 package com.example.snippets.kotlin.capabilities
 
 import android.content.Intent
+import android.widget.FrameLayout
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import android.widget.FrameLayout
 import com.example.snippets.common.R
 import com.example.snippets.kotlin.MapActivity
 import com.example.snippets.kotlin.TrackedMap
@@ -83,8 +83,18 @@ class MapInitSnippetsTest {
             val marker = TrackedMap.lastInstance?.items?.filterIsInstance<Marker>()?.firstOrNull()
             assertNotNull("Basic Map Activity snippet must add Marker in Sydney", marker)
             assertEquals("Marker title must be exactly 'Marker in Sydney'", "Marker in Sydney", marker!!.title)
-            assertEquals("Marker latitude must exactly match Sydney (-34.0)", sydney.latitude, marker.position.latitude, 0.001)
-            assertEquals("Marker longitude must exactly match Sydney (151.0)", sydney.longitude, marker.position.longitude, 0.001)
+            assertEquals(
+                "Marker latitude must exactly match Sydney (-34.0)",
+                sydney.latitude,
+                marker.position.latitude,
+                0.001,
+            )
+            assertEquals(
+                "Marker longitude must exactly match Sydney (151.0)",
+                sydney.longitude,
+                marker.position.longitude,
+                0.001,
+            )
         }
     }
 
@@ -92,7 +102,8 @@ class MapInitSnippetsTest {
     fun verifyEnableTrafficLayer_falsifiable() {
         // Capability 20793ebb: Add a traffic layer to a map
         runWithMap("Map Initialization", "11. Enable Traffic Layer") { map ->
-            // Falsifiability Check: If snippet code is removed or changed to isTrafficEnabled = false, this test STRICTLY FAILS!
+            // Falsifiability Check: If snippet code is removed or changed to isTrafficEnabled = false,
+            // this test STRICTLY FAILS!
             assertTrue("googleMap.isTrafficEnabled MUST be true after snippet execution", map.isTrafficEnabled)
         }
     }

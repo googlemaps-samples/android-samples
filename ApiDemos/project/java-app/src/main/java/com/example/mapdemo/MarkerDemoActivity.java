@@ -14,10 +14,35 @@
 
 package com.example.mapdemo;
 
-import com.example.common_ui.catalog.Sample;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import com.example.common_ui.R;
 import com.example.common_ui.catalog.Complexity;
 import com.example.common_ui.catalog.Framework;
-
+import com.example.common_ui.catalog.Sample;
+import com.example.common_ui.databinding.MarkerDemoBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -33,65 +58,35 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.SystemClock;
-
-import com.example.common_ui.R;
-import com.example.common_ui.databinding.MarkerDemoBinding;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.DrawableRes;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.view.View;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.Interpolator;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * This shows how to place markers on a map.
- */
+/** This shows how to place markers on a map. */
 @Sample(
-    id = "marker_demo",
-    title = "Standard Markers & Info Windows",
-    description = "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info window layouts.",
-    category = "Markers & Overlays",
-    complexity = Complexity.SIMPLE,
-    tags = {"#markers", "#infowindow", "#draggable", "#icons", "#anchor"},
-    purpose = "Demonstrates adding standard markers with alpha, rotation, draggable pins (long press Melbourne to drag), and custom InfoWindowAdapter views.",
-    successCriteria = "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
-    failureIndicators = "Info window clicks not detected or custom snippet styling not applied.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "marker_demo",
+        title = "Standard Markers & Info Windows",
+        description =
+                "Placing markers, custom icons, draggable pins (long press Melbourne to drag), and custom info window layouts.",
+        category = "Markers & Overlays",
+        complexity = Complexity.SIMPLE,
+        tags = {"#markers", "#infowindow", "#draggable", "#icons", "#anchor"},
+        purpose =
+                "Demonstrates adding standard markers with alpha, rotation, draggable pins (long press Melbourne to drag), and custom InfoWindowAdapter views.",
+        successCriteria =
+                "Tapping markers displays custom info windows with formatted content; dragging pins updates position.",
+        failureIndicators =
+                "Info window clicks not detected or custom snippet styling not applied.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_marker]
-public class MarkerDemoActivity extends SamplesBaseActivity implements
-        OnMarkerClickListener,
-        OnInfoWindowClickListener,
-        OnMarkerDragListener,
-        OnSeekBarChangeListener,
-        OnInfoWindowLongClickListener,
-        OnInfoWindowCloseListener,
-        OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
+public class MarkerDemoActivity extends SamplesBaseActivity
+        implements OnMarkerClickListener,
+                OnInfoWindowClickListener,
+                OnMarkerDragListener,
+                OnSeekBarChangeListener,
+                OnInfoWindowLongClickListener,
+                OnInfoWindowCloseListener,
+                OnMapAndViewReadyListener.OnGlobalLayoutAndMapReadyListener {
 
     private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
 
@@ -112,7 +107,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
     /** Demonstrates customizing the info window and/or its contents. */
     class CustomInfoWindowAdapter implements InfoWindowAdapter {
 
-        // These are both viewgroups containing an ImageView with id "badge" and two TextViews with id
+        // These are both viewgroups containing an ImageView with id "badge" and two TextViews with
+        // id
         // "title" and "snippet".
         private final View mWindow;
 
@@ -125,7 +121,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
         @Override
         public View getInfoWindow(Marker marker) {
-            if (binding.customInfoWindowOptions.getCheckedRadioButtonId() != R.id.custom_info_window) {
+            if (binding.customInfoWindowOptions.getCheckedRadioButtonId()
+                    != R.id.custom_info_window) {
                 // This means that getInfoContents will be called.
                 return null;
             }
@@ -135,7 +132,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
         @Override
         public View getInfoContents(Marker marker) {
-            if (binding.customInfoWindowOptions.getCheckedRadioButtonId() != R.id.custom_info_contents) {
+            if (binding.customInfoWindowOptions.getCheckedRadioButtonId()
+                    != R.id.custom_info_contents) {
                 // This means that the default info contents will be used.
                 return null;
             }
@@ -211,10 +209,9 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
     private Marker mDarwin3;
     private Marker mDarwin4;
 
-
     /**
-     * Keeps track of the last selected marker (though it may no longer be selected).  This is
-     * useful for refreshing the info window.
+     * Keeps track of the last selected marker (though it may no longer be selected). This is useful
+     * for refreshing the info window.
      */
     private Marker mLastSelectedMarker;
 
@@ -231,15 +228,17 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         binding.rotationSeekBar.setMax(360);
         binding.rotationSeekBar.setOnSeekBarChangeListener(this);
 
-        binding.customInfoWindowOptions.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (mLastSelectedMarker != null && mLastSelectedMarker.isInfoWindowShown()) {
-                    // Refresh the info window when the info window's content has changed.
-                    mLastSelectedMarker.showInfoWindow();
-                }
-            }
-        });
+        binding.customInfoWindowOptions.setOnCheckedChangeListener(
+                new OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        if (mLastSelectedMarker != null
+                                && mLastSelectedMarker.isInfoWindowShown()) {
+                            // Refresh the info window when the info window's content has changed.
+                            mLastSelectedMarker.showInfoWindow();
+                        }
+                    }
+                });
 
         binding.clearMap.setOnClickListener(v -> onClearMap());
         binding.resetMap.setOnClickListener(v -> onResetMap());
@@ -277,79 +276,103 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         // Ideally this string would be localised.
         mMap.setContentDescription("Map with lots of markers.");
 
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(PERTH)
-                .include(SYDNEY)
-                .include(ADELAIDE)
-                .include(BRISBANE)
-                .include(MELBOURNE)
-                .include(DARWIN)
-                .build();
+        LatLngBounds bounds =
+                new LatLngBounds.Builder()
+                        .include(PERTH)
+                        .include(SYDNEY)
+                        .include(ADELAIDE)
+                        .include(BRISBANE)
+                        .include(MELBOURNE)
+                        .include(DARWIN)
+                        .build();
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
     }
 
     private void addMarkersToMap() {
         // Uses a colored icon.
-        mBrisbane = mMap.addMarker(new MarkerOptions()
-                .position(BRISBANE)
-                .title("Brisbane")
-                .snippet("Population: 2,074,200")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mBrisbane =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(BRISBANE)
+                                .title("Brisbane")
+                                .snippet("Population: 2,074,200")
+                                .icon(
+                                        BitmapDescriptorFactory.defaultMarker(
+                                                BitmapDescriptorFactory.HUE_AZURE)));
 
         // Uses a custom icon with the info window popping out of the center of the icon.
-        mSydney = mMap.addMarker(new MarkerOptions()
-                .position(SYDNEY)
-                .title("Sydney")
-                .snippet("Population: 4,627,300")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow))
-                .infoWindowAnchor(0.5f, 0.5f));
+        mSydney =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(SYDNEY)
+                                .title("Sydney")
+                                .snippet("Population: 4,627,300")
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.arrow))
+                                .infoWindowAnchor(0.5f, 0.5f));
 
         // Creates a draggable marker. Long press to drag.
-        mMelbourne = mMap.addMarker(new MarkerOptions()
-                .position(MELBOURNE)
-                .title("Melbourne")
-                .snippet(getString(R.string.melbourne_drag_snippet))
-                .icon(vectorToBitmap(R.drawable.ic_drag_pan, Color.parseColor("#E65100")))
-                .draggable(true));
+        mMelbourne =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(MELBOURNE)
+                                .title("Melbourne")
+                                .snippet(getString(R.string.melbourne_drag_snippet))
+                                .icon(
+                                        vectorToBitmap(
+                                                R.drawable.ic_drag_pan,
+                                                Color.parseColor("#E65100")))
+                                .draggable(true));
 
         // Place four markers on top of each other with differing z-indexes.
-        mDarwin1 = mMap.addMarker(new MarkerOptions()
-                .position(DARWIN)
-                .title("Darwin Marker 1")
-                .snippet("z-index 1")
-                .zIndex(1));
-        mDarwin2 = mMap.addMarker(new MarkerOptions()
-                .position(DARWIN)
-                .title("Darwin Marker 2")
-                .snippet("z-index 2")
-                .zIndex(2));
-        mDarwin3 = mMap.addMarker(new MarkerOptions()
-                .position(DARWIN)
-                .title("Darwin Marker 3")
-                .snippet("z-index 3")
-                .zIndex(3));
-        mDarwin4 = mMap.addMarker(new MarkerOptions()
-                .position(DARWIN)
-                .title("Darwin Marker 4")
-                .snippet("z-index 4")
-                .zIndex(4));
-
+        mDarwin1 =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(DARWIN)
+                                .title("Darwin Marker 1")
+                                .snippet("z-index 1")
+                                .zIndex(1));
+        mDarwin2 =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(DARWIN)
+                                .title("Darwin Marker 2")
+                                .snippet("z-index 2")
+                                .zIndex(2));
+        mDarwin3 =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(DARWIN)
+                                .title("Darwin Marker 3")
+                                .snippet("z-index 3")
+                                .zIndex(3));
+        mDarwin4 =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(DARWIN)
+                                .title("Darwin Marker 4")
+                                .snippet("z-index 4")
+                                .zIndex(4));
 
         // A few more markers for good measure.
-        mPerth = mMap.addMarker(new MarkerOptions()
-                .position(PERTH)
-                .title("Perth")
-                .snippet("Population: 1,738,800"));
-        mAdelaide = mMap.addMarker(new MarkerOptions()
-                .position(ADELAIDE)
-                .title("Adelaide")
-                .snippet("Population: 1,213,000"));
+        mPerth =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(PERTH)
+                                .title("Perth")
+                                .snippet("Population: 1,738,800"));
+        mAdelaide =
+                mMap.addMarker(
+                        new MarkerOptions()
+                                .position(ADELAIDE)
+                                .title("Adelaide")
+                                .snippet("Population: 1,213,000"));
 
         // Vector drawable resource as a marker icon.
-        mMap.addMarker(new MarkerOptions()
-                .position(ALICE_SPRINGS)
-                .icon(vectorToBitmap(R.drawable.ic_android, Color.parseColor("#A4C639")))
-                .title("Alice Springs"));
+        mMap.addMarker(
+                new MarkerOptions()
+                        .position(ALICE_SPRINGS)
+                        .icon(vectorToBitmap(R.drawable.ic_android, Color.parseColor("#A4C639")))
+                        .title("Alice Springs"));
 
         if (mMelbourne != null) {
             mMelbourne.showInfoWindow();
@@ -363,26 +386,46 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
         int numMarkersInRainbow = 12;
         for (int i = 0; i < numMarkersInRainbow; i++) {
-            Marker marker = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(
-                            -30 + 10 * Math.sin(i * Math.PI / (numMarkersInRainbow - 1)),
-                            135 - 10 * Math.cos(i * Math.PI / (numMarkersInRainbow - 1))))
-                    .title("Marker " + i)
-                    .icon(BitmapDescriptorFactory.defaultMarker(i * 360 / numMarkersInRainbow))
-                    .flat(flat)
-                    .rotation(rotation));
+            Marker marker =
+                    mMap.addMarker(
+                            new MarkerOptions()
+                                    .position(
+                                            new LatLng(
+                                                    -30
+                                                            + 10
+                                                                    * Math.sin(
+                                                                            i
+                                                                                    * Math.PI
+                                                                                    / (numMarkersInRainbow
+                                                                                            - 1)),
+                                                    135
+                                                            - 10
+                                                                    * Math.cos(
+                                                                            i
+                                                                                    * Math.PI
+                                                                                    / (numMarkersInRainbow
+                                                                                            - 1))))
+                                    .title("Marker " + i)
+                                    .icon(
+                                            BitmapDescriptorFactory.defaultMarker(
+                                                    i * 360 / numMarkersInRainbow))
+                                    .flat(flat)
+                                    .rotation(rotation));
             mMarkerRainbow.add(marker);
         }
     }
 
     /**
-     * Demonstrates converting a {@link Drawable} to a {@link BitmapDescriptor},
-     * for use as a marker icon.
+     * Demonstrates converting a {@link Drawable} to a {@link BitmapDescriptor}, for use as a marker
+     * icon.
      */
     private BitmapDescriptor vectorToBitmap(@DrawableRes int id, @ColorInt int color) {
         Drawable vectorDrawable = ResourcesCompat.getDrawable(getResources(), id, null);
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(),
-                vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap bitmap =
+                Bitmap.createBitmap(
+                        vectorDrawable.getIntrinsicWidth(),
+                        vectorDrawable.getIntrinsicHeight(),
+                        Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         DrawableCompat.setTint(vectorDrawable, color);
@@ -459,20 +502,25 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
             final Interpolator interpolator = new BounceInterpolator();
 
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    long elapsed = SystemClock.uptimeMillis() - start;
-                    float t = Math.max(
-                            1 - interpolator.getInterpolation((float) elapsed / duration), 0);
-                    marker.setAnchor(0.5f, 1.0f + 2 * t);
+            handler.post(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            long elapsed = SystemClock.uptimeMillis() - start;
+                            float t =
+                                    Math.max(
+                                            1
+                                                    - interpolator.getInterpolation(
+                                                            (float) elapsed / duration),
+                                            0);
+                            marker.setAnchor(0.5f, 1.0f + 2 * t);
 
-                    if (t > 0.0) {
-                        // Post again 16ms later.
-                        handler.postDelayed(this, 16);
-                    }
-                }
-            });
+                            if (t > 0.0) {
+                                // Post again 16ms later.
+                                handler.postDelayed(this, 16);
+                            }
+                        }
+                    });
         } else if (marker.equals(mAdelaide)) {
             // This causes the marker at Adelaide to change color and alpha.
             marker.setIcon(BitmapDescriptorFactory.defaultMarker(mRandom.nextFloat() * 360));
@@ -482,8 +530,8 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
         // Markers have a z-index that is settable and gettable.
         float zIndex = marker.getZIndex() + 1.0f;
         marker.setZIndex(zIndex);
-        Toast.makeText(this, marker.getTitle() + " z-index set to " + zIndex,
-                Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, marker.getTitle() + " z-index set to " + zIndex, Toast.LENGTH_SHORT)
+                .show();
 
         mLastSelectedMarker = marker;
         // We return false to indicate that we have not consumed the event and that we wish
@@ -499,7 +547,7 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
 
     @Override
     public void onInfoWindowClose(Marker marker) {
-        //Toast.makeText(this, "Close Info Window", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Close Info Window", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -522,8 +570,11 @@ public class MarkerDemoActivity extends SamplesBaseActivity implements
     @Override
     public void onMarkerDrag(Marker marker) {
         binding.topText.setVisibility(View.VISIBLE);
-        binding.topText.setText(getString(R.string.on_marker_drag, marker.getPosition().latitude, marker.getPosition().longitude));
+        binding.topText.setText(
+                getString(
+                        R.string.on_marker_drag,
+                        marker.getPosition().latitude,
+                        marker.getPosition().longitude));
     }
-
 }
 // [END maps_android_sample_marker]

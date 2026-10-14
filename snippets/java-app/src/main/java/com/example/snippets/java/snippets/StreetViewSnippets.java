@@ -24,12 +24,11 @@ import com.example.snippets.java.annotations.SnippetGroup;
 import com.example.snippets.java.annotations.SnippetItem;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
-import com.google.android.gms.maps.model.StreetViewSource;
 
 @SnippetGroup(
-    title = "Street View",
-    description = "Snippets demonstrating Google Street View integration, camera movements, and panorama configuration."
-)
+        title = "Street View",
+        description =
+                "Snippets demonstrating Google Street View integration, camera movements, and panorama configuration.")
 public class StreetViewSnippets {
 
     private final Context context;
@@ -41,18 +40,18 @@ public class StreetViewSnippets {
     }
 
     @SnippetItem(
-        title = "1. Launch Street View Activity",
-        description = "What it does: Launches an Activity embedding a StreetViewPanoramaView initialized in San Francisco.\nHow to see the effect: A full-screen interactive 360-degree street view panorama opens."
-    )
+            title = "1. Launch Street View Activity",
+            description =
+                    "What it does: Launches an Activity embedding a StreetViewPanoramaView initialized in San Francisco.\nHow to see the effect: A full-screen interactive 360-degree street view panorama opens.")
     public void launchStreetView() {
         Intent intent = new Intent(context, StreetViewActivity.class);
         context.startActivity(intent);
     }
 
     @SnippetItem(
-        title = "2. Set Panorama Location",
-        description = "What it does: Sets the panorama view geographic coordinates, search radius, and outdoor source filter.\nHow to see the effect: The Street View camera jumps directly to target coordinates."
-    )
+            title = "2. Set Panorama Location",
+            description =
+                    "What it does: Sets the panorama view geographic coordinates, search radius, and outdoor source filter.\nHow to see the effect: The Street View camera jumps directly to target coordinates.")
     public void setLocation() {
         LatLng sanFrancisco = new LatLng(37.754130, -122.447129);
         Intent intent = new Intent(context, StreetViewActivity.class);
@@ -61,28 +60,26 @@ public class StreetViewSnippets {
     }
 
     @SnippetItem(
-        title = "3. Zoom Panorama",
-        description = "What it does: Constructs a StreetViewPanoramaCamera configuration with an increased zoom level.\nHow to see the effect: The Street View perspective zooms closer into the street scene."
-    )
+            title = "3. Zoom Panorama",
+            description =
+                    "What it does: Constructs a StreetViewPanoramaCamera configuration with an increased zoom level.\nHow to see the effect: The Street View perspective zooms closer into the street scene.")
     public void zoomPanorama() {
         float zoomBy = 0.5f;
-        StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder()
-            .zoom(1f + zoomBy)
-            .build();
+        StreetViewPanoramaCamera camera =
+                new StreetViewPanoramaCamera.Builder().zoom(1f + zoomBy).build();
         Intent intent = new Intent(context, StreetViewActivity.class);
         intent.putExtra("extra_action", "ZOOM");
         context.startActivity(intent);
     }
 
     @SnippetItem(
-        title = "4. Animate Camera",
-        description = "What it does: Configures camera bearing rotation (heading adjustment) for smooth panorama panning.\nHow to see the effect: The Street View panorama camera view rotates horizontally."
-    )
+            title = "4. Animate Camera",
+            description =
+                    "What it does: Configures camera bearing rotation (heading adjustment) for smooth panorama panning.\nHow to see the effect: The Street View panorama camera view rotates horizontally.")
     public void animatePanorama() {
         long duration = 1000;
-        StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder()
-            .bearing(180f - 60f)
-            .build();
+        StreetViewPanoramaCamera camera =
+                new StreetViewPanoramaCamera.Builder().bearing(180f - 60f).build();
         Intent intent = new Intent(context, StreetViewActivity.class);
         intent.putExtra("extra_action", "ANIMATE");
         context.startActivity(intent);

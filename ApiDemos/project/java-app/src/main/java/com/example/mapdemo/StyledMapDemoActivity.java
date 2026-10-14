@@ -12,53 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
-
-import com.example.common_ui.catalog.Sample;
-import com.example.common_ui.catalog.Complexity;
-import com.example.common_ui.catalog.Framework;
-import com.example.common_ui.R;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-
+import com.example.common_ui.R;
+import com.example.common_ui.catalog.Complexity;
+import com.example.common_ui.catalog.Framework;
+import com.example.common_ui.catalog.Sample;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This shows how to style a map with JSON.
- */
+/** This shows how to style a map with JSON. */
 @Sample(
-    id = "com.example.mapdemo.StyledMapDemoActivity",
-    title = "JSON Map Styling (Retro / Dark)",
-    description = "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
-    category = "Styling & Cloud",
-    complexity = Complexity.SIMPLE,
-    tags = {"#styling", "#json", "#darkmode", "#night", "#retro"},
-    apiCalls = {
-        "GoogleMap.setMapStyle(MapStyleOptions)",
-        "MapStyleOptions.loadRawResourceStyle(Context, int)",
-        "MapStyleOptions(String)"
-    },
-    purpose = "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
-    successCriteria = "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
-    failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
-    framework = Framework.JAVA_VIEWS
-)
+        id = "com.example.mapdemo.StyledMapDemoActivity",
+        title = "JSON Map Styling (Retro / Dark)",
+        description =
+                "Applying raw JSON styling rules locally for Retro, Grayscale, and Night mode aesthetics.",
+        category = "Styling & Cloud",
+        complexity = Complexity.SIMPLE,
+        tags = {"#styling", "#json", "#darkmode", "#night", "#retro"},
+        apiCalls = {
+            "GoogleMap.setMapStyle(MapStyleOptions)",
+            "MapStyleOptions.loadRawResourceStyle(Context, int)",
+            "MapStyleOptions(String)"
+        },
+        purpose =
+                "Demonstrates applying local JSON MapStyleOptions to change base map theme dynamically.",
+        successCriteria =
+                "Selecting style options in the toolbar instantly restyles the map (Night / Retro / Standard).",
+        failureIndicators = "Invalid JSON causes silent fallback or parsing exception.",
+        framework = Framework.JAVA_VIEWS)
 // [START maps_android_sample_styled_map]
 public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
@@ -75,11 +70,11 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
     // These are simply the string resource IDs for each of the style names. We use them
     // as identifiers when choosing which style to apply.
     private final int[] mStyleIds = {
-            R.string.style_label_retro,
-            R.string.style_label_night,
-            R.string.style_label_grayscale,
-            R.string.style_label_no_pois_no_transit,
-            R.string.style_label_default,
+        R.string.style_label_retro,
+        R.string.style_label_night,
+        R.string.style_label_grayscale,
+        R.string.style_label_no_pois_no_transit,
+        R.string.style_label_default,
     };
 
     private static final LatLng SYDNEY = new LatLng(-33.8688, 151.2093);
@@ -128,8 +123,7 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
     }
 
     /**
-     * Shows a dialog listing the styles to choose from, and applies the selected
-     * style when chosen.
+     * Shows a dialog listing the styles to choose from, and applies the selected style when chosen.
      */
     private void showStylesDialog() {
         // mStyleIds stores each style's resource ID, and we extract the names here, rather
@@ -143,7 +137,8 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.style_choose));
-        builder.setItems(styleNames.toArray(new CharSequence[styleNames.size()]),
+        builder.setItems(
+                styleNames.toArray(new CharSequence[styleNames.size()]),
                 (dialog, which) -> {
                     mSelectedStyleId = mStyleIds[which];
                     String msg = getString(R.string.style_set_to, getString(mSelectedStyleId));
@@ -155,9 +150,9 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
     }
 
     /**
-     * Creates a {@link MapStyleOptions} object via loadRawResourceStyle() (or via the
-     * constructor with a JSON String), then sets it on the {@link GoogleMap} instance,
-     * via the setMapStyle() method.
+     * Creates a {@link MapStyleOptions} object via loadRawResourceStyle() (or via the constructor
+     * with a JSON String), then sets it on the {@link GoogleMap} instance, via the setMapStyle()
+     * method.
      */
     private void setSelectedStyle() {
         MapStyleOptions style;
@@ -173,26 +168,28 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
             style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_grayscale);
         } else if (id == R.string.style_label_no_pois_no_transit) {
             // Sets the no POIs or transit style via JSON string.
-            style = new MapStyleOptions("[" +
-                                                "  {" +
-                                                "    \"featureType\":\"poi.business\"," +
-                                                "    \"elementType\":\"all\"," +
-                                                "    \"stylers\":[" +
-                                                "      {" +
-                                                "        \"visibility\":\"off\"" +
-                                                "      }" +
-                                                "    ]" +
-                                                "  }," +
-                                                "  {" +
-                                                "    \"featureType\":\"transit\"," +
-                                                "    \"elementType\":\"all\"," +
-                                                "    \"stylers\":[" +
-                                                "      {" +
-                                                "        \"visibility\":\"off\"" +
-                                                "      }" +
-                                                "    ]" +
-                                                "  }" +
-                                                "]");
+            style =
+                    new MapStyleOptions(
+                            "["
+                                    + "  {"
+                                    + "    \"featureType\":\"poi.business\","
+                                    + "    \"elementType\":\"all\","
+                                    + "    \"stylers\":["
+                                    + "      {"
+                                    + "        \"visibility\":\"off\""
+                                    + "      }"
+                                    + "    ]"
+                                    + "  },"
+                                    + "  {"
+                                    + "    \"featureType\":\"transit\","
+                                    + "    \"elementType\":\"all\","
+                                    + "    \"stylers\":["
+                                    + "      {"
+                                    + "        \"visibility\":\"off\""
+                                    + "      }"
+                                    + "    ]"
+                                    + "  }"
+                                    + "]");
         } else if (id == R.string.style_label_default) {
             // Removes previously set style, by setting it to null.
             style = null;
@@ -201,6 +198,5 @@ public class StyledMapDemoActivity extends SamplesBaseActivity implements OnMapR
         }
         mMap.setMapStyle(style);
     }
-
 }
 // [END maps_android_sample_styled_map]

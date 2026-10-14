@@ -47,27 +47,28 @@ public abstract class MapDemoActivityTest<T extends AppCompatActivity & MapProvi
     @Before
     public void setUp() {
         scenario = ActivityScenario.launch(activityClass);
-        scenario.onActivity(activity -> {
-            long startTime = System.currentTimeMillis();
-            long endTime = startTime + 5000; // 5 second timeout
+        scenario.onActivity(
+                activity -> {
+                    long startTime = System.currentTimeMillis();
+                    long endTime = startTime + 5000; // 5 second timeout
 
-            while (!activity.isMapReady() && System.currentTimeMillis() < endTime) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (!activity.isMapReady()) {
-                throw new RuntimeException("Map is not ready after 5 seconds");
-            }
+                    while (!activity.isMapReady() && System.currentTimeMillis() < endTime) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (!activity.isMapReady()) {
+                        throw new RuntimeException("Map is not ready after 5 seconds");
+                    }
 
-            map = activity.getMap();
-            mapView = activity.findViewById(R.id.map);
+                    map = activity.getMap();
+                    mapView = activity.findViewById(R.id.map);
 
-            idlingResource = new MapIdlingResource(activity.getMap());
-            IdlingRegistry.getInstance().register(idlingResource);
-        });
+                    idlingResource = new MapIdlingResource(activity.getMap());
+                    IdlingRegistry.getInstance().register(idlingResource);
+                });
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -91,23 +92,25 @@ public abstract class MapDemoActivityTest<T extends AppCompatActivity & MapProvi
 
     protected void clickOnMapAt(LatLng latLng, GoogleMap map, View mapView, Tapper tapType) {
         final float[] coordinates = new float[2];
-        scenario.onActivity(activity -> {
-            int[] mapLocation = new int[2];
-            mapView.getLocationOnScreen(mapLocation);
+        scenario.onActivity(
+                activity -> {
+                    int[] mapLocation = new int[2];
+                    mapView.getLocationOnScreen(mapLocation);
 
-            android.graphics.Point screenPosition = map.getProjection().toScreenLocation(latLng);
+                    android.graphics.Point screenPosition =
+                            map.getProjection().toScreenLocation(latLng);
 
-            coordinates[0] = screenPosition.x + mapLocation[0];
-            coordinates[1] = screenPosition.y + mapLocation[1];
-        });
+                    coordinates[0] = screenPosition.x + mapLocation[0];
+                    coordinates[1] = screenPosition.y + mapLocation[1];
+                });
 
-        GeneralClickAction clickAction = new GeneralClickAction(
-            tapType,
-            view -> coordinates,
-            Press.FINGER,
-            InputDevice.SOURCE_UNKNOWN,
-            MotionEvent.BUTTON_PRIMARY
-        );
+        GeneralClickAction clickAction =
+                new GeneralClickAction(
+                        tapType,
+                        view -> coordinates,
+                        Press.FINGER,
+                        InputDevice.SOURCE_UNKNOWN,
+                        MotionEvent.BUTTON_PRIMARY);
         Espresso.onView(ViewMatchers.withId(R.id.map)).perform(clickAction);
     }
 }

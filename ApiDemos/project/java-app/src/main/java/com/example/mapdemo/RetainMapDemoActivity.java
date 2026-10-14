@@ -12,18 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
+import android.os.Bundle;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This shows how to retain a map across activity restarts (e.g., from screen rotations), which can
@@ -37,7 +33,9 @@ public class RetainMapDemoActivity extends SamplesBaseActivity implements OnMapR
         setContentView(com.example.common_ui.R.layout.basic_demo);
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
 
         if (savedInstanceState == null) {
             // First incarnation of this activity.

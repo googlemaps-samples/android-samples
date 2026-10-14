@@ -19,6 +19,7 @@ package com.example.snippets.kotlin
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -28,11 +29,10 @@ import androidx.lifecycle.lifecycleScope
 import com.example.snippets.common.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import android.widget.FrameLayout
-import com.google.android.gms.maps.GoogleMapOptions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
@@ -52,7 +52,9 @@ class MapActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(R.layout.activity_map)
 
-        supportActionBar?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#7F52FF")))
+        supportActionBar?.setBackgroundDrawable(
+            android.graphics.drawable.ColorDrawable(android.graphics.Color.parseColor("#7F52FF")),
+        )
         window.statusBarColor = android.graphics.Color.parseColor("#5835C4")
 
         val mainView = findViewById<android.view.View>(R.id.map_container)
@@ -71,7 +73,11 @@ class MapActivity : AppCompatActivity() {
                 android.content.pm.PackageManager.GET_META_DATA,
             )
             val apiKey = appInfo.metaData?.getString("com.google.android.geo.API_KEY")?.trim()
-            if (apiKey.isNullOrEmpty() || apiKey == "DEFAULT_API_KEY" || apiKey == "YOUR_API_KEY" || !apiKey.startsWith("AIza")) {
+            if (apiKey.isNullOrEmpty() ||
+                apiKey == "DEFAULT_API_KEY" ||
+                apiKey == "YOUR_API_KEY" ||
+                !apiKey.startsWith("AIza")
+            ) {
                 Toast.makeText(
                     this,
                     "ERROR: Invalid Google Maps API Key configured in secrets.properties",
@@ -93,7 +99,11 @@ class MapActivity : AppCompatActivity() {
         currentIndex = snippetList.indexOfFirst {
             it.title == snippetTitle && (groupTitle == null || it.groupTitle == groupTitle)
         }
-        Log.d("MapActivity", "onCreate: groupTitle='$groupTitle', snippetTitle='$snippetTitle', resolved index=$currentIndex, resolved item='${snippetList.getOrNull(currentIndex)?.let { "${it.groupTitle} - ${it.title}" }}'")
+        Log.d(
+            "MapActivity",
+            "onCreate: groupTitle='$groupTitle', snippetTitle='$snippetTitle', resolved index=$currentIndex, " +
+                "resolved item='${snippetList.getOrNull(currentIndex)?.let { "${it.groupTitle} - ${it.title}" }}'",
+        )
         if (currentIndex == -1 && snippetList.isNotEmpty()) {
             currentIndex = 0
             Log.d("MapActivity", "Fallback to index 0: '${snippetList[0].groupTitle} - ${snippetList[0].title}'")
@@ -117,9 +127,14 @@ class MapActivity : AppCompatActivity() {
                             .build()
                     """.trimIndent()
 
-                    val cm = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as? android.content.ClipboardManager
+                    val cm = getSystemService(android.content.Context.CLIPBOARD_SERVICE)
+                        as? android.content.ClipboardManager
                     cm?.setPrimaryClip(android.content.ClipData.newPlainText("CameraPosition", codeSnippet))
-                    Toast.makeText(this@MapActivity, "📷 Camera Pose copied to clipboard!\n$codeSnippet", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@MapActivity,
+                        "📷 Camera Pose copied to clipboard!\n$codeSnippet",
+                        Toast.LENGTH_LONG,
+                    ).show()
                     Log.d("MapActivity", "Camera Pose copied:\n$codeSnippet")
                 } else {
                     Toast.makeText(this@MapActivity, "Map NOT initialized yet", Toast.LENGTH_SHORT).show()
@@ -130,10 +145,18 @@ class MapActivity : AppCompatActivity() {
         findViewById<Button>(R.id.purpose_button).apply {
             setOnClickListener {
                 val item = snippetList.getOrNull(currentIndex)
-                val desc = if (!item?.description.isNullOrEmpty()) item?.description else "Demonstrates ${item?.title ?: snippetTitle}"
+                val desc = if (!item?.description.isNullOrEmpty()) {
+                    item?.description
+                } else {
+                    "Demonstrates " +
+                        "${item?.title ?: snippetTitle}"
+                }
                 androidx.appcompat.app.AlertDialog.Builder(this@MapActivity)
                     .setTitle("ℹ️ ${item?.title ?: snippetTitle ?: "Snippet Purpose"}")
-                    .setMessage("🎯 Purpose & Point:\n$desc\n\n👀 What you should see / do:\nInteract with the live map on your device screen to test this capability.")
+                    .setMessage(
+                        "🎯 Purpose & Point:\n$desc\n\n👀 What you should see / do:\n" +
+                            "Interact with the live map on your device screen to test this capability.",
+                    )
                     .setPositiveButton("Got It", null)
                     .show()
             }
@@ -254,9 +277,13 @@ class MapActivity : AppCompatActivity() {
         }
 
         val newMapView = MapView(this, options)
-        holder.addView(newMapView, FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
-        ))
+        holder.addView(
+            newMapView,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT,
+            ),
+        )
         newMapView.onCreate(null)
         newMapView.onStart()
         newMapView.onResume()
@@ -271,7 +298,9 @@ class MapActivity : AppCompatActivity() {
             ?: return
 
         val allSnippets = SnippetRegistry.getSnippetGroups().flatMap { it.items }
-        val idx = allSnippets.indexOfFirst { it.title == snippet.title && (groupTitle == null || it.groupTitle == groupTitle) }
+        val idx = allSnippets.indexOfFirst {
+            it.title == snippet.title && (groupTitle == null || it.groupTitle == groupTitle)
+        }
         if (idx != -1) {
             currentIndex = idx
         }

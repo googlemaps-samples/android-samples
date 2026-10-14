@@ -16,13 +16,12 @@ package com.example.mapdemo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -32,8 +31,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
-import androidx.lifecycle.LifecycleOwnerKt;
-
 import com.example.common_ui.catalog.Framework;
 import com.example.common_ui.catalog.ReviewStatus;
 import com.example.common_ui.catalog.SampleCatalogRegistry;
@@ -43,10 +40,7 @@ import com.example.reviewer.repository.SampleReviewRepository;
 import com.example.reviewer.ui.ReviewEvaluationDialog;
 import com.example.reviewer.ui.SampleExpectationsBottomSheet;
 import com.google.android.material.appbar.MaterialToolbar;
-
 import kotlin.Unit;
-import kotlinx.coroutines.BuildersKt;
-import kotlinx.coroutines.Dispatchers;
 
 public class SamplesBaseActivity extends AppCompatActivity {
 
@@ -63,12 +57,15 @@ public class SamplesBaseActivity extends AppCompatActivity {
         super.setContentView(com.example.common_ui.R.layout.activity_sample_base);
         setupEdgeToEdgeInsets();
         setupSampleToolbar();
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                navigateBackToCatalog();
-            }
-        });
+        getOnBackPressedDispatcher()
+                .addCallback(
+                        this,
+                        new OnBackPressedCallback(true) {
+                            @Override
+                            public void handleOnBackPressed() {
+                                navigateBackToCatalog();
+                            }
+                        });
     }
 
     @Override
@@ -137,9 +134,16 @@ public class SamplesBaseActivity extends AppCompatActivity {
         if (existingTopBar != null) {
             super.setContentView(childView);
         } else {
-            View baseView = getLayoutInflater().inflate(com.example.common_ui.R.layout.activity_sample_base, null);
-            ViewGroup container = baseView.findViewById(com.example.common_ui.R.id.sample_content_container);
-            container.addView(childView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            View baseView =
+                    getLayoutInflater()
+                            .inflate(com.example.common_ui.R.layout.activity_sample_base, null);
+            ViewGroup container =
+                    baseView.findViewById(com.example.common_ui.R.id.sample_content_container);
+            container.addView(
+                    childView,
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT));
             super.setContentView(baseView);
         }
         setupEdgeToEdgeInsets();
@@ -224,9 +228,10 @@ public class SamplesBaseActivity extends AppCompatActivity {
     private void navigateBackToCatalog() {
         if (isTaskRoot()) {
             try {
-                String targetActivity = isReviewerMode()
-                        ? "com.example.reviewer.compose.ReviewerActivity"
-                        : "com.example.common_ui.catalog.compose.CatalogActivity";
+                String targetActivity =
+                        isReviewerMode()
+                                ? "com.example.reviewer.compose.ReviewerActivity"
+                                : "com.example.common_ui.catalog.compose.CatalogActivity";
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), targetActivity);
                 startActivity(intent);
@@ -243,73 +248,91 @@ public class SamplesBaseActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == 2001) {
             if (currentSampleMetadata != null) {
-                SampleExpectationsBottomSheet sheet = SampleExpectationsBottomSheet.Companion.newInstance(
-                        currentSampleMetadata,
-                        Framework.JAVA_VIEWS,
-                        isReviewerMode(),
-                        (sampleItem, framework) -> {
-                            SampleReviewRepository.launchSample(SamplesBaseActivity.this, sampleItem, framework, isReviewerMode());
-                            return Unit.INSTANCE;
-                        }
-                );
+                SampleExpectationsBottomSheet sheet =
+                        SampleExpectationsBottomSheet.Companion.newInstance(
+                                currentSampleMetadata,
+                                Framework.JAVA_VIEWS,
+                                isReviewerMode(),
+                                (sampleItem, framework) -> {
+                                    SampleReviewRepository.launchSample(
+                                            SamplesBaseActivity.this,
+                                            sampleItem,
+                                            framework,
+                                            isReviewerMode());
+                                    return Unit.INSTANCE;
+                                });
                 sheet.show(getSupportFragmentManager(), "SampleExpectationsBottomSheet");
             }
             return true;
         } else if (item.getItemId() == 2003) {
             if (currentSampleMetadata != null) {
                 ReviewEvaluationDialog.show(
-                        this,
-                        currentSampleMetadata,
-                        Framework.JAVA_VIEWS,
-                        ReviewStatus.PASSING
-                );
+                        this, currentSampleMetadata, Framework.JAVA_VIEWS, ReviewStatus.PASSING);
             }
             return true;
         } else if (item.getItemId() == 2004) {
             if (currentSampleMetadata != null) {
                 ReviewEvaluationDialog.show(
-                        this,
-                        currentSampleMetadata,
-                        Framework.JAVA_VIEWS,
-                        ReviewStatus.NEEDS_WORK
-                );
+                        this, currentSampleMetadata, Framework.JAVA_VIEWS, ReviewStatus.NEEDS_WORK);
             }
             return true;
         } else if (item.getItemId() == 2005) {
             if (currentSampleMetadata != null) {
-                reviewRepository.getNextUncheckedSampleAsync(currentSampleMetadata.getId(), Framework.JAVA_VIEWS, next -> {
-                    if (next != null) {
-                        SampleReviewRepository.launchSample(SamplesBaseActivity.this, next, Framework.JAVA_VIEWS);
-                    } else {
-                        Toast.makeText(SamplesBaseActivity.this, "🎉 All Java samples reviewed!", Toast.LENGTH_LONG).show();
-                        navigateBackToCatalog();
-                    }
-                    return Unit.INSTANCE;
-                });
+                reviewRepository.getNextUncheckedSampleAsync(
+                        currentSampleMetadata.getId(),
+                        Framework.JAVA_VIEWS,
+                        next -> {
+                            if (next != null) {
+                                SampleReviewRepository.launchSample(
+                                        SamplesBaseActivity.this, next, Framework.JAVA_VIEWS);
+                            } else {
+                                Toast.makeText(
+                                                SamplesBaseActivity.this,
+                                                "🎉 All Java samples reviewed!",
+                                                Toast.LENGTH_LONG)
+                                        .show();
+                                navigateBackToCatalog();
+                            }
+                            return Unit.INSTANCE;
+                        });
             }
             return true;
         } else if (item.getItemId() == 2006) {
             if (currentSampleMetadata != null) {
-                reviewRepository.getPreviousSampleAsync(currentSampleMetadata.getId(), Framework.JAVA_VIEWS, prev -> {
-                    if (prev != null) {
-                        SampleReviewRepository.launchSample(SamplesBaseActivity.this, prev, Framework.JAVA_VIEWS);
-                    }
-                    return Unit.INSTANCE;
-                });
+                reviewRepository.getPreviousSampleAsync(
+                        currentSampleMetadata.getId(),
+                        Framework.JAVA_VIEWS,
+                        prev -> {
+                            if (prev != null) {
+                                SampleReviewRepository.launchSample(
+                                        SamplesBaseActivity.this, prev, Framework.JAVA_VIEWS);
+                            }
+                            return Unit.INSTANCE;
+                        });
             }
             return true;
         } else if (item.getItemId() == 2007) {
             if (currentSampleMetadata != null) {
                 String targetFqcn = currentSampleMetadata.getTargetFqcn(Framework.JAVA_VIEWS);
-                reviewRepository.deleteEvaluation(targetFqcn, () -> {
-                    Toast.makeText(this, "Reverted " + currentSampleMetadata.getTitle() + " to Unchecked", Toast.LENGTH_SHORT).show();
-                    return Unit.INSTANCE;
-                });
+                reviewRepository.deleteEvaluation(
+                        targetFqcn,
+                        () -> {
+                            Toast.makeText(
+                                            this,
+                                            "Reverted "
+                                                    + currentSampleMetadata.getTitle()
+                                                    + " to Unchecked",
+                                            Toast.LENGTH_SHORT)
+                                    .show();
+                            return Unit.INSTANCE;
+                        });
             }
             return true;
         } else if (item.getItemId() == 2002) {
-            if (currentSampleMetadata != null && currentSampleMetadata.getKotlinActivity() != null) {
-                SampleReviewRepository.launchSample(this, currentSampleMetadata, Framework.KOTLIN_VIEWS, isReviewerMode());
+            if (currentSampleMetadata != null
+                    && currentSampleMetadata.getKotlinActivity() != null) {
+                SampleReviewRepository.launchSample(
+                        this, currentSampleMetadata, Framework.KOTLIN_VIEWS, isReviewerMode());
             }
             return true;
         }
@@ -324,17 +347,21 @@ public class SamplesBaseActivity extends AppCompatActivity {
             TypedValue typedValue = new TypedValue();
             int baseHeight;
             if (getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
-                baseHeight = TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());
+                baseHeight =
+                        TypedValue.complexToDimensionPixelSize(
+                                typedValue.data, getResources().getDisplayMetrics());
             } else {
                 baseHeight = (int) (56 * getResources().getDisplayMetrics().density);
             }
-            ViewCompat.setOnApplyWindowInsetsListener(topBar, (view, insets) -> {
-                Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
-                view.setPadding(cutout.left, cutout.top, cutout.right, 0);
-                view.getLayoutParams().height = baseHeight + cutout.top;
-                view.requestLayout();
-                return insets;
-            });
+            ViewCompat.setOnApplyWindowInsetsListener(
+                    topBar,
+                    (view, insets) -> {
+                        Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
+                        view.setPadding(cutout.left, cutout.top, cutout.right, 0);
+                        view.getLayoutParams().height = baseHeight + cutout.top;
+                        view.requestLayout();
+                        return insets;
+                    });
         }
 
         View mapContainer = root.findViewById(com.example.common_ui.R.id.map_container);
@@ -342,27 +369,27 @@ public class SamplesBaseActivity extends AppCompatActivity {
             mapContainer = root.findViewById(com.example.common_ui.R.id.sample_content_container);
         }
         View bottomTarget = mapContainer != null ? mapContainer : root;
-        ViewCompat.setOnApplyWindowInsetsListener(bottomTarget, (view, insets) -> {
-            Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
-            view.setPadding(cutout.left, 0, cutout.right, cutout.bottom);
-            return insets;
-        });
+        ViewCompat.setOnApplyWindowInsetsListener(
+                bottomTarget,
+                (view, insets) -> {
+                    Insets cutout = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
+                    view.setPadding(cutout.left, 0, cutout.right, cutout.bottom);
+                    return insets;
+                });
     }
 
     protected static void applyInsets(View container) {
         if (container == null) return;
-        ViewCompat.setOnApplyWindowInsetsListener(container, (v, insets) -> {
-            Insets navBars = insets.getInsets(
-                    WindowInsetsCompat.Type.navigationBars() | WindowInsetsCompat.Type.displayCutout()
-            );
-            Insets statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars());
-            v.setPadding(
-                navBars.left,
-                statusBars.top,
-                navBars.right,
-                navBars.bottom
-            );
-            return insets;
-        });
+        ViewCompat.setOnApplyWindowInsetsListener(
+                container,
+                (v, insets) -> {
+                    Insets navBars =
+                            insets.getInsets(
+                                    WindowInsetsCompat.Type.navigationBars()
+                                            | WindowInsetsCompat.Type.displayCutout());
+                    Insets statusBars = insets.getInsets(WindowInsetsCompat.Type.statusBars());
+                    v.setPadding(navBars.left, statusBars.top, navBars.right, navBars.bottom);
+                    return insets;
+                });
     }
 }

@@ -15,10 +15,8 @@
 package com.example.snippets.java;
 
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.StreetViewPanoramaOptions;
@@ -30,7 +28,8 @@ import com.google.android.gms.maps.model.StreetViewPanoramaLocation;
 import com.google.android.gms.maps.model.StreetViewSource;
 
 // [START maps_street_view_on_street_view_panorama_ready]
-public class StreetViewActivity extends AppCompatActivity implements OnStreetViewPanoramaReadyCallback {
+public class StreetViewActivity extends AppCompatActivity
+        implements OnStreetViewPanoramaReadyCallback {
     // [START_EXCLUDE]
     // [START maps_street_view_on_create]
     @Override
@@ -39,11 +38,12 @@ public class StreetViewActivity extends AppCompatActivity implements OnStreetVie
         setContentView(R.layout.activity_street_view);
         // [START maps_street_view_find_fragment]
         SupportStreetViewPanoramaFragment streetViewPanoramaFragment =
-            (SupportStreetViewPanoramaFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.street_view_panorama);
+                (SupportStreetViewPanoramaFragment)
+                        getSupportFragmentManager().findFragmentById(R.id.street_view_panorama);
         streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
         // [END maps_street_view_find_fragment]
     }
+
     // [END maps_street_view_on_create]
 
     // [START maps_street_view_on_street_view_panorama_ready_callback]
@@ -66,13 +66,15 @@ public class StreetViewActivity extends AppCompatActivity implements OnStreetVie
         }
         // [END_EXCLUDE]
     }
+
     // [END maps_street_view_on_street_view_panorama_ready_callback]
 
     private void newView() {
         // [START maps_street_view_new_panorama_view]
         LatLng sanFrancisco = new LatLng(37.754130, -122.447129);
-        StreetViewPanoramaView view = new StreetViewPanoramaView(this,
-            new StreetViewPanoramaOptions().position(sanFrancisco));
+        StreetViewPanoramaView view =
+                new StreetViewPanoramaView(
+                        this, new StreetViewPanoramaOptions().position(sanFrancisco));
         // [END maps_street_view_new_panorama_view]
     }
 
@@ -104,22 +106,24 @@ public class StreetViewActivity extends AppCompatActivity implements OnStreetVie
     private void zoom(StreetViewPanorama streetViewPanorama) {
         // [START maps_street_view_panorama_zoom]
         float zoomBy = 0.5f;
-        StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder()
-            .zoom(streetViewPanorama.getPanoramaCamera().zoom + zoomBy)
-            .tilt(streetViewPanorama.getPanoramaCamera().tilt)
-            .bearing(streetViewPanorama.getPanoramaCamera().bearing)
-            .build();
+        StreetViewPanoramaCamera camera =
+                new StreetViewPanoramaCamera.Builder()
+                        .zoom(streetViewPanorama.getPanoramaCamera().zoom + zoomBy)
+                        .tilt(streetViewPanorama.getPanoramaCamera().tilt)
+                        .bearing(streetViewPanorama.getPanoramaCamera().bearing)
+                        .build();
         // [END maps_street_view_panorama_zoom]
     }
 
     private void pan(StreetViewPanorama streetViewPanorama) {
         // [START maps_street_view_panorama_pan]
         float panBy = 30;
-        StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder()
-            .zoom(streetViewPanorama.getPanoramaCamera().zoom)
-            .tilt(streetViewPanorama.getPanoramaCamera().tilt)
-            .bearing(streetViewPanorama.getPanoramaCamera().bearing - panBy)
-            .build();
+        StreetViewPanoramaCamera camera =
+                new StreetViewPanoramaCamera.Builder()
+                        .zoom(streetViewPanorama.getPanoramaCamera().zoom)
+                        .tilt(streetViewPanorama.getPanoramaCamera().tilt)
+                        .bearing(streetViewPanorama.getPanoramaCamera().bearing - panBy)
+                        .build();
         // [END maps_street_view_panorama_pan]
     }
 
@@ -130,9 +134,8 @@ public class StreetViewActivity extends AppCompatActivity implements OnStreetVie
 
         StreetViewPanoramaCamera previous = streetViewPanorama.getPanoramaCamera();
 
-        StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder(previous)
-            .tilt(tilt)
-            .build();
+        StreetViewPanoramaCamera camera =
+                new StreetViewPanoramaCamera.Builder(previous).tilt(tilt).build();
         // [END maps_street_view_panorama_tilt]
     }
 
@@ -141,11 +144,11 @@ public class StreetViewActivity extends AppCompatActivity implements OnStreetVie
         // Keeping the zoom and tilt. Animate bearing by 60 degrees in 1000 milliseconds.
         long duration = 1000;
         StreetViewPanoramaCamera camera =
-            new StreetViewPanoramaCamera.Builder()
-                .zoom(streetViewPanorama.getPanoramaCamera().zoom)
-                .tilt(streetViewPanorama.getPanoramaCamera().tilt)
-                .bearing(streetViewPanorama.getPanoramaCamera().bearing - 60)
-                .build();
+                new StreetViewPanoramaCamera.Builder()
+                        .zoom(streetViewPanorama.getPanoramaCamera().zoom)
+                        .tilt(streetViewPanorama.getPanoramaCamera().tilt)
+                        .bearing(streetViewPanorama.getPanoramaCamera().bearing - 60)
+                        .build();
         streetViewPanorama.animateTo(camera, duration);
         // [END maps_street_view_panorama_animate]
     }

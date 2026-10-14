@@ -16,23 +16,22 @@
 
 package com.example.kotlindemos
 
-
-import com.example.common_ui.R
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.example.common_ui.R
 
 /**
  * A widget that describes an activity that demonstrates a feature.
  */
 class FeatureView(context: Context) : FrameLayout(context) {
-    /**
+    /*
      * Constructs a feature view by inflating layout/feature.xml.
      */
     init {
         val layoutInflater =
-                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         layoutInflater.inflate(R.layout.feature, this)
     }
 

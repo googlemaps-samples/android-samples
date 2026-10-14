@@ -16,7 +16,6 @@ package com.example.kotlindemos
 import android.os.Bundle
 import android.view.View
 import com.example.common_ui.R
-
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment
 import com.google.android.gms.maps.model.LatLng
 

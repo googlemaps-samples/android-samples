@@ -16,12 +16,18 @@
 
 package com.example.kotlindemos
 
-
+import android.graphics.Color
+import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.CheckBox
+import android.widget.SeekBar
+import android.widget.Spinner
 import com.example.common_ui.R
-import com.example.common_ui.catalog.Sample
 import com.example.common_ui.catalog.Complexity
 import com.example.common_ui.catalog.Framework
-
+import com.example.common_ui.catalog.Sample
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -40,15 +46,6 @@ import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.RoundCap
 import com.google.android.gms.maps.model.SquareCap
-import android.graphics.Color
-import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.SeekBar
-import android.widget.Spinner
-
 import java.util.Arrays
 
 /**
@@ -64,13 +61,13 @@ import java.util.Arrays
     purpose = "Demonstrates drawing customizable polylines with dash/gap patterns, round end caps, and bevel joints.",
     successCriteria = "Polylines render crisp dashed and dotted stroke lines along coordinate vertices.",
     failureIndicators = "Line caps distorted or custom pattern ignored on high-DPI screens.",
-    framework = Framework.KOTLIN_VIEWS
+    framework = Framework.KOTLIN_VIEWS,
 )
 class PolylineDemoActivity :
-        SamplesBaseActivity(),
-        OnMapReadyCallback,
-        SeekBar.OnSeekBarChangeListener,
-        AdapterView.OnItemSelectedListener {
+    SamplesBaseActivity(),
+    OnMapReadyCallback,
+    SeekBar.OnSeekBarChangeListener,
+    AdapterView.OnItemSelectedListener {
 
     private val CUSTOM_CAP_IMAGE_REF_WIDTH_PX = 50
     private val INITIAL_STROKE_WIDTH_PX = 5
@@ -111,19 +108,25 @@ class PolylineDemoActivity :
 
     // These are the options for polyline caps, joints and patterns. We use their
     // string resource IDs as identifiers.
-    private val capTypeNameResourceIds = intArrayOf(R.string.cap_butt,
-                                                    R.string.cap_round,
-                                                    R.string.cap_square,
-                                                    R.string.cap_image)
+    private val capTypeNameResourceIds = intArrayOf(
+        R.string.cap_butt,
+        R.string.cap_round,
+        R.string.cap_square,
+        R.string.cap_image,
+    )
 
-    private val jointTypeNameResourceIds = intArrayOf(R.string.joint_type_default,
-                                                      R.string.joint_type_bevel,
-                                                      R.string.joint_type_round)
+    private val jointTypeNameResourceIds = intArrayOf(
+        R.string.joint_type_default,
+        R.string.joint_type_bevel,
+        R.string.joint_type_round,
+    )
 
-    private val patternTypeNameResourceIds = intArrayOf(R.string.pattern_solid,
-                                                        R.string.pattern_dashed,
-                                                        R.string.pattern_dotted,
-                                                        R.string.pattern_mixed)
+    private val patternTypeNameResourceIds = intArrayOf(
+        R.string.pattern_solid,
+        R.string.pattern_dashed,
+        R.string.pattern_dotted,
+        R.string.pattern_mixed,
+    )
 
     // [START maps_android_sample_polylines]
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,27 +149,35 @@ class PolylineDemoActivity :
         }
 
         startCapSpinner = findViewById<Spinner>(R.id.startCapSpinner).apply {
-            adapter = ArrayAdapter(this@PolylineDemoActivity,
-                    android.R.layout.simple_spinner_item,
-                    getResourceStrings(capTypeNameResourceIds))
+            adapter = ArrayAdapter(
+                this@PolylineDemoActivity,
+                android.R.layout.simple_spinner_item,
+                getResourceStrings(capTypeNameResourceIds),
+            )
         }
 
         endCapSpinner = findViewById<Spinner>(R.id.endCapSpinner).apply {
-            adapter = ArrayAdapter(this@PolylineDemoActivity,
-                    android.R.layout.simple_spinner_item,
-                    getResourceStrings(capTypeNameResourceIds))
+            adapter = ArrayAdapter(
+                this@PolylineDemoActivity,
+                android.R.layout.simple_spinner_item,
+                getResourceStrings(capTypeNameResourceIds),
+            )
         }
 
         jointTypeSpinner = findViewById<Spinner>(R.id.jointTypeSpinner).apply {
-            adapter = ArrayAdapter(this@PolylineDemoActivity,
-                    android.R.layout.simple_spinner_item,
-                    getResourceStrings(jointTypeNameResourceIds))
+            adapter = ArrayAdapter(
+                this@PolylineDemoActivity,
+                android.R.layout.simple_spinner_item,
+                getResourceStrings(jointTypeNameResourceIds),
+            )
         }
 
         patternSpinner = findViewById<Spinner>(R.id.patternSpinner).apply {
             adapter = ArrayAdapter(
-                    this@PolylineDemoActivity, android.R.layout.simple_spinner_item,
-                    getResourceStrings(patternTypeNameResourceIds))
+                this@PolylineDemoActivity,
+                android.R.layout.simple_spinner_item,
+                getResourceStrings(patternTypeNameResourceIds),
+            )
         }
 
         clickabilityCheckbox = findViewById<CheckBox>(R.id.toggleClickability)
@@ -177,9 +188,7 @@ class PolylineDemoActivity :
     }
     // [START_EXCLUDE silent]
 
-    private fun getResourceStrings(resourceIds: IntArray): List<String> {
-        return resourceIds.map { getString(it) }
-    }
+    private fun getResourceStrings(resourceIds: IntArray): List<String> = resourceIds.map { getString(it) }
     // [END_EXCLUDE]
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -188,13 +197,15 @@ class PolylineDemoActivity :
             setContentDescription(getString(R.string.polyline_demo_description))
 
             // A geodesic polyline that goes around the world.
-            addPolyline(PolylineOptions().apply {
-                add(lhrLatLng, aklLatLng, laxLatLng, jfkLatLng, lhrLatLng)
-                width(INITIAL_STROKE_WIDTH_PX.toFloat())
-                color(Color.BLUE)
-                geodesic(true)
-                clickable(clickabilityCheckbox.isChecked)
-            })
+            addPolyline(
+                PolylineOptions().apply {
+                    add(lhrLatLng, aklLatLng, laxLatLng, jfkLatLng, lhrLatLng)
+                    width(INITIAL_STROKE_WIDTH_PX.toFloat())
+                    color(Color.BLUE)
+                    geodesic(true)
+                    clickable(clickabilityCheckbox.isChecked)
+                },
+            )
 
             // Move the googleMap so that it is centered on the mutable polyline.
             moveCamera(CameraUpdateFactory.newLatLngZoom(melbourneLatLng, 3f))
@@ -207,13 +218,14 @@ class PolylineDemoActivity :
         }
 
         // A simple polyline across Australia. This polyline will be mutable.
-        mutablePolyline = googleMap.addPolyline(PolylineOptions().apply{
-            color(Color.HSVToColor(
-                    alphaBar.progress, floatArrayOf(hueBar.progress.toFloat(), 1f, 1f)))
-            width(widthBar.progress.toFloat())
-            clickable(clickabilityCheckbox.isChecked)
-            add(melbourneLatLng, adelaideLatLng, perthLatLng, darwinLatLng)
-        })
+        mutablePolyline = googleMap.addPolyline(
+            PolylineOptions().apply {
+                color(Color.HSVToColor(alphaBar.progress, floatArrayOf(hueBar.progress.toFloat(), 1f, 1f)))
+                width(widthBar.progress.toFloat())
+                clickable(clickabilityCheckbox.isChecked)
+                add(melbourneLatLng, adelaideLatLng, perthLatLng, darwinLatLng)
+            },
+        )
 
         arrayOf(hueBar, alphaBar, widthBar).map {
             it.setOnSeekBarChangeListener(this)
@@ -230,41 +242,40 @@ class PolylineDemoActivity :
             pattern = getSelectedPattern(patternSpinner.selectedItemPosition)
         }
 
-        clickabilityCheckbox.setOnClickListener {
-            view -> mutablePolyline.isClickable = (view as CheckBox).isChecked
+        clickabilityCheckbox.setOnClickListener { view ->
+            mutablePolyline.isClickable = (view as CheckBox).isChecked
         }
     }
     // [END maps_android_sample_polylines]
 
-    private fun getSelectedCap(pos: Int): Cap? {
-        return when (capTypeNameResourceIds[pos]) {
-            R.string.cap_butt -> ButtCap()
-            R.string.cap_square -> SquareCap()
-            R.string.cap_round -> RoundCap()
-            R.string.cap_image -> CustomCap(
-              BitmapDescriptorFactory.fromResource(R.drawable.chevron),
-              CUSTOM_CAP_IMAGE_REF_WIDTH_PX.toFloat())
-            else -> null
-        }
+    private fun getSelectedCap(pos: Int): Cap? = when (capTypeNameResourceIds[pos]) {
+        R.string.cap_butt -> ButtCap()
+
+        R.string.cap_square -> SquareCap()
+
+        R.string.cap_round -> RoundCap()
+
+        R.string.cap_image -> CustomCap(
+            BitmapDescriptorFactory.fromResource(R.drawable.chevron),
+            CUSTOM_CAP_IMAGE_REF_WIDTH_PX.toFloat(),
+        )
+
+        else -> null
     }
 
-    private fun getSelectedJointType(pos: Int): Int {
-        return when (jointTypeNameResourceIds[pos]) {
-            R.string.joint_type_bevel -> JointType.BEVEL
-            R.string.joint_type_round -> JointType.ROUND
-            R.string.joint_type_default -> JointType.DEFAULT
-            else -> 0
-        }
+    private fun getSelectedJointType(pos: Int): Int = when (jointTypeNameResourceIds[pos]) {
+        R.string.joint_type_bevel -> JointType.BEVEL
+        R.string.joint_type_round -> JointType.ROUND
+        R.string.joint_type_default -> JointType.DEFAULT
+        else -> 0
     }
 
-    private fun getSelectedPattern(pos: Int): List<PatternItem>? {
-        return when (patternTypeNameResourceIds[pos]) {
-            R.string.pattern_solid -> null
-            R.string.pattern_dotted -> patternDotted
-            R.string.pattern_dashed -> patternDashed
-            R.string.pattern_mixed -> patternMixed
-            else -> null
-        }
+    private fun getSelectedPattern(pos: Int): List<PatternItem>? = when (patternTypeNameResourceIds[pos]) {
+        R.string.pattern_solid -> null
+        R.string.pattern_dotted -> patternDotted
+        R.string.pattern_dashed -> patternDashed
+        R.string.pattern_mixed -> patternMixed
+        else -> null
     }
 
     /**
@@ -272,15 +283,17 @@ class PolylineDemoActivity :
      * Can change polyline color, width and transparency.
      */
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        when (seekBar) {
+            hueBar ->
+                mutablePolyline.color =
+                    Color.HSVToColor(Color.alpha(mutablePolyline.color), floatArrayOf(progress.toFloat(), 1f, 1f))
 
-        when(seekBar) {
-            hueBar -> mutablePolyline.color = Color.HSVToColor(
-                    Color.alpha(mutablePolyline.color), floatArrayOf(progress.toFloat(), 1f, 1f))
             alphaBar -> {
                 val prevHSV = FloatArray(3)
                 Color.colorToHSV(mutablePolyline.color, prevHSV)
                 mutablePolyline.color = Color.HSVToColor(progress, prevHSV)
             }
+
             widthBar -> mutablePolyline.width = progress.toFloat()
         }
     }
@@ -309,5 +322,4 @@ class PolylineDemoActivity :
     override fun onNothingSelected(parent: AdapterView<*>) {
         // Don't do anything here.
     }
-
 }

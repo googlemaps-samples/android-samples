@@ -63,7 +63,7 @@ class ApiDemoApplication : Application() {
                 Toast.makeText(
                     this,
                     "API Key was not set in secrets.properties",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
                 throw RuntimeException("API Key was not set in secrets.properties")
             }
@@ -88,7 +88,11 @@ class ApiDemoApplication : Application() {
             getString(R.string.map_id)
         } else {
             Log.w(TAG, "Map ID is not set. See README for instructions.")
-            Toast.makeText(this, "Map ID is not set. Some features may not work. See README for instructions.", Toast.LENGTH_LONG)
+            Toast.makeText(
+                this,
+                "Map ID is not set. Some features may not work. See README for instructions.",
+                Toast.LENGTH_LONG,
+            )
                 .show()
             null
         }

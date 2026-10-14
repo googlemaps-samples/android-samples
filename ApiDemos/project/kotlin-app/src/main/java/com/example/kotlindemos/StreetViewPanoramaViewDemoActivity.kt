@@ -17,7 +17,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import com.example.common_ui.R
-
 import com.google.android.gms.maps.StreetViewPanoramaOptions
 import com.google.android.gms.maps.StreetViewPanoramaView
 import com.google.android.gms.maps.model.LatLng
@@ -37,8 +36,8 @@ class StreetViewPanoramaViewDemoActivity : SamplesBaseActivity() {
             streetViewPanoramaView,
             ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            ),
         )
 
         // *** IMPORTANT ***
@@ -70,7 +69,7 @@ class StreetViewPanoramaViewDemoActivity : SamplesBaseActivity() {
             streetViewBundle = Bundle()
             outState.putBundle(
                 STREETVIEW_BUNDLE_KEY,
-                streetViewBundle
+                streetViewBundle,
             )
         }
         streetViewPanoramaView.onSaveInstanceState(streetViewBundle)

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
 import android.annotation.SuppressLint;
@@ -26,8 +25,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 /**
  * Helper class that will delay triggering the OnMapReady callback until both the GoogleMap and the
  * View having completed initialization. This is only necessary if a developer wishes to immediately
- * invoke any method on the GoogleMap that also requires the View to have finished layout
- * (ie. anything that needs to know the View's true size like snapshotting).
+ * invoke any method on the GoogleMap that also requires the View to have finished layout (ie.
+ * anything that needs to know the View's true size like snapshotting).
  */
 public class OnMapAndViewReadyListener implements OnGlobalLayoutListener, OnMapReadyCallback {
 
@@ -79,8 +78,8 @@ public class OnMapAndViewReadyListener implements OnGlobalLayoutListener, OnMapR
         fireCallbackIfReady();
     }
 
-    @SuppressWarnings("deprecation")  // We use the new method when supported
-    @SuppressLint("NewApi")  // We check which build version we are using.
+    @SuppressWarnings("deprecation") // We use the new method when supported
+    @SuppressLint("NewApi") // We check which build version we are using.
     @Override
     public void onGlobalLayout() {
         // Remove our listener.

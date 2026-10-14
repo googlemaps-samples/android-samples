@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package com.example.mapdemo;
 
+import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,14 +22,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.IndoorBuilding;
 import com.google.android.gms.maps.model.IndoorLevel;
 import com.google.android.gms.maps.model.LatLng;
-
-import android.os.Bundle;
-
 import java.util.List;
 
-/**
- * A demo activity showing how to use indoor.
- */
+/** A demo activity showing how to use indoor. */
 public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapReadyCallback {
 
     GoogleMap map;
@@ -50,7 +45,9 @@ public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapRead
         binding.higherLevelButton.setOnClickListener(v -> onHigherLevel());
 
         SupportMapFragment mapFragment =
-                (SupportMapFragment) getSupportFragmentManager().findFragmentById(com.example.common_ui.R.id.map);
+                (SupportMapFragment)
+                        getSupportFragmentManager()
+                                .findFragmentById(com.example.common_ui.R.id.map);
         mapFragment.getMapAsync(this);
         applyInsets(binding.mapContainer);
     }
@@ -85,8 +82,7 @@ public class IndoorDemoActivity extends SamplesBaseActivity implements OnMapRead
     private void onVisibleLevelInfo() {
         IndoorBuilding building = map.getFocusedBuilding();
         if (building != null) {
-            IndoorLevel level =
-                    building.getLevels().get(building.getActiveLevelIndex());
+            IndoorLevel level = building.getLevels().get(building.getActiveLevelIndex());
             if (level != null) {
                 setText(level.getName());
             } else {

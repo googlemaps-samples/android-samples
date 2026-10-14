@@ -40,6 +40,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.firemarkers.ui.theme.FireMarkersTheme
 import com.example.firemarkers.viewmodel.MarkersViewModel
@@ -51,8 +52,6 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberUpdatedMarkerState
 import dagger.hilt.android.AndroidEntryPoint
-
-import androidx.core.view.WindowCompat
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -105,7 +104,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                 title = {
                     Text(
                         "FireMarkers",
-                        fontSize = 20.sp
+                        fontSize = 20.sp,
                     )
                 },
                 actions = {
@@ -113,23 +112,23 @@ fun MapScreen(modifier: Modifier = Modifier) {
                         Text("🎄") // Tree emoji for controller
                         IconButton(
                             onClick = { viewModel.toggleAnimation() },
-                            enabled = hasMarkers
+                            enabled = hasMarkers,
                         ) {
                             Icon(
                                 imageVector = if (animationRunning) Icons.Default.Stop else Icons.Default.PlayArrow,
-                                contentDescription = "Animate Shape"
+                                contentDescription = "Animate Shape",
                             )
                         }
                         IconButton(onClick = { viewModel.seedDatabase() }) {
                             Icon(
                                 imageVector = Icons.Default.AddLocation,
-                                contentDescription = "Seed Database"
+                                contentDescription = "Seed Database",
                             )
                         }
                         IconButton(onClick = { viewModel.clearMarkers() }) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
-                                contentDescription = "Clear Markers"
+                                contentDescription = "Clear Markers",
                             )
                         }
                     } else {
@@ -138,26 +137,26 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             Text("🎃") // Pumpkin emoji for agent
                         }
                     }
-                }
+                },
             )
         },
-        modifier = modifier
+        modifier = modifier,
     ) { innerPadding ->
         GoogleMap(
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
-            cameraPositionState = cameraPositionState
+            cameraPositionState = cameraPositionState,
         ) {
             markers.forEach { markerData ->
                 key(markerData.id) {
                     val markerState = rememberUpdatedMarkerState(
-                        position = LatLng(markerData.latitude, markerData.longitude)
+                        position = LatLng(markerData.latitude, markerData.longitude),
                     )
                     Marker(
                         state = markerState,
                         title = markerData.label,
-                        icon = BitmapDescriptorFactory.defaultMarker(markerData.color)
+                        icon = BitmapDescriptorFactory.defaultMarker(markerData.color),
                     )
                 }
             }

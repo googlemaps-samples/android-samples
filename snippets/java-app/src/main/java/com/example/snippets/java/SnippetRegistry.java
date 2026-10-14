@@ -31,7 +31,6 @@ import com.example.snippets.java.snippets.OverlaySnippets;
 import com.example.snippets.java.snippets.ShapesSnippets;
 import com.example.snippets.java.snippets.StreetViewSnippets;
 import com.example.snippets.java.snippets.UtilsSnippets;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.GroundOverlay;
 import com.google.android.gms.maps.model.Marker;
@@ -79,8 +78,7 @@ public class SnippetRegistry {
                     OverlaySnippets.class,
                     ShapesSnippets.class,
                     StreetViewSnippets.class,
-                    UtilsSnippets.class
-            );
+                    UtilsSnippets.class);
 
     /** Scans annotated classes to build the hierarchical snippet model. */
     public static List<SnippetGroupInfo> getSnippetGroups() {
@@ -103,8 +101,7 @@ public class SnippetRegistry {
                                 groupAnnotation.title(),
                                 (context, map) -> {
                                     try {
-                                        TrackedMap trackedMap =
-                                                new TrackedMap(map, addedElements);
+                                        TrackedMap trackedMap = new TrackedMap(map, addedElements);
                                         Object instance =
                                                 createInstance(clazz, context, trackedMap);
                                         if (method.getParameterCount() == 0) {
@@ -118,16 +115,23 @@ public class SnippetRegistry {
                                         if (cause instanceof RuntimeException) {
                                             throw (RuntimeException) cause;
                                         }
-                                        throw new RuntimeException("Snippet execution failed: " + method.getName(), cause);
+                                        throw new RuntimeException(
+                                                "Snippet execution failed: " + method.getName(),
+                                                cause);
                                     } catch (Exception e) {
-                                        throw new RuntimeException("Snippet reflection invocation failed: " + method.getName(), e);
+                                        throw new RuntimeException(
+                                                "Snippet reflection invocation failed: "
+                                                        + method.getName(),
+                                                e);
                                     }
                                 }));
             }
 
             if (!items.isEmpty()) {
-                items.sort(Comparator.comparingInt((SnippetItemInfo i) -> parseLeadingNumber(i.getTitle()))
-                        .thenComparing(SnippetItemInfo::getTitle));
+                items.sort(
+                        Comparator.comparingInt(
+                                        (SnippetItemInfo i) -> parseLeadingNumber(i.getTitle()))
+                                .thenComparing(SnippetItemInfo::getTitle));
                 groups.add(
                         new SnippetGroupInfo(
                                 groupAnnotation.title(), groupAnnotation.description(), items));
@@ -136,7 +140,8 @@ public class SnippetRegistry {
         return groups;
     }
 
-    private static final java.util.regex.Pattern LEADING_NUM = java.util.regex.Pattern.compile("^(\\d+)");
+    private static final java.util.regex.Pattern LEADING_NUM =
+            java.util.regex.Pattern.compile("^(\\d+)");
 
     private static int parseLeadingNumber(String title) {
         if (title == null) return Integer.MAX_VALUE;
@@ -144,7 +149,8 @@ public class SnippetRegistry {
         if (m.find()) {
             try {
                 return Integer.parseInt(m.group(1));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
         return Integer.MAX_VALUE;
     }
@@ -152,8 +158,7 @@ public class SnippetRegistry {
     private static Object createInstance(Class<?> clazz, Context context, TrackedMap map)
             throws Exception {
         try {
-            return clazz.getConstructor(Context.class, TrackedMap.class)
-                    .newInstance(context, map);
+            return clazz.getConstructor(Context.class, TrackedMap.class).newInstance(context, map);
         } catch (NoSuchMethodException e1) {
             try {
                 return clazz.getConstructor(TrackedMap.class).newInstance(map);

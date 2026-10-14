@@ -17,7 +17,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -31,44 +30,36 @@ import com.google.android.gms.maps.SupportMapFragment
  */
 class MapInPagerDemoActivity : SamplesBaseActivity() {
 
-  /** Called when the activity is first created.  */
-  public override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.map_in_pager_demo)
-    val adapter = MyAdapter(supportFragmentManager)
-    val pager = findViewById<ViewPager>(R.id.pager)
-    pager.adapter = adapter
+    /** Called when the activity is first created.  */
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.map_in_pager_demo)
+        val adapter = MyAdapter(supportFragmentManager)
+        val pager = findViewById<ViewPager>(R.id.pager)
+        pager.adapter = adapter
 
-    // This is required to avoid a black flash when the map is loaded.  The flash is due
-    // to the use of a SurfaceView as the underlying view of the map.
-    pager.requestTransparentRegion(pager)
-    applyInsets(findViewById(R.id.map_container))
-  }
-
-  /** A simple fragment that displays a TextView.  */
-  class TextFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              bundle: Bundle?): View? {
-      return inflater.inflate(R.layout.text_fragment, container, false)
-    }
-  }
-
-  /** A simple FragmentPagerAdapter that returns two TextFragment and a SupportMapFragment.  */
-  @Suppress("DEPRECATION")
-  class MyAdapter(fm: FragmentManager) :
-    FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-
-    override fun getCount(): Int {
-      return 3
+        // This is required to avoid a black flash when the map is loaded.  The flash is due
+        // to the use of a SurfaceView as the underlying view of the map.
+        pager.requestTransparentRegion(pager)
+        applyInsets(findViewById(R.id.map_container))
     }
 
-    override fun getItem(position: Int): Fragment {
-      return when (position) {
-        0, 1 -> TextFragment()
-        2 -> SupportMapFragment.newInstance()
-        else -> Fragment()
-      }
+    /** A simple fragment that displays a TextView.  */
+    class TextFragment : Fragment() {
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, bundle: Bundle?): View? =
+            inflater.inflate(R.layout.text_fragment, container, false)
     }
-  }
+
+    /** A simple FragmentPagerAdapter that returns two TextFragment and a SupportMapFragment.  */
+    @Suppress("DEPRECATION")
+    class MyAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        override fun getCount(): Int = 3
+
+        override fun getItem(position: Int): Fragment = when (position) {
+            0, 1 -> TextFragment()
+            2 -> SupportMapFragment.newInstance()
+            else -> Fragment()
+        }
+    }
 }

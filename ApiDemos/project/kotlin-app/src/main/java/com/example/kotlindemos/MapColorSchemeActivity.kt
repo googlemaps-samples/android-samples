@@ -20,19 +20,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import com.example.common_ui.R
-
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.MapColorScheme
 
-
 class MapColorSchemeActivity :
-    SamplesBaseActivity(), OnMapReadyCallback {
+    SamplesBaseActivity(),
+    OnMapReadyCallback {
 
     /** This is ok to be lateinit as it is initialised in onMapReady */
     private lateinit var map: GoogleMap
-
 
     private lateinit var buttonLight: Button
     private lateinit var buttonDark: Button

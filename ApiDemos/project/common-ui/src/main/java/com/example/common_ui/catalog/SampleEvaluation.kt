@@ -30,5 +30,5 @@ data class SampleEvaluation(
     val status: String = ReviewStatus.UNCHECKED.name,
     val notes: String = "",
     val screenshotPath: String? = null,
-    val lastUpdated: Long = System.currentTimeMillis()
+    val lastUpdated: Long = System.currentTimeMillis(),
 ) : Serializable

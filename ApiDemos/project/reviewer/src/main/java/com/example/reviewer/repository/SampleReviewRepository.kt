@@ -48,22 +48,23 @@ import java.io.File
 class SampleReviewRepository private constructor(
     private val dao: SampleEvaluationDao,
     private val context: Context? = null,
-    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
 ) {
 
     val allEvaluationsFlow: Flow<List<SampleEvaluationEntity>> = dao.getAllEvaluationsFlow()
 
-    fun getEvaluationFlow(sampleId: String): Flow<SampleEvaluationEntity?> {
-        return dao.getEvaluationFlow(sampleId)
+    fun getEvaluationFlow(sampleId: String): Flow<SampleEvaluationEntity?> = dao.getEvaluationFlow(sampleId)
+
+    suspend fun getEvaluation(sampleId: String): SampleEvaluationEntity? = withContext(Dispatchers.IO) {
+        dao.getEvaluation(sampleId)
     }
 
-    suspend fun getEvaluation(sampleId: String): SampleEvaluationEntity? {
-        return withContext(Dispatchers.IO) {
-            dao.getEvaluation(sampleId)
-        }
-    }
-
-    private fun syncEvaluationToCounterpart(targetFqcn: String, status: ReviewStatus, notes: String, screenshotPath: String?) {
+    private fun syncEvaluationToCounterpart(
+        targetFqcn: String,
+        status: ReviewStatus,
+        notes: String,
+        screenshotPath: String?,
+    ) {
         val ctx = context ?: return
         val currentPkg = ctx.packageName
         val otherPkg = if (currentPkg == "com.example.kotlindemos") "com.example.mapdemo" else "com.example.kotlindemos"
@@ -103,7 +104,7 @@ class SampleReviewRepository private constructor(
         notes: String,
         metadata: SampleItem,
         screenshotPath: String? = null,
-        syncToCounterpart: Boolean = true
+        syncToCounterpart: Boolean = true,
     ) = withContext(Dispatchers.IO) {
         val frameworkName = if (targetFqcn.contains("mapdemo")) "JAVA" else "KOTLIN"
         val entity = SampleEvaluationEntity(
@@ -115,7 +116,7 @@ class SampleReviewRepository private constructor(
             status = status.name,
             notes = notes,
             screenshotPath = screenshotPath,
-            lastUpdated = System.currentTimeMillis()
+            lastUpdated = System.currentTimeMillis(),
         )
         dao.upsertEvaluation(entity)
         if (syncToCounterpart) {
@@ -136,7 +137,7 @@ class SampleReviewRepository private constructor(
         notes: String,
         metadata: SampleItem,
         screenshotPath: String? = null,
-        onComplete: (() -> Unit)? = null
+        onComplete: (() -> Unit)? = null,
     ) {
         coroutineScope.launch {
             saveEvaluationDirect(targetFqcn, status, notes, metadata, screenshotPath, syncToCounterpart = true)
@@ -164,83 +165,75 @@ class SampleReviewRepository private constructor(
         }
     }
 
-    suspend fun getNextUncheckedSample(
-        currentSampleId: String?,
-        framework: Framework
-    ): SampleItem? = withContext(Dispatchers.IO) {
-        val evaluations = dao.getAllEvaluations().associateBy { it.sampleId }
-        val eligibleSamples = SampleCatalogRegistry.SAMPLES.filter {
-            it.getActivityForFramework(framework) != null
-        }
-        if (eligibleSamples.isEmpty()) return@withContext null
+    suspend fun getNextUncheckedSample(currentSampleId: String?, framework: Framework): SampleItem? =
+        withContext(Dispatchers.IO) {
+            val evaluations = dao.getAllEvaluations().associateBy { it.sampleId }
+            val eligibleSamples = SampleCatalogRegistry.SAMPLES.filter {
+                it.getActivityForFramework(framework) != null
+            }
+            if (eligibleSamples.isEmpty()) return@withContext null
 
-        val uncheckedSamples = eligibleSamples.filter { sample ->
-            val fqcn = sample.getTargetFqcn(framework)
-            val eval = evaluations[fqcn]
-            eval == null || eval.status == ReviewStatus.UNCHECKED.name
-        }
-        if (uncheckedSamples.isEmpty()) return@withContext null
+            val uncheckedSamples = eligibleSamples.filter { sample ->
+                val fqcn = sample.getTargetFqcn(framework)
+                val eval = evaluations[fqcn]
+                eval == null || eval.status == ReviewStatus.UNCHECKED.name
+            }
+            if (uncheckedSamples.isEmpty()) return@withContext null
 
-        if (currentSampleId == null) {
-            return@withContext uncheckedSamples.first()
+            if (currentSampleId == null) {
+                return@withContext uncheckedSamples.first()
+            }
+
+            val currentIndex = eligibleSamples.indexOfFirst {
+                it.id == currentSampleId || it.getTargetFqcn(framework) == currentSampleId
+            }
+
+            if (currentIndex == -1) {
+                return@withContext uncheckedSamples.first()
+            }
+
+            // Search forward after current sample
+            for (i in (currentIndex + 1) until eligibleSamples.size) {
+                val sample = eligibleSamples[i]
+                val fqcn = sample.getTargetFqcn(framework)
+                val eval = evaluations[fqcn]
+                if (eval == null || eval.status == ReviewStatus.UNCHECKED.name) {
+                    return@withContext sample
+                }
+            }
+
+            // Wrap around from beginning up to current sample
+            for (i in 0 until currentIndex) {
+                val sample = eligibleSamples[i]
+                val fqcn = sample.getTargetFqcn(framework)
+                val eval = evaluations[fqcn]
+                if (eval == null || eval.status == ReviewStatus.UNCHECKED.name) {
+                    return@withContext sample
+                }
+            }
+
+            return@withContext null
         }
 
-        val currentIndex = eligibleSamples.indexOfFirst {
-            it.id == currentSampleId || it.getTargetFqcn(framework) == currentSampleId
-        }
+    suspend fun getPreviousSample(currentSampleId: String?, framework: Framework): SampleItem? =
+        withContext(Dispatchers.IO) {
+            val eligibleSamples = SampleCatalogRegistry.SAMPLES.filter {
+                it.getActivityForFramework(framework) != null
+            }
+            if (eligibleSamples.isEmpty()) return@withContext null
 
-        if (currentIndex == -1) {
-            return@withContext uncheckedSamples.first()
-        }
+            val currentIndex = eligibleSamples.indexOfFirst {
+                it.id == currentSampleId || it.getTargetFqcn(framework) == currentSampleId
+            }
 
-        // Search forward after current sample
-        for (i in (currentIndex + 1) until eligibleSamples.size) {
-            val sample = eligibleSamples[i]
-            val fqcn = sample.getTargetFqcn(framework)
-            val eval = evaluations[fqcn]
-            if (eval == null || eval.status == ReviewStatus.UNCHECKED.name) {
-                return@withContext sample
+            if (currentIndex <= 0) {
+                return@withContext eligibleSamples.last()
+            } else {
+                return@withContext eligibleSamples[currentIndex - 1]
             }
         }
 
-        // Wrap around from beginning up to current sample
-        for (i in 0 until currentIndex) {
-            val sample = eligibleSamples[i]
-            val fqcn = sample.getTargetFqcn(framework)
-            val eval = evaluations[fqcn]
-            if (eval == null || eval.status == ReviewStatus.UNCHECKED.name) {
-                return@withContext sample
-            }
-        }
-
-        return@withContext null
-    }
-
-    suspend fun getPreviousSample(
-        currentSampleId: String?,
-        framework: Framework
-    ): SampleItem? = withContext(Dispatchers.IO) {
-        val eligibleSamples = SampleCatalogRegistry.SAMPLES.filter {
-            it.getActivityForFramework(framework) != null
-        }
-        if (eligibleSamples.isEmpty()) return@withContext null
-
-        val currentIndex = eligibleSamples.indexOfFirst {
-            it.id == currentSampleId || it.getTargetFqcn(framework) == currentSampleId
-        }
-
-        if (currentIndex <= 0) {
-            return@withContext eligibleSamples.last()
-        } else {
-            return@withContext eligibleSamples[currentIndex - 1]
-        }
-    }
-
-    fun getNextUncheckedSampleAsync(
-        currentSampleId: String?,
-        framework: Framework,
-        callback: (SampleItem?) -> Unit
-    ) {
+    fun getNextUncheckedSampleAsync(currentSampleId: String?, framework: Framework, callback: (SampleItem?) -> Unit) {
         coroutineScope.launch {
             val result = getNextUncheckedSample(currentSampleId, framework)
             withContext(Dispatchers.Main) {
@@ -249,11 +242,7 @@ class SampleReviewRepository private constructor(
         }
     }
 
-    fun getPreviousSampleAsync(
-        currentSampleId: String?,
-        framework: Framework,
-        callback: (SampleItem?) -> Unit
-    ) {
+    fun getPreviousSampleAsync(currentSampleId: String?, framework: Framework, callback: (SampleItem?) -> Unit) {
         coroutineScope.launch {
             val result = getPreviousSample(currentSampleId, framework)
             withContext(Dispatchers.Main) {
@@ -262,11 +251,9 @@ class SampleReviewRepository private constructor(
         }
     }
 
-    suspend fun exportAiringOfGrievances(context: Context): File {
-        return withContext(Dispatchers.IO) {
-            val allEvaluations = dao.getAllEvaluations()
-            GrievanceReportExporter.generateAndSaveReport(context, allEvaluations)
-        }
+    suspend fun exportAiringOfGrievances(context: Context): File = withContext(Dispatchers.IO) {
+        val allEvaluations = dao.getAllEvaluations()
+        GrievanceReportExporter.generateAndSaveReport(context, allEvaluations)
     }
 
     companion object {
@@ -274,13 +261,11 @@ class SampleReviewRepository private constructor(
         private var INSTANCE: SampleReviewRepository? = null
 
         @JvmStatic
-        fun getInstance(context: Context): SampleReviewRepository {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: run {
-                    val appContext = context.applicationContext
-                    val db = SampleCatalogDatabase.getInstance(appContext)
-                    SampleReviewRepository(db.sampleEvaluationDao(), appContext).also { INSTANCE = it }
-                }
+        fun getInstance(context: Context): SampleReviewRepository = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: run {
+                val appContext = context.applicationContext
+                val db = SampleCatalogDatabase.getInstance(appContext)
+                SampleReviewRepository(db.sampleEvaluationDao(), appContext).also { INSTANCE = it }
             }
         }
 
@@ -290,14 +275,14 @@ class SampleReviewRepository private constructor(
             activity: Activity,
             sample: SampleItem,
             framework: Framework,
-            isReviewerMode: Boolean = true
+            isReviewerMode: Boolean = true,
         ) {
             val className = sample.getActivityForFramework(framework)
             if (className.isNullOrBlank()) {
                 Toast.makeText(
                     activity,
                     "No ${framework.displayName} implementation available for ${sample.title}",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
                 return
             }
@@ -325,20 +310,20 @@ class SampleReviewRepository private constructor(
                     Toast.makeText(
                         activity,
                         "${framework.displayName} app ($targetPackage) is not installed",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_LONG,
                     ).show()
                 }
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(
                     activity,
                     "${framework.displayName} app ($targetPackage) is not installed",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
             } catch (e: Exception) {
                 Toast.makeText(
                     activity,
                     "Could not launch ${sample.title}: ${e.message}",
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_LONG,
                 ).show()
             }
         }

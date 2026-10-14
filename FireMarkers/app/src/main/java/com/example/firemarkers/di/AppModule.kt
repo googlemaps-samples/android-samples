@@ -37,7 +37,5 @@ object AppModule {
      */
     @Provides
     @Singleton
-    fun provideFirebaseConnection(): FirebaseConnection {
-        return FirebaseConnection()
-    }
+    fun provideFirebaseConnection(): FirebaseConnection = FirebaseConnection()
 }

@@ -16,7 +16,10 @@ package com.example.kotlindemos
 import androidx.test.espresso.IdlingResource
 import com.google.android.gms.maps.GoogleMap
 
-class MapIdlingResource(private val map: GoogleMap?) : IdlingResource, GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveStartedListener {
+class MapIdlingResource(private val map: GoogleMap?) :
+    IdlingResource,
+    GoogleMap.OnCameraIdleListener,
+    GoogleMap.OnCameraMoveStartedListener {
     private var callback: IdlingResource.ResourceCallback? = null
     private var isIdle = true
 
@@ -25,13 +28,9 @@ class MapIdlingResource(private val map: GoogleMap?) : IdlingResource, GoogleMap
         map?.setOnCameraMoveStartedListener(this)
     }
 
-    override fun getName(): String {
-        return MapIdlingResource::class.java.name
-    }
+    override fun getName(): String = MapIdlingResource::class.java.name
 
-    override fun isIdleNow(): Boolean {
-        return isIdle
-    }
+    override fun isIdleNow(): Boolean = isIdle
 
     override fun registerIdleTransitionCallback(callback: IdlingResource.ResourceCallback?) {
         this.callback = callback
