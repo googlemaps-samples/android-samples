@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/org/example/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,16 +56,6 @@ class OverlaySnippets(private val map: TrackedMap) {
         // [START maps_android_ground_overlays_retain]
         // Add an overlay to the map, retaining a handle to the GroundOverlay object.
         val imageOverlay = map.addGroundOverlay(newarkMap)
-        imageOverlay?.let {
-            val isClickable = it.isClickable
-            val isVisible = it.isVisible
-            val bearing = it.bearing
-            val transparency = it.transparency
-            val zIndex = it.zIndex
-            val position = it.position
-            val width = it.width
-            val height = it.height
-        }
         // [END maps_android_ground_overlays_retain]
 
         // [START maps_android_ground_overlays_remove]
@@ -161,12 +151,6 @@ class OverlaySnippets(private val map: TrackedMap) {
             TileOverlayOptions()
                 .tileProvider(tileProvider),
         )
-        tileOverlay?.let {
-            val isVisible = it.isVisible
-            val fadeIn = it.fadeIn
-            val transparency = it.transparency
-            val zIndex = it.zIndex
-        }
         // [END maps_android_tile_overlays_add]
 
         // [START maps_android_tile_overlays_remove]

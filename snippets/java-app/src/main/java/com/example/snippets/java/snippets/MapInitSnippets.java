@@ -31,6 +31,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapColorScheme;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 @SnippetGroup(
@@ -96,10 +97,6 @@ public class MapInitSnippets {
         // [START maps_android_map_type]
         // Sets the map type to be "hybrid"
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        // [START_EXCLUDE silent]
-        map.setIndoorEnabled(true);
-        boolean isIndoor = map.isIndoorEnabled();
-        // [END_EXCLUDE]
         // [END maps_android_map_type]
     }
 
@@ -198,12 +195,10 @@ public class MapInitSnippets {
                     "What it does: Configures the map color scheme (Dark Mode / Light Mode / Follow System).\nHow to see the effect: Map visual colors shift to dark palette styling matching dark mode application preferences.")
     public void setMapColorScheme() {
         // [START maps_android_map_color_scheme]
-        GoogleMapOptions options =
-                new GoogleMapOptions()
-                        .mapColorScheme(com.google.android.gms.maps.model.MapColorScheme.DARK);
+        GoogleMapOptions options = new GoogleMapOptions().mapColorScheme(MapColorScheme.DARK);
         // [END maps_android_map_color_scheme]
 
-        map.setMapColorScheme(com.google.android.gms.maps.model.MapColorScheme.DARK);
+        map.setMapColorScheme(MapColorScheme.DARK);
     }
 
     @SnippetItem(

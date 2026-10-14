@@ -196,6 +196,7 @@ public class UtilsSnippets {
 
         // Add the cluster item (marker) to the cluster manager.
         clusterManager.addItem(infoWindowItem);
+        clusterManager.cluster();
         // [END maps_android_utils_clustering_info_window]
     }
 
@@ -512,8 +513,8 @@ public class UtilsSnippets {
 
         // Add a tile overlay to the map, using the heat map tile provider.
         TileOverlay overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.8136, 144.9631), 10f));
         // [END maps_android_utils_heatmap_simple]
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.8136, 144.9631), 10f));
     }
 
     private List<LatLng> readItems(@RawRes int resource) throws JSONException {
@@ -559,8 +560,8 @@ public class UtilsSnippets {
         // Add the tile overlay to the map.
         TileOverlay tileOverlay =
                 map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.8136, 144.9631), 10f));
         // [END maps_android_utils_heatmap_customize]
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-37.8136, 144.9631), 10f));
         heatmapTileOverlay = tileOverlay;
 
         assert tileOverlay != null;
@@ -575,7 +576,7 @@ public class UtilsSnippets {
         for (LatLng latLng : latLngs) {
             data.add(new WeightedLatLng(latLng));
         }
-        provider.updateData(data);
+        provider.setWeightedData(data);
         tileOverlay.clearTileCache();
         // [END maps_android_utils_heatmap_customize_dataset]
     }

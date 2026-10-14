@@ -4,32 +4,25 @@ This matrix ensures that every critical feature in the Maps SDK (2D) is actively
 
 ## Kotlin Snippets
 ### `Circle`
-- `getCenter`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `getFillColor`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `getRadius`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
+- `getCenter`: ❌ No coverage
+- `getFillColor`: ❌ No coverage
+- `getRadius`: ❌ No coverage
 - `getStrokeColor`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L196-L211) (Tag: `maps_android_shapes_circles_events`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L177-L192) (Tag: `maps_android_shapes_circles_events`)
 - `getStrokePattern`: ❌ No coverage
-- `getStrokeWidth`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
+- `getStrokeWidth`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getZIndex`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `isClickable`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `isVisible`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:67](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L67) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:63](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L63) (Tag: `No Tag`)
 - `setCenter`: ❌ No coverage
 - `setClickable`: ❌ No coverage
 - `setFillColor`: ❌ No coverage
 - `setRadius`: ❌ No coverage
 - `setStrokeColor`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L196-L211) (Tag: `maps_android_shapes_circles_events`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L177-L192) (Tag: `maps_android_shapes_circles_events`)
 - `setStrokePattern`: ❌ No coverage
 - `setStrokeWidth`: ❌ No coverage
 - `setTag`: ❌ No coverage
@@ -38,231 +31,230 @@ This matrix ensures that every critical feature in the Maps SDK (2D) is actively
 
 ### `ClusterManager`
 - `addItem`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L160-L174) (Tag: `maps_android_utils_clustering_info_window`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L169-L184) (Tag: `maps_android_utils_clustering_info_window`)
 - `addItems`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:139](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L139) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:138](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L138) (Tag: `No Tag`)
 - `clearItems`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L183-L186) (Tag: `maps_android_utils_clustering_clear`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L198-L201) (Tag: `maps_android_utils_clustering_clear`)
 - `cluster`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L104-L121) (Tag: `maps_android_utils_clustering_cluster_manager`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L183-L186) (Tag: `maps_android_utils_clustering_clear`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L194-L198) (Tag: `maps_android_utils_clustering_remove`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L102-L119) (Tag: `maps_android_utils_clustering_cluster_manager`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L169-L184) (Tag: `maps_android_utils_clustering_info_window`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L198-L201) (Tag: `maps_android_utils_clustering_clear`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L214-L218) (Tag: `maps_android_utils_clustering_remove`)
 - `removeItem`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L194-L198) (Tag: `maps_android_utils_clustering_remove`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L214-L218) (Tag: `maps_android_utils_clustering_remove`)
 - `setAnimation`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L148-L150) (Tag: `maps_android_utils_clustering_animation_off`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L152-L154) (Tag: `maps_android_utils_clustering_animation_off`)
 - `setOnClusterClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L206-L219) (Tag: `maps_android_utils_clustering_listeners`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L231-L244) (Tag: `maps_android_utils_clustering_listeners`)
 - `setOnClusterItemClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L206-L219) (Tag: `maps_android_utils_clustering_listeners`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L231-L244) (Tag: `maps_android_utils_clustering_listeners`)
 - `setOnClusterItemInfoWindowClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L206-L219) (Tag: `maps_android_utils_clustering_listeners`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L231-L244) (Tag: `maps_android_utils_clustering_listeners`)
 
 ### `GeoJsonLayer`
 - `addFeature`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L277-L279) (Tag: `maps_android_util_geojson_point_feature_add`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L317-L319) (Tag: `maps_android_util_geojson_point_feature_add`)
 - `addLayerToMap`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L246-L248) (Tag: `maps_android_util_geojson_add_layer_to_map`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L275-L277) (Tag: `maps_android_util_geojson_add_layer_to_map`)
 - `getDefaultLineStringStyle`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L305-L312) (Tag: `maps_android_util_geojson_style`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L345-L352) (Tag: `maps_android_util_geojson_style`)
 - `getDefaultPointStyle`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L305-L312) (Tag: `maps_android_util_geojson_style`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L345-L352) (Tag: `maps_android_util_geojson_style`)
 - `getDefaultPolygonStyle`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L305-L312) (Tag: `maps_android_util_geojson_style`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L345-L352) (Tag: `maps_android_util_geojson_style`)
 - `getFeatures`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L285-L296) (Tag: `maps_android_util_geojson_point_feature_access`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L325-L336) (Tag: `maps_android_util_geojson_point_feature_access`)
 - `removeFeature`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L281-L283) (Tag: `maps_android_util_geojson_point_feature_remove`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L321-L323) (Tag: `maps_android_util_geojson_point_feature_remove`)
 - `removeLayerFromMap`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L258-L260) (Tag: `maps_android_util_geojson_remove_layer`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L296-L298) (Tag: `maps_android_util_geojson_remove_layer`)
 - `setOnFeatureClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L298-L303) (Tag: `maps_android_util_geojson_geometry_click_events`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L338-L343) (Tag: `maps_android_util_geojson_geometry_click_events`)
 
 ### `GoogleMap`
 - `addCircle`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:71](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L71) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L171-L188) (Tag: `maps_android_shapes_circles_circleoptions`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L196-L211) (Tag: `maps_android_shapes_circles_events`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:87](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L87) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L160-L168) (Tag: `maps_android_shapes_circles_circleoptions`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L177-L192) (Tag: `maps_android_shapes_circles_events`)
 - `addGroundOverlay`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:77](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L77) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L46-L52) (Tag: `maps_android_ground_overlays_add`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L78-L86) (Tag: `maps_android_ground_overlays_associate_data`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:93](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L93) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L48-L54) (Tag: `maps_android_ground_overlays_add`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L56-L59) (Tag: `maps_android_ground_overlays_retain`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L70-L78) (Tag: `maps_android_ground_overlays_associate_data`)
 - `addMarker`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:47](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L47) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:53](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L53) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:163](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L163) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L47-L56) (Tag: `maps_android_mapsactivity`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L104-L111) (Tag: `maps_android_markers_custom_marker_color`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L119-L126) (Tag: `maps_android_markers_opacity`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L134-L143) (Tag: `maps_android_markers_image`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/MapsObject.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/MapsObject.kt#L43-L51) (Tag: `maps_android_on_map_ready_add_marker`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:63](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L63) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:69](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L69) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:178](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L178) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L50-L59) (Tag: `maps_android_mapsactivity`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L115-L122) (Tag: `maps_android_markers_opacity`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L132-L141) (Tag: `maps_android_markers_image`)
   - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L151-L158) (Tag: `maps_android_markers_flatten`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L166-L174) (Tag: `maps_android_markers_rotate`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L182-L189) (Tag: `maps_android_markers_z_index`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L197-L242) (Tag: `maps_android_markers_tag_sample`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L250-L258) (Tag: `maps_android_info_windows_add`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L266-L277) (Tag: `maps_android_info_windows_show_hide`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L300-L309) (Tag: `maps_android_marker_collision`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L74-L82) (Tag: `maps_android_markers_draggable`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L90-L96) (Tag: `maps_android_markers_default_icon`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L167-L175) (Tag: `maps_android_markers_rotate`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L185-L192) (Tag: `maps_android_markers_z_index`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L202-L247) (Tag: `maps_android_markers_tag_sample`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L257-L265) (Tag: `maps_android_info_windows_add`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L275-L286) (Tag: `maps_android_info_windows_show_hide`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L314-L323) (Tag: `maps_android_marker_collision`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L46-L56) (Tag: `maps_android_markers_add_a_marker`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L65-L72) (Tag: `maps_android_markers_draggable`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L82-L88) (Tag: `maps_android_markers_default_icon`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L98-L105) (Tag: `maps_android_markers_custom_marker_color`)
 - `addPolygon`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:65](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L65) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:175](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L175) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L102-L124) (Tag: `maps_android_shapes_polygons_autocompletion`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L81-L94) (Tag: `maps_android_shapes_polygons_polygonoptions`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:81](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L81) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:192](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L192) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L130-L150) (Tag: `maps_android_shapes_polygons_hollow`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L75-L88) (Tag: `maps_android_shapes_polygons_polygonoptions`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L98-L120) (Tag: `maps_android_shapes_polygons_autocompletion`)
 - `addPolyline`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:59](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L59) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:169](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L169) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L219-L227) (Tag: `maps_android_shapes_custom_appearances`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L254-L268) (Tag: `maps_android_shapes_associate_data`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L276-L283) (Tag: `maps_android_polyline_multicolored`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L291-L304) (Tag: `maps_android_polyline_gradient`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L312-L321) (Tag: `maps_android_polyline_stamped`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:75](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L75) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:185](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L185) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L202-L210) (Tag: `maps_android_shapes_custom_appearances`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L242-L256) (Tag: `maps_android_shapes_associate_data`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L266-L273) (Tag: `maps_android_polyline_multicolored`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L283-L296) (Tag: `maps_android_polyline_gradient`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L306-L315) (Tag: `maps_android_polyline_stamped`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L55-L66) (Tag: `maps_android_shapes_polylines_polylineoptions`)
 - `addTileOverlay`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:83](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L83) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L123-L161) (Tag: `maps_android_tile_overlays_add`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L177-L193) (Tag: `maps_android_tile_overlays_transparency`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L400-L418) (Tag: `maps_android_utils_heatmap_simple`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L445-L466) (Tag: `maps_android_utils_heatmap_customize`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:99](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L99) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L121-L154) (Tag: `maps_android_tile_overlays_add`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L172-L187) (Tag: `maps_android_tile_overlays_transparency`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L465-L482) (Tag: `maps_android_utils_heatmap_simple`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L512-L532) (Tag: `maps_android_utils_heatmap_customize`)
 - `animateCamera`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:90](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L90) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:92](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L92) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:94](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L94) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L95-L116) (Tag: `maps_android_camera_and_view_common_map_movements`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:249](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L249) (Tag: `No Tag`)
-- `clear`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:133](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L133) (Tag: `No Tag`)
-- `getCameraPosition`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/MapActivity.kt:102](kotlin-app/src/main/java/com/example/snippets/kotlin/MapActivity.kt#L102) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:125](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L125) (Tag: `No Tag`)
-- `getMapType`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:109](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L109) (Tag: `No Tag`)
-- `getMaxZoomLevel`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:126](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L126) (Tag: `No Tag`)
-- `getMinZoomLevel`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:127](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L127) (Tag: `No Tag`)
-- `getProjection`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:124](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L124) (Tag: `No Tag`)
-- `getUiSettings`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:123](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L123) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:143](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L143) (Tag: `No Tag`)
-- `isIndoorEnabled`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:115](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L115) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L80-L85) (Tag: `maps_android_map_type`)
-- `isMyLocationEnabled`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:121](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L121) (Tag: `No Tag`)
-- `isTrafficEnabled`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:112](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L112) (Tag: `No Tag`)
-- `moveCamera`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:89](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L89) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt:38](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L38) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L50-L56) (Tag: `maps_android_camera_and_view_setting_boundaries`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L64-L70) (Tag: `maps_android_camera_and_view_centering_within_area`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L95-L116) (Tag: `maps_android_camera_and_view_common_map_movements`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt#L123-L182) (Tag: `maps_android_dds_country_interactive`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt#L50-L79) (Tag: `maps_android_dds_locality_boundary`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt#L87-L115) (Tag: `maps_android_dds_state_boundaries`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt:72](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt#L72) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt#L165-L202) (Tag: `maps_android_dds_nyc_squirrels`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt#L217-L278) (Tag: `maps_android_dds_kyoto_temples`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L47-L56) (Tag: `maps_android_mapsactivity`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L74-L82) (Tag: `maps_android_markers_draggable`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:340](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L340) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:356](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L356) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L104-L121) (Tag: `maps_android_utils_clustering_cluster_manager`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L400-L418) (Tag: `maps_android_utils_heatmap_simple`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L445-L466) (Tag: `maps_android_utils_heatmap_customize`)
-- `setIndoorEnabled`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:114](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L114) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:140](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L140) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L80-L85) (Tag: `maps_android_map_type`)
-- `setLatLngBoundsForCameraTarget`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:135](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L135) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:98](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L98) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L78-L87) (Tag: `maps_android_camera_and_view_panning_restrictions`)
-- `setMapType`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:108](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L108) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:136](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L136) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L80-L85) (Tag: `maps_android_map_type`)
-- `setMaxZoomPreference`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:97](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L97) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L39-L42) (Tag: `maps_android_camera_and_view_zoom_level`)
-- `setMinZoomPreference`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:96](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L96) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L39-L42) (Tag: `maps_android_camera_and_view_zoom_level`)
-- `setMyLocationEnabled`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:119](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L119) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MyLocationSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MyLocationSnippets.kt#L38-L52) (Tag: `maps_android_my_location`)
-- `setOnCameraIdleListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:104](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L104) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:158](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L158) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:157](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L157) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:158](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L158) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L104-L121) (Tag: `maps_android_utils_clustering_cluster_manager`)
-- `setOnCameraMoveListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:105](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L105) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:155](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L155) (Tag: `No Tag`)
-- `setOnCameraMoveStartedListener`:
   - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:106](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L106) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:156](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L156) (Tag: `No Tag`)
-- `setOnInfoWindowClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:103](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L103) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:161](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L161) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L285-L292) (Tag: `maps_android_info_windows_click_listener`)
-- `setOnMapClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:100](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L100) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:153](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L153) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:150](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L150) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:151](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L151) (Tag: `No Tag`)
-- `setOnMapLongClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:101](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L101) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:108](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L108) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:110](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L110) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L104-L125) (Tag: `maps_android_camera_and_view_common_map_movements`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:278](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L278) (Tag: `No Tag`)
+- `clear`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:207](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L207) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:217](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L217) (Tag: `No Tag`)
+- `getCameraPosition`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/MapActivity.kt:116](kotlin-app/src/main/java/com/example/snippets/kotlin/MapActivity.kt#L116) (Tag: `No Tag`)
   - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:154](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L154) (Tag: `No Tag`)
+- `getMapType`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:132](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L132) (Tag: `No Tag`)
+- `getMaxZoomLevel`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:155](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L155) (Tag: `No Tag`)
+- `getMinZoomLevel`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:156](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L156) (Tag: `No Tag`)
+- `getProjection`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:153](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L153) (Tag: `No Tag`)
+- `getUiSettings`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:152](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L152) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:227](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L227) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt:123](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L123) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt:124](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L124) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt:125](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L125) (Tag: `No Tag`)
+- `isIndoorEnabled`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:144](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L144) (Tag: `No Tag`)
+- `isMyLocationEnabled`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:150](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L150) (Tag: `No Tag`)
+- `isTrafficEnabled`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:138](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L138) (Tag: `No Tag`)
+- `moveCamera`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:105](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L105) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt:40](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L40) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L104-L125) (Tag: `maps_android_camera_and_view_common_map_movements`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L54-L60) (Tag: `maps_android_camera_and_view_setting_boundaries`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L69-L75) (Tag: `maps_android_camera_and_view_centering_within_area`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt#L129-L188) (Tag: `maps_android_dds_country_interactive`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt#L52-L81) (Tag: `maps_android_dds_locality_boundary`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DataDrivenBoundarySnippets.kt#L91-L119) (Tag: `maps_android_dds_state_boundaries`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt#L186-L227) (Tag: `maps_android_dds_nyc_squirrels`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt#L244-L305) (Tag: `maps_android_dds_kyoto_temples`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/DatasetLayerSnippets.kt#L69-L165) (Tag: `maps_android_dds_boulder_trails`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:144](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L144) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:79](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L79) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L50-L59) (Tag: `maps_android_mapsactivity`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt:73](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L73) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L46-L56) (Tag: `maps_android_markers_add_a_marker`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:383](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L383) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:419](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L419) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:483](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L483) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:533](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L533) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L102-L119) (Tag: `maps_android_utils_clustering_cluster_manager`)
+- `setIndoorEnabled`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:143](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L143) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:224](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L224) (Tag: `No Tag`)
+- `setLatLngBoundsForCameraTarget`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:114](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L114) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:219](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L219) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L85-L94) (Tag: `maps_android_camera_and_view_panning_restrictions`)
+- `setMapType`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:134](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L134) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:220](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L220) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt:122](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L122) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L98-L101) (Tag: `maps_android_map_type`)
+- `setMaxZoomPreference`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:113](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L113) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L41-L44) (Tag: `maps_android_camera_and_view_zoom_level`)
+- `setMinZoomPreference`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:112](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L112) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/CameraControlSnippets.kt#L41-L44) (Tag: `maps_android_camera_and_view_zoom_level`)
+- `setMyLocationEnabled`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:148](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L148) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MyLocationSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MyLocationSnippets.kt#L40-L54) (Tag: `maps_android_my_location`)
+- `setOnCameraIdleListener`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:126](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L126) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:242](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L242) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:171](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L171) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:172](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L172) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L102-L119) (Tag: `maps_android_utils_clustering_cluster_manager`)
+- `setOnCameraMoveListener`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:127](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L127) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:239](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L239) (Tag: `No Tag`)
+- `setOnCameraMoveStartedListener`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:129](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L129) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:240](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L240) (Tag: `No Tag`)
+- `setOnInfoWindowClickListener`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:125](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L125) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:245](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L245) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L296-L304) (Tag: `maps_android_info_windows_click_listener`)
+- `setOnMapClickListener`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:118](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L118) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:237](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L237) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:164](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L164) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:165](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L165) (Tag: `No Tag`)
+- `setOnMapLongClickListener`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:121](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L121) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:238](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L238) (Tag: `No Tag`)
 - `setOnMarkerClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:102](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L102) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:159](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L159) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L197-L242) (Tag: `maps_android_markers_tag_sample`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L104-L121) (Tag: `maps_android_utils_clustering_cluster_manager`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:123](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L123) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:243](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L243) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L202-L247) (Tag: `maps_android_markers_tag_sample`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L102-L119) (Tag: `maps_android_utils_clustering_cluster_manager`)
 - `setTrafficEnabled`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:111](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L111) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:139](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L139) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L184-L186) (Tag: `maps_android_traffic_layer`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:140](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L140) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt:223](kotlin-app/src/main/java/com/example/snippets/kotlin/TrackedMap.kt#L223) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MapInitSnippets.kt#L223-L225) (Tag: `maps_android_traffic_layer`)
 
 ### `GoogleMapKt`
 - `cameraIdleEvents`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:142](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L142) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt:156](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L156) (Tag: `No Tag`)
 - `cameraMoveEvents`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L85-L91) (Tag: `maps_android_ktx_camera_events`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/KtxSnippets.kt#L90-L96) (Tag: `maps_android_ktx_camera_events`)
 
 ### `GroundOverlay`
-- `getBearing`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
-- `getHeight`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
-- `getPosition`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
+- `getBearing`: ❌ No coverage
+- `getHeight`: ❌ No coverage
+- `getPosition`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getTransparency`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
-- `getWidth`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
-- `getZIndex`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
-- `isClickable`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
-- `isVisible`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L54-L67) (Tag: `maps_android_ground_overlays_retain`)
+- `getTransparency`: ❌ No coverage
+- `getWidth`: ❌ No coverage
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:68](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L68) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L69-L71) (Tag: `maps_android_ground_overlays_remove`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:64](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L64) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L61-L63) (Tag: `maps_android_ground_overlays_remove`)
 - `setBearing`: ❌ No coverage
 - `setClickable`: ❌ No coverage
 - `setPosition`: ❌ No coverage
 - `setTag`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L78-L86) (Tag: `maps_android_ground_overlays_associate_data`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L70-L78) (Tag: `maps_android_ground_overlays_associate_data`)
 - `setTransparency`: ❌ No coverage
 - `setVisible`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
@@ -271,55 +263,47 @@ This matrix ensures that every critical feature in the Maps SDK (2D) is actively
 - `setData`: ❌ No coverage
 - `setGradient`: ❌ No coverage
 - `setOpacity`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L469-L472) (Tag: `maps_android_utils_heatmap_customize_opacity`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L536-L539) (Tag: `maps_android_utils_heatmap_customize_opacity`)
 - `setRadius`: ❌ No coverage
 - `setWeightedData`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L474-L478) (Tag: `maps_android_utils_heatmap_customize_dataset`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L541-L545) (Tag: `maps_android_utils_heatmap_customize_dataset`)
 
 ### `KmlLayer`
 - `addLayerToMap`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:339](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L339) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L353-L355) (Tag: `maps_android_utils_kml_add_layer`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L538-L547) (Tag: `maps_android_utils_multilayer_kml_click_events`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt:381](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L381) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L416-L418) (Tag: `maps_android_utils_kml_add_layer`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L611-L620) (Tag: `maps_android_utils_multilayer_kml_click_events`)
 - `getContainers`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L358-L362) (Tag: `maps_android_utils_kml_access_containers`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L370-L376) (Tag: `maps_android_utils_kml_access_properties`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L421-L425) (Tag: `maps_android_utils_kml_access_containers`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L433-L439) (Tag: `maps_android_utils_kml_access_properties`)
 - `getPlacemarks`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L364-L368) (Tag: `maps_android_utils_kml_access_placemarks`)
-- `removeLayerFromMap`: ❌ No coverage
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L427-L431) (Tag: `maps_android_utils_kml_access_placemarks`)
+- `removeLayerFromMap`:
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L397-L399) (Tag: `maps_android_utils_kml_remove_layer`)
 - `setOnFeatureClickListener`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L378-L383) (Tag: `maps_android_utils_kml_click_listener`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L538-L547) (Tag: `maps_android_utils_multilayer_kml_click_events`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L441-L446) (Tag: `maps_android_utils_kml_click_listener`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L611-L620) (Tag: `maps_android_utils_multilayer_kml_click_events`)
 
 ### `Marker`
-- `getAlpha`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
-- `getPosition`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
-- `getRotation`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
-- `getSnippet`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
+- `getAlpha`: ❌ No coverage
+- `getPosition`: ❌ No coverage
+- `getRotation`: ❌ No coverage
+- `getSnippet`: ❌ No coverage
 - `getTag`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L197-L242) (Tag: `maps_android_markers_tag_sample`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L202-L247) (Tag: `maps_android_markers_tag_sample`)
 - `getTitle`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L197-L242) (Tag: `maps_android_markers_tag_sample`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L549-L558) (Tag: `maps_android_utils_multilayer_marker_click_events`)
-- `getZIndex`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L202-L247) (Tag: `maps_android_markers_tag_sample`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L622-L631) (Tag: `maps_android_utils_multilayer_marker_click_events`)
+- `getZIndex`: ❌ No coverage
 - `hideInfoWindow`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L266-L277) (Tag: `maps_android_info_windows_show_hide`)
-- `isDraggable`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
-- `isFlat`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L275-L286) (Tag: `maps_android_info_windows_show_hide`)
+- `isDraggable`: ❌ No coverage
+- `isFlat`: ❌ No coverage
 - `isInfoWindowShown`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L266-L277) (Tag: `maps_android_info_windows_show_hide`)
-- `isVisible`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L45-L66) (Tag: `maps_android_markers_add_a_marker`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L275-L286) (Tag: `maps_android_info_windows_show_hide`)
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:64](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L64) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:60](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L60) (Tag: `No Tag`)
 - `setAlpha`: ❌ No coverage
 - `setAnchor`: ❌ No coverage
 - `setDraggable`: ❌ No coverage
@@ -330,37 +314,28 @@ This matrix ensures that every critical feature in the Maps SDK (2D) is actively
 - `setRotation`: ❌ No coverage
 - `setSnippet`: ❌ No coverage
 - `setTag`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L197-L242) (Tag: `maps_android_markers_tag_sample`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L202-L247) (Tag: `maps_android_markers_tag_sample`)
 - `setTitle`: ❌ No coverage
 - `setVisible`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
 - `showInfoWindow`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L266-L277) (Tag: `maps_android_info_windows_show_hide`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/MarkerSnippets.kt#L275-L286) (Tag: `maps_android_info_windows_show_hide`)
 
 ### `Polygon`
-- `getFillColor`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
-- `getHoles`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
-- `getPoints`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
-- `getStrokeColor`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
+- `getFillColor`: ❌ No coverage
+- `getHoles`: ❌ No coverage
+- `getPoints`: ❌ No coverage
+- `getStrokeColor`: ❌ No coverage
 - `getStrokeJointType`: ❌ No coverage
 - `getStrokePattern`: ❌ No coverage
-- `getStrokeWidth`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
+- `getStrokeWidth`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getZIndex`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
-- `isClickable`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
-- `isGeodesic`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
-- `isVisible`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L132-L163) (Tag: `maps_android_shapes_polygons_hollow`)
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isGeodesic`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:66](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L66) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:62](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L62) (Tag: `No Tag`)
 - `setClickable`: ❌ No coverage
 - `setFillColor`: ❌ No coverage
 - `setGeodesic`: ❌ No coverage
@@ -375,102 +350,84 @@ This matrix ensures that every critical feature in the Maps SDK (2D) is actively
 - `setZIndex`: ❌ No coverage
 
 ### `Polyline`
-- `getColor`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+- `getColor`: ❌ No coverage
 - `getEndCap`: ❌ No coverage
 - `getJointType`: ❌ No coverage
 - `getPattern`: ❌ No coverage
-- `getPoints`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+- `getPoints`: ❌ No coverage
 - `getStartCap`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getWidth`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `getZIndex`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `isClickable`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `isGeodesic`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `isVisible`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L53-L73) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+- `getWidth`: ❌ No coverage
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isGeodesic`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:65](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L65) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:61](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L61) (Tag: `No Tag`)
 - `setClickable`: ❌ No coverage
 - `setColor`: ❌ No coverage
 - `setEndCap`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L244-L246) (Tag: `maps_android_shapes_custom_appearances_end_cap`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L230-L232) (Tag: `maps_android_shapes_custom_appearances_end_cap`)
 - `setGeodesic`: ❌ No coverage
 - `setJointType`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L236-L238) (Tag: `maps_android_shapes_custom_appearances_joint_type`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L222-L224) (Tag: `maps_android_shapes_custom_appearances_joint_type`)
 - `setPattern`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L229-L234) (Tag: `maps_android_shapes_custom_appearances_stroke_pattern`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L212-L220) (Tag: `maps_android_shapes_custom_appearances_stroke_pattern`)
 - `setPoints`: ❌ No coverage
 - `setStartCap`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L240-L242) (Tag: `maps_android_shapes_custom_appearances_start_cap`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L226-L228) (Tag: `maps_android_shapes_custom_appearances_start_cap`)
 - `setTag`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L254-L268) (Tag: `maps_android_shapes_associate_data`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/ShapesSnippets.kt#L242-L256) (Tag: `maps_android_shapes_associate_data`)
 - `setVisible`: ❌ No coverage
 - `setWidth`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
 
 ### `TileOverlay`
 - `clearTileCache`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L167-L169) (Tag: `maps_android_tile_overlays_clear_tile_cache`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L469-L472) (Tag: `maps_android_utils_heatmap_customize_opacity`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L474-L478) (Tag: `maps_android_utils_heatmap_customize_dataset`)
-- `getFadeIn`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L123-L161) (Tag: `maps_android_tile_overlays_add`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L160-L162) (Tag: `maps_android_tile_overlays_clear_tile_cache`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L536-L539) (Tag: `maps_android_utils_heatmap_customize_opacity`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L541-L545) (Tag: `maps_android_utils_heatmap_customize_dataset`)
+- `getFadeIn`: ❌ No coverage
 - `getTransparency`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L123-L161) (Tag: `maps_android_tile_overlays_add`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L177-L193) (Tag: `maps_android_tile_overlays_transparency`)
-- `getZIndex`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L123-L161) (Tag: `maps_android_tile_overlays_add`)
-- `isVisible`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L123-L161) (Tag: `maps_android_tile_overlays_add`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L172-L187) (Tag: `maps_android_tile_overlays_transparency`)
+- `getZIndex`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:69](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L69) (Tag: `No Tag`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L163-L165) (Tag: `maps_android_tile_overlays_remove`)
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L487-L489) (Tag: `maps_android_utils_heatmap_remove`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt:65](kotlin-app/src/main/java/com/example/snippets/kotlin/SnippetRegistry.kt#L65) (Tag: `No Tag`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L156-L158) (Tag: `maps_android_tile_overlays_remove`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/UtilsSnippets.kt#L558-L560) (Tag: `maps_android_utils_heatmap_remove`)
 - `setFadeIn`: ❌ No coverage
 - `setTransparency`:
-  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L177-L193) (Tag: `maps_android_tile_overlays_transparency`)
+  - [kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt](kotlin-app/src/main/java/com/example/snippets/kotlin/snippets/OverlaySnippets.kt#L172-L187) (Tag: `maps_android_tile_overlays_transparency`)
 - `setVisible`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
 
 ### Missing Extracted API Coverage (Kotlin Snippets)
 The following non-getter/setter APIs currently have `0` occurrences within this section:
 
-- `KmlLayer.removeLayerFromMap`
+🎉 All non-getter/setter APIs are fully covered!
 
 ## Java Snippets
 ### `Circle`
-- `getCenter`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `getFillColor`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `getRadius`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
+- `getCenter`: ❌ No coverage
+- `getFillColor`: ❌ No coverage
+- `getRadius`: ❌ No coverage
 - `getStrokeColor`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L192-L209) (Tag: `maps_android_shapes_circles_events`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L177-L197) (Tag: `maps_android_shapes_circles_events`)
 - `getStrokePattern`: ❌ No coverage
-- `getStrokeWidth`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
+- `getStrokeWidth`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getZIndex`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `isClickable`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
-- `isVisible`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:59](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L59) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:58](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L58) (Tag: `No Tag`)
 - `setCenter`: ❌ No coverage
 - `setClickable`: ❌ No coverage
 - `setFillColor`: ❌ No coverage
 - `setRadius`: ❌ No coverage
 - `setStrokeColor`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L192-L209) (Tag: `maps_android_shapes_circles_events`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L177-L197) (Tag: `maps_android_shapes_circles_events`)
 - `setStrokePattern`: ❌ No coverage
 - `setStrokeWidth`: ❌ No coverage
 - `setTag`: ❌ No coverage
@@ -479,222 +436,215 @@ The following non-getter/setter APIs currently have `0` occurrences within this 
 
 ### `ClusterManager`
 - `addItem`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L179-L193) (Tag: `maps_android_utils_clustering_info_window`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L185-L200) (Tag: `maps_android_utils_clustering_info_window`)
 - `addItems`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:158](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L158) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:161](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L161) (Tag: `No Tag`)
 - `clearItems`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L202-L207) (Tag: `maps_android_utils_clustering_clear`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L211-L216) (Tag: `maps_android_utils_clustering_clear`)
 - `cluster`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L125-L141) (Tag: `maps_android_utils_clustering_cluster_manager`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L202-L207) (Tag: `maps_android_utils_clustering_clear`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L215-L221) (Tag: `maps_android_utils_clustering_remove`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L128-L144) (Tag: `maps_android_utils_clustering_cluster_manager`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L185-L200) (Tag: `maps_android_utils_clustering_info_window`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L211-L216) (Tag: `maps_android_utils_clustering_clear`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L227-L233) (Tag: `maps_android_utils_clustering_remove`)
 - `removeItem`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L215-L221) (Tag: `maps_android_utils_clustering_remove`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L227-L233) (Tag: `maps_android_utils_clustering_remove`)
 - `setAnimation`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L167-L169) (Tag: `maps_android_utils_clustering_animation_off`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L172-L174) (Tag: `maps_android_utils_clustering_animation_off`)
 - `setOnClusterClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L229-L253) (Tag: `maps_android_utils_clustering_listeners`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L244-L284) (Tag: `maps_android_utils_clustering_listeners`)
 - `setOnClusterItemClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L229-L253) (Tag: `maps_android_utils_clustering_listeners`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L244-L284) (Tag: `maps_android_utils_clustering_listeners`)
 - `setOnClusterItemInfoWindowClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L229-L253) (Tag: `maps_android_utils_clustering_listeners`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L244-L284) (Tag: `maps_android_utils_clustering_listeners`)
 
 ### `GeoJsonLayer`
 - `addFeature`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L312-L314) (Tag: `maps_android_util_geojson_point_feature_add`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L350-L352) (Tag: `maps_android_util_geojson_point_feature_add`)
 - `addLayerToMap`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L280-L282) (Tag: `maps_android_util_geojson_add_layer_to_map`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L311-L313) (Tag: `maps_android_util_geojson_add_layer_to_map`)
 - `getDefaultLineStringStyle`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L343-L350) (Tag: `maps_android_util_geojson_style`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L382-L390) (Tag: `maps_android_util_geojson_style`)
 - `getDefaultPointStyle`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L343-L350) (Tag: `maps_android_util_geojson_style`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L382-L390) (Tag: `maps_android_util_geojson_style`)
 - `getDefaultPolygonStyle`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L343-L350) (Tag: `maps_android_util_geojson_style`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L382-L390) (Tag: `maps_android_util_geojson_style`)
 - `getFeatures`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L320-L331) (Tag: `maps_android_util_geojson_point_feature_access`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L358-L369) (Tag: `maps_android_util_geojson_point_feature_access`)
 - `removeFeature`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L316-L318) (Tag: `maps_android_util_geojson_point_feature_remove`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L354-L356) (Tag: `maps_android_util_geojson_point_feature_remove`)
 - `removeLayerFromMap`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L292-L294) (Tag: `maps_android_util_geojson_remove_layer`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L328-L330) (Tag: `maps_android_util_geojson_remove_layer`)
 - `setOnFeatureClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L333-L341) (Tag: `maps_android_util_geojson_geometry_click_events`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L371-L380) (Tag: `maps_android_util_geojson_geometry_click_events`)
 
 ### `GoogleMap`
 - `addCircle`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:79](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L79) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L167-L184) (Tag: `maps_android_shapes_circles_circleoptions`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L192-L209) (Tag: `maps_android_shapes_circles_events`)
-- `addGroundOverlay`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:85](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L85) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L52-L59) (Tag: `maps_android_ground_overlays_add`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L85-L92) (Tag: `maps_android_ground_overlays_associate_data`)
-- `addMarker`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:55](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L55) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:61](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L61) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L55-L62) (Tag: `maps_android_mapsactivity`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L107-L113) (Tag: `maps_android_markers_custom_marker_color`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L121-L126) (Tag: `maps_android_markers_opacity`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L134-L142) (Tag: `maps_android_markers_image`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L150-L156) (Tag: `maps_android_markers_flatten`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L164-L171) (Tag: `maps_android_markers_rotate`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L179-L184) (Tag: `maps_android_markers_z_index`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L192-L232) (Tag: `maps_android_markers_tag_sample`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L240-L247) (Tag: `maps_android_info_windows_add`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L255-L265) (Tag: `maps_android_info_windows_show_hide`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L289-L298) (Tag: `maps_android_marker_collision`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L79-L86) (Tag: `maps_android_markers_draggable`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L94-L99) (Tag: `maps_android_markers_default_icon`)
-- `addPolygon`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:73](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L73) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L111-L126) (Tag: `maps_android_shapes_polygons_autocompletion`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L92-L103) (Tag: `maps_android_shapes_polygons_polygonoptions`)
-- `addPolyline`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:67](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L67) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L217-L223) (Tag: `maps_android_shapes_custom_appearances`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L250-L261) (Tag: `maps_android_shapes_associate_data`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L269-L274) (Tag: `maps_android_polyline_multicolored`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L282-L286) (Tag: `maps_android_polyline_gradient`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L294-L301) (Tag: `maps_android_polyline_stamped`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `addTileOverlay`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:91](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L91) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L128-L170) (Tag: `maps_android_tile_overlays_add`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L186-L202) (Tag: `maps_android_tile_overlays_transparency`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L442-L460) (Tag: `maps_android_utils_heatmap_simple`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L488-L510) (Tag: `maps_android_utils_heatmap_customize`)
-- `animateCamera`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:101](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L101) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:105](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L105) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:109](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L109) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L101-L122) (Tag: `maps_android_camera_and_view_common_map_movements`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:283](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L283) (Tag: `No Tag`)
-- `clear`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:208](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L208) (Tag: `No Tag`)
-- `getCameraPosition`:
-  - [java-app/src/main/java/com/example/snippets/java/MapActivity.java:87](java-app/src/main/java/com/example/snippets/java/MapActivity.java#L87) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:194](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L194) (Tag: `No Tag`)
-- `getMapType`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:157](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L157) (Tag: `No Tag`)
-- `getMaxZoomLevel`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:198](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L198) (Tag: `No Tag`)
-- `getMinZoomLevel`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:202](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L202) (Tag: `No Tag`)
-- `getProjection`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:190](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L190) (Tag: `No Tag`)
-- `getUiSettings`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:186](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L186) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:218](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L218) (Tag: `No Tag`)
-- `isIndoorEnabled`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:173](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L173) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L86-L91) (Tag: `maps_android_map_type`)
-- `isMyLocationEnabled`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:182](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L182) (Tag: `No Tag`)
-- `isTrafficEnabled`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:165](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L165) (Tag: `No Tag`)
-- `moveCamera`:
   - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:97](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L97) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java:44](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L44) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L101-L122) (Tag: `maps_android_camera_and_view_common_map_movements`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L56-L62) (Tag: `maps_android_camera_and_view_setting_boundaries`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L70-L76) (Tag: `maps_android_camera_and_view_centering_within_area`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java#L136-L202) (Tag: `maps_android_dds_country_interactive_java`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java#L60-L90) (Tag: `maps_android_dds_locality_boundary_java`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java#L98-L128) (Tag: `maps_android_dds_state_boundaries_java`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java#L178-L220) (Tag: `maps_android_dds_nyc_squirrels_java`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java#L237-L309) (Tag: `maps_android_dds_kyoto_temples_java`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java#L71-L111) (Tag: `maps_android_dds_boulder_trails_java`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L55-L62) (Tag: `maps_android_mapsactivity`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L79-L86) (Tag: `maps_android_markers_draggable`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:378](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L378) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:394](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L394) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L125-L141) (Tag: `maps_android_utils_clustering_cluster_manager`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L442-L460) (Tag: `maps_android_utils_heatmap_simple`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L488-L510) (Tag: `maps_android_utils_heatmap_customize`)
-- `setIndoorEnabled`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:169](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L169) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:215](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L215) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L86-L91) (Tag: `maps_android_map_type`)
-- `setLatLngBoundsForCameraTarget`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:121](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L121) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L162-L169) (Tag: `maps_android_shapes_circles_circleoptions`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L177-L197) (Tag: `maps_android_shapes_circles_events`)
+- `addGroundOverlay`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:103](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L103) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L51-L59) (Tag: `maps_android_ground_overlays_add`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L64) (Tag: `maps_android_ground_overlays_retain`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L75-L86) (Tag: `maps_android_ground_overlays_associate_data`)
+- `addMarker`:
+  - [java-app/src/main/java/com/example/snippets/java/MapsObject.java](java-app/src/main/java/com/example/snippets/java/MapsObject.java#L42-L48) (Tag: `maps_android_on_map_ready_add_marker`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:73](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L73) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:79](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L79) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L56-L61) (Tag: `maps_android_mapsactivity`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L105-L109) (Tag: `maps_android_markers_opacity`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L117-L126) (Tag: `maps_android_markers_image`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L134-L137) (Tag: `maps_android_markers_flatten`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L145-L153) (Tag: `maps_android_markers_rotate`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L161-L164) (Tag: `maps_android_markers_z_index`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L172-L213) (Tag: `maps_android_markers_tag_sample`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L221-L229) (Tag: `maps_android_info_windows_add`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L237-L245) (Tag: `maps_android_info_windows_show_hide`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L269-L279) (Tag: `maps_android_marker_collision`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L51-L57) (Tag: `maps_android_markers_add_a_marker`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L65-L68) (Tag: `maps_android_markers_draggable`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L77-L80) (Tag: `maps_android_markers_default_icon`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L88-L97) (Tag: `maps_android_markers_custom_marker_color`)
+- `addPolygon`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:91](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L91) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L109-L127) (Tag: `maps_android_shapes_polygons_autocompletion`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L135-L154) (Tag: `maps_android_shapes_polygons_hollow`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L88-L101) (Tag: `maps_android_shapes_polygons_polygonoptions`)
+- `addPolyline`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:85](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L85) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L205-L215) (Tag: `maps_android_shapes_custom_appearances`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L242-L256) (Tag: `maps_android_shapes_associate_data`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L264-L273) (Tag: `maps_android_polyline_multicolored`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L281-L292) (Tag: `maps_android_polyline_gradient`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L300-L313) (Tag: `maps_android_polyline_stamped`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L80) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+- `addTileOverlay`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:109](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L109) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L125-L168) (Tag: `maps_android_tile_overlays_add`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L184-L203) (Tag: `maps_android_tile_overlays_transparency`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L501-L516) (Tag: `maps_android_utils_heatmap_simple`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L545-L563) (Tag: `maps_android_utils_heatmap_customize`)
+- `animateCamera`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:119](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L119) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:123](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L123) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:128](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L128) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L104-L127) (Tag: `maps_android_camera_and_view_common_map_movements`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:314](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L314) (Tag: `No Tag`)
+- `clear`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:291](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L291) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:301](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L301) (Tag: `No Tag`)
+- `getCameraPosition`:
+  - [java-app/src/main/java/com/example/snippets/java/MapActivity.java:115](java-app/src/main/java/com/example/snippets/java/MapActivity.java#L115) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:214](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L214) (Tag: `No Tag`)
+- `getMapType`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:177](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L177) (Tag: `No Tag`)
+- `getMaxZoomLevel`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:218](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L218) (Tag: `No Tag`)
+- `getMinZoomLevel`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:222](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L222) (Tag: `No Tag`)
+- `getProjection`:
   - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:210](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L210) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L84-L93) (Tag: `maps_android_camera_and_view_panning_restrictions`)
+- `getUiSettings`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:206](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L206) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:311](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L311) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java:120](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L120) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java:121](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L121) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java:122](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L122) (Tag: `No Tag`)
+- `isIndoorEnabled`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:193](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L193) (Tag: `No Tag`)
+- `isMyLocationEnabled`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:202](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L202) (Tag: `No Tag`)
+- `isTrafficEnabled`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:185](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L185) (Tag: `No Tag`)
+- `moveCamera`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:115](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L115) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java:44](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L44) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L104-L127) (Tag: `maps_android_camera_and_view_common_map_movements`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L56-L63) (Tag: `maps_android_camera_and_view_setting_boundaries`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L71-L78) (Tag: `maps_android_camera_and_view_centering_within_area`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java#L137-L206) (Tag: `maps_android_dds_country_interactive`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java#L59-L90) (Tag: `maps_android_dds_locality_boundary`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DataDrivenBoundarySnippets.java#L98-L129) (Tag: `maps_android_dds_state_boundaries`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java#L202-L243) (Tag: `maps_android_dds_nyc_squirrels`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java#L264-L350) (Tag: `maps_android_dds_kyoto_temples`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/DatasetLayerSnippets.java#L73-L184) (Tag: `maps_android_dds_boulder_trails`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L56-L61) (Tag: `maps_android_mapsactivity`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java:69](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L69) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L51-L57) (Tag: `maps_android_markers_add_a_marker`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:419](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L419) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:451](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L451) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:517](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L517) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:564](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L564) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L128-L144) (Tag: `maps_android_utils_clustering_cluster_manager`)
+- `setIndoorEnabled`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:189](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L189) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:308](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L308) (Tag: `No Tag`)
+- `setLatLngBoundsForCameraTarget`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:140](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L140) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:303](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L303) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L86-L96) (Tag: `maps_android_camera_and_view_panning_restrictions`)
 - `setMapType`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:153](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L153) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:211](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L211) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L86-L91) (Tag: `maps_android_map_type`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:173](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L173) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:304](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L304) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java:119](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L119) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L97-L100) (Tag: `maps_android_map_type`)
 - `setMaxZoomPreference`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:117](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L117) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:136](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L136) (Tag: `No Tag`)
   - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L45-L48) (Tag: `maps_android_camera_and_view_zoom_level`)
 - `setMinZoomPreference`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:113](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L113) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:132](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L132) (Tag: `No Tag`)
   - [java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/CameraControlSnippets.java#L45-L48) (Tag: `maps_android_camera_and_view_zoom_level`)
 - `setMyLocationEnabled`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:178](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L178) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MyLocationSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MyLocationSnippets.java#L49-L69) (Tag: `maps_android_my_location`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:198](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L198) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MyLocationSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MyLocationSnippets.java#L48-L73) (Tag: `maps_android_my_location`)
 - `setOnCameraIdleListener`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:141](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L141) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:234](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L234) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L125-L141) (Tag: `maps_android_utils_clustering_cluster_manager`)
-- `setOnCameraMoveListener`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:145](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L145) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:231](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L231) (Tag: `No Tag`)
-- `setOnCameraMoveStartedListener`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:149](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L149) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:232](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L232) (Tag: `No Tag`)
-- `setOnInfoWindowClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:137](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L137) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:237](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L237) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L273-L281) (Tag: `maps_android_info_windows_click_listener`)
-- `setOnMapClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:125](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L125) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:229](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L229) (Tag: `No Tag`)
-- `setOnMapLongClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:129](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L129) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:230](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L230) (Tag: `No Tag`)
-- `setOnMarkerClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:133](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L133) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:235](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L235) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L192-L232) (Tag: `maps_android_markers_tag_sample`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L125-L141) (Tag: `maps_android_utils_clustering_cluster_manager`)
-- `setTrafficEnabled`:
   - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:161](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L161) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:214](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L214) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L193-L195) (Tag: `maps_android_traffic_layer`)
-
-### `GoogleMapKt`
-- `cameraIdleEvents`: ❌ No coverage
-- `cameraMoveEvents`: ❌ No coverage
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:327](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L327) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L128-L144) (Tag: `maps_android_utils_clustering_cluster_manager`)
+- `setOnCameraMoveListener`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:165](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L165) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:324](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L324) (Tag: `No Tag`)
+- `setOnCameraMoveStartedListener`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:169](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L169) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:325](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L325) (Tag: `No Tag`)
+- `setOnInfoWindowClickListener`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:157](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L157) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:330](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L330) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L253-L261) (Tag: `maps_android_info_windows_click_listener`)
+- `setOnMapClickListener`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:145](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L145) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:322](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L322) (Tag: `No Tag`)
+- `setOnMapLongClickListener`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:149](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L149) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:323](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L323) (Tag: `No Tag`)
+- `setOnMarkerClickListener`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:153](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L153) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:328](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L328) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L172-L213) (Tag: `maps_android_markers_tag_sample`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L128-L144) (Tag: `maps_android_utils_clustering_cluster_manager`)
+- `setTrafficEnabled`:
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:181](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L181) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/TrackedMap.java:307](java-app/src/main/java/com/example/snippets/java/TrackedMap.java#L307) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MapInitSnippets.java#L209-L211) (Tag: `maps_android_traffic_layer`)
 
 ### `GroundOverlay`
-- `getBearing`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
-- `getHeight`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
-- `getPosition`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
+- `getBearing`: ❌ No coverage
+- `getHeight`: ❌ No coverage
+- `getPosition`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getTransparency`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
-- `getWidth`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
-- `getZIndex`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
-- `isClickable`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
-- `isVisible`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L61-L74) (Tag: `maps_android_ground_overlays_retain`)
+- `getTransparency`: ❌ No coverage
+- `getWidth`: ❌ No coverage
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:60](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L60) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L76-L78) (Tag: `maps_android_ground_overlays_remove`)
+  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:59](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L59) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L66-L68) (Tag: `maps_android_ground_overlays_remove`)
 - `setBearing`: ❌ No coverage
 - `setClickable`: ❌ No coverage
 - `setPosition`: ❌ No coverage
 - `setTag`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L85-L92) (Tag: `maps_android_ground_overlays_associate_data`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L75-L86) (Tag: `maps_android_ground_overlays_associate_data`)
 - `setTransparency`: ❌ No coverage
 - `setVisible`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
@@ -703,54 +653,47 @@ The following non-getter/setter APIs currently have `0` occurrences within this 
 - `setData`: ❌ No coverage
 - `setGradient`: ❌ No coverage
 - `setOpacity`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L515-L518) (Tag: `maps_android_utils_heatmap_customize_opacity`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L569-L572) (Tag: `maps_android_utils_heatmap_customize_opacity`)
 - `setRadius`: ❌ No coverage
-- `setWeightedData`: ❌ No coverage
+- `setWeightedData`:
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L574-L581) (Tag: `maps_android_utils_heatmap_customize_dataset`)
 
 ### `KmlLayer`
 - `addLayerToMap`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:377](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L377) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L391-L393) (Tag: `maps_android_utils_kml_add_layer`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L568-L573) (Tag: `maps_android_utils_multilayer_kml_click_events`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java:417](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L417) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L448-L450) (Tag: `maps_android_utils_kml_add_layer`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L646-L655) (Tag: `maps_android_utils_multilayer_kml_click_events`)
 - `getContainers`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L396-L400) (Tag: `maps_android_utils_kml_access_containers`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L408-L414) (Tag: `maps_android_utils_kml_access_properties`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L453-L457) (Tag: `maps_android_utils_kml_access_containers`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L465-L471) (Tag: `maps_android_utils_kml_access_properties`)
 - `getPlacemarks`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L402-L406) (Tag: `maps_android_utils_kml_access_placemarks`)
-- `removeLayerFromMap`: ❌ No coverage
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L459-L463) (Tag: `maps_android_utils_kml_access_placemarks`)
+- `removeLayerFromMap`:
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L431-L433) (Tag: `maps_android_utils_kml_remove_layer`)
 - `setOnFeatureClickListener`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L416-L424) (Tag: `maps_android_utils_kml_click_listener`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L568-L573) (Tag: `maps_android_utils_multilayer_kml_click_events`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L473-L482) (Tag: `maps_android_utils_kml_click_listener`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L646-L655) (Tag: `maps_android_utils_multilayer_kml_click_events`)
 
 ### `Marker`
-- `getAlpha`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
-- `getPosition`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
-- `getRotation`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
-- `getSnippet`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
+- `getAlpha`: ❌ No coverage
+- `getPosition`: ❌ No coverage
+- `getRotation`: ❌ No coverage
+- `getSnippet`: ❌ No coverage
 - `getTag`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L192-L232) (Tag: `maps_android_markers_tag_sample`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L172-L213) (Tag: `maps_android_markers_tag_sample`)
 - `getTitle`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L192-L232) (Tag: `maps_android_markers_tag_sample`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L575-L581) (Tag: `maps_android_utils_multilayer_marker_click_events`)
-- `getZIndex`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L172-L213) (Tag: `maps_android_markers_tag_sample`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L657-L667) (Tag: `maps_android_utils_multilayer_marker_click_events`)
+- `getZIndex`: ❌ No coverage
 - `hideInfoWindow`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L255-L265) (Tag: `maps_android_info_windows_show_hide`)
-- `isDraggable`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
-- `isFlat`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L237-L245) (Tag: `maps_android_info_windows_show_hide`)
+- `isDraggable`: ❌ No coverage
+- `isFlat`: ❌ No coverage
 - `isInfoWindowShown`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L255-L265) (Tag: `maps_android_info_windows_show_hide`)
-- `isVisible`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L52-L71) (Tag: `maps_android_markers_add_a_marker`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L237-L245) (Tag: `maps_android_info_windows_show_hide`)
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:56](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L56) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:55](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L55) (Tag: `No Tag`)
 - `setAlpha`: ❌ No coverage
 - `setAnchor`: ❌ No coverage
 - `setDraggable`: ❌ No coverage
@@ -761,37 +704,28 @@ The following non-getter/setter APIs currently have `0` occurrences within this 
 - `setRotation`: ❌ No coverage
 - `setSnippet`: ❌ No coverage
 - `setTag`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L192-L232) (Tag: `maps_android_markers_tag_sample`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L172-L213) (Tag: `maps_android_markers_tag_sample`)
 - `setTitle`: ❌ No coverage
 - `setVisible`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
 - `showInfoWindow`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L255-L265) (Tag: `maps_android_info_windows_show_hide`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/MarkerSnippets.java#L237-L245) (Tag: `maps_android_info_windows_show_hide`)
 
 ### `Polygon`
-- `getFillColor`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
-- `getHoles`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
-- `getPoints`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
-- `getStrokeColor`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
+- `getFillColor`: ❌ No coverage
+- `getHoles`: ❌ No coverage
+- `getPoints`: ❌ No coverage
+- `getStrokeColor`: ❌ No coverage
 - `getStrokeJointType`: ❌ No coverage
 - `getStrokePattern`: ❌ No coverage
-- `getStrokeWidth`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
+- `getStrokeWidth`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getZIndex`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
-- `isClickable`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
-- `isGeodesic`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
-- `isVisible`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L134-L159) (Tag: `maps_android_shapes_polygons_hollow`)
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isGeodesic`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:58](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L58) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:57](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L57) (Tag: `No Tag`)
 - `setClickable`: ❌ No coverage
 - `setFillColor`: ❌ No coverage
 - `setGeodesic`: ❌ No coverage
@@ -806,73 +740,60 @@ The following non-getter/setter APIs currently have `0` occurrences within this 
 - `setZIndex`: ❌ No coverage
 
 ### `Polyline`
-- `getColor`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+- `getColor`: ❌ No coverage
 - `getEndCap`: ❌ No coverage
 - `getJointType`: ❌ No coverage
 - `getPattern`: ❌ No coverage
-- `getPoints`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+- `getPoints`: ❌ No coverage
 - `getStartCap`: ❌ No coverage
 - `getTag`: ❌ No coverage
-- `getWidth`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `getZIndex`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `isClickable`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `isGeodesic`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
-- `isVisible`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L64-L84) (Tag: `maps_android_shapes_polylines_polylineoptions`)
+- `getWidth`: ❌ No coverage
+- `getZIndex`: ❌ No coverage
+- `isClickable`: ❌ No coverage
+- `isGeodesic`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:57](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L57) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:56](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L56) (Tag: `No Tag`)
 - `setClickable`: ❌ No coverage
 - `setColor`: ❌ No coverage
 - `setEndCap`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L239-L242) (Tag: `maps_android_shapes_custom_appearances_end_cap`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L231-L234) (Tag: `maps_android_shapes_custom_appearances_end_cap`)
 - `setGeodesic`: ❌ No coverage
 - `setJointType`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L231-L233) (Tag: `maps_android_shapes_custom_appearances_joint_type`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L223-L225) (Tag: `maps_android_shapes_custom_appearances_joint_type`)
 - `setPattern`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L225-L229) (Tag: `maps_android_shapes_custom_appearances_stroke_pattern`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L217-L221) (Tag: `maps_android_shapes_custom_appearances_stroke_pattern`)
 - `setPoints`: ❌ No coverage
 - `setStartCap`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L235-L237) (Tag: `maps_android_shapes_custom_appearances_start_cap`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L227-L229) (Tag: `maps_android_shapes_custom_appearances_start_cap`)
 - `setTag`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L250-L261) (Tag: `maps_android_shapes_associate_data`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/ShapesSnippets.java#L242-L256) (Tag: `maps_android_shapes_associate_data`)
 - `setVisible`: ❌ No coverage
 - `setWidth`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
 
 ### `TileOverlay`
 - `clearTileCache`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L176-L178) (Tag: `maps_android_tile_overlays_clear_tile_cache`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L515-L518) (Tag: `maps_android_utils_heatmap_customize_opacity`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L520-L527) (Tag: `maps_android_utils_heatmap_customize_dataset`)
-- `getFadeIn`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L128-L170) (Tag: `maps_android_tile_overlays_add`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L174-L176) (Tag: `maps_android_tile_overlays_clear_tile_cache`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L569-L572) (Tag: `maps_android_utils_heatmap_customize_opacity`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L574-L581) (Tag: `maps_android_utils_heatmap_customize_dataset`)
+- `getFadeIn`: ❌ No coverage
 - `getTransparency`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L128-L170) (Tag: `maps_android_tile_overlays_add`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L186-L202) (Tag: `maps_android_tile_overlays_transparency`)
-- `getZIndex`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L128-L170) (Tag: `maps_android_tile_overlays_add`)
-- `isVisible`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L128-L170) (Tag: `maps_android_tile_overlays_add`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L184-L203) (Tag: `maps_android_tile_overlays_transparency`)
+- `getZIndex`: ❌ No coverage
+- `isVisible`: ❌ No coverage
 - `remove`:
-  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:61](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L61) (Tag: `No Tag`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L172-L174) (Tag: `maps_android_tile_overlays_remove`)
-  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L536-L538) (Tag: `maps_android_utils_heatmap_remove`)
+  - [java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java:60](java-app/src/main/java/com/example/snippets/java/SnippetRegistry.java#L60) (Tag: `No Tag`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L170-L172) (Tag: `maps_android_tile_overlays_remove`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/UtilsSnippets.java#L593-L595) (Tag: `maps_android_utils_heatmap_remove`)
 - `setFadeIn`: ❌ No coverage
 - `setTransparency`:
-  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L186-L202) (Tag: `maps_android_tile_overlays_transparency`)
+  - [java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java](java-app/src/main/java/com/example/snippets/java/snippets/OverlaySnippets.java#L184-L203) (Tag: `maps_android_tile_overlays_transparency`)
 - `setVisible`: ❌ No coverage
 - `setZIndex`: ❌ No coverage
 
 ### Missing Extracted API Coverage (Java Snippets)
 The following non-getter/setter APIs currently have `0` occurrences within this section:
 
-- `GoogleMapKt.cameraIdleEvents`
-- `GoogleMapKt.cameraMoveEvents`
-- `KmlLayer.removeLayerFromMap`
+🎉 All non-getter/setter APIs are fully covered!
 

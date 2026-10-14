@@ -31,6 +31,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapColorScheme
 import com.google.android.gms.maps.model.MarkerOptions
 
 @SnippetGroup(
@@ -66,6 +67,7 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
     )
     fun mapFragment() {
         // [START maps_android_map_fragment]
+        // [START_EXCLUDE silent]
         if (context is FragmentActivity) {
             val mapFragment = SupportMapFragment.newInstance()
             context.supportFragmentManager
@@ -73,6 +75,16 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
                 .add(com.example.snippets.common.R.id.map_container, mapFragment)
                 .commit()
         }
+        /*
+        // [END_EXCLUDE]
+        val mapFragment = SupportMapFragment.newInstance()
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.map_container, mapFragment)
+            .commit()
+        // [START_EXCLUDE silent]
+         */
+        // [END_EXCLUDE]
         // [END maps_android_map_fragment]
     }
 
@@ -85,9 +97,7 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
     fun mapType() {
         // [START maps_android_map_type]
         // Sets the map type to be "hybrid"
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID)
-        map.setIndoorEnabled(true)
-        val isIndoor = map.isIndoorEnabled()
+        map.mapType = GoogleMap.MAP_TYPE_HYBRID
         // [END maps_android_map_type]
     }
 
@@ -109,7 +119,7 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
             .tiltGesturesEnabled(false)
         // [END maps_android_google_map_options_configure]
 
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
+        map.mapType = GoogleMap.MAP_TYPE_SATELLITE
         map.getUiSettings().isCompassEnabled = false
         map.getUiSettings().isRotateGesturesEnabled = false
         map.getUiSettings().isTiltGesturesEnabled = false
@@ -197,10 +207,10 @@ class MapInitSnippets(private val context: Context, private val map: TrackedMap)
     fun setMapColorScheme() {
         // [START maps_android_map_color_scheme]
         val options = GoogleMapOptions()
-            .mapColorScheme(com.google.android.gms.maps.model.MapColorScheme.DARK)
+            .mapColorScheme(MapColorScheme.DARK)
         // [END maps_android_map_color_scheme]
 
-        map.mapColorScheme = com.google.android.gms.maps.model.MapColorScheme.DARK
+        map.mapColorScheme = MapColorScheme.DARK
     }
 
     @SnippetItem(

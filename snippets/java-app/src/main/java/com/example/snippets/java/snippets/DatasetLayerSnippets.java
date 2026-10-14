@@ -70,7 +70,7 @@ public class DatasetLayerSnippets {
             return;
         }
 
-        // [START maps_android_dds_boulder_trails_java]
+        // [START maps_android_dds_boulder_trails]
         // 1. Get the dataset feature layer
         FeatureLayer layer =
                 map.getFeatureLayer(
@@ -82,8 +82,74 @@ public class DatasetLayerSnippets {
         // 2. Center the camera over Boulder OSMP Trails
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(40.0150, -105.2705), 13.0f));
 
-        // 3. Setup toggle button inside the activity controls container
+        // 3. Define toggle state and custom styling application function
         boulderColorByDifficulty = true;
+
+        Runnable applyBoulderStyling =
+                () -> {
+                    if (layer != null) {
+                        layer.setFeatureStyle(
+                                feature -> {
+                                    if (feature instanceof DatasetFeature) {
+                                        DatasetFeature datasetFeature = (DatasetFeature) feature;
+                                        Map<String, String> attributes =
+                                                datasetFeature.getDatasetAttributes();
+                                        String difficulty =
+                                                attributes.get("OSMPTrailsOSMPDIFFICULTY");
+                                        String dogsAllowed =
+                                                attributes.get("OSMPTrailsOSMPDOGREGGEN");
+
+                                        int strokeColor;
+                                        float strokeWidth = 3.0f;
+
+                                        if (boulderColorByDifficulty) {
+                                            // Mode 1: Color by difficulty
+                                            if ("Easy".equals(difficulty)) {
+                                                strokeColor = Color.GREEN;
+                                            } else if ("Moderate".equals(difficulty)) {
+                                                strokeColor = Color.BLUE;
+                                            } else if ("Difficult".equals(difficulty)) {
+                                                strokeColor = Color.RED;
+                                            } else {
+                                                strokeColor = Color.MAGENTA;
+                                            }
+
+                                            // If dogs are not allowed, make the line wider and
+                                            // slightly transparent
+                                            if ("No Dogs".equals(dogsAllowed)) {
+                                                strokeColor =
+                                                        ColorUtils.setAlphaComponent(
+                                                                strokeColor, 120);
+                                                strokeWidth = 6.0f;
+                                            }
+                                        } else {
+                                            // Mode 2: Color by dog regulations
+                                            if ("No Dogs".equals(dogsAllowed)) {
+                                                strokeColor = Color.RED; // Prohibited
+                                            } else if ("LR".equals(dogsAllowed)
+                                                    || "LVS".equals(dogsAllowed)) {
+                                                strokeColor = Color.YELLOW; // Leash Required /
+                                                // Conditional
+                                            } else if ("RV".equals(dogsAllowed)) {
+                                                strokeColor = Color.GREEN; // Off Leash
+                                            } else {
+                                                strokeColor = Color.LTGRAY; // Unknown
+                                            }
+                                            strokeWidth = 4.0f;
+                                        }
+
+                                        return new FeatureStyle.Builder()
+                                                .strokeColor(strokeColor)
+                                                .strokeWidth(strokeWidth)
+                                                .build();
+                                    }
+                                    return null;
+                                });
+                    }
+                };
+
+        // [START_EXCLUDE silent]
+        // 4. Setup toggle button inside the activity controls container
         android.app.Activity activity = (android.app.Activity) context;
         if (activity != null) {
             android.widget.LinearLayout container =
@@ -105,71 +171,17 @@ public class DatasetLayerSnippets {
                                     boulderColorByDifficulty
                                             ? "Mode: Difficulty"
                                             : "Mode: Dog Leash");
-                            applyBoulderStyling(layer);
+                            applyBoulderStyling.run();
                         });
                 container.addView(toggleButton);
                 container.setVisibility(android.view.View.VISIBLE);
             }
         }
+        // [END_EXCLUDE]
 
         // Apply initial styling
-        applyBoulderStyling(layer);
-        // [END maps_android_dds_boulder_trails_java]
-    }
-
-    private void applyBoulderStyling(FeatureLayer layer) {
-        if (layer != null) {
-            layer.setFeatureStyle(
-                    feature -> {
-                        if (feature instanceof DatasetFeature) {
-                            DatasetFeature datasetFeature = (DatasetFeature) feature;
-                            Map<String, String> attributes = datasetFeature.getDatasetAttributes();
-                            String difficulty = attributes.get("OSMPTrailsOSMPDIFFICULTY");
-                            String dogsAllowed = attributes.get("OSMPTrailsOSMPDOGREGGEN");
-
-                            int strokeColor;
-                            float strokeWidth = 3.0f;
-
-                            if (boulderColorByDifficulty) {
-                                // Mode 1: Color by difficulty
-                                if ("Easy".equals(difficulty)) {
-                                    strokeColor = Color.GREEN;
-                                } else if ("Moderate".equals(difficulty)) {
-                                    strokeColor = Color.BLUE;
-                                } else if ("Difficult".equals(difficulty)) {
-                                    strokeColor = Color.RED;
-                                } else {
-                                    strokeColor = Color.MAGENTA;
-                                }
-
-                                // If dogs are not allowed, make the line wider and slightly
-                                // transparent
-                                if ("No Dogs".equals(dogsAllowed)) {
-                                    strokeColor = ColorUtils.setAlphaComponent(strokeColor, 120);
-                                    strokeWidth = 6.0f;
-                                }
-                            } else {
-                                // Mode 2: Color by dog regulations
-                                if ("No Dogs".equals(dogsAllowed)) {
-                                    strokeColor = Color.RED; // Prohibited
-                                } else if ("LR".equals(dogsAllowed) || "LVS".equals(dogsAllowed)) {
-                                    strokeColor = Color.YELLOW; // Leash Required / Conditional
-                                } else if ("RV".equals(dogsAllowed)) {
-                                    strokeColor = Color.GREEN; // Off Leash
-                                } else {
-                                    strokeColor = Color.LTGRAY; // Unknown
-                                }
-                                strokeWidth = 4.0f;
-                            }
-
-                            return new FeatureStyle.Builder()
-                                    .strokeColor(strokeColor)
-                                    .strokeWidth(strokeWidth)
-                                    .build();
-                        }
-                        return null;
-                    });
-        }
+        applyBoulderStyling.run();
+        // [END maps_android_dds_boulder_trails]
     }
 
     @SnippetItem(
@@ -187,7 +199,7 @@ public class DatasetLayerSnippets {
             return;
         }
 
-        // [START maps_android_dds_nyc_squirrels_java]
+        // [START maps_android_dds_nyc_squirrels]
         // 1. Get the dataset feature layer
         FeatureLayer layer =
                 map.getFeatureLayer(
@@ -228,7 +240,7 @@ public class DatasetLayerSnippets {
                         return null;
                     });
         }
-        // [END maps_android_dds_nyc_squirrels_java]
+        // [END maps_android_dds_nyc_squirrels]
     }
 
     @SnippetItem(
@@ -249,7 +261,7 @@ public class DatasetLayerSnippets {
         // Reset click state
         kyotoClickedGlobalId = null;
 
-        // [START maps_android_dds_kyoto_temples_java]
+        // [START maps_android_dds_kyoto_temples]
         // 1. Get the dataset feature layer
         FeatureLayer layer =
                 map.getFeatureLayer(
@@ -335,6 +347,6 @@ public class DatasetLayerSnippets {
 
         // Apply initial styles
         applyStyles.run();
-        // [END maps_android_dds_kyoto_temples_java]
+        // [END maps_android_dds_kyoto_temples]
     }
 }

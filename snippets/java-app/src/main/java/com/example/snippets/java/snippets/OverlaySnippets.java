@@ -61,18 +61,6 @@ public class OverlaySnippets {
         // [START maps_android_ground_overlays_retain]
         // Add an overlay to the map, retaining a handle to the GroundOverlay object.
         GroundOverlay imageOverlay = map.addGroundOverlay(newarkMap);
-        // [START_EXCLUDE silent]
-        if (imageOverlay != null) {
-            boolean isClickable = imageOverlay.isClickable();
-            boolean isVisible = imageOverlay.isVisible();
-            float bearing = imageOverlay.getBearing();
-            float transparency = imageOverlay.getTransparency();
-            float zIndex = imageOverlay.getZIndex();
-            LatLng position = imageOverlay.getPosition();
-            float width = imageOverlay.getWidth();
-            float height = imageOverlay.getHeight();
-        }
-        // [END_EXCLUDE]
         // [END maps_android_ground_overlays_retain]
 
         // [START maps_android_ground_overlays_remove]
@@ -177,14 +165,6 @@ public class OverlaySnippets {
 
         TileOverlay tileOverlay =
                 map.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
-        // [START_EXCLUDE silent]
-        if (tileOverlay != null) {
-            boolean isVisible = tileOverlay.isVisible();
-            boolean fadeIn = tileOverlay.getFadeIn();
-            float transparency = tileOverlay.getTransparency();
-            float zIndex = tileOverlay.getZIndex();
-        }
-        // [END_EXCLUDE]
         // [END maps_android_tile_overlays_add]
 
         // [START maps_android_tile_overlays_remove]
