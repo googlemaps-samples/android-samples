@@ -69,10 +69,6 @@ class MapsActivityCurrentPlace :
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private var lastKnownLocation: Location? = null
-    private var likelyPlaceNames: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAddresses: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAttributions: Array<List<*>?> = arrayOfNulls(0)
-    private var likelyPlaceLatLngs: Array<LatLng?> = arrayOfNulls(0)
 
     // [START maps_current_place_on_create]
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -284,6 +280,40 @@ class MapsActivityCurrentPlace :
     }
     // [END maps_current_place_on_request_permissions_result]
 
+    // [START maps_current_place_ui_model]
+
+    /**
+     * UI representation of a place item to display in the selection dialog and map marker.
+     *
+     * It is good practice to decouple the external data/backend model ([Place]) from the UI layer.
+     * The UI should be as free of logic as possible: it receives presentation-ready data (non-null
+     * coordinates, ready-to-display title and snippet strings) so that dialogs and map overlays
+     * remain simple, predictable, and testable.
+     */
+    private data class PlaceItemUiModel(val title: String, val snippet: String, val position: LatLng)
+
+    /**
+     * Maps an external [Place] domain model into a display-ready [PlaceItemUiModel].
+     *
+     * The mapper encapsulates all data normalization, default value fallbacks (such as fallback
+     * titles), and string formatting (such as appending third-party attributions to the address).
+     * Keeping this transformation logic in the mapper prevents business and formatting logic
+     * from leaking into the UI components. Returns `null` if essential coordinates are missing.
+     */
+    private fun Place.toUiModel(): PlaceItemUiModel? {
+        val position = location ?: return null
+        val title = displayName ?: getString(R.string.default_info_title)
+        val snippet = buildString {
+            formattedAddress?.let { append(it) }
+            attributions?.takeIf { it.isNotEmpty() }?.let {
+                if (isNotEmpty()) append("\n")
+                append(it.joinToString("\n"))
+            }
+        }
+        return PlaceItemUiModel(title = title, snippet = snippet, position = position)
+    }
+    // [END maps_current_place_ui_model]
+
     /**
      * Prompts the user to select the current place from a list of likely places, and shows the
      * current place on the map - provided the user has granted location permission.
@@ -317,17 +347,13 @@ class MapsActivityCurrentPlace :
             val placeResult = placesClient.searchNearby(request)
             placeResult.addOnCompleteListener { task ->
                 if (task.isSuccessful && task.result != null) {
-                    val likelyPlaces = task.result.places.take(M_MAX_ENTRIES)
-
-                    // Build a list of likely places to show the user.
-                    likelyPlaceNames = likelyPlaces.map { it.displayName }.toTypedArray()
-                    likelyPlaceAddresses = likelyPlaces.map { it.formattedAddress }.toTypedArray()
-                    likelyPlaceAttributions = likelyPlaces.map { it.attributions }.toTypedArray()
-                    likelyPlaceLatLngs = likelyPlaces.map { it.location }.toTypedArray()
+                    val places = task.result.places
+                        .take(M_MAX_ENTRIES)
+                        .mapNotNull { it.toUiModel() }
 
                     // Show a dialog offering the user the list of likely places, and add a
                     // marker at the selected place.
-                    openPlacesDialog()
+                    openPlacesDialog(places)
                 } else {
                     Log.e(TAG, "Exception: %s", task.exception)
                 }
@@ -354,45 +380,35 @@ class MapsActivityCurrentPlace :
      * Displays a form allowing the user to select a place from a list of likely places.
      */
     // [START maps_current_place_open_places_dialog]
-    private fun openPlacesDialog() {
+    private fun openPlacesDialog(places: List<PlaceItemUiModel>) {
         // Ask the user to choose the place where they are now.
-        val listener = DialogInterface.OnClickListener { dialog, which ->
+        val listener = DialogInterface.OnClickListener { _, which ->
             // The "which" argument contains the position of the selected item.
-            val markerLatLng = likelyPlaceLatLngs[which]
-            var markerSnippet = likelyPlaceAddresses[which]
-            if (likelyPlaceAttributions[which] != null) {
-                markerSnippet = """
-                    $markerSnippet
-                    ${likelyPlaceAttributions[which]}
-                """.trimIndent()
-            }
-
-            if (markerLatLng == null) {
-                return@OnClickListener
-            }
+            val selected = places[which]
 
             // Add a marker for the selected place, with an info window
             // showing information about that place.
             map?.addMarker(
                 MarkerOptions()
-                    .title(likelyPlaceNames[which])
-                    .position(markerLatLng)
-                    .snippet(markerSnippet),
+                    .title(selected.title)
+                    .position(selected.position)
+                    .snippet(selected.snippet),
             )
 
             // Position the map's camera at the location of the marker.
             map?.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
-                    markerLatLng,
+                    selected.position,
                     DEFAULT_ZOOM.toFloat(),
                 ),
             )
         }
 
         // Display the dialog.
+        val titles = places.map { it.title }.toTypedArray()
         AlertDialog.Builder(this)
             .setTitle(R.string.pick_place)
-            .setItems(likelyPlaceNames, listener)
+            .setItems(titles, listener)
             .show()
     }
     // [END maps_current_place_open_places_dialog]
