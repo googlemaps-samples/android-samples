@@ -7,7 +7,7 @@ This sample goes hand in hand with a tutorial for the Google Maps Android API:
 Prerequisites
 --------------
 
-- Android API level 21+
+- Android API level 24+
 - Latest Android Build Tools
 - Android Support Repository
 - Google Repository
@@ -27,6 +27,17 @@ This sample uses the Gradle build system.
   Alternatively use the `gradlew build` command to build the project directly.
 
 This demo app requires that you add your own Google Maps API key. See [Get an API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key) for more instructions.
+
+The app uses the Places SDK for Android (New), so the API key must have
+[Places API (New)](https://developers.google.com/maps/documentation/places/android-sdk/cloud-setup)
+enabled in addition to the Maps SDK for Android.
+
+This sample is part of the root Gradle build. From the root of this repository, add your key to
+`secrets.properties` (see `local.defaults.properties` for the format) and run:
+
+```
+./gradlew :tutorials:java:CurrentPlaceDetailsOnMap:assembleDebug
+```
 
 Support
 -------
