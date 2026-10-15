@@ -69,6 +69,10 @@ project(":snippets:app-places-ktx").projectDir = file("snippets/app-places-ktx")
 // Tutorials
 include(":tutorials:kotlin:Polygons")
 project(":tutorials:kotlin:Polygons").projectDir = file("tutorials/kotlin/Polygons/app")
+include(":tutorials:java:CurrentPlaceDetailsOnMap")
+project(":tutorials:java:CurrentPlaceDetailsOnMap").projectDir = file("tutorials/java/CurrentPlaceDetailsOnMap/app")
+include(":tutorials:kotlin:CurrentPlaceDetailsOnMap")
+project(":tutorials:kotlin:CurrentPlaceDetailsOnMap").projectDir = file("tutorials/kotlin/CurrentPlaceDetailsOnMap/app")
 // Add others as needed, starting with these for now
 
 // Visual Testing

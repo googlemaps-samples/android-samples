@@ -30,7 +30,7 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.get()
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
@@ -43,7 +43,7 @@ android {
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -62,16 +62,16 @@ kotlin {
 }
 
 dependencies {
-    androidTestImplementation(libs.espressoCore) {
+    androidTestImplementation(libs.espresso.core) {
         exclude(group = "com.android.support", module = "support-annotations")
     }
     implementation(libs.appcompat)
-    implementation(libs.playServicesMaps)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     implementation(libs.places)
     implementation(libs.volley)
     testImplementation(libs.junit)
-    implementation(libs.coreKtx)
-    implementation(libs.lifecycleViewModelKtx)
+    implementation(libs.core.ktx)
     implementation(libs.kotlin.stdlib)
     implementation(libs.material)
 }

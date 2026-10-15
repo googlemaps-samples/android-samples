@@ -41,9 +41,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.CircularBounds
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.api.net.SearchNearbyRequest
 
 /**
  * An activity that displays a map showing the place at the device's current location.
@@ -92,7 +93,7 @@ class MapsActivityCurrentPlace :
 
         // [START_EXCLUDE silent]
         // Construct a PlacesClient
-        Places.initialize(applicationContext, BuildConfig.MAPS_API_KEY)
+        Places.initializeWithNewPlacesApiEnabled(applicationContext, BuildConfig.MAPS_API_KEY)
         placesClient = Places.createClient(this)
 
         // Construct a FusedLocationProviderClient.
@@ -288,47 +289,41 @@ class MapsActivityCurrentPlace :
      * current place on the map - provided the user has granted location permission.
      */
     // [START maps_current_place_show_current_place]
-    @SuppressLint("MissingPermission")
     private fun showCurrentPlace() {
-        if (map == null) {
-            return
-        }
+        val map = map ?: return
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
-            val placeFields = listOf(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+            val placeFields = listOf(
+                Place.Field.DISPLAY_NAME,
+                Place.Field.FORMATTED_ADDRESS,
+                Place.Field.LOCATION,
+            )
 
-            // Use the builder to create a FindCurrentPlaceRequest.
-            val request = FindCurrentPlaceRequest.newInstance(placeFields)
+            // Search around the device's last-known location, falling back to the center of
+            // the map if the location is not available yet.
+            val center = lastKnownLocation?.let { LatLng(it.latitude, it.longitude) }
+                ?: map.cameraPosition.target
+            val searchArea = CircularBounds.newInstance(center, SEARCH_RADIUS_METERS)
+
+            // Use the builder to create a SearchNearbyRequest that returns the closest places
+            // first.
+            val request = SearchNearbyRequest.builder(searchArea, placeFields)
+                .setMaxResultCount(M_MAX_ENTRIES)
+                .setRankPreference(SearchNearbyRequest.RankPreference.DISTANCE)
+                .build()
 
             // Get the likely places - that is, the businesses and other points of interest that
-            // are the best match for the device's current location.
-            val placeResult = placesClient.findCurrentPlace(request)
+            // are closest to the device's current location.
+            val placeResult = placesClient.searchNearby(request)
             placeResult.addOnCompleteListener { task ->
                 if (task.isSuccessful && task.result != null) {
-                    val likelyPlaces = task.result
+                    val likelyPlaces = task.result.places.take(M_MAX_ENTRIES)
 
-                    // Set the count, handling cases where less than 5 entries are returned.
-                    val count = if (likelyPlaces != null && likelyPlaces.placeLikelihoods.size < M_MAX_ENTRIES) {
-                        likelyPlaces.placeLikelihoods.size
-                    } else {
-                        M_MAX_ENTRIES
-                    }
-                    var i = 0
-                    likelyPlaceNames = arrayOfNulls(count)
-                    likelyPlaceAddresses = arrayOfNulls(count)
-                    likelyPlaceAttributions = arrayOfNulls<List<*>?>(count)
-                    likelyPlaceLatLngs = arrayOfNulls(count)
-                    for (placeLikelihood in likelyPlaces?.placeLikelihoods ?: emptyList()) {
-                        // Build a list of likely places to show the user.
-                        likelyPlaceNames[i] = placeLikelihood.place.name
-                        likelyPlaceAddresses[i] = placeLikelihood.place.address
-                        likelyPlaceAttributions[i] = placeLikelihood.place.attributions
-                        likelyPlaceLatLngs[i] = placeLikelihood.place.latLng
-                        i++
-                        if (i > count - 1) {
-                            break
-                        }
-                    }
+                    // Build a list of likely places to show the user.
+                    likelyPlaceNames = likelyPlaces.map { it.displayName }.toTypedArray()
+                    likelyPlaceAddresses = likelyPlaces.map { it.formattedAddress }.toTypedArray()
+                    likelyPlaceAttributions = likelyPlaces.map { it.attributions }.toTypedArray()
+                    likelyPlaceLatLngs = likelyPlaces.map { it.location }.toTypedArray()
 
                     // Show a dialog offering the user the list of likely places, and add a
                     // marker at the selected place.
@@ -342,7 +337,7 @@ class MapsActivityCurrentPlace :
             Log.i(TAG, "The user did not grant location permission.")
 
             // Add a default marker, because the user hasn't selected a place.
-            map?.addMarker(
+            map.addMarker(
                 MarkerOptions()
                     .title(getString(R.string.default_info_title))
                     .position(defaultLocation)
@@ -440,5 +435,6 @@ class MapsActivityCurrentPlace :
 
         // Used for selecting the current place.
         private const val M_MAX_ENTRIES = 5
+        private const val SEARCH_RADIUS_METERS = 100.0
     }
 }

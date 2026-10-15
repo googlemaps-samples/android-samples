@@ -40,7 +40,7 @@ android {
         }
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
@@ -49,11 +49,12 @@ android {
 
 dependencies {
     implementation(libs.appcompat)
-    implementation(libs.playServicesMaps)
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     implementation(libs.places)
     implementation(libs.volley)
-    implementation(platform(libs.kotlinBom))
-    implementation (libs.material)
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.material)
     testImplementation(libs.junit)
 }
 

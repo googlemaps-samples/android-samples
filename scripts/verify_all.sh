@@ -47,6 +47,8 @@ MODULES=(
     ":snippets:java-app"
     ":snippets:app-utils"
     ":tutorials:kotlin:Polygons"
+    ":tutorials:java:CurrentPlaceDetailsOnMap"
+    ":tutorials:kotlin:CurrentPlaceDetailsOnMap"
 )
 
 # Parse arguments
