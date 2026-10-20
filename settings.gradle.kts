@@ -73,6 +73,10 @@ include(":tutorials:java:CurrentPlaceDetailsOnMap")
 project(":tutorials:java:CurrentPlaceDetailsOnMap").projectDir = file("tutorials/java/CurrentPlaceDetailsOnMap/app")
 include(":tutorials:kotlin:CurrentPlaceDetailsOnMap")
 project(":tutorials:kotlin:CurrentPlaceDetailsOnMap").projectDir = file("tutorials/kotlin/CurrentPlaceDetailsOnMap/app")
+include(":tutorials:java:MapWithMarker")
+project(":tutorials:java:MapWithMarker").projectDir = file("tutorials/java/MapWithMarker/app")
+include(":tutorials:kotlin:MapWithMarker")
+project(":tutorials:kotlin:MapWithMarker").projectDir = file("tutorials/kotlin/MapWithMarker/app")
 // Add others as needed, starting with these for now
 
 // Visual Testing
