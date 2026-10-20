@@ -290,7 +290,7 @@ class MapsActivityCurrentPlace :
      * coordinates, ready-to-display title and snippet strings) so that dialogs and map overlays
      * remain simple, predictable, and testable.
      */
-    private data class PlaceItemUiModel(val title: String, val snippet: String, val position: LatLng)
+    internal data class PlaceItemUiModel(val title: String, val snippet: String, val position: LatLng)
 
     /**
      * Maps an external [Place] domain model into a display-ready [PlaceItemUiModel].
@@ -300,18 +300,8 @@ class MapsActivityCurrentPlace :
      * Keeping this transformation logic in the mapper prevents business and formatting logic
      * from leaking into the UI components. Returns `null` if essential coordinates are missing.
      */
-    private fun Place.toUiModel(): PlaceItemUiModel? {
-        val position = location ?: return null
-        val title = displayName ?: getString(R.string.default_info_title)
-        val snippet = buildString {
-            formattedAddress?.let { append(it) }
-            attributions?.takeIf { it.isNotEmpty() }?.let {
-                if (isNotEmpty()) append("\n")
-                append(it.joinToString("\n"))
-            }
-        }
-        return PlaceItemUiModel(title = title, snippet = snippet, position = position)
-    }
+    internal fun Place.toUiModel(defaultTitle: String = getString(R.string.default_info_title)): PlaceItemUiModel? =
+        toPlaceItemUiModel(this, defaultTitle)
     // [END maps_current_place_ui_model]
 
     /**
@@ -347,13 +337,13 @@ class MapsActivityCurrentPlace :
             val placeResult = placesClient.searchNearby(request)
             placeResult.addOnCompleteListener { task ->
                 if (task.isSuccessful && task.result != null) {
-                    val places = task.result.places
+                    val likelyPlaces = task.result.places
                         .take(M_MAX_ENTRIES)
                         .mapNotNull { it.toUiModel() }
 
                     // Show a dialog offering the user the list of likely places, and add a
                     // marker at the selected place.
-                    openPlacesDialog(places)
+                    openPlacesDialog(likelyPlaces)
                 } else {
                     Log.e(TAG, "Exception: %s", task.exception)
                 }
@@ -380,32 +370,32 @@ class MapsActivityCurrentPlace :
      * Displays a form allowing the user to select a place from a list of likely places.
      */
     // [START maps_current_place_open_places_dialog]
-    private fun openPlacesDialog(places: List<PlaceItemUiModel>) {
+    private fun openPlacesDialog(likelyPlaces: List<PlaceItemUiModel>) {
         // Ask the user to choose the place where they are now.
         val listener = DialogInterface.OnClickListener { _, which ->
             // The "which" argument contains the position of the selected item.
-            val selected = places[which]
+            val selectedPlace = likelyPlaces[which]
 
             // Add a marker for the selected place, with an info window
             // showing information about that place.
             map?.addMarker(
                 MarkerOptions()
-                    .title(selected.title)
-                    .position(selected.position)
-                    .snippet(selected.snippet),
+                    .title(selectedPlace.title)
+                    .position(selectedPlace.position)
+                    .snippet(selectedPlace.snippet),
             )
 
             // Position the map's camera at the location of the marker.
             map?.moveCamera(
                 CameraUpdateFactory.newLatLngZoom(
-                    selected.position,
+                    selectedPlace.position,
                     DEFAULT_ZOOM.toFloat(),
                 ),
             )
         }
 
         // Display the dialog.
-        val titles = places.map { it.title }.toTypedArray()
+        val titles = likelyPlaces.map { it.title }.toTypedArray()
         AlertDialog.Builder(this)
             .setTitle(R.string.pick_place)
             .setItems(titles, listener)
@@ -453,4 +443,22 @@ class MapsActivityCurrentPlace :
         private const val M_MAX_ENTRIES = 5
         private const val SEARCH_RADIUS_METERS = 100.0
     }
+}
+
+/**
+ * Pure mapping function transforming a [Place] into a [MapsActivityCurrentPlace.PlaceItemUiModel].
+ *
+ * Placed at package level for direct unit testability without requiring Android Activity instantiation.
+ */
+internal fun toPlaceItemUiModel(place: Place, defaultTitle: String): MapsActivityCurrentPlace.PlaceItemUiModel? {
+    val position = place.location ?: return null
+    val title = place.displayName ?: defaultTitle
+    val snippet = buildString {
+        place.formattedAddress?.let { append(it) }
+        place.attributions?.takeIf { it.isNotEmpty() }?.let {
+            if (isNotEmpty()) append("\n")
+            append(it.joinToString("\n"))
+        }
+    }
+    return MapsActivityCurrentPlace.PlaceItemUiModel(title = title, snippet = snippet, position = position)
 }

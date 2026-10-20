@@ -18,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -339,13 +338,14 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
      * leaking into the UI components. Returns {@code null} if essential coordinates are missing.
      */
     private PlaceItemUiModel toUiModel(Place place) {
+        return toUiModel(place, getString(R.string.default_info_title));
+    }
+
+    static PlaceItemUiModel toUiModel(Place place, String defaultTitle) {
         if (place.getLocation() == null) {
             return null;
         }
-        String title =
-                place.getDisplayName() != null
-                        ? place.getDisplayName()
-                        : getString(R.string.default_info_title);
+        String title = place.getDisplayName() != null ? place.getDisplayName() : defaultTitle;
 
         StringBuilder snippet = new StringBuilder();
         if (place.getFormattedAddress() != null) {
@@ -355,7 +355,7 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             if (snippet.length() > 0) {
                 snippet.append("\n");
             }
-            snippet.append(TextUtils.join("\n", place.getAttributions()));
+            snippet.append(String.join("\n", place.getAttributions()));
         }
         return new PlaceItemUiModel(title, snippet.toString(), place.getLocation());
     }
@@ -406,19 +406,19 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                         @Override
                         public void onComplete(@NonNull Task<SearchNearbyResponse> task) {
                             if (task.isSuccessful() && task.getResult() != null) {
-                                List<Place> likelyPlaces = task.getResult().getPlaces();
-                                int count = Math.min(likelyPlaces.size(), M_MAX_ENTRIES);
-                                List<PlaceItemUiModel> places = new ArrayList<>();
+                                List<Place> responsePlaces = task.getResult().getPlaces();
+                                int count = Math.min(responsePlaces.size(), M_MAX_ENTRIES);
+                                List<PlaceItemUiModel> likelyPlaces = new ArrayList<>();
                                 for (int i = 0; i < count; i++) {
-                                    PlaceItemUiModel model = toUiModel(likelyPlaces.get(i));
+                                    PlaceItemUiModel model = toUiModel(responsePlaces.get(i));
                                     if (model != null) {
-                                        places.add(model);
+                                        likelyPlaces.add(model);
                                     }
                                 }
 
                                 // Show a dialog offering the user the list of likely places, and
                                 // add a marker at the selected place.
-                                MapsActivityCurrentPlace.this.openPlacesDialog(places);
+                                MapsActivityCurrentPlace.this.openPlacesDialog(likelyPlaces);
                             } else {
                                 Log.e(TAG, "Exception: %s", task.getException());
                             }
@@ -444,33 +444,34 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     /** Displays a form allowing the user to select a place from a list of likely places. */
     // [START maps_current_place_open_places_dialog]
-    private void openPlacesDialog(List<PlaceItemUiModel> places) {
+    private void openPlacesDialog(List<PlaceItemUiModel> likelyPlaces) {
         // Ask the user to choose the place where they are now.
         DialogInterface.OnClickListener listener =
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // The "which" argument contains the position of the selected item.
-                        PlaceItemUiModel selected = places.get(which);
+                        PlaceItemUiModel selectedPlace = likelyPlaces.get(which);
 
                         // Add a marker for the selected place, with an info window
                         // showing information about that place.
                         map.addMarker(
                                 new MarkerOptions()
-                                        .title(selected.title)
-                                        .position(selected.position)
-                                        .snippet(selected.snippet));
+                                        .title(selectedPlace.title)
+                                        .position(selectedPlace.position)
+                                        .snippet(selectedPlace.snippet));
 
                         // Position the map's camera at the location of the marker.
                         map.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(selected.position, DEFAULT_ZOOM));
+                                CameraUpdateFactory.newLatLngZoom(
+                                        selectedPlace.position, DEFAULT_ZOOM));
                     }
                 };
 
         // Display the dialog.
-        String[] titles = new String[places.size()];
-        for (int i = 0; i < places.size(); i++) {
-            titles[i] = places.get(i).title;
+        String[] titles = new String[likelyPlaces.size()];
+        for (int i = 0; i < likelyPlaces.size(); i++) {
+            titles[i] = likelyPlaces.get(i).title;
         }
         new AlertDialog.Builder(this)
                 .setTitle(R.string.pick_place)

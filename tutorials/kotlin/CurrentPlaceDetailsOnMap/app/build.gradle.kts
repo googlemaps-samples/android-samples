@@ -53,6 +53,12 @@ android {
     }
 
     namespace = "com.example.currentplacedetailsonmap"
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 kotlin {
@@ -71,6 +77,7 @@ dependencies {
     implementation(libs.places)
     implementation(libs.volley)
     testImplementation(libs.junit)
+    testImplementation(libs.truth)
     implementation(libs.core.ktx)
     implementation(libs.kotlin.stdlib)
     implementation(libs.material)
