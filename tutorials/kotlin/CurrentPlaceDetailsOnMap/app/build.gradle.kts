@@ -37,9 +37,21 @@ android {
         buildConfig = true
     }
 
+    val localDebugKeystore = file("../debug.keystore")
+    if (localDebugKeystore.exists()) {
+        signingConfigs {
+            getByName("debug") {
+                storeFile = localDebugKeystore
+            }
+        }
+    }
+
     buildTypes {
         debug {
             isDebuggable = true
+            if (localDebugKeystore.exists()) {
+                signingConfig = signingConfigs.getByName("debug")
+            }
         }
         release {
             isMinifyEnabled = false
@@ -71,6 +83,9 @@ dependencies {
     androidTestImplementation(libs.espresso.core) {
         exclude(group = "com.android.support", module = "support-annotations")
     }
+    androidTestImplementation(libs.truth)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.androidx.test.rules)
     implementation(libs.appcompat)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)

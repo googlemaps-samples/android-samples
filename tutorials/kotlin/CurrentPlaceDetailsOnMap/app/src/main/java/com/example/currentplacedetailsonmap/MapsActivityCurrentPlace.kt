@@ -29,6 +29,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.currentplacedetailsonmap.MapsActivityCurrentPlace.PlaceItemUiModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -370,7 +371,7 @@ class MapsActivityCurrentPlace :
      * Displays a form allowing the user to select a place from a list of likely places.
      */
     // [START maps_current_place_open_places_dialog]
-    private fun openPlacesDialog(likelyPlaces: List<PlaceItemUiModel>) {
+    internal fun openPlacesDialog(likelyPlaces: List<PlaceItemUiModel>) {
         // Ask the user to choose the place where they are now.
         val listener = DialogInterface.OnClickListener { _, which ->
             // The "which" argument contains the position of the selected item.
@@ -446,11 +447,11 @@ class MapsActivityCurrentPlace :
 }
 
 /**
- * Pure mapping function transforming a [Place] into a [MapsActivityCurrentPlace.PlaceItemUiModel].
+ * Pure mapping function transforming a [Place] into a [PlaceItemUiModel].
  *
  * Placed at package level for direct unit testability without requiring Android Activity instantiation.
  */
-internal fun toPlaceItemUiModel(place: Place, defaultTitle: String): MapsActivityCurrentPlace.PlaceItemUiModel? {
+internal fun toPlaceItemUiModel(place: Place, defaultTitle: String): PlaceItemUiModel? {
     val position = place.location ?: return null
     val title = place.displayName ?: defaultTitle
     val snippet = buildString {
@@ -460,5 +461,5 @@ internal fun toPlaceItemUiModel(place: Place, defaultTitle: String): MapsActivit
             append(it.joinToString("\n"))
         }
     }
-    return MapsActivityCurrentPlace.PlaceItemUiModel(title = title, snippet = snippet, position = position)
+    return PlaceItemUiModel(title = title, snippet = snippet, position = position)
 }
