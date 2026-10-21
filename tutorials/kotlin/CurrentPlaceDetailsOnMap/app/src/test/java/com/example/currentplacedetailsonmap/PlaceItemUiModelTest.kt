@@ -18,8 +18,9 @@ package com.example.currentplacedetailsonmap
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
-import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class PlaceItemUiModelTest {
 
@@ -37,10 +38,10 @@ class PlaceItemUiModelTest {
 
         val uiModel = toPlaceItemUiModel(place, defaultTitle)
 
-        assertThat(uiModel).isNotNull()
-        assertThat(uiModel?.title).isEqualTo("Sydney Opera House")
-        assertThat(uiModel?.position).isEqualTo(testLatLng)
-        assertThat(uiModel?.snippet).isEqualTo("Bennelong Point, Sydney NSW 2000\nPhoto by John Doe")
+        assertNotNull(uiModel)
+        assert(uiModel.title == "Sydney Opera House")
+        assert(uiModel.position == testLatLng)
+        assert(uiModel.snippet == "Bennelong Point, Sydney NSW 2000\nPhoto by John Doe")
     }
 
     @Test
@@ -52,7 +53,7 @@ class PlaceItemUiModelTest {
 
         val uiModel = toPlaceItemUiModel(place, defaultTitle)
 
-        assertThat(uiModel).isNull()
+        assertNull(uiModel)
     }
 
     @Test
@@ -64,10 +65,10 @@ class PlaceItemUiModelTest {
 
         val uiModel = toPlaceItemUiModel(place, defaultTitle)
 
-        assertThat(uiModel).isNotNull()
-        assertThat(uiModel?.title).isEqualTo(defaultTitle)
-        assertThat(uiModel?.position).isEqualTo(testLatLng)
-        assertThat(uiModel?.snippet).isEqualTo("Bennelong Point, Sydney NSW 2000")
+        assertNotNull(uiModel)
+        assert(uiModel.title == defaultTitle)
+        assert(uiModel.position == testLatLng)
+        assert(uiModel.snippet == "Bennelong Point, Sydney NSW 2000")
     }
 
     @Test
@@ -80,8 +81,8 @@ class PlaceItemUiModelTest {
 
         val uiModel = toPlaceItemUiModel(place, defaultTitle)
 
-        assertThat(uiModel).isNotNull()
-        assertThat(uiModel?.snippet).isEqualTo("Bennelong Point, Sydney NSW 2000")
+        assertNotNull(uiModel)
+        assert(uiModel.snippet == "Bennelong Point, Sydney NSW 2000")
     }
 
     @Test
@@ -94,7 +95,7 @@ class PlaceItemUiModelTest {
 
         val uiModel = toPlaceItemUiModel(place, defaultTitle)
 
-        assertThat(uiModel).isNotNull()
-        assertThat(uiModel?.snippet).isEqualTo("Photo by John Doe\nPhoto by Jane Smith")
+        assertNotNull(uiModel)
+        assert(uiModel.snippet == "Photo by John Doe\nPhoto by Jane Smith")
     }
 }

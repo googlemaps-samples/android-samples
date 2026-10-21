@@ -26,11 +26,13 @@ import com.google.android.libraries.places.api.model.CircularBounds
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.api.net.SearchNearbyRequest
-import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
+import kotlin.math.abs
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 /**
  * Integration test connecting directly to the Google Places API server.
@@ -73,24 +75,24 @@ class PlacesServerIntegrationTest {
         // Synchronously await the live Places API server response (15s timeout)
         val response = Tasks.await(placesClient.searchNearby(request), 15, TimeUnit.SECONDS)
 
-        assertThat(response).isNotNull()
-        assertThat(response.places).isNotEmpty()
+        assertNotNull(response)
+        assertTrue(response.places.isNotEmpty())
 
         // Pass server models through the tutorial's UI model mapper
         val likelyPlaces: List<PlaceItemUiModel> = response.places.mapNotNull {
             toPlaceItemUiModel(it, defaultTitle = "Unknown Location")
         }
 
-        assertThat(likelyPlaces).isNotEmpty()
+        assertTrue(likelyPlaces.isNotEmpty())
 
         // Verify Chautauqua Park is present among the closest places returned by the server
         val placeNames = likelyPlaces.map { it.title }
-        assertThat(placeNames).contains("Chautauqua Park")
+        assertTrue("Chautauqua Park" in placeNames)
 
         // Assert that the UI model contains complete presentation data
         val chautauquaUiModel = likelyPlaces.first { it.title == "Chautauqua Park" }
-        assertThat(chautauquaUiModel.position.latitude).isWithin(0.02).of(39.9992)
-        assertThat(chautauquaUiModel.position.longitude).isWithin(0.02).of(-105.2815)
-        assertThat(chautauquaUiModel.snippet).contains("Boulder, CO")
+        assertTrue(abs(chautauquaUiModel.position.latitude - 39.9992) < 0.02)
+        assertTrue(abs(chautauquaUiModel.position.longitude - -105.2815) < 0.02)
+        assertTrue("Boulder, CO" in chautauquaUiModel.snippet)
     }
 }

@@ -32,11 +32,11 @@ import androidx.test.rule.GrantPermissionRule
 import com.example.currentplacedetailsonmap.MapsActivityCurrentPlace.PlaceItemUiModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
-import com.google.common.truth.Truth.assertThat
 import org.hamcrest.Matchers.anything
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertTrue
 
 /**
  * UI journey test testing the dialog presentation and marker selection flow.
@@ -109,9 +109,9 @@ class CurrentPlaceUserJourneyUiTest {
             titleView.text = selectedPlace.title
             snippetView.text = selectedPlace.snippet
 
-            assertThat(titleView.text.toString()).isEqualTo(chautauquaName)
-            assertThat(snippetView.text.toString()).isEqualTo(
-                "$chautauquaAddress\n$chautauquaAttribution",
+            assertTrue(titleView.text.toString() == chautauquaName)
+            assertTrue(
+                snippetView.text.toString() == "$chautauquaAddress\n$chautauquaAttribution",
             )
         }
     }
