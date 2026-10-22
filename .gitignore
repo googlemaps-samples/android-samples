@@ -24,4 +24,3 @@ sydney_final.png
 !**/assets/screenshots/*.png
 __pycache__/
 *.pyc
-*.keystore

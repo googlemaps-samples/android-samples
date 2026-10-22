@@ -18,7 +18,6 @@ package com.example.currentplacedetailsonmap
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.currentplacedetailsonmap.MapsActivityCurrentPlace.PlaceItemUiModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Tasks
 import com.google.android.libraries.places.api.Places
@@ -27,6 +26,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.api.net.SearchNearbyRequest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
@@ -41,6 +41,9 @@ import kotlin.test.assertTrue
  * map cleanly to the tutorial's [PlaceItemUiModel].
  */
 @RunWith(AndroidJUnit4::class)
+@Ignore(
+    "Integration test connecting directly to live Google Places API server; requires funded API key and network connectivity",
+)
 class PlacesServerIntegrationTest {
 
     private lateinit var placesClient: PlacesClient

@@ -38,21 +38,9 @@ android {
         buildConfig = true
     }
 
-    val localDebugKeystore = file("../debug.keystore")
-    if (localDebugKeystore.exists()) {
-        signingConfigs {
-            getByName("debug") {
-                storeFile = localDebugKeystore
-            }
-        }
-    }
-
     buildTypes {
         debug {
             isDebuggable = true
-            if (localDebugKeystore.exists()) {
-                signingConfig = signingConfigs.getByName("debug")
-            }
         }
         release {
             isMinifyEnabled = false

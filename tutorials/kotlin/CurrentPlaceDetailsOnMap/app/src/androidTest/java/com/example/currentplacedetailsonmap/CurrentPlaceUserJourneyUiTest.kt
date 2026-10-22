@@ -17,7 +17,6 @@
 package com.example.currentplacedetailsonmap
 
 import android.Manifest
-import android.widget.TextView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
@@ -29,13 +28,13 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
-import com.example.currentplacedetailsonmap.MapsActivityCurrentPlace.PlaceItemUiModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.model.Place
 import org.hamcrest.Matchers.anything
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
@@ -95,24 +94,13 @@ class CurrentPlaceUserJourneyUiTest {
         // Confirm dialog is dismissed
         onView(withText(R.string.pick_place)).check(doesNotExist())
 
-        // Verify the map marker and custom info window UI contents
+        // Verify the map marker added from the dialog selection
         scenario.onActivity { activity ->
-            val infoView = activity.layoutInflater.inflate(
-                R.layout.custom_info_contents,
-                activity.findViewById(R.id.map),
-                false,
-            )
-            val titleView = infoView.findViewById<TextView>(R.id.title)
-            val snippetView = infoView.findViewById<TextView>(R.id.snippet)
-
-            val selectedPlace = likelyPlaces[0]
-            titleView.text = selectedPlace.title
-            snippetView.text = selectedPlace.snippet
-
-            assertTrue(titleView.text.toString() == chautauquaName)
-            assertTrue(
-                snippetView.text.toString() == "$chautauquaAddress\n$chautauquaAttribution",
-            )
+            val marker = activity.selectedMarker
+            assertNotNull(marker)
+            assertTrue(marker.title == chautauquaName)
+            assertTrue(marker.snippet == "$chautauquaAddress\n$chautauquaAttribution")
+            assertTrue(marker.position == chautauquaLocation)
         }
     }
 }

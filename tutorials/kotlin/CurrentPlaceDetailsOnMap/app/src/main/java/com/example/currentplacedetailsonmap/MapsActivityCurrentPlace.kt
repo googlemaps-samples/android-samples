@@ -29,7 +29,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.currentplacedetailsonmap.MapsActivityCurrentPlace.PlaceItemUiModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -55,6 +54,7 @@ class MapsActivityCurrentPlace :
     OnMapReadyCallback {
     private var map: GoogleMap? = null
     private var cameraPosition: CameraPosition? = null
+    internal var selectedMarker: Marker? = null
 
     // The entry point to the Places API.
     private lateinit var placesClient: PlacesClient
@@ -281,29 +281,7 @@ class MapsActivityCurrentPlace :
     }
     // [END maps_current_place_on_request_permissions_result]
 
-    // [START maps_current_place_ui_model]
-
-    /**
-     * UI representation of a place item to display in the selection dialog and map marker.
-     *
-     * It is good practice to decouple the external data/backend model ([Place]) from the UI layer.
-     * The UI should be as free of logic as possible: it receives presentation-ready data (non-null
-     * coordinates, ready-to-display title and snippet strings) so that dialogs and map overlays
-     * remain simple, predictable, and testable.
-     */
-    internal data class PlaceItemUiModel(val title: String, val snippet: String, val position: LatLng)
-
-    /**
-     * Maps an external [Place] domain model into a display-ready [PlaceItemUiModel].
-     *
-     * The mapper encapsulates all data normalization, default value fallbacks (such as fallback
-     * titles), and string formatting (such as appending third-party attributions to the address).
-     * Keeping this transformation logic in the mapper prevents business and formatting logic
-     * from leaking into the UI components. Returns `null` if essential coordinates are missing.
-     */
-    internal fun Place.toUiModel(defaultTitle: String = getString(R.string.default_info_title)): PlaceItemUiModel? =
-        toPlaceItemUiModel(this, defaultTitle)
-    // [END maps_current_place_ui_model]
+    private fun Place.toUiModel(): PlaceItemUiModel? = toPlaceItemUiModel(this, getString(R.string.default_info_title))
 
     /**
      * Prompts the user to select the current place from a list of likely places, and shows the
@@ -379,7 +357,7 @@ class MapsActivityCurrentPlace :
 
             // Add a marker for the selected place, with an info window
             // showing information about that place.
-            map?.addMarker(
+            selectedMarker = map?.addMarker(
                 MarkerOptions()
                     .title(selectedPlace.title)
                     .position(selectedPlace.position)
@@ -446,10 +424,25 @@ class MapsActivityCurrentPlace :
     }
 }
 
+// [START maps_current_place_ui_model]
+
 /**
- * Pure mapping function transforming a [Place] into a [PlaceItemUiModel].
+ * UI representation of a place item to display in the selection dialog and map marker.
  *
- * Placed at package level for direct unit testability without requiring Android Activity instantiation.
+ * It is good practice to decouple the external data/backend model ([Place]) from the UI layer.
+ * The UI should be as free of logic as possible: it receives presentation-ready data (non-null
+ * coordinates, ready-to-display title and snippet strings) so that dialogs and map overlays
+ * remain simple, predictable, and testable.
+ */
+internal data class PlaceItemUiModel(val title: String, val snippet: String, val position: LatLng)
+
+/**
+ * Maps an external [Place] domain model into a display-ready [PlaceItemUiModel].
+ *
+ * The mapper encapsulates all data normalization, default value fallbacks (such as fallback
+ * titles), and string formatting (such as appending third-party attributions to the address).
+ * Keeping this transformation logic in the mapper prevents business and formatting logic
+ * from leaking into the UI components. Returns `null` if essential coordinates are missing.
  */
 internal fun toPlaceItemUiModel(place: Place, defaultTitle: String): PlaceItemUiModel? {
     val position = place.location ?: return null
@@ -463,3 +456,4 @@ internal fun toPlaceItemUiModel(place: Place, defaultTitle: String): PlaceItemUi
     }
     return PlaceItemUiModel(title = title, snippet = snippet, position = position)
 }
+// [END maps_current_place_ui_model]
