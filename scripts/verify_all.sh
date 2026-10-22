@@ -49,6 +49,8 @@ MODULES=(
     ":tutorials:kotlin:Polygons"
     ":tutorials:java:CurrentPlaceDetailsOnMap"
     ":tutorials:kotlin:CurrentPlaceDetailsOnMap"
+    ":tutorials:java:MapWithMarker"
+    ":tutorials:kotlin:MapWithMarker"
 )
 
 # Parse arguments

@@ -145,6 +145,8 @@ jobs:
         ./gradlew :tutorials:kotlin:Polygons:assembleDebug
         ./gradlew :tutorials:java:CurrentPlaceDetailsOnMap:assembleDebug
         ./gradlew :tutorials:kotlin:CurrentPlaceDetailsOnMap:assembleDebug
+        ./gradlew :tutorials:java:MapWithMarker:assembleDebug
+        ./gradlew :tutorials:kotlin:MapWithMarker:assembleDebug
 
   test:
     runs-on: ubuntu-latest
