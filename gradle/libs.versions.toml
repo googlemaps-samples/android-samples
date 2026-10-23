@@ -65,7 +65,7 @@ uiautomator = "2.4.0"
 
 # Firebase
 firebaseBom = "34.19.0"
-firebaseDatabase = "22.0.2"
+firebaseDatabase = "23.0.0"
 
 # Third Party
 easypermissions = "3.0.0"
