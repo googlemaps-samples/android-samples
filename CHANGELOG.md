@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.3.0](https://github.com/googlemaps-samples/android-samples/compare/v2.2.0...v2.3.0) (2026-10-23)
+
+
+### Features
+
+* extract on-device review app and tools to :ApiDemos:reviewer module ([#2428](https://github.com/googlemaps-samples/android-samples/issues/2428)) ([1c91025](https://github.com/googlemaps-samples/android-samples/commit/1c91025d64a2a5a18f284c024943803c81026d0d))
+* Integrate AttributionId Flow ([#2386](https://github.com/googlemaps-samples/android-samples/issues/2386)) ([c2c1c47](https://github.com/googlemaps-samples/android-samples/commit/c2c1c473ce3b3d3d25ae85f20a2766eb8005b8b3))
+* modernize Java snippets module with capabilities test suite ([#2426](https://github.com/googlemaps-samples/android-samples/issues/2426)) ([e11f53d](https://github.com/googlemaps-samples/android-samples/commit/e11f53d9f9e0b870db95bc93070782723b93bbf1))
+* modernize Kotlin snippets module with capabilities and visual test suites ([#2427](https://github.com/googlemaps-samples/android-samples/issues/2427)) ([ddae109](https://github.com/googlemaps-samples/android-samples/commit/ddae1098d0c6284b553520b1e96a66c2b37663b3))
+
+
+### Bug Fixes
+
+* crash on rotation in Kotlin BackgroundColorCustomizationProgrammaticDemoActivity ([f7f9020](https://github.com/googlemaps-samples/android-samples/commit/f7f90201a662373a9bb82dbe0ffc383d52004426))
+* crash on rotation in Kotlin LayersDemoActivity ([f7f9020](https://github.com/googlemaps-samples/android-samples/commit/f7f90201a662373a9bb82dbe0ffc383d52004426))
+* **snippets:** clean up region tags, remove dummy getter blocks, and fix Kotlin/Java parity ([#2451](https://github.com/googlemaps-samples/android-samples/issues/2451)) ([1bcdae2](https://github.com/googlemaps-samples/android-samples/commit/1bcdae26dc00d00658c48db9d49b11cee59ae230))
+* **tutorials:** include MapWithMarker in root build and update Gradle config ([#2458](https://github.com/googlemaps-samples/android-samples/issues/2458)) ([7772221](https://github.com/googlemaps-samples/android-samples/commit/77722211aa6281d37f9842e94ebc36292fcda911))
+* **tutorials:** migrate CurrentPlaceDetailsOnMap to Places SDK 6 ([#2456](https://github.com/googlemaps-samples/android-samples/issues/2456)) ([6210c6d](https://github.com/googlemaps-samples/android-samples/commit/6210c6d108c6b4c7f2fc5d162c7609fee84a2c59))
+
 ## [2.2.0](https://github.com/googlemaps-samples/android-samples/compare/v2.1.0...v2.2.0) (2026-10-07)
 
 
