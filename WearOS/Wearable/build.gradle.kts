@@ -68,7 +68,7 @@ dependencies {
     // first add the following to your libs.versions.toml file:
     //
     // [versions]
-    // playServicesMaps = "20.0.0"
+    // playServicesMaps = "20.1.0"
     // wear = "1.4.0"
     // wearable = "2.9.0"
     //
@@ -96,7 +96,7 @@ dependencies {
     //
     //    compileOnly("com.google.android.wearable:wearable:2.9.0")
     //    implementation("com.google.android.support:wearable:2.9.0")
-    //    implementation("com.google.android.gms:play-services-maps:20.0.0")
+    //    implementation("com.google.android.gms:play-services-maps:20.1.0")
     //    implementation("androidx.wear:wear:1.4.0")
     //    androidTestImplementation("androidx.test.ext:junit:1.3.0")
     //    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")

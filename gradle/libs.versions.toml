@@ -40,7 +40,7 @@ mapsCompose = "9.0.1"
 mapsUtils = "6.0.0"
 places = "6.0.2"
 playServicesLocation = "21.4.0"
-playServicesMaps = "20.0.0"
+playServicesMaps = "20.1.0"
 secretsGradlePlugin = "2.0.1"
 room = "2.8.5"
 
@@ -74,7 +74,7 @@ ktor = "3.6.0"
 kotlinxSerialization = "1.11.0"
 
 # Code formatting
-spotless = "8.10.3"
+spotless = "8.10.4"
 
 [libraries]
 # Kotlin
