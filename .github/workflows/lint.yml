@@ -34,7 +34,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up JDK 17
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -66,55 +66,55 @@ jobs:
           ./gradlew :FireMarkers:app:lintDebug
 
       - name: Upload SARIF for ApiDemos:kotlin-app
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: ApiDemos/project/kotlin-app/build/reports/lint-results-debug.sarif
           category: ApiDemos-kotlin-app
 
       - name: Upload SARIF for ApiDemos:java-app
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: ApiDemos/project/java-app/build/reports/lint-results-debug.sarif
           category: ApiDemos-java-app
 
       - name: Upload SARIF for ApiDemos:common-ui
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: ApiDemos/project/common-ui/build/reports/lint-results-debug.sarif
           category: ApiDemos-common-ui
 
       - name: Upload SARIF for snippets:kotlin-app
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: snippets/kotlin-app/build/reports/lint-results-debug.sarif
           category: snippets-kotlin-app
 
       - name: Upload SARIF for snippets:java-app
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: snippets/java-app/build/reports/lint-results-debug.sarif
           category: snippets-java-app
 
       - name: Upload SARIF for snippets:app-places-ktx
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: snippets/app-places-ktx/build/reports/lint-results-debug.sarif
           category: snippets-app-places-ktx
 
       - name: Upload SARIF for snippets:app-compose
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: snippets/app-compose/build/reports/lint-results-debug.sarif
           category: snippets-app-compose
 
       - name: Upload SARIF for WearOS:Wearable
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: WearOS/Wearable/build/reports/lint-results-debug.sarif
           category: WearOS-Wearable
 
       - name: Upload SARIF for FireMarkers:app
-        uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
         with:
           sarif_file: FireMarkers/app/build/reports/lint-results-debug.sarif
           category: FireMarkers-app
