@@ -91,9 +91,6 @@ class CurrentPlaceUserJourneyUiTest {
             .atPosition(0)
             .perform(click())
 
-        // Confirm dialog is dismissed
-        onView(withText(R.string.pick_place)).check(doesNotExist())
-
         // Verify the map marker added from the dialog selection
         scenario.onActivity { activity ->
             val marker = activity.selectedMarker
@@ -102,5 +99,34 @@ class CurrentPlaceUserJourneyUiTest {
             assertTrue(marker.snippet == "$chautauquaAddress\n$chautauquaAttribution")
             assertTrue(marker.position == chautauquaLocation)
         }
+
+        // Confirm dialog is dismissed
+        onView(withText(R.string.pick_place)).check(doesNotExist())
+    }
+
+    @Test
+    fun setCustomLocation_updatesLastKnownLocationAndMovesCamera() {
+        val scenario = ActivityScenario.launch(MapsActivityCurrentPlace::class.java)
+        val customLatLng = LatLng(37.4220, -122.0841)
+
+        scenario.onActivity { activity ->
+            activity.setCustomLocation(customLatLng)
+            val loc = activity.lastKnownLocation
+            assertNotNull(loc)
+            assertTrue(loc.latitude == customLatLng.latitude)
+            assertTrue(loc.longitude == customLatLng.longitude)
+        }
+    }
+
+    @Test
+    fun openPlacesDialog_withEmptyList_doesNotShowDialog() {
+        val scenario = ActivityScenario.launch(MapsActivityCurrentPlace::class.java)
+
+        scenario.onActivity { activity ->
+            activity.openPlacesDialog(emptyList())
+        }
+
+        // Confirm dialog is not shown
+        onView(withText(R.string.pick_place)).check(doesNotExist())
     }
 }

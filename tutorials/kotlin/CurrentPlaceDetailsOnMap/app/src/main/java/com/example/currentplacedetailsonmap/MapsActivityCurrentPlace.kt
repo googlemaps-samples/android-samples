@@ -20,15 +20,19 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -68,8 +72,8 @@ class MapsActivityCurrentPlace :
     private var locationPermissionGranted = false
 
     // The geographical location where the device is currently located. That is, the last-known
-    // location retrieved by the Fused Location Provider.
-    private var lastKnownLocation: Location? = null
+    // location retrieved by the Fused Location Provider or set via long press.
+    internal var lastKnownLocation: Location? = null
 
     // [START maps_current_place_on_create]
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +93,26 @@ class MapsActivityCurrentPlace :
         setContentView(R.layout.activity_maps)
 
         // [START_EXCLUDE silent]
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insets ->
+            val systemBars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout(),
+            )
+            val actionBarContainer = window.decorView.findViewById<View>(androidx.appcompat.R.id.action_bar_container)
+            actionBarContainer?.setPadding(
+                actionBarContainer.paddingLeft,
+                systemBars.top,
+                actionBarContainer.paddingRight,
+                actionBarContainer.paddingBottom,
+            )
+            val typedValue = TypedValue()
+            val actionBarHeight = if (theme.resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
+                TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
+            } else {
+                0
+            }
+            map?.setPadding(0, systemBars.top + actionBarHeight, 0, systemBars.bottom)
+            insets
+        }
         // Construct a PlacesClient
         Places.initializeWithNewPlacesApiEnabled(applicationContext, BuildConfig.MAPS_API_KEY)
         placesClient = Places.createClient(this)
@@ -175,8 +199,26 @@ class MapsActivityCurrentPlace :
         })
         // [END map_current_place_set_info_window_adapter]
 
+        // Allow moving the current location with a long press on the map to easily
+        // demo and discover nearby places anywhere in the world.
+        this.map?.setOnMapLongClickListener { latLng ->
+            setCustomLocation(latLng)
+        }
+
         // Prompt the user for permission.
         getLocationPermission()
+
+        val insets = ViewCompat.getRootWindowInsets(window.decorView)
+            ?.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+        val topInset = insets?.top ?: 0
+        val bottomInset = insets?.bottom ?: 0
+        val typedValue = TypedValue()
+        val actionBarHeight = if (theme.resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
+            TypedValue.complexToDimensionPixelSize(typedValue.data, resources.displayMetrics)
+        } else {
+            0
+        }
+        this.map?.setPadding(0, topInset + actionBarHeight, 0, bottomInset)
         // [END_EXCLUDE]
 
         // Turn on the My Location layer and the related control on the map.
@@ -290,6 +332,11 @@ class MapsActivityCurrentPlace :
     // [START maps_current_place_show_current_place]
     private fun showCurrentPlace() {
         val map = map ?: return
+        // [START_EXCLUDE]
+        if (lastKnownLocation?.provider == "manual") {
+            locationPermissionGranted = true
+        }
+        // [END_EXCLUDE]
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
             val placeFields = listOf(
@@ -350,6 +397,16 @@ class MapsActivityCurrentPlace :
      */
     // [START maps_current_place_open_places_dialog]
     internal fun openPlacesDialog(likelyPlaces: List<PlaceItemUiModel>) {
+        // [START_EXCLUDE]
+        if (likelyPlaces.isEmpty()) {
+            Toast.makeText(
+                this,
+                "No places found nearby. Long-press on the map to choose another location.",
+                Toast.LENGTH_LONG,
+            ).show()
+            return
+        }
+        // [END_EXCLUDE]
         // Ask the user to choose the place where they are now.
         val listener = DialogInterface.OnClickListener { _, which ->
             // The "which" argument contains the position of the selected item.
@@ -406,6 +463,19 @@ class MapsActivityCurrentPlace :
         }
     }
     // [END maps_current_place_update_location_ui]
+
+    /**
+     * Updates the current location and searches for places around the specified coordinate.
+     */
+    internal fun setCustomLocation(latLng: LatLng) {
+        val location = Location("manual").apply {
+            latitude = latLng.latitude
+            longitude = latLng.longitude
+        }
+        lastKnownLocation = location
+        map?.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+        showCurrentPlace()
+    }
 
     companion object {
         private val TAG = MapsActivityCurrentPlace::class.java.simpleName
