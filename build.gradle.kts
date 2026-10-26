@@ -54,3 +54,13 @@ spotless {
         googleJavaFormat().aosp()
     }
 }
+
+// Share the isCI flag with subprojects (optional; secrets-enforcement also reads CI from the environment).
+val isCI = providers.environmentVariable("CI").map { it.toBoolean() }.getOrElse(false)
+extra["isCI"] = isCI
+
+// Enforce that required secrets are configured in secrets.properties before installing onto a device.
+// Compilation (`assemble*`, `build`), unit tests (`test*`), and lint continue to use
+// `local.defaults.properties` so contributors can build and run tests without an API key.
+extra["requiredSecrets"] = listOf("MAPS_API_KEY")
+apply(from = "gradle/secrets-enforcement.gradle.kts")
