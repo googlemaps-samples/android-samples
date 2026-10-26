@@ -9,7 +9,6 @@ Prerequisites
 
 - Android API level 24+
 - Latest Android Build Tools
-- Android Support Repository
 - Google Repository
 - Google Play Services
 
