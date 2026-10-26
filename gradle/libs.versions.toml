@@ -28,7 +28,7 @@ navigation = "2.10.2"
 recyclerview = "1.4.0"
 
 # Jetpack Compose
-compose = "1.12.0"
+compose = "1.12.1"
 composeBom = "2026.09.00"
 hiltNavigationCompose = "1.4.0"
 material = "1.14.0" # View-based Material
@@ -37,7 +37,7 @@ materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
 mapsCompose = "9.0.1"
-mapsUtils = "6.0.0"
+mapsUtils = "6.1.0"
 places = "6.0.2"
 playServicesLocation = "21.4.0"
 playServicesMaps = "20.1.0"
@@ -72,7 +72,7 @@ firebaseDatabase = "23.0.0"
 easypermissions = "3.0.0"
 volley = "1.2.1"
 ktor = "3.6.0"
-kotlinxSerialization = "1.11.0"
+kotlinxSerialization = "1.12.0"
 
 # Code formatting
 spotless = "8.10.4"
