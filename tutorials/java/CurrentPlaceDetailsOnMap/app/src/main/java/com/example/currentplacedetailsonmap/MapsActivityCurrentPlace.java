@@ -19,16 +19,21 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,6 +52,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.api.net.SearchNearbyRequest;
 import com.google.android.libraries.places.api.net.SearchNearbyResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,8 +77,8 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     private boolean locationPermissionGranted;
 
     // The geographical location where the device is currently located. That is, the last-known
-    // location retrieved by the Fused Location Provider.
-    private Location lastKnownLocation;
+    // location retrieved by the Fused Location Provider or set via long press.
+    Location lastKnownLocation;
 
     // Keys for storing activity state.
     // [START maps_current_place_state_keys]
@@ -83,10 +89,6 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
     // Used for selecting the current place.
     private static final int M_MAX_ENTRIES = 5;
     private static final double SEARCH_RADIUS_METERS = 100.0;
-    private String[] likelyPlaceNames;
-    private String[] likelyPlaceAddresses;
-    private List[] likelyPlaceAttributions;
-    private LatLng[] likelyPlaceLatLngs;
 
     // [START maps_current_place_on_create]
     @Override
@@ -107,6 +109,37 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         setContentView(R.layout.activity_maps);
 
         // [START_EXCLUDE silent]
+        ViewCompat.setOnApplyWindowInsetsListener(
+                getWindow().getDecorView(),
+                (v, insets) -> {
+                    Insets systemBars =
+                            insets.getInsets(
+                                    WindowInsetsCompat.Type.systemBars()
+                                            | WindowInsetsCompat.Type.displayCutout());
+                    View actionBarContainer =
+                            getWindow()
+                                    .getDecorView()
+                                    .findViewById(androidx.appcompat.R.id.action_bar_container);
+                    if (actionBarContainer != null) {
+                        actionBarContainer.setPadding(
+                                actionBarContainer.getPaddingLeft(),
+                                systemBars.top,
+                                actionBarContainer.getPaddingRight(),
+                                actionBarContainer.getPaddingBottom());
+                    }
+                    TypedValue typedValue = new TypedValue();
+                    int actionBarHeight =
+                            getTheme()
+                                            .resolveAttribute(
+                                                    android.R.attr.actionBarSize, typedValue, true)
+                                    ? TypedValue.complexToDimensionPixelSize(
+                                            typedValue.data, getResources().getDisplayMetrics())
+                                    : 0;
+                    if (map != null) {
+                        map.setPadding(0, systemBars.top + actionBarHeight, 0, systemBars.bottom);
+                    }
+                    return insets;
+                });
         // Construct a PlacesClient
         Places.initializeWithNewPlacesApiEnabled(getApplicationContext(), BuildConfig.MAPS_API_KEY);
         placesClient = Places.createClient(this);
@@ -210,8 +243,27 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                 });
         // [END map_current_place_set_info_window_adapter]
 
+        // Allow moving the current location with a long press on the map to easily
+        // demo and discover nearby places anywhere in the world.
+        this.map.setOnMapLongClickListener(this::setCustomLocation);
+
         // Prompt the user for permission.
         getLocationPermission();
+
+        WindowInsetsCompat rootInsets = ViewCompat.getRootWindowInsets(getWindow().getDecorView());
+        if (rootInsets != null) {
+            Insets systemBars =
+                    rootInsets.getInsets(
+                            WindowInsetsCompat.Type.systemBars()
+                                    | WindowInsetsCompat.Type.displayCutout());
+            TypedValue typedValue = new TypedValue();
+            int actionBarHeight =
+                    getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)
+                            ? TypedValue.complexToDimensionPixelSize(
+                                    typedValue.data, getResources().getDisplayMetrics())
+                            : 0;
+            this.map.setPadding(0, systemBars.top + actionBarHeight, 0, systemBars.bottom);
+        }
         // [END_EXCLUDE]
 
         // Turn on the My Location layer and the related control on the map.
@@ -311,6 +363,60 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     // [END maps_current_place_on_request_permissions_result]
 
+    // [START maps_current_place_ui_model]
+    /**
+     * UI representation of a place item to display in the selection dialog and map marker.
+     *
+     * <p>It is good practice to decouple the external data/backend model ({@link Place}) from the
+     * UI layer. The UI should be as free of logic as possible: it receives presentation-ready data
+     * (non-null coordinates, ready-to-display title and snippet strings) so that dialogs and map
+     * overlays remain simple, predictable, and testable.
+     */
+    static class PlaceItemUiModel {
+        final String title;
+        final String snippet;
+        final LatLng position;
+
+        PlaceItemUiModel(String title, String snippet, LatLng position) {
+            this.title = title;
+            this.snippet = snippet;
+            this.position = position;
+        }
+    }
+
+    /**
+     * Maps an external {@link Place} domain model into a display-ready {@link PlaceItemUiModel}.
+     *
+     * <p>The mapper encapsulates all data normalization, default value fallbacks (such as fallback
+     * titles), and string formatting (such as appending third-party attributions to the address).
+     * Keeping this transformation logic in the mapper prevents business and formatting logic from
+     * leaking into the UI components. Returns {@code null} if essential coordinates are missing.
+     */
+    private PlaceItemUiModel toUiModel(Place place) {
+        return toUiModel(place, getString(R.string.default_info_title));
+    }
+
+    static PlaceItemUiModel toUiModel(Place place, String defaultTitle) {
+        if (place.getLocation() == null) {
+            return null;
+        }
+        String title = place.getDisplayName() != null ? place.getDisplayName() : defaultTitle;
+
+        StringBuilder snippet = new StringBuilder();
+        if (place.getFormattedAddress() != null) {
+            snippet.append(place.getFormattedAddress());
+        }
+        if (place.getAttributions() != null && !place.getAttributions().isEmpty()) {
+            if (snippet.length() > 0) {
+                snippet.append("\n");
+            }
+            snippet.append(String.join("\n", place.getAttributions()));
+        }
+        return new PlaceItemUiModel(title, snippet.toString(), place.getLocation());
+    }
+
+    // [END maps_current_place_ui_model]
+
     /**
      * Prompts the user to select the current place from a list of likely places, and shows the
      * current place on the map - provided the user has granted location permission.
@@ -320,6 +426,12 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
         if (map == null) {
             return;
         }
+
+        // [START_EXCLUDE]
+        if (lastKnownLocation != null && "manual".equals(lastKnownLocation.getProvider())) {
+            locationPermissionGranted = true;
+        }
+        // [END_EXCLUDE]
 
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
@@ -355,30 +467,19 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
                         @Override
                         public void onComplete(@NonNull Task<SearchNearbyResponse> task) {
                             if (task.isSuccessful() && task.getResult() != null) {
-                                List<Place> likelyPlaces = task.getResult().getPlaces();
-
-                                // Set the count, handling cases where less than 5 entries are
-                                // returned.
-                                int count = Math.min(likelyPlaces.size(), M_MAX_ENTRIES);
-
-                                likelyPlaceNames = new String[count];
-                                likelyPlaceAddresses = new String[count];
-                                likelyPlaceAttributions = new List[count];
-                                likelyPlaceLatLngs = new LatLng[count];
-
+                                List<Place> responsePlaces = task.getResult().getPlaces();
+                                int count = Math.min(responsePlaces.size(), M_MAX_ENTRIES);
+                                List<PlaceItemUiModel> likelyPlaces = new ArrayList<>();
                                 for (int i = 0; i < count; i++) {
-                                    // Build a list of likely places to show the user.
-                                    Place place = likelyPlaces.get(i);
-                                    likelyPlaceNames[i] = place.getDisplayName();
-                                    likelyPlaceAddresses[i] = place.getFormattedAddress();
-                                    likelyPlaceAttributions[i] = place.getAttributions();
-                                    likelyPlaceLatLngs[i] = place.getLocation();
+                                    PlaceItemUiModel model = toUiModel(responsePlaces.get(i));
+                                    if (model != null) {
+                                        likelyPlaces.add(model);
+                                    }
                                 }
 
                                 // Show a dialog offering the user the list of likely places, and
-                                // add a
-                                // marker at the selected place.
-                                MapsActivityCurrentPlace.this.openPlacesDialog();
+                                // add a marker at the selected place.
+                                MapsActivityCurrentPlace.this.openPlacesDialog(likelyPlaces);
                             } else {
                                 Log.e(TAG, "Exception: %s", task.getException());
                             }
@@ -404,39 +505,49 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
 
     /** Displays a form allowing the user to select a place from a list of likely places. */
     // [START maps_current_place_open_places_dialog]
-    private void openPlacesDialog() {
+    void openPlacesDialog(List<PlaceItemUiModel> likelyPlaces) {
+        // [START_EXCLUDE]
+        if (likelyPlaces.isEmpty()) {
+            Toast.makeText(
+                            this,
+                            "No places found nearby. Long-press on the map to choose another location.",
+                            Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+        // [END_EXCLUDE]
         // Ask the user to choose the place where they are now.
         DialogInterface.OnClickListener listener =
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // The "which" argument contains the position of the selected item.
-                        LatLng markerLatLng = likelyPlaceLatLngs[which];
-                        String markerSnippet = likelyPlaceAddresses[which];
-                        if (likelyPlaceAttributions[which] != null) {
-                            markerSnippet = markerSnippet + "\n" + likelyPlaceAttributions[which];
-                        }
+                        PlaceItemUiModel selectedPlace = likelyPlaces.get(which);
 
                         // Add a marker for the selected place, with an info window
                         // showing information about that place.
                         map.addMarker(
                                 new MarkerOptions()
-                                        .title(likelyPlaceNames[which])
-                                        .position(markerLatLng)
-                                        .snippet(markerSnippet));
+                                        .title(selectedPlace.title)
+                                        .position(selectedPlace.position)
+                                        .snippet(selectedPlace.snippet));
 
                         // Position the map's camera at the location of the marker.
                         map.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(markerLatLng, DEFAULT_ZOOM));
+                                CameraUpdateFactory.newLatLngZoom(
+                                        selectedPlace.position, DEFAULT_ZOOM));
                     }
                 };
 
         // Display the dialog.
-        AlertDialog dialog =
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.pick_place)
-                        .setItems(likelyPlaceNames, listener)
-                        .show();
+        String[] titles = new String[likelyPlaces.size()];
+        for (int i = 0; i < likelyPlaces.size(); i++) {
+            titles[i] = likelyPlaces.get(i).title;
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.pick_place)
+                .setItems(titles, listener)
+                .show();
     }
 
     // [END maps_current_place_open_places_dialog]
@@ -460,5 +571,18 @@ public class MapsActivityCurrentPlace extends AppCompatActivity implements OnMap
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
     // [END maps_current_place_update_location_ui]
+
+    /** Updates the current location and searches for places around the specified coordinate. */
+    void setCustomLocation(LatLng latLng) {
+        Location location = new Location("manual");
+        location.setLatitude(latLng.latitude);
+        location.setLongitude(latLng.longitude);
+        lastKnownLocation = location;
+        if (map != null) {
+            map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        }
+        showCurrentPlace();
+    }
 }

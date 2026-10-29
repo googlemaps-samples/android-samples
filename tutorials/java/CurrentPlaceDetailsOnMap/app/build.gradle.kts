@@ -45,6 +45,12 @@ android {
     }
 
     namespace = "com.example.currentplacedetailsonmap"
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 dependencies {
@@ -56,6 +62,7 @@ dependencies {
     implementation(platform(libs.kotlin.bom))
     implementation(libs.material)
     testImplementation(libs.junit)
+    testImplementation(libs.truth)
 }
 
 secrets {

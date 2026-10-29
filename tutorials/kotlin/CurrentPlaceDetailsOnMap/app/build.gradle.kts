@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("com.android.application")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.kotlin.power.assert)
 }
 
 android {
@@ -53,6 +54,12 @@ android {
     }
 
     namespace = "com.example.currentplacedetailsonmap"
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 kotlin {
@@ -61,16 +68,30 @@ kotlin {
     }
 }
 
+powerAssert {
+    functions = listOf(
+        "kotlin.assert",
+        "kotlin.test.assertTrue",
+        "kotlin.test.assertEquals",
+        "kotlin.test.assertNull",
+        "kotlin.test.assertNotNull"
+    )
+}
+
 dependencies {
     androidTestImplementation(libs.espresso.core) {
         exclude(group = "com.android.support", module = "support-annotations")
     }
+    androidTestImplementation(libs.kotlin.test)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.androidx.test.rules)
     implementation(libs.appcompat)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     implementation(libs.places)
     implementation(libs.volley)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test)
     implementation(libs.core.ktx)
     implementation(libs.kotlin.stdlib)
     implementation(libs.material)
