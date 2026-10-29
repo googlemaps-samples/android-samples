@@ -1,6 +1,6 @@
 [versions]
 # Project Configuration
-androidGradlePlugin = "9.4.1"
+androidGradlePlugin = "9.5.0"
 minSdk = "24"
 compileSdk = "37"
 targetSdk = "37"
