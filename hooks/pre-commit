@@ -1,14 +1,12 @@
 #!/bin/bash
 
-## This hook provides an example that prevents the API Key from being committed.
-## The file can be adapted to your needs, but ultimately this hook will reject the commit if the MAPS_API_KEY
-## has been modified. Git Hooks are located in the folder .git/hooks
+## This hook rejects the commit if any staged change adds a Google Maps API key.
+## Install it by copying this file to .git/hooks/pre-commit.
 
-FILE="local.defaults.properties"
-API_KEY_REGEX="AIza[0-9A-Za-z\-_]{35}"
+API_KEY_REGEX='AIza[0-9A-Za-z_-]{35}'
 
-if grep -qE "^MAPS_API_KEY=$API_KEY_REGEX" "$FILE"; then
-    echo "Error: Commit rejected. Invalid content in $FILE."
+if git diff --cached -U0 --no-color | grep -E '^\+' | grep -qE "$API_KEY_REGEX"; then
+    echo "Error: Commit rejected. A staged change contains a Google Maps API key."
     exit 1
 fi
 
