@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.util.Log
 import android.widget.Toast
 import com.example.common_ui.catalog.Framework
@@ -32,6 +33,7 @@ import com.example.reviewer.compose.ReviewerActivity
 import com.example.reviewer.db.SampleCatalogDatabase
 import com.example.reviewer.db.SampleEvaluationDao
 import com.example.reviewer.db.SampleEvaluationEntity
+import com.example.reviewer.ui.ScreenCaptureHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -131,16 +133,27 @@ class SampleReviewRepository private constructor(
         }
     }
 
+    /**
+     * Saves an evaluation in the background. A [screenshot] is written to a PNG file off the
+     * main thread first, and its path takes the place of [screenshotPath].
+     */
     fun saveEvaluation(
         targetFqcn: String,
         status: ReviewStatus,
         notes: String,
         metadata: SampleItem,
         screenshotPath: String? = null,
+        screenshot: Bitmap? = null,
         onComplete: (() -> Unit)? = null,
     ) {
         coroutineScope.launch {
-            saveEvaluationDirect(targetFqcn, status, notes, metadata, screenshotPath, syncToCounterpart = true)
+            val ctx = context
+            val path = if (screenshot != null && ctx != null) {
+                ScreenCaptureHelper.saveBitmap(ctx, screenshot, metadata.id).absolutePath
+            } else {
+                screenshotPath
+            }
+            saveEvaluationDirect(targetFqcn, status, notes, metadata, path, syncToCounterpart = true)
             withContext(Dispatchers.Main) {
                 onComplete?.invoke()
             }

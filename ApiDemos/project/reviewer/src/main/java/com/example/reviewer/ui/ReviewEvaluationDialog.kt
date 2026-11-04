@@ -480,15 +480,9 @@ object ReviewEvaluationDialog {
             layoutParams = params
             setOnClickListener {
                 val notes = input.text.toString().trim()
-                var screenshotPath: String? = null
-                if (canvasView != null) {
-                    val finalBitmap = canvasView.createAnnotatedBitmap() ?: capturedBitmap
-                    if (finalBitmap != null) {
-                        val savedFile = ScreenCaptureHelper.saveBitmap(activity, finalBitmap, sample.id)
-                        screenshotPath = savedFile.absolutePath
-                    }
-                }
-                repository.saveEvaluation(targetFqcn, status, notes, sample, screenshotPath) {
+                // The PNG is written by the repository on its IO scope, not on the main thread.
+                val screenshot = canvasView?.let { it.createAnnotatedBitmap() ?: capturedBitmap }
+                repository.saveEvaluation(targetFqcn, status, notes, sample, screenshot = screenshot) {
                     dialog.dismiss()
                     showUndoSnackbar(activity, targetFqcn, sample, framework, status, repository)
                 }
@@ -507,15 +501,9 @@ object ReviewEvaluationDialog {
             layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.35f)
             setOnClickListener {
                 val notes = input.text.toString().trim()
-                var screenshotPath: String? = null
-                if (canvasView != null) {
-                    val finalBitmap = canvasView.createAnnotatedBitmap() ?: capturedBitmap
-                    if (finalBitmap != null) {
-                        val savedFile = ScreenCaptureHelper.saveBitmap(activity, finalBitmap, sample.id)
-                        screenshotPath = savedFile.absolutePath
-                    }
-                }
-                repository.saveEvaluation(targetFqcn, status, notes, sample, screenshotPath) {
+                // The PNG is written by the repository on its IO scope, not on the main thread.
+                val screenshot = canvasView?.let { it.createAnnotatedBitmap() ?: capturedBitmap }
+                repository.saveEvaluation(targetFqcn, status, notes, sample, screenshot = screenshot) {
                     dialog.dismiss()
                     advanceToNextUnchecked(activity, sample, framework, repository)
                 }
