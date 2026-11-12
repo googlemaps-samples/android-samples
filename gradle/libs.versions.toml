@@ -1,6 +1,6 @@
 [versions]
 # Project Configuration
-androidGradlePlugin = "9.5.0"
+androidGradlePlugin = "9.5.1"
 minSdk = "24"
 compileSdk = "37"
 targetSdk = "37"
@@ -12,7 +12,7 @@ javaVersion = "17"
 kotlin = "2.4.21"
 kotlinxCoroutinesTest = "1.11.0"
 kotlinxDatetime = "0.8.0"
-ksp = "2.3.12"
+ksp = "2.3.13"
 
 # AndroidX Core & Jetpack
 activity = "1.13.0"
@@ -61,8 +61,8 @@ androidxTestOrchestrator = "1.6.1"
 androidxTestRules = "1.7.0"
 truth = "1.4.5"
 turbine = "1.2.1"
-uiautomator = "2.4.0"
-mockk = "1.14.11"
+uiautomator = "2.4.1"
+mockk = "1.14.12"
 
 # Firebase
 firebaseBom = "34.19.0"
@@ -71,11 +71,11 @@ firebaseDatabase = "23.0.0"
 # Third Party
 easypermissions = "3.0.0"
 volley = "1.2.1"
-ktor = "3.6.0"
+ktor = "3.6.1"
 kotlinxSerialization = "1.12.0"
 
 # Code formatting
-spotless = "8.10.4"
+spotless = "8.11.0"
 
 #Tracker lib
 startup-runtime = "1.2.0"
