@@ -37,8 +37,8 @@ materialIconsExtended = "1.7.8"
 
 # Google Maps & Places
 mapsCompose = "9.0.1"
-mapsUtils = "6.1.0"
-places = "6.0.2"
+mapsUtils = "7.0.1"
+places = "6.1.0"
 playServicesLocation = "21.4.0"
 playServicesMaps = "20.1.0"
 secretsGradlePlugin = "2.0.1"
