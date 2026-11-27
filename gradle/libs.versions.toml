@@ -65,7 +65,7 @@ uiautomator = "2.4.0"
 mockk = "1.14.11"
 
 # Firebase
-firebaseBom = "34.19.0"
+firebaseBom = "35.1.0"
 firebaseDatabase = "23.0.0"
 
 # Third Party
