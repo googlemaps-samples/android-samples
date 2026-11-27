@@ -53,20 +53,19 @@ public class StreetViewPanoramaOptionsDemoActivity extends SamplesBaseActivity {
                 (SupportStreetViewPanoramaFragment)
                         getSupportFragmentManager()
                                 .findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
-        streetViewPanoramaFragment.getStreetViewPanoramaAsync(
-                panorama -> {
-                    streetViewPanorama = panorama;
-                    panorama.setStreetNamesEnabled(binding.streetnames.isChecked());
-                    panorama.setUserNavigationEnabled(binding.navigation.isChecked());
-                    panorama.setZoomGesturesEnabled(binding.zoom.isChecked());
-                    panorama.setPanningGesturesEnabled(binding.panning.isChecked());
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync(panorama -> {
+            streetViewPanorama = panorama;
+            panorama.setStreetNamesEnabled(binding.streetnames.isChecked());
+            panorama.setUserNavigationEnabled(binding.navigation.isChecked());
+            panorama.setZoomGesturesEnabled(binding.zoom.isChecked());
+            panorama.setPanningGesturesEnabled(binding.panning.isChecked());
 
-                    // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
-                    // loaded which is when the savedInstanceState is null).
-                    if (savedInstanceState == null) {
-                        setPosition();
-                    }
-                });
+            // Only set the panorama to SAN_FRAN on startup (when no panoramas have been
+            // loaded which is when the savedInstanceState is null).
+            if (savedInstanceState == null) {
+                setPosition();
+            }
+        });
 
         applyInsets(binding.mapContainer);
     }

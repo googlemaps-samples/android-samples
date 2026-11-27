@@ -76,16 +76,14 @@ public class MultiMapDemoActivity extends SamplesBaseActivity {
         SupportMapFragment fragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(fragmentId);
         if (fragment != null) {
-            fragment.getMapAsync(
-                    map -> {
-                        map.moveCamera(
-                                CameraUpdateFactory.newLatLngZoom(COMMON_START, INITIAL_ZOOM));
-                        map.addMarker(new MarkerOptions().position(location).title(title));
-                        map.animateCamera(
-                                CameraUpdateFactory.newLatLngZoom(location, TARGET_ZOOM),
-                                ANIM_DURATION_MS,
-                                null);
-                    });
+            fragment.getMapAsync(map -> {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(COMMON_START, INITIAL_ZOOM));
+                map.addMarker(new MarkerOptions().position(location).title(title));
+                map.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(location, TARGET_ZOOM),
+                        ANIM_DURATION_MS,
+                        null);
+            });
         }
     }
 }

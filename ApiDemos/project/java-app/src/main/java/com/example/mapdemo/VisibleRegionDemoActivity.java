@@ -90,33 +90,31 @@ public class VisibleRegionDemoActivity extends SamplesBaseActivity
         binding = VisibleRegionDemoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.cameraActionsButton.setOnClickListener(
-                v -> {
-                    PopupMenu popup = new PopupMenu(this, v);
-                    popup.getMenuInflater().inflate(R.menu.visible_region_menu, popup.getMenu());
-                    popup.setOnMenuItemClickListener(
-                            item -> {
-                                int itemId = item.getItemId();
-                                if (itemId == R.id.menu_action_no_padding) {
-                                    setNoPadding();
-                                    return true;
-                                } else if (itemId == R.id.menu_action_more_padding) {
-                                    setMorePadding(v);
-                                    return true;
-                                } else if (itemId == R.id.menu_action_opera_house) {
-                                    moveToOperaHouse(v);
-                                    return true;
-                                } else if (itemId == R.id.menu_action_sfo) {
-                                    moveToSFO(v);
-                                    return true;
-                                } else if (itemId == R.id.menu_action_australia) {
-                                    moveToAUS(v);
-                                    return true;
-                                }
-                                return false;
-                            });
-                    popup.show();
-                });
+        binding.cameraActionsButton.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(this, v);
+            popup.getMenuInflater().inflate(R.menu.visible_region_menu, popup.getMenu());
+            popup.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.menu_action_no_padding) {
+                    setNoPadding();
+                    return true;
+                } else if (itemId == R.id.menu_action_more_padding) {
+                    setMorePadding(v);
+                    return true;
+                } else if (itemId == R.id.menu_action_opera_house) {
+                    moveToOperaHouse(v);
+                    return true;
+                } else if (itemId == R.id.menu_action_sfo) {
+                    moveToSFO(v);
+                    return true;
+                } else if (itemId == R.id.menu_action_australia) {
+                    moveToAUS(v);
+                    return true;
+                }
+                return false;
+            });
+            popup.show();
+        });
 
         binding.vrNormalButton.setOnClickListener(v -> setNoPadding());
         binding.vrMorePaddedButton.setOnClickListener(this::setMorePadding);

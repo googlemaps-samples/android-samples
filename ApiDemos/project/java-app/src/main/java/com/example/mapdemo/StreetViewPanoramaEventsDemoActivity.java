@@ -70,24 +70,23 @@ public class StreetViewPanoramaEventsDemoActivity extends SamplesBaseActivity
                 (SupportStreetViewPanoramaFragment)
                         getSupportFragmentManager()
                                 .findFragmentById(com.example.common_ui.R.id.streetviewpanorama);
-        streetViewPanoramaFragment.getStreetViewPanoramaAsync(
-                panorama -> {
-                    streetViewPanorama = panorama;
-                    streetViewPanorama.setOnStreetViewPanoramaChangeListener(
-                            StreetViewPanoramaEventsDemoActivity.this);
-                    streetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
-                            StreetViewPanoramaEventsDemoActivity.this);
-                    streetViewPanorama.setOnStreetViewPanoramaClickListener(
-                            StreetViewPanoramaEventsDemoActivity.this);
-                    streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
-                            StreetViewPanoramaEventsDemoActivity.this);
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync(panorama -> {
+            streetViewPanorama = panorama;
+            streetViewPanorama.setOnStreetViewPanoramaChangeListener(
+                    StreetViewPanoramaEventsDemoActivity.this);
+            streetViewPanorama.setOnStreetViewPanoramaCameraChangeListener(
+                    StreetViewPanoramaEventsDemoActivity.this);
+            streetViewPanorama.setOnStreetViewPanoramaClickListener(
+                    StreetViewPanoramaEventsDemoActivity.this);
+            streetViewPanorama.setOnStreetViewPanoramaLongClickListener(
+                    StreetViewPanoramaEventsDemoActivity.this);
 
-                    // Only set the panorama to SYDNEY on startup (when no panoramas have been
-                    // loaded which is when the savedInstanceState is null).
-                    if (savedInstanceState == null) {
-                        streetViewPanorama.setPosition(SYDNEY);
-                    }
-                });
+            // Only set the panorama to SYDNEY on startup (when no panoramas have been
+            // loaded which is when the savedInstanceState is null).
+            if (savedInstanceState == null) {
+                streetViewPanorama.setPosition(SYDNEY);
+            }
+        });
 
         applyInsets(findViewById(com.example.common_ui.R.id.map_container));
     }

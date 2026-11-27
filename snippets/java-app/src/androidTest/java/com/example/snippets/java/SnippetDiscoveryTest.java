@@ -68,18 +68,17 @@ public class SnippetDiscoveryTest {
             final MapView[] mapViewHolder = new MapView[1];
 
             try (ActivityScenario<MapActivity> scenario = ActivityScenario.launch(intent)) {
-                scenario.onActivity(
-                        activity -> {
-                            FrameLayout holder = activity.findViewById(R.id.map_view_holder);
-                            mapViewHolder[0] =
-                                    activity.mapView != null
-                                            ? activity.mapView
-                                            : (MapView)
-                                                    (holder != null && holder.getChildCount() > 0
-                                                            ? holder.getChildAt(0)
-                                                            : null);
-                            latch.countDown();
-                        });
+                scenario.onActivity(activity -> {
+                    FrameLayout holder = activity.findViewById(R.id.map_view_holder);
+                    mapViewHolder[0] =
+                            activity.mapView != null
+                                    ? activity.mapView
+                                    : (MapView)
+                                            (holder != null && holder.getChildCount() > 0
+                                                    ? holder.getChildAt(0)
+                                                    : null);
+                    latch.countDown();
+                });
 
                 boolean loaded = latch.await(5, TimeUnit.SECONDS);
                 Assert.assertTrue(

@@ -174,16 +174,15 @@ public class DemoSmokeTest {
 
         Thread.UncaughtExceptionHandler handler = Thread.getDefaultUncaughtExceptionHandler();
         defaultHandler = handler;
-        Thread.setDefaultUncaughtExceptionHandler(
-                (thread, throwable) -> {
-                    uncaughtExceptions.add(throwable);
-                    // The main looper cannot recover from a crash, so let it take the process down:
-                    // the
-                    // orchestrator reports it against this test and carries on with the next one.
-                    if (thread == Looper.getMainLooper().getThread() && handler != null) {
-                        handler.uncaughtException(thread, throwable);
-                    }
-                });
+        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+            uncaughtExceptions.add(throwable);
+            // The main looper cannot recover from a crash, so let it take the process down:
+            // the
+            // orchestrator reports it against this test and carries on with the next one.
+            if (thread == Looper.getMainLooper().getThread() && handler != null) {
+                handler.uncaughtException(thread, throwable);
+            }
+        });
     }
 
     /** Also catches crashes while the demo is torn down after the test body. */
@@ -264,22 +263,21 @@ public class DemoSmokeTest {
         List<MapSurface> shown = new ArrayList<>();
 
         while (shown.isEmpty() && System.currentTimeMillis() < deadline) {
-            scenario.onActivity(
-                    activity -> {
-                        surfaces.clear();
-                        surfaces.addAll(mapSurfaces(activity));
-                        shown.clear();
-                        for (MapSurface surface : surfaces) {
-                            if (surface.view != null && isLaidOutOnScreen(surface.view)) {
-                                shown.add(surface);
-                            }
-                        }
-                        // Demos such as MapInPager open on a page without a map: swipe on to find
-                        // it.
-                        if (shown.isEmpty()) {
-                            turnPagerPage(activity.getWindow().getDecorView());
-                        }
-                    });
+            scenario.onActivity(activity -> {
+                surfaces.clear();
+                surfaces.addAll(mapSurfaces(activity));
+                shown.clear();
+                for (MapSurface surface : surfaces) {
+                    if (surface.view != null && isLaidOutOnScreen(surface.view)) {
+                        shown.add(surface);
+                    }
+                }
+                // Demos such as MapInPager open on a page without a map: swipe on to find
+                // it.
+                if (shown.isEmpty()) {
+                    turnPagerPage(activity.getWindow().getDecorView());
+                }
+            });
             if (shown.isEmpty()) {
                 Thread.sleep(POLL_INTERVAL_MS);
             }
@@ -305,13 +303,11 @@ public class DemoSmokeTest {
         MapSurface surface = pickSurface(shown);
         AtomicReference<GoogleMap> map = new AtomicReference<>();
         CountDownLatch ready = new CountDownLatch(1);
-        scenario.onActivity(
-                activity ->
-                        surface.awaitReady.accept(
-                                readyMap -> {
-                                    map.set(readyMap);
-                                    ready.countDown();
-                                }));
+        scenario.onActivity(activity ->
+                surface.awaitReady.accept(readyMap -> {
+                    map.set(readyMap);
+                    ready.countDown();
+                }));
         assertWithMessage(
                         demoName
                                 + " "
@@ -347,13 +343,12 @@ public class DemoSmokeTest {
             throws InterruptedException {
         for (float delta : new float[] {-1f, 1f}) {
             CountDownLatch loaded = new CountDownLatch(1);
-            scenario.onActivity(
-                    activity -> {
-                        if (requireMapLoaded) {
-                            map.setOnMapLoadedCallback(loaded::countDown);
-                        }
-                        map.moveCamera(CameraUpdateFactory.zoomBy(delta));
-                    });
+            scenario.onActivity(activity -> {
+                if (requireMapLoaded) {
+                    map.setOnMapLoadedCallback(loaded::countDown);
+                }
+                map.moveCamera(CameraUpdateFactory.zoomBy(delta));
+            });
             if (requireMapLoaded) {
                 assertWithMessage(demoName + " map did not finish loading after zooming")
                         .that(loaded.await(MAP_LOADED_TIMEOUT_MS, TimeUnit.MILLISECONDS))

@@ -106,20 +106,16 @@ public class LocationSourceDemoActivity extends SamplesBaseActivity implements O
 
         mLocationSource = new GpxLocationSource(new ArrayList<>(), 60L);
         Executors.newSingleThreadExecutor()
-                .execute(
-                        () -> {
-                            List<LatLng> trackPoints =
-                                    parseGpxTrack(
-                                            getResources()
-                                                    .openRawResource(R.raw.fowler_rattlesnake));
-                            runOnUiThread(
-                                    () -> {
-                                        mLocationSource.setTrackPoints(trackPoints);
-                                        if (mMap != null) {
-                                            setupTrackOnMap(mMap);
-                                        }
-                                    });
-                        });
+                .execute(() -> {
+                    List<LatLng> trackPoints =
+                            parseGpxTrack(getResources().openRawResource(R.raw.fowler_rattlesnake));
+                    runOnUiThread(() -> {
+                        mLocationSource.setTrackPoints(trackPoints);
+                        if (mMap != null) {
+                            setupTrackOnMap(mMap);
+                        }
+                    });
+                });
 
         MaterialButton toggleButton = findViewById(R.id.btn_toggle_playback);
         if (toggleButton != null) {

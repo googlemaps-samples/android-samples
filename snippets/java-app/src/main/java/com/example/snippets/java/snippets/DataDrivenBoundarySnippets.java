@@ -73,19 +73,18 @@ public class DataDrivenBoundarySnippets {
         int strokeColor = ColorUtils.setAlphaComponent(purple, 255);
 
         if (layer != null) {
-            layer.setFeatureStyle(
-                    feature -> {
-                        if (feature instanceof PlaceFeature
-                                && "ChIJ0zQtYiWsVHkRk8lRoB1RNPo"
-                                        .equals(((PlaceFeature) feature).getPlaceId())) {
-                            return new FeatureStyle.Builder()
-                                    .fillColor(fillColor)
-                                    .strokeColor(strokeColor)
-                                    .strokeWidth(3.0f)
-                                    .build();
-                        }
-                        return null;
-                    });
+            layer.setFeatureStyle(feature -> {
+                if (feature instanceof PlaceFeature
+                        && "ChIJ0zQtYiWsVHkRk8lRoB1RNPo"
+                                .equals(((PlaceFeature) feature).getPlaceId())) {
+                    return new FeatureStyle.Builder()
+                            .fillColor(fillColor)
+                            .strokeColor(strokeColor)
+                            .strokeWidth(3.0f)
+                            .build();
+                }
+                return null;
+            });
         }
         // [END maps_android_dds_locality_boundary]
     }
@@ -109,22 +108,19 @@ public class DataDrivenBoundarySnippets {
         // 3. Define styling: Assign pseudo-random hue fills dynamically based on place ID
         int alpha = (int) (255 * 0.25); // 25% opacity
         if (layer != null) {
-            layer.setFeatureStyle(
-                    feature -> {
-                        if (feature instanceof PlaceFeature) {
-                            PlaceFeature placeFeature = (PlaceFeature) feature;
-                            int hueColor = placeFeature.getPlaceId().hashCode() % 300;
-                            if (hueColor < 0) hueColor += 300;
-                            return new FeatureStyle.Builder()
-                                    .fillColor(
-                                            Color.HSVToColor(
-                                                    alpha, new float[] {hueColor, 1.0f, 1.0f}))
-                                    .strokeColor(Color.DKGRAY)
-                                    .strokeWidth(1.5f)
-                                    .build();
-                        }
-                        return null;
-                    });
+            layer.setFeatureStyle(feature -> {
+                if (feature instanceof PlaceFeature) {
+                    PlaceFeature placeFeature = (PlaceFeature) feature;
+                    int hueColor = placeFeature.getPlaceId().hashCode() % 300;
+                    if (hueColor < 0) hueColor += 300;
+                    return new FeatureStyle.Builder()
+                            .fillColor(Color.HSVToColor(alpha, new float[] {hueColor, 1.0f, 1.0f}))
+                            .strokeColor(Color.DKGRAY)
+                            .strokeWidth(1.5f)
+                            .build();
+                }
+                return null;
+            });
         }
         // [END maps_android_dds_state_boundaries]
     }
@@ -155,50 +151,47 @@ public class DataDrivenBoundarySnippets {
                     @Override
                     public void run() {
                         if (layer != null) {
-                            layer.setFeatureStyle(
-                                    feature -> {
-                                        if (feature instanceof PlaceFeature) {
-                                            PlaceFeature placeFeature = (PlaceFeature) feature;
-                                            int fillColor =
-                                                    selectedCountryPlaceIds.contains(
-                                                                    placeFeature.getPlaceId())
-                                                            ? selectedFillColor
-                                                            : defaultFillColor;
-                                            return new FeatureStyle.Builder()
-                                                    .fillColor(fillColor)
-                                                    .strokeColor(Color.BLACK)
-                                                    .strokeWidth(1.0f)
-                                                    .build();
-                                        }
-                                        return null;
-                                    });
+                            layer.setFeatureStyle(feature -> {
+                                if (feature instanceof PlaceFeature) {
+                                    PlaceFeature placeFeature = (PlaceFeature) feature;
+                                    int fillColor =
+                                            selectedCountryPlaceIds.contains(
+                                                            placeFeature.getPlaceId())
+                                                    ? selectedFillColor
+                                                    : defaultFillColor;
+                                    return new FeatureStyle.Builder()
+                                            .fillColor(fillColor)
+                                            .strokeColor(Color.BLACK)
+                                            .strokeWidth(1.0f)
+                                            .build();
+                                }
+                                return null;
+                            });
                         }
                     }
                 };
 
         // 3. Register feature click listener to toggle selections and toast Place ID
         if (layer != null) {
-            layer.addOnFeatureClickListener(
-                    event -> {
-                        boolean changed = false;
-                        for (com.google.android.gms.maps.model.Feature f : event.getFeatures()) {
-                            if (f instanceof PlaceFeature) {
-                                PlaceFeature placeFeature = (PlaceFeature) f;
-                                String placeId = placeFeature.getPlaceId();
-                                if (selectedCountryPlaceIds.contains(placeId)) {
-                                    selectedCountryPlaceIds.remove(placeId);
-                                } else {
-                                    selectedCountryPlaceIds.add(placeId);
-                                }
-                                changed = true;
-                                Toast.makeText(context, "Country: " + placeId, Toast.LENGTH_SHORT)
-                                        .show();
-                            }
+            layer.addOnFeatureClickListener(event -> {
+                boolean changed = false;
+                for (com.google.android.gms.maps.model.Feature f : event.getFeatures()) {
+                    if (f instanceof PlaceFeature) {
+                        PlaceFeature placeFeature = (PlaceFeature) f;
+                        String placeId = placeFeature.getPlaceId();
+                        if (selectedCountryPlaceIds.contains(placeId)) {
+                            selectedCountryPlaceIds.remove(placeId);
+                        } else {
+                            selectedCountryPlaceIds.add(placeId);
                         }
-                        if (changed) {
-                            applyStyles.run(); // Refresh styling state
-                        }
-                    });
+                        changed = true;
+                        Toast.makeText(context, "Country: " + placeId, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if (changed) {
+                    applyStyles.run(); // Refresh styling state
+                }
+            });
         }
 
         // Apply initial styles

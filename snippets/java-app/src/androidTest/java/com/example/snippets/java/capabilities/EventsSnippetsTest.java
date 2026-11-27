@@ -58,24 +58,22 @@ public class EventsSnippetsTest {
         final GoogleMap[] googleMapHolder = new GoogleMap[1];
 
         try (ActivityScenario<MapActivity> scenario = ActivityScenario.launch(intent)) {
-            scenario.onActivity(
-                    activity -> {
-                        FrameLayout holder = activity.findViewById(R.id.map_view_holder);
-                        MapView mapView =
-                                activity.mapView != null
-                                        ? activity.mapView
-                                        : (MapView)
-                                                (holder != null && holder.getChildCount() > 0
-                                                        ? holder.getChildAt(0)
-                                                        : null);
-                        if (mapView != null) {
-                            mapView.getMapAsync(
-                                    map -> {
-                                        googleMapHolder[0] = map;
-                                        latch.countDown();
-                                    });
-                        }
+            scenario.onActivity(activity -> {
+                FrameLayout holder = activity.findViewById(R.id.map_view_holder);
+                MapView mapView =
+                        activity.mapView != null
+                                ? activity.mapView
+                                : (MapView)
+                                        (holder != null && holder.getChildCount() > 0
+                                                ? holder.getChildAt(0)
+                                                : null);
+                if (mapView != null) {
+                    mapView.getMapAsync(map -> {
+                        googleMapHolder[0] = map;
+                        latch.countDown();
                     });
+                }
+            });
 
             boolean loaded = latch.await(10, TimeUnit.SECONDS);
             Assert.assertTrue(
@@ -98,31 +96,24 @@ public class EventsSnippetsTest {
                 (map, scenario) -> {
                     final boolean[] isClickableHolder = new boolean[] {true};
                     InstrumentationRegistry.getInstrumentation()
-                            .runOnMainSync(
-                                    () -> {
-                                        scenario.onActivity(
-                                                activity -> {
-                                                    FrameLayout holder =
-                                                            activity.findViewById(
-                                                                    R.id.map_view_holder);
-                                                    MapView mapView =
-                                                            activity.mapView != null
-                                                                    ? activity.mapView
-                                                                    : (MapView)
-                                                                            (holder != null
-                                                                                            && holder
-                                                                                                            .getChildCount()
-                                                                                                    > 0
-                                                                                    ? holder
-                                                                                            .getChildAt(
-                                                                                                    0)
-                                                                                    : null);
-                                                    isClickableHolder[0] =
-                                                            mapView != null
-                                                                    ? mapView.isClickable()
-                                                                    : true;
-                                                });
-                                    });
+                            .runOnMainSync(() -> {
+                                scenario.onActivity(activity -> {
+                                    FrameLayout holder =
+                                            activity.findViewById(R.id.map_view_holder);
+                                    MapView mapView =
+                                            activity.mapView != null
+                                                    ? activity.mapView
+                                                    : (MapView)
+                                                            (holder != null
+                                                                            && holder
+                                                                                            .getChildCount()
+                                                                                    > 0
+                                                                    ? holder.getChildAt(0)
+                                                                    : null);
+                                    isClickableHolder[0] =
+                                            mapView != null ? mapView.isClickable() : true;
+                                });
+                            });
                     Assert.assertFalse(
                             "MapView.isClickable must be strictly false when '1. MapView Disable Click Event' is executed! "
                                     + "If mapView.setClickable(false) is removed or broken in EventsSnippets.java, this test fails.",
@@ -138,21 +129,19 @@ public class EventsSnippetsTest {
                     final GoogleMap.OnPoiClickListener[] listenerHolder =
                             new GoogleMap.OnPoiClickListener[1];
                     InstrumentationRegistry.getInstrumentation()
-                            .runOnMainSync(
-                                    () -> {
-                                        listenerHolder[0] =
-                                                TrackedMap.lastInstance != null
-                                                        ? TrackedMap.lastInstance
-                                                                .registeredPoiClickListener
-                                                        : null;
-                                        if (listenerHolder[0] != null) {
-                                            listenerHolder[0].onPoiClick(
-                                                    new PointOfInterest(
-                                                            new LatLng(-33.88, 151.21),
-                                                            "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                                                            "Sydney Opera House"));
-                                        }
-                                    });
+                            .runOnMainSync(() -> {
+                                listenerHolder[0] =
+                                        TrackedMap.lastInstance != null
+                                                ? TrackedMap.lastInstance.registeredPoiClickListener
+                                                : null;
+                                if (listenerHolder[0] != null) {
+                                    listenerHolder[0].onPoiClick(
+                                            new PointOfInterest(
+                                                    new LatLng(-33.88, 151.21),
+                                                    "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                                                    "Sydney Opera House"));
+                                }
+                            });
 
                     Assert.assertNotNull(
                             "OnPoiClickListener must be registered in TrackedMap when '4. POI Click Listener' is run! "

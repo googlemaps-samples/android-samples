@@ -109,48 +109,45 @@ public class MapActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.snapshot_button)
-                .setOnClickListener(
-                        v -> {
-                            if (googleMap != null) {
-                                CameraPosition cam = googleMap.getCameraPosition();
-                                LatLng target = cam.target;
-                                double rawBearing = cam.bearing;
-                                double bearing = (rawBearing % 360.0 + 360.0) % 360.0;
+                .setOnClickListener(v -> {
+                    if (googleMap != null) {
+                        CameraPosition cam = googleMap.getCameraPosition();
+                        LatLng target = cam.target;
+                        double rawBearing = cam.bearing;
+                        double bearing = (rawBearing % 360.0 + 360.0) % 360.0;
 
-                                String codeSnippet =
-                                        String.format(
-                                                java.util.Locale.US,
-                                                "CameraPosition.builder()\n    .target(new LatLng(%.6f, %.6f))\n    .zoom(%.1ff)\n    .tilt(%.1ff)\n    .bearing(%.1ff)\n    .build()",
-                                                target.latitude,
-                                                target.longitude,
-                                                cam.zoom,
-                                                cam.tilt,
-                                                bearing);
+                        String codeSnippet =
+                                String.format(
+                                        java.util.Locale.US,
+                                        "CameraPosition.builder()\n    .target(new LatLng(%.6f, %.6f))\n    .zoom(%.1ff)\n    .tilt(%.1ff)\n    .bearing(%.1ff)\n    .build()",
+                                        target.latitude,
+                                        target.longitude,
+                                        cam.zoom,
+                                        cam.tilt,
+                                        bearing);
 
-                                android.content.ClipboardManager cm =
-                                        (android.content.ClipboardManager)
-                                                getSystemService(
-                                                        android.content.Context.CLIPBOARD_SERVICE);
-                                if (cm != null) {
-                                    cm.setPrimaryClip(
-                                            android.content.ClipData.newPlainText(
-                                                    "CameraPosition", codeSnippet));
-                                }
-                                Toast.makeText(
-                                                MapActivity.this,
-                                                "📷 Camera Pose copied to clipboard!\n"
-                                                        + codeSnippet,
-                                                Toast.LENGTH_LONG)
-                                        .show();
-                                Log.d("MapActivity", "Camera Pose copied:\n" + codeSnippet);
-                            } else {
-                                Toast.makeText(
-                                                MapActivity.this,
-                                                "Map not initialized yet",
-                                                Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
+                        android.content.ClipboardManager cm =
+                                (android.content.ClipboardManager)
+                                        getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+                        if (cm != null) {
+                            cm.setPrimaryClip(
+                                    android.content.ClipData.newPlainText(
+                                            "CameraPosition", codeSnippet));
+                        }
+                        Toast.makeText(
+                                        MapActivity.this,
+                                        "📷 Camera Pose copied to clipboard!\n" + codeSnippet,
+                                        Toast.LENGTH_LONG)
+                                .show();
+                        Log.d("MapActivity", "Camera Pose copied:\n" + codeSnippet);
+                    } else {
+                        Toast.makeText(
+                                        MapActivity.this,
+                                        "Map not initialized yet",
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
 
         findViewById(R.id.reset_view_button).setOnClickListener(v -> runSnippet());
 
@@ -178,59 +175,55 @@ public class MapActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.purpose_button)
-                .setOnClickListener(
-                        v -> {
-                            String desc = "Demonstrates " + snippetTitle;
-                            if (currentIndex >= 0 && currentIndex < snippetList.size()) {
-                                SnippetItemInfo item = snippetList.get(currentIndex);
-                                if (item.getDescription() != null
-                                        && !item.getDescription().isEmpty()) {
-                                    desc = item.getDescription();
-                                }
-                            }
-                            new androidx.appcompat.app.AlertDialog.Builder(MapActivity.this)
-                                    .setTitle(
-                                            "ℹ️ "
-                                                    + (snippetTitle != null
-                                                            ? snippetTitle
-                                                            : "Snippet Purpose"))
-                                    .setMessage(
-                                            "🎯 Purpose & Point:\n"
-                                                    + desc
-                                                    + "\n\n👀 What you should see / do:\nInteract with the live map on your device screen to test this capability.")
-                                    .setPositiveButton("Got It", null)
-                                    .show();
-                        });
+                .setOnClickListener(v -> {
+                    String desc = "Demonstrates " + snippetTitle;
+                    if (currentIndex >= 0 && currentIndex < snippetList.size()) {
+                        SnippetItemInfo item = snippetList.get(currentIndex);
+                        if (item.getDescription() != null && !item.getDescription().isEmpty()) {
+                            desc = item.getDescription();
+                        }
+                    }
+                    new androidx.appcompat.app.AlertDialog.Builder(MapActivity.this)
+                            .setTitle(
+                                    "ℹ️ "
+                                            + (snippetTitle != null
+                                                    ? snippetTitle
+                                                    : "Snippet Purpose"))
+                            .setMessage(
+                                    "🎯 Purpose & Point:\n"
+                                            + desc
+                                            + "\n\n👀 What you should see / do:\nInteract with the live map on your device screen to test this capability.")
+                            .setPositiveButton("Got It", null)
+                            .show();
+                });
 
         findViewById(R.id.previous_button)
-                .setOnClickListener(
-                        v -> {
-                            if (snippetList.isEmpty()) return;
-                            if (currentIndex > 0) {
-                                currentIndex--;
-                            } else {
-                                currentIndex = snippetList.size() - 1;
-                            }
-                            SnippetItemInfo item = snippetList.get(currentIndex);
-                            groupTitle = item.getGroupTitle();
-                            snippetTitle = item.getTitle();
-                            runSnippet();
-                        });
+                .setOnClickListener(v -> {
+                    if (snippetList.isEmpty()) return;
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                    } else {
+                        currentIndex = snippetList.size() - 1;
+                    }
+                    SnippetItemInfo item = snippetList.get(currentIndex);
+                    groupTitle = item.getGroupTitle();
+                    snippetTitle = item.getTitle();
+                    runSnippet();
+                });
 
         findViewById(R.id.next_button)
-                .setOnClickListener(
-                        v -> {
-                            if (snippetList.isEmpty()) return;
-                            if (currentIndex < snippetList.size() - 1) {
-                                currentIndex++;
-                            } else {
-                                currentIndex = 0;
-                            }
-                            SnippetItemInfo item = snippetList.get(currentIndex);
-                            groupTitle = item.getGroupTitle();
-                            snippetTitle = item.getTitle();
-                            runSnippet();
-                        });
+                .setOnClickListener(v -> {
+                    if (snippetList.isEmpty()) return;
+                    if (currentIndex < snippetList.size() - 1) {
+                        currentIndex++;
+                    } else {
+                        currentIndex = 0;
+                    }
+                    SnippetItemInfo item = snippetList.get(currentIndex);
+                    groupTitle = item.getGroupTitle();
+                    snippetTitle = item.getTitle();
+                    runSnippet();
+                });
 
         runSnippet();
     }
@@ -336,11 +329,10 @@ public class MapActivity extends AppCompatActivity {
                 }
                 android.view.View topBar = findViewById(androidx.appcompat.R.id.action_bar);
                 if (topBar != null) {
-                    topBar.setOnClickListener(
-                            v -> {
-                                android.view.View pb = findViewById(R.id.purpose_button);
-                                if (pb != null) pb.performClick();
-                            });
+                    topBar.setOnClickListener(v -> {
+                        android.view.View pb = findViewById(R.id.purpose_button);
+                        if (pb != null) pb.performClick();
+                    });
                 }
 
                 // Aggressively recreate MapView
@@ -361,11 +353,10 @@ public class MapActivity extends AppCompatActivity {
                                 TrackedMap.resetMapToDefaults(map);
                                 try {
                                     finalSnippet.getAction().execute(MapActivity.this, map);
-                                    map.setOnMapLoadedCallback(
-                                            () -> {
-                                                if (mapView != null)
-                                                    mapView.setContentDescription("MapLoaded");
-                                            });
+                                    map.setOnMapLoadedCallback(() -> {
+                                        if (mapView != null)
+                                            mapView.setContentDescription("MapLoaded");
+                                    });
                                     new Handler(Looper.getMainLooper())
                                             .postDelayed(
                                                     () -> {

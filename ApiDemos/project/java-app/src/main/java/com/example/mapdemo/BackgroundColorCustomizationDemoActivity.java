@@ -55,10 +55,8 @@ public class BackgroundColorCustomizationDemoActivity extends SamplesBaseActivit
 
         SwitchMaterial mapTypeToggleCheckbox =
                 findViewById(com.example.common_ui.R.id.map_type_toggle);
-        mapTypeToggleCheckbox.setOnCheckedChangeListener(
-                (view, isChecked) ->
-                        map.setMapType(
-                                isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
+        mapTypeToggleCheckbox.setOnCheckedChangeListener((view, isChecked) ->
+                map.setMapType(isChecked ? GoogleMap.MAP_TYPE_NORMAL : GoogleMap.MAP_TYPE_NONE));
 
         map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }

@@ -57,24 +57,22 @@ public class CameraControlSnippetsTest {
         final GoogleMap[] googleMapHolder = new GoogleMap[1];
 
         try (ActivityScenario<MapActivity> scenario = ActivityScenario.launch(intent)) {
-            scenario.onActivity(
-                    activity -> {
-                        FrameLayout holder = activity.findViewById(R.id.map_view_holder);
-                        MapView mapView =
-                                activity.mapView != null
-                                        ? activity.mapView
-                                        : (MapView)
-                                                (holder != null && holder.getChildCount() > 0
-                                                        ? holder.getChildAt(0)
-                                                        : null);
-                        if (mapView != null) {
-                            mapView.getMapAsync(
-                                    map -> {
-                                        googleMapHolder[0] = map;
-                                        latch.countDown();
-                                    });
-                        }
+            scenario.onActivity(activity -> {
+                FrameLayout holder = activity.findViewById(R.id.map_view_holder);
+                MapView mapView =
+                        activity.mapView != null
+                                ? activity.mapView
+                                : (MapView)
+                                        (holder != null && holder.getChildCount() > 0
+                                                ? holder.getChildAt(0)
+                                                : null);
+                if (mapView != null) {
+                    mapView.getMapAsync(map -> {
+                        googleMapHolder[0] = map;
+                        latch.countDown();
                     });
+                }
+            });
 
             boolean loaded = latch.await(10, TimeUnit.SECONDS);
             Assert.assertTrue(
@@ -98,16 +96,15 @@ public class CameraControlSnippetsTest {
 
                     // Run camera mutations and reads strictly on UI main thread using runOnMainSync
                     InstrumentationRegistry.getInstrumentation()
-                            .runOnMainSync(
-                                    () -> {
-                                        // Attempt to zoom out below minZoom (6.0f)
-                                        map.moveCamera(CameraUpdateFactory.zoomTo(2.0f));
-                                        clampedZoomHolder[0] = map.getCameraPosition().zoom;
+                            .runOnMainSync(() -> {
+                                // Attempt to zoom out below minZoom (6.0f)
+                                map.moveCamera(CameraUpdateFactory.zoomTo(2.0f));
+                                clampedZoomHolder[0] = map.getCameraPosition().zoom;
 
-                                        // Attempt to zoom in above maxZoom (14.0f)
-                                        map.moveCamera(CameraUpdateFactory.zoomTo(21.0f));
-                                        clampedZoomHolder[1] = map.getCameraPosition().zoom;
-                                    });
+                                // Attempt to zoom in above maxZoom (14.0f)
+                                map.moveCamera(CameraUpdateFactory.zoomTo(21.0f));
+                                clampedZoomHolder[1] = map.getCameraPosition().zoom;
+                            });
 
                     float clampedMinZoom = clampedZoomHolder[0];
                     float clampedMaxZoom = clampedZoomHolder[1];
@@ -138,13 +135,12 @@ public class CameraControlSnippetsTest {
 
                     // Run camera mutations strictly on UI main thread using runOnMainSync
                     InstrumentationRegistry.getInstrumentation()
-                            .runOnMainSync(
-                                    () -> {
-                                        // Attempt to pan camera to London, UK (51.5074, -0.1278)
-                                        LatLng london = new LatLng(51.5074, -0.1278);
-                                        map.moveCamera(CameraUpdateFactory.newLatLng(london));
-                                        targetHolder[0] = map.getCameraPosition().target;
-                                    });
+                            .runOnMainSync(() -> {
+                                // Attempt to pan camera to London, UK (51.5074, -0.1278)
+                                LatLng london = new LatLng(51.5074, -0.1278);
+                                map.moveCamera(CameraUpdateFactory.newLatLng(london));
+                                targetHolder[0] = map.getCameraPosition().target;
+                            });
 
                     LatLng currentTarget = targetHolder[0];
                     Assert.assertNotNull("Camera target must not be null", currentTarget);

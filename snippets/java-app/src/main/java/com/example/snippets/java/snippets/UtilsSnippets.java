@@ -645,25 +645,20 @@ public class UtilsSnippets {
 
         // [START maps_android_utils_multilayer_kml_click_events]
         kmlPolylineLayer.addLayerToMap();
-        kmlPolylineLayer.setOnFeatureClickListener(
-                feature ->
-                        Toast.makeText(
-                                        context,
-                                        "KML polyline clicked: " + feature.getProperty("name"),
-                                        Toast.LENGTH_SHORT)
-                                .show());
+        kmlPolylineLayer.setOnFeatureClickListener(feature ->
+                Toast.makeText(
+                                context,
+                                "KML polyline clicked: " + feature.getProperty("name"),
+                                Toast.LENGTH_SHORT)
+                        .show());
         // [END maps_android_utils_multilayer_kml_click_events]
 
         // [START maps_android_utils_multilayer_marker_click_events]
-        markerCollection.setOnMarkerClickListener(
-                marker -> {
-                    Toast.makeText(
-                                    context,
-                                    "Marker clicked: " + marker.getTitle(),
-                                    Toast.LENGTH_SHORT)
-                            .show();
-                    return false;
-                });
+        markerCollection.setOnMarkerClickListener(marker -> {
+            Toast.makeText(context, "Marker clicked: " + marker.getTitle(), Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        });
         // [END maps_android_utils_multilayer_marker_click_events]
     }
 }
