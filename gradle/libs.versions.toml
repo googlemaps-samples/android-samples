@@ -5,7 +5,7 @@ minSdk = "24"
 compileSdk = "37"
 targetSdk = "37"
 versionCode = "1"
-versionName = "2.2.0" # {x-release-please-version}
+versionName = "2.3.0" # {x-release-please-version}
 javaVersion = "17"
 
 # Kotlin & Coroutines
