@@ -203,24 +203,22 @@ public class DataDrivenDatasetStylingActivity extends SamplesBaseActivity
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
 
-        googleMap.setOnCameraIdleListener(
-                () -> {
-                    com.google.android.gms.maps.model.CameraPosition cp =
-                            googleMap.getCameraPosition();
-                    Log.i(
-                            TAG,
-                            "CAMERA_PARAMS: target=LatLng("
-                                    + cp.target.latitude
-                                    + ", "
-                                    + cp.target.longitude
-                                    + "), zoom="
-                                    + cp.zoom
-                                    + "f, tilt="
-                                    + cp.tilt
-                                    + "f, bearing="
-                                    + cp.bearing
-                                    + "f");
-                });
+        googleMap.setOnCameraIdleListener(() -> {
+            com.google.android.gms.maps.model.CameraPosition cp = googleMap.getCameraPosition();
+            Log.i(
+                    TAG,
+                    "CAMERA_PARAMS: target=LatLng("
+                            + cp.target.latitude
+                            + ", "
+                            + cp.target.longitude
+                            + "), zoom="
+                            + cp.zoom
+                            + "f, tilt="
+                            + cp.tilt
+                            + "f, bearing="
+                            + cp.bearing
+                            + "f");
+        });
 
         MapCapabilities capabilities = map.getMapCapabilities();
         Log.d(

@@ -137,19 +137,17 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity
         mapFragment.getMapAsync(this);
 
         findViewById(R.id.button_hawaii)
-                .setOnClickListener(
-                        view -> {
-                            localityEnabled = true;
-                            updateStyles();
-                            centerMapOnLocation(HANA_HAWAII, 11f);
-                        });
+                .setOnClickListener(view -> {
+                    localityEnabled = true;
+                    updateStyles();
+                    centerMapOnLocation(HANA_HAWAII, 11f);
+                });
         findViewById(R.id.button_us)
-                .setOnClickListener(
-                        view -> {
-                            adminAreaEnabled = true;
-                            updateStyles();
-                            centerMapOnLocation(CENTER_US, 3.8f);
-                        });
+                .setOnClickListener(view -> {
+                    adminAreaEnabled = true;
+                    updateStyles();
+                    centerMapOnLocation(CENTER_US, 3.8f);
+                });
 
         applyInsets(findViewById(R.id.map_container));
 
@@ -162,28 +160,21 @@ public class DataDrivenBoundariesActivity extends SamplesBaseActivity
 
     private void setupBoundarySelectorButton() {
         MaterialButton stylingTypeButton = findViewById(R.id.button_feature_type);
-        stylingTypeButton.setOnClickListener(
-                v -> {
-                    PopupMenu popupMenu = new PopupMenu(this, v);
-                    MenuInflater inflater = popupMenu.getMenuInflater();
-                    inflater.inflate(R.menu.boundary_types_menu, popupMenu.getMenu());
+        stylingTypeButton.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(this, v);
+            MenuInflater inflater = popupMenu.getMenuInflater();
+            inflater.inflate(R.menu.boundary_types_menu, popupMenu.getMenu());
 
-                    popupMenu.setOnMenuItemClickListener(this);
+            popupMenu.setOnMenuItemClickListener(this);
 
-                    popupMenu
-                            .getMenu()
-                            .findItem(R.id.boundary_type_locality)
-                            .setChecked(localityEnabled);
-                    popupMenu
-                            .getMenu()
-                            .findItem(R.id.boundary_type_administrative_area_level_1)
-                            .setChecked(adminAreaEnabled);
-                    popupMenu
-                            .getMenu()
-                            .findItem(R.id.boundary_type_country)
-                            .setChecked(countryEnabled);
-                    popupMenu.show();
-                });
+            popupMenu.getMenu().findItem(R.id.boundary_type_locality).setChecked(localityEnabled);
+            popupMenu
+                    .getMenu()
+                    .findItem(R.id.boundary_type_administrative_area_level_1)
+                    .setChecked(adminAreaEnabled);
+            popupMenu.getMenu().findItem(R.id.boundary_type_country).setChecked(countryEnabled);
+            popupMenu.show();
+        });
     }
 
     // [END_EXCLUDE]

@@ -95,17 +95,16 @@ public class CameraClampingDemoActivity extends SamplesBaseActivity
         resetMinMaxZoom();
         updateZoomLabel(mMinZoom, mMaxZoom);
 
-        binding.zoomRangeSlider.addOnChangeListener(
-                (slider, value, fromUser) -> {
-                    java.util.List<Float> values = slider.getValues();
-                    mMinZoom = values.get(0);
-                    mMaxZoom = values.get(1);
-                    updateZoomLabel(mMinZoom, mMaxZoom);
-                    if (fromUser && mMap != null) {
-                        mMap.setMinZoomPreference(mMinZoom);
-                        mMap.setMaxZoomPreference(mMaxZoom);
-                    }
-                });
+        binding.zoomRangeSlider.addOnChangeListener((slider, value, fromUser) -> {
+            java.util.List<Float> values = slider.getValues();
+            mMinZoom = values.get(0);
+            mMaxZoom = values.get(1);
+            updateZoomLabel(mMinZoom, mMaxZoom);
+            if (fromUser && mMap != null) {
+                mMap.setMinZoomPreference(mMinZoom);
+                mMap.setMaxZoomPreference(mMaxZoom);
+            }
+        });
 
         binding.clampLatlngAdelaide.setOnClickListener(v -> onClampToAdelaide());
         binding.clampLatlngPacific.setOnClickListener(v -> onClampToPacific());

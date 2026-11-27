@@ -36,11 +36,10 @@ public class CameraDemoActivityTest {
     @Before
     public void setUp() {
         scenario = ActivityScenario.launch(CameraDemoActivity.class);
-        scenario.onActivity(
-                activity -> {
-                    idlingResource = new MapIdlingResource(activity.getMap());
-                    IdlingRegistry.getInstance().register(idlingResource);
-                });
+        scenario.onActivity(activity -> {
+            idlingResource = new MapIdlingResource(activity.getMap());
+            IdlingRegistry.getInstance().register(idlingResource);
+        });
     }
 
     @Test
@@ -53,18 +52,15 @@ public class CameraDemoActivityTest {
             throw new RuntimeException(e);
         }
 
-        scenario.onActivity(
-                activity -> {
-                    CameraPosition cameraPosition = activity.getMap().getCameraPosition();
-                    assertEquals(
-                            CameraDemoActivity.BONDI.target.latitude,
-                            cameraPosition.target.latitude,
-                            1e-5);
-                    assertEquals(
-                            CameraDemoActivity.BONDI.target.longitude,
-                            cameraPosition.target.longitude,
-                            1e-5);
-                });
+        scenario.onActivity(activity -> {
+            CameraPosition cameraPosition = activity.getMap().getCameraPosition();
+            assertEquals(
+                    CameraDemoActivity.BONDI.target.latitude, cameraPosition.target.latitude, 1e-5);
+            assertEquals(
+                    CameraDemoActivity.BONDI.target.longitude,
+                    cameraPosition.target.longitude,
+                    1e-5);
+        });
     }
 
     @After

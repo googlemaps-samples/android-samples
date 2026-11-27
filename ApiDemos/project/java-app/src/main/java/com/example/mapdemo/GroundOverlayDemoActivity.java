@@ -130,11 +130,10 @@ public class GroundOverlayDemoActivity extends SamplesBaseActivity
         // Move the camera to frame the Newark overlays with padding.
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(OVERLAY_BOUNDS, 80));
 
-        map.setOnMapClickListener(
-                ll -> {
-                    Point point = mMap.getProjection().toScreenLocation(ll);
-                    mapClickCount += 1;
-                });
+        map.setOnMapClickListener(ll -> {
+            Point point = mMap.getProjection().toScreenLocation(ll);
+            mapClickCount += 1;
+        });
 
         // Prepare the BitmapDescriptor objects. Using a BitmapDescriptorFactory is the most
         // memory-efficient way to create the images that will be used for the overlays.

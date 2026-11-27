@@ -88,63 +88,59 @@ public class DatasetLayerSnippets {
         Runnable applyBoulderStyling =
                 () -> {
                     if (layer != null) {
-                        layer.setFeatureStyle(
-                                feature -> {
-                                    if (feature instanceof DatasetFeature) {
-                                        DatasetFeature datasetFeature = (DatasetFeature) feature;
-                                        Map<String, String> attributes =
-                                                datasetFeature.getDatasetAttributes();
-                                        String difficulty =
-                                                attributes.get("OSMPTrailsOSMPDIFFICULTY");
-                                        String dogsAllowed =
-                                                attributes.get("OSMPTrailsOSMPDOGREGGEN");
+                        layer.setFeatureStyle(feature -> {
+                            if (feature instanceof DatasetFeature) {
+                                DatasetFeature datasetFeature = (DatasetFeature) feature;
+                                Map<String, String> attributes =
+                                        datasetFeature.getDatasetAttributes();
+                                String difficulty = attributes.get("OSMPTrailsOSMPDIFFICULTY");
+                                String dogsAllowed = attributes.get("OSMPTrailsOSMPDOGREGGEN");
 
-                                        int strokeColor;
-                                        float strokeWidth = 3.0f;
+                                int strokeColor;
+                                float strokeWidth = 3.0f;
 
-                                        if (boulderColorByDifficulty) {
-                                            // Mode 1: Color by difficulty
-                                            if ("Easy".equals(difficulty)) {
-                                                strokeColor = Color.GREEN;
-                                            } else if ("Moderate".equals(difficulty)) {
-                                                strokeColor = Color.BLUE;
-                                            } else if ("Difficult".equals(difficulty)) {
-                                                strokeColor = Color.RED;
-                                            } else {
-                                                strokeColor = Color.MAGENTA;
-                                            }
-
-                                            // If dogs are not allowed, make the line wider and
-                                            // slightly transparent
-                                            if ("No Dogs".equals(dogsAllowed)) {
-                                                strokeColor =
-                                                        ColorUtils.setAlphaComponent(
-                                                                strokeColor, 120);
-                                                strokeWidth = 6.0f;
-                                            }
-                                        } else {
-                                            // Mode 2: Color by dog regulations
-                                            if ("No Dogs".equals(dogsAllowed)) {
-                                                strokeColor = Color.RED; // Prohibited
-                                            } else if ("LR".equals(dogsAllowed)
-                                                    || "LVS".equals(dogsAllowed)) {
-                                                strokeColor = Color.YELLOW; // Leash Required /
-                                                // Conditional
-                                            } else if ("RV".equals(dogsAllowed)) {
-                                                strokeColor = Color.GREEN; // Off Leash
-                                            } else {
-                                                strokeColor = Color.LTGRAY; // Unknown
-                                            }
-                                            strokeWidth = 4.0f;
-                                        }
-
-                                        return new FeatureStyle.Builder()
-                                                .strokeColor(strokeColor)
-                                                .strokeWidth(strokeWidth)
-                                                .build();
+                                if (boulderColorByDifficulty) {
+                                    // Mode 1: Color by difficulty
+                                    if ("Easy".equals(difficulty)) {
+                                        strokeColor = Color.GREEN;
+                                    } else if ("Moderate".equals(difficulty)) {
+                                        strokeColor = Color.BLUE;
+                                    } else if ("Difficult".equals(difficulty)) {
+                                        strokeColor = Color.RED;
+                                    } else {
+                                        strokeColor = Color.MAGENTA;
                                     }
-                                    return null;
-                                });
+
+                                    // If dogs are not allowed, make the line wider and
+                                    // slightly transparent
+                                    if ("No Dogs".equals(dogsAllowed)) {
+                                        strokeColor =
+                                                ColorUtils.setAlphaComponent(strokeColor, 120);
+                                        strokeWidth = 6.0f;
+                                    }
+                                } else {
+                                    // Mode 2: Color by dog regulations
+                                    if ("No Dogs".equals(dogsAllowed)) {
+                                        strokeColor = Color.RED; // Prohibited
+                                    } else if ("LR".equals(dogsAllowed)
+                                            || "LVS".equals(dogsAllowed)) {
+                                        strokeColor = Color.YELLOW; // Leash Required /
+                                        // Conditional
+                                    } else if ("RV".equals(dogsAllowed)) {
+                                        strokeColor = Color.GREEN; // Off Leash
+                                    } else {
+                                        strokeColor = Color.LTGRAY; // Unknown
+                                    }
+                                    strokeWidth = 4.0f;
+                                }
+
+                                return new FeatureStyle.Builder()
+                                        .strokeColor(strokeColor)
+                                        .strokeWidth(strokeWidth)
+                                        .build();
+                            }
+                            return null;
+                        });
                     }
                 };
 
@@ -164,15 +160,12 @@ public class DatasetLayerSnippets {
                 int paddingTopBottomPx = (int) (4 * scale + 0.5f);
                 toggleButton.setPadding(
                         paddingPx, paddingTopBottomPx, paddingPx, paddingTopBottomPx);
-                toggleButton.setOnClickListener(
-                        v -> {
-                            boulderColorByDifficulty = !boulderColorByDifficulty;
-                            toggleButton.setText(
-                                    boulderColorByDifficulty
-                                            ? "Mode: Difficulty"
-                                            : "Mode: Dog Leash");
-                            applyBoulderStyling.run();
-                        });
+                toggleButton.setOnClickListener(v -> {
+                    boulderColorByDifficulty = !boulderColorByDifficulty;
+                    toggleButton.setText(
+                            boulderColorByDifficulty ? "Mode: Difficulty" : "Mode: Dog Leash");
+                    applyBoulderStyling.run();
+                });
                 container.addView(toggleButton);
                 container.setVisibility(android.view.View.VISIBLE);
             }
@@ -213,32 +206,31 @@ public class DatasetLayerSnippets {
 
         // 3. Define styling rules based on squirrel fur color attributes
         if (layer != null) {
-            layer.setFeatureStyle(
-                    feature -> {
-                        if (feature instanceof DatasetFeature) {
-                            DatasetFeature datasetFeature = (DatasetFeature) feature;
-                            Map<String, String> attributes = datasetFeature.getDatasetAttributes();
-                            String furColor = attributes.get("Color");
+            layer.setFeatureStyle(feature -> {
+                if (feature instanceof DatasetFeature) {
+                    DatasetFeature datasetFeature = (DatasetFeature) feature;
+                    Map<String, String> attributes = datasetFeature.getDatasetAttributes();
+                    String furColor = attributes.get("Color");
 
-                            int color;
-                            if ("Black+".equals(furColor)) {
-                                color = Color.BLACK;
-                            } else if ("Cinnamon+".equals(furColor)) {
-                                color = Color.rgb(210, 105, 30); // Chocolate brown
-                            } else if ("Gray+".equals(furColor)) {
-                                color = Color.GRAY;
-                            } else {
-                                color = Color.GREEN; // default
-                            }
+                    int color;
+                    if ("Black+".equals(furColor)) {
+                        color = Color.BLACK;
+                    } else if ("Cinnamon+".equals(furColor)) {
+                        color = Color.rgb(210, 105, 30); // Chocolate brown
+                    } else if ("Gray+".equals(furColor)) {
+                        color = Color.GRAY;
+                    } else {
+                        color = Color.GREEN; // default
+                    }
 
-                            return new FeatureStyle.Builder()
-                                    .fillColor(color)
-                                    .strokeColor(Color.WHITE)
-                                    .pointRadius(8.0f)
-                                    .build();
-                        }
-                        return null;
-                    });
+                    return new FeatureStyle.Builder()
+                            .fillColor(color)
+                            .strokeColor(Color.WHITE)
+                            .pointRadius(8.0f)
+                            .build();
+                }
+                return null;
+            });
         }
         // [END maps_android_dds_nyc_squirrels]
     }
@@ -279,70 +271,59 @@ public class DatasetLayerSnippets {
                     @Override
                     public void run() {
                         if (layer != null) {
-                            layer.setFeatureStyle(
-                                    feature -> {
-                                        if (feature instanceof DatasetFeature) {
-                                            DatasetFeature datasetFeature =
-                                                    (DatasetFeature) feature;
-                                            Map<String, String> attributes =
-                                                    datasetFeature.getDatasetAttributes();
-                                            String type = attributes.get("type");
-                                            String globalId = attributes.get("globalid");
+                            layer.setFeatureStyle(feature -> {
+                                if (feature instanceof DatasetFeature) {
+                                    DatasetFeature datasetFeature = (DatasetFeature) feature;
+                                    Map<String, String> attributes =
+                                            datasetFeature.getDatasetAttributes();
+                                    String type = attributes.get("type");
+                                    String globalId = attributes.get("globalid");
 
-                                            int fillColor;
-                                            if ("temple".equals(type)) {
-                                                fillColor =
-                                                        ColorUtils.setAlphaComponent(
-                                                                Color.BLUE, 100);
-                                            } else {
-                                                fillColor =
-                                                        ColorUtils.setAlphaComponent(
-                                                                Color.GREEN, 80);
-                                            }
+                                    int fillColor;
+                                    if ("temple".equals(type)) {
+                                        fillColor = ColorUtils.setAlphaComponent(Color.BLUE, 100);
+                                    } else {
+                                        fillColor = ColorUtils.setAlphaComponent(Color.GREEN, 80);
+                                    }
 
-                                            // Highlight clicked temple area in Yellow
-                                            if (globalId != null
-                                                    && globalId.equals(kyotoClickedGlobalId)) {
-                                                fillColor =
-                                                        ColorUtils.setAlphaComponent(
-                                                                Color.YELLOW, 180);
-                                            }
+                                    // Highlight clicked temple area in Yellow
+                                    if (globalId != null && globalId.equals(kyotoClickedGlobalId)) {
+                                        fillColor = ColorUtils.setAlphaComponent(Color.YELLOW, 180);
+                                    }
 
-                                            return new FeatureStyle.Builder()
-                                                    .fillColor(fillColor)
-                                                    .strokeColor(Color.BLACK)
-                                                    .strokeWidth(2.0f)
-                                                    .build();
-                                        }
-                                        return null;
-                                    });
+                                    return new FeatureStyle.Builder()
+                                            .fillColor(fillColor)
+                                            .strokeColor(Color.BLACK)
+                                            .strokeWidth(2.0f)
+                                            .build();
+                                }
+                                return null;
+                            });
                         }
                     }
                 };
 
         // 3. Register click handler to select temple feature and toast its name
         if (layer != null) {
-            layer.addOnFeatureClickListener(
-                    event -> {
-                        DatasetFeature clickedFeature = null;
-                        for (com.google.android.gms.maps.model.Feature f : event.getFeatures()) {
-                            if (f instanceof DatasetFeature) {
-                                clickedFeature = (DatasetFeature) f;
-                                break;
-                            }
-                        }
-                        if (clickedFeature != null) {
-                            Map<String, String> attributes = clickedFeature.getDatasetAttributes();
-                            String templeName =
-                                    attributes.containsKey("name")
-                                            ? attributes.get("name")
-                                            : "Unknown Temple";
-                            kyotoClickedGlobalId = attributes.get("globalid");
-                            Toast.makeText(context, "Temple: " + templeName, Toast.LENGTH_SHORT)
-                                    .show();
-                            applyStyles.run(); // Refresh styling state
-                        }
-                    });
+            layer.addOnFeatureClickListener(event -> {
+                DatasetFeature clickedFeature = null;
+                for (com.google.android.gms.maps.model.Feature f : event.getFeatures()) {
+                    if (f instanceof DatasetFeature) {
+                        clickedFeature = (DatasetFeature) f;
+                        break;
+                    }
+                }
+                if (clickedFeature != null) {
+                    Map<String, String> attributes = clickedFeature.getDatasetAttributes();
+                    String templeName =
+                            attributes.containsKey("name")
+                                    ? attributes.get("name")
+                                    : "Unknown Temple";
+                    kyotoClickedGlobalId = attributes.get("globalid");
+                    Toast.makeText(context, "Temple: " + templeName, Toast.LENGTH_SHORT).show();
+                    applyStyles.run(); // Refresh styling state
+                }
+            });
         }
 
         // Apply initial styles

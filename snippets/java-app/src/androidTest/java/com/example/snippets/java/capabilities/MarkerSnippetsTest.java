@@ -57,24 +57,22 @@ public class MarkerSnippetsTest {
         final GoogleMap[] googleMapHolder = new GoogleMap[1];
 
         try (ActivityScenario<MapActivity> scenario = ActivityScenario.launch(intent)) {
-            scenario.onActivity(
-                    activity -> {
-                        FrameLayout holder = activity.findViewById(R.id.map_view_holder);
-                        MapView mapView =
-                                activity.mapView != null
-                                        ? activity.mapView
-                                        : (MapView)
-                                                (holder != null && holder.getChildCount() > 0
-                                                        ? holder.getChildAt(0)
-                                                        : null);
-                        if (mapView != null) {
-                            mapView.getMapAsync(
-                                    map -> {
-                                        googleMapHolder[0] = map;
-                                        latch.countDown();
-                                    });
-                        }
+            scenario.onActivity(activity -> {
+                FrameLayout holder = activity.findViewById(R.id.map_view_holder);
+                MapView mapView =
+                        activity.mapView != null
+                                ? activity.mapView
+                                : (MapView)
+                                        (holder != null && holder.getChildCount() > 0
+                                                ? holder.getChildAt(0)
+                                                : null);
+                if (mapView != null) {
+                    mapView.getMapAsync(map -> {
+                        googleMapHolder[0] = map;
+                        latch.countDown();
                     });
+                }
+            });
 
             boolean loaded = latch.await(10, TimeUnit.SECONDS);
             Assert.assertTrue(
@@ -84,10 +82,9 @@ public class MarkerSnippetsTest {
                     "GoogleMap must not be null for snippet: " + snippetTitle, googleMapHolder[0]);
 
             InstrumentationRegistry.getInstrumentation()
-                    .runOnMainSync(
-                            () -> {
-                                verification.verify(googleMapHolder[0]);
-                            });
+                    .runOnMainSync(() -> {
+                        verification.verify(googleMapHolder[0]);
+                    });
         }
     }
 
